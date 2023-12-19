@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,9 +9,10 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const { t } = useTranslation();
   return (
     <div>
-      <h1>Welcome to Remix</h1>
+      <h1>{t("greeting")}</h1>
       <ul>
         <li>
           <a
