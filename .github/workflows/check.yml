@@ -1,0 +1,114 @@
+name: Check
+on:
+  pull_request:
+  workflow_call:
+    # secrets:
+    #   SESSION_SECRET:
+    #     required: true
+    #   OIDC_ISSUER:
+    #     required: true
+    #   OIDC_CLIENT_ID:
+    #     required: true
+    #   OIDC_CLIENT_SECRET:
+    #     required: true
+    #   PLAYWRIGHT_TESTS_AUTH0_DOMAIN:
+    #     required: true
+    #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID:
+    #     required: true
+    #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET:
+    #     required: true
+    #   CHROMATIC_PROJECT_TOKEN:
+    #     required: true
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+      - run: npm run lint -- --max-warnings=0
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+      - run: npm run typecheck
+
+  # unit-tests:
+  #   name: Unit Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #     - uses: bahmutov/npm-install@v1
+  #     - run: npm run test
+
+  # e2e-tests:
+  #   name: End-to-End Tests
+  #   timeout-minutes: 60
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #     - uses: bahmutov/npm-install@v1
+  #     - name: Start database
+  #       run: docker-compose up -d && sleep 3
+  #     - run: npx prisma migrate deploy
+  #       env:
+  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+  #     - run: npm run build
+  #     - run: npm start &
+  #       env:
+  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+  #         BASE_URL: http://localhost:3000
+  #         SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  #         OIDC_ISSUER: ${{ secrets.OIDC_ISSUER }}
+  #         OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
+  #         OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
+  #     - run: npx playwright install --with-deps
+  #     - run: npx playwright test
+  #       env:
+  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+  #         PLAYWRIGHT_TESTS_AUTH0_DOMAIN: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_DOMAIN }}
+  #         PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID }}
+  #         PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET }}
+  #     - uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
+  #         retention-days: 30
+
+  # storybook:
+  #   name: Chromatic
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #     - uses: bahmutov/npm-install@v1
+  #     - name: Publish to Chromatic
+  #       uses: chromaui/action@v1
+  #       with:
+  #         projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+  #         exitOnceUploaded: true
+  #         onlyChanged: true

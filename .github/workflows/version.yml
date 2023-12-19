@@ -1,0 +1,44 @@
+name: Version
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: "The complete version string"
+        value: ${{ jobs.version.outputs.version }}
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.complete-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: paulhatch/semantic-version@v5.3.0
+        id: semantic-version
+        with:
+          search_commit_body: true
+      - run: |
+          echo "Version: ${{ steps.semantic-version.outputs.version }}"
+          echo "Major: ${{ steps.semantic-version.outputs.major }}"
+          echo "Minor: ${{ steps.semantic-version.outputs.minor }}"
+          echo "Patch: ${{ steps.semantic-version.outputs.patch }}"
+          echo "Version type: ${{ steps.semantic-version.outputs.version_type }}"
+          echo "Version tag: ${{ steps.semantic-version.outputs.version_tag }}"
+          echo "Increment: ${{ steps.semantic-version.outputs.increment }}"
+          echo "Current commit: ${{ steps.semantic-version.outputs.current_commit }}"
+          echo "Is tagged: ${{ steps.semantic-version.outputs.is_tagged }}"
+      - id: complete-version
+        run: |
+          if [ ${{ steps.semantic-version.outputs.is_tagged }} == "true" ]; then
+              pre_release_postfix=""
+          else
+              if [ "$GITHUB_REF_NAME" == "main" ]; then
+                  pre_release_postfix="-pre${{ steps.semantic-version.outputs.increment }}"
+              else
+                  pre_release_postfix="-$GITHUB_HEAD_REF-${{ steps.semantic-version.outputs.increment }}"
+              fi
+          fi
+          echo "version=${{ steps.semantic-version.outputs.version }}$pre_release_postfix" >> "$GITHUB_OUTPUT"
+      - run: echo "Complete version is ${{ steps.complete-version.outputs.version }}"
