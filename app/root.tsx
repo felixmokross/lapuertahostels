@@ -1,4 +1,3 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -13,7 +12,14 @@ import styles from "./tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  {
+    rel: "preconnect",
+    href: "https://rsms.me",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://rsms.me/inter/inter.css",
+  },
 ];
 
 export default function App() {
@@ -25,7 +31,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-gray-50 antialiased">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
