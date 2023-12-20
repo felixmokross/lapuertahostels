@@ -16,16 +16,19 @@ jobs:
           version: 0.1.117
       - run: |
           flyctl apps list --json --org $FLY_ORG \
-            | jq '[
-                .[]
-                  | { ID:.ID, LastReleasedAt: .CurrentRelease.CreatedAt }
-                  | select(.ID | (test("^lapuertahostels-preview-") and (test("-db$") | not)))
-              ]
-                | sort_by(.LastReleasedAt)
-                | reverse
-                | .[3:]
-                | map(.ID, .ID + "-db")
-                | .[]' \
+            | jq '[map(
+              { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
+              | select(.ID | (test("^lapuertahostels-preview-") and (test("-db$") | not)))
+              | { ID, LastReleasedDaysAgo: ((now - (.LastReleasedAt | fromdate)) / 60 / 60 / 24) }
+            )]
+            | map((. | map(select(.LastReleasedDaysAgo > 4))), (.
+                | sort_by(.LastReleasedDaysAgo)
+                | .[3:])
+            )
+            | flatten
+            | unique_by(.ID)
+            | map(.ID, .ID + "-db")
+            | .[]' \
               | xargs -I {} flyctl apps destroy --yes {}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
