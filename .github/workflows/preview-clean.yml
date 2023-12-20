@@ -29,6 +29,7 @@ jobs:
             )
             | flatten
             | unique_by(.ID)
+            | map(.ID)
             | .[]' \
               | xargs -I {} flyctl apps destroy --yes {}
         env:
