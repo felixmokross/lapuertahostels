@@ -61,6 +61,11 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          defer
+          data-domain="lapuertahostels-2.fly.dev"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </head>
       <body className="bg-gray-50 antialiased">
         <Outlet />
