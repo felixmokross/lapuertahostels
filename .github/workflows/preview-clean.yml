@@ -20,7 +20,7 @@ jobs:
           flyctl apps list --json --org $FLY_ORG \
             | jq '[map(
               { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
-              | select(.ID | (test("^lapuertahostels-preview-") and (test("-db$") | not)))
+              | select(.ID | test("^lapuertahostels-preview-"))
               | { ID, LastReleasedDaysAgo: ((now - (.LastReleasedAt | fromdate)) / 60 / 60 / 24) }
             )]
             | map((. | map(select(.LastReleasedDaysAgo > 4))), (.
@@ -29,7 +29,7 @@ jobs:
             )
             | flatten
             | unique_by(.ID)
-            | map(.ID, .ID + "-db")
+            | map(.ID)
             | .[]' \
               | xargs -I {} flyctl apps destroy --yes {}
         env:
