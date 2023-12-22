@@ -1,3 +1,3 @@
 export function Carousel() {
-  return <p>Hello</p>;
+  return <p className="font-bold">Hello</p>;
 }
