@@ -67,7 +67,7 @@ export default function App() {
           src="https://plausible.io/js/script.js"
         ></script>
       </head>
-      <body className="bg-white antialiased">
+      <body className="bg-white text-neutral-900 antialiased">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

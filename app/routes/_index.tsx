@@ -13,7 +13,7 @@ export default function Index() {
   return (
     <>
       <header className="flex px-2 py-4">
-        <h1 className="flex items-center gap-6 font-serif text-xl tracking-tight">
+        <h1 className="flex items-center gap-6 font-serif text-xl tracking-tight text-puerta-700">
           <img src={logo} alt="" width={50} height={50} />
           <>La Puerta Hostels</>
         </h1>
@@ -34,14 +34,30 @@ export default function Index() {
           </h3>
         </div>
 
-        <div className="mx-auto max-w-5xl">
-          <h3>Some heading text</h3>
-          <p>This is something more</p>
+        <div className="mx-auto mt-8 max-w-5xl">
+          <h3 className="text-3xl tracking-tight text-puerta-600">
+            Discover the Colombian Costa Caribe
+          </h3>
+          <p className="mt-4 text-lg leading-relaxed">
+            Hike through the breath-taking beauty of{" "}
+            <strong className="text-puerta-600">Tayrona National Park</strong>,
+            discover the mysterious{" "}
+            <strong className="text-puerta-600">Lost City</strong>, or refresh
+            yourself in the river of{" "}
+            <strong className="text-puerta-600">Minca</strong>.
+          </p>
         </div>
 
-        <h2>Your Homebase in Santa Marta</h2>
-        <p>Text</p>
+        <hr className="mx-auto mt-16 max-w-5xl text-puerta-400" />
 
+        <div className="mx-auto mt-16 max-w-5xl">
+          <h2 className="text-3xl tracking-tight">
+            Your Homebase in Santa Marta
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+        </div>
         <div className="flex justify-around">
           <div className="flex w-52 flex-col items-center">
             Puerta Aqua
