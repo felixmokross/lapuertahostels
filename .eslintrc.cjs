@@ -21,10 +21,7 @@ module.exports = {
   },
 
   // Base config
-  extends: [
-    "eslint:recommended",
-    "prettier"
-  ],
+  extends: ["eslint:recommended", "prettier", "plugin:storybook/recommended"],
 
   overrides: [
     // React
