@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://lapuertahostels-2.fly.dev/
+      url: https://lapuertahostels.co/
     needs: [check, version]
     steps:
       - uses: actions/checkout@v3
