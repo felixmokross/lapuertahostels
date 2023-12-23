@@ -32,7 +32,10 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
-  return json({ locale });
+  return json({
+    locale,
+    imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
+  });
 }
 
 export const handle = {
