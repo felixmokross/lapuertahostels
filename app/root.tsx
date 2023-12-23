@@ -24,7 +24,7 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
-  return json({ locale });
+  return json({ locale, analyticsDomain: process.env.ANALYTICS_DOMAIN });
 }
 
 export const handle = {
@@ -37,7 +37,7 @@ export const handle = {
 
 export default function App() {
   // Get the locale from the loader
-  const { locale } = useLoaderData<typeof loader>();
+  const { locale, analyticsDomain } = useLoaderData<typeof loader>();
 
   const { i18n } = useTranslation();
 
@@ -53,11 +53,13 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script
-          defer
-          data-domain="lapuertahostels.co"
-          src="https://plausible.io/js/script.js"
-        ></script>
+        {analyticsDomain && (
+          <script
+            defer
+            data-domain={analyticsDomain}
+            src="https://plausible.io/js/script.js"
+          ></script>
+        )}
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">

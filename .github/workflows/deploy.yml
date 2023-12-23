@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ inputs.environment == 'production' && 'https://lapuertahostels.co' || 'https://lapuertahostels-staging.fly.dev/' }}
+      url: https://${{ steps.define-env.outputs.domain }}/
     needs: [check, version]
     steps:
       - uses: actions/checkout@v3
@@ -47,6 +47,18 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
-      - run: flyctl deploy --app ${{ inputs.environment == 'production' && 'lapuertahostels-2' || 'lapuertahostels-staging' }} --remote-only --image-label v${{ needs.version.outputs.version }}
+      - id: define-env
+        run: |
+          case ${{ inputs.environment }} in
+            production)
+              echo "fly_app=lapuertahostels-2" >> "$GITHUB_OUTPUT"
+              echo "domain=lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              ;;
+            staging)
+              echo "fly_app=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
+              echo "domain=lapuertahostels-staging.fly.dev" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+      - run: flyctl deploy --app ${{ steps.define-env.outputs.fly_app }} --remote-only --image-label v${{ needs.version.outputs.version }} --env ANALYTICS_DOMAIN=${{ steps.define-env.outputs.domain }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
