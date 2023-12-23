@@ -47,6 +47,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
-      - run: flyctl deploy --app {{ inputs.environment == 'production' && 'lapuertahostels-2' || 'lapuertahostels-staging' }} --remote-only --image-label v${{ needs.version.outputs.version }}
+      - run: flyctl deploy --app ${{ inputs.environment == 'production' && 'lapuertahostels-2' || 'lapuertahostels-staging' }} --remote-only --image-label v${{ needs.version.outputs.version }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
