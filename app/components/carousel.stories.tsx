@@ -24,6 +24,11 @@ export const Primary: Story = {
         alt: "Parque Tayrona",
         title: { text: "Parque Tayrona", position: "top-left" },
       },
+      {
+        src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+        alt: "Minca",
+        title: { text: "Minca", position: "bottom-left" },
+      },
     ],
   },
 };
