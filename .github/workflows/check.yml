@@ -2,9 +2,9 @@ name: Check
 on:
   pull_request:
   workflow_call:
-    CHROMATIC_PROJECT_TOKEN:
-      required: true
-    # secrets:
+    secrets:
+      CHROMATIC_PROJECT_TOKEN:
+        required: true
     #   SESSION_SECRET:
     #     required: true
     #   OIDC_ISSUER:
@@ -63,7 +63,8 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           onlyChanged: true
-        env: STORYBOOK_IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development
+        env:
+          STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/development
 
   # unit-tests:
   #   name: Unit Tests
