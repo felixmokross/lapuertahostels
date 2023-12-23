@@ -2,6 +2,8 @@ name: Check
 on:
   pull_request:
   workflow_call:
+    CHROMATIC_PROJECT_TOKEN:
+      required: true
     # secrets:
     #   SESSION_SECRET:
     #     required: true
@@ -16,8 +18,6 @@ on:
     #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID:
     #     required: true
     #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET:
-    #     required: true
-    #   CHROMATIC_PROJECT_TOKEN:
     #     required: true
 
 env:
@@ -45,6 +45,25 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - uses: bahmutov/npm-install@v1
       - run: npm run typecheck
+
+  storybook:
+    name: Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitOnceUploaded: true
+          onlyChanged: true
+        env: STORYBOOK_IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development
 
   # unit-tests:
   #   name: Unit Tests
@@ -94,21 +113,3 @@ jobs:
   #         name: playwright-report
   #         path: playwright-report/
   #         retention-days: 30
-
-  storybook:
-    name: Chromatic
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          exitOnceUploaded: true
-          onlyChanged: true
