@@ -3,15 +3,7 @@ import {
   type LinksFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "@remix-run/react";
+import { Links, Meta, useLoaderData } from "@remix-run/react";
 
 import styles from "./tailwind.css";
 import i18next from "./i18next.server";
