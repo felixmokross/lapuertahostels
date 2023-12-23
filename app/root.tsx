@@ -55,7 +55,7 @@ export default function App() {
         <Links />
         <script
           defer
-          data-domain="lapuertahostels-2.fly.dev"
+          data-domain="lapuertahostels.co"
           src="https://plausible.io/js/script.js"
         ></script>
       </head>
