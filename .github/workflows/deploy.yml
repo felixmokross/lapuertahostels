@@ -53,12 +53,20 @@ jobs:
             production)
               echo "fly_app=lapuertahostels-2" >> "$GITHUB_OUTPUT"
               echo "domain=lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels" >> "$GITHUB_OUTPUT"
               ;;
             staging)
               echo "fly_app=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
               echo "domain=lapuertahostels-staging.fly.dev" >> "$GITHUB_OUTPUT"
+              echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
               ;;
           esac
-      - run: flyctl deploy --app ${{ steps.define-env.outputs.fly_app }} --remote-only --image-label v${{ needs.version.outputs.version }} --env ANALYTICS_DOMAIN=${{ steps.define-env.outputs.domain }}
+      - run: |
+          flyctl deploy \
+            --app ${{ steps.define-env.outputs.fly_app }} \
+            --remote-only \
+            --image-label v${{ needs.version.outputs.version }} \
+            --env ANALYTICS_DOMAIN=${{ steps.define-env.outputs.domain }} \
+            --env IMAGEKIT_BASE_URL=${{ steps.define-env.outputs.imagekit_base_url }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

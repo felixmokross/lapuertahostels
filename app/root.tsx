@@ -24,7 +24,11 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
-  return json({ locale, analyticsDomain: process.env.ANALYTICS_DOMAIN });
+  return json({
+    locale,
+    imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
+    analyticsDomain: process.env.ANALYTICS_DOMAIN,
+  });
 }
 
 export const handle = {

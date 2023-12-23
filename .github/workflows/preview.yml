@@ -70,7 +70,11 @@ jobs:
         #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID }}
         #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET }}
       - name: Deploy
-        run: flyctl deploy --app $APP_NAME --image-label v${{ needs.version.outputs.version }}
+        run: |
+          flyctl deploy \
+            --app $APP_NAME \
+            --image-label v${{ needs.version.outputs.version }} \
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit

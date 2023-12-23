@@ -30,10 +30,10 @@
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.0",
     "@remix-run/dev": "^2.4.0",
+    "@remix-run/testing": "^2.4.1",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
-    "@storybook/addon-onboarding": "^1.0.10",
     "@storybook/blocks": "^7.6.6",
     "@storybook/react": "^7.6.6",
     "@storybook/react-vite": "^7.6.6",

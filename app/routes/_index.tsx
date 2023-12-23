@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
-import tayronaImage from "../assets/tayrona.jpg";
 import logo from "../assets/logo-lapuertahostels.jpg";
+import { Carousel } from "~/components/carousel";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,20 +19,20 @@ export default function Index() {
         </h1>
       </header>
       <main>
-        <div className="relative h-[30rem] bg-puerta-100">
-          <img
-            src={tayronaImage}
-            alt=""
-            className="h-full w-full object-cover"
-          />
-          {/* <div className="bg-black absolute top-0 h-full w-full opacity-0"></div> */}
-          <h3
-            className="absolute left-8 top-1/3 -translate-y-1/2 text-6xl font-light tracking-tighter text-white"
-            style={{ textShadow: "0 0 50px black" }}
-          >
-            Parque Tayrona
-          </h3>
-        </div>
+        <Carousel
+          items={[
+            {
+              src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843&tr=ar-4-3,w-1600",
+              alt: "Lost City",
+              title: { text: "Lost City", position: "top-right" },
+            },
+            {
+              src: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717&tr=ar-4-3,w-1600",
+              alt: "Parque Tayrona",
+              title: { text: "Parque Tayrona", position: "top-left" },
+            },
+          ]}
+        />
 
         <div className="mx-auto mt-8 max-w-5xl">
           <h3 className="text-3xl tracking-tight text-puerta-600">
