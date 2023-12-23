@@ -21,9 +21,17 @@ jobs:
             | jq '[map(
               { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
               | select(.ID | test("^lapuertahostels-preview-"))
-              | { ID, LastReleasedDaysAgo: ((now - (.LastReleasedAt | fromdate)) / 60 / 60 / 24) }
+              | {
+                  ID,
+                  LastReleasedDaysAgo: (
+                    if .LastReleasedAt == null
+                      then null
+                      else ((now - (.LastReleasedAt | fromdate)) / 60 / 60 / 24)
+                    end
+                  )
+                }
             )]
-            | map((. | map(select(.LastReleasedDaysAgo > 4))), (.
+            | map((. | map(select(.LastReleasedDaysAgo == null or .LastReleasedDaysAgo > 4))), (.
                 | sort_by(.LastReleasedDaysAgo)
                 | .[3:])
             )
