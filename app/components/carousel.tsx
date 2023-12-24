@@ -65,8 +65,10 @@ export function Carousel({ items }: CarouselProps) {
           >
             <span
               className={cn(
-                "h-1 w-10 rounded-full bg-neutral-200 opacity-75 transition-[background-color,opacity] duration-200 ease-in group-hover:bg-white group-hover:opacity-100",
-                index === itemIndex && "bg-white opacity-100",
+                "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
+                index === itemIndex
+                  ? "bg-white opacity-100"
+                  : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
               )}
             ></span>
             <span className="sr-only">Go to {item.alt}</span>
