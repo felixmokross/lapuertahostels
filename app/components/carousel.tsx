@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
 
@@ -24,33 +24,38 @@ export function Carousel({ items }: CarouselProps) {
 
   const [itemIndex, setItemIndex] = useState(0);
 
-  const item = items[itemIndex];
   return (
     <div className="relative h-[30rem] bg-puerta-100">
-      <Fragment key={itemIndex}>
-        <Image
-          src={item.src}
-          alt={item.alt}
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
-        {item.title && (
-          <h3
-            className={cn(
-              "absolute -translate-y-1/2 text-6xl font-light tracking-tighter text-white",
-              {
-                "left-8 top-1/3": item.title.position === "top-left",
-                "right-8 top-1/3": item.title.position === "top-right",
-                "bottom-1/3 left-8": item.title.position === "bottom-left",
-                "bottom-1/3 right-8": item.title.position === "bottom-right",
-              },
+      {items.map((item, i) => {
+        item = items[i];
+        return (
+          <div className={cn("contents", i !== itemIndex && "hidden")} key={i}>
+            <Image
+              src={item.src}
+              alt={item.alt}
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
+            {item.title && (
+              <h3
+                className={cn(
+                  "absolute -translate-y-1/2 text-6xl font-light tracking-tighter text-white",
+                  {
+                    "left-8 top-1/3": item.title.position === "top-left",
+                    "right-8 top-1/3": item.title.position === "top-right",
+                    "bottom-1/3 left-8": item.title.position === "bottom-left",
+                    "bottom-1/3 right-8":
+                      item.title.position === "bottom-right",
+                  },
+                )}
+                style={{ textShadow: "0 0 50px black" }}
+              >
+                {item.title.text}
+              </h3>
             )}
-            style={{ textShadow: "0 0 50px black" }}
-          >
-            {item.title.text}
-          </h3>
-        )}
-      </Fragment>
+          </div>
+        );
+      })}
       <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
         {items.map((item, index) => (
           <button

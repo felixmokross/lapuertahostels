@@ -11,5 +11,15 @@ export function Image({ src, alt, ...props }: ImageProps) {
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const { imagekitBaseUrl } = rootLoaderData;
-  return <img src={`${imagekitBaseUrl}/${src}`} alt={alt} {...props} />;
+
+  return (
+    <img
+      src={`${imagekitBaseUrl}/${src},bl-10`}
+      onLoad={
+        (e) => e.currentTarget.setAttribute("src", `${imagekitBaseUrl}/${src}`) // TODO improve this
+      }
+      alt={alt}
+      {...props}
+    />
+  );
 }
