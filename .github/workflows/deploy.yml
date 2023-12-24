@@ -33,6 +33,7 @@ jobs:
     permissions:
       contents: write
   define-env:
+    runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.define-env.outputs.environment }}
       fly_app: ${{ steps.define-env.outputs.fly_app }}
