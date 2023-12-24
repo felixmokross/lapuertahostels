@@ -35,7 +35,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ steps.define-env.environment }}
+      name: ${{ steps.define-env.outputs.environment }}
       url: https://${{ steps.define-env.outputs.domain }}/
     needs: [check, version]
     steps:
