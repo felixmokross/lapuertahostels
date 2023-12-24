@@ -33,7 +33,7 @@ export function Carousel({ items }: CarouselProps) {
           alt={item.alt}
           className="h-full w-full object-cover"
         />
-        {/* <div className="bg-black absolute top-0 h-full w-full opacity-20"></div> */}
+        <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
         {item.title && (
           <h3
             className={cn(
@@ -51,13 +51,19 @@ export function Carousel({ items }: CarouselProps) {
           </h3>
         )}
       </Fragment>
-      <div className="absolute bottom-8 flex  w-full -translate-y-1/2 justify-center gap-4">
+      <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
         {items.map((item, index) => (
           <button
-            className="h-2 w-8 bg-neutral-200"
+            className={cn("group inline-flex h-10 items-center px-2")}
             key={index}
             onClick={() => setItemIndex(index)}
           >
+            <span
+              className={cn(
+                "h-1 w-8 rounded-full bg-neutral-200 opacity-75 transition-[background-color,opacity] duration-200 ease-in group-hover:bg-white group-hover:opacity-100",
+                index === itemIndex && "bg-white opacity-100",
+              )}
+            ></span>
             <span className="sr-only">{item.alt}</span>
           </button>
         ))}
