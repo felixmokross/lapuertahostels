@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
 import { Transition } from "@headlessui/react";
@@ -24,6 +24,17 @@ export function Carousel({ items }: CarouselProps) {
   }
 
   const [itemIndex, setItemIndex] = useState(0);
+
+  const intervalRef = useRef(0);
+
+  useEffect(() => {
+    intervalRef.current = window.setInterval(
+      () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
+      5000,
+    );
+
+    return () => clearInterval(intervalRef.current);
+  }, [items.length]);
 
   return (
     <div className="relative h-[30rem] bg-puerta-100">
@@ -73,7 +84,17 @@ export function Carousel({ items }: CarouselProps) {
           <button
             className={cn("group inline-flex h-10 items-center px-2")}
             key={index}
-            onClick={() => setItemIndex(index)}
+            onClick={() => {
+              clearInterval(intervalRef.current);
+              setItemIndex(index);
+              intervalRef.current = window.setInterval(
+                () =>
+                  setItemIndex(
+                    (currentIndex) => (currentIndex + 1) % items.length,
+                  ),
+                5000,
+              );
+            }}
           >
             <span
               className={cn(
