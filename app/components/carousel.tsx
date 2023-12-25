@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
+import { Transition } from "@headlessui/react";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -29,11 +30,22 @@ export function Carousel({ items }: CarouselProps) {
       {items.map((item, i) => {
         item = items[i];
         return (
-          <div className={cn("contents", i !== itemIndex && "hidden")} key={i}>
+          <Transition
+            key={i}
+            className={cn("h-full")}
+            show={i === itemIndex}
+            unmount={false}
+            enter="transition-opacity duration-1000"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-1000"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
             <Image
               src={item.src}
               alt={item.alt}
-              className="h-full w-full object-cover"
+              className="absolute top-0 h-full w-full object-cover"
             />
             <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
             {item.title && (
@@ -53,7 +65,7 @@ export function Carousel({ items }: CarouselProps) {
                 {item.title.text}
               </h3>
             )}
-          </div>
+          </Transition>
         );
       })}
       <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
