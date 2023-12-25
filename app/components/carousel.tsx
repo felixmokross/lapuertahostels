@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
 import { Transition } from "@headlessui/react";
@@ -23,18 +23,7 @@ export function Carousel({ items }: CarouselProps) {
     throw new Error("Carousel must have at least one item");
   }
 
-  const [itemIndex, setItemIndex] = useState(0);
-
-  const intervalRef = useRef(0);
-
-  useEffect(() => {
-    intervalRef.current = window.setInterval(
-      () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
-      5000,
-    );
-
-    return () => clearInterval(intervalRef.current);
-  }, [items.length]);
+  const { itemIndex, goTo } = useCarouselState(items);
 
   return (
     <div className="relative h-[30rem] bg-puerta-100">
@@ -43,7 +32,7 @@ export function Carousel({ items }: CarouselProps) {
         return (
           <Transition
             key={i}
-            className={cn("h-full")}
+            className="h-full"
             show={i === itemIndex}
             unmount={false}
             enter="transition-opacity duration-1000"
@@ -80,26 +69,16 @@ export function Carousel({ items }: CarouselProps) {
         );
       })}
       <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
-        {items.map((item, index) => (
+        {items.map((item, i) => (
           <button
             className={cn("group inline-flex h-10 items-center px-2")}
-            key={index}
-            onClick={() => {
-              clearInterval(intervalRef.current);
-              setItemIndex(index);
-              intervalRef.current = window.setInterval(
-                () =>
-                  setItemIndex(
-                    (currentIndex) => (currentIndex + 1) % items.length,
-                  ),
-                5000,
-              );
-            }}
+            key={i}
+            onClick={() => goTo(i)}
           >
             <span
               className={cn(
                 "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
-                index === itemIndex
+                i === itemIndex
                   ? "bg-white opacity-100"
                   : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
               )}
@@ -110,4 +89,37 @@ export function Carousel({ items }: CarouselProps) {
       </div>
     </div>
   );
+}
+
+function useCarouselState(items: CarouselItem[]) {
+  const [itemIndex, setItemIndex] = useState(0);
+
+  const intervalRef = useRef(0);
+
+  const startInterval = useCallback(() => {
+    intervalRef.current = window.setInterval(
+      () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
+      5000,
+    );
+  }, [items.length]);
+
+  function stopInterval() {
+    clearInterval(intervalRef.current);
+  }
+
+  useEffect(() => {
+    startInterval();
+    return stopInterval;
+  }, [startInterval]);
+
+  return {
+    itemIndex,
+    goTo(newItemIndex: number) {
+      stopInterval();
+
+      setItemIndex(newItemIndex);
+
+      startInterval();
+    },
+  };
 }
