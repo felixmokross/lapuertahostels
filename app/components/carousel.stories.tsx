@@ -22,7 +22,17 @@ export const Primary: Story = {
       {
         src: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717&tr=ar-4-3,w-1600",
         alt: "Parque Tayrona",
-        title: { text: "Parque Tayrona", position: "top-left" },
+        title: { text: "Parque Tayrona", position: "bottom-left" },
+      },
+      {
+        src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964&tr=ar-4-3,w-1600",
+        alt: "Santa Marta",
+        title: { text: "Santa Marta", position: "bottom-right" },
+      },
+      {
+        src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704&tr=ar-4-3,w-1600",
+        alt: "Minca",
+        title: { text: "Minca", position: "top-left" },
       },
     ],
   },
