@@ -32,24 +32,20 @@ jobs:
       - uses: softprops/action-gh-release@v1
     permissions:
       contents: write
-  deploy:
+  define-env:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ inputs.environment }}
-      url: https://${{ steps.define-env.outputs.domain }}/
-    needs: [check, version]
+    outputs:
+      environment: ${{ steps.define-env.outputs.environment }}
+      fly_app: ${{ steps.define-env.outputs.fly_app }}
+      domain: ${{ steps.define-env.outputs.domain }}
+      imagekit_base_url: ${{ steps.define-env.outputs.imagekit_base_url }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-        with:
-          version: 0.1.117
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
       - id: define-env
         run: |
-          case ${{ inputs.environment }} in
+          environment=${{ inputs.environment || 'staging' }}
+          echo "environment=$environment" >> "$GITHUB_OUTPUT"
+
+          case $environment in
             production)
               echo "fly_app=lapuertahostels-2" >> "$GITHUB_OUTPUT"
               echo "domain=lapuertahostels.co" >> "$GITHUB_OUTPUT"
@@ -61,12 +57,27 @@ jobs:
               echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
               ;;
           esac
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.define-env.outputs.environment }}
+      url: https://${{ needs.define-env.outputs.domain }}/
+    needs: [check, version, define-env]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.1.117
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
       - run: |
           flyctl deploy \
-            --app ${{ steps.define-env.outputs.fly_app }} \
+            --app ${{ needs.define-env.outputs.fly_app }} \
             --remote-only \
             --image-label v${{ needs.version.outputs.version }} \
-            --env ANALYTICS_DOMAIN=${{ steps.define-env.outputs.domain }} \
-            --env IMAGEKIT_BASE_URL=${{ steps.define-env.outputs.imagekit_base_url }} \
+            --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain }} \
+            --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
