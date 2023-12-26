@@ -45,7 +45,8 @@ export function Carousel({ items }: CarouselProps) {
             <Image
               src={item.src}
               alt={item.alt}
-              className="absolute top-0 h-full w-full object-cover"
+              withPreview={i === 0}
+              className="absolute top-0"
             />
             <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
             {item.title && (
@@ -104,7 +105,7 @@ function useCarouselState(items: CarouselItem[]) {
   }, [items.length]);
 
   function stopInterval() {
-    clearInterval(intervalRef.current);
+    if (intervalRef.current) window.clearInterval(intervalRef.current);
   }
 
   useEffect(() => {
