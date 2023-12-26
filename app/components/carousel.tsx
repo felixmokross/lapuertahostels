@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
 import { Transition } from "@headlessui/react";
@@ -14,7 +14,7 @@ export type CarouselItem = {
 };
 
 export type CarouselItemTitle = {
-  text: string;
+  text: string | ReactNode;
   position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 };
 
@@ -48,20 +48,21 @@ export function Carousel({ items }: CarouselProps) {
               withPreview={i === 0}
               className="absolute top-0"
             />
-            <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
+            <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (
               <h3
                 className={cn(
-                  "absolute -translate-y-1/2 text-6xl font-light tracking-tighter text-white",
+                  "absolute max-w-xl font-serif text-6xl font-light leading-relaxed tracking-tighter text-white",
                   {
-                    "left-8 top-1/3": item.title.position === "top-left",
-                    "right-8 top-1/3": item.title.position === "top-right",
-                    "bottom-1/3 left-8": item.title.position === "bottom-left",
-                    "bottom-1/3 right-8":
+                    "left-8 top-8": item.title.position === "top-left",
+                    "right-8 top-8 text-right":
+                      item.title.position === "top-right",
+                    "bottom-8 left-8": item.title.position === "bottom-left",
+                    "bottom-8 right-8 text-right":
                       item.title.position === "bottom-right",
                   },
                 )}
-                style={{ textShadow: "0 0 50px black" }}
+                style={{ textShadow: "0 0 25px black" }}
               >
                 {item.title.text}
               </h3>
@@ -109,7 +110,7 @@ function useCarouselState(items: CarouselItem[]) {
   }
 
   useEffect(() => {
-    startInterval();
+    // startInterval();
     return stopInterval;
   }, [startInterval]);
 
@@ -120,7 +121,7 @@ function useCarouselState(items: CarouselItem[]) {
 
       setItemIndex(newItemIndex);
 
-      startInterval();
+      // startInterval();
     },
   };
 }
