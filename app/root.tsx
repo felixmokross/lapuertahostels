@@ -3,7 +3,15 @@ import {
   type LinksFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
-import { Links, Meta, useLoaderData } from "@remix-run/react";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "@remix-run/react";
 
 import styles from "./tailwind.css";
 import i18next from "./i18next.server";
@@ -66,13 +74,13 @@ export default function App() {
         )}
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
+        {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
-        </div>
-        {/* <Outlet />
+        </div> */}
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload /> */}
+        <LiveReload />
       </body>
     </html>
   );
