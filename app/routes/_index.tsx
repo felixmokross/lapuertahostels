@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useRouteLoaderData } from "@remix-run/react";
+import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { loader } from "~/root";
 
@@ -17,16 +17,18 @@ export default function Index() {
   const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
-      <header className="flex px-4 py-4">
-        <h1 className="flex items-center gap-4 font-serif text-2xl tracking-tight text-puerta-700">
-          <img
-            src={`${imagekitBaseUrl}/lapuertahostels-logo-simple.png?updatedAt=1703612701386&tr=h-80`}
-            alt=""
-            width={40}
-            height={40}
-          />
-          <>La Puerta Hostels</>
-        </h1>
+      <header className="flex items-center justify-between px-4 py-4">
+        <Link to="/">
+          <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
+            <img
+              src={`${imagekitBaseUrl}/lapuertahostels-logo-simple.png?updatedAt=1703612701386&tr=h-80`}
+              alt=""
+              width={40}
+              height={40}
+            />
+            <>La Puerta Hostels</>
+          </h1>
+        </Link>
       </header>
       <main>
         <Carousel
@@ -79,7 +81,7 @@ export default function Index() {
               title: {
                 text: (
                   <>
-                    Discover the Streets
+                    Explore the Streets
                     <br />
                     of <span className="text-puerta-200">Santa Marta</span>
                   </>
@@ -90,47 +92,71 @@ export default function Index() {
           ]}
         />
 
-        <div className="mx-auto mt-8 max-w-5xl">
-          <h3 className="font-serif text-3xl tracking-tight text-puerta-600">
+        <div className="mx-auto mt-24 max-w-4xl">
+          <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
             Discover the Colombian Costa Caribe
           </h3>
-          <p className="mt-4 text-lg leading-relaxed">
+          <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed">
             Hike through the breath-taking beauty of{" "}
-            <strong className="text-puerta-600">Tayrona National Park</strong>,
+            <strong className="text-neutral-900">Tayrona National Park</strong>,
             discover the mysterious{" "}
-            <strong className="text-puerta-600">Lost City</strong>, or refresh
+            <strong className="text-neutral-900">Lost City</strong>, or refresh
             yourself in the river of{" "}
-            <strong className="text-puerta-600">Minca</strong>.
+            <strong className="text-neutral-900">Minca</strong>. Our variety of
+            heartful accommodations in the city of Santa Marta are{" "}
+            <strong className="text-neutral-900">your perfect homebase.</strong>
           </p>
         </div>
 
-        <hr className="mx-auto mt-16 max-w-5xl text-puerta-400" />
-
-        <div className="mx-auto mt-16 max-w-5xl">
-          <h2 className="text-3xl tracking-tight">
-            Your Homebase in Santa Marta
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-        </div>
-        <div className="flex justify-around">
-          <div className="flex w-52 flex-col items-center">
-            Puerta Aqua
-            <div className="h-52 w-full rounded-md bg-aqua-500"></div>
-            <div className="">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div className="mt-24 bg-puerta-500">
+          <div className="mx-auto max-w-4xl py-16">
+            <h2 className="font-serif text-5xl tracking-tight text-white">
+              Your Homebase in Santa Marta
+            </h2>
+            <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed text-white">
+              Choose from our three accommodation offerings in Santa Marta.
+            </p>
+            <div className="mt-6 flex gap-x-6">
+              <div className="flex flex-col items-center">
+                Puerta Aqua
+                <div className="h-96 w-full overflow-hidden rounded-lg">
+                  <img
+                    src={`${imagekitBaseUrl}/315892183_204830145296159_6921746397470758374_n.jpg?updatedAt=1703702313633&tr=ar-3-4,w-600`}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                Puerta Azul
+                <div className="h-96 w-full overflow-hidden rounded-lg">
+                  <img
+                    src={`${imagekitBaseUrl}/358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179&tr=ar-3-4,w-600`}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                Apartments
+                <div className="h-96 w-full overflow-hidden rounded-lg">
+                  <img
+                    src={`${imagekitBaseUrl}/oscar-ivan-esquivel-arteaga-floNFI99j4g-unsplash.jpg?updatedAt=1703468598274&tr=ar-3-4,w-600`}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex w-52 flex-col items-center">
-            Puerta Azul
-            <div className="h-52 w-full rounded-md bg-azul-600"></div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-          </div>
-          <div className="flex w-52 flex-col items-center">
-            Apartments
-            <div className="h-52 w-full rounded-md bg-puerta-600"></div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
           </div>
         </div>
         <div>
@@ -138,6 +164,8 @@ export default function Index() {
 
           <p>Some text about Santa Marta</p>
         </div>
+
+        {/* <hr className="mx-auto mt-20 max-w-4xl border-t-2 text-neutral-400" /> */}
 
         <div>
           <h3>About Us</h3>

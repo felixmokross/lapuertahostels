@@ -27,11 +27,11 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&display=swap",
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Playfair%20Display:wght@400&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Playfair%20Display:wght@400..500&display=swap",
   },
   {
     rel: "apple-touch-icon",

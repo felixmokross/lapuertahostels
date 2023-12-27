@@ -50,22 +50,26 @@ export function Carousel({ items }: CarouselProps) {
             />
             <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (
-              <h3
-                className={cn(
-                  "absolute max-w-xl font-serif text-6xl font-light leading-relaxed tracking-tighter text-white",
-                  {
-                    "left-8 top-8": item.title.position === "top-left",
-                    "right-8 top-8 text-right":
-                      item.title.position === "top-right",
-                    "bottom-8 left-8": item.title.position === "bottom-left",
-                    "bottom-8 right-8 text-right":
-                      item.title.position === "bottom-right",
-                  },
-                )}
-                style={{ textShadow: "0 0 25px black" }}
+              <div
+                className={cn("absolute max-w-xl space-y-6", {
+                  "left-8 top-8": item.title.position === "top-left",
+                  "right-8 top-8 text-right":
+                    item.title.position === "top-right",
+                  "bottom-8 left-8": item.title.position === "bottom-left",
+                  "bottom-8 right-8 text-right":
+                    item.title.position === "bottom-right",
+                })}
               >
-                {item.title.text}
-              </h3>
+                <h3
+                  className="font-serif text-6xl font-light leading-relaxed tracking-tighter text-white"
+                  style={{ textShadow: "0 0 25px black" }}
+                >
+                  {item.title.text}
+                </h3>
+                <button className="rounded-md bg-puerta-500 px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-md shadow-black/50 hover:bg-puerta-200 hover:text-puerta-800 hover:shadow-lg hover:shadow-black/50">
+                  Read More
+                </button>
+              </div>
             )}
           </Transition>
         );
@@ -110,7 +114,7 @@ function useCarouselState(items: CarouselItem[]) {
   }
 
   useEffect(() => {
-    // startInterval();
+    startInterval();
     return stopInterval;
   }, [startInterval]);
 
@@ -121,7 +125,7 @@ function useCarouselState(items: CarouselItem[]) {
 
       setItemIndex(newItemIndex);
 
-      // startInterval();
+      startInterval();
     },
   };
 }
