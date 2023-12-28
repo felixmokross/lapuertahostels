@@ -1,9 +1,18 @@
 import {
   json,
+  MetaFunction,
   type LinksFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
-import { Links, Meta, useLoaderData } from "@remix-run/react";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "@remix-run/react";
 
 import styles from "./tailwind.css";
 import i18next from "./i18next.server";
@@ -14,11 +23,52 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
   {
     rel: "preconnect",
-    href: "https://rsms.me",
+    href: "https://fonts.gstatic.com",
   },
   {
     rel: "stylesheet",
-    href: "https://rsms.me/inter/inter.css",
+    href: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&display=swap",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Playfair%20Display:wght@400..500&display=swap",
+  },
+  {
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: "/apple-touch-icon.png",
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "32x32",
+    href: "/favicon-32x32.png",
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "16x16",
+    href: "/favicon-16x16.png",
+  },
+  {
+    rel: "manifest",
+    href: "/site.webmanifest",
+  },
+  {
+    rel: "mask-icon",
+    href: "/safari-pinned-tab.svg",
+    color: "#754E27",
+  },
+];
+
+export const meta: MetaFunction = () => [
+  {
+    name: "msapplication-TileColor",
+    content: "#00aba9",
+  },
+  {
+    name: "theme-color",
+    content: "#ffffff",
   },
 ];
 
@@ -66,13 +116,13 @@ export default function App() {
         )}
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
+        {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
-        </div>
-        {/* <Outlet />
+        </div> */}
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload /> */}
+        <LiveReload />
       </body>
     </html>
   );

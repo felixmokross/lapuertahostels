@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
 import { Image } from "./image";
 import { Transition } from "@headlessui/react";
@@ -14,7 +14,7 @@ export type CarouselItem = {
 };
 
 export type CarouselItemTitle = {
-  text: string;
+  text: string | ReactNode;
   position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 };
 
@@ -45,25 +45,31 @@ export function Carousel({ items }: CarouselProps) {
             <Image
               src={item.src}
               alt={item.alt}
-              className="absolute top-0 h-full w-full object-cover"
+              withPreview={i === 0}
+              className="absolute top-0"
             />
-            <div className="absolute top-0 h-full w-full bg-black opacity-10"></div>
+            <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (
-              <h3
-                className={cn(
-                  "absolute -translate-y-1/2 text-6xl font-light tracking-tighter text-white",
-                  {
-                    "left-8 top-1/3": item.title.position === "top-left",
-                    "right-8 top-1/3": item.title.position === "top-right",
-                    "bottom-1/3 left-8": item.title.position === "bottom-left",
-                    "bottom-1/3 right-8":
-                      item.title.position === "bottom-right",
-                  },
-                )}
-                style={{ textShadow: "0 0 50px black" }}
+              <div
+                className={cn("absolute max-w-xl space-y-6", {
+                  "left-8 top-8": item.title.position === "top-left",
+                  "right-8 top-8 text-right":
+                    item.title.position === "top-right",
+                  "bottom-8 left-8": item.title.position === "bottom-left",
+                  "bottom-8 right-8 text-right":
+                    item.title.position === "bottom-right",
+                })}
               >
-                {item.title.text}
-              </h3>
+                <h3
+                  className="font-serif text-6xl font-light leading-relaxed tracking-tight text-white"
+                  style={{ textShadow: "0 0 25px black" }}
+                >
+                  {item.title.text}
+                </h3>
+                <button className="rounded-md bg-puerta-500 px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-md shadow-black/50 hover:bg-puerta-200 hover:text-puerta-800 hover:shadow-lg hover:shadow-black/50">
+                  Read More
+                </button>
+              </div>
             )}
           </Transition>
         );
@@ -104,7 +110,7 @@ function useCarouselState(items: CarouselItem[]) {
   }, [items.length]);
 
   function stopInterval() {
-    clearInterval(intervalRef.current);
+    if (intervalRef.current) window.clearInterval(intervalRef.current);
   }
 
   useEffect(() => {

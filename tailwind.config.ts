@@ -25,6 +25,7 @@ export default {
       },
       azul: colors.blue,
       aqua: colors.teal,
+      apartments: colors.orange,
       neutral: colors.gray,
       "accent-neutral": colors.amber,
       "accent-positive": colors.green,
@@ -32,7 +33,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Lato", ...defaultTheme.fontFamily.sans],
+        serif: ["Playfair Display", ...defaultTheme.fontFamily.serif],
       },
     },
   },
