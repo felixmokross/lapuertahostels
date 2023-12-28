@@ -61,7 +61,7 @@ export function Carousel({ items }: CarouselProps) {
                 })}
               >
                 <h3
-                  className="font-serif text-6xl font-light leading-relaxed tracking-tighter text-white"
+                  className="font-serif text-6xl font-light leading-relaxed tracking-tight text-white"
                   style={{ textShadow: "0 0 25px black" }}
                 >
                   {item.title.text}

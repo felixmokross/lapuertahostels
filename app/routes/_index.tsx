@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
+import { cn } from "~/components/classnames";
 import { loader } from "~/root";
 
 export const meta: MetaFunction = () => {
@@ -108,54 +109,45 @@ export default function Index() {
           </p>
         </div>
 
-        <div className="mt-24 bg-puerta-500">
-          <div className="mx-auto max-w-4xl py-16">
-            <h2 className="font-serif text-5xl tracking-tight text-white">
-              Your Homebase in Santa Marta
-            </h2>
-            <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed text-white">
-              Choose from our three accommodation offerings in Santa Marta.
-            </p>
-            <div className="mt-6 flex gap-x-6">
-              <div className="flex flex-col items-center">
-                Puerta Aqua
-                <div className="h-96 w-full overflow-hidden rounded-lg">
-                  <img
-                    src={`${imagekitBaseUrl}/315892183_204830145296159_6921746397470758374_n.jpg?updatedAt=1703702313633&tr=ar-3-4,w-600`}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </div>
-              </div>
-              <div className="flex flex-col items-center">
-                Puerta Azul
-                <div className="h-96 w-full overflow-hidden rounded-lg">
-                  <img
-                    src={`${imagekitBaseUrl}/358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179&tr=ar-3-4,w-600`}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </div>
-              </div>
-              <div className="flex flex-col items-center">
-                Apartments
-                <div className="h-96 w-full overflow-hidden rounded-lg">
-                  <img
-                    src={`${imagekitBaseUrl}/oscar-ivan-esquivel-arteaga-floNFI99j4g-unsplash.jpg?updatedAt=1703468598274&tr=ar-3-4,w-600`}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </div>
-              </div>
+        <div className="relative mt-24">
+          <div className="absolute inset-0 -z-10 h-2/3 bg-gradient-to-br from-puerta-400 to-puerta-600"></div>
+          <div className="py-16">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="font-serif text-5xl tracking-tight text-white">
+                Your Homebase in Santa Marta
+              </h2>
+              <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed text-white">
+                Choose from our three accommodation offerings in Santa Marta.
+              </p>
+            </div>
+            <div className="mt-10 grid grid-cols-3 gap-x-8 px-8">
+              <AccommodationCard
+                name="Puerta Aqua"
+                color="aqua"
+                image={{
+                  src: "315892183_204830145296159_6921746397470758374_n.jpg?updatedAt=1703702313633",
+                  alt: "Puerta Aqua",
+                }}
+                description="Stay at our lively hostel in the heart of Santa Marta."
+              />
+              <AccommodationCard
+                name="Puerta Azul"
+                color="azul"
+                image={{
+                  src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179",
+                  alt: "Puerta Azul",
+                }}
+                description="Our most beautiful house can be booked by room or completely as a private six-room villa."
+              />
+              <AccommodationCard
+                name="Appartments"
+                color="appartments"
+                image={{
+                  src: "oscar-ivan-esquivel-arteaga-floNFI99j4g-unsplash.jpg?updatedAt=1703468598274",
+                  alt: "Appartments",
+                }}
+                description="Choose from our cozy private appartments across the city."
+              />
             </div>
           </div>
         </div>
@@ -176,5 +168,58 @@ export default function Index() {
         <div>Footer</div>
       </footer>
     </>
+  );
+}
+
+type AccommodationCardProps = {
+  name: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  description: string;
+  color: "aqua" | "azul" | "appartments";
+};
+
+function AccommodationCard({
+  name,
+  image,
+  description,
+  color,
+}: AccommodationCardProps) {
+  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  if (!rootLoaderData) throw new Error("root loader not found");
+
+  const { imagekitBaseUrl } = rootLoaderData;
+  return (
+    <Link
+      to="."
+      className={cn(
+        "group flex flex-col items-center overflow-hidden rounded-xl shadow-lg hover:shadow-md",
+        {
+          "bg-aqua-600 hover:bg-aqua-200": color === "aqua",
+          "bg-azul-600 hover:bg-azul-200": color === "azul",
+          "bg-apartments-500 hover:bg-apartments-200": color === "appartments",
+        },
+      )}
+    >
+      <div className="relative aspect-[16/9] bg-white">
+        <img
+          src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-600`}
+          alt=""
+          className="h-full w-full object-cover group-hover:opacity-75"
+        />
+      </div>
+      <div
+        className={cn("space-y-1 px-6 py-4 text-base text-white", {
+          "group-hover:text-azul-800": color === "azul",
+          "group-hover:text-aqua-800": color === "aqua",
+          "group-hover:text-apartments-800": color === "appartments",
+        })}
+      >
+        <h4 className="text-sm font-bold uppercase tracking-wider">{name}</h4>
+        <p className="">{description}</p>
+      </div>
+    </Link>
   );
 }
