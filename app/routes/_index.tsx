@@ -22,9 +22,9 @@ export default function Index() {
         <Link to="/">
           <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
             <img
-              src={`${imagekitBaseUrl}/lapuertahostels-logo-simple.png?updatedAt=1703612701386&tr=h-80`}
-              alt=""
-              width={40}
+              src={`${imagekitBaseUrl}/logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-80`}
+              alt="La Puerta Hostels Logo"
+              width={33}
               height={40}
             />
             <>La Puerta Hostels</>
