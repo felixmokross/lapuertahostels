@@ -57,7 +57,7 @@ export const links: LinksFunction = () => [
   {
     rel: "mask-icon",
     href: "/safari-pinned-tab.svg",
-    color: "#754E27",
+    color: "#603f1f",
   },
 ];
 
@@ -68,7 +68,7 @@ export const meta: MetaFunction = () => [
   },
   {
     name: "theme-color",
-    content: "#ffffff",
+    content: "#e2d0b6",
   },
 ];
 
