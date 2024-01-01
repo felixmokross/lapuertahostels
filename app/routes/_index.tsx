@@ -246,7 +246,7 @@ function AccommodationCard({
           src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-600,fo-custom`}
           // fo-custom is not needed on all images
           alt=""
-          className="h-full w-full object-cover group-hover:opacity-75"
+          className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
         />
       </div>
       <div
