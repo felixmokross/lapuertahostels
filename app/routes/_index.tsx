@@ -16,9 +16,10 @@ export const meta: MetaFunction = () => {
 
 const footerNavigation = {
   hotel: [
-    { name: "About Us", href: "#" },
+    { name: "About", href: "#" },
     { name: "Puerta Aqua", href: "#" },
     { name: "La Puerta Azul", href: "#" },
+    { name: "Contact", href: "#" },
   ],
   experiences: [
     { name: "Santa Marta", href: "#" },
@@ -320,8 +321,12 @@ export default function Index() {
                 La Puerta Hostels
               </h6>
               <p className="text-sm leading-6 text-neutral-600">
-                Welcome to the door of the dreams. Dreams come true if you
-                reserve well!
+                La Puerta Hostels S.A.S.
+                <br />
+                Calle 18 #5-66
+                <br />
+                Santa Marta 470004
+                <br /> Colombia
               </p>
               <div className="flex space-x-6">
                 {footerNavigation.social.map((item) => (
@@ -390,9 +395,43 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24">
+
+          <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
+            <div>
+              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                Subscribe to our newsletter
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                Don&rsquo;t miss out on new experiences, discounts, or any other
+                news from us!
+              </p>
+            </div>
+            <form className="mt-6 sm:flex sm:max-w-md lg:mt-0">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                type="email"
+                name="email-address"
+                id="email-address"
+                autoComplete="email"
+                required
+                className="w-full min-w-0 appearance-none rounded-md border-0 bg-white px-3 py-1.5 text-base text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-puerta-600 sm:w-56 sm:text-sm sm:leading-6"
+                placeholder="Enter your email"
+              />
+              <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
+                <button
+                  type="submit"
+                  className="flex h-full w-full items-center justify-center rounded-md bg-puerta-500 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-sm hover:bg-puerta-200 hover:text-puerta-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-puerta-600"
+                >
+                  Subscribe
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="mt-8 border-t border-neutral-900/10 pt-8 sm:mt-10 lg:mt-12">
             <p className="text-xs leading-5 text-neutral-500">
-              &copy; 2024 LA PUERTA HOSTELS, Inc. All rights reserved.
+              &copy; 2024 La Puerta Hostels S.A.S. All rights reserved.
             </p>
           </div>
         </div>
