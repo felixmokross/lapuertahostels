@@ -118,11 +118,12 @@ export default function Index() {
               <h2 className="font-serif text-5xl tracking-tight text-white">
                 Your Home Base for a Perfect Trip
               </h2>
-              <p className="mt-6 hyphens-auto text-justify text-base leading-relaxed text-white">
-                Choose from our three accommodation offerings in Santa Marta.
+              <p className="mt-6 hyphens-auto text-justify text-lg leading-relaxed text-white">
+                Choose between our <strong>two accommodations</strong> in Santa
+                Marta.
               </p>
             </div>
-            <div className="mt-10 grid grid-cols-3 gap-x-8 px-8">
+            <div className="mx-auto mt-14 grid max-w-7xl grid-cols-2 gap-x-8 px-8">
               <AccommodationCard
                 name="Puerta Aqua"
                 color="aqua"
@@ -130,7 +131,7 @@ export default function Index() {
                   src: "315892183_204830145296159_6921746397470758374_n.jpg?updatedAt=1703702313633",
                   alt: "Puerta Aqua",
                 }}
-                description="Stay at our lively hostel in the heart of Santa Marta."
+                description="Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night."
               />
               <AccommodationCard
                 name="Puerta Azul"
@@ -139,16 +140,7 @@ export default function Index() {
                   src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179",
                   alt: "Puerta Azul",
                 }}
-                description="Our most beautiful house can be booked by room or completely as a private six-room villa."
-              />
-              <AccommodationCard
-                name="Appartments"
-                color="appartments"
-                image={{
-                  src: "oscar-ivan-esquivel-arteaga-floNFI99j4g-unsplash.jpg?updatedAt=1703468598274",
-                  alt: "Appartments",
-                }}
-                description="Choose from our cozy private appartments across the city."
+                description="Being one of the oldest houses in Santa Marta, Puerta Aqua is filled with beauty and history. It can also be booked completely as a private six-room villa."
               />
             </div>
           </div>
@@ -192,10 +184,10 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="mx-auto mb-20 mt-60 grid max-w-4xl grid-cols-2 justify-center gap-16">
-          <div className="mx-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
+        <div className="mx-auto mb-20 mt-60 grid max-w-4xl grid-cols-2 items-center justify-center gap-16">
+          <div className="-ml-10 mr-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
             <img
-              src={`${imagekitBaseUrl}/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325&tr=ar-3-4,w-1000,e-grayscale`}
+              src={`${imagekitBaseUrl}/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325&tr=ar-3-4,w-1600,e-grayscale`}
               alt=""
               className="h-full w-full object-cover"
             />
@@ -204,20 +196,39 @@ export default function Index() {
             <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
               About Us
             </h3>
-            <p className="mt-6 hyphens-auto text-justify text-base">
-              Hike through the breath-taking beauty of{" "}
-              <strong className="text-neutral-900">
-                Tayrona National Park
-              </strong>
-              , discover the mysterious{" "}
-              <strong className="text-neutral-900">Lost City</strong>, or
-              refresh yourself in the river of{" "}
-              <strong className="text-neutral-900">Minca</strong>. Our variety
-              of heartful accommodations in the city of Santa Marta are{" "}
-              <strong className="text-neutral-900">
-                your perfect home base.
-              </strong>
-            </p>
+            <div className="mt-6 space-y-4 hyphens-auto text-justify text-base leading-relaxed">
+              <p>
+                Step into our <strong>Santa Marta haven,</strong> where the{" "}
+                <strong>Caribbean breeze whispers tales of adventure,</strong>{" "}
+                and the Sierra Nevada mountains cradle our dreams. Three years
+                ago, a passionate soul embarked on a journey to craft more than
+                just a hostel—a place where every traveler feels the warmth of
+                connection and the embrace of a second home.
+              </p>
+              <p>
+                We didn&rsquo;t just paint walls; we painted stories. Our
+                founder, driven by a <strong>deep love for Santa Marta,</strong>{" "}
+                worked tirelessly to create a space that resonates with the
+                city&rsquo;s soul. From vibrant murals that speak of local tales
+                to cozy corners designed for shared laughter, every inch is a
+                canvas of our commitment to authentic experiences.
+              </p>
+              <p>
+                Collaborating with skilled local artisans, we&rsquo;ve woven the
+                spirit of Santa Marta into the very fabric of our hostel. The
+                past three years have seen our space evolve into a{" "}
+                <strong>
+                  sanctuary for adventurers, a haven for backpackers, and a
+                  tapestry of shared memories
+                </strong>{" "}
+                for those exploring Santa Marta&rsquo;s wonders.
+              </p>
+              <p>
+                Join us in this heartfelt journey—where stories come to life,
+                friendships find a common thread, and the enchantment of Santa
+                Marta unfolds at our intimately personal hostel.
+              </p>
+            </div>
           </div>
         </div>
       </main>
@@ -252,7 +263,7 @@ function AccommodationCard({
     <Link
       to="."
       className={cn(
-        "group flex flex-col items-center overflow-hidden rounded-xl shadow-lg hover:shadow-md",
+        "group flex flex-col overflow-hidden rounded-xl shadow-lg hover:shadow-md",
         {
           "bg-aqua-600 hover:bg-aqua-200": color === "aqua",
           "bg-azul-600 hover:bg-azul-200": color === "azul",
@@ -262,7 +273,7 @@ function AccommodationCard({
     >
       <div className="relative aspect-[16/9] bg-white">
         <img
-          src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-600,fo-custom`}
+          src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-1200,fo-custom`}
           // fo-custom is not needed on all images
           alt=""
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
