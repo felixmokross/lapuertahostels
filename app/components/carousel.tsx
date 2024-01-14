@@ -26,7 +26,7 @@ export function Carousel({ items }: CarouselProps) {
   const { itemIndex, goTo } = useCarouselState(items);
 
   return (
-    <div className="relative h-[30rem] bg-puerta-100">
+    <div className="relative h-[40rem] bg-puerta-100">
       {items.map((item, i) => {
         item = items[i];
         return (
