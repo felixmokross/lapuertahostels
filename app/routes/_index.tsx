@@ -3,7 +3,7 @@ import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
 import { loader } from "~/root";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { XMarkIcon, GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 
@@ -68,7 +68,7 @@ export default function Index() {
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const [bannerVisible, setBannerVisible] = useState(true);
-  const { imagekitBaseUrl } = rootLoaderData;
+  const { imagekitBaseUrl, locale } = rootLoaderData;
   return (
     <>
       {bannerVisible && (
@@ -91,7 +91,7 @@ export default function Index() {
           </div>
         </div>
       )}
-      <header className="flex items-center justify-between px-4 py-4">
+      <header className="grid grid-cols-3 items-center px-4 py-4">
         <Link to="/">
           <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
             <img
@@ -103,6 +103,70 @@ export default function Index() {
             <>La Puerta Hostels</>
           </h1>
         </Link>
+        <div className="space-x-10 justify-self-center text-sm font-bold text-neutral-500">
+          <Link to="" className={cn("hover:text-neutral-900")}>
+            Puerta Aqua
+          </Link>
+          <Link to="" className={cn("hover:text-neutral-900")}>
+            La Puerta Azul
+          </Link>
+          <Link to="#santa-marta" className={cn("hover:text-neutral-900")}>
+            Santa Marta
+          </Link>
+          <Link to="#about-us" className={cn("hover:text-neutral-900")}>
+            About Us
+          </Link>
+          <Link to="" className={cn("hover:text-neutral-900")}>
+            Contact
+          </Link>
+        </div>
+        <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
+          <GlobeAmericasIcon className="h-4" />
+          <Link
+            to=""
+            className={cn(
+              "hover:text-neutral-900",
+              locale === "en"
+                ? "text-neutral-900"
+                : "hidden group-hover:inline",
+            )}
+          >
+            English
+          </Link>
+          <Link
+            to=""
+            className={cn(
+              "hover:text-neutral-900",
+              locale === "es"
+                ? "text-neutral-900"
+                : "hidden group-hover:inline",
+            )}
+          >
+            Español
+          </Link>
+          <Link
+            to=""
+            className={cn(
+              "hover:text-neutral-900",
+              locale === "de"
+                ? "text-neutral-900"
+                : "hidden group-hover:inline",
+            )}
+          >
+            Deutsch
+          </Link>
+          <Link
+            to=""
+            className={cn(
+              "hover:text-neutral-900",
+              locale === "fr"
+                ? "text-neutral-900"
+                : "hidden group-hover:inline",
+            )}
+          >
+            Français
+          </Link>
+        </div>
       </header>
       <main>
         <Carousel
@@ -218,7 +282,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="relative mx-auto mt-32 max-w-4xl">
+        <div className="relative mx-auto mt-32 max-w-4xl" id="santa-marta">
           <div className="h-[32rem] overflow-hidden rounded-lg shadow-md">
             <img
               src={`${imagekitBaseUrl}/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707&tr=w-1000,ar-16-9,c-maintain_ratio,fo-auto`}
@@ -257,7 +321,10 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="mx-auto mb-20 mt-72 grid max-w-4xl grid-cols-2 items-center justify-center gap-16">
+        <div
+          id="about-us"
+          className="mx-auto mb-20 mt-72 grid max-w-4xl grid-cols-2 items-center justify-center gap-16"
+        >
           <div className="-ml-10 mr-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
             <img
               src={`${imagekitBaseUrl}/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale`}
