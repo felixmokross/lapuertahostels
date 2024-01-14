@@ -3,6 +3,8 @@ import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
 import { loader } from "~/root";
+import { XMarkIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,9 +17,30 @@ export default function Index() {
   const rootLoaderData = useRouteLoaderData<typeof loader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
+  const [bannerVisible, setBannerVisible] = useState(true);
   const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
+      {bannerVisible && (
+        <div className="flex items-center gap-x-6 bg-puerta-800 px-6 py-2.5 text-sm text-white sm:px-3.5 sm:before:flex-1">
+          <div className="flex gap-2 leading-6">
+            <p>Travel before 20 September and get 20% off!</p>
+            <Link to="/" className="font-bold hover:underline">
+              <strong>Book now &rarr;</strong>
+            </Link>
+          </div>
+          <div className="flex flex-1 justify-end">
+            <button
+              onClick={() => setBannerVisible(false)}
+              type="button"
+              className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
+            >
+              <span className="sr-only">Dismiss</span>
+              <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      )}
       <header className="flex items-center justify-between px-4 py-4">
         <Link to="/">
           <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
