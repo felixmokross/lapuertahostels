@@ -118,7 +118,7 @@ export default function Index() {
               <h2 className="font-serif text-5xl tracking-tight text-white">
                 Your Home Base for a Perfect Trip
               </h2>
-              <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed text-white">
+              <p className="mt-6 hyphens-auto text-justify text-base leading-relaxed text-white">
                 Choose from our three accommodation offerings in Santa Marta.
               </p>
             </div>
@@ -191,15 +191,34 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-24 max-w-4xl">
-          <p>Some text about Santa Marta</p>
-        </div>
 
-        {/* <hr className="mx-auto mt-20 max-w-4xl border-t-2 text-neutral-400" /> */}
-
-        <div>
-          <h3>About Us</h3>
-          <p>Some text about us</p>
+        <div className="mx-auto mb-20 mt-60 grid max-w-4xl grid-cols-2 justify-center gap-16">
+          <div className="mx-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
+            <img
+              src={`${imagekitBaseUrl}/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325&tr=ar-3-4,w-1000,e-grayscale`}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="">
+            <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
+              About Us
+            </h3>
+            <p className="mt-6 hyphens-auto text-justify text-base">
+              Hike through the breath-taking beauty of{" "}
+              <strong className="text-neutral-900">
+                Tayrona National Park
+              </strong>
+              , discover the mysterious{" "}
+              <strong className="text-neutral-900">Lost City</strong>, or
+              refresh yourself in the river of{" "}
+              <strong className="text-neutral-900">Minca</strong>. Our variety
+              of heartful accommodations in the city of Santa Marta are{" "}
+              <strong className="text-neutral-900">
+                your perfect home base.
+              </strong>
+            </p>
+          </div>
         </div>
       </main>
       <footer>
