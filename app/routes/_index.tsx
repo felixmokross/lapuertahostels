@@ -103,7 +103,7 @@ export default function Index() {
             <>La Puerta Hostels</>
           </h1>
         </Link>
-        <div className="space-x-10 justify-self-center text-sm font-bold text-neutral-500">
+        <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
           <Link to="" className={cn("hover:text-neutral-900")}>
             Puerta Aqua
           </Link>
