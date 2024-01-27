@@ -13,6 +13,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    src: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717&tr=ar-4-3,w-1600",
+    src: "logos/logo-puerta-with-text.png?updatedAt=1703906701749&tr=h-160",
+    width: 66,
+    height: 80,
   },
 };

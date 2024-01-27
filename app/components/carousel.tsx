@@ -1,7 +1,8 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
-import { Image } from "./image";
+import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
+import { useTranslation } from "react-i18next";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -24,6 +25,7 @@ export function Carousel({ items }: CarouselProps) {
   }
 
   const { itemIndex, goTo } = useCarouselState(items);
+  const { t } = useTranslation();
 
   return (
     <div className="relative h-[40rem] bg-puerta-100">
@@ -42,7 +44,7 @@ export function Carousel({ items }: CarouselProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Image
+            <CarouselImage
               src={item.src}
               alt={item.alt}
               withPreview={i === 0}
@@ -67,7 +69,7 @@ export function Carousel({ items }: CarouselProps) {
                   {item.title.text}
                 </h3>
                 <button className="rounded-md bg-puerta-500 px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-md shadow-black/50 hover:bg-puerta-200 hover:text-puerta-800 hover:shadow-lg hover:shadow-black/50">
-                  Read More
+                  {t("carousel.cta")}
                 </button>
               </div>
             )}

@@ -26,7 +26,6 @@ export default {
       },
       azul: colors.blue,
       aqua: colors.teal,
-      apartments: colors.orange,
       neutral: colors.gray,
       "accent-neutral": colors.amber,
       "accent-positive": colors.green,
