@@ -1,11 +1,13 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import { loader } from "~/root";
 import { cn } from "./classnames";
-import { useEffect, useRef, useState } from "react";
+import { DetailedHTMLProps, useEffect, useRef, useState } from "react";
+import { Image } from "./image";
 
-export type CarouselImageProps = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
+export type CarouselImageProps = Omit<
+  DetailedHTMLProps<
+    React.ImgHTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  >,
+  "ref"
 > & {
   withPreview?: boolean;
 };
@@ -17,11 +19,6 @@ export function CarouselImage({
   withPreview = false,
   ...props
 }: CarouselImageProps) {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
-  const { imagekitBaseUrl } = rootLoaderData;
-
   const [state, setState] = useState<"loading" | "loaded">("loading");
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -32,21 +29,20 @@ export function CarouselImage({
     }
   }, [state]);
 
-  const imageSrc = `${imagekitBaseUrl}/${src}`;
-  const previewImageSrc = `${imageSrc},bl-10`;
+  const previewImageSrc = `${src},bl-10`;
 
   return (
     <div className={cn("h-full w-full", className)}>
       {withPreview && state === "loading" && (
-        <img
+        <Image
           src={previewImageSrc}
           alt={alt}
           className="absolute top-0 h-full w-full object-cover"
           {...props}
         />
       )}
-      <img
-        src={imageSrc}
+      <Image
+        src={src}
         ref={imgRef}
         onLoad={() => {
           setState("loaded");

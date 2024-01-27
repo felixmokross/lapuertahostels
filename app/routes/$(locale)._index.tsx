@@ -8,6 +8,7 @@ import { loader as rootLoader } from "~/root";
 import { useTranslation } from "react-i18next";
 import { Banner } from "~/components/banner";
 import { Header } from "~/components/header";
+import { Image } from "~/components/image";
 
 export const meta: MetaFunction = () => {
   return [
@@ -66,11 +67,7 @@ const footerNavigation = {
 };
 
 export default function Index() {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
   const { t } = useTranslation();
-  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
       <Banner cta={t("bannerCta")} ctaTo="/">
@@ -193,8 +190,8 @@ export default function Index() {
         </div>
         <div className="relative mx-auto mt-32 max-w-4xl" id="santa-marta">
           <div className="h-[32rem] overflow-hidden rounded-lg shadow-md">
-            <img
-              src={`${imagekitBaseUrl}/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707&tr=w-1000,ar-16-9,c-maintain_ratio,fo-auto`}
+            <Image
+              src="/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707&tr=w-1000,ar-16-9,c-maintain_ratio,fo-auto"
               alt="View of Santa Marta"
               className="h-full w-full object-cover"
             />
@@ -235,8 +232,8 @@ export default function Index() {
           className="mx-auto mb-20 mt-72 grid max-w-4xl grid-cols-2 items-center justify-center gap-16"
         >
           <div className="-ml-10 mr-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
-            <img
-              src={`${imagekitBaseUrl}/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale`}
+            <Image
+              src="/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale"
               alt=""
               className="h-full w-full object-cover"
             />
@@ -289,9 +286,9 @@ export default function Index() {
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">
               <h6 className="mt-2 flex items-center gap-2 font-serif text-base uppercase tracking-wider text-neutral-900">
-                <img
+                <Image
                   className="h-7"
-                  src={`${imagekitBaseUrl}/logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-56`}
+                  src="/logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-56"
                   alt="La Puerta Hostels Logo"
                 />
                 La Puerta Hostels

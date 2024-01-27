@@ -1,21 +1,17 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { Link, useRouteLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import { cn } from "./classnames";
 import { useTranslation } from "react-i18next";
-import { loader as rootLoader } from "~/root";
+import { Image } from "./image";
 
 export function Header() {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
   const { t, i18n } = useTranslation();
-  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
       <Link to="/">
         <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
-          <img
-            src={`${imagekitBaseUrl}/logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-80`}
+          <Image
+            src="logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-80"
             alt="La Puerta Hostels Logo"
             width={33}
             height={40}
