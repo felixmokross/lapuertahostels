@@ -2,10 +2,12 @@ import type { MetaFunction } from "@remix-run/node";
 import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
-import { loader } from "~/root";
-import { XMarkIcon, GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { SVGProps, useState } from "react";
+import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
+import { SVGProps } from "react";
 import { JSX } from "react/jsx-runtime";
+import { loader as rootLoader } from "~/root";
+import { useTranslation } from "react-i18next";
+import { Banner } from "~/components/banner";
 
 export const meta: MetaFunction = () => {
   return [
@@ -64,33 +66,14 @@ const footerNavigation = {
 };
 
 export default function Index() {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
-  const [bannerVisible, setBannerVisible] = useState(true);
-  const { imagekitBaseUrl, locale } = rootLoaderData;
+  const { t, i18n } = useTranslation();
+  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
-      {bannerVisible && (
-        <div className="flex items-center gap-x-6 bg-puerta-800 px-6 py-2.5 text-sm text-white sm:px-3.5 sm:before:flex-1">
-          <div className="flex gap-2 leading-6">
-            <p>Travel before 20 September and get 20% off!</p>
-            <Link to="/" className="font-bold hover:underline">
-              <strong>Book now &rarr;</strong>
-            </Link>
-          </div>
-          <div className="flex flex-1 justify-end">
-            <button
-              onClick={() => setBannerVisible(false)}
-              type="button"
-              className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
-            >
-              <span className="sr-only">Dismiss</span>
-              <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-      )}
+      <Banner />
       <header className="grid grid-cols-3 items-center px-4 py-4">
         <Link to="/">
           <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
@@ -103,7 +86,7 @@ export default function Index() {
             <>La Puerta Hostels</>
           </h1>
         </Link>
-        <div className="space-x-10 justify-self-center text-sm font-bold text-neutral-500">
+        <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
           <Link to="" className={cn("hover:text-neutral-900")}>
             Puerta Aqua
           </Link>
@@ -114,19 +97,20 @@ export default function Index() {
             Santa Marta
           </Link>
           <Link to="#about-us" className={cn("hover:text-neutral-900")}>
-            About Us
+            {t("aboutUs")}
           </Link>
           <Link to="" className={cn("hover:text-neutral-900")}>
-            Contact
+            {t("contact")}
           </Link>
         </div>
         <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
           <GlobeAmericasIcon className="h-4" />
           <Link
-            to=""
+            to="/en"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "en"
+              i18n.language === "en"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -134,10 +118,11 @@ export default function Index() {
             English
           </Link>
           <Link
-            to=""
+            to="/es"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "es"
+              i18n.language === "es"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -145,10 +130,11 @@ export default function Index() {
             Español
           </Link>
           <Link
-            to=""
+            to="/de"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "de"
+              i18n.language === "de"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -156,10 +142,11 @@ export default function Index() {
             Deutsch
           </Link>
           <Link
-            to=""
+            to="/fr"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "fr"
+              i18n.language === "fr"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -277,7 +264,7 @@ export default function Index() {
                   src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179",
                   alt: "La Puerta Azul",
                 }}
-                description="Being one of the oldest houses in Santa Marta, La Puerta Aqua is filled with beauty and history. It can also be booked completely as a private six-room villa."
+                description="Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa."
               />
             </div>
           </div>
@@ -334,7 +321,7 @@ export default function Index() {
           </div>
           <div className="">
             <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
-              About Us
+              {t("aboutUs")}
             </h3>
             <div className="mt-6 space-y-4 hyphens-auto text-justify text-base leading-relaxed">
               <p>
@@ -523,7 +510,7 @@ function AccommodationCard({
   description,
   color,
 }: AccommodationCardProps) {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const { imagekitBaseUrl } = rootLoaderData;

@@ -1,3 +1,7 @@
 {
-  "greeting": "Hello"
+  "bannerMessage": "Travel before 20 September and get 20% off!",
+  "bannerCta": "Book now",
+  "bannerDismiss": "Dismiss",
+  "aboutUs": "About Us",
+  "contact": "Contact"
 }

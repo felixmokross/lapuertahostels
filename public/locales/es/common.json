@@ -1,3 +1,7 @@
 {
-  "greeting": "Hola"
+  "bannerMessage": "Viaja antes del 20 de septiembre y consigue un 20% de descuento!",
+  "bannerCta": "Reserva ahora",
+  "bannerDismiss": "Cerrar",
+  "aboutUs": "Sobre nosotros",
+  "contact": "Contacto"
 }
