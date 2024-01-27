@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { Link } from "@remix-run/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "./link";
 
 export type BannerProps = {
   children: string;

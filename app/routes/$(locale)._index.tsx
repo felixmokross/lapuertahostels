@@ -1,10 +1,11 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Link, useRouteLoaderData } from "@remix-run/react";
+import { useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
 import { loader as rootLoader } from "~/root";
 import { useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
+import { Link } from "~/components/link";
 
 export const meta: MetaFunction = () => {
   return [

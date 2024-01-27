@@ -3,13 +3,13 @@ import { Image } from "./image";
 
 const navigation = {
   hotel: [
-    { name: "About Us", href: "#about-us" },
+    { name: "About Us", href: ".#about-us" },
     { name: "Puerta Aqua", href: "/aqua" },
     { name: "La Puerta Azul", href: "/azul" },
     { name: "Contact", href: "#" },
   ],
   experiences: [
-    { name: "Santa Marta", href: "#santa-marta" },
+    { name: "Santa Marta", href: ".#santa-marta" },
     { name: "Lost City", href: "#" },
     { name: "Tayrona Park", href: "#" },
     { name: "Minca", href: "#" },

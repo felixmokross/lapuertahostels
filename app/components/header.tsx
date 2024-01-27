@@ -1,8 +1,8 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { Link } from "@remix-run/react";
 import { cn } from "./classnames";
 import { useTranslation } from "react-i18next";
 import { Image } from "./image";
+import { Link } from "./link";
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -26,10 +26,10 @@ export function Header() {
         <Link to="azul" className={cn("hover:text-neutral-900")}>
           La Puerta Azul
         </Link>
-        <Link to="#santa-marta" className={cn("hover:text-neutral-900")}>
+        <Link to=".#santa-marta" className={cn("hover:text-neutral-900")}>
           Santa Marta
         </Link>
-        <Link to="#about-us" className={cn("hover:text-neutral-900")}>
+        <Link to=".#about-us" className={cn("hover:text-neutral-900")}>
           {t("aboutUs")}
         </Link>
         <Link to="" className={cn("hover:text-neutral-900")}>
