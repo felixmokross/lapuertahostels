@@ -6,6 +6,7 @@ import { XMarkIcon, GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { loader as rootLoader } from "~/root";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -67,6 +68,7 @@ export default function Index() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
+  const { i18n } = useTranslation();
   const [bannerVisible, setBannerVisible] = useState(true);
   const { imagekitBaseUrl } = rootLoaderData;
   return (
@@ -127,7 +129,7 @@ export default function Index() {
             reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "en"
+              i18n.language === "en"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -139,7 +141,7 @@ export default function Index() {
             reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "es"
+              i18n.language === "es"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -151,7 +153,7 @@ export default function Index() {
             reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "de"
+              i18n.language === "de"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
@@ -163,7 +165,7 @@ export default function Index() {
             reloadDocument
             className={cn(
               "hover:text-neutral-900",
-              locale === "fr"
+              i18n.language === "fr"
                 ? "text-neutral-900"
                 : "hidden group-hover:inline",
             )}
