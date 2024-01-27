@@ -2,10 +2,10 @@ import type { MetaFunction } from "@remix-run/node";
 import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
-import { loader } from "~/root";
 import { XMarkIcon, GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
+import { loader as rootLoader } from "~/root";
 
 export const meta: MetaFunction = () => {
   return [
@@ -64,7 +64,7 @@ const footerNavigation = {
 };
 
 export default function Index() {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const [bannerVisible, setBannerVisible] = useState(true);
@@ -123,7 +123,8 @@ export default function Index() {
         <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
           <GlobeAmericasIcon className="h-4" />
           <Link
-            to=""
+            to="/en"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
               locale === "en"
@@ -134,7 +135,8 @@ export default function Index() {
             English
           </Link>
           <Link
-            to=""
+            to="/es"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
               locale === "es"
@@ -145,7 +147,8 @@ export default function Index() {
             Español
           </Link>
           <Link
-            to=""
+            to="/de"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
               locale === "de"
@@ -156,7 +159,8 @@ export default function Index() {
             Deutsch
           </Link>
           <Link
-            to=""
+            to="/fr"
+            reloadDocument
             className={cn(
               "hover:text-neutral-900",
               locale === "fr"
@@ -277,7 +281,7 @@ export default function Index() {
                   src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179",
                   alt: "La Puerta Azul",
                 }}
-                description="Being one of the oldest houses in Santa Marta, La Puerta Aqua is filled with beauty and history. It can also be booked completely as a private six-room villa."
+                description="Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa."
               />
             </div>
           </div>
@@ -523,7 +527,7 @@ function AccommodationCard({
   description,
   color,
 }: AccommodationCardProps) {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const { imagekitBaseUrl } = rootLoaderData;
