@@ -68,7 +68,7 @@ export default function Index() {
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const [bannerVisible, setBannerVisible] = useState(true);
-  const { imagekitBaseUrl, locale } = rootLoaderData;
+  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
       {bannerVisible && (
