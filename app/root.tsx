@@ -11,6 +11,9 @@ import {
 
 import styles from "./tailwind.css";
 import { useTranslation } from "react-i18next";
+import { Banner } from "./components/banner";
+import { Header } from "./components/header";
+import { Footer } from "./components/footer";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -83,7 +86,7 @@ export const handle = {
 export default function App() {
   // Get the locale from the loader
   const { analyticsDomain } = useLoaderData<typeof loader>();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
       <head>
@@ -103,7 +106,14 @@ export default function App() {
         {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
         </div> */}
-        <Outlet />
+        <Banner cta={t("bannerCta")} ctaTo="/">
+          {t("bannerMessage")}
+        </Banner>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

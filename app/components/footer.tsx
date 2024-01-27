@@ -4,8 +4,8 @@ import { Image } from "./image";
 const navigation = {
   hotel: [
     { name: "About", href: "#" },
-    { name: "Puerta Aqua", href: "#" },
-    { name: "La Puerta Azul", href: "#" },
+    { name: "Puerta Aqua", href: "/aqua" },
+    { name: "La Puerta Azul", href: "/azul" },
     { name: "Contact", href: "#" },
   ],
   experiences: [

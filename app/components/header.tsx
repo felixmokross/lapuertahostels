@@ -20,10 +20,10 @@ export function Header() {
         </h1>
       </Link>
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
-        <Link to="" className={cn("hover:text-neutral-900")}>
+        <Link to="aqua" className={cn("hover:text-neutral-900")}>
           Puerta Aqua
         </Link>
-        <Link to="" className={cn("hover:text-neutral-900")}>
+        <Link to="azul" className={cn("hover:text-neutral-900")}>
           La Puerta Azul
         </Link>
         <Link to="#santa-marta" className={cn("hover:text-neutral-900")}>
