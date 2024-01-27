@@ -3,5 +3,9 @@
   "bannerCta": "Reserva ahora",
   "bannerDismiss": "Cerrar",
   "aboutUs": "Sobre nosotros",
-  "contact": "Contacto"
+  "contact": "Contacto",
+  "intro": {
+    "heading": "Discubre la Costa Caribe Colombiana",
+    "text": "Recorre la impresionante belleza del <2>Parque Tayrona</2>, descubre la misteriosa <5>Ciudad Perdida</5>, o refréscate en el río de <8>Minca</8>. Nuestra variedad de acogedores alojamientos en la ciudad de Santa Marta son <11>tu base perfecta.</11>"
+  }
 }

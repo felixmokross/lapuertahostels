@@ -3,7 +3,7 @@ import { redirect, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
 import { loader as rootLoader } from "~/root";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import i18n from "~/i18n";
@@ -37,11 +37,11 @@ export default function Route() {
             alt: "Lost City",
             title: {
               text: (
-                <>
-                  Find the
+                <Trans i18nKey="carousel.lostCity.title">
+                  Find the Lost City
                   <br />
                   <span className="text-puerta-200">Lost City</span>
-                </>
+                </Trans>
               ),
               position: "top-right",
             },
@@ -51,11 +51,11 @@ export default function Route() {
             alt: "Parque Tayrona",
             title: {
               text: (
-                <>
+                <Trans i18nKey="carousel.parqueTayrona.title">
                   Hike Through
                   <br />
                   the <span className="text-puerta-200">Tayrona Park</span>
-                </>
+                </Trans>
               ),
               position: "top-left",
             },
@@ -65,11 +65,10 @@ export default function Route() {
             alt: "Minca",
             title: {
               text: (
-                <>
-                  Follow the
-                  <br />
+                <Trans i18nKey="carousel.minca.title">
+                  Follow the <br />{" "}
                   <span className="text-puerta-200">Minca River</span>
-                </>
+                </Trans>
               ),
               position: "bottom-left",
             },
@@ -79,11 +78,11 @@ export default function Route() {
             alt: "Santa Marta",
             title: {
               text: (
-                <>
+                <Trans i18nKey="carousel.santaMarta.title">
                   Explore the Streets
                   <br />
                   of <span className="text-puerta-200">Santa Marta</span>
-                </>
+                </Trans>
               ),
               position: "bottom-right",
             },
@@ -93,17 +92,21 @@ export default function Route() {
 
       <div className="mx-auto mt-24 max-w-4xl">
         <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
-          Discover the Colombian Costa Caribe
+          {t("intro.heading")}
         </h3>
         <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed">
-          Hike through the breath-taking beauty of{" "}
-          <strong className="text-neutral-900">Tayrona National Park</strong>,
-          discover the mysterious{" "}
-          <strong className="text-neutral-900">Lost City</strong>, or refresh
-          yourself in the river of{" "}
-          <strong className="text-neutral-900">Minca</strong>. Our variety of
-          heartful accommodations in the city of Santa Marta are{" "}
-          <strong className="text-neutral-900">your perfect home base.</strong>
+          <Trans i18nKey="intro.text">
+            Hike through the breath-taking beauty of{" "}
+            <strong className="text-neutral-900">Tayrona National Park</strong>,
+            discover the mysterious{" "}
+            <strong className="text-neutral-900">Lost City</strong>, or refresh
+            yourself in the river of{" "}
+            <strong className="text-neutral-900">Minca</strong>. Our variety of
+            heartful accommodations in the city of Santa Marta are{" "}
+            <strong className="text-neutral-900">
+              your perfect home base.
+            </strong>
+          </Trans>
         </p>
       </div>
 
