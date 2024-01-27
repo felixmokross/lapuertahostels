@@ -3,20 +3,20 @@ import { loader } from "~/root";
 import { cn } from "./classnames";
 import { useEffect, useRef, useState } from "react";
 
-export type ImageProps = React.DetailedHTMLProps<
+export type CarouselImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
   HTMLImageElement
 > & {
   withPreview?: boolean;
 };
 
-export function Image({
+export function CarouselImage({
   src,
   alt,
   className,
   withPreview = false,
   ...props
-}: ImageProps) {
+}: CarouselImageProps) {
   const rootLoaderData = useRouteLoaderData<typeof loader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 

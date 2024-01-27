@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./classnames";
-import { Image } from "./image";
+import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
 
 export type CarouselProps = {
@@ -42,7 +42,7 @@ export function Carousel({ items }: CarouselProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Image
+            <CarouselImage
               src={item.src}
               alt={item.alt}
               withPreview={i === 0}
