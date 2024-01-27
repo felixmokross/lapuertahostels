@@ -73,7 +73,9 @@ export default function Index() {
   const { imagekitBaseUrl } = rootLoaderData;
   return (
     <>
-      <Banner />
+      <Banner cta={t("bannerCta")} ctaTo="/">
+        {t("bannerMessage")}
+      </Banner>
       <header className="grid grid-cols-3 items-center px-4 py-4">
         <Link to="/">
           <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">

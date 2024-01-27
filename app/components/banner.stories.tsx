@@ -12,5 +12,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    children: "Travel before 20 September and get 20% off!",
+    cta: "Book now",
+    ctaTo: "/cta",
+  },
 };
