@@ -68,7 +68,7 @@ export default function Index() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [bannerVisible, setBannerVisible] = useState(true);
   const { imagekitBaseUrl } = rootLoaderData;
   return (
@@ -76,9 +76,9 @@ export default function Index() {
       {bannerVisible && (
         <div className="flex items-center gap-x-6 bg-puerta-800 px-6 py-2.5 text-sm text-white sm:px-3.5 sm:before:flex-1">
           <div className="flex gap-2 leading-6">
-            <p>Travel before 20 September and get 20% off!</p>
+            <p>{t("bannerMessage")}</p>
             <Link to="/" className="font-bold hover:underline">
-              <strong>Book now &rarr;</strong>
+              <strong>{t("bannerCta")} &rarr;</strong>
             </Link>
           </div>
           <div className="flex flex-1 justify-end">
@@ -87,7 +87,7 @@ export default function Index() {
               type="button"
               className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
             >
-              <span className="sr-only">Dismiss</span>
+              <span className="sr-only">{t("bannerDismiss")}</span>
               <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
             </button>
           </div>
@@ -116,10 +116,10 @@ export default function Index() {
             Santa Marta
           </Link>
           <Link to="#about-us" className={cn("hover:text-neutral-900")}>
-            About Us
+            {t("aboutUs")}
           </Link>
           <Link to="" className={cn("hover:text-neutral-900")}>
-            Contact
+            {t("contact")}
           </Link>
         </div>
         <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
@@ -340,7 +340,7 @@ export default function Index() {
           </div>
           <div className="">
             <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
-              About Us
+              {t("aboutUs")}
             </h3>
             <div className="mt-6 space-y-4 hyphens-auto text-justify text-base leading-relaxed">
               <p>
