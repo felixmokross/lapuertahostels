@@ -3,9 +3,10 @@ import { cn } from "./classnames";
 import { useTranslation } from "react-i18next";
 import { Image } from "./image";
 import { Link } from "./link";
+import { Link as RemixLink, useMatch } from "@remix-run/react";
 
 export function Header() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
       <Link to="/">
@@ -38,55 +39,36 @@ export function Header() {
       </div>
       <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
         <GlobeAmericasIcon className="h-4" />
-        <Link
-          to="/en"
-          reloadDocument
-          className={cn(
-            "hover:text-neutral-900",
-            i18n.language === "en"
-              ? "text-neutral-900"
-              : "hidden group-hover:inline",
-          )}
-        >
-          English
-        </Link>
-        <Link
-          to="/es"
-          reloadDocument
-          className={cn(
-            "hover:text-neutral-900",
-            i18n.language === "es"
-              ? "text-neutral-900"
-              : "hidden group-hover:inline",
-          )}
-        >
-          Español
-        </Link>
-        <Link
-          to="/de"
-          reloadDocument
-          className={cn(
-            "hover:text-neutral-900",
-            i18n.language === "de"
-              ? "text-neutral-900"
-              : "hidden group-hover:inline",
-          )}
-        >
-          Deutsch
-        </Link>
-        <Link
-          to="/fr"
-          reloadDocument
-          className={cn(
-            "hover:text-neutral-900",
-            i18n.language === "fr"
-              ? "text-neutral-900"
-              : "hidden group-hover:inline",
-          )}
-        >
-          Français
-        </Link>
+        <LocaleLink locale="en">English</LocaleLink>
+        <LocaleLink locale="es">Español</LocaleLink>
+        <LocaleLink locale="de">Deutsch</LocaleLink>
+        <LocaleLink locale="fr">Français</LocaleLink>
       </div>
     </header>
+  );
+}
+
+type LocaleLinkProps = {
+  locale: string;
+  children: string;
+};
+
+function LocaleLink({ children, locale }: LocaleLinkProps) {
+  const { i18n } = useTranslation();
+  const match = useMatch("/:locale/*");
+  const splat = match?.params["*"];
+  return (
+    <RemixLink
+      to={`/${locale}${splat ? `/${splat}` : ""}`}
+      reloadDocument
+      className={cn(
+        "hover:text-neutral-900",
+        i18n.language === locale
+          ? "text-neutral-900"
+          : "hidden group-hover:inline",
+      )}
+    >
+      {children}
+    </RemixLink>
   );
 }
