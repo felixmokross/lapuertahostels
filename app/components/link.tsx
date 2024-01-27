@@ -12,7 +12,7 @@ export function Link({ to, ...props }: LinkProps) {
   const resolvedPath = useResolvedPath(to);
   return (
     <RemixLink
-      to={`${locale && `/${locale}`}${resolvedPath.pathname === "/" ? "" : resolvedPath.pathname}${resolvedPath.search}${resolvedPath.hash}`}
+      to={`${locale ? `/${locale}` : ""}${resolvedPath.pathname === "/" ? "" : resolvedPath.pathname}${resolvedPath.search}${resolvedPath.hash}`}
       {...props}
     />
   );
