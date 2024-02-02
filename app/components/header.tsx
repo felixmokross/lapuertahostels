@@ -11,7 +11,7 @@ export function Header() {
     <header className="grid grid-cols-3 items-center px-4 py-4">
       <h1>
         <Link to="/">
-          <PuertaLogo />
+          <PuertaLogo size="large" />
         </Link>
       </h1>
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
