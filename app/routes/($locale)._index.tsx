@@ -9,6 +9,7 @@ import { Link } from "~/components/link";
 import i18n from "~/i18n";
 import i18next from "~/i18next.server";
 import { Heading, HeadingHighlight } from "~/components/heading";
+import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
 
 export const meta: MetaFunction = () => {
   return [
@@ -95,20 +96,18 @@ export default function Route() {
         <Heading as="h1" size="medium">
           {t("intro.heading")}
         </Heading>
-        <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed">
+        <Paragraph size="extra-large" className="mt-6">
           <Trans i18nKey="intro.text">
             Hike through the breath-taking beauty of{" "}
-            <strong className="text-neutral-900">Tayrona National Park</strong>,
+            <ParagraphHighlight>Tayrona National Park</ParagraphHighlight>,
             discover the mysterious{" "}
-            <strong className="text-neutral-900">Lost City</strong>, or refresh
+            <ParagraphHighlight>Lost City</ParagraphHighlight>, or refresh
             yourself in the river of{" "}
-            <strong className="text-neutral-900">Minca</strong>. Our variety of
+            <ParagraphHighlight>Minca</ParagraphHighlight>. Our variety of
             heartful accommodations in the city of Santa Marta are{" "}
-            <strong className="text-neutral-900">
-              your perfect home base.
-            </strong>
+            <ParagraphHighlight>your perfect home base.</ParagraphHighlight>
           </Trans>
-        </p>
+        </Paragraph>
       </div>
 
       <div className="relative mt-36">
@@ -118,10 +117,10 @@ export default function Route() {
             <Heading as="h2" size="large" variant="white">
               Your Home Base for a Perfect Trip
             </Heading>
-            <p className="mt-6 hyphens-auto text-justify text-lg leading-relaxed text-white">
+            <Paragraph className="mt-6" size="large" variant="white">
               Choose between our <strong>two accommodations</strong> in Santa
               Marta.
-            </p>
+            </Paragraph>
           </div>
           <div className="mx-auto mt-14 grid max-w-7xl grid-cols-2 gap-x-8 px-8">
             <AccommodationCard
@@ -162,7 +161,7 @@ export default function Route() {
         </div>
         <div className="absolute inset-0 flex items-end justify-end">
           <div className="max-w-lg translate-x-12 translate-y-20 space-y-4 rounded-md bg-gradient-to-bl from-puerta-100 to-puerta-300 px-6 py-4 shadow-lg">
-            <p className="hyphens-auto text-justify text-base leading-relaxed text-puerta-800">
+            <Paragraph variant="puerta">
               Santa Marta, nestled{" "}
               <strong>
                 between the Caribbean Sea and the Sierra Nevada mountains,
@@ -177,7 +176,7 @@ export default function Route() {
               <strong>
                 exploration of Colombia&rsquo;s diverse landscapes.
               </strong>
-            </p>
+            </Paragraph>
           </div>
         </div>
       </div>
@@ -197,24 +196,24 @@ export default function Route() {
           <Heading as="h3" size="medium">
             {t("aboutUs")}
           </Heading>
-          <div className="mt-6 space-y-4 hyphens-auto text-justify text-base leading-relaxed">
-            <p>
+          <div className="mt-6 space-y-4">
+            <Paragraph>
               Step into our <strong>Santa Marta haven,</strong> where the{" "}
               <strong>Caribbean breeze whispers tales of adventure,</strong> and
               the Sierra Nevada mountains cradle our dreams. Three years ago, a
               passionate soul embarked on a journey to craft more than just a
               hostel—a place where every traveler feels the warmth of connection
               and the embrace of a second home.
-            </p>
-            <p>
+            </Paragraph>
+            <Paragraph>
               We didn&rsquo;t just paint walls; we painted stories. Our founder,
               driven by a <strong>deep love for Santa Marta,</strong> worked
               tirelessly to create a space that resonates with the city&rsquo;s
               soul. From vibrant murals that speak of local tales to cozy
               corners designed for shared laughter, every inch is a canvas of
               our commitment to authentic experiences.
-            </p>
-            <p>
+            </Paragraph>
+            <Paragraph>
               Collaborating with skilled local artisans, we&rsquo;ve woven the
               spirit of Santa Marta into the very fabric of our hostel. The past
               three years have seen our space evolve into a{" "}
@@ -223,12 +222,12 @@ export default function Route() {
                 tapestry of shared memories
               </strong>{" "}
               for those exploring Santa Marta&rsquo;s wonders.
-            </p>
-            <p>
+            </Paragraph>
+            <Paragraph>
               Join us in this heartfelt journey—where stories come to life,
               friendships find a common thread, and the enchantment of Santa
               Marta unfolds at our intimately personal hostel.
-            </p>
+            </Paragraph>
           </div>
         </div>
       </div>
