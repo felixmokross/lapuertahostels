@@ -3,7 +3,7 @@ import turbosnap from "vite-plugin-turbosnap";
 import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
-  stories: ["../app/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: ["../app/**/*.stories.@(js|jsx|mjs|ts|tsx)", "../docs/**/*.mdx"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",

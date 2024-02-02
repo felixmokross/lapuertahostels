@@ -1,0 +1,22 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
+import tailwindConfig from "../tailwind.config";
+
+<Meta title="Colors" />
+
+<ColorPalette>
+  {Object.entries(tailwindConfig.theme.colors)
+    .filter(([key]) =>
+      [
+        "puerta",
+        "azul",
+        "aqua",
+        "neutral",
+        "accent-neutral",
+        "accent-positive",
+        "accent-negative",
+      ].includes(key),
+    )
+    .map(([name, colors]) => (
+      <ColorItem title={name} colors={colors} />
+    ))}
+</ColorPalette>

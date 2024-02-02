@@ -8,6 +8,7 @@ import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import i18n from "~/i18n";
 import i18next from "~/i18next.server";
+import { Heading, HeadingHighlight } from "~/components/heading";
 
 export const meta: MetaFunction = () => {
   return [
@@ -91,9 +92,9 @@ export default function Route() {
       />
 
       <div className="mx-auto mt-24 max-w-4xl">
-        <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
+        <Heading as="h1" size="medium">
           {t("intro.heading")}
-        </h3>
+        </Heading>
         <p className="mt-6 hyphens-auto text-justify text-xl leading-relaxed">
           <Trans i18nKey="intro.text">
             Hike through the breath-taking beauty of{" "}
@@ -114,9 +115,9 @@ export default function Route() {
         <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
         <div className="py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="font-serif text-5xl tracking-tight text-white">
+            <Heading as="h2" size="large" variant="white">
               Your Home Base for a Perfect Trip
-            </h2>
+            </Heading>
             <p className="mt-6 hyphens-auto text-justify text-lg leading-relaxed text-white">
               Choose between our <strong>two accommodations</strong> in Santa
               Marta.
@@ -154,12 +155,9 @@ export default function Route() {
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 flex rounded-lg bg-gradient-to-t from-transparent to-black/40 px-8 py-4">
-            <h3
-              className="font-serif text-6xl leading-relaxed tracking-tight text-white"
-              style={{ textShadow: "0 0 50px black" }}
-            >
-              Do You Know <span className="text-puerta-200">Santa Marta?</span>
-            </h3>
+            <Heading as="h3" size="extra-large" variant="white" textShadow>
+              Do You Know <HeadingHighlight>Santa Marta?</HeadingHighlight>
+            </Heading>
           </div>
         </div>
         <div className="absolute inset-0 flex items-end justify-end">
@@ -196,9 +194,9 @@ export default function Route() {
           />
         </div>
         <div className="">
-          <h3 className="font-serif text-4xl tracking-tight text-puerta-600">
+          <Heading as="h3" size="medium">
             {t("aboutUs")}
-          </h3>
+          </Heading>
           <div className="mt-6 space-y-4 hyphens-auto text-justify text-base leading-relaxed">
             <p>
               Step into our <strong>Santa Marta haven,</strong> where the{" "}

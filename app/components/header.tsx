@@ -1,60 +1,51 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { cn } from "./classnames";
 import { useTranslation } from "react-i18next";
-import { Image } from "./image";
-import { Link } from "./link";
+import { Link, LinkProps } from "./link";
 import { Link as RemixLink, useMatch } from "@remix-run/react";
+import { PuertaLogo } from "./puerta-logo";
 
 export function Header() {
   const { t } = useTranslation();
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
-      <Link to="/">
-        <h1 className="flex items-center gap-4 font-serif text-2xl uppercase tracking-wide text-neutral-900">
-          <Image
-            src="logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=h-80"
-            alt="La Puerta Hostels Logo"
-            width={33}
-            height={40}
-          />
-          <>La Puerta Hostels</>
-        </h1>
-      </Link>
+      <h1>
+        <Link to="/">
+          <PuertaLogo />
+        </Link>
+      </h1>
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
-        <Link to="aqua" className={cn("hover:text-neutral-900")}>
-          Puerta Aqua
-        </Link>
-        <Link to="azul" className={cn("hover:text-neutral-900")}>
-          La Puerta Azul
-        </Link>
-        <Link to=".#santa-marta" className={cn("hover:text-neutral-900")}>
-          Santa Marta
-        </Link>
-        <Link to=".#about-us" className={cn("hover:text-neutral-900")}>
-          {t("aboutUs")}
-        </Link>
-        <Link to="" className={cn("hover:text-neutral-900")}>
-          {t("contact")}
-        </Link>
+        <NavLink to="aqua">Puerta Aqua</NavLink>
+        <NavLink to="azul">La Puerta Azul</NavLink>
+        <NavLink to=".#santa-marta">Santa Marta</NavLink>
+        <NavLink to=".#about-us">{t("aboutUs")}</NavLink>
+        <NavLink to="">{t("contact")}</NavLink>
       </div>
       <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
         <GlobeAmericasIcon className="h-4" />
-        <LocaleLink locale="en">English</LocaleLink>
-        <LocaleLink locale="es">Español</LocaleLink>
-        <LocaleLink locale="de">Deutsch</LocaleLink>
-        <LocaleLink locale="fr">Français</LocaleLink>
+        <LocaleLink locale="en" />
+        <LocaleLink locale="es" />
+        <LocaleLink locale="de" />
+        <LocaleLink locale="fr" />
       </div>
     </header>
   );
 }
 
+type NavLinkProps = LinkProps;
+
+function NavLink({ className, ...props }: NavLinkProps) {
+  return (
+    <Link className={cn("hover:text-neutral-900", className)} {...props} />
+  );
+}
+
 type LocaleLinkProps = {
   locale: string;
-  children: string;
 };
 
-function LocaleLink({ children, locale }: LocaleLinkProps) {
-  const { i18n } = useTranslation();
+function LocaleLink({ locale }: LocaleLinkProps) {
+  const { i18n, t } = useTranslation();
   const match = useMatch("/:locale/*");
   const splat = match?.params["*"];
   return (
@@ -68,7 +59,7 @@ function LocaleLink({ children, locale }: LocaleLinkProps) {
           : "hidden group-hover:inline",
       )}
     >
-      {children}
+      {t(`languages.${locale}`)}
     </RemixLink>
   );
 }

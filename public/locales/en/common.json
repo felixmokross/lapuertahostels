@@ -1,4 +1,10 @@
 {
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "de": "Deutsch",
+    "fr": "Français"
+  },
   "bannerMessage": "Travel before 20 September and get 20% off!",
   "bannerCta": "Book now",
   "bannerDismiss": "Dismiss",

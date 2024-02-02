@@ -3,6 +3,7 @@ import { cn } from "./classnames";
 import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
 import { useTranslation } from "react-i18next";
+import { Heading } from "./heading";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -62,12 +63,9 @@ export function Carousel({ items }: CarouselProps) {
                     item.title.position === "bottom-right",
                 })}
               >
-                <h3
-                  className="font-serif text-6xl font-light leading-relaxed tracking-tight text-white"
-                  style={{ textShadow: "0 0 25px black" }}
-                >
+                <Heading as="h3" size="extra-large" variant="white" textShadow>
                   {item.title.text}
-                </h3>
+                </Heading>
                 <button className="rounded-md bg-puerta-500 px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-md shadow-black/50 hover:bg-puerta-200 hover:text-puerta-800 hover:shadow-lg hover:shadow-black/50">
                   {t("carousel.cta")}
                 </button>
