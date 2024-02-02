@@ -96,17 +96,12 @@ export default function Route() {
         <Heading as="h1" size="medium">
           {t("intro.heading")}
         </Heading>
-        <Paragraph size="extra-large" className="mt-6">
-          <Trans i18nKey="intro.text">
-            Hike through the breath-taking beauty of{" "}
-            <ParagraphHighlight>Tayrona National Park</ParagraphHighlight>,
-            discover the mysterious{" "}
-            <ParagraphHighlight>Lost City</ParagraphHighlight>, or refresh
-            yourself in the river of{" "}
-            <ParagraphHighlight>Minca</ParagraphHighlight>. Our variety of
-            heartful accommodations in the city of Santa Marta are{" "}
-            <ParagraphHighlight>your perfect home base.</ParagraphHighlight>
-          </Trans>
+        <Paragraph justify size="extra-large" className="mt-6">
+          <Trans
+            i18nKey="intro.text"
+            defaults="Hike through the breath-taking beauty of <hl>Tayrona National Park</hl>, discover the mysterious <hl>Lost City</hl>, or refresh yourself in the river of <hl>Minca</hl>. Our variety of heartful accommodations in the city of Santa Marta are <hl>your perfect home base.</hl>"
+            components={{ hl: <ParagraphHighlight /> }}
+          />
         </Paragraph>
       </div>
 
@@ -117,7 +112,7 @@ export default function Route() {
             <Heading as="h2" size="large" variant="white">
               Your Home Base for a Perfect Trip
             </Heading>
-            <Paragraph className="mt-6" size="large" variant="white">
+            <Paragraph className="mt-6" justify size="large" variant="white">
               Choose between our <strong>two accommodations</strong> in Santa
               Marta.
             </Paragraph>
@@ -161,7 +156,7 @@ export default function Route() {
         </div>
         <div className="absolute inset-0 flex items-end justify-end">
           <div className="max-w-lg translate-x-12 translate-y-20 space-y-4 rounded-md bg-gradient-to-bl from-puerta-100 to-puerta-300 px-6 py-4 shadow-lg">
-            <Paragraph variant="puerta">
+            <Paragraph variant="puerta" justify>
               Santa Marta, nestled{" "}
               <strong>
                 between the Caribbean Sea and the Sierra Nevada mountains,
@@ -197,7 +192,7 @@ export default function Route() {
             {t("aboutUs")}
           </Heading>
           <div className="mt-6 space-y-4">
-            <Paragraph>
+            <Paragraph justify>
               Step into our <strong>Santa Marta haven,</strong> where the{" "}
               <strong>Caribbean breeze whispers tales of adventure,</strong> and
               the Sierra Nevada mountains cradle our dreams. Three years ago, a
@@ -205,7 +200,7 @@ export default function Route() {
               hostel—a place where every traveler feels the warmth of connection
               and the embrace of a second home.
             </Paragraph>
-            <Paragraph>
+            <Paragraph justify>
               We didn&rsquo;t just paint walls; we painted stories. Our founder,
               driven by a <strong>deep love for Santa Marta,</strong> worked
               tirelessly to create a space that resonates with the city&rsquo;s
@@ -213,7 +208,7 @@ export default function Route() {
               corners designed for shared laughter, every inch is a canvas of
               our commitment to authentic experiences.
             </Paragraph>
-            <Paragraph>
+            <Paragraph justify>
               Collaborating with skilled local artisans, we&rsquo;ve woven the
               spirit of Santa Marta into the very fabric of our hostel. The past
               three years have seen our space evolve into a{" "}
@@ -223,7 +218,7 @@ export default function Route() {
               </strong>{" "}
               for those exploring Santa Marta&rsquo;s wonders.
             </Paragraph>
-            <Paragraph>
+            <Paragraph justify>
               Join us in this heartfelt journey—where stories come to life,
               friendships find a common thread, and the enchantment of Santa
               Marta unfolds at our intimately personal hostel.
@@ -277,13 +272,15 @@ function AccommodationCard({
         />
       </div>
       <div
-        className={cn("space-y-2 px-6 py-4 text-base text-white", {
+        className={cn("space-y-2 px-6 py-4 text-white", {
           "group-hover:text-azul-800": color === "azul",
           "group-hover:text-aqua-800": color === "aqua",
         })}
       >
-        <h4 className="text-sm font-bold uppercase tracking-wider">{name}</h4>
-        <p className="leading-relaxed">{description}</p>
+        <Heading as="h4" variant="inherit" size="small">
+          {name}
+        </Heading>
+        <Paragraph variant="inherit">{description}</Paragraph>
       </div>
     </Link>
   );

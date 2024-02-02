@@ -1,12 +1,12 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./classnames";
 
-type HeadingVariant = "puerta" | "white";
+type HeadingVariant = "puerta" | "white" | "inherit";
 
 type HeadingProps = PropsWithChildren<{
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   variant?: HeadingVariant;
-  size: "medium" | "large" | "extra-large";
+  size: "small" | "medium" | "large" | "extra-large";
   textShadow?: boolean;
 }>;
 
@@ -21,15 +21,18 @@ export function Heading({
     <VariantContext.Provider value={variant}>
       <Component
         className={cn(
-          "font-serif tracking-tight text-puerta-600",
           {
             "text-puerta-600": variant === "puerta",
             "text-white": variant === "white",
+            "text-inherit": variant === "inherit",
           },
           {
-            "text-4xl": size === "medium",
-            "text-5xl": size === "large",
-            "text-6xl font-light leading-relaxed": size === "extra-large",
+            "font-sans text-sm font-bold uppercase tracking-wider":
+              size === "small",
+            "font-serif text-4xl tracking-tight": size === "medium",
+            "font-serif text-5xl tracking-tight": size === "large",
+            "font-serif text-6xl font-light leading-relaxed tracking-tight":
+              size === "extra-large",
           },
         )}
         {...(textShadow ? { style: { textShadow: "0 0 50px black" } } : {})}

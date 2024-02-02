@@ -1,25 +1,28 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./classnames";
 
-type ParagraphVariant = "neutral" | "puerta" | "white";
+type ParagraphVariant = "neutral" | "puerta" | "white" | "inherit";
 
 export type ParagraphProps = PropsWithChildren<{
   className?: string;
   size?: "medium" | "large" | "extra-large";
   variant?: ParagraphVariant;
+  justify?: boolean;
 }>;
 
 export function Paragraph({
   children,
   size,
   variant = "neutral",
+  justify = false,
   className,
 }: ParagraphProps) {
   return (
     <VariantContext.Provider value={variant}>
       <p
         className={cn(
-          "hyphens-auto text-justify leading-relaxed",
+          "leading-relaxed",
+          justify && "hyphens-auto text-justify",
           {
             "text-base": size === "medium",
             "text-lg": size === "large",
@@ -28,6 +31,7 @@ export function Paragraph({
           {
             "text-white": variant === "white",
             "text-puerta-800": variant === "puerta",
+            "text-inherit": variant === "inherit",
           },
           className,
         )}
