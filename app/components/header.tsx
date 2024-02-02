@@ -6,7 +6,7 @@ import { Link as RemixLink, useMatch } from "@remix-run/react";
 import { PuertaLogo } from "./puerta-logo";
 import { AquaLogo } from "./aqua-logo";
 import { AzulLogo } from "./azul-logo";
-import { useTheme } from "~/common";
+import { useTheme } from "../common";
 
 export function Header() {
   const { t } = useTranslation();
