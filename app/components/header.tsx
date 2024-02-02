@@ -4,14 +4,21 @@ import { useTranslation } from "react-i18next";
 import { Link, LinkProps } from "./link";
 import { Link as RemixLink, useMatch } from "@remix-run/react";
 import { PuertaLogo } from "./puerta-logo";
+import { AquaLogo } from "./aqua-logo";
+import { AzulLogo } from "./azul-logo";
+import { useTheme } from "~/common";
 
 export function Header() {
   const { t } = useTranslation();
+
+  const theme = useTheme();
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
       <h1>
         <Link to="/">
-          <PuertaLogo size="large" />
+          {theme === "puerta" && <PuertaLogo size="large" />}
+          {theme === "aqua" && <AquaLogo size="large" />}
+          {theme === "azul" && <AzulLogo size="large" />}
         </Link>
       </h1>
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
