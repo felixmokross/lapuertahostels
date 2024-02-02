@@ -4,6 +4,7 @@ import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
 import { useTranslation } from "react-i18next";
 import { Heading } from "./heading";
+import { Button } from "./button";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -66,9 +67,9 @@ export function Carousel({ items }: CarouselProps) {
                 <Heading as="h3" size="extra-large" variant="white" textShadow>
                   {item.title.text}
                 </Heading>
-                <button className="rounded-md bg-puerta-500 px-6 py-3 text-base font-bold uppercase tracking-wider text-white shadow-md shadow-black/50 hover:bg-puerta-200 hover:text-puerta-800 hover:shadow-lg hover:shadow-black/50">
+                <Button size="large" blackShadow>
                   {t("carousel.cta")}
-                </button>
+                </Button>
               </div>
             )}
           </Transition>

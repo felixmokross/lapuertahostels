@@ -1,5 +1,6 @@
 import { SVGProps } from "react";
 import { Image } from "./image";
+import { Button } from "./button";
 
 const navigation = {
   hotel: [
@@ -167,12 +168,13 @@ export function Footer() {
               placeholder="Enter your email"
             />
             <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-              <button
+              <Button
+                size="small"
                 type="submit"
-                className="flex h-full w-full items-center justify-center rounded-md bg-puerta-500 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-sm hover:bg-puerta-200 hover:text-puerta-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-puerta-600"
+                className="flex h-full w-full items-center justify-center"
               >
                 Subscribe
-              </button>
+              </Button>
             </div>
           </form>
         </div>
