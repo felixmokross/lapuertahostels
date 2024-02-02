@@ -7,6 +7,7 @@ export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     colors: {
+      inherit: colors.inherit,
       black: colors.black,
       transparent: colors.transparent,
       current: colors.current,
