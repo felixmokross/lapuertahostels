@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { AzulLogo } from "./azul-logo";
 
 const meta = {
-  title: "AzulLogo",
+  title: "logos/AzulLogo",
   component: AzulLogo,
   argTypes: {},
 } satisfies Meta<typeof AzulLogo>;

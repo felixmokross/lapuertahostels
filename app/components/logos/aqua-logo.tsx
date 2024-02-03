@@ -1,14 +1,14 @@
-import { cn } from "./classnames";
-import { Image } from "./image";
+import { cn } from "../classnames";
+import { Image } from "../image";
 
-export type AzulLogoProps = {
+export type AquaLogoProps = {
   size: "small" | "large";
 };
 
-export function AzulLogo({ size }: AzulLogoProps) {
+export function AquaLogo({ size }: AquaLogoProps) {
   return (
     <span
-      className={cn("flex items-center font-serif uppercase text-azul-900", {
+      className={cn("flex items-center font-serif uppercase text-aqua-600", {
         "gap-2 text-base tracking-wider": size === "small",
         "gap-4 text-2xl tracking-wide": size === "large",
       })}
@@ -18,15 +18,15 @@ export function AzulLogo({ size }: AzulLogoProps) {
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={`logos/logo-azul-simple.png?updatedAt=1703915175439&tr=${
+        src={`logos/logo-aqua-simple.png?updatedAt=1703915191239&tr=${
           {
             small: "h-56",
             large: "h-80",
           }[size]
         }`}
-        alt="La Puerta Azul Logo"
+        alt="Puerta Aqua Logo"
       />
-      <>La Puerta Azul</>
+      <>Puerta Aqua</>
     </span>
   );
 }

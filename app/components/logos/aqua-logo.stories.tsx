@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { PuertaLogo } from "./puerta-logo";
+import { AquaLogo } from "../logos/aqua-logo";
 
 const meta = {
-  title: "PuertaLogo",
-  component: PuertaLogo,
+  title: "logos/AquaLogo",
+  component: AquaLogo,
   argTypes: {},
-} satisfies Meta<typeof PuertaLogo>;
+} satisfies Meta<typeof AquaLogo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

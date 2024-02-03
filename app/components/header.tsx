@@ -3,9 +3,9 @@ import { cn } from "./classnames";
 import { useTranslation } from "react-i18next";
 import { Link, LinkProps } from "./link";
 import { Link as RemixLink, useMatch } from "@remix-run/react";
-import { PuertaLogo } from "./puerta-logo";
-import { AquaLogo } from "./aqua-logo";
-import { AzulLogo } from "./azul-logo";
+import { PuertaLogo } from "./logos/puerta-logo";
+import { AquaLogo } from "./logos/aqua-logo";
+import { AzulLogo } from "./logos/azul-logo";
 import { useTheme } from "../common";
 
 export function Header() {

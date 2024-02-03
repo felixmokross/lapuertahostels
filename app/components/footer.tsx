@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 import { Button } from "./button";
-import { PuertaLogo } from "./puerta-logo";
+import { PuertaLogo } from "./logos/puerta-logo";
 
 const navigation = {
   hotel: [

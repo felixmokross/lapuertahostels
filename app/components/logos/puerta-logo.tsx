@@ -1,14 +1,14 @@
-import { cn } from "./classnames";
-import { Image } from "./image";
+import { cn } from "../classnames";
+import { Image } from "../image";
 
-export type AquaLogoProps = {
+export type PuertaLogoProps = {
   size: "small" | "large";
 };
 
-export function AquaLogo({ size }: AquaLogoProps) {
+export function PuertaLogo({ size }: PuertaLogoProps) {
   return (
     <span
-      className={cn("flex items-center font-serif uppercase text-aqua-600", {
+      className={cn("flex items-center font-serif uppercase text-neutral-900", {
         "gap-2 text-base tracking-wider": size === "small",
         "gap-4 text-2xl tracking-wide": size === "large",
       })}
@@ -18,15 +18,15 @@ export function AquaLogo({ size }: AquaLogoProps) {
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={`logos/logo-aqua-simple.png?updatedAt=1703915191239&tr=${
+        src={`logos/logo-puerta-simple.png?updatedAt=1703906701749&tr=${
           {
             small: "h-56",
             large: "h-80",
           }[size]
         }`}
-        alt="Puerta Aqua Logo"
+        alt="La Puerta Hostels Logo"
       />
-      <>Puerta Aqua</>
+      <>La Puerta Hostels</>
     </span>
   );
 }
