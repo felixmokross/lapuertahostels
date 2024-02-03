@@ -19,7 +19,7 @@ import {
 import styles from "./tailwind.css";
 import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
-import { Header } from "./components/header";
+import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import i18n from "./i18n";
 import i18next from "./i18next.server";

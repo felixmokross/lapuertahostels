@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "./link";
 import { cn } from "./classnames";
+import { Transition } from "@headlessui/react";
 
 export type BannerProps = {
   children: string;
@@ -14,17 +15,21 @@ export type BannerProps = {
 export function Banner({ children, cta, ctaTo, variant }: BannerProps) {
   const [bannerVisible, setBannerVisible] = useState(true);
   const { t } = useTranslation();
-  if (!bannerVisible) return null;
+
   return (
-    <div
+    <Transition
+      show={bannerVisible}
       className={cn(
-        "flex items-center gap-x-6  px-6 py-2.5 text-sm text-white sm:px-3.5 sm:before:flex-1",
+        "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
         {
           "bg-puerta-800": variant === "puerta",
           "bg-azul-950": variant === "azul",
           "bg-aqua-600": variant === "aqua",
         },
       )}
+      leave="transition-transform ease-in duration-500"
+      leaveFrom="translate-y-0"
+      leaveTo="-translate-y-full"
     >
       <div className="flex gap-2 leading-6">
         <p>{children}</p>
@@ -42,6 +47,6 @@ export function Banner({ children, cta, ctaTo, variant }: BannerProps) {
           <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
         </button>
       </div>
-    </div>
+    </Transition>
   );
 }

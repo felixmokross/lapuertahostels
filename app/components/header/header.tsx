@@ -1,12 +1,10 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { cn } from "./classnames";
+import { cn } from "../classnames";
 import { useTranslation } from "react-i18next";
-import { Link, LinkProps } from "./link";
+import { Link, LinkProps } from "../link";
 import { Link as RemixLink, useMatch } from "@remix-run/react";
-import { PuertaLogo } from "./logos/puerta-logo";
-import { AquaLogo } from "./logos/aqua-logo";
-import { AzulLogo } from "./logos/azul-logo";
-import { useTheme } from "../common";
+import { useTheme } from "../../common";
+import { ThemeLogo } from "./theme-logo";
 
 export function Header() {
   const { t } = useTranslation();
@@ -14,13 +12,7 @@ export function Header() {
   const theme = useTheme();
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
-      <h1>
-        <Link to="/">
-          {theme === "puerta" && <PuertaLogo size="large" />}
-          {theme === "aqua" && <AquaLogo size="large" />}
-          {theme === "azul" && <AzulLogo size="large" />}
-        </Link>
-      </h1>
+      <ThemeLogo theme={theme} />
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
         <NavLink to="aqua">Puerta Aqua</NavLink>
         <NavLink to="azul">La Puerta Azul</NavLink>

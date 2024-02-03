@@ -8,3 +8,5 @@ export function useTheme() {
       | undefined) || "puerta"
   );
 }
+
+export type Theme = ReturnType<typeof useTheme>;
