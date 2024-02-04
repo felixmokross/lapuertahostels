@@ -109,7 +109,7 @@ export default function App() {
   const { t, i18n } = useTranslation();
   const brand = useBrand();
   return (
-    <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
+    <html lang={i18n.language} dir={i18n.dir()}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
