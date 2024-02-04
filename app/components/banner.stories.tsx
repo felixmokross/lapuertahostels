@@ -5,12 +5,7 @@ import { Banner } from "./banner";
 const meta = {
   title: "Banner",
   component: Banner,
-  argTypes: {
-    brand: {
-      options: ["puerta", "aqua", "azul"],
-      control: { type: "radio" },
-    },
-  },
+  argTypes: {},
 } satisfies Meta<typeof Banner>;
 
 export default meta;
@@ -21,6 +16,5 @@ export const Primary: Story = {
     children: "Travel before 20 September and get 20% off!",
     cta: "Book now",
     ctaTo: "/cta",
-    brand: "puerta",
   },
 };

@@ -1,7 +1,7 @@
 import { SVGProps } from "react";
 import { Button } from "./button";
 import { BrandLogo } from "./brand-logo";
-import { Brand, brands } from "../brands";
+import { useBrand } from "../brands";
 
 const navigation = {
   hotel: [
@@ -52,14 +52,11 @@ const navigation = {
   ],
 };
 
-export type FooterProps = {
-  brand: Brand;
-};
-
-export function Footer({ brand }: FooterProps) {
+export function Footer() {
+  const brand = useBrand();
   return (
     <footer
-      className={`mt-40 ${brands[brand].footerBackgroundColor}`}
+      className={`mt-40 ${brand.footerBackgroundColor}`}
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">

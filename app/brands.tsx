@@ -1,16 +1,26 @@
 import { useMatch } from "@remix-run/react";
+import { PropsWithChildren, createContext, useContext } from "react";
 
-export function useBrand(): Brand {
+export const BrandContext = createContext<Brand | undefined>(undefined);
+
+export function RoutingBrandProvider({ children }: PropsWithChildren) {
   const brandFromUrl = useMatch("/:locale/:brand/*")?.params.brand;
-  if (brandFromUrl === "azul") {
-    return "azul";
-  }
+  const brand =
+    brandFromUrl === "azul"
+      ? "azul"
+      : brandFromUrl === "aqua"
+        ? "aqua"
+        : "puerta";
 
-  if (brandFromUrl === "aqua") {
-    return "aqua";
-  }
+  return (
+    <BrandContext.Provider value={brand}>{children}</BrandContext.Provider>
+  );
+}
 
-  return "puerta";
+export function useBrand(): BrandConfig {
+  const brand = useContext(BrandContext);
+  if (!brand) throw new Error("useBrand must be used within a BrandProvider");
+  return brands[brand];
 }
 
 export type Brand = "puerta" | "aqua" | "azul";

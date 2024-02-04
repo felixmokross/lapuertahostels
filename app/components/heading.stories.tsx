@@ -10,7 +10,6 @@ const meta = {
     as: { control: "select", options: ["h1", "h2", "h3", "h4", "h5", "h6"] },
     size: { control: "radio", options: ["medium", "large", "extra-large"] },
     variant: { control: "radio", options: ["brand", "white", "inherit"] },
-    brand: { control: "radio", options: ["puerta", "aqua", "azul"] },
     children: { control: false },
   },
   parameters: {
@@ -39,7 +38,6 @@ export const VariantPuerta: Story = {
     children: "Discover the Colombian Costa Caribe",
     size: "extra-large",
     variant: "brand",
-    brand: "puerta",
   },
   parameters: {
     background: "white",

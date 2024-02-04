@@ -23,7 +23,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import i18n from "./i18n";
 import i18next from "./i18next.server";
-import { useBrand } from "./brands";
+import { RoutingBrandProvider } from "./brands";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -107,7 +107,6 @@ export const handle = {
 export default function App() {
   const { analyticsDomain } = useLoaderData<typeof loader>();
   const { t, i18n } = useTranslation();
-  const brand = useBrand();
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
@@ -127,14 +126,16 @@ export default function App() {
         {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
         </div> */}
-        <Banner cta={t("bannerCta")} ctaTo="/" brand={brand}>
-          {t("bannerMessage")}
-        </Banner>
-        <Header brand={brand} />
-        <main>
-          <Outlet />
-        </main>
-        <Footer brand={brand} />
+        <RoutingBrandProvider>
+          <Banner cta={t("bannerCta")} ctaTo="/">
+            {t("bannerMessage")}
+          </Banner>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </RoutingBrandProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

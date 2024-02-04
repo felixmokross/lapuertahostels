@@ -5,19 +5,12 @@ import { Footer } from "./footer";
 const meta = {
   title: "Footer",
   component: Footer,
-  argTypes: {
-    brand: {
-      control: "radio",
-      options: ["puerta", "aqua", "azul"],
-    },
-  },
+  argTypes: {},
 } satisfies Meta<typeof Footer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {
-    brand: "puerta",
-  },
+  args: {},
 };

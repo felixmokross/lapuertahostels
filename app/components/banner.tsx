@@ -4,25 +4,25 @@ import { useTranslation } from "react-i18next";
 import { Link } from "./link";
 import { cn } from "./classnames";
 import { Transition } from "@headlessui/react";
-import { Brand, brands } from "../brands";
+import { useBrand } from "../brands";
 
 export type BannerProps = {
   children: string;
   cta: string;
   ctaTo: string;
-  brand: Brand;
 };
 
-export function Banner({ children, cta, ctaTo, brand }: BannerProps) {
+export function Banner({ children, cta, ctaTo }: BannerProps) {
   const [bannerVisible, setBannerVisible] = useState(true);
   const { t } = useTranslation();
+  const brand = useBrand();
 
   return (
     <Transition
       show={bannerVisible}
       className={cn(
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
-        brands[brand].bannerBackgroundColor,
+        brand.bannerBackgroundColor,
       )}
       leave="transition-transform ease-out duration-500"
       leaveFrom="translate-y-0"
