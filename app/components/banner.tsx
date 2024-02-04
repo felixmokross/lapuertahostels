@@ -24,7 +24,7 @@ export function Banner({ children, cta, ctaTo, brand }: BannerProps) {
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
         brands[brand].bannerBackgroundColor,
       )}
-      leave="transition-transform ease-in duration-500"
+      leave="transition-transform ease-out duration-500"
       leaveFrom="translate-y-0"
       leaveTo="-translate-y-full"
     >

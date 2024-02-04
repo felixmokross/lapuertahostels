@@ -1,17 +1,16 @@
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { cn } from "../classnames";
 import { useTranslation } from "react-i18next";
 import { Link, LinkProps } from "../link";
-import { Link as RemixLink, useMatch } from "@remix-run/react";
 import { HeaderBrandLogo } from "./header-brand-logo";
 import { Brand } from "~/brands";
+import { LocaleSwitcher } from "./locale-switcher";
 
 export type HeaderProps = {
   brand: Brand;
 };
 
 export function Header({ brand }: HeaderProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
@@ -23,12 +22,8 @@ export function Header({ brand }: HeaderProps) {
         <NavLink to=".#about-us">{t("aboutUs")}</NavLink>
         <NavLink to="">{t("contact")}</NavLink>
       </div>
-      <div className="group flex items-center justify-end gap-2 text-sm font-bold text-neutral-500">
-        <GlobeAmericasIcon className="h-4" />
-        <LocaleLink locale="en" />
-        <LocaleLink locale="es" />
-        <LocaleLink locale="de" />
-        <LocaleLink locale="fr" />
+      <div className="flex items-center justify-end">
+        <LocaleSwitcher currentLocale={i18n.language} />
       </div>
     </header>
   );
@@ -39,29 +34,5 @@ type NavLinkProps = LinkProps;
 function NavLink({ className, ...props }: NavLinkProps) {
   return (
     <Link className={cn("hover:text-neutral-900", className)} {...props} />
-  );
-}
-
-type LocaleLinkProps = {
-  locale: string;
-};
-
-function LocaleLink({ locale }: LocaleLinkProps) {
-  const { i18n, t } = useTranslation();
-  const match = useMatch("/:locale/*");
-  const splat = match?.params["*"];
-  return (
-    <RemixLink
-      to={`/${locale}${splat ? `/${splat}` : ""}`}
-      reloadDocument
-      className={cn(
-        "hover:text-neutral-900",
-        i18n.language === locale
-          ? "text-neutral-900"
-          : "hidden group-hover:inline",
-      )}
-    >
-      {t(`languages.${locale}`)}
-    </RemixLink>
   );
 }

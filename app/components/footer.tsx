@@ -1,7 +1,7 @@
 import { SVGProps } from "react";
 import { Button } from "./button";
 import { BrandLogo } from "./brand-logo";
-import { Brand, brands } from "~/brands";
+import { Brand, brands } from "../brands";
 
 const navigation = {
   hotel: [
