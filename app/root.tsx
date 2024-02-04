@@ -134,7 +134,7 @@ export default function App() {
         <main>
           <Outlet />
         </main>
-        <Footer />
+        <Footer brand={brand} />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
