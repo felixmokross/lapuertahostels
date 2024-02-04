@@ -93,7 +93,7 @@ export default function Route() {
       />
 
       <div className="mx-auto mt-24 max-w-4xl">
-        <Heading as="h1" size="medium">
+        <Heading as="h1" size="medium" brand="puerta">
           {t("intro.heading")}
         </Heading>
         <Paragraph justify size="extra-large" className="mt-6">
@@ -188,7 +188,7 @@ export default function Route() {
           />
         </div>
         <div className="">
-          <Heading as="h3" size="medium">
+          <Heading as="h3" size="medium" brand="puerta">
             {t("aboutUs")}
           </Heading>
           <div className="mt-6 space-y-4">

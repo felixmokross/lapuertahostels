@@ -1,31 +1,38 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./classnames";
+import { Brand, brands } from "../brands";
 
-type HeadingVariant = "puerta" | "white" | "inherit";
+type HeadingVariant = "brand" | "white" | "inherit";
 
 type HeadingProps = PropsWithChildren<{
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   variant?: HeadingVariant;
+  brand?: Brand;
   size: "small" | "medium" | "large" | "extra-large";
   textShadow?: boolean;
 }>;
 
 export function Heading({
   as: Component,
-  variant = "puerta",
+  variant = "brand",
+  brand,
   size,
   textShadow = false,
   children,
 }: HeadingProps) {
+  if (variant === "brand" && !brand) {
+    throw new Error("brand is required if variant is 'brand'");
+  }
   return (
     <VariantContext.Provider value={variant}>
       <Component
         className={cn(
-          {
-            "text-puerta-600": variant === "puerta",
-            "text-white": variant === "white",
-            "text-inherit": variant === "inherit",
-          },
+          variant === "brand"
+            ? brands[brand!].headingTextColor
+            : {
+                "text-white": variant === "white",
+                "text-inherit": variant === "inherit",
+              },
           {
             "font-sans text-sm font-bold uppercase tracking-wider":
               size === "small",

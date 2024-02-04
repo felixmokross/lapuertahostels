@@ -22,6 +22,7 @@ export type BrandConfig<TBrand extends Brand = Brand> = {
   navLinks: NavLinkConfig[];
   logoTextColor: string;
   logoUrl: string;
+  headingTextColor: string;
   bannerBackgroundColor: string;
   footerBackgroundColor: string;
 };
@@ -46,6 +47,7 @@ export const brands: BrandRegistry = {
     name: "La Puerta Hostels",
     logoTextColor: "text-neutral-900",
     logoUrl: "logos/logo-puerta-simple.png?updatedAt=1703906701749",
+    headingTextColor: "text-puerta-600",
     bannerBackgroundColor: "bg-puerta-800",
     footerBackgroundColor: "bg-puerta-100",
   },
@@ -56,6 +58,7 @@ export const brands: BrandRegistry = {
     name: "Puerta Aqua",
     logoTextColor: "text-aqua-600",
     logoUrl: "logos/logo-aqua-simple.png?updatedAt=1703915191239",
+    headingTextColor: "text-aqua-600",
     bannerBackgroundColor: "bg-aqua-600",
     footerBackgroundColor: "bg-aqua-50",
   },
@@ -66,6 +69,7 @@ export const brands: BrandRegistry = {
     name: "La Puerta Azul",
     logoTextColor: "text-azul-900",
     logoUrl: "logos/logo-azul-simple.png?updatedAt=1703915175439",
+    headingTextColor: "text-azul-900",
     bannerBackgroundColor: "bg-azul-950",
     footerBackgroundColor: "bg-azul-50",
   },
