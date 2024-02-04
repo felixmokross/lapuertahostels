@@ -58,16 +58,11 @@ function useVariant() {
 
 export function HeadingHighlight({ children }: PropsWithChildren) {
   const variant = useVariant();
+  const brand = useBrand();
 
   if (variant !== "white") throw new Error("Only white variant is supported");
 
   return (
-    <span
-      className={cn({
-        "text-puerta-200": variant === "white",
-      })}
-    >
-      {children}
-    </span>
+    <span className={brand.headingWhiteHighlightTextColor}>{children}</span>
   );
 }
