@@ -18,11 +18,15 @@ export type Brand = "puerta" | "aqua" | "azul";
 export type BrandConfig<TBrand extends Brand = Brand> = {
   key: TBrand;
   name: string;
+  homeLinkUrl: string;
+  navLinks: NavLinkConfig[];
   logoTextColor: string;
   logoUrl: string;
   bannerBackgroundColor: string;
   footerBackgroundColor: string;
 };
+
+export type NavLinkConfig = { url: string; labelKey: string };
 
 type BrandRegistry = {
   [KBrand in Brand]: BrandConfig<KBrand>;
@@ -31,6 +35,14 @@ type BrandRegistry = {
 export const brands: BrandRegistry = {
   puerta: {
     key: "puerta",
+    homeLinkUrl: "/",
+    navLinks: [
+      { url: "/aqua", labelKey: "brands.aqua" },
+      { url: "/azul", labelKey: "brands.azul" },
+      { url: ".#santa-marta", labelKey: "santaMarta" },
+      { url: ".#about-us", labelKey: "aboutUs" },
+      { url: "", labelKey: "contact" },
+    ],
     name: "La Puerta Hostels",
     logoTextColor: "text-neutral-900",
     logoUrl: "logos/logo-puerta-simple.png?updatedAt=1703906701749",
@@ -39,6 +51,8 @@ export const brands: BrandRegistry = {
   },
   aqua: {
     key: "aqua",
+    homeLinkUrl: "/aqua",
+    navLinks: [{ url: "/", labelKey: "brands.puerta" }],
     name: "Puerta Aqua",
     logoTextColor: "text-aqua-600",
     logoUrl: "logos/logo-aqua-simple.png?updatedAt=1703915191239",
@@ -47,6 +61,8 @@ export const brands: BrandRegistry = {
   },
   azul: {
     key: "azul",
+    homeLinkUrl: "/azul",
+    navLinks: [{ url: "/", labelKey: "brands.puerta" }],
     name: "La Puerta Azul",
     logoTextColor: "text-azul-900",
     logoUrl: "logos/logo-azul-simple.png?updatedAt=1703915175439",

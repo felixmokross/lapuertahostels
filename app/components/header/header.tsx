@@ -2,7 +2,7 @@ import { cn } from "../classnames";
 import { useTranslation } from "react-i18next";
 import { Link, LinkProps } from "../link";
 import { HeaderBrandLogo } from "./header-brand-logo";
-import { Brand } from "~/brands";
+import { Brand, brands } from "~/brands";
 import { LocaleSwitcher } from "./locale-switcher";
 
 export type HeaderProps = {
@@ -16,11 +16,11 @@ export function Header({ brand }: HeaderProps) {
     <header className="grid grid-cols-3 items-center px-4 py-4">
       <HeaderBrandLogo brand={brand} />
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
-        <NavLink to="aqua">Puerta Aqua</NavLink>
-        <NavLink to="azul">La Puerta Azul</NavLink>
-        <NavLink to=".#santa-marta">Santa Marta</NavLink>
-        <NavLink to=".#about-us">{t("aboutUs")}</NavLink>
-        <NavLink to="">{t("contact")}</NavLink>
+        {brands[brand].navLinks.map((navLink, index) => (
+          <NavLink key={index} to={navLink.url}>
+            {t(navLink.labelKey)}
+          </NavLink>
+        ))}
       </div>
       <div className="flex items-center justify-end">
         <LocaleSwitcher currentLocale={i18n.language} />

@@ -10,7 +10,7 @@ export type HeaderBrandLogoProps = {
 export function HeaderBrandLogo({ brand }: HeaderBrandLogoProps) {
   return (
     <h1 className="relative h-10 w-full">
-      <Link to="/">
+      <Link to={brands[brand].homeLinkUrl}>
         {(Object.keys(brands) as (keyof typeof brands)[]).map((b) => (
           <Transition
             key={b}
