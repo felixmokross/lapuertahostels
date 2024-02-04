@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 import { Button } from "./button";
-import { PuertaLogo } from "./logos/puerta-logo";
+import { BrandLogo } from "./brand-logo";
 
 const navigation = {
   hotel: [
@@ -61,7 +61,7 @@ export function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h6 className="mt-2">
-              <PuertaLogo size="small" />
+              <BrandLogo size="small" brand="puerta" />
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
               La Puerta Hostels S.A.S.

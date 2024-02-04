@@ -6,7 +6,7 @@ const meta = {
   title: "Banner",
   component: Banner,
   argTypes: {
-    variant: {
+    brand: {
       options: ["puerta", "aqua", "azul"],
       control: { type: "radio" },
     },
@@ -21,6 +21,6 @@ export const Primary: Story = {
     children: "Travel before 20 September and get 20% off!",
     cta: "Book now",
     ctaTo: "/cta",
-    variant: "puerta",
+    brand: "puerta",
   },
 };

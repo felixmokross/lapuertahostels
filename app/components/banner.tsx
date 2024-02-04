@@ -4,15 +4,16 @@ import { useTranslation } from "react-i18next";
 import { Link } from "./link";
 import { cn } from "./classnames";
 import { Transition } from "@headlessui/react";
+import { Brand, brands } from "../brands";
 
 export type BannerProps = {
   children: string;
   cta: string;
   ctaTo: string;
-  variant: "puerta" | "aqua" | "azul";
+  brand: Brand;
 };
 
-export function Banner({ children, cta, ctaTo, variant }: BannerProps) {
+export function Banner({ children, cta, ctaTo, brand }: BannerProps) {
   const [bannerVisible, setBannerVisible] = useState(true);
   const { t } = useTranslation();
 
@@ -21,11 +22,7 @@ export function Banner({ children, cta, ctaTo, variant }: BannerProps) {
       show={bannerVisible}
       className={cn(
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
-        {
-          "bg-puerta-800": variant === "puerta",
-          "bg-azul-950": variant === "azul",
-          "bg-aqua-600": variant === "aqua",
-        },
+        brands[brand].bannerBackgroundColor,
       )}
       leave="transition-transform ease-in duration-500"
       leaveFrom="translate-y-0"

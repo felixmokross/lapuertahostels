@@ -3,16 +3,19 @@ import { cn } from "../classnames";
 import { useTranslation } from "react-i18next";
 import { Link, LinkProps } from "../link";
 import { Link as RemixLink, useMatch } from "@remix-run/react";
-import { useTheme } from "../../common";
-import { ThemeLogo } from "./theme-logo";
+import { HeaderBrandLogo } from "./header-brand-logo";
+import { Brand } from "~/brands";
 
-export function Header() {
+export type HeaderProps = {
+  brand: Brand;
+};
+
+export function Header({ brand }: HeaderProps) {
   const { t } = useTranslation();
 
-  const theme = useTheme();
   return (
     <header className="grid grid-cols-3 items-center px-4 py-4">
-      <ThemeLogo theme={theme} />
+      <HeaderBrandLogo brand={brand} />
       <div className="space-x-10 justify-self-center text-nowrap text-sm font-bold text-neutral-500">
         <NavLink to="aqua">Puerta Aqua</NavLink>
         <NavLink to="azul">La Puerta Azul</NavLink>

@@ -23,7 +23,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import i18n from "./i18n";
 import i18next from "./i18next.server";
-import { useTheme } from "./common";
+import { useBrand } from "./brands";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -107,7 +107,7 @@ export const handle = {
 export default function App() {
   const { analyticsDomain } = useLoaderData<typeof loader>();
   const { t, i18n } = useTranslation();
-  const theme = useTheme();
+  const brand = useBrand();
   return (
     <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
       <head>
@@ -127,10 +127,10 @@ export default function App() {
         {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
         </div> */}
-        <Banner cta={t("bannerCta")} ctaTo="/" variant={theme}>
+        <Banner cta={t("bannerCta")} ctaTo="/" brand={brand}>
           {t("bannerMessage")}
         </Banner>
-        <Header />
+        <Header brand={brand} />
         <main>
           <Outlet />
         </main>

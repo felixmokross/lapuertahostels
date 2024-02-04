@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ThemeLogo } from "./theme-logo";
+import { HeaderBrandLogo } from "./header-brand-logo";
 
 const meta = {
-  title: "header/ThemeLogo",
-  component: ThemeLogo,
+  title: "header/HeaderBrandLogo",
+  component: HeaderBrandLogo,
   argTypes: {
-    theme: {
+    brand: {
       control: "radio",
       options: ["puerta", "aqua", "azul"],
     },
   },
-} satisfies Meta<typeof ThemeLogo>;
+} satisfies Meta<typeof HeaderBrandLogo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    theme: "puerta",
+    brand: "puerta",
   },
 };
