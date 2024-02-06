@@ -1,10 +1,4 @@
-import {
-  json,
-  MetaFunction,
-  type LinksFunction,
-  LoaderFunctionArgs,
-  redirect,
-} from "@remix-run/node";
+import { json, MetaFunction, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -12,7 +6,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  matchPath,
   useLoaderData,
 } from "@remix-run/react";
 
@@ -21,8 +14,6 @@ import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
-import i18n from "./i18n";
-import i18next from "./i18next.server";
 import { RoutingBrandProvider } from "./brands";
 
 export const links: LinksFunction = () => [
@@ -78,18 +69,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const match = matchPath(":locale?/*", new URL(request.url).pathname);
-  if (
-    !match?.params?.locale ||
-    !i18n.supportedLngs.includes(match.params.locale)
-  ) {
-    const autoDetectedLocale = await i18next.getLocale(request);
-    return redirect(
-      `/${autoDetectedLocale}${match?.pathname === "/" ? "" : `${match?.pathname}`}`,
-    );
-  }
-
+export async function loader() {
   return json({
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,

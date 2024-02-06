@@ -36,7 +36,7 @@ export default function Route() {
         ]}
       />
       <div className="mx-auto mt-24 max-w-4xl">
-        <Heading as="h2" size="large" brand="azul">
+        <Heading as="h2" size="large">
           Welcome to Your Vacation Home
         </Heading>
       </div>

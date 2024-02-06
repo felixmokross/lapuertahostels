@@ -1,13 +1,10 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { redirect, useRouteLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/classnames";
 import { loader as rootLoader } from "~/root";
 import { Trans, useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
-import { Link } from "~/components/link";
-import i18n from "~/i18n";
-import i18next from "~/i18next.server";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
 
@@ -17,16 +14,6 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
-
-export async function loader({ params, request }: LoaderFunctionArgs) {
-  if (params.locale && !i18n.supportedLngs.includes(params.locale)) {
-    // if the 'locale' param is not a supported language, redirect to that path under the auto-detected locale
-    const autoDetectedLocale = await i18next.getLocale(request);
-    return redirect(`/${autoDetectedLocale}/${params.locale}`);
-  }
-
-  return null;
-}
 
 export default function Route() {
   const { t } = useTranslation();
@@ -93,7 +80,7 @@ export default function Route() {
       />
 
       <div className="mx-auto mt-24 max-w-4xl">
-        <Heading as="h1" size="medium" brand="puerta">
+        <Heading as="h1" size="medium">
           {t("intro.heading")}
         </Heading>
         <Paragraph justify size="extra-large" className="mt-6">
@@ -188,7 +175,7 @@ export default function Route() {
           />
         </div>
         <div className="">
-          <Heading as="h3" size="medium" brand="puerta">
+          <Heading as="h3" size="medium">
             {t("aboutUs")}
           </Heading>
           <div className="mt-6 space-y-4">

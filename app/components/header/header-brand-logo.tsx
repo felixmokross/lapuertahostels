@@ -1,7 +1,7 @@
-import { Link } from "../link";
 import { Transition } from "@headlessui/react";
 import { BrandLogo } from "../brand-logo";
 import { brands, useBrand } from "../../brands";
+import { Link } from "@remix-run/react";
 
 export function HeaderBrandLogo() {
   const brand = useBrand();

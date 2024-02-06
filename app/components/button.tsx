@@ -16,7 +16,6 @@ export function Button({
   ...props
 }: ButtonProps) {
   const brand = useBrand();
-  console.log(brand);
   return (
     <button
       className={cn(

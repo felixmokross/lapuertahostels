@@ -4,7 +4,7 @@ import { PropsWithChildren, createContext, useContext } from "react";
 export const BrandContext = createContext<Brand | undefined>(undefined);
 
 export function RoutingBrandProvider({ children }: PropsWithChildren) {
-  const brandFromUrl = useMatch("/:locale/:brand/*")?.params.brand;
+  const brandFromUrl = useMatch("/:brand/*")?.params.brand;
   const brand =
     brandFromUrl === "azul"
       ? "azul"

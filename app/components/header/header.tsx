@@ -1,9 +1,9 @@
 import { cn } from "../classnames";
 import { useTranslation } from "react-i18next";
-import { Link, LinkProps } from "../link";
 import { HeaderBrandLogo } from "./header-brand-logo";
 import { useBrand } from "../../brands";
 import { LocaleSwitcher } from "./locale-switcher";
+import { Link, LinkProps } from "@remix-run/react";
 
 export function Header() {
   const { t, i18n } = useTranslation();

@@ -2,7 +2,7 @@ import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { Dropdown } from "../dropdown";
 import { useTranslation } from "react-i18next";
 import i18nConfig from "../../i18n";
-import { useMatch, Link as RemixLink } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;
@@ -10,8 +10,8 @@ export type LocaleSwitcherProps = {
 
 export function LocaleSwitcher({ currentLocale }: LocaleSwitcherProps) {
   const { t } = useTranslation();
-  const match = useMatch("/:locale/*");
-  const splat = match?.params["*"];
+  const location = useLocation();
+
   return (
     <Dropdown
       button={
@@ -26,14 +26,22 @@ export function LocaleSwitcher({ currentLocale }: LocaleSwitcherProps) {
       {i18nConfig.supportedLngs
         .filter((locale) => locale !== currentLocale)
         .map((locale) => (
-          <Dropdown.Item
+          <form
             key={locale}
-            as={RemixLink}
-            to={`/${locale}${splat ? `/${splat}` : ""}`}
-            reloadDocument
+            method="post"
+            action="/locale"
+            className="contents"
           >
-            {t(`languages.${locale}`)}
-          </Dropdown.Item>
+            <input type="hidden" name="locale" value={locale} />
+            <input
+              type="hidden"
+              name="redirectTo"
+              value={`${location.pathname}${location.search}${location.hash}`}
+            />
+            <Dropdown.Item as="button" type="submit">
+              {t(`languages.${locale}`)}
+            </Dropdown.Item>
+          </form>
         ))}
     </Dropdown>
   );
