@@ -1,5 +1,13 @@
+import { MetaFunction } from "@remix-run/node";
 import { Carousel } from "~/components/carousel";
 import { Heading, HeadingHighlight } from "~/components/heading";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "LA PUERTA AZUL" },
+    { name: "description", content: "Welcome to Remix!" },
+  ];
+};
 
 export default function Route() {
   return (
