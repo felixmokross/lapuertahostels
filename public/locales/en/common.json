@@ -1,4 +1,10 @@
 {
+  "brands": {
+    "puerta": "La Puerta Hostels",
+    "azul": "La Puerta Azul",
+    "aqua": "Puerta Aqua"
+  },
+  "santaMarta": "Santa Marta",
   "languages": {
     "en": "English",
     "es": "Español",

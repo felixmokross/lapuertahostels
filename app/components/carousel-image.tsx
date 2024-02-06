@@ -10,6 +10,7 @@ export type CarouselImageProps = Omit<
   "ref"
 > & {
   withPreview?: boolean;
+  position?: "center" | "bottom";
 };
 
 export function CarouselImage({
@@ -17,6 +18,7 @@ export function CarouselImage({
   alt,
   className,
   withPreview = false,
+  position,
   ...props
 }: CarouselImageProps) {
   const [state, setState] = useState<"loading" | "loaded">("loading");
@@ -30,6 +32,9 @@ export function CarouselImage({
   }, [state]);
 
   const previewImageSrc = `${src},bl-10`;
+  const imageClassName = cn("absolute top-0 h-full w-full object-cover", {
+    "object-[center_70%]": position === "bottom",
+  });
 
   return (
     <div className={cn("h-full w-full", className)}>
@@ -37,7 +42,7 @@ export function CarouselImage({
         <Image
           src={previewImageSrc}
           alt={alt}
-          className="absolute top-0 h-full w-full object-cover"
+          className={imageClassName}
           {...props}
         />
       )}
@@ -48,7 +53,7 @@ export function CarouselImage({
           setState("loaded");
         }}
         alt={alt}
-        className="absolute top-0 h-full w-full object-cover"
+        className={imageClassName}
         {...props}
       />
     </div>

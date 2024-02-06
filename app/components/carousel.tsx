@@ -14,6 +14,7 @@ export type CarouselItem = {
   src: string;
   alt: string;
   title: CarouselItemTitle;
+  position?: "center" | "bottom";
 };
 
 export type CarouselItemTitle = {
@@ -51,6 +52,7 @@ export function Carousel({ items }: CarouselProps) {
               alt={item.alt}
               withPreview={i === 0}
               className="absolute top-0"
+              position={item.position}
             />
             <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (

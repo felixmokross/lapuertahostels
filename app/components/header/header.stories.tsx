@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { PuertaLogo } from "./puerta-logo";
+import { Header } from "./header";
 
 const meta = {
-  title: "PuertaLogo",
-  component: PuertaLogo,
+  title: "header/Header",
+  component: Header,
   argTypes: {},
-} satisfies Meta<typeof PuertaLogo>;
+} satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,10 +1,4 @@
-import {
-  json,
-  MetaFunction,
-  type LinksFunction,
-  LoaderFunctionArgs,
-  redirect,
-} from "@remix-run/node";
+import { json, MetaFunction, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -12,17 +6,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  matchPath,
   useLoaderData,
 } from "@remix-run/react";
 
 import styles from "./tailwind.css";
 import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
-import { Header } from "./components/header";
+import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
-import i18n from "./i18n";
-import i18next from "./i18next.server";
+import { RoutingBrandProvider } from "./brands";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -77,18 +69,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const match = matchPath(":locale?/*", new URL(request.url).pathname);
-  if (
-    !match?.params?.locale ||
-    !i18n.supportedLngs.includes(match.params.locale)
-  ) {
-    const autoDetectedLocale = await i18next.getLocale(request);
-    return redirect(
-      `/${autoDetectedLocale}${match?.pathname === "/" ? "" : `${match?.pathname}`}`,
-    );
-  }
-
+export async function loader() {
   return json({
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
@@ -107,7 +88,7 @@ export default function App() {
   const { analyticsDomain } = useLoaderData<typeof loader>();
   const { t, i18n } = useTranslation();
   return (
-    <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
+    <html lang={i18n.language} dir={i18n.dir()}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -125,14 +106,16 @@ export default function App() {
         {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
           Coming soon…
         </div> */}
-        <Banner cta={t("bannerCta")} ctaTo="/">
-          {t("bannerMessage")}
-        </Banner>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
+        <RoutingBrandProvider>
+          <Banner cta={t("bannerCta")} ctaTo="/">
+            {t("bannerMessage")}
+          </Banner>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </RoutingBrandProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

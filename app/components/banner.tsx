@@ -1,7 +1,10 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "./link";
+import { cn } from "./classnames";
+import { Transition } from "@headlessui/react";
+import { useBrand } from "../brands";
+import { Link } from "@remix-run/react";
 
 export type BannerProps = {
   children: string;
@@ -12,9 +15,19 @@ export type BannerProps = {
 export function Banner({ children, cta, ctaTo }: BannerProps) {
   const [bannerVisible, setBannerVisible] = useState(true);
   const { t } = useTranslation();
-  if (!bannerVisible) return null;
+  const brand = useBrand();
+
   return (
-    <div className="flex items-center gap-x-6 bg-puerta-800 px-6 py-2.5 text-sm text-white sm:px-3.5 sm:before:flex-1">
+    <Transition
+      show={bannerVisible}
+      className={cn(
+        "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
+        brand.bannerBackgroundColor,
+      )}
+      leave="transition-transform ease-out duration-500"
+      leaveFrom="translate-y-0"
+      leaveTo="-translate-y-full"
+    >
       <div className="flex gap-2 leading-6">
         <p>{children}</p>
         <Link to={ctaTo} className="font-bold hover:underline">
@@ -31,6 +44,6 @@ export function Banner({ children, cta, ctaTo }: BannerProps) {
           <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
         </button>
       </div>
-    </div>
+    </Transition>
   );
 }

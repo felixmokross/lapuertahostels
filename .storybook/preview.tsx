@@ -3,6 +3,7 @@ import { createRemixStub } from "@remix-run/testing";
 import "../app/tailwind.css";
 import React from "react";
 import i18n from "./i18next";
+import { BrandContext } from "../app/brands";
 
 const withRemix: Decorator = (Story) => {
   const RemixStub = createRemixStub([
@@ -34,6 +35,17 @@ const preview: Preview = {
       es: "Español",
     },
   },
+  globalTypes: {
+    brand: {
+      defaultValue: "puerta",
+      toolbar: {
+        title: "Brand",
+        icon: "verified",
+        items: ["puerta", "aqua", "azul"],
+        dynamicTitle: true,
+      },
+    },
+  },
   parameters: {
     i18n,
     actions: { argTypesRegex: "^on[A-Z].*" },
@@ -44,7 +56,14 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withRemix],
+  decorators: [
+    withRemix,
+    (Story, { globals }) => (
+      <BrandContext.Provider value={globals.brand}>
+        <Story />
+      </BrandContext.Provider>
+    ),
+  ],
 };
 
 export default preview;

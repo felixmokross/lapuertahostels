@@ -8,8 +8,8 @@ const meta = {
   component: Heading,
   argTypes: {
     as: { control: "select", options: ["h1", "h2", "h3", "h4", "h5", "h6"] },
-    size: { control: "select", options: ["medium", "large", "extra-large"] },
-    variant: { control: "select", options: ["puerta", "white"] },
+    size: { control: "radio", options: ["medium", "large", "extra-large"] },
+    variant: { control: "radio", options: ["brand", "white", "inherit"] },
     children: { control: false },
   },
   parameters: {
@@ -37,7 +37,7 @@ export const VariantPuerta: Story = {
     as: "h1",
     children: "Discover the Colombian Costa Caribe",
     size: "extra-large",
-    variant: "puerta",
+    variant: "brand",
   },
   parameters: {
     background: "white",

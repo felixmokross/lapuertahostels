@@ -1,5 +1,6 @@
 import { PropsWithChildren, PropsWithoutRef } from "react";
 import { cn } from "./classnames";
+import { useBrand } from "../brands";
 
 export type ButtonProps = PropsWithChildren<{
   size: "small" | "large";
@@ -10,14 +11,19 @@ export type ButtonProps = PropsWithChildren<{
 export function Button({
   children,
   size,
-  blackShadow,
+  blackShadow = false,
   className,
   ...props
 }: ButtonProps) {
+  const brand = useBrand();
   return (
     <button
       className={cn(
-        "rounded-md bg-puerta-500 font-bold uppercase text-white hover:bg-puerta-200 hover:text-puerta-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-puerta-600",
+        "rounded-md font-bold uppercase text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        brand.buttonColors.backgroundColor,
+        brand.buttonColors.hoverBackgroundColor,
+        brand.buttonColors.hoverTextColor,
+        brand.buttonColors.focusOutlineColor,
         {
           "px-6 py-3 text-base tracking-wider shadow-md hover:shadow-lg":
             size === "large",
