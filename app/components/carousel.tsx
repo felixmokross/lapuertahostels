@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
 import { useTranslation } from "react-i18next";

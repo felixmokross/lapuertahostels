@@ -1,5 +1,5 @@
 import { PropsWithChildren, PropsWithoutRef } from "react";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { useBrand } from "../brands";
 
 export type ButtonProps = PropsWithChildren<{

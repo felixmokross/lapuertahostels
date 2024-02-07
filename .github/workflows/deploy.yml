@@ -64,11 +64,11 @@ jobs:
       url: https://${{ needs.define-env.outputs.domain }}/
     needs: [check, version, define-env]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.1.117
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
       - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false

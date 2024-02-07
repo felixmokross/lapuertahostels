@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { Transition } from "@headlessui/react";
 import { useBrand } from "../brands";
 import { Link } from "@remix-run/react";
