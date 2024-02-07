@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Paragraph, ParagraphHighlight } from "./paragraph";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 
 const meta = {
   title: "Paragraph",

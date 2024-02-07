@@ -1,4 +1,4 @@
-import { cn } from "../classnames";
+import { cn } from "../cn";
 import { useTranslation } from "react-i18next";
 import { HeaderBrandLogo } from "./header-brand-logo";
 import { useBrand } from "../../brands";

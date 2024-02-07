@@ -1,4 +1,4 @@
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { DetailedHTMLProps, useEffect, useRef, useState } from "react";
 import { Image } from "./image";
 

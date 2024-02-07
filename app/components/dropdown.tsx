@@ -6,7 +6,7 @@ import {
   PropsWithChildren,
   ReactNode,
 } from "react";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 
 export type DropdownProps = PropsWithChildren<{
   button: ReactNode;

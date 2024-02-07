@@ -1,5 +1,5 @@
 import { Brand, brands } from "../brands";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { Image } from "./image";
 
 export type BrandLogoProps = {

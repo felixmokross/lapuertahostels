@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
-import { cn } from "~/components/classnames";
+import { cn } from "~/components/cn";
 import { loader as rootLoader } from "~/root";
 import { Trans, useTranslation } from "react-i18next";
 import { Image } from "~/components/image";

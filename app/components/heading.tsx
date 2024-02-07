@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import { cn } from "./classnames";
+import { cn } from "./cn";
 import { useBrand } from "../brands";
 
 type HeadingVariant = "brand" | "white" | "inherit";
