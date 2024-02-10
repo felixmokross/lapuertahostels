@@ -21,12 +21,13 @@ export function Paragraph({
     <VariantContext.Provider value={variant}>
       <p
         className={cn(
-          "leading-relaxed",
           justify && "hyphens-auto text-justify",
           {
-            "text-base": size === "medium",
-            "text-md md:text-lg": size === "large",
-            "text-lg md:text-xl": size === "extra-large",
+            "text-base leading-relaxed": size === "medium",
+            "text-md leading-relaxed md:text-lg md:leading-relaxed":
+              size === "large",
+            "text-lg leading-relaxed md:text-xl md:leading-relaxed":
+              size === "extra-large",
           },
           {
             "text-white": variant === "white",
