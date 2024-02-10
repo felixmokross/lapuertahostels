@@ -12,7 +12,7 @@ export type ParagraphProps = PropsWithChildren<{
 
 export function Paragraph({
   children,
-  size,
+  size = "medium",
   variant = "neutral",
   justify = false,
   className,
@@ -21,12 +21,13 @@ export function Paragraph({
     <VariantContext.Provider value={variant}>
       <p
         className={cn(
-          "leading-relaxed",
           justify && "hyphens-auto text-justify",
           {
-            "text-base": size === "medium",
-            "text-lg": size === "large",
-            "text-xl": size === "extra-large",
+            "text-base leading-relaxed": size === "medium",
+            "text-md leading-relaxed md:text-lg md:leading-relaxed":
+              size === "large",
+            "text-lg leading-relaxed md:text-xl md:leading-relaxed":
+              size === "extra-large",
           },
           {
             "text-white": variant === "white",
@@ -47,7 +48,7 @@ const VariantContext = createContext<ParagraphVariant | undefined>(undefined);
 function useVariant() {
   const context = useContext(VariantContext);
   if (!context) {
-    throw new Error("ParagrapgHighlight must be used inside a Paragraph");
+    throw new Error("ParagraphHighlight must be used inside a Paragraph");
   }
   return context;
 }

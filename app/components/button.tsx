@@ -25,7 +25,7 @@ export function Button({
         brand.buttonColors.hoverTextColor,
         brand.buttonColors.focusOutlineColor,
         {
-          "px-6 py-3 text-base tracking-wider shadow-md hover:shadow-lg":
+          "px-4 py-2 text-sm tracking-wider shadow-md hover:shadow-lg md:px-6 md:py-3 md:text-base":
             size === "large",
           "px-3 py-2 text-xs tracking-wide shadow-sm hover:shadow-md":
             size === "small",

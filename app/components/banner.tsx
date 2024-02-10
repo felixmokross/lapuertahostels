@@ -28,10 +28,10 @@ export function Banner({ children, cta, ctaTo }: BannerProps) {
       leaveFrom="translate-y-0"
       leaveTo="-translate-y-full"
     >
-      <div className="flex gap-2 leading-6">
-        <p>{children}</p>
-        <Link to={ctaTo} className="font-bold hover:underline">
-          <strong>{cta} &rarr;</strong>
+      <div className="leading-6">
+        {children} <span className="mx-1">&middot;</span>{" "}
+        <Link to={ctaTo} className="text-nowrap font-bold hover:underline">
+          <strong>{cta}</strong>
         </Link>
       </div>
       <div className="flex flex-1 justify-end">

@@ -107,7 +107,7 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-            <div className="mt-10 md:mt-0">
+            <div>
               <h3 className="text-sm font-semibold leading-6 text-neutral-900">
                 Experiences
               </h3>
@@ -124,7 +124,7 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-            <div className="mt-10 md:mt-0">
+            <div>
               <h3 className="text-sm font-semibold leading-6 text-neutral-900">
                 Legal
               </h3>

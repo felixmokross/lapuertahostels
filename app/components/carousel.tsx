@@ -31,7 +31,7 @@ export function Carousel({ items }: CarouselProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="relative h-[40rem] bg-puerta-100">
+    <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
       {items.map((item, i) => {
         item = items[i];
         return (
