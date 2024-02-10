@@ -5,19 +5,27 @@ import { Image } from "./image";
 export type BrandLogoProps = {
   size: "small" | "large";
   brand: Brand;
+  type?: "with-wordmark" | "simple";
+  className?: string;
 };
 
-export function BrandLogo({ size, brand }: BrandLogoProps) {
+export function BrandLogo({
+  size,
+  brand,
+  type = "with-wordmark",
+  className,
+}: BrandLogoProps) {
   const brandConfig = brands[brand];
   return (
     <span
       className={cn(
-        "flex items-center font-serif uppercase",
+        "flex items-center text-nowrap font-serif uppercase",
         brandConfig.logoTextColor,
         {
           "gap-2 text-base tracking-wider": size === "small",
           "gap-4 text-2xl tracking-wide": size === "large",
         },
+        className,
       )}
     >
       <Image
@@ -33,7 +41,7 @@ export function BrandLogo({ size, brand }: BrandLogoProps) {
         }`}
         alt={`${brandConfig.name} Logo`}
       />
-      {brandConfig.name}
+      {type === "with-wordmark" && brandConfig.name}
     </span>
   );
 }

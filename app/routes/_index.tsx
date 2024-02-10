@@ -79,11 +79,11 @@ export default function Route() {
         ]}
       />
 
-      <div className="mx-auto mt-24 max-w-4xl">
+      <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
         <Heading as="h1" size="medium">
           {t("intro.heading")}
         </Heading>
-        <Paragraph justify size="extra-large" className="mt-6">
+        <Paragraph justify size="extra-large" className="mt-4 md:mt-6">
           <Trans
             i18nKey="intro.text"
             defaults="Hike through the breath-taking beauty of <hl>Tayrona National Park</hl>, discover the mysterious <hl>Lost City</hl>, or refresh yourself in the river of <hl>Minca</hl>. Our variety of heartful accommodations in the city of Santa Marta are <hl>your perfect home base.</hl>"
@@ -92,19 +92,24 @@ export default function Route() {
         </Paragraph>
       </div>
 
-      <div className="relative mt-36">
+      <div className="relative mt-14 md:mt-36">
         <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
-        <div className="py-16">
-          <div className="mx-auto max-w-4xl">
+        <div className="py-8 md:py-16">
+          <div className="lg-px-0 mx-auto max-w-4xl px-8">
             <Heading as="h2" size="large" variant="white">
               Your Home Base for a Perfect Trip
             </Heading>
-            <Paragraph className="mt-6" justify size="large" variant="white">
+            <Paragraph
+              className="mt-4 md:mt-6"
+              justify
+              size="large"
+              variant="white"
+            >
               Choose between our <strong>two accommodations</strong> in Santa
               Marta.
             </Paragraph>
           </div>
-          <div className="mx-auto mt-14 grid max-w-7xl grid-cols-2 gap-x-8 px-8">
+          <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
             <AccommodationCard
               name="Puerta Aqua"
               to="/aqua"
@@ -128,21 +133,24 @@ export default function Route() {
           </div>
         </div>
       </div>
-      <div className="relative mx-auto mt-32 max-w-4xl" id="santa-marta">
-        <div className="h-[32rem] overflow-hidden rounded-lg shadow-md">
+      <div
+        className="relative mx-auto mt-14 lg:mt-32 lg:max-w-4xl"
+        id="santa-marta"
+      >
+        <div className="h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
           <Image
             src="/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707&tr=w-1000,ar-16-9,c-maintain_ratio,fo-auto"
             alt="View of Santa Marta"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 flex rounded-lg bg-gradient-to-t from-transparent to-black/40 px-8 py-4">
+          <div className="absolute inset-0 flex bg-gradient-to-t from-transparent to-black/40 px-6 py-4 md:px-8 md:py-6 lg:rounded-lg">
             <Heading as="h3" size="extra-large" variant="white" textShadow>
               Do You Know <HeadingHighlight>Santa Marta?</HeadingHighlight>
             </Heading>
           </div>
         </div>
-        <div className="absolute inset-0 flex items-end justify-end">
-          <div className="max-w-lg translate-x-12 translate-y-20 space-y-4 rounded-md bg-gradient-to-bl from-puerta-100 to-puerta-300 px-6 py-4 shadow-lg">
+        <div className="lg:absolute lg:inset-0 lg:flex lg:items-end lg:justify-end">
+          <div className="bg-gradient-to-bl from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-x-12 lg:translate-y-20">
             <Paragraph variant="puerta" justify>
               Santa Marta, nestled{" "}
               <strong>
@@ -165,20 +173,13 @@ export default function Route() {
 
       <div
         id="about-us"
-        className="mx-auto mb-20 mt-72 grid max-w-4xl grid-cols-2 items-center justify-center gap-16"
+        className="mx-auto mb-20 mt-24 max-w-4xl lg:mt-72 lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16"
       >
-        <div className="-ml-10 mr-12 mt-4 aspect-[3/4] -rotate-6 overflow-hidden rounded-md shadow-lg">
-          <Image
-            src="/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale"
-            alt=""
-            className="h-full w-full object-cover"
-          />
-        </div>
-        <div className="">
+        <div className="px-8 lg:order-last lg:px-0">
           <Heading as="h3" size="medium">
             {t("aboutUs")}
           </Heading>
-          <div className="mt-6 space-y-4">
+          <div className="mt-4 space-y-3 md:mt-6 md:space-y-4">
             <Paragraph justify>
               Step into our <strong>Santa Marta haven,</strong> where the{" "}
               <strong>Caribbean breeze whispers tales of adventure,</strong> and
@@ -212,6 +213,13 @@ export default function Route() {
             </Paragraph>
           </div>
         </div>
+        <div className="mx-auto mt-32 aspect-[3/4] max-w-xs -rotate-6 overflow-hidden rounded-md shadow-lg lg:-ml-10 lg:mr-12 lg:mt-0 lg:max-w-none">
+          <Image
+            src="/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </div>
       </div>
     </>
   );
@@ -243,7 +251,7 @@ function AccommodationCard({
     <Link
       to={to}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-xl shadow-lg hover:shadow-md",
+        "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
         {
           "bg-aqua-600 hover:bg-aqua-200": color === "aqua",
           "bg-azul-600 hover:bg-azul-200": color === "azul",
@@ -259,15 +267,20 @@ function AccommodationCard({
         />
       </div>
       <div
-        className={cn("space-y-2 px-6 py-4 text-white", {
-          "group-hover:text-azul-800": color === "azul",
-          "group-hover:text-aqua-800": color === "aqua",
-        })}
+        className={cn(
+          "space-y-1 px-8 py-6 text-white md:space-y-2 md:px-6 md:py-4",
+          {
+            "group-hover:text-azul-800": color === "azul",
+            "group-hover:text-aqua-800": color === "aqua",
+          },
+        )}
       >
         <Heading as="h4" variant="inherit" size="small">
           {name}
         </Heading>
-        <Paragraph variant="inherit">{description}</Paragraph>
+        <Paragraph variant="inherit" justify>
+          {description}
+        </Paragraph>
       </div>
     </Link>
   );

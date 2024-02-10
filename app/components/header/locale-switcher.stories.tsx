@@ -11,6 +11,9 @@ const meta = {
       control: { type: "select" },
     },
   },
+  parameters: {
+    layout: "centered",
+  },
 } satisfies Meta<typeof LocaleSwitcher>;
 
 export default meta;

@@ -24,7 +24,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",
   },
   {
     rel: "stylesheet",
@@ -107,7 +107,7 @@ export default function App() {
           Coming soon…
         </div> */}
         <RoutingBrandProvider>
-          <Banner cta={t("bannerCta")} ctaTo="/">
+          <Banner cta={`${t("bannerCta")} →`} ctaTo="/">
             {t("bannerMessage")}
           </Banner>
           <Header />

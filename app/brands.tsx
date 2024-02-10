@@ -42,6 +42,7 @@ export type BrandConfig<TBrand extends Brand = Brand> = {
     hoverTextColor: string;
     focusOutlineColor: string;
   };
+  navButtonClassName: string;
 };
 
 export type NavLinkConfig = { url: string; labelKey: string };
@@ -74,6 +75,7 @@ export const brands: BrandRegistry = {
       hoverTextColor: "hover:text-puerta-800",
       focusOutlineColor: "focus-visible:outline-puerta-600",
     },
+    navButtonClassName: "border-puerta-500 bg-puerta-50 text-puerta-700",
   },
   aqua: {
     key: "aqua",
@@ -92,6 +94,7 @@ export const brands: BrandRegistry = {
       hoverTextColor: "hover:text-aqua-800",
       focusOutlineColor: "focus-visible:outline-aqua-600",
     },
+    navButtonClassName: "border-aqua-400 bg-aqua-50 text-aqua-700",
   },
   azul: {
     key: "azul",
@@ -110,5 +113,6 @@ export const brands: BrandRegistry = {
       hoverTextColor: "hover:text-azul-900",
       focusOutlineColor: "focus-visible:outline-azul-900",
     },
+    navButtonClassName: "border-azul-950 bg-azul-50 text-azul-800",
   },
 };

@@ -30,11 +30,13 @@ export function Heading({
                 "text-inherit": variant === "inherit",
               },
           {
-            "font-sans text-sm font-bold uppercase tracking-wider":
+            "font-sans text-sm font-bold uppercase leading-relaxed tracking-wider":
               size === "small",
-            "font-serif text-4xl tracking-tight": size === "medium",
-            "font-serif text-5xl tracking-tight": size === "large",
-            "font-serif text-6xl font-light leading-relaxed tracking-tight":
+            "font-serif text-3xl leading-relaxed tracking-tight md:text-4xl md:leading-relaxed":
+              size === "medium",
+            "font-serif text-4xl leading-relaxed tracking-tight md:text-5xl md:leading-relaxed":
+              size === "large",
+            "font-serif text-5xl leading-relaxed tracking-tight md:text-6xl md:font-light md:leading-relaxed":
               size === "extra-large",
           },
         )}
