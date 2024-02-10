@@ -20,6 +20,11 @@ const config: StorybookConfig = {
   async viteFinal(config, { configType }) {
     // Merge custom configuration into the default config
     return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "~": "/app",
+        },
+      },
       assetsInclude: ["/sb-preview/runtime.js"], // Bug workaround, see https://github.com/storybookjs/storybook/issues/25256
       plugins:
         configType === "PRODUCTION"
