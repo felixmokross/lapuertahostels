@@ -48,7 +48,6 @@ const preview: Preview = {
   },
   parameters: {
     i18n,
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
