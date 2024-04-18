@@ -1,7 +1,6 @@
 import { json, MetaFunction, type LinksFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -9,7 +8,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
-import styles from "./tailwind.css";
+import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
@@ -118,7 +117,6 @@ export default function App() {
         </RoutingBrandProvider>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
