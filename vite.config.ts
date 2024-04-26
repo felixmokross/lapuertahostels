@@ -10,9 +10,19 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
-    remix({
-      ignoredRouteFiles: ["**/.*"],
-    }),
+    !isVitest() &&
+      !isStorybook() &&
+      remix({
+        ignoredRouteFiles: ["**/.*"],
+      }),
     tsconfigPaths(),
   ],
 });
+
+function isStorybook() {
+  return process.argv[1]?.includes("storybook");
+}
+
+function isVitest() {
+  return !!process.env.VITEST;
+}
