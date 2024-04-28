@@ -5,6 +5,7 @@ import { Transition } from "@headlessui/react";
 import { useTranslation } from "react-i18next";
 import { Heading } from "./heading";
 import { Button } from "./button";
+import { Link } from "@remix-run/react";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -15,6 +16,12 @@ export type CarouselItem = {
   alt: string;
   title: CarouselItemTitle;
   position?: "center" | "bottom";
+  cta?: CarouselItemCallToAction;
+};
+
+export type CarouselItemCallToAction = {
+  text: string;
+  to?: string;
 };
 
 export type CarouselItemTitle = {
@@ -69,9 +76,16 @@ export function Carousel({ items }: CarouselProps) {
                 <Heading as="h3" size="extra-large" variant="white" textShadow>
                   {item.title.text}
                 </Heading>
-                <Button size="large" blackShadow>
-                  {t("carousel.cta")}
-                </Button>
+                {item.cta && (
+                  <Button
+                    as={Link}
+                    size="large"
+                    blackShadow
+                    to={item.cta.to || "#"}
+                  >
+                    {t("carousel.cta")}
+                  </Button>
+                )}
               </div>
             )}
           </Transition>

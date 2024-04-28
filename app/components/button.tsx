@@ -1,25 +1,32 @@
-import { PropsWithChildren, PropsWithoutRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ElementType,
+  PropsWithChildren,
+} from "react";
 import { cn } from "./cn";
 import { useBrand } from "../brands";
 
-export type ButtonProps = PropsWithChildren<{
+export type ButtonProps<T extends ElementType> = PropsWithChildren<{
+  as?: T;
   size: "small" | "large";
   blackShadow?: boolean;
 }> &
-  PropsWithoutRef<JSX.IntrinsicElements["button"]>;
+  Omit<ComponentPropsWithoutRef<T>, "as">;
 
-export function Button({
+export function Button<T extends ElementType>({
+  as,
   children,
   size,
   blackShadow = false,
   className,
   ...props
-}: ButtonProps) {
+}: ButtonProps<T>) {
+  const Component = as || "button";
   const brand = useBrand();
   return (
-    <button
+    <Component
       className={cn(
-        "rounded-md font-bold uppercase text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "inline-block rounded-md font-bold uppercase text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
         brand.buttonColors.backgroundColor,
         brand.buttonColors.hoverBackgroundColor,
         brand.buttonColors.hoverTextColor,
@@ -36,6 +43,6 @@ export function Button({
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
