@@ -22,6 +22,21 @@ export default function Route() {
       <Carousel
         items={[
           {
+            src: "tr:ar-4-3,w-1600/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+            alt: "Parque Tayrona",
+            title: {
+              text: (
+                <Trans i18nKey="carousel.parqueTayrona.title">
+                  Hike Through
+                  <br />
+                  the <span className="text-puerta-200">Tayrona Park</span>
+                </Trans>
+              ),
+              position: "top-left",
+            },
+            cta: { text: t("carousel.cta"), to: "/experiences/tayrona" },
+          },
+          {
             src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843&tr=ar-4-3,w-1600",
             alt: "Lost City",
             title: {
@@ -34,20 +49,7 @@ export default function Route() {
               ),
               position: "top-right",
             },
-          },
-          {
-            src: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717&tr=ar-4-3,w-1600",
-            alt: "Parque Tayrona",
-            title: {
-              text: (
-                <Trans i18nKey="carousel.parqueTayrona.title">
-                  Hike Through
-                  <br />
-                  the <span className="text-puerta-200">Tayrona Park</span>
-                </Trans>
-              ),
-              position: "top-left",
-            },
+            cta: { text: t("carousel.cta") },
           },
           {
             src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704&tr=ar-4-3,w-1600",
@@ -61,21 +63,23 @@ export default function Route() {
               ),
               position: "bottom-left",
             },
+            cta: { text: t("carousel.cta") },
           },
-          {
-            src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964&tr=ar-4-3,w-1600",
-            alt: "Santa Marta",
-            title: {
-              text: (
-                <Trans i18nKey="carousel.santaMarta.title">
-                  Explore the Streets
-                  <br />
-                  of <span className="text-puerta-200">Santa Marta</span>
-                </Trans>
-              ),
-              position: "bottom-right",
-            },
-          },
+          // {
+          //   src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964&tr=ar-4-3,w-1600",
+          //   alt: "Santa Marta",
+          //   title: {
+          //     text: (
+          //       <Trans i18nKey="carousel.santaMarta.title">
+          //         Explore the Streets
+          //         <br />
+          //         of <span className="text-puerta-200">Santa Marta</span>
+          //       </Trans>
+          //     ),
+          //     position: "bottom-right",
+          //   },
+          //   cta: { text: t("carousel.cta") },
+          // },
         ]}
       />
 
@@ -115,7 +119,7 @@ export default function Route() {
               to="/aqua"
               color="aqua"
               image={{
-                src: "315892183_204830145296159_6921746397470758374_n.jpg?updatedAt=1703702313633",
+                src: "aqua/spaces/Frente.jpg?updatedAt=1714161155761",
                 alt: "Puerta Aqua",
               }}
               description="Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night."
@@ -125,7 +129,7 @@ export default function Route() {
               to="/azul"
               color="azul"
               image={{
-                src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179",
+                src: "azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "La Puerta Azul",
               }}
               description="Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa."

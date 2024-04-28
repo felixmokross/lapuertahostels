@@ -17,6 +17,7 @@ export function HeaderBrandLogo() {
             enter="transition ease-out duration-500"
             enterFrom="-translate-x-3/4 opacity-0"
             enterTo="translate-x-0 opacity-100"
+            leave="hidden"
           >
             <BrandLogo
               size="large"

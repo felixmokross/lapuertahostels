@@ -15,7 +15,7 @@ export default function Route() {
       <Carousel
         items={[
           {
-            src: "358685842_17937739007690648_2983057103105632929_n.jpg?updatedAt=1703702151179&tr=ar-4-3,w-1600",
+            src: "azul/piscina/10.jpg?updatedAt=1714162021839&tr=ar-4-3,w-1600",
             alt: "Atrium of La Puerta Azul",
             title: {
               text: (
@@ -29,7 +29,33 @@ export default function Route() {
             position: "bottom",
           },
           {
-            src: "370249812_17944730015690648_6797462358499013504_n.jpg?updatedAt=1703702170880&tr=ar-4-3,w-1600",
+            src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408&tr=ar-4-3,w-1600",
+            alt: "Room view of La Puerta Azul",
+            title: {
+              text: (
+                <>
+                  Enjoy Our{" "}
+                  <HeadingHighlight>Comfortable Rooms</HeadingHighlight>
+                </>
+              ),
+              position: "bottom-left",
+            },
+          },
+          {
+            src: "azul/piscina/6.jpg?updatedAt=1714162022776",
+            alt: "Room view of La Puerta Azul",
+            title: {
+              text: (
+                <>
+                  Enjoy Our{" "}
+                  <HeadingHighlight>Comfortable Rooms</HeadingHighlight>
+                </>
+              ),
+              position: "bottom-left",
+            },
+          },
+          {
+            src: "azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
             alt: "Room view of La Puerta Azul",
             title: {
               text: (
