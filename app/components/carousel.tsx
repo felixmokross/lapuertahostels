@@ -2,7 +2,6 @@ import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
-import { useTranslation } from "react-i18next";
 import { Heading } from "./heading";
 import { Button } from "./button";
 import { Link } from "@remix-run/react";
@@ -18,12 +17,6 @@ export type CarouselItem = {
   alt: string;
   title?: CarouselItemTitle;
   position?: "center" | "bottom";
-  cta?: CarouselItemCallToAction;
-};
-
-export type CarouselItemCallToAction = {
-  text: string;
-  to?: string;
 };
 
 export type CarouselItemTitle = {
@@ -35,6 +28,12 @@ export type CarouselItemTitle = {
     | "bottom-right"
     | "center";
   imageOverlay?: "subtle" | "moderate" | "intense";
+  cta?: CarouselItemCallToAction;
+};
+
+export type CarouselItemCallToAction = {
+  text: string;
+  to?: string;
 };
 
 export function Carousel({ items, transformation }: CarouselProps) {
@@ -43,7 +42,6 @@ export function Carousel({ items, transformation }: CarouselProps) {
   }
 
   const { itemIndex, goTo } = useCarouselState(items);
-  const { t } = useTranslation();
 
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
@@ -100,14 +98,14 @@ export function Carousel({ items, transformation }: CarouselProps) {
                   >
                     {item.title.text}
                   </Heading>
-                  {item.cta && (
+                  {item.title.cta && (
                     <Button
                       as={Link}
                       size="large"
                       blackShadow
-                      to={item.cta.to || "#"}
+                      to={item.title.cta.to || "#"}
                     >
-                      {t("carousel.cta")}
+                      {item.title.cta.text}
                     </Button>
                   )}
                 </div>

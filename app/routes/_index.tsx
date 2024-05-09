@@ -33,8 +33,8 @@ export default function Route() {
                 </Trans>
               ),
               position: "top-left",
+              cta: { text: t("carousel.cta"), to: "/experiences/tayrona" },
             },
-            cta: { text: t("carousel.cta"), to: "/experiences/tayrona" },
           },
           {
             src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
@@ -48,8 +48,8 @@ export default function Route() {
                 </Trans>
               ),
               position: "top-right",
+              cta: { text: t("carousel.cta") },
             },
-            cta: { text: t("carousel.cta") },
           },
           {
             src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
@@ -62,8 +62,8 @@ export default function Route() {
                 </Trans>
               ),
               position: "bottom-left",
+              cta: { text: t("carousel.cta") },
             },
-            cta: { text: t("carousel.cta") },
           },
           // {
           //   src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
@@ -77,8 +77,8 @@ export default function Route() {
           //       </Trans>
           //     ),
           //     position: "bottom-right",
+          //     cta: { text: t("carousel.cta") },
           //   },
-          //   cta: { text: t("carousel.cta") },
           // },
         ]}
         transformation={{

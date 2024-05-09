@@ -1,7 +1,12 @@
-import { Carousel } from "~/components/carousel";
+import { Carousel, CarouselItemCallToAction } from "~/components/carousel";
 import { FeaturesSection } from "~/components/features-section";
 import { HeadingHighlight } from "~/components/heading";
 import { ParagraphHighlight } from "~/components/paragraph";
+
+const cta: CarouselItemCallToAction = {
+  text: "Book Now",
+  to: "/booking",
+};
 
 export function Page() {
   return (
@@ -21,19 +26,40 @@ export function Page() {
               ),
               position: "center",
               imageOverlay: "intense",
+              cta,
             },
           },
           {
             src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
             alt: "Room view of La Puerta Azul",
-          },
-          {
-            src: "azul/piscina/6.jpg?updatedAt=1714162022776",
-            alt: "Room view of La Puerta Azul",
+            title: {
+              text: (
+                <>
+                  Cool Down
+                  <br />
+                  <HeadingHighlight>by the Pool</HeadingHighlight>
+                </>
+              ),
+              position: "bottom-left",
+              imageOverlay: "subtle",
+              cta,
+            },
           },
           {
             src: "azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
             alt: "Room view of La Puerta Azul",
+            title: {
+              text: (
+                <>
+                  Enjoy the
+                  <br />
+                  <HeadingHighlight>Morning</HeadingHighlight>
+                </>
+              ),
+              position: "top-right",
+              imageOverlay: "moderate",
+              cta,
+            },
           },
         ]}
         transformation={{
@@ -64,7 +90,7 @@ export function Page() {
                 src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
                 alt: "Example image",
               },
-              title: "Cool Down in the Pool",
+              title: "Cool Down by the Pool",
               paragraphContent: (
                 <>
                   Our <ParagraphHighlight>courtyard pool</ParagraphHighlight> is

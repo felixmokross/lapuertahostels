@@ -21,26 +21,38 @@ export const Primary: Story = {
       {
         src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
         alt: "Lost City",
-        title: { text: "Lost City", position: "top-right" },
-        cta: { text: "Read More" },
+        title: {
+          text: "Lost City",
+          position: "top-right",
+          cta: { text: "Read More" },
+        },
       },
       {
         src: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
         alt: "Parque Tayrona",
-        title: { text: "Parque Tayrona", position: "bottom-left" },
-        cta: { text: "Read More" },
+        title: {
+          text: "Parque Tayrona",
+          position: "bottom-left",
+          cta: { text: "Read More" },
+        },
       },
       {
         src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
         alt: "Santa Marta",
-        title: { text: "Santa Marta", position: "bottom-right" },
-        cta: { text: "Read More" },
+        title: {
+          text: "Santa Marta",
+          position: "bottom-right",
+          cta: { text: "Read More" },
+        },
       },
       {
         src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
         alt: "Minca",
-        title: { text: "Minca", position: "top-left" },
-        cta: { text: "Read More" },
+        title: {
+          text: "Minca",
+          position: "top-left",
+          cta: { text: "Read More" },
+        },
       },
     ],
   },
