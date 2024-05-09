@@ -20,7 +20,6 @@ export const ImageLeft: Story = {
     image: {
       src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
       alt: "Example image",
-      transformation: { width: 1000 },
     },
     children: (
       <>
