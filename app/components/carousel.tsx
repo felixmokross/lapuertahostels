@@ -2,20 +2,32 @@ import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
-import { useTranslation } from "react-i18next";
 import { Heading } from "./heading";
 import { Button } from "./button";
 import { Link } from "@remix-run/react";
+import { ImageTransformation } from "./image";
 
 export type CarouselProps = {
   items: CarouselItem[];
+  transformation?: ImageTransformation;
 };
 
 export type CarouselItem = {
   src: string;
   alt: string;
-  title: CarouselItemTitle;
+  title?: CarouselItemTitle;
   position?: "center" | "bottom";
+};
+
+export type CarouselItemTitle = {
+  text: string | ReactNode;
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "center";
+  imageOverlay?: "subtle" | "moderate" | "intense";
   cta?: CarouselItemCallToAction;
 };
 
@@ -24,23 +36,16 @@ export type CarouselItemCallToAction = {
   to?: string;
 };
 
-export type CarouselItemTitle = {
-  text: string | ReactNode;
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
-};
-
-export function Carousel({ items }: CarouselProps) {
+export function Carousel({ items, transformation }: CarouselProps) {
   if (items.length === 0) {
     throw new Error("Carousel must have at least one item");
   }
 
   const { itemIndex, goTo } = useCarouselState(items);
-  const { t } = useTranslation();
 
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
       {items.map((item, i) => {
-        item = items[i];
         return (
           <Transition
             key={i}
@@ -57,36 +62,54 @@ export function Carousel({ items }: CarouselProps) {
             <CarouselImage
               src={item.src}
               alt={item.alt}
+              transformation={transformation}
               withPreview={i === 0}
               className="absolute top-0"
               position={item.position}
             />
-            <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (
-              <div
-                className={cn("absolute max-w-xl space-y-6", {
-                  "left-8 top-8": item.title.position === "top-left",
-                  "right-8 top-8 text-right":
-                    item.title.position === "top-right",
-                  "bottom-8 left-8": item.title.position === "bottom-left",
-                  "bottom-8 right-8 text-right":
-                    item.title.position === "bottom-right",
-                })}
-              >
-                <Heading as="h3" size="extra-large" variant="white" textShadow>
-                  {item.title.text}
-                </Heading>
-                {item.cta && (
-                  <Button
-                    as={Link}
-                    size="large"
-                    blackShadow
-                    to={item.cta.to || "#"}
+              <>
+                <div
+                  className={cn("absolute top-0 h-full w-full bg-black", {
+                    "opacity-15": item.title.imageOverlay === "subtle",
+                    "opacity-20":
+                      !item.title.imageOverlay ||
+                      item.title.imageOverlay === "moderate",
+                    "opacity-25": item.title.imageOverlay === "intense",
+                  })}
+                ></div>
+                <div
+                  className={cn("absolute max-w-xl space-y-6", {
+                    "left-8 top-8": item.title.position === "top-left",
+                    "right-8 top-8 text-right":
+                      item.title.position === "top-right",
+                    "bottom-8 left-8": item.title.position === "bottom-left",
+                    "bottom-8 right-8 text-right":
+                      item.title.position === "bottom-right",
+                    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
+                      !item.title.position || item.title.position === "center",
+                  })}
+                >
+                  <Heading
+                    as="h3"
+                    size="extra-large"
+                    variant="white"
+                    textShadow
                   >
-                    {t("carousel.cta")}
-                  </Button>
-                )}
-              </div>
+                    {item.title.text}
+                  </Heading>
+                  {item.title.cta && (
+                    <Button
+                      as={Link}
+                      size="large"
+                      blackShadow
+                      to={item.title.cta.to || "#"}
+                    >
+                      {item.title.cta.text}
+                    </Button>
+                  )}
+                </div>
+              </>
             )}
           </Transition>
         );
@@ -122,7 +145,7 @@ function useCarouselState(items: CarouselItem[]) {
   const startInterval = useCallback(() => {
     intervalRef.current = window.setInterval(
       () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
-      5000,
+      10_000,
     );
   }, [items.length]);
 
@@ -141,8 +164,6 @@ function useCarouselState(items: CarouselItem[]) {
       stopInterval();
 
       setItemIndex(newItemIndex);
-
-      startInterval();
     },
   };
 }

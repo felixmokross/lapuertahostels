@@ -1,6 +1,4 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import turbosnap from "vite-plugin-turbosnap";
-import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
   stories: ["../app/**/*.stories.@(js|jsx|mjs|ts|tsx)", "../docs/**/*.mdx"],

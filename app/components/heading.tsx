@@ -9,6 +9,7 @@ type HeadingProps = PropsWithChildren<{
   variant?: HeadingVariant;
   size: "small" | "medium" | "large" | "extra-large";
   textShadow?: boolean;
+  className?: string;
 }>;
 
 export function Heading({
@@ -17,6 +18,7 @@ export function Heading({
   size,
   textShadow = false,
   children,
+  className,
 }: HeadingProps) {
   const brand = useBrand();
   return (
@@ -39,6 +41,7 @@ export function Heading({
             "font-serif text-5xl leading-relaxed tracking-tight md:text-6xl md:font-light md:leading-relaxed":
               size === "extra-large",
           },
+          className,
         )}
         {...(textShadow ? { style: { textShadow: "0 0 50px black" } } : {})}
       >

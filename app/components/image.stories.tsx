@@ -13,8 +13,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    src: "logos/logo-puerta-with-text.png?updatedAt=1703906701749&tr=h-160",
-    width: 66,
-    height: 80,
+    src: "logos/logo-puerta-with-text.png?updatedAt=1703906701749",
+    alt: "Logo Puerta",
+    transformation: {
+      height: 160,
+    },
+    className: "h-[80px]",
   },
 };
