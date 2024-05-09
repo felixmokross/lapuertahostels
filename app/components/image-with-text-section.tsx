@@ -1,18 +1,16 @@
 import { PropsWithChildren, ReactNode } from "react";
 import { cn } from "./cn";
-import { Image } from "./image";
+import { Image, ImageProps } from "./image";
 
 export type ImageWithTextSectionProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
-  imageSrc: string;
-  imageAlt: string;
+  image: ImageProps;
   children: ReactNode;
 }>;
 
 export function ImageWithTextSection({
   orientation = "image-left",
-  imageSrc,
-  imageAlt,
+  image,
   children,
 }: ImageWithTextSectionProps) {
   return (
@@ -23,7 +21,7 @@ export function ImageWithTextSection({
       )}
     >
       <div className="max-w-md shrink-0 overflow-hidden rounded-md">
-        <Image src={imageSrc} alt={imageAlt} />
+        <Image {...image} />
       </div>
       <div className="text-center">{children}</div>
     </div>

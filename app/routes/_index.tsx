@@ -22,7 +22,7 @@ export default function Route() {
       <Carousel
         items={[
           {
-            src: "tr:ar-4-3,w-1600/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+            src: "experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
             alt: "Parque Tayrona",
             title: {
               text: (
@@ -37,7 +37,7 @@ export default function Route() {
             cta: { text: t("carousel.cta"), to: "/experiences/tayrona" },
           },
           {
-            src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843&tr=ar-4-3,w-1600",
+            src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
             alt: "Lost City",
             title: {
               text: (
@@ -52,7 +52,7 @@ export default function Route() {
             cta: { text: t("carousel.cta") },
           },
           {
-            src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704&tr=ar-4-3,w-1600",
+            src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
             alt: "Minca",
             title: {
               text: (
@@ -66,7 +66,7 @@ export default function Route() {
             cta: { text: t("carousel.cta") },
           },
           // {
-          //   src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964&tr=ar-4-3,w-1600",
+          //   src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
           //   alt: "Santa Marta",
           //   title: {
           //     text: (
@@ -81,6 +81,10 @@ export default function Route() {
           //   cta: { text: t("carousel.cta") },
           // },
         ]}
+        transformation={{
+          aspectRatio: { width: 4, height: 3 },
+          width: 1600,
+        }}
       />
 
       <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
@@ -143,9 +147,15 @@ export default function Route() {
       >
         <div className="h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
           <Image
-            src="/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707&tr=w-1000,ar-16-9,c-maintain_ratio,fo-auto"
+            src="/oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707"
             alt="View of Santa Marta"
             className="h-full w-full object-cover"
+            transformation={{
+              width: 1000,
+              aspectRatio: { width: 16, height: 9 },
+              cropStrategy: "maintain_ratio",
+              focus: "auto",
+            }}
           />
           <div className="absolute inset-0 flex bg-gradient-to-t from-transparent to-black/40 px-6 py-4 md:px-8 md:py-6 lg:rounded-lg">
             <Heading as="h3" size="extra-large" variant="white" textShadow>
@@ -219,9 +229,14 @@ export default function Route() {
         </div>
         <div className="mx-auto mt-32 aspect-[3/4] max-w-xs -rotate-6 overflow-hidden rounded-md shadow-lg lg:-ml-10 lg:mr-12 lg:mt-0 lg:max-w-none">
           <Image
-            src="/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449&tr=ar-3-4,w-1600,e-grayscale"
+            src="/351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449"
             alt=""
             className="h-full w-full object-cover"
+            transformation={{
+              aspectRatio: { width: 3, height: 4 },
+              width: 1600,
+              enhancement: "grayscale",
+            }}
           />
         </div>
       </div>

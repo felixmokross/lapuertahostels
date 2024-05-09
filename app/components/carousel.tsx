@@ -6,9 +6,11 @@ import { useTranslation } from "react-i18next";
 import { Heading } from "./heading";
 import { Button } from "./button";
 import { Link } from "@remix-run/react";
+import { ImageTransformation } from "./image";
 
 export type CarouselProps = {
   items: CarouselItem[];
+  transformation?: ImageTransformation;
 };
 
 export type CarouselItem = {
@@ -29,7 +31,7 @@ export type CarouselItemTitle = {
   position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 };
 
-export function Carousel({ items }: CarouselProps) {
+export function Carousel({ items, transformation }: CarouselProps) {
   if (items.length === 0) {
     throw new Error("Carousel must have at least one item");
   }
@@ -57,6 +59,7 @@ export function Carousel({ items }: CarouselProps) {
             <CarouselImage
               src={item.src}
               alt={item.alt}
+              transformation={transformation}
               withPreview={i === 0}
               className="absolute top-0"
               position={item.position}
@@ -122,7 +125,7 @@ function useCarouselState(items: CarouselItem[]) {
   const startInterval = useCallback(() => {
     intervalRef.current = window.setInterval(
       () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
-      5000,
+      10_000,
     );
   }, [items.length]);
 

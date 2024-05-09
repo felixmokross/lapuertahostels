@@ -17,8 +17,11 @@ type Story = StoryObj<typeof meta>;
 export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
-    imageSrc: "tr:w-1000/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-    imageAlt: "Example image",
+    image: {
+      src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+      alt: "Example image",
+      transformation: { width: 1000 },
+    },
     children: (
       <>
         <Heading size="medium" variant="brand" as="h4" className="-mt-4">

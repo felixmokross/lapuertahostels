@@ -1,14 +1,8 @@
 import { cn } from "./cn";
-import { DetailedHTMLProps, useEffect, useRef, useState } from "react";
-import { Image } from "./image";
+import { useEffect, useRef, useState } from "react";
+import { Image, ImageProps } from "./image";
 
-export type CarouselImageProps = Omit<
-  DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  >,
-  "ref"
-> & {
+export type CarouselImageProps = ImageProps & {
   withPreview?: boolean;
   position?: "center" | "bottom";
 };

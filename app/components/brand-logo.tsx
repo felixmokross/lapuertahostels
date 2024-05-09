@@ -33,13 +33,11 @@ export function BrandLogo({
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={`${brandConfig.logoUrl}&tr=${
-          {
-            small: "h-56",
-            large: "h-80",
-          }[size]
-        }`}
+        src={brandConfig.logoUrl}
         alt={`${brandConfig.name} Logo`}
+        transformation={{
+          height: size === "small" ? 56 : size === "large" ? 80 : undefined,
+        }}
       />
       {type === "with-wordmark" && brandConfig.name}
     </span>
