@@ -18,6 +18,6 @@ export const Primary: Story = {
     transformation: {
       height: 160,
     },
-    className: "w-[66px] h-[80px]",
+    className: "h-[80px]",
   },
 };
