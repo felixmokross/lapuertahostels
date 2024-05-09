@@ -27,7 +27,7 @@ export function CarouselImage({
 
   const previewImageSrc = `${src},bl-10`;
   const imageClassName = cn("absolute top-0 h-full w-full object-cover", {
-    "object-[center_70%]": position === "bottom",
+    "object-[center_90%]": position === "bottom",
   });
 
   return (

@@ -16,7 +16,7 @@ export type CarouselProps = {
 export type CarouselItem = {
   src: string;
   alt: string;
-  title: CarouselItemTitle;
+  title?: CarouselItemTitle;
   position?: "center" | "bottom";
   cta?: CarouselItemCallToAction;
 };
@@ -28,7 +28,13 @@ export type CarouselItemCallToAction = {
 
 export type CarouselItemTitle = {
   text: string | ReactNode;
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "center";
+  imageOverlay?: "subtle" | "moderate" | "intense";
 };
 
 export function Carousel({ items, transformation }: CarouselProps) {
@@ -42,7 +48,6 @@ export function Carousel({ items, transformation }: CarouselProps) {
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
       {items.map((item, i) => {
-        item = items[i];
         return (
           <Transition
             key={i}
@@ -64,32 +69,49 @@ export function Carousel({ items, transformation }: CarouselProps) {
               className="absolute top-0"
               position={item.position}
             />
-            <div className="absolute top-0 h-full w-full bg-black opacity-20"></div>
             {item.title && (
-              <div
-                className={cn("absolute max-w-xl space-y-6", {
-                  "left-8 top-8": item.title.position === "top-left",
-                  "right-8 top-8 text-right":
-                    item.title.position === "top-right",
-                  "bottom-8 left-8": item.title.position === "bottom-left",
-                  "bottom-8 right-8 text-right":
-                    item.title.position === "bottom-right",
-                })}
-              >
-                <Heading as="h3" size="extra-large" variant="white" textShadow>
-                  {item.title.text}
-                </Heading>
-                {item.cta && (
-                  <Button
-                    as={Link}
-                    size="large"
-                    blackShadow
-                    to={item.cta.to || "#"}
+              <>
+                <div
+                  className={cn("absolute top-0 h-full w-full bg-black", {
+                    "opacity-15": item.title.imageOverlay === "subtle",
+                    "opacity-20":
+                      !item.title.imageOverlay ||
+                      item.title.imageOverlay === "moderate",
+                    "opacity-25": item.title.imageOverlay === "intense",
+                  })}
+                ></div>
+                <div
+                  className={cn("absolute max-w-xl space-y-6", {
+                    "left-8 top-8": item.title.position === "top-left",
+                    "right-8 top-8 text-right":
+                      item.title.position === "top-right",
+                    "bottom-8 left-8": item.title.position === "bottom-left",
+                    "bottom-8 right-8 text-right":
+                      item.title.position === "bottom-right",
+                    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
+                      !item.title.position || item.title.position === "center",
+                  })}
+                >
+                  <Heading
+                    as="h3"
+                    size="extra-large"
+                    variant="white"
+                    textShadow
                   >
-                    {t("carousel.cta")}
-                  </Button>
-                )}
-              </div>
+                    {item.title.text}
+                  </Heading>
+                  {item.cta && (
+                    <Button
+                      as={Link}
+                      size="large"
+                      blackShadow
+                      to={item.cta.to || "#"}
+                    >
+                      {t("carousel.cta")}
+                    </Button>
+                  )}
+                </div>
+              </>
             )}
           </Transition>
         );
@@ -144,8 +166,6 @@ function useCarouselState(items: CarouselItem[]) {
       stopInterval();
 
       setItemIndex(newItemIndex);
-
-      startInterval();
     },
   };
 }
