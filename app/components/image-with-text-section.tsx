@@ -22,12 +22,12 @@ export function ImageWithTextSection({
         className,
       )}
     >
-      <div className="max-w-md shrink-0 overflow-hidden rounded-md">
+      <div className="max-w-md shrink-0 overflow-hidden rounded-md shadow-lg">
         <Image
           {...image}
           transformation={{
             width: 1000,
-            aspectRatio: { width: 5, height: 4 },
+            aspectRatio: { width: 4, height: 3 },
           }}
         />
       </div>
