@@ -6,7 +6,7 @@ import { Link } from "@remix-run/react";
 export function HeaderBrandLogo() {
   const brand = useBrand();
   return (
-    <h1>
+    <h1 className="h-10">
       <Link to={brand.homeLinkUrl}>
         {(Object.keys(brands) as (keyof typeof brands)[]).map((b) => (
           <Transition
