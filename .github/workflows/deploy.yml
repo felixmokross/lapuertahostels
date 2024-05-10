@@ -61,6 +61,7 @@ jobs:
               echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
               ;;
           esac
+        working-directory: .
   deploy:
     runs-on: ubuntu-latest
     environment:
