@@ -5,6 +5,10 @@ on:
 env:
   NODE_VERSION: 20
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
   version:
     uses: ./.github/workflows/version.yml

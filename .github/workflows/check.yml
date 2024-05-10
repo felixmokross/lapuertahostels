@@ -23,6 +23,10 @@ on:
 env:
   NODE_VERSION: 20
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
   lint:
     name: Lint
