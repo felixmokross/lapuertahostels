@@ -50,6 +50,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
       - run: npm run typecheck
 
   storybook:
@@ -63,12 +65,15 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           onlyChanged: true
+          workingDir: frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/development
 
@@ -81,6 +86,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
       - run: npm run test
 
   # e2e-tests:
