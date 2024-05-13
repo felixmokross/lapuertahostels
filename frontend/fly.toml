@@ -4,7 +4,7 @@
 #
 
 app = "lapuertahostels-staging"
-primary_region = "bog"
+primary_region = "cdg"
 
 [build]
 
