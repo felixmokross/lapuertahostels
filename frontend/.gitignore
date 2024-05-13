@@ -5,3 +5,5 @@ node_modules
 .env
 /storybook-static
 *.log
+
+/app/payload-types.ts

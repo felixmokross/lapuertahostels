@@ -4,6 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "update-types": "cd ../cms && npm run generate:types && cd - && npm run copy-types",
+    "copy-types": "cp ../cms/src/payload-types.ts ./app",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",

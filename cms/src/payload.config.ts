@@ -6,7 +6,9 @@ import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 
-import Users from "./collections/Users";
+import { Users } from "./collections/Users";
+import { CarouselItems } from "./collections/CarouselItems";
+import { Home } from "./globals/Home";
 
 export default buildConfig({
   admin: {
@@ -14,9 +16,11 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Users, CarouselItems],
+  globals: [Home],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
+    declare: false,
   },
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, "generated-schema.graphql"),
