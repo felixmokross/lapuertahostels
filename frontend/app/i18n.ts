@@ -9,5 +9,3 @@ export default {
   // Disabling suspense is recommended
   react: { useSuspense: false },
 };
-
-
