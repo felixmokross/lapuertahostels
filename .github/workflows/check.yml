@@ -5,32 +5,17 @@ on:
     secrets:
       CHROMATIC_PROJECT_TOKEN:
         required: true
-    #   SESSION_SECRET:
-    #     required: true
-    #   OIDC_ISSUER:
-    #     required: true
-    #   OIDC_CLIENT_ID:
-    #     required: true
-    #   OIDC_CLIENT_SECRET:
-    #     required: true
-    #   PLAYWRIGHT_TESTS_AUTH0_DOMAIN:
-    #     required: true
-    #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID:
-    #     required: true
-    #   PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET:
-    #     required: true
 
 env:
   NODE_VERSION: 20
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
-  lint:
-    name: Lint
+  lint-frontend:
+    name: Lint Frontend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,9 +26,28 @@ jobs:
           working-directory: frontend
       - run: npm run lint -- --max-warnings=0
 
-  typecheck:
-    name: Typecheck
+  format-frontend:
+    name: Format Frontend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
+      - run: npm run check-format
+
+  typecheck-frontend:
+    name: Typecheck Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -54,9 +58,76 @@ jobs:
           working-directory: frontend
       - run: npm run typecheck
 
+  unit-tests-frontend:
+    name: Unit Tests Frontends
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
+      - run: npm run test
+
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
+      - run: npm run build
+
+  format-cms:
+    name: Format CMS
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: cms
+      - run: npm run check-format
+
+  build-cms:
+    name: Build CMS
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: cms
+      - run: npm run build
+
   storybook:
     name: Chromatic
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,54 +147,3 @@ jobs:
           workingDir: frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/development
-
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
-      - run: npm run test
-
-  # e2e-tests:
-  #   name: End-to-End Tests
-  #   timeout-minutes: 60
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #     - uses: bahmutov/npm-install@v1
-  #     - name: Start database
-  #       run: docker-compose up -d && sleep 3
-  #     - run: npx prisma migrate deploy
-  #       env:
-  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-  #     - run: npm run build
-  #     - run: npm start &
-  #       env:
-  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-  #         BASE_URL: http://localhost:3000
-  #         SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-  #         OIDC_ISSUER: ${{ secrets.OIDC_ISSUER }}
-  #         OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
-  #         OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
-  #     - run: npx playwright install --with-deps
-  #     - run: npx playwright test
-  #       env:
-  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-  #         PLAYWRIGHT_TESTS_AUTH0_DOMAIN: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_DOMAIN }}
-  #         PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_CLIENT_ID }}
-  #         PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET: ${{ secrets.PLAYWRIGHT_TESTS_AUTH0_CLIENT_SECRET }}
-  #     - uses: actions/upload-artifact@v3
-  #       if: always()
-  #       with:
-  #         name: playwright-report
-  #         path: playwright-report/
-  #         retention-days: 30
