@@ -97,7 +97,7 @@ jobs:
 
           echo Setting secrets:
           flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
-            PAYLOAD_SECRET=$(openssl rand -hex 12)
+            PAYLOAD_SECRET=$(openssl rand -hex 12) \
             --app $APP_NAME --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
