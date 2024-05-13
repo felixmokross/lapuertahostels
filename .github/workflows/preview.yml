@@ -50,6 +50,8 @@ jobs:
           flyctl apps create --name $APP_NAME --org $FLY_ORG
       - name: Deploy
         run: |
+          GITHUB_SHA_SHORT=${GITHUB_SHA::4}
+
           flyctl deploy \
             --app $APP_NAME \
             --image-label v${{ needs.version.outputs.version }} \
