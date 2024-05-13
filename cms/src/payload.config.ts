@@ -18,6 +18,11 @@ export default buildConfig({
   editor: slateEditor({}),
   collections: [Users, CarouselItems],
   globals: [Home],
+  localization: {
+    locales: ["en", "es", "de", "fr"],
+    defaultLocale: "en",
+    fallback: true,
+  },
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
     declare: false,
