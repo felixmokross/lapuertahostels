@@ -23,12 +23,12 @@ jobs:
           working-directory: cms
       - run: npm run generate:types
         working-directory: cms
+      - run: npm run copy-types
+        working-directory: frontend
       - uses: actions/upload-artifact@v4
         with:
           name: cms-types
-          path: cms/src/payload-types.ts
-      - run: npm run copy-types
-        working-directory: frontend
+          path: frontend/app/payload-types.ts
 
   lint-frontend:
     name: Lint Frontend
