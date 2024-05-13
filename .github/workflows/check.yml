@@ -13,6 +13,9 @@ jobs:
   generate-cms-types:
     name: Generate CMS Types
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cms
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,13 +25,10 @@ jobs:
         with:
           working-directory: cms
       - run: npm run generate:types
-        working-directory: cms
-      - run: npm run copy-types
-        working-directory: frontend
       - uses: actions/upload-artifact@v4
         with:
           name: cms-types
-          path: frontend/app/payload-types.ts
+          path: cms/src/payload-types.ts
 
   lint-frontend:
     name: Lint Frontend
@@ -48,6 +48,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: cms-types
+          path: frontend/app
       - run: npm run lint -- --max-warnings=0
 
   format-frontend:
@@ -84,6 +85,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: cms-types
+          path: frontend/app
       - run: npm run typecheck
 
   unit-tests-frontend:
