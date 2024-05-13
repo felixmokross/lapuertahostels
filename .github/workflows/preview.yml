@@ -38,47 +38,23 @@ jobs:
           echo App name is $APP_NAME
           echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
 
-          # DB_APP_NAME=$APP_NAME-db
-          # echo DB app name is $DB_APP_NAME
-          # echo "DB_APP_NAME=$DB_APP_NAME" >> $GITHUB_ENV
-
           APP_URL=https://$APP_NAME.fly.dev
           echo App URL is $APP_URL
           echo "APP_URL=$APP_URL" >> $GITHUB_ENV
       - name: Delete if exists
         run: |
           flyctl apps destroy --yes $APP_NAME || true
-          # flyctl apps destroy --yes $DB_APP_NAME || true
-      - name: Create App and DB
+      - name: Create App
         run: |
-          # DB_PW=$(openssl rand -hex 32)
-
-          # echo Creating postgres cluster $DB_APP_NAME:
-          # flyctl postgres create --name $DB_APP_NAME --region bog --password $DB_PW --initial-cluster-size 1 --vm-size shared-cpu-1x --volume-size 1 --org $FLY_ORG
-
           echo Creating app $APP_NAME:
           flyctl apps create --name $APP_NAME --org $FLY_ORG
-
-          # echo Attaching Postgres cluster to app:
-          # flyctl postgres attach $DB_APP_NAME --app $APP_NAME
-
-          # echo Setting secrets:
-          # flyctl secrets set SESSION_SECRET=$(openssl rand -hex 32) \
-          #   BASE_URL="$APP_URL" \
-          #   OIDC_ISSUER=$PREVIEW_DEPLOYMENT_OIDC_ISSUER \
-          #   OIDC_CLIENT_ID=$PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID \
-          #   OIDC_CLIENT_SECRET=$PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET \
-          #   --app $APP_NAME --stage
-        # env:
-        #   PREVIEW_DEPLOYMENT_OIDC_ISSUER: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_ISSUER }}
-        #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID }}
-        #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET }}
       - name: Deploy
         run: |
           flyctl deploy \
             --app $APP_NAME \
             --image-label v${{ needs.version.outputs.version }} \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
+            --env PAYLOAD_CMS_BASE_URL=https://lapuertahostels-cms-staging.fly.dev/api \
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit
