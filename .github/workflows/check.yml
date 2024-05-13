@@ -89,7 +89,7 @@ jobs:
       - run: npm run typecheck
 
   unit-tests-frontend:
-    name: Unit Tests Frontends
+    name: Unit Tests Frontend
     runs-on: ubuntu-latest
     defaults:
       run:

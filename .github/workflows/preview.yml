@@ -5,14 +5,11 @@ on:
 env:
   NODE_VERSION: 20
 
-defaults:
-  run:
-    working-directory: frontend
-
+# TODO this could be optimized
 jobs:
   version:
     uses: ./.github/workflows/version.yml
-  deploy:
+  deploy-frontend:
     runs-on: ubuntu-latest
     needs: version
     environment:
@@ -21,6 +18,9 @@ jobs:
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FLY_ORG: personal
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
@@ -54,8 +54,58 @@ jobs:
             --app $APP_NAME \
             --image-label v${{ needs.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
-            --env PAYLOAD_CMS_BASE_URL=https://lapuertahostels-cms-staging.fly.dev/api \
+            --env PAYLOAD_CMS_BASE_URL=https://lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT.fly.dev/api \
+  deploy-cms:
+    runs-on: ubuntu-latest
+    needs: version
+    environment:
+      name: preview
+      url: ${{ env.APP_URL }}
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      FLY_ORG: personal
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.1.117
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
+      - name: Generate App Name
+        run: |
+          GITHUB_SHA_SHORT=${GITHUB_SHA::4}
+
+          APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
+          echo App name is $APP_NAME
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+
+          APP_URL=https://$APP_NAME.fly.dev
+          echo App URL is $APP_URL
+          echo "APP_URL=$APP_URL" >> $GITHUB_ENV
+      - name: Delete if exists
+        run: |
+          flyctl apps destroy --yes $APP_NAME || true
+      - name: Create App
+        run: |
+          echo Creating app $APP_NAME:
+          flyctl apps create --name $APP_NAME --org $FLY_ORG
+
+          echo Setting secrets:
+          flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
+            --app $APP_NAME --stage
+        env:
+          PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --app $APP_NAME \
+            --image-label v${{ needs.version.outputs.version }} \
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit
-    needs: deploy
+    needs: [deploy-frontend, deploy-cms]
