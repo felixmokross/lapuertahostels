@@ -33,7 +33,7 @@ jobs:
             )]
             | map((. | map(select(.LastReleasedDaysAgo == null or .LastReleasedDaysAgo > 4))), (.
                 | sort_by(.LastReleasedDaysAgo)
-                | .[3:])
+                | .[6:])
             )
             | flatten
             | unique_by(.ID)
