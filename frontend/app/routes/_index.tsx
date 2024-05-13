@@ -22,7 +22,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
   // TODO provide an function for this
   return (await (
-    await fetch(`http://localhost:3001/api/globals/home?locale=${locale}`)
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/home?locale=${locale}`,
+    )
   ).json()) as Home;
 }
 
