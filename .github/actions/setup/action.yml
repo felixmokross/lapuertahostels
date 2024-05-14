@@ -2,13 +2,9 @@ name: "Setup"
 inputs:
   working-directory:
     required: true
-  fetch-depth:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: ${{ inputs.fetch-depth }}
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}

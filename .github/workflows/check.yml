@@ -14,10 +14,11 @@ jobs:
     name: Frontend / Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-      - uses: ./.github/actions/populate-cms-types/action.yml
+      - uses: ./.github/actions/populate-cms-types
       - run: npm run lint -- --max-warnings=0
         working-directory: frontend
 
@@ -25,7 +26,8 @@ jobs:
     name: Frontend / Format
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
       - run: npm run check-format
@@ -35,10 +37,11 @@ jobs:
     name: Frontend / Typecheck
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-      - uses: ./.github/actions/populate-cms-types/action.yml
+      - uses: ./.github/actions/populate-cms-types
       - run: npm run typecheck
         working-directory: frontend
 
@@ -46,10 +49,11 @@ jobs:
     name: Frontend / Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-      - uses: ./.github/actions/populate-cms-types/action.yml
+      - uses: ./.github/actions/populate-cms-types
       - run: npm run test
         working-directory: frontend
 
@@ -57,7 +61,8 @@ jobs:
     name: Frontend / Build
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
       - run: npm run build
@@ -66,10 +71,12 @@ jobs:
     name: Chromatic
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-          fetch-depth: 0
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
@@ -84,7 +91,8 @@ jobs:
     name: CMS / Format
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: cms
       - run: npm run check-format
@@ -94,7 +102,8 @@ jobs:
     name: CMS / Build
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup/action.yml
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
         with:
           working-directory: cms
       - run: npm run build
