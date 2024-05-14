@@ -1,0 +1,11 @@
+name: "Populate CMS Types"
+runs:
+  using: "composite"
+  steps:
+    - uses: bahmutov/npm-install@v1
+      with:
+        working-directory: cms
+    - run: npm run generate:types
+      working-directory: cms
+    - run: npm run copy-types
+      working-directory: frontend

@@ -10,164 +10,66 @@ env:
   NODE_VERSION: 20
 
 jobs:
-  generate-cms-types:
-    name: Generate CMS Types
+  frontend-lint:
+    name: Frontend / Lint
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: cms
-      - run: npm run generate:types
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cms-types
-          path: cms/src/payload-types.ts
-
-  lint-frontend:
-    name: Lint Frontend
-    runs-on: ubuntu-latest
-    needs: generate-cms-types
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
-      - uses: actions/download-artifact@v4
-        with:
-          name: cms-types
-          path: frontend/app
+      - uses: .github/actions/populate-cms-types.yml
       - run: npm run lint -- --max-warnings=0
-
-  format-frontend:
-    name: Format Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
         working-directory: frontend
+
+  frontend-format:
+    name: Frontend / Format
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
       - run: npm run check-format
-
-  typecheck-frontend:
-    name: Typecheck Frontend
-    runs-on: ubuntu-latest
-    needs: generate-cms-types
-    defaults:
-      run:
         working-directory: frontend
+
+  frontend-typecheck:
+    name: Frontend / Typecheck
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
-      - uses: actions/download-artifact@v4
-        with:
-          name: cms-types
-          path: frontend/app
+      - uses: .github/actions/populate-cms-types.yml
       - run: npm run typecheck
-
-  unit-tests-frontend:
-    name: Unit Tests Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
         working-directory: frontend
+
+  frontend-unit-tests:
+    name: Frontend / Unit Tests
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
+      - uses: .github/actions/populate-cms-types.yml
       - run: npm run test
-
-  build-frontend:
-    name: Build Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
         working-directory: frontend
+
+  frontend-build:
+    name: Frontend / Build
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
       - run: npm run build
 
-  format-cms:
-    name: Format CMS
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: cms
-      - run: npm run check-format
-
-  build-cms:
-    name: Build CMS
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cms
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: cms
-      - run: npm run build
-
-  storybook:
+  frontend-chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
+      - uses: .github/actions/setup.yml
         with:
           working-directory: frontend
+          fetch-depth: 0
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
@@ -177,3 +79,23 @@ jobs:
           workingDir: frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/development
+
+  cms-format:
+    name: CMS / Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/actions/setup.yml
+        with:
+          working-directory: cms
+      - run: npm run check-format
+        working-directory: cms
+
+  cms-build:
+    name: CMS / Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/actions/setup.yml
+        with:
+          working-directory: cms
+      - run: npm run build
+        working-directory: cms
