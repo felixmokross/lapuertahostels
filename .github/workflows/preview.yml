@@ -49,9 +49,6 @@ jobs:
 
   preview-cms:
     runs-on: ubuntu-latest
-    environment:
-      name: preview
-      url: ${{ steps.app-name.outputs.app-url }}
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FLY_ORG: personal
