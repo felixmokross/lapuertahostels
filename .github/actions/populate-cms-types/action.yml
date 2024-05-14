@@ -1,4 +1,5 @@
 name: "Populate CMS Types"
+shell
 runs:
   using: "composite"
   steps:
@@ -6,6 +7,8 @@ runs:
       with:
         working-directory: cms
     - run: npm run generate:types
+      shell: bash
       working-directory: cms
     - run: npm run copy-types
+      shell: bash
       working-directory: frontend
