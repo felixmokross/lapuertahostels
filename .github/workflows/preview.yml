@@ -89,4 +89,4 @@ jobs:
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit
-    needs: [preview-frontend]
+    needs: [preview-frontend, preview-cms]
