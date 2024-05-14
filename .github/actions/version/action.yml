@@ -4,9 +4,6 @@ outputs:
     value: ${{ steps.complete-version.outputs.version }}
 runs:
   using: "composite"
-  defaults:
-    run:
-      shell: bash
   steps:
     - uses: paulhatch/semantic-version@v5.3.0
       id: semantic-version
@@ -22,6 +19,7 @@ runs:
         echo "Increment: ${{ steps.semantic-version.outputs.increment }}"
         echo "Current commit: ${{ steps.semantic-version.outputs.current_commit }}"
         echo "Is tagged: ${{ steps.semantic-version.outputs.is_tagged }}"
+      shell: bash
     - id: complete-version
       run: |
         if [ ${{ steps.semantic-version.outputs.is_tagged }} == "true" ]; then
@@ -34,6 +32,9 @@ runs:
             fi
         fi
         echo "version=${{ steps.semantic-version.outputs.version }}$pre_release_postfix" >> "$GITHUB_OUTPUT"
+      shell: bash
     - run: echo "Complete version is ${{ steps.complete-version.outputs.version }}"
+      shell: bash
     - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
+      shell: bash
       working-directory: frontend
