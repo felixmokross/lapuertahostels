@@ -6,12 +6,11 @@ env:
   NODE_VERSION: 20
 
 jobs:
-  # TODO parallize what can be done in parallel
-  preview:
+  preview-frontend:
     runs-on: ubuntu-latest
     environment:
       name: preview
-      url: ${{ env.FRONTEND_APP_URL }}
+      url: ${{ steps.app-name.outputs.app-url }}
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FLY_ORG: personal
@@ -19,44 +18,61 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.1.117
-      - uses: ./.github/actions/version
-        id: version
-      - name: Generate App Names
-        run: |
-          GITHUB_SHA_SHORT=${GITHUB_SHA::4}
-
-          FRONTEND_APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
-          echo Frontend app name is $FRONTEND_APP_NAME
-          echo "FRONTEND_APP_NAME=$FRONTEND_APP_NAME" >> $GITHUB_ENV
-
-          FRONTEND_APP_URL=https://$FRONTEND_APP_NAME.fly.dev
-          echo Frontend app URL is $FRONTEND_APP_URL
-          echo "FRONTEND_APP_URL=$FRONTEND_APP_URL" >> $GITHUB_ENV
-
-          CMS_APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
-          echo CMS app name is $CMS_APP_NAME
-          echo "CMS_APP_NAME=$CMS_APP_NAME" >> $GITHUB_ENV
-
-          CMS_APP_URL=https://$CMS_APP_NAME.fly.dev
-          echo CMS app URL is $CMS_APP_URL
-          echo "CMS_APP_URL=$CMS_APP_URL" >> $GITHUB_ENV
+      - uses: ./.github/actions/app-name
+        id: app-name
+        with:
+          component: frontend
+      - uses: ./.github/actions/app-name
+        id: cms-app-name
+        with:
+          component: cms
       - name: Delete if exists
         run: |
-          flyctl apps destroy --yes $FRONTEND_APP_NAME || true
-          flyctl apps destroy --yes $CMS_APP_NAME || true
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
       - name: Create App
         run: |
-          echo Creating app $FRONTEND_APP_NAME:
-          flyctl apps create --name $FRONTEND_APP_NAME --org $FLY_ORG
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+      - uses: ./.github/actions/version
+        id: version
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --app ${{ steps.app-name.outputs.app-name }} \
+            --image-label v${{ steps.version.outputs.version }} \
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
+            --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }}/api \
+        working-directory: frontend
 
-          echo Creating app $CMS_APP_NAME:
-          flyctl apps create --name $CMS_APP_NAME --org $FLY_ORG
+  preview-cms:
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.app-name.outputs.app-url }}
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      FLY_ORG: personal
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.1.117
+      - uses: ./.github/actions/app-name
+        id: app-name
+        with:
+          component: cms
+      - name: Delete if exists
+        run: |
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
+      - name: Create App
+        run: |
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
 
           echo Setting secrets:
           flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
@@ -64,21 +80,16 @@ jobs:
             --app $CMS_APP_NAME --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
-      - name: Deploy Frontend
+      - uses: ./.github/actions/version
+        id: version
+      - name: Deploy
         run: |
           flyctl deploy \
-            --app $FRONTEND_APP_NAME \
-            --image-label v${{ steps.version.outputs.version }} \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
-            --env PAYLOAD_CMS_BASE_URL=$CMS_APP_URL/api \
-        working-directory: frontend
-      - name: Deploy CMS
-        run: |
-          flyctl deploy \
-            --app $CMS_APP_NAME \
+            --app ${{ steps.app-name.outputs.app-name }} \
             --image-label v${{ steps.version.outputs.version }} \
         working-directory: cms
+  
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit
-    needs: [preview]
+    needs: [preview-frontend]

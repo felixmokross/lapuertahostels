@@ -35,6 +35,9 @@ runs:
       shell: bash
     - run: echo "Complete version is ${{ steps.complete-version.outputs.version }}"
       shell: bash
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
     - run: npm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash
       working-directory: frontend

@@ -1,0 +1,30 @@
+name: "App Name"
+inputs:
+  component:
+    required: true
+outputs:
+  app-name:
+    value: ${{ steps.app-name.outputs.app-name }}
+  app-url:
+    value: ${{ steps.app-name.outputs.app-url }}
+runs:
+  using: "composite"
+  steps:
+    - id: app-name
+      run: |
+        GITHUB_SHA_SHORT=${GITHUB_SHA::4}
+
+        case ${{ inputs.component }} in
+          frontend)
+            APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
+            echo "app-name=$APP_NAME" >> $GITHUB_OUTPUT
+            ;;
+          cms)
+            APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
+            echo "app-name=$APP_NAME" >> $GITHUB_OUTPUT
+            ;;
+        esac
+
+        APP_URL=https://$APP_NAME.fly.dev
+        echo "app-url=$APP_URL" >> $GITHUB_OUTPUT
+      shell: bash
