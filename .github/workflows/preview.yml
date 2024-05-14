@@ -32,19 +32,19 @@ jobs:
           GITHUB_SHA_SHORT=${GITHUB_SHA::4}
 
           FRONTEND_APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
-          echo App name is $FRONTEND_APP_NAME
+          echo Frontend app name is $FRONTEND_APP_NAME
           echo "FRONTEND_APP_NAME=$FRONTEND_APP_NAME" >> $GITHUB_ENV
 
           FRONTEND_APP_URL=https://$FRONTEND_APP_NAME.fly.dev
-          echo Frontend App URL is $FRONTEND_APP_URL
+          echo Frontend app URL is $FRONTEND_APP_URL
           echo "FRONTEND_APP_URL=$FRONTEND_APP_URL" >> $GITHUB_ENV
 
           CMS_APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
-          echo CMS App name is $CMS_APP_NAME
+          echo CMS app name is $CMS_APP_NAME
           echo "CMS_APP_NAME=$CMS_APP_NAME" >> $GITHUB_ENV
 
           CMS_APP_URL=https://$CMS_APP_NAME.fly.dev
-          echo CMS App URL is $CMS_APP_URL
+          echo CMS app URL is $CMS_APP_URL
           echo "CMS_APP_URL=$CMS_APP_URL" >> $GITHUB_ENV
       - name: Delete if exists
         run: |
@@ -64,17 +64,20 @@ jobs:
             --app $CMS_APP_NAME --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
-      - name: Deploy
+      - name: Deploy Frontend
         run: |
           flyctl deploy \
             --app $FRONTEND_APP_NAME \
             --image-label v${{ steps.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
             --env PAYLOAD_CMS_BASE_URL=$CMS_APP_URL/api \
-
+        working-directory: frontend
+      - name: Deploy CMS
+        run: |
           flyctl deploy \
             --app $CMS_APP_NAME \
             --image-label v${{ steps.version.outputs.version }} \
+        working-directory: cms
   clean:
     uses: ./.github/workflows/preview-clean.yml
     secrets: inherit
