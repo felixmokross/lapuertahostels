@@ -1,5 +1,4 @@
 name: "Populate CMS Types"
-shell
 runs:
   using: "composite"
   steps:
