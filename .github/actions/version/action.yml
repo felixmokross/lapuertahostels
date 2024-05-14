@@ -1,6 +1,7 @@
 name: "Version"
 outputs:
-  version: ${{ steps.complete-version.outputs.version }}
+  version:
+    value: ${{ steps.complete-version.outputs.version }}
 runs:
   using: "composite"
   defaults:
