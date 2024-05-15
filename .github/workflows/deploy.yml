@@ -91,6 +91,7 @@ jobs:
             --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }}/api \
+        working-directory: frontend
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -110,5 +111,6 @@ jobs:
             --app ${{ needs.define-env.outputs.fly_app_cms }} \
             --remote-only \
             --image-label v${{ steps.version.outputs.version }} \
+        working-directory: cms
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
