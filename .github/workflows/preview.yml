@@ -6,7 +6,8 @@ env:
   NODE_VERSION: 20
 
 jobs:
-  preview-frontend:
+  frontend-preview:
+    name: Frontend / Preview
     runs-on: ubuntu-latest
     environment:
       name: preview
@@ -37,6 +38,8 @@ jobs:
           echo Creating app ${{ steps.app-name.outputs.app-name }}:
           flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
       - uses: ./.github/actions/version
+        with:
+          working-directory: frontend
         id: version
       - name: Deploy
         run: |
@@ -47,7 +50,8 @@ jobs:
             --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }}/api \
         working-directory: frontend
 
-  preview-cms:
+  cms-preview:
+    name: CMS / Preview
     runs-on: ubuntu-latest
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -78,6 +82,8 @@ jobs:
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
       - uses: ./.github/actions/version
+        with:
+          working-directory: cms
         id: version
       - name: Deploy
         run: |
@@ -86,7 +92,8 @@ jobs:
             --image-label v${{ steps.version.outputs.version }} \
         working-directory: cms
   
-  clean:
-    uses: ./.github/workflows/preview-clean.yml
+  clean-preview:
+    name: Clean Preview
+    uses: ./.github/workflows/clean-preview.yml
     secrets: inherit
-    needs: [preview-frontend, preview-cms]
+    needs: [frontend-preview, cms-preview]

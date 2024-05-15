@@ -1,4 +1,4 @@
-name: Preview Clean
+name: Clean Preview
 on:
   schedule:
     - cron: "0 2 * * *"
@@ -9,7 +9,8 @@ on:
         required: true
 
 jobs:
-  clean:
+  clean-preview:
+    name: Clean Preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
