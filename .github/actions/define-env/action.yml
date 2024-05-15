@@ -1,0 +1,39 @@
+name: "Version"
+inputs:
+  environment:
+outputs:
+  environment:
+    value: ${{ steps.define-env.outputs.environment }}
+  fly_app_frontend:
+    value: ${{ steps.define-env.outputs.fly_app_frontend }}
+  fly_app_cms:
+    value: ${{ steps.define-env.outputs.fly_app_cms }}
+  domain_frontend:
+    value: ${{ steps.define-env.outputs.domain_frontend }}
+  domain_cms:
+    value: ${{ steps.define-env.outputs.domain_cms }}
+  imagekit_base_url:
+    value: ${{ steps.define-env.outputs.imagekit_base_url }}
+runs:
+  - id: define-env
+    run: |
+      environment=${{ inputs.environment || 'staging' }}
+      echo "environment=$environment" >> "$GITHUB_OUTPUT"
+
+      case $environment in
+        production)
+          echo "fly_app_frontend=lapuertahostels-2" >> "$GITHUB_OUTPUT"
+          echo "fly_app_cms=lapuertahostels-cms" >> "$GITHUB_OUTPUT"
+          echo "domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
+          echo "domain_cms=lapuertahostels-cms.fly.dev" >> "$GITHUB_OUTPUT"
+          echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels" >> "$GITHUB_OUTPUT"
+          ;;
+        staging)
+          echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
+          echo "fly_app_cms=lapuertahostels-cms-staging" >> "$GITHUB_OUTPUT"
+          echo "domain_frontend=lapuertahostels-staging.fly.dev" >> "$GITHUB_OUTPUT"
+          echo "domain_cms=lapuertahostels-cms-staging.fly.dev" >> "$GITHUB_OUTPUT"
+          echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
+          ;;
+      esac
+    shell: bash

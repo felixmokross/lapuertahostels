@@ -38,8 +38,6 @@ jobs:
           echo Creating app ${{ steps.app-name.outputs.app-name }}:
           flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
       - uses: ./.github/actions/version
-        with:
-          working-directory: frontend
         id: version
       - name: Deploy
         run: |
@@ -82,8 +80,6 @@ jobs:
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
       - uses: ./.github/actions/version
-        with:
-          working-directory: cms
         id: version
       - name: Deploy
         run: |

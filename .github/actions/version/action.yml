@@ -1,7 +1,4 @@
 name: "Version"
-inputs:
-  working-directory:
-    required: true
 outputs:
   version:
     value: ${{ steps.complete-version.outputs.version }}
@@ -43,4 +40,7 @@ runs:
         node-version: ${{ env.NODE_VERSION }}
     - run: npm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: frontend
+    - run: npm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
+      shell: bash
+      working-directory: cms
