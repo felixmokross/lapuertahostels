@@ -1,9 +1,10 @@
 {
-  "bannerMessage": "Viaja antes del 20 de septiembre y consigue un 20% de descuento!",
-  "bannerCta": "Reserva ahora",
   "bannerDismiss": "Cerrar",
   "aboutUs": "Sobre nosotros",
   "contact": "Contacto",
+  "carousel": {
+    "cta": "Saber más"
+  },
   "intro": {
     "heading": "Discubre la Costa Caribe Colombiana",
     "text": "Recorre la impresionante belleza del <hl>Parque Tayrona</hl>, descubre la misteriosa <hl>Ciudad Perdida</hl>, o refréscate en el río de <hl>Minca</hl>. Nuestra variedad de acogedores alojamientos en la ciudad de Santa Marta son <hl>tu base perfecta.</hl>"

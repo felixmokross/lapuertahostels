@@ -1,23 +1,9 @@
 {
-  "bannerMessage": "Reise vor dem 20. September und erhalte 20% Rabatt!",
-  "bannerCta": "Jetzt buchen",
   "bannerDismiss": "Schließen",
   "aboutUs": "Über uns",
   "contact": "Kontakt",
   "carousel": {
-    "cta": "Mehr erfahren",
-    "lostCity": {
-      "title": "Finde die <1 /><2>Verlorene Stadt</2>"
-    },
-    "parqueTayrona": {
-      "title": "Wandere durch<br/>den <3>Tayrona-Park</3>"
-    },
-    "minca": {
-      "title": "Folge dem <br/> <3>Minca-Fluss</3>"
-    },
-    "santaMarta": {
-      "title": "Entdecke die Straßen <br/>von <3>Santa Marta</3>"
-    }
+    "cta": "Mehr erfahren"
   },
   "intro": {
     "heading": "Entdecke die kolumbianische Karibikküste",
