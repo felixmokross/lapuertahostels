@@ -7,7 +7,7 @@ runs:
   steps:
     - run: |
         if [ -f .git/shallow ]; then
-          echo "Checkout must be with `fetch-depth: 0` for the versioning to work correctly"
+          echo "Checkout must be with 'fetch-depth: 0' for the versioning to work correctly"
           exit 1
         fi
       shell: bash
