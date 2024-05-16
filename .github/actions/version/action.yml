@@ -5,6 +5,12 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - run: |
+        if [ -f .git/shallow ]; then
+          echo "Checkout must be with `fetch-depth: 0` for the versioning to work correctly"
+          exit 1
+        fi
+      shell: bash
     - uses: paulhatch/semantic-version@v5.3.0
       id: semantic-version
       with:
