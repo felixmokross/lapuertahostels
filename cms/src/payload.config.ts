@@ -9,6 +9,7 @@ import { buildConfig } from "payload/config";
 import { Users } from "./collections/Users";
 import { CarouselItems } from "./collections/CarouselItems";
 import { Home } from "./globals/Home";
+import { Common } from "./globals/Common";
 
 export default buildConfig({
   admin: {
@@ -17,7 +18,7 @@ export default buildConfig({
   },
   editor: slateEditor({}),
   collections: [Users, CarouselItems],
-  globals: [Home],
+  globals: [Home, Common],
   localization: {
     locales: ["en", "es", "de", "fr"],
     defaultLocale: "en",

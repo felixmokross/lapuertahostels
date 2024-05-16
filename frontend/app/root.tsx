@@ -1,4 +1,9 @@
-import { json, MetaFunction, type LinksFunction } from "@remix-run/node";
+import {
+  json,
+  LoaderFunctionArgs,
+  MetaFunction,
+  type LinksFunction,
+} from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -14,6 +19,8 @@ import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import { RoutingBrandProvider } from "./brands";
+import i18next from "./i18next.server";
+import { Common } from "./payload-types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -68,8 +75,16 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = await i18next.getLocale(request);
+  // TODO provide an function for this
+  const common = (await (
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/common?locale=${locale}`,
+    )
+  ).json()) as Common;
   return json({
+    common,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   });
@@ -84,8 +99,8 @@ export const handle = {
 };
 
 export default function App() {
-  const { analyticsDomain } = useLoaderData<typeof loader>();
-  const { t, i18n } = useTranslation();
+  const { common, analyticsDomain } = useLoaderData<typeof loader>();
+  const { i18n } = useTranslation();
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
@@ -106,9 +121,14 @@ export default function App() {
           Coming soon…
         </div> */}
         <RoutingBrandProvider>
-          <Banner cta={`${t("bannerCta")} →`} ctaTo="/">
-            {t("bannerMessage")}
-          </Banner>
+          {common.banner?.message && (
+            <Banner
+              cta={`${common.banner.cta} →`}
+              ctaTo={common.banner.ctaUrl || "#"}
+            >
+              {common.banner.message}
+            </Banner>
+          )}
           <Header />
           <main>
             <Outlet />
