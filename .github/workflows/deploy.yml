@@ -103,8 +103,8 @@ jobs:
     needs: [check, define-env]
     steps:
       - uses: actions/checkout@v4
-        # with:
-        #   fetch-depth: 0
+        with:
+          fetch-depth: 0
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.1.117
