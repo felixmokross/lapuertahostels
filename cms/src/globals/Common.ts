@@ -10,10 +10,12 @@ export const Common: GlobalConfig = {
       fields: [
         {
           name: "message",
+          localized: true,
           type: "text",
         },
         {
           name: "cta",
+          localized: true,
           type: "text",
         },
         {
