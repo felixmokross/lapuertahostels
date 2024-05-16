@@ -1,4 +1,4 @@
-name: Preview Clean
+name: Clean Preview
 on:
   schedule:
     - cron: "0 2 * * *"
@@ -9,7 +9,8 @@ on:
         required: true
 
 jobs:
-  clean:
+  clean-preview:
+    name: Clean Preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +21,7 @@ jobs:
           flyctl apps list --json --org $FLY_ORG \
             | jq '[map(
               { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
-              | select(.ID | test("^lapuertahostels-preview-"))
+              | select(.ID | (test("^lapuertahostels-preview-") or test("^lapuertahostels-cms-preview-")))
               | {
                   ID,
                   LastReleasedDaysAgo: (
@@ -33,7 +34,7 @@ jobs:
             )]
             | map((. | map(select(.LastReleasedDaysAgo == null or .LastReleasedDaysAgo > 4))), (.
                 | sort_by(.LastReleasedDaysAgo)
-                | .[3:])
+                | .[6:])
             )
             | flatten
             | unique_by(.ID)

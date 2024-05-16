@@ -5,81 +5,91 @@ on:
 env:
   NODE_VERSION: 20
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
-  version:
-    uses: ./.github/workflows/version.yml
-  deploy:
+  frontend-preview:
+    name: Frontend / Preview
     runs-on: ubuntu-latest
-    needs: version
     environment:
       name: preview
-      url: ${{ env.APP_URL }}
+      url: ${{ steps.app-name.outputs.app-url }}
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FLY_ORG: personal
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.1.117
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/app-name
+        id: app-name
         with:
-          node-version: ${{ env.NODE_VERSION }}
-      - run: npm version ${{ needs.version.outputs.version }} --git-tag-version false
-      - name: Generate App Name
-        run: |
-          GITHUB_SHA_SHORT=${GITHUB_SHA::4}
-
-          APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
-          echo App name is $APP_NAME
-          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
-
-          # DB_APP_NAME=$APP_NAME-db
-          # echo DB app name is $DB_APP_NAME
-          # echo "DB_APP_NAME=$DB_APP_NAME" >> $GITHUB_ENV
-
-          APP_URL=https://$APP_NAME.fly.dev
-          echo App URL is $APP_URL
-          echo "APP_URL=$APP_URL" >> $GITHUB_ENV
+          component: frontend
+      - uses: ./.github/actions/app-name
+        id: cms-app-name
+        with:
+          component: cms
       - name: Delete if exists
         run: |
-          flyctl apps destroy --yes $APP_NAME || true
-          # flyctl apps destroy --yes $DB_APP_NAME || true
-      - name: Create App and DB
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
+      - name: Create App
         run: |
-          # DB_PW=$(openssl rand -hex 32)
-
-          # echo Creating postgres cluster $DB_APP_NAME:
-          # flyctl postgres create --name $DB_APP_NAME --region bog --password $DB_PW --initial-cluster-size 1 --vm-size shared-cpu-1x --volume-size 1 --org $FLY_ORG
-
-          echo Creating app $APP_NAME:
-          flyctl apps create --name $APP_NAME --org $FLY_ORG
-
-          # echo Attaching Postgres cluster to app:
-          # flyctl postgres attach $DB_APP_NAME --app $APP_NAME
-
-          # echo Setting secrets:
-          # flyctl secrets set SESSION_SECRET=$(openssl rand -hex 32) \
-          #   BASE_URL="$APP_URL" \
-          #   OIDC_ISSUER=$PREVIEW_DEPLOYMENT_OIDC_ISSUER \
-          #   OIDC_CLIENT_ID=$PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID \
-          #   OIDC_CLIENT_SECRET=$PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET \
-          #   --app $APP_NAME --stage
-        # env:
-        #   PREVIEW_DEPLOYMENT_OIDC_ISSUER: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_ISSUER }}
-        #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_ID }}
-        #   PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET: ${{ secrets.PREVIEW_DEPLOYMENT_OIDC_CLIENT_SECRET }}
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+      - uses: ./.github/actions/version
+        id: version
       - name: Deploy
         run: |
           flyctl deploy \
-            --app $APP_NAME \
-            --image-label v${{ needs.version.outputs.version }} \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development
-  clean:
-    uses: ./.github/workflows/preview-clean.yml
+            --app ${{ steps.app-name.outputs.app-name }} \
+            --image-label v${{ steps.version.outputs.version }} \
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
+            --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }}/api \
+        working-directory: frontend
+
+  cms-preview:
+    name: CMS / Preview
+    runs-on: ubuntu-latest
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      FLY_ORG: personal
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.1.117
+      - uses: ./.github/actions/app-name
+        id: app-name
+        with:
+          component: cms
+      - name: Delete if exists
+        run: |
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
+      - name: Create App
+        run: |
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+
+          echo Setting secrets:
+          flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
+            PAYLOAD_SECRET=$(openssl rand -hex 12) \
+            --app ${{ steps.app-name.outputs.app-name }} --stage
+        env:
+          PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
+      - uses: ./.github/actions/version
+        id: version
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --app ${{ steps.app-name.outputs.app-name }} \
+            --image-label v${{ steps.version.outputs.version }} \
+        working-directory: cms
+  
+  clean-preview:
+    name: Clean Preview
+    uses: ./.github/workflows/clean-preview.yml
     secrets: inherit
-    needs: deploy
+    needs: [frontend-preview, cms-preview]

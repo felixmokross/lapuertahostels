@@ -1,0 +1,10 @@
+# flyctl launch added from .gitignore
+**/build
+**/dist
+media
+**/node_modules
+**/.DS_Store
+**/.env
+
+src/payload-types.ts
+fly.toml

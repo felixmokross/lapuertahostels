@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link, useRouteLoaderData } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/cn";
 import { loader as rootLoader } from "~/root";
@@ -7,6 +7,9 @@ import { Trans, useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
+import i18next from "~/i18next.server";
+import { Home } from "~/payload-types";
+import { Fragment } from "react/jsx-runtime";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,72 +18,57 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = await i18next.getLocale(request);
+  // TODO provide an function for this
+  return (await (
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/home?locale=${locale}`,
+    )
+  ).json()) as Home;
+}
+
 export default function Route() {
   const { t } = useTranslation();
+  const homeData = useLoaderData<typeof loader>();
   return (
     <>
       <Carousel
-        items={[
-          {
-            src: "experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
-            alt: "Parque Tayrona",
+        items={homeData.hero.map((carouselItem) => {
+          if (typeof carouselItem === "string") {
+            throw new Error("Did not receive carouselItem details");
+          }
+          return {
+            src: carouselItem.imageUrl,
+            alt: carouselItem.imageAlt,
             title: {
               text: (
-                <Trans i18nKey="carousel.parqueTayrona.title">
-                  Hike Through
-                  <br />
-                  the <span className="text-puerta-200">Tayrona Park</span>
-                </Trans>
+                <>
+                  {carouselItem.title.map((line, i) => (
+                    <Fragment key={i}>
+                      {(line.children as Record<string, unknown>[]).map(
+                        (c, j) => (
+                          <Fragment key={j}>
+                            {c.bold ? (
+                              <HeadingHighlight>
+                                {c.text as string}
+                              </HeadingHighlight>
+                            ) : (
+                              (c.text as string)
+                            )}
+                          </Fragment>
+                        ),
+                      )}
+                      <br />
+                    </Fragment>
+                  ))}
+                </>
               ),
-              position: "top-left",
-              cta: { text: t("carousel.cta"), to: "/experiences/tayrona" },
+              position: carouselItem.titlePosition || undefined,
+              cta: { text: t("carousel.cta"), to: carouselItem.ctaUrl },
             },
-          },
-          {
-            src: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
-            alt: "Lost City",
-            title: {
-              text: (
-                <Trans i18nKey="carousel.lostCity.title">
-                  Find the Lost City
-                  <br />
-                  <span className="text-puerta-200">Lost City</span>
-                </Trans>
-              ),
-              position: "top-right",
-              cta: { text: t("carousel.cta") },
-            },
-          },
-          {
-            src: "denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
-            alt: "Minca",
-            title: {
-              text: (
-                <Trans i18nKey="carousel.minca.title">
-                  Follow the <br />{" "}
-                  <span className="text-puerta-200">Minca River</span>
-                </Trans>
-              ),
-              position: "bottom-left",
-              cta: { text: t("carousel.cta") },
-            },
-          },
-          // {
-          //   src: "david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
-          //   alt: "Santa Marta",
-          //   title: {
-          //     text: (
-          //       <Trans i18nKey="carousel.santaMarta.title">
-          //         Explore the Streets
-          //         <br />
-          //         of <span className="text-puerta-200">Santa Marta</span>
-          //       </Trans>
-          //     ),
-          //     position: "bottom-right",
-          //     cta: { text: t("carousel.cta") },
-          //   },
-          // },
-        ]}
+          };
+        })}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 1600,
