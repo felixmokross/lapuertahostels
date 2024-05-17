@@ -70,5 +70,29 @@ export const Home: GlobalConfig = {
       required: true,
       localized: true,
     },
+    {
+      name: "intro",
+      type: "group",
+      fields: [
+        {
+          name: "heading",
+          type: "text",
+          required: true,
+          localized: true,
+        },
+        {
+          name: "text",
+          type: "richText",
+          required: true,
+          localized: true,
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
+        },
+      ],
+    },
   ],
 };

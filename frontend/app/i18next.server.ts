@@ -10,7 +10,7 @@ const i18next = new RemixI18Next({
   detection: {
     supportedLanguages: i18n.supportedLngs,
     fallbackLanguage: i18n.fallbackLng,
-    order: ["cookie", "header"],
+    order: ["searchParams", "cookie", "header"],
     cookie: localeCookie,
   },
   // This is the configuration for i18next used

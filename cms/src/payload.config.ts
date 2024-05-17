@@ -15,7 +15,8 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL,
+      url: ({ locale }) =>
+        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}?lng=${locale}`,
       globals: [Home.slug, Common.slug],
     },
   },

@@ -3,7 +3,7 @@ import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/cn";
 import { loader as rootLoader } from "~/root";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
@@ -52,8 +52,8 @@ export default function Route() {
           title: {
             text: (
               <>
-                {slide.title.map((line, i) => (
-                  <Fragment key={i}>
+                {slide.title.map((line, index, allLines) => (
+                  <Fragment key={index}>
                     {(line.children as Record<string, unknown>[]).map(
                       (c, j) => (
                         <Fragment key={j}>
@@ -67,7 +67,7 @@ export default function Route() {
                         </Fragment>
                       ),
                     )}
-                    <br />
+                    {index < allLines.length - 1 && <br />}
                   </Fragment>
                 ))}
               </>
@@ -84,14 +84,23 @@ export default function Route() {
 
       <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
         <Heading as="h1" size="medium">
-          {t("intro.heading")}
+          {homeData2.intro.heading}
         </Heading>
         <Paragraph justify size="extra-large" className="mt-4 md:mt-6">
-          <Trans
-            i18nKey="intro.text"
-            defaults="Hike through the breath-taking beauty of <hl>Tayrona National Park</hl>, discover the mysterious <hl>Lost City</hl>, or refresh yourself in the river of <hl>Minca</hl>. Our variety of heartful accommodations in the city of Santa Marta are <hl>your perfect home base.</hl>"
-            components={{ hl: <ParagraphHighlight /> }}
-          />
+          {homeData2.intro.text.map((line, index, allLines) => (
+            <Fragment key={index}>
+              {(line.children as Record<string, unknown>[]).map((c, j) => (
+                <Fragment key={j}>
+                  {c.bold ? (
+                    <ParagraphHighlight>{c.text as string}</ParagraphHighlight>
+                  ) : (
+                    (c.text as string)
+                  )}
+                </Fragment>
+              ))}
+              {index < allLines.length - 1 && <br />}
+            </Fragment>
+          ))}
         </Paragraph>
       </div>
 
