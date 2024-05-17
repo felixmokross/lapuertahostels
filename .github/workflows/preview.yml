@@ -90,7 +90,7 @@ jobs:
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
             --image-label v${{ steps.version.outputs.version }} \
-            --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
+            --env PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
         working-directory: cms
 
   clean-preview:
