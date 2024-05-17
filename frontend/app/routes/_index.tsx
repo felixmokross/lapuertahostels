@@ -10,6 +10,7 @@ import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
 import i18next from "~/i18next.server";
 import { Home } from "~/payload-types";
 import { Fragment } from "react/jsx-runtime";
+import { useLivePreview } from "@payloadcms/live-preview-react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,22 +20,33 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  if (!process.env.PAYLOAD_CMS_BASE_URL) {
+    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
+  }
+
   const locale = await i18next.getLocale(request);
   // TODO provide an function for this
-  return (await (
-    await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/home?locale=${locale}`,
-    )
-  ).json()) as Home;
+  return {
+    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
+    homeData: (await (
+      await fetch(
+        `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
+      )
+    ).json()) as Home,
+  };
 }
 
 export default function Route() {
   const { t } = useTranslation();
-  const homeData = useLoaderData<typeof loader>();
+  const { homeData, payloadCmsBaseUrl } = useLoaderData<typeof loader>();
+  const { data: homeData2 } = useLivePreview({
+    initialData: homeData,
+    serverURL: payloadCmsBaseUrl,
+  });
   return (
     <>
       <Carousel
-        items={homeData.slides.map((slide) => ({
+        items={homeData2.slides.map((slide) => ({
           src: slide.imageUrl,
           alt: slide.imageAlt,
           title: {

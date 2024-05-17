@@ -21,6 +21,7 @@ import { Footer } from "./components/footer";
 import { RoutingBrandProvider } from "./brands";
 import i18next from "./i18next.server";
 import { Common } from "./payload-types";
+import { useLivePreview } from "@payloadcms/live-preview-react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -76,15 +77,22 @@ export const meta: MetaFunction = () => [
 ];
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  if (!process.env.PAYLOAD_CMS_BASE_URL) {
+    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
+  }
+
   const locale = await i18next.getLocale(request);
+
   // TODO provide an function for this
   const common = (await (
     await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/common?locale=${locale}`,
+      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/common?locale=${locale}`,
     )
   ).json()) as Common;
+
   return json({
     common,
+    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   });
@@ -99,8 +107,13 @@ export const handle = {
 };
 
 export default function App() {
-  const { common, analyticsDomain } = useLoaderData<typeof loader>();
+  const { common, analyticsDomain, payloadCmsBaseUrl } =
+    useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
+  const { data: common2 } = useLivePreview({
+    initialData: common,
+    serverURL: payloadCmsBaseUrl,
+  });
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
@@ -121,12 +134,12 @@ export default function App() {
           Coming soon…
         </div> */}
         <RoutingBrandProvider>
-          {common.banner?.message && (
+          {common2.banner?.message && (
             <Banner
-              cta={`${common.banner.cta} →`}
-              ctaTo={common.banner.ctaUrl || "#"}
+              cta={`${common2.banner.cta} →`}
+              ctaTo={common2.banner.ctaUrl || "#"}
             >
-              {common.banner.message}
+              {common2.banner.message}
             </Banner>
           )}
           <Header />

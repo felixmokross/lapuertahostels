@@ -14,6 +14,10 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    livePreview: {
+      url: process.env.LIVE_PREVIEW_URL,
+      globals: [Home.slug, Common.slug],
+    },
   },
   editor: slateEditor({}),
   collections: [Users],
