@@ -24,5 +24,22 @@ export const Common: GlobalConfig = {
         },
       ],
     },
+    {
+      name: "footer",
+      type: "group",
+      fields: [
+        {
+          name: "address",
+          type: "textarea",
+          required: true,
+        },
+        {
+          name: "copyright",
+          type: "text",
+          required: true,
+          localized: true,
+        },
+      ],
+    },
   ],
 };

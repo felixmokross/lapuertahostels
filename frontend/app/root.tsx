@@ -146,7 +146,7 @@ export default function App() {
           <main>
             <Outlet />
           </main>
-          <Footer />
+          <Footer content={common2.footer} />
         </RoutingBrandProvider>
         <ScrollRestoration />
         <Scripts />
