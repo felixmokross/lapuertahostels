@@ -7,7 +7,6 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 
 import { Users } from "./collections/Users";
-import { CarouselItems } from "./collections/CarouselItems";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 
@@ -17,7 +16,7 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users, CarouselItems],
+  collections: [Users],
   globals: [Home, Common],
   localization: {
     locales: ["en", "es", "de", "fr"],

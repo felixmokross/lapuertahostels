@@ -1,3 +1,5 @@
+import { slateEditor } from "@payloadcms/richtext-slate";
+import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { GlobalConfig } from "payload/types";
 
 export const Home: GlobalConfig = {
@@ -5,12 +7,62 @@ export const Home: GlobalConfig = {
   access: { read: () => true },
   fields: [
     {
-      name: "hero",
-      type: "relationship",
+      name: "slides",
+      type: "array",
       required: true,
       maxRows: 6,
-      relationTo: "carouselItems",
-      hasMany: true,
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "title",
+          type: "richText",
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
+          required: true,
+          localized: true,
+        },
+        {
+          name: "titlePosition",
+          type: "select",
+          options: [
+            "center",
+            "top-left",
+            "top-right",
+            "bottom-right",
+            "bottom-left",
+          ],
+        },
+        {
+          name: "imageUrl",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "imageAlt",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "ctaUrl",
+          type: "text",
+          required: true,
+        },
+      ],
+      admin: {
+        components: {
+          RowLabel: ({ data, index }: RowLabelArgs) => {
+            return data?.name || `Slide ${String(index).padStart(2, "0")}`;
+          },
+        },
+      },
     },
   ],
 };
