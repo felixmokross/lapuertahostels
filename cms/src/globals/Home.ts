@@ -94,5 +94,81 @@ export const Home: GlobalConfig = {
         },
       ],
     },
+    {
+      name: "accommodations",
+      type: "group",
+      fields: [
+        {
+          name: "heading",
+          type: "text",
+          required: true,
+          localized: true,
+        },
+        {
+          name: "text",
+          type: "richText",
+          required: true,
+          localized: true,
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
+        },
+        {
+          name: "cards",
+          type: "array",
+          minRows: 2,
+          maxRows: 2,
+          required: true,
+          fields: [
+            {
+              name: "name",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "color",
+              type: "select",
+              options: ["aqua", "azul"],
+              required: true,
+            },
+            {
+              name: "to",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "imageUrl",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "imageAlt",
+              type: "text",
+              required: true,
+              localized: true,
+            },
+            {
+              name: "description",
+              type: "text",
+              required: true,
+              localized: true,
+            },
+          ],
+          admin: {
+            components: {
+              RowLabel: ({ data, index }: RowLabelArgs) => {
+                return (
+                  data?.name ||
+                  `Accommodation ${String(index).padStart(2, "0")}`
+                );
+              },
+            },
+          },
+        },
+      ],
+    },
   ],
 };

@@ -109,7 +109,7 @@ export default function Route() {
         <div className="py-8 md:py-16">
           <div className="lg-px-0 mx-auto max-w-4xl px-8">
             <Heading as="h2" size="large" variant="white">
-              Your Home Base for a Perfect Trip
+              {homeData2.accommodations.heading}
             </Heading>
             <Paragraph
               className="mt-4 md:mt-6"
@@ -117,31 +117,38 @@ export default function Route() {
               size="large"
               variant="white"
             >
-              Choose between our <strong>two accommodations</strong> in Santa
-              Marta.
+              {homeData2.accommodations.text.map((line, index, allLines) => (
+                <Fragment key={index}>
+                  {(line.children as Record<string, unknown>[]).map((c, j) => (
+                    <Fragment key={j}>
+                      {c.bold ? (
+                        <ParagraphHighlight>
+                          {c.text as string}
+                        </ParagraphHighlight>
+                      ) : (
+                        (c.text as string)
+                      )}
+                    </Fragment>
+                  ))}
+                  {index < allLines.length - 1 && <br />}
+                </Fragment>
+              ))}
             </Paragraph>
           </div>
           <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-            <AccommodationCard
-              name="Puerta Aqua"
-              to="/aqua"
-              color="aqua"
-              image={{
-                src: "aqua/spaces/Frente.jpg?updatedAt=1714161155761",
-                alt: "Puerta Aqua",
-              }}
-              description="Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night."
-            />
-            <AccommodationCard
-              name="La Puerta Azul"
-              to="/azul"
-              color="azul"
-              image={{
-                src: "azul/piscina/10.jpg?updatedAt=1714162021839",
-                alt: "La Puerta Azul",
-              }}
-              description="Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa."
-            />
+            {homeData2.accommodations.cards.map((card) => (
+              <AccommodationCard
+                key={card.id}
+                name={card.name}
+                to={card.to}
+                color={card.color}
+                image={{
+                  src: card.imageUrl,
+                  alt: card.imageAlt,
+                }}
+                description={card.description}
+              />
+            ))}
           </div>
         </div>
       </div>
