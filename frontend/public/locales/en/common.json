@@ -11,28 +11,7 @@
     "de": "Deutsch",
     "fr": "Français"
   },
-  "bannerMessage": "Travel before 20 September and get 20% off!",
-  "bannerCta": "Book now",
   "bannerDismiss": "Dismiss",
   "aboutUs": "About Us",
-  "contact": "Contact",
-  "carousel": {
-    "cta": "Read More",
-    "lostCity": {
-      "title": "Find the<1 /><2>Lost City</2>"
-    },
-    "parqueTayrona": {
-      "title": "Hike Through<br/>the <3>Tayrona Park</3>"
-    },
-    "minca": {
-      "title": "Follow the <br/> <3>Minca River</3>"
-    },
-    "santaMarta": {
-      "title": "Explore the Streets<br/>of <3>Santa Marta</3>"
-    }
-  },
-  "intro": {
-    "heading": "Discover the Colombian Costa Caribe",
-    "text": "Hike through the breath-taking beauty of <hl>Tayrona National Park</hl>, discover the mysterious <hl>Lost City</hl>, or refresh yourself in the river of <hl>Minca</hl>. Our variety of heartful accommodations in the city of Santa Marta are <hl>your perfect home base.</hl>"
-  }
+  "contact": "Contact"
 }

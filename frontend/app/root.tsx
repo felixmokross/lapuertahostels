@@ -1,4 +1,9 @@
-import { json, MetaFunction, type LinksFunction } from "@remix-run/node";
+import {
+  json,
+  LoaderFunctionArgs,
+  MetaFunction,
+  type LinksFunction,
+} from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -14,6 +19,9 @@ import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import { RoutingBrandProvider } from "./brands";
+import i18next from "./i18next.server";
+import { Common, Config } from "./payload-types";
+import { useLivePreview } from "@payloadcms/live-preview-react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -68,8 +76,23 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  if (!process.env.PAYLOAD_CMS_BASE_URL) {
+    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
+  }
+
+  const locale = await i18next.getLocale(request);
+
+  // TODO provide an function for this
+  const common = (await (
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/common?locale=${locale}`,
+    )
+  ).json()) as Common;
+
   return json({
+    common,
+    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   });
@@ -83,9 +106,31 @@ export const handle = {
   i18n: "common",
 };
 
+function useGlobalLivePreview<K extends keyof Config["globals"]>(
+  globalType: K,
+  {
+    initialData,
+    serverURL,
+  }: Parameters<typeof useLivePreview<Config["globals"][K]>>[0],
+) {
+  const result = useLivePreview({ initialData, serverURL });
+
+  // @ts-expect-error The global types of Payload don't declare the 'globalType' field, but this is how we can determine it at runtime.
+  if (result.isLoading || result.data.globalType === globalType) {
+    return result;
+  }
+
+  return { data: initialData, isLoading: false };
+}
+
 export default function App() {
-  const { analyticsDomain } = useLoaderData<typeof loader>();
-  const { t, i18n } = useTranslation();
+  const { common, analyticsDomain, payloadCmsBaseUrl } =
+    useLoaderData<typeof loader>();
+  const { i18n } = useTranslation();
+  const { data: common2 } = useGlobalLivePreview("common", {
+    initialData: common,
+    serverURL: payloadCmsBaseUrl,
+  });
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
@@ -106,14 +151,19 @@ export default function App() {
           Coming soon…
         </div> */}
         <RoutingBrandProvider>
-          <Banner cta={`${t("bannerCta")} →`} ctaTo="/">
-            {t("bannerMessage")}
-          </Banner>
+          {common2.banner?.message && (
+            <Banner
+              cta={`${common2.banner.cta} →`}
+              ctaTo={common2.banner.ctaUrl || "#"}
+            >
+              {common2.banner.message}
+            </Banner>
+          )}
           <Header />
           <main>
             <Outlet />
           </main>
-          <Footer />
+          <Footer content={common2.footer} />
         </RoutingBrandProvider>
         <ScrollRestoration />
         <Scripts />

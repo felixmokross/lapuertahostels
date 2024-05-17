@@ -35,7 +35,7 @@ jobs:
       - uses: softprops/action-gh-release@v1
     permissions:
       contents: write
-  
+
   define-env:
     name: Define Environment
     runs-on: ubuntu-latest
@@ -92,7 +92,7 @@ jobs:
             --image-label v${{ steps.version.outputs.version }} \
             --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
-            --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }}/api \
+            --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         working-directory: frontend
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -115,6 +115,7 @@ jobs:
             --app ${{ needs.define-env.outputs.fly_app_cms }} \
             --remote-only \
             --image-label v${{ steps.version.outputs.version }} \
+            --env PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
         working-directory: cms
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

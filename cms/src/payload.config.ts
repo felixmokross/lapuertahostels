@@ -7,17 +7,22 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
 
 import { Users } from "./collections/Users";
-import { CarouselItems } from "./collections/CarouselItems";
 import { Home } from "./globals/Home";
+import { Common } from "./globals/Common";
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    livePreview: {
+      url: ({ locale }) =>
+        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}?lng=${locale}`,
+      globals: [Home.slug, Common.slug],
+    },
   },
   editor: slateEditor({}),
-  collections: [Users, CarouselItems],
-  globals: [Home],
+  collections: [Users],
+  globals: [Home, Common],
   localization: {
     locales: ["en", "es", "de", "fr"],
     defaultLocale: "en",

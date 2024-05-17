@@ -45,7 +45,7 @@ jobs:
             --app ${{ steps.app-name.outputs.app-name }} \
             --image-label v${{ steps.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
-            --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }}/api \
+            --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
         working-directory: frontend
 
   cms-preview:
@@ -65,6 +65,10 @@ jobs:
         id: app-name
         with:
           component: cms
+      - uses: ./.github/actions/app-name
+        id: frontend-app-name
+        with:
+          component: frontend
       - name: Delete if exists
         run: |
           flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
@@ -86,8 +90,9 @@ jobs:
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
             --image-label v${{ steps.version.outputs.version }} \
+            --env PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
         working-directory: cms
-  
+
   clean-preview:
     name: Clean Preview
     uses: ./.github/workflows/clean-preview.yml

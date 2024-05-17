@@ -3,13 +3,14 @@ import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/cn";
 import { loader as rootLoader } from "~/root";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph, ParagraphHighlight } from "~/components/paragraph";
 import i18next from "~/i18next.server";
 import { Home } from "~/payload-types";
 import { Fragment } from "react/jsx-runtime";
+import { useLivePreview } from "@payloadcms/live-preview-react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,56 +20,62 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  if (!process.env.PAYLOAD_CMS_BASE_URL) {
+    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
+  }
+
   const locale = await i18next.getLocale(request);
   // TODO provide an function for this
-  return (await (
-    await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/globals/home?locale=${locale}`,
-    )
-  ).json()) as Home;
+  return {
+    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
+    homeData: (await (
+      await fetch(
+        `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
+      )
+    ).json()) as Home,
+  };
 }
 
 export default function Route() {
   const { t } = useTranslation();
-  const homeData = useLoaderData<typeof loader>();
+  const { homeData, payloadCmsBaseUrl } = useLoaderData<typeof loader>();
+  const { data: homeData2 } = useLivePreview({
+    initialData: homeData,
+    serverURL: payloadCmsBaseUrl,
+  });
   return (
     <>
       <Carousel
-        items={homeData.hero.map((carouselItem) => {
-          if (typeof carouselItem === "string") {
-            throw new Error("Did not receive carouselItem details");
-          }
-          return {
-            src: carouselItem.imageUrl,
-            alt: carouselItem.imageAlt,
-            title: {
-              text: (
-                <>
-                  {carouselItem.title.map((line, i) => (
-                    <Fragment key={i}>
-                      {(line.children as Record<string, unknown>[]).map(
-                        (c, j) => (
-                          <Fragment key={j}>
-                            {c.bold ? (
-                              <HeadingHighlight>
-                                {c.text as string}
-                              </HeadingHighlight>
-                            ) : (
-                              (c.text as string)
-                            )}
-                          </Fragment>
-                        ),
-                      )}
-                      <br />
-                    </Fragment>
-                  ))}
-                </>
-              ),
-              position: carouselItem.titlePosition || undefined,
-              cta: { text: t("carousel.cta"), to: carouselItem.ctaUrl },
-            },
-          };
-        })}
+        items={homeData2.slides.map((slide) => ({
+          src: slide.imageUrl,
+          alt: slide.imageAlt,
+          title: {
+            text: (
+              <>
+                {slide.title.map((line, index, allLines) => (
+                  <Fragment key={index}>
+                    {(line.children as Record<string, unknown>[]).map(
+                      (c, j) => (
+                        <Fragment key={j}>
+                          {c.bold ? (
+                            <HeadingHighlight>
+                              {c.text as string}
+                            </HeadingHighlight>
+                          ) : (
+                            (c.text as string)
+                          )}
+                        </Fragment>
+                      ),
+                    )}
+                    {index < allLines.length - 1 && <br />}
+                  </Fragment>
+                ))}
+              </>
+            ),
+            position: slide.titlePosition || undefined,
+            cta: { text: homeData2.slideCta, to: slide.ctaUrl },
+          },
+        }))}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 1600,
@@ -77,14 +84,23 @@ export default function Route() {
 
       <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
         <Heading as="h1" size="medium">
-          {t("intro.heading")}
+          {homeData2.intro.heading}
         </Heading>
         <Paragraph justify size="extra-large" className="mt-4 md:mt-6">
-          <Trans
-            i18nKey="intro.text"
-            defaults="Hike through the breath-taking beauty of <hl>Tayrona National Park</hl>, discover the mysterious <hl>Lost City</hl>, or refresh yourself in the river of <hl>Minca</hl>. Our variety of heartful accommodations in the city of Santa Marta are <hl>your perfect home base.</hl>"
-            components={{ hl: <ParagraphHighlight /> }}
-          />
+          {homeData2.intro.text.map((line, index, allLines) => (
+            <Fragment key={index}>
+              {(line.children as Record<string, unknown>[]).map((c, j) => (
+                <Fragment key={j}>
+                  {c.bold ? (
+                    <ParagraphHighlight>{c.text as string}</ParagraphHighlight>
+                  ) : (
+                    (c.text as string)
+                  )}
+                </Fragment>
+              ))}
+              {index < allLines.length - 1 && <br />}
+            </Fragment>
+          ))}
         </Paragraph>
       </div>
 
@@ -93,7 +109,7 @@ export default function Route() {
         <div className="py-8 md:py-16">
           <div className="lg-px-0 mx-auto max-w-4xl px-8">
             <Heading as="h2" size="large" variant="white">
-              Your Home Base for a Perfect Trip
+              {homeData2.accommodations.heading}
             </Heading>
             <Paragraph
               className="mt-4 md:mt-6"
@@ -101,31 +117,38 @@ export default function Route() {
               size="large"
               variant="white"
             >
-              Choose between our <strong>two accommodations</strong> in Santa
-              Marta.
+              {homeData2.accommodations.text.map((line, index, allLines) => (
+                <Fragment key={index}>
+                  {(line.children as Record<string, unknown>[]).map((c, j) => (
+                    <Fragment key={j}>
+                      {c.bold ? (
+                        <ParagraphHighlight>
+                          {c.text as string}
+                        </ParagraphHighlight>
+                      ) : (
+                        (c.text as string)
+                      )}
+                    </Fragment>
+                  ))}
+                  {index < allLines.length - 1 && <br />}
+                </Fragment>
+              ))}
             </Paragraph>
           </div>
           <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-            <AccommodationCard
-              name="Puerta Aqua"
-              to="/aqua"
-              color="aqua"
-              image={{
-                src: "aqua/spaces/Frente.jpg?updatedAt=1714161155761",
-                alt: "Puerta Aqua",
-              }}
-              description="Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night."
-            />
-            <AccommodationCard
-              name="La Puerta Azul"
-              to="/azul"
-              color="azul"
-              image={{
-                src: "azul/piscina/10.jpg?updatedAt=1714162021839",
-                alt: "La Puerta Azul",
-              }}
-              description="Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa."
-            />
+            {homeData2.accommodations.cards.map((card) => (
+              <AccommodationCard
+                key={card.id}
+                name={card.name}
+                to={card.to}
+                color={card.color}
+                image={{
+                  src: card.imageUrl,
+                  alt: card.imageAlt,
+                }}
+                description={card.description}
+              />
+            ))}
           </div>
         </div>
       </div>

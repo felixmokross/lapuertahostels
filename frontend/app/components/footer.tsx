@@ -1,7 +1,8 @@
-import { SVGProps } from "react";
+import { Fragment, SVGProps } from "react";
 import { Button } from "./button";
 import { BrandLogo } from "./brand-logo";
 import { useBrand } from "../brands";
+import { Common } from "~/payload-types";
 
 const navigation = {
   hotel: [
@@ -62,7 +63,11 @@ const navigation = {
   ],
 };
 
-export function Footer() {
+type FooterProps = {
+  content: Common["footer"];
+};
+
+export function Footer({ content }: FooterProps) {
   const brand = useBrand();
   return (
     <footer
@@ -79,12 +84,12 @@ export function Footer() {
               <BrandLogo size="small" brand="puerta" />
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
-              La Puerta Hostels S.A.S.
-              <br />
-              Calle 18 #5-66
-              <br />
-              Santa Marta 470004
-              <br /> Colombia
+              {content.address.split("\n").map((line, index, allLines) => (
+                <Fragment key={index}>
+                  {line}
+                  {index < allLines.length - 1 && <br />}
+                </Fragment>
+              ))}
             </p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
@@ -190,7 +195,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-neutral-900/10 pt-8 sm:mt-10 lg:mt-12">
           <p className="text-xs leading-5 text-neutral-500">
-            &copy; 2024 La Puerta Hostels S.A.S. All rights reserved.
+            &copy; {new Date().getFullYear()} {content.copyright}
           </p>
         </div>
       </div>
