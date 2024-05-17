@@ -34,41 +34,36 @@ export default function Route() {
   return (
     <>
       <Carousel
-        items={homeData.hero.map((carouselItem) => {
-          if (typeof carouselItem === "string") {
-            throw new Error("Did not receive carouselItem details");
-          }
-          return {
-            src: carouselItem.imageUrl,
-            alt: carouselItem.imageAlt,
-            title: {
-              text: (
-                <>
-                  {carouselItem.title.map((line, i) => (
-                    <Fragment key={i}>
-                      {(line.children as Record<string, unknown>[]).map(
-                        (c, j) => (
-                          <Fragment key={j}>
-                            {c.bold ? (
-                              <HeadingHighlight>
-                                {c.text as string}
-                              </HeadingHighlight>
-                            ) : (
-                              (c.text as string)
-                            )}
-                          </Fragment>
-                        ),
-                      )}
-                      <br />
-                    </Fragment>
-                  ))}
-                </>
-              ),
-              position: carouselItem.titlePosition || undefined,
-              cta: { text: t("carousel.cta"), to: carouselItem.ctaUrl },
-            },
-          };
-        })}
+        items={homeData.slides.map((slide) => ({
+          src: slide.imageUrl,
+          alt: slide.imageAlt,
+          title: {
+            text: (
+              <>
+                {slide.title.map((line, i) => (
+                  <Fragment key={i}>
+                    {(line.children as Record<string, unknown>[]).map(
+                      (c, j) => (
+                        <Fragment key={j}>
+                          {c.bold ? (
+                            <HeadingHighlight>
+                              {c.text as string}
+                            </HeadingHighlight>
+                          ) : (
+                            (c.text as string)
+                          )}
+                        </Fragment>
+                      ),
+                    )}
+                    <br />
+                  </Fragment>
+                ))}
+              </>
+            ),
+            position: slide.titlePosition || undefined,
+            cta: { text: t("carousel.cta"), to: slide.ctaUrl },
+          },
+        }))}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 1600,
