@@ -73,7 +73,7 @@ export default function Route() {
               </>
             ),
             position: slide.titlePosition || undefined,
-            cta: { text: t("carousel.cta"), to: slide.ctaUrl },
+            cta: { text: homeData2.slideCta, to: slide.ctaUrl },
           },
         }))}
         transformation={{

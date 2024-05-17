@@ -64,5 +64,11 @@ export const Home: GlobalConfig = {
         },
       },
     },
+    {
+      name: "slideCta",
+      type: "text",
+      required: true,
+      localized: true,
+    },
   ],
 };
