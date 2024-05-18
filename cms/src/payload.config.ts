@@ -16,7 +16,8 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: async ({ locale }) => `${await getLivePreviewUrl()}?lng=${locale}`,
+      url: async ({ locale }) =>
+        `${(await getConfig()).livePreviewUrl}?lng=${locale}`,
       globals: [Home.slug, Common.slug],
     },
     meta: {
@@ -43,11 +44,3 @@ export default buildConfig({
     url: process.env.DATABASE_URI,
   }),
 });
-
-async function getLivePreviewUrl() {
-  const { livePreviewUrl } = await getConfig();
-
-  console.info(`Live Preview URL is ${livePreviewUrl}`);
-
-  return livePreviewUrl;
-}
