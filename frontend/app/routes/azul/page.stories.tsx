@@ -39,6 +39,7 @@ export const Primary: Story = {
           ],
           titlePosition: "center",
           imageOverlay: "intense",
+          imagePosition: "bottom",
         },
         {
           imageUrl: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
