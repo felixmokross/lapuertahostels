@@ -1,4 +1,5 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
+import { ObjectId } from "mongodb";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const date = new Date();
@@ -9,11 +10,27 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         _id: "puerta",
         name: "La Puerta Hostels",
         navLinks: [
-          { url: "/aqua", label: "Puerta Aqua" },
-          { url: "/azul", label: "La Puerta Azul" },
-          { url: ".#santa-marta", label: "Santa Marta" },
-          { url: ".#about-us", label: "About Us" },
-          { url: "#", label: "Contact" },
+          {
+            id: new ObjectId().toHexString(),
+            url: "/aqua",
+            label: "Puerta Aqua",
+          },
+          {
+            id: new ObjectId().toHexString(),
+            url: "/azul",
+            label: "La Puerta Azul",
+          },
+          {
+            id: new ObjectId().toHexString(),
+            url: ".#santa-marta",
+            label: "Santa Marta",
+          },
+          {
+            id: new ObjectId().toHexString(),
+            url: ".#about-us",
+            label: "About Us",
+          },
+          { id: new ObjectId().toHexString(), url: "#", label: "Contact" },
         ],
         logoUrl:
           "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
@@ -24,7 +41,13 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       {
         _id: "azul",
         name: "La Puerta Azul",
-        navLinks: [{ url: "/", label: "La Puerta Hostels" }],
+        navLinks: [
+          {
+            id: new ObjectId().toHexString(),
+            url: "/",
+            label: "La Puerta Hostels",
+          },
+        ],
         logoUrl:
           "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
         createdAt: date,
@@ -34,7 +57,13 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       {
         _id: "aqua",
         name: "Puerta Aqua",
-        navLinks: [{ url: "/", label: "La Puerta Hostels" }],
+        navLinks: [
+          {
+            id: new ObjectId().toHexString(),
+            url: "/",
+            label: "La Puerta Hostels",
+          },
+        ],
         logoUrl:
           "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
         createdAt: date,
@@ -47,7 +76,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 type Migration_Brand = {
   _id: string;
   name: string;
-  navLinks: { url: string; label: string }[];
+  navLinks: { id: string; url: string; label: string }[];
   logoUrl: string;
   createdAt: Date;
   updatedAt: Date;
