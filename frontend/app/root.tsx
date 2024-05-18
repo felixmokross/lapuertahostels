@@ -95,6 +95,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
+    comingSoon: !!process.env.COMING_SOON,
   });
 }
 
@@ -124,7 +125,7 @@ function useGlobalLivePreview<K extends keyof Config["globals"]>(
 }
 
 export default function App() {
-  const { common, analyticsDomain, payloadCmsBaseUrl } =
+  const { common, analyticsDomain, payloadCmsBaseUrl, comingSoon } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
   const { data: common2 } = useGlobalLivePreview("common", {
@@ -147,24 +148,27 @@ export default function App() {
         )}
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        {/* <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
-          Coming soon…
-        </div> */}
-        <RoutingBrandProvider>
-          {common2.banner?.message && (
-            <Banner
-              cta={`${common2.banner.cta} →`}
-              ctaTo={common2.banner.ctaUrl || "#"}
-            >
-              {common2.banner.message}
-            </Banner>
-          )}
-          <Header />
-          <main>
-            <Outlet />
-          </main>
-          <Footer content={common2.footer} />
-        </RoutingBrandProvider>
+        {comingSoon ? (
+          <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
+            Coming soon…
+          </div>
+        ) : (
+          <RoutingBrandProvider>
+            {common2.banner?.message && (
+              <Banner
+                cta={`${common2.banner.cta} →`}
+                ctaTo={common2.banner.ctaUrl || "#"}
+              >
+                {common2.banner.message}
+              </Banner>
+            )}
+            <Header />
+            <main>
+              <Outlet />
+            </main>
+            <Footer content={common2.footer} />
+          </RoutingBrandProvider>
+        )}
         <ScrollRestoration />
         <Scripts />
       </body>
