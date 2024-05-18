@@ -214,11 +214,15 @@ function AccommodationCard({
       )}
     >
       <div className="relative aspect-[16/9] bg-white">
-        <img
-          src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-1200,fo-custom`}
-          // fo-custom is not needed on all images
-          alt=""
+        <Image
+          src={image.src}
+          alt={image.alt}
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
+          transformation={{
+            aspectRatio: { width: 16, height: 9 },
+            width: 1200,
+            focus: "custom",
+          }}
         />
       </div>
       <div
