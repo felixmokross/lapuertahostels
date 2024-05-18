@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload/types";
+import { isAdmin, isSelf } from "../common/access-control";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -16,8 +17,28 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: "email",
   },
+  access: {
+    read: ({ req, id }) => isSelf(req, id) || isAdmin(req),
+    create: ({ req }) => isAdmin(req),
+    update: ({ req, id }) => isSelf(req, id) || isAdmin(req),
+    delete: ({ req }) => isAdmin(req),
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    {
+      name: "role",
+      label: {
+        en: "Role",
+        es: "Rol",
+      },
+      type: "select",
+      options: ["editor", "admin"],
+      defaultValue: "editor",
+      required: true,
+      access: {
+        read: () => true,
+        create: ({ req }) => isAdmin(req),
+        update: ({ req }) => isAdmin(req),
+      },
+    },
   ],
 };
