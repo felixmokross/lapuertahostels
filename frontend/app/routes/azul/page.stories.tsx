@@ -21,5 +21,24 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    content: {
+      slides: [
+        {
+          imageUrl:
+            "/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+          imageAlt: "Lost City",
+          ctaUrl: "/lost-city",
+          name: "Lost City",
+          title: [
+            { children: [{ type: "text", text: "Find the" }] },
+            { children: [{ type: "text", text: "Lost City", bold: true }] },
+          ],
+          imageOverlay: "subtle",
+        },
+      ],
+      slideCta: "Book Now",
+      features: [],
+    },
+  },
 };

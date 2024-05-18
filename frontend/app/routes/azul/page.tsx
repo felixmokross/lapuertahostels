@@ -6,7 +6,7 @@ import { ParagraphHighlight } from "~/components/paragraph";
 import { Azul } from "~/payload-types";
 
 export type PageProps = {
-  content: Azul;
+  content: Omit<Azul, "id">;
 };
 
 export function Page({ content }: PageProps) {
