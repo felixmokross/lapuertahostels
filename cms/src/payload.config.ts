@@ -9,15 +9,15 @@ import { buildConfig } from "payload/config";
 import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
-
-const livePreviewUrl = process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL;
+import { getConfig } from "./common/config";
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: ({ locale }) => `${livePreviewUrl}?lng=${locale}`,
+      url: async ({ locale }) =>
+        `${(await getConfig()).livePreviewUrl}?lng=${locale}`,
       globals: [Home.slug, Common.slug],
     },
     meta: {
