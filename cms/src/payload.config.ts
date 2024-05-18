@@ -10,14 +10,18 @@ import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 
+const livePreviewUrl = process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL;
+
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: ({ locale }) =>
-        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}?lng=${locale}`,
+      url: ({ locale }) => `${livePreviewUrl}?lng=${locale}`,
       globals: [Home.slug, Common.slug],
+    },
+    meta: {
+      titleSuffix: " · La Puerta Hostels Admin",
     },
   },
   editor: slateEditor({}),
