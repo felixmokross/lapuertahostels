@@ -4,6 +4,7 @@ on:
 
 env:
   NODE_VERSION: 20
+  IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
 
 jobs:
   frontend-preview:
@@ -44,7 +45,7 @@ jobs:
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
             --image-label v${{ steps.version.outputs.version }} \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/development \
+            --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
         working-directory: frontend
 
