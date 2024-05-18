@@ -11,6 +11,13 @@ import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 
 const livePreviewUrl = process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL;
+if (!livePreviewUrl) {
+  throw new Error(
+    "Missing PAYLOAD_PUBLIC_LIVE_PREVIEW_URL in environment variables",
+  );
+}
+
+console.info(`Live Preview URL is ${livePreviewUrl}`);
 
 export default buildConfig({
   admin: {
