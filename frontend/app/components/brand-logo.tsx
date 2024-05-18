@@ -1,10 +1,11 @@
-import { Brand, brands } from "../brands";
+import { Brand } from "~/payload-types";
+import { BrandId, brands } from "../brands";
 import { cn } from "./cn";
 import { Image } from "./image";
 
 export type BrandLogoProps = {
   size: "small" | "large";
-  brand: Brand;
+  brand: Pick<Brand, "id" | "logoUrl" | "name">;
   type?: "with-wordmark" | "simple";
   className?: string;
 };
@@ -15,7 +16,7 @@ export function BrandLogo({
   type = "with-wordmark",
   className,
 }: BrandLogoProps) {
-  const brandConfig = brands[brand];
+  const brandConfig = brands[brand.id as BrandId];
   return (
     <span
       className={cn(
@@ -33,13 +34,13 @@ export function BrandLogo({
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={brandConfig.logoUrl}
-        alt={`${brandConfig.name} Logo`}
+        src={brand.logoUrl}
+        alt={`${brand.name} Logo`}
         transformation={{
           height: size === "small" ? 56 : size === "large" ? 80 : undefined,
         }}
       />
-      {type === "with-wordmark" && brandConfig.name}
+      {type === "with-wordmark" && brand.name}
     </span>
   );
 }

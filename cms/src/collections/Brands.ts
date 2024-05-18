@@ -91,6 +91,7 @@ export const Brands: CollectionConfig = {
         es: "URL del logo",
       },
       type: "text",
+      required: true,
     },
   ],
 };

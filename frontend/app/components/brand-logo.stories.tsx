@@ -23,13 +23,18 @@ type Story = StoryObj<typeof meta>;
 export const Large: Story = {
   args: {
     size: "large",
-    brand: "puerta",
+    brand: {
+      id: "puerta",
+      logoUrl:
+        "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+      name: "La Puerta Hostels",
+    },
   },
 };
 
 export const Small: Story = {
   args: {
+    ...Large.args,
     size: "small",
-    brand: "puerta",
   },
 };
