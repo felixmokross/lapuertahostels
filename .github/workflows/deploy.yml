@@ -62,8 +62,8 @@ jobs:
             staging)
               echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
               echo "fly_app_cms=lapuertahostels-cms-staging" >> "$GITHUB_OUTPUT"
-              echo "domain_frontend=lapuertahostels-staging.fly.dev" >> "$GITHUB_OUTPUT"
-              echo "domain_cms=lapuertahostels-cms-staging.fly.dev" >> "$GITHUB_OUTPUT"
+              echo "domain_frontend=staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "domain_cms=admin.staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
               ;;
           esac
