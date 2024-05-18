@@ -17,8 +17,8 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: async ({ locale }) =>
-        `${(await getConfig()).livePreviewUrl}?lng=${locale}`,
+      url: async ({ locale, documentInfo }) =>
+        `${(await getConfig()).livePreviewUrl}${documentInfo.global.custom.route || ""}?lng=${locale}`,
       globals: [Home.slug, Azul.slug],
     },
     meta: {

@@ -94,4 +94,7 @@ export const Azul: GlobalConfig = {
       },
     },
   ],
+  custom: {
+    route: "/azul",
+  },
 };
