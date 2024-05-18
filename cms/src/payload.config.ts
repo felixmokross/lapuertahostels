@@ -10,15 +10,16 @@ import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 import { getConfig } from "./common/config";
+import { Azul } from "./globals/Azul";
 
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: async ({ locale }) =>
-        `${(await getConfig()).livePreviewUrl}?lng=${locale}`,
-      globals: [Home.slug],
+      url: async ({ locale, documentInfo }) =>
+        `${(await getConfig()).livePreviewUrl}${documentInfo.global.custom.route || ""}?lng=${locale}`,
+      globals: [Home.slug, Azul.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
@@ -26,7 +27,7 @@ export default buildConfig({
   },
   editor: slateEditor({}),
   collections: [Users],
-  globals: [Home, Common],
+  globals: [Home, Azul, Common],
   localization: {
     locales: ["en", "es", "de", "fr"],
     defaultLocale: "en",
