@@ -19,7 +19,7 @@ export default buildConfig({
     livePreview: {
       url: async ({ locale }) =>
         `${(await getConfig()).livePreviewUrl}?lng=${locale}`,
-      globals: [Home.slug],
+      globals: [Home.slug, Azul.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
