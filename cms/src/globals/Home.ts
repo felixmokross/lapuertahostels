@@ -87,6 +87,7 @@ export const Home: GlobalConfig = {
           },
           type: "text",
           required: true,
+          localized: true,
         },
         {
           name: "ctaUrl",

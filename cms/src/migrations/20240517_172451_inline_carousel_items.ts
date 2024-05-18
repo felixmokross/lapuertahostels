@@ -47,10 +47,12 @@ type Before_CarouselItem = {
 };
 
 type Before_Home = {
+  globalType: "home";
   hero: unknown;
 };
 
 type After_Home = {
+  globalType: "home";
   slides: After_Slide[];
 };
 
