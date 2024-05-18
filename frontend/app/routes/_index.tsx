@@ -1,8 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/cn";
-import { loader as rootLoader } from "~/root";
 import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph } from "~/components/paragraph";
@@ -198,10 +197,6 @@ function AccommodationCard({
   description,
   color,
 }: AccommodationCardProps) {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
-  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <Link
       to={to}

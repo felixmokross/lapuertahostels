@@ -14,7 +14,7 @@ export function Page() {
       <Carousel
         items={[
           {
-            src: "azul/piscina/10.jpg?updatedAt=1714162021839",
+            src: "/azul/piscina/10.jpg?updatedAt=1714162021839",
             alt: "Atrium of La Puerta Azul",
             position: "bottom",
             title: {
@@ -30,7 +30,7 @@ export function Page() {
             },
           },
           {
-            src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+            src: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
             alt: "Room view of La Puerta Azul",
             title: {
               text: (
@@ -46,7 +46,7 @@ export function Page() {
             },
           },
           {
-            src: "azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+            src: "/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
             alt: "Room view of La Puerta Azul",
             title: {
               text: (
@@ -72,7 +72,7 @@ export function Page() {
           items={[
             {
               image: {
-                src: "azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+                src: "/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
                 alt: "Example image",
               },
               title: "Feel Newborn",
@@ -87,7 +87,7 @@ export function Page() {
             },
             {
               image: {
-                src: "azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+                src: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
                 alt: "Example image",
               },
               title: "Cool Down by the Pool",
@@ -101,7 +101,7 @@ export function Page() {
             },
             {
               image: {
-                src: "azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+                src: "/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
                 alt: "Example image",
               },
               title: "Bring Your Family",
@@ -116,7 +116,7 @@ export function Page() {
             },
             {
               image: {
-                src: "azul/piscina/10.jpg?updatedAt=1714162021839",
+                src: "/azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "Example image",
               },
               title: "A Beautiful Courtyard",
@@ -132,7 +132,7 @@ export function Page() {
             },
             {
               image: {
-                src: "azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
+                src: "/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
                 alt: "Example image",
               },
               title: "Freshen Up",
@@ -147,7 +147,7 @@ export function Page() {
             },
             {
               image: {
-                src: "azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+                src: "/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
                 alt: "Example image",
               },
               title: "Enjoy the Morning",
