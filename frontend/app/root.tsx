@@ -20,8 +20,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import { RoutingBrandProvider } from "./brands";
 import i18next from "./i18next.server";
-import { Common, Config } from "./payload-types";
-import { useLivePreview } from "@payloadcms/live-preview-react";
+import { Common } from "./payload-types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -92,7 +91,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   return json({
     common,
-    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
     comingSoon: !!process.env.COMING_SOON,
@@ -107,31 +105,10 @@ export const handle = {
   i18n: "common",
 };
 
-function useGlobalLivePreview<K extends keyof Config["globals"]>(
-  globalType: K,
-  {
-    initialData,
-    serverURL,
-  }: Parameters<typeof useLivePreview<Config["globals"][K]>>[0],
-) {
-  const result = useLivePreview({ initialData, serverURL });
-
-  // @ts-expect-error The global types of Payload don't declare the 'globalType' field, but this is how we can determine it at runtime.
-  if (result.isLoading || result.data.globalType === globalType) {
-    return result;
-  }
-
-  return { data: initialData, isLoading: false };
-}
-
 export default function App() {
-  const { common, analyticsDomain, payloadCmsBaseUrl, comingSoon } =
+  const { common, analyticsDomain, comingSoon } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
-  const { data: common2 } = useGlobalLivePreview("common", {
-    initialData: common,
-    serverURL: payloadCmsBaseUrl,
-  });
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
@@ -154,19 +131,19 @@ export default function App() {
           </div>
         ) : (
           <RoutingBrandProvider>
-            {common2.banner?.message && (
+            {common.banner?.message && (
               <Banner
-                cta={`${common2.banner.cta} →`}
-                ctaTo={common2.banner.ctaUrl || "#"}
+                cta={`${common.banner.cta} →`}
+                ctaTo={common.banner.ctaUrl || "#"}
               >
-                {common2.banner.message}
+                {common.banner.message}
               </Banner>
             )}
             <Header />
             <main>
               <Outlet />
             </main>
-            <Footer content={common2.footer} />
+            <Footer content={common.footer} />
           </RoutingBrandProvider>
         )}
         <ScrollRestoration />
