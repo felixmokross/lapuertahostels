@@ -1,5 +1,6 @@
 import express from "express";
 import payload from "payload";
+import { Config } from "./common/config";
 
 require("dotenv").config();
 const app = express();
@@ -15,7 +16,7 @@ app.get("/", (_, res) => {
 app.get("/config", (_, res) => {
   res.json({
     livePreviewUrl: process.env.LIVE_PREVIEW_URL,
-  });
+  } as Config);
 });
 
 const start = async () => {

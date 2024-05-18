@@ -9,14 +9,7 @@ import { buildConfig } from "payload/config";
 import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
-
-async function getLivePreviewUrl() {
-  const { livePreviewUrl } = await (await fetch("/config")).json();
-
-  console.info(`Live Preview URL is ${livePreviewUrl}`);
-
-  return livePreviewUrl;
-}
+import { getConfig } from "./common/config";
 
 export default buildConfig({
   admin: {
@@ -50,3 +43,11 @@ export default buildConfig({
     url: process.env.DATABASE_URI,
   }),
 });
+
+async function getLivePreviewUrl() {
+  const { livePreviewUrl } = await getConfig();
+
+  console.info(`Live Preview URL is ${livePreviewUrl}`);
+
+  return livePreviewUrl;
+}
