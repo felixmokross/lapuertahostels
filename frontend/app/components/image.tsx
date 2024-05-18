@@ -23,10 +23,15 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
   if (!rootLoaderData) throw new Error("root loader not found");
 
   const { imagekitBaseUrl } = rootLoaderData;
+  if (!imagekitBaseUrl) throw new Error("imagekitBaseUrl not available");
+
+  if (src.startsWith(imagekitBaseUrl)) {
+    src = src.slice(imagekitBaseUrl.length);
+  }
 
   return (
     <img
-      src={`${imagekitBaseUrl}/${transformation ? `${toImagekitTransformationString(transformation)}/` : ""}${src}`}
+      src={`${imagekitBaseUrl}/${transformation ? toImagekitTransformationString(transformation) : ""}${src}`}
       className={className}
       alt={alt}
       ref={ref}
@@ -39,7 +44,7 @@ export type ImageTransformation = {
   height?: number;
   aspectRatio?: { width: number; height: number };
   cropStrategy?: "maintain_ratio";
-  focus?: "auto";
+  focus?: "auto" | "custom";
   enhancement?: "grayscale";
 };
 

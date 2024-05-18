@@ -1,8 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { Carousel } from "~/components/carousel";
 import { cn } from "~/components/cn";
-import { loader as rootLoader } from "~/root";
 import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph } from "~/components/paragraph";
@@ -198,10 +197,6 @@ function AccommodationCard({
   description,
   color,
 }: AccommodationCardProps) {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
-  const { imagekitBaseUrl } = rootLoaderData;
   return (
     <Link
       to={to}
@@ -214,11 +209,15 @@ function AccommodationCard({
       )}
     >
       <div className="relative aspect-[16/9] bg-white">
-        <img
-          src={`${imagekitBaseUrl}/${image.src}&tr=ar-16-9,w-1200,fo-custom`}
-          // fo-custom is not needed on all images
-          alt=""
+        <Image
+          src={image.src}
+          alt={image.alt}
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
+          transformation={{
+            aspectRatio: { width: 16, height: 9 },
+            width: 1200,
+            focus: "custom",
+          }}
         />
       </div>
       <div
