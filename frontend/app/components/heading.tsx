@@ -4,7 +4,7 @@ import { useBrand } from "../brands";
 
 type HeadingVariant = "brand" | "white" | "inherit";
 
-type HeadingProps = PropsWithChildren<{
+export type HeadingProps = PropsWithChildren<{
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   variant?: HeadingVariant;
   size: "small" | "medium" | "large" | "extra-large";

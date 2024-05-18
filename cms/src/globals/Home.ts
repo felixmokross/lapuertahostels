@@ -90,6 +90,15 @@ export const Home: GlobalConfig = {
           localized: true,
         },
         {
+          name: "imageOverlay",
+          label: {
+            en: "Image Overlay",
+            es: "Superposición de la Imagen",
+          },
+          type: "select",
+          options: ["subtle", "moderate", "intense"],
+        },
+        {
           name: "ctaUrl",
           label: {
             en: "CTA URL",
@@ -259,6 +268,130 @@ export const Home: GlobalConfig = {
               RowLabel: ({ data }: RowLabelArgs) => data?.name,
             },
           },
+        },
+      ],
+    },
+    {
+      name: "aboutSantaMarta",
+      label: {
+        en: "About Santa Marta",
+        es: "Sobre Santa Marta",
+      },
+      type: "group",
+      fields: [
+        {
+          name: "imageUrl",
+          label: {
+            en: "Image URL",
+            es: "URL de la Imagen",
+          },
+          type: "text",
+          required: true,
+        },
+        {
+          name: "imageAlt",
+          label: {
+            en: "Alternative Text of the Image",
+            es: "Texto Alternativo de la Imagen",
+          },
+          type: "text",
+          required: true,
+          localized: true,
+        },
+        {
+          name: "heading",
+          label: {
+            en: "Heading",
+            es: "Título",
+          },
+          type: "richText",
+          required: true,
+          localized: true,
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
+        },
+        {
+          name: "text",
+          label: {
+            en: "Text",
+            es: "Texto",
+          },
+          type: "richText",
+          required: true,
+          localized: true,
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
+        },
+      ],
+    },
+    {
+      name: "aboutUs",
+      label: {
+        en: "About Us",
+        es: "Sobre Nosotros",
+      },
+      type: "group",
+      fields: [
+        {
+          name: "imageUrl",
+          label: {
+            en: "Image URL",
+            es: "URL de la Imagen",
+          },
+          type: "text",
+          required: true,
+        },
+        {
+          name: "imageAlt",
+          label: {
+            en: "Alternative Text of the Image",
+            es: "Texto Alternativo de la Imagen",
+          },
+          type: "text",
+          required: true,
+          localized: true,
+        },
+        {
+          name: "grayscale",
+          label: {
+            en: "Grayscale",
+            es: "Escala de Grises",
+          },
+          type: "checkbox",
+        },
+        {
+          name: "heading",
+          label: {
+            en: "Heading",
+            es: "Título",
+          },
+          type: "text",
+          required: true,
+          localized: true,
+        },
+        {
+          name: "text",
+          label: {
+            en: "Text",
+            es: "Texto",
+          },
+          type: "richText",
+          required: true,
+          localized: true,
+          editor: slateEditor({
+            admin: {
+              elements: [],
+              leaves: ["bold"],
+            },
+          }),
         },
       ],
     },
