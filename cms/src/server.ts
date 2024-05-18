@@ -9,6 +9,15 @@ app.get("/", (_, res) => {
   res.redirect("/admin");
 });
 
+// PAYLOAD_PUBLIC variables don't work in deployed environments without an .env file
+// So we use server-side variables which we expose via an endpoint to the client
+// See https://github.com/payloadcms/payload/discussions/3758
+app.get("/config", (_, res) => {
+  res.json({
+    livePreviewUrl: process.env.LIVE_PREVIEW_URL,
+  });
+});
+
 const start = async () => {
   // Initialize Payload
   await payload.init({

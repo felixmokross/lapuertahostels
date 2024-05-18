@@ -10,13 +10,8 @@ import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 
-function getLivePreviewUrl() {
-  const livePreviewUrl = process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL;
-  if (!livePreviewUrl) {
-    throw new Error(
-      "Missing PAYLOAD_PUBLIC_LIVE_PREVIEW_URL in environment variables",
-    );
-  }
+async function getLivePreviewUrl() {
+  const { livePreviewUrl } = await (await fetch("/config")).json();
 
   console.info(`Live Preview URL is ${livePreviewUrl}`);
 
@@ -28,7 +23,7 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(),
     livePreview: {
-      url: ({ locale }) => `${getLivePreviewUrl()}?lng=${locale}`,
+      url: async ({ locale }) => `${await getLivePreviewUrl()}?lng=${locale}`,
       globals: [Home.slug, Common.slug],
     },
     meta: {
