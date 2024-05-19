@@ -108,7 +108,5 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: cms
-      - run: npm run generate:types
-        working-directory: cms
       - run: npm run build
         working-directory: cms
