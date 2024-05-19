@@ -20,6 +20,20 @@ Calle 18 #5-66
 Santa Marta 470004
 Colombia`,
       copyright: "La Puerta Hostels S.A.S. All rights reserved.",
+      socialLinks: [
+        {
+          platform: "facebook",
+          url: "#",
+        },
+        {
+          platform: "instagram",
+          url: "#",
+        },
+        {
+          platform: "whatsapp",
+          url: "#",
+        },
+      ],
     },
     allBrands: [
       {
