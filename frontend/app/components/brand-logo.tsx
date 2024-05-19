@@ -1,11 +1,11 @@
 import { Brand } from "~/payload-types";
-import { BrandId, brands } from "../brands";
+import { BrandId, themesByBrand } from "../brands";
 import { cn } from "./cn";
 import { Image } from "./image";
 
 export type BrandLogoProps = {
   size: "small" | "large";
-  brand: Pick<Brand, "id" | "logoUrl" | "name">;
+  brand: Brand;
   type?: "with-wordmark" | "simple";
   className?: string;
 };
@@ -16,12 +16,12 @@ export function BrandLogo({
   type = "with-wordmark",
   className,
 }: BrandLogoProps) {
-  const brandConfig = brands[brand.id as BrandId];
+  const theme = themesByBrand[brand.id as BrandId];
   return (
     <span
       className={cn(
         "flex items-center text-nowrap font-serif uppercase",
-        brandConfig.logoTextColor,
+        theme.logoTextColor,
         {
           "gap-2 text-base tracking-wider": size === "small",
           "gap-4 text-2xl tracking-wide": size === "large",

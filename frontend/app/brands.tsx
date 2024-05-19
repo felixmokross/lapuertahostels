@@ -1,40 +1,16 @@
-import { useMatch } from "@remix-run/react";
 import { PropsWithChildren, createContext, useContext } from "react";
+import { Brand } from "./payload-types";
 
-export function getBrandIdFromUrl(pathname: string): BrandId {
+export function getBrandIdFromPath(pathname: string): BrandId {
   if (pathname.startsWith("/aqua")) return "aqua";
   if (pathname.startsWith("/azul")) return "azul";
 
   return "puerta";
 }
 
-export const BrandContext = createContext<BrandId | undefined>(undefined);
-
-export function RoutingBrandProvider({ children }: PropsWithChildren) {
-  const brandFromUrl = useMatch("/:brand/*")?.params.brand;
-  const brand =
-    brandFromUrl === "azul"
-      ? "azul"
-      : brandFromUrl === "aqua"
-        ? "aqua"
-        : "puerta";
-
-  return (
-    <BrandContext.Provider value={brand}>{children}</BrandContext.Provider>
-  );
-}
-
-export function useBrand(): BrandConfig {
-  const brand = useContext(BrandContext);
-  if (!brand) throw new Error("useBrand must be used within a BrandProvider");
-  return brands[brand];
-}
-
 export type BrandId = "puerta" | "aqua" | "azul";
 
-export type BrandConfig<TBrand extends BrandId = BrandId> = {
-  key: TBrand;
-  homeLinkUrl: string;
+export type Theme = {
   logoTextColor: string;
   headingTextColor: string;
   headingWhiteHighlightTextColor: string;
@@ -49,16 +25,34 @@ export type BrandConfig<TBrand extends BrandId = BrandId> = {
   navButtonClassName: string;
 };
 
-export type NavLinkConfig = { url: string; labelKey: string };
-
-type BrandRegistry = {
-  [KBrand in BrandId]: BrandConfig<KBrand>;
+export type ThemeProviderProps = {
+  brand: Brand;
 };
 
-export const brands: BrandRegistry = {
+export function ThemeProvider({
+  brand,
+  children,
+}: PropsWithChildren<ThemeProviderProps>) {
+  const theme = themesByBrand[brand.id as BrandId];
+
+  return (
+    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+  );
+}
+
+export const ThemeContext = createContext<Theme | undefined>(undefined);
+
+export function useTheme() {
+  const theme = useContext(ThemeContext);
+  if (!theme) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+
+  return theme;
+}
+
+export const themesByBrand: Record<BrandId, Theme> = {
   puerta: {
-    key: "puerta",
-    homeLinkUrl: "/",
     logoTextColor: "text-neutral-900",
     headingTextColor: "text-puerta-600",
     headingWhiteHighlightTextColor: "text-puerta-200",
@@ -73,8 +67,6 @@ export const brands: BrandRegistry = {
     navButtonClassName: "border-puerta-500 bg-puerta-50 text-puerta-700",
   },
   aqua: {
-    key: "aqua",
-    homeLinkUrl: "/aqua",
     logoTextColor: "text-aqua-600",
     headingTextColor: "text-aqua-600",
     headingWhiteHighlightTextColor: "text-aqua-200",
@@ -89,8 +81,6 @@ export const brands: BrandRegistry = {
     navButtonClassName: "border-aqua-400 bg-aqua-50 text-aqua-700",
   },
   azul: {
-    key: "azul",
-    homeLinkUrl: "/azul",
     logoTextColor: "text-azul-900",
     headingTextColor: "text-azul-900",
     headingWhiteHighlightTextColor: "text-azul-200",

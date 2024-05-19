@@ -9,6 +9,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       {
         _id: "puerta",
         name: "La Puerta Hostels",
+        homeLinkUrl: "/",
         navLinks: [
           {
             id: new ObjectId().toHexString(),
@@ -41,6 +42,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       {
         _id: "azul",
         name: "La Puerta Azul",
+        homeLinkUrl: "/azul",
         navLinks: [
           {
             id: new ObjectId().toHexString(),
@@ -57,6 +59,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       {
         _id: "aqua",
         name: "Puerta Aqua",
+        homeLinkUrl: "/aqua",
         navLinks: [
           {
             id: new ObjectId().toHexString(),
@@ -76,6 +79,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 type Migration_Brand = {
   _id: string;
   name: string;
+  homeLinkUrl: string;
   navLinks: { id: string; url: string; label: string }[];
   logoUrl: string;
   createdAt: Date;

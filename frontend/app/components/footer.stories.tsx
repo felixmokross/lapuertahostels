@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Footer } from "./footer";
+import { Brand } from "~/payload-types";
 
 const meta = {
   title: "Footer",
@@ -20,5 +21,13 @@ Santa Marta 470004
 Colombia`,
       copyright: "La Puerta Hostels S.A.S. All rights reserved.",
     },
+    allBrands: [
+      {
+        id: "puerta",
+        logoUrl:
+          "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+        name: "La Puerta Hostels",
+      } as Brand,
+    ],
   },
 };

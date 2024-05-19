@@ -10,10 +10,11 @@ import { useState } from "react";
 import { Brand } from "~/payload-types";
 
 export type HeaderProps = {
-  content: Omit<Brand, "createdAt" | "updatedAt">;
+  brand: Brand;
+  allBrands: Brand[];
 };
 
-export function Header({ content }: HeaderProps) {
+export function Header({ brand, allBrands }: HeaderProps) {
   const { t, i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
@@ -23,9 +24,9 @@ export function Header({ content }: HeaderProps) {
         {({ open }) => (
           <>
             <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
-              <HeaderBrandLogo />
+              <HeaderBrandLogo brand={brand} allBrands={allBrands} />
               <div className="hidden space-x-4 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-y-6 xl:space-x-8">
-                {content.navLinks?.map((navLink) => (
+                {brand.navLinks?.map((navLink) => (
                   <NavLink key={navLink.id} to={navLink.url}>
                     {navLink.label}
                   </NavLink>
@@ -49,7 +50,7 @@ export function Header({ content }: HeaderProps) {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 pb-3 pt-2">
-                {content.navLinks?.map((navLink) => (
+                {brand.navLinks?.map((navLink) => (
                   // current: block border-l-4 border-puerta-500 bg-puerta-50 py-2 pl-3 pr-4 text-base font-bold text-puerta-700
                   <Disclosure.Button
                     key={navLink.id}

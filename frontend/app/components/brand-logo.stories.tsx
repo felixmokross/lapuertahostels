@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { BrandLogo } from "./brand-logo";
+import { Brand } from "~/payload-types";
 
 const meta = {
   title: "BrandLogo",
@@ -28,7 +29,7 @@ export const Large: Story = {
       logoUrl:
         "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
       name: "La Puerta Hostels",
-    },
+    } as Brand,
   },
 };
 

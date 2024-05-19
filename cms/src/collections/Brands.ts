@@ -41,6 +41,15 @@ export const Brands: CollectionConfig = {
       required: true,
     },
     {
+      name: "homeLinkUrl",
+      label: {
+        en: "Home Link URL",
+        es: "URL del enlace de inicio",
+      },
+      type: "text",
+      required: true,
+    },
+    {
       name: "navLinks",
       label: {
         en: "Navigation Links",

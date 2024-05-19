@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "./cn";
 import { Transition } from "@headlessui/react";
-import { useBrand } from "../brands";
 import { Link } from "@remix-run/react";
+import { useTheme } from "~/brands";
 
 export type BannerProps = {
   children: string;
@@ -15,14 +15,14 @@ export type BannerProps = {
 export function Banner({ children, cta, ctaTo }: BannerProps) {
   const [bannerVisible, setBannerVisible] = useState(true);
   const { t } = useTranslation();
-  const brand = useBrand();
+  const theme = useTheme();
 
   return (
     <Transition
       show={bannerVisible}
       className={cn(
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
-        brand.bannerBackgroundColor,
+        theme.bannerBackgroundColor,
       )}
       leave="transition-transform ease-out duration-500"
       leaveFrom="translate-y-0"
