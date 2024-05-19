@@ -6,7 +6,7 @@ import { Image } from "~/components/image";
 import { Heading, HeadingHighlight } from "~/components/heading";
 import { Paragraph } from "~/components/paragraph";
 import i18next from "~/i18next.server";
-import { Home } from "~/payload-types";
+import { Brand, Home } from "~/payload-types";
 import { useLivePreview } from "@payloadcms/live-preview-react";
 import {
   RichText,
@@ -94,19 +94,22 @@ export default function Route() {
             </RichTextParagraph>
           </div>
           <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-            {homeData2.accommodations.cards.map((card) => (
-              <AccommodationCard
-                key={card.id}
-                name={card.name}
-                to={card.to}
-                color={card.color}
-                image={{
-                  src: card.imageUrl,
-                  alt: card.imageAlt,
-                }}
-                description={card.description}
-              />
-            ))}
+            {homeData2.accommodations.cards.map((card) => {
+              const cardBrand = card.brand as Brand;
+              return (
+                <AccommodationCard
+                  key={card.id}
+                  name={cardBrand.name}
+                  to={cardBrand.homeLinkUrl}
+                  color={cardBrand.id as "aqua" | "azul"}
+                  image={{
+                    src: card.imageUrl,
+                    alt: card.imageAlt,
+                  }}
+                  description={card.description}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
