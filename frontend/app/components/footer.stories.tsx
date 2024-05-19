@@ -63,6 +63,14 @@ Colombia`,
           ],
         },
       ],
+      newsletter: {
+        show: true,
+        title: "Subscribe to our newsletter",
+        description:
+          "Don’t miss out on new experiences, discounts, or any other news from us!",
+        emailPlaceholder: "Enter your email",
+        buttonLabel: "Subscribe",
+      },
     },
     allBrands: [
       {
