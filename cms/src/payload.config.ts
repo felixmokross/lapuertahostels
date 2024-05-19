@@ -45,4 +45,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
+  cors: process.env.LIVE_PREVIEW_URL
+    ? [process.env.LIVE_PREVIEW_URL]
+    : undefined,
 });

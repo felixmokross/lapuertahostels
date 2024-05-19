@@ -104,31 +104,14 @@ export const Home: GlobalConfig = {
           required: true,
           fields: [
             {
-              name: "name",
+              name: "brand",
               label: {
-                en: "Name",
-                es: "Nombre",
+                en: "Brand",
+                es: "Marca",
               },
-              type: "text",
-              required: true,
-            },
-            {
-              name: "color",
-              label: {
-                en: "Color",
-                es: "Color",
-              },
-              type: "select",
-              options: ["aqua", "azul"],
-              required: true,
-            },
-            {
-              name: "to",
-              label: {
-                en: "Link",
-                es: "Enlace",
-              },
-              type: "text",
+              type: "relationship",
+              relationTo: "brands",
+              filterOptions: { id: { not_equals: "puerta" } },
               required: true,
             },
             {
