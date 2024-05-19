@@ -1,5 +1,8 @@
 {
   "bannerDismiss": "Cerrar",
   "aboutUs": "Sobre nosotros",
-  "contact": "Contacto"
+  "contact": "Contacto",
+  "footer": {
+    "heading": "Pie de página"
+  }
 }

@@ -13,5 +13,8 @@
   },
   "bannerDismiss": "Dismiss",
   "aboutUs": "About Us",
-  "contact": "Contact"
+  "contact": "Contact",
+  "footer": {
+    "heading": "Footer"
+  }
 }
