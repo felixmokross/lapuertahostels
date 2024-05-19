@@ -3,7 +3,8 @@ import { createRemixStub } from "@remix-run/testing";
 import "../app/tailwind.css";
 import React from "react";
 import i18n from "./i18next";
-import { BrandContext } from "../app/brands";
+import { ThemeProvider } from "../app/brands";
+import { Brand } from "../app/payload-types";
 
 const withRemix: Decorator = (Story) => {
   const RemixStub = createRemixStub([
@@ -58,9 +59,9 @@ const preview: Preview = {
   decorators: [
     withRemix,
     (Story, { globals }) => (
-      <BrandContext.Provider value={globals.brand}>
+      <ThemeProvider brand={{ id: globals.brand } as Brand}>
         <Story />
-      </BrandContext.Provider>
+      </ThemeProvider>
     ),
   ],
 };

@@ -10,6 +10,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  ShouldRevalidateFunctionArgs,
   useLoaderData,
 } from "@remix-run/react";
 
@@ -18,9 +19,9 @@ import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
-import { RoutingBrandProvider } from "./brands";
+import { getBrandIdFromPath, ThemeProvider } from "./brands";
 import i18next from "./i18next.server";
-import { Common } from "./payload-types";
+import { Brand, Common } from "./payload-types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -75,12 +76,39 @@ export const meta: MetaFunction = () => [
   },
 ];
 
+export function shouldRevalidate({
+  currentUrl,
+  nextUrl,
+  defaultShouldRevalidate,
+}: ShouldRevalidateFunctionArgs) {
+  const currentBrandId = getBrandIdFromPath(currentUrl.pathname);
+  const nextBrandId = getBrandIdFromPath(nextUrl.pathname);
+  if (currentBrandId !== nextBrandId) {
+    console.log("Brand changed, revalidating");
+    return true;
+  }
+
+  return defaultShouldRevalidate;
+}
+
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
 
+  const brandId = getBrandIdFromPath(new URL(request.url).pathname);
   const locale = await i18next.getLocale(request);
+
+  const allBrands = (
+    await (
+      await fetch(
+        `${process.env.PAYLOAD_CMS_BASE_URL}/api/brands?locale=${locale}`,
+      )
+    ).json()
+  ).docs as Brand[];
+
+  const brand = allBrands.find((b) => b.id === brandId);
+  if (!brand) throw new Error(`Brand not found: ${brandId}`);
 
   // TODO provide an function for this
   const common = (await (
@@ -90,6 +118,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   ).json()) as Common;
 
   return json({
+    brand,
+    allBrands,
     common,
     imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
@@ -106,7 +136,7 @@ export const handle = {
 };
 
 export default function App() {
-  const { common, analyticsDomain, comingSoon } =
+  const { common, analyticsDomain, comingSoon, brand, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
   return (
@@ -130,7 +160,7 @@ export default function App() {
             Coming soon…
           </div>
         ) : (
-          <RoutingBrandProvider>
+          <ThemeProvider brand={brand}>
             {common.banner?.message && (
               <Banner
                 cta={`${common.banner.cta} →`}
@@ -139,12 +169,12 @@ export default function App() {
                 {common.banner.message}
               </Banner>
             )}
-            <Header />
+            <Header brand={brand} allBrands={allBrands} />
             <main>
               <Outlet />
             </main>
-            <Footer content={common.footer} />
-          </RoutingBrandProvider>
+            <Footer allBrands={allBrands} content={common.footer} />
+          </ThemeProvider>
         )}
         <ScrollRestoration />
         <Scripts />

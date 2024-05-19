@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
-import { useBrand } from "../brands";
+import { useTheme } from "~/brands";
 
 type HeadingVariant = "brand" | "white" | "inherit";
 
@@ -20,13 +20,13 @@ export function Heading({
   children,
   className,
 }: HeadingProps) {
-  const brand = useBrand();
+  const theme = useTheme();
   return (
     <VariantContext.Provider value={variant}>
       <Component
         className={cn(
           variant === "brand"
-            ? brand.headingTextColor
+            ? theme.headingTextColor
             : {
                 "text-white": variant === "white",
                 "text-inherit": variant === "inherit",
@@ -63,11 +63,11 @@ function useVariant() {
 
 export function HeadingHighlight({ children }: PropsWithChildren) {
   const variant = useVariant();
-  const brand = useBrand();
+  const theme = useTheme();
 
   if (variant !== "white") throw new Error("Only white variant is supported");
 
   return (
-    <span className={brand.headingWhiteHighlightTextColor}>{children}</span>
+    <span className={theme.headingWhiteHighlightTextColor}>{children}</span>
   );
 }

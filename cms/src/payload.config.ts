@@ -11,6 +11,7 @@ import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
 import { getConfig } from "./common/config";
 import { Azul } from "./globals/Azul";
+import { Brands } from "./collections/Brands";
 
 export default buildConfig({
   admin: {
@@ -26,7 +27,7 @@ export default buildConfig({
     },
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Users, Brands],
   globals: [Home, Azul, Common],
   localization: {
     locales: ["en", "es", "de", "fr"],

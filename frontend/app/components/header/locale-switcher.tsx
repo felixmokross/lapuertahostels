@@ -6,7 +6,7 @@ import { useLocation } from "@remix-run/react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { cn } from "../cn";
-import { useBrand } from "~/brands";
+import { useTheme } from "~/brands";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;
@@ -65,7 +65,7 @@ export function MobileLocaleSwitcher({
 }: MobileLocaleSwitcherProps) {
   const { t } = useTranslation();
   const location = useLocation();
-  const brand = useBrand();
+  const theme = useTheme();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -113,7 +113,7 @@ export function MobileLocaleSwitcher({
                         "flex w-full items-center gap-1.5 border-l-4 py-2 pl-6 pr-8 text-base font-bold",
                         currentLocale !== locale
                           ? "border-transparent text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                          : brand.navButtonClassName,
+                          : theme.navButtonClassName,
                       )}
                     >
                       {t(`languages.${locale}`)}

@@ -1,8 +1,8 @@
 import { Fragment, SVGProps } from "react";
 import { Button } from "./button";
 import { BrandLogo } from "./brand-logo";
-import { useBrand } from "../brands";
-import { Common } from "~/payload-types";
+import { useTheme } from "../brands";
+import { Brand, Common } from "~/payload-types";
 
 const navigation = {
   hotel: [
@@ -65,13 +65,16 @@ const navigation = {
 
 type FooterProps = {
   content: Common["footer"];
+  allBrands: Brand[];
 };
 
-export function Footer({ content }: FooterProps) {
-  const brand = useBrand();
+export function Footer({ content, allBrands }: FooterProps) {
+  const theme = useTheme();
+  const puertaBrand = allBrands.find((b) => b.id === "puerta");
+  if (!puertaBrand) throw new Error("Puerta brand not found");
   return (
     <footer
-      className={`mt-40 ${brand.footerBackgroundColor}`}
+      className={`mt-40 ${theme.footerBackgroundColor}`}
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
@@ -81,7 +84,7 @@ export function Footer({ content }: FooterProps) {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h6 className="mt-2">
-              <BrandLogo size="small" brand="puerta" />
+              <BrandLogo size="small" brand={puertaBrand} />
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
               {content.address.split("\n").map((line, index, allLines) => (

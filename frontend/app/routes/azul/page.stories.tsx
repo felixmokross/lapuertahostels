@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Page } from "./page";
-import { BrandContext } from "~/brands";
+import { ThemeProvider } from "~/brands";
+import { Brand } from "~/payload-types";
 
 const meta = {
   title: "routes/azul/Page",
@@ -10,9 +11,9 @@ const meta = {
   decorators: [
     // override the brand context, this is a Azul-only component
     (Story) => (
-      <BrandContext.Provider value="azul">
+      <ThemeProvider brand={{ id: "azul" } as Brand}>
         <Story />
-      </BrandContext.Provider>
+      </ThemeProvider>
     ),
   ],
 } satisfies Meta<typeof Page>;

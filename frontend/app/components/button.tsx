@@ -4,7 +4,7 @@ import {
   PropsWithChildren,
 } from "react";
 import { cn } from "./cn";
-import { useBrand } from "../brands";
+import { useTheme } from "~/brands";
 
 export type ButtonProps<T extends ElementType> = PropsWithChildren<{
   as?: T;
@@ -22,15 +22,15 @@ export function Button<T extends ElementType>({
   ...props
 }: ButtonProps<T>) {
   const Component = as || "button";
-  const brand = useBrand();
+  const theme = useTheme();
   return (
     <Component
       className={cn(
         "inline-block rounded-md font-bold uppercase text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-        brand.buttonColors.backgroundColor,
-        brand.buttonColors.hoverBackgroundColor,
-        brand.buttonColors.hoverTextColor,
-        brand.buttonColors.focusOutlineColor,
+        theme.buttonColors.backgroundColor,
+        theme.buttonColors.hoverBackgroundColor,
+        theme.buttonColors.hoverTextColor,
+        theme.buttonColors.focusOutlineColor,
         {
           "px-4 py-2 text-sm tracking-wider shadow-md hover:shadow-lg md:px-6 md:py-3 md:text-base":
             size === "large",
