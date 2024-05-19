@@ -118,8 +118,11 @@ export const Home: GlobalConfig = {
                 en: "Color",
                 es: "Color",
               },
-              type: "select",
-              options: ["aqua", "azul"],
+              type: "radio",
+              options: [
+                { value: "aqua", label: "Aqua" },
+                { value: "azul", label: "Azul" },
+              ],
               required: true,
             },
             {

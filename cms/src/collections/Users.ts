@@ -30,8 +30,11 @@ export const Users: CollectionConfig = {
         en: "Role",
         es: "Rol",
       },
-      type: "select",
-      options: ["editor", "admin"],
+      type: "radio",
+      options: [
+        { value: "editor", label: { en: "Editor", es: "Editor" } },
+        { value: "admin", label: { en: "Admin", es: "Administrador" } },
+      ],
       defaultValue: "editor",
       required: true,
       access: {

@@ -53,14 +53,27 @@ export const slidesField = {
         en: "Title Position",
         es: "Posición del Título",
       },
-      type: "select",
+      type: "radio",
       options: [
-        "center",
-        "top-left",
-        "top-right",
-        "bottom-right",
-        "bottom-left",
+        { value: "center", label: { en: "Center", es: "Centro" } },
+        {
+          value: "top-left",
+          label: { en: "Top Left", es: "Arriba a la Izquierda" },
+        },
+        {
+          value: "top-right",
+          label: { en: "Top Right", es: "Arriba a la Derecha" },
+        },
+        {
+          value: "bottom-right",
+          label: { en: "Bottom Right", es: "Abajo a la Derecha" },
+        },
+        {
+          value: "bottom-left",
+          label: { en: "Bottom Left", es: "Abajo a la Izquierda" },
+        },
       ],
+      defaultValue: "center",
     },
     {
       name: "imageUrl",
@@ -87,8 +100,13 @@ export const slidesField = {
         en: "Image Overlay",
         es: "Superposición de la Imagen",
       },
-      type: "select",
-      options: ["subtle", "moderate", "intense"],
+      type: "radio",
+      options: [
+        { value: "subtle", label: { en: "Subtle", es: "Sutil" } },
+        { value: "moderate", label: { en: "Moderate", es: "Moderado" } },
+        { value: "intense", label: { en: "Intense", es: "Intenso" } },
+      ],
+      defaultValue: "moderate",
     },
     {
       name: "imagePosition",
@@ -96,8 +114,12 @@ export const slidesField = {
         en: "Image Position",
         es: "Posición de la Imagen",
       },
-      type: "select",
-      options: ["center", "bottom"],
+      type: "radio",
+      options: [
+        { value: "center", label: { en: "Center", es: "Centro" } },
+        { value: "bottom", label: { en: "Bottom", es: "Abajo" } },
+      ],
+      defaultValue: "center",
     },
     {
       name: "ctaUrl",
