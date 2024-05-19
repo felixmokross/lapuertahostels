@@ -1,5 +1,11 @@
 import { GlobalConfig } from "payload/types";
 
+const socialPlatformOptions = [
+  { label: "Facebook", value: "facebook" },
+  { label: "Instagram", value: "instagram" },
+  { label: "WhatsApp", value: "whatsapp" },
+];
+
 export const Common: GlobalConfig = {
   slug: "common",
   label: {
@@ -70,6 +76,102 @@ export const Common: GlobalConfig = {
           type: "text",
           required: true,
           localized: true,
+        },
+        {
+          type: "array",
+          name: "socialLinks",
+          label: {
+            en: "Social Links",
+            es: "Enlaces Sociales",
+          },
+          fields: [
+            {
+              name: "platform",
+              type: "select",
+              label: {
+                en: "Platform",
+                es: "Plataforma",
+              },
+              options: socialPlatformOptions,
+              required: true,
+            },
+            {
+              name: "url",
+              type: "text",
+              label: {
+                en: "URL",
+                es: "URL",
+              },
+              required: true,
+            },
+          ],
+          admin: {
+            components: {
+              RowLabel: ({ data }) =>
+                socialPlatformOptions.find((p) => p.value === data?.platform)
+                  ?.label,
+            },
+          },
+        },
+        {
+          name: "linkGroups",
+          label: {
+            en: "Link Groups",
+            es: "Grupos de Enlaces",
+          },
+          type: "array",
+          fields: [
+            {
+              name: "title",
+              label: {
+                en: "Title",
+                es: "Título",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+            },
+            {
+              name: "links",
+              label: {
+                en: "Links",
+                es: "Enlaces",
+              },
+              type: "array",
+              required: true,
+              fields: [
+                {
+                  name: "name",
+                  label: {
+                    en: "Name",
+                    es: "Nombre",
+                  },
+                  localized: true,
+                  required: true,
+                  type: "text",
+                },
+                {
+                  name: "url",
+                  label: {
+                    en: "URL",
+                    es: "URL",
+                  },
+                  required: true,
+                  type: "text",
+                },
+              ],
+              admin: {
+                components: {
+                  RowLabel: ({ data }) => data?.name,
+                },
+              },
+            },
+          ],
+          admin: {
+            components: {
+              RowLabel: ({ data }) => data?.title,
+            },
+          },
         },
       ],
     },

@@ -1,67 +1,10 @@
-import { Fragment, SVGProps } from "react";
+import { Fragment } from "react";
 import { Button } from "./button";
 import { BrandLogo } from "./brand-logo";
 import { useTheme } from "../brands";
 import { Brand, Common } from "~/payload-types";
-
-const navigation = {
-  hotel: [
-    { name: "About Us", href: ".#about-us" },
-    { name: "Puerta Aqua", href: "/aqua" },
-    { name: "La Puerta Azul", href: "/azul" },
-    { name: "Contact", href: "#" },
-  ],
-  experiences: [
-    { name: "Santa Marta", href: ".#santa-marta" },
-    { name: "Lost City", href: "#" },
-    { name: "Tayrona Park", href: "#" },
-    { name: "Minca", href: "#" },
-  ],
-  legal: [
-    { name: "Terms", href: "#" },
-    { name: "Cancelation", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "FAQ", href: "#" },
-  ],
-  social: [
-    {
-      name: "Facebook",
-      href: "#",
-      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
-        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-          <path
-            fillRule="evenodd"
-            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-            clipRule="evenodd"
-          />
-        </svg>
-      ),
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/lapuertahostels",
-      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
-        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-          <path
-            fillRule="evenodd"
-            d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-            clipRule="evenodd"
-          />
-        </svg>
-      ),
-    },
-    {
-      name: "WhatsApp",
-      href: "https://wa.me/message/GD4IG2FJPKATE1",
-      icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
-        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-          <path d="M16.799 13.4923C16.76 13.4736 15.302 12.7556 15.0429 12.6623C14.9371 12.6244 14.8238 12.5873 14.7032 12.5873C14.5064 12.5873 14.341 12.6854 14.2121 12.8781C14.0665 13.0946 13.6256 13.61 13.4894 13.764C13.4716 13.7843 13.4473 13.8086 13.4327 13.8086C13.4197 13.8086 13.194 13.7157 13.1257 13.686C11.5616 13.0066 10.3744 11.3727 10.2116 11.0972C10.1884 11.0576 10.1874 11.0396 10.1872 11.0396C10.1929 11.0186 10.2455 10.9659 10.2727 10.9387C10.3521 10.8601 10.4381 10.7566 10.5214 10.6564C10.5608 10.6089 10.6003 10.5614 10.639 10.5166C10.7598 10.376 10.8136 10.267 10.8759 10.1406L10.9086 10.0749C11.0608 9.77254 10.9308 9.51734 10.8888 9.43494C10.8543 9.36598 10.2386 7.88013 10.1732 7.72403C10.0158 7.34734 9.80779 7.17195 9.51876 7.17195C9.49195 7.17195 9.51876 7.17195 9.4063 7.17669C9.26935 7.18247 8.52357 7.28065 8.19383 7.48851C7.84415 7.70896 7.25259 8.41169 7.25259 9.64754C7.25259 10.7598 7.95844 11.81 8.26149 12.2094C8.26902 12.2195 8.28285 12.2399 8.30292 12.2693C9.46351 13.9642 10.9103 15.2203 12.377 15.8062C13.789 16.3703 14.4577 16.4355 14.8378 16.4355H14.8379C14.9976 16.4355 15.1255 16.4229 15.2383 16.4118L15.3098 16.405C15.7976 16.3618 16.8696 15.8063 17.1134 15.1287C17.3055 14.595 17.3561 14.0119 17.2283 13.8003C17.1408 13.6564 16.9899 13.584 16.799 13.4923Z" />
-          <path d="M12.1775 2C6.7609 2 2.35414 6.37364 2.35414 11.7496C2.35414 13.4883 2.81947 15.1903 3.70096 16.6799L2.01375 21.6569C1.98232 21.7497 2.0057 21.8523 2.07434 21.9222C2.12388 21.9727 2.19109 22 2.25973 22C2.28602 22 2.31252 21.9961 2.33836 21.9878L7.52798 20.3387C8.94811 21.0975 10.5532 21.498 12.1776 21.498C17.5937 21.4981 22 17.1249 22 11.7496C22 6.37364 17.5937 2 12.1775 2ZM12.1775 19.4672C10.649 19.4672 9.16856 19.0258 7.89596 18.1907C7.85317 18.1626 7.8035 18.1482 7.7535 18.1482C7.72707 18.1482 7.70057 18.1522 7.67479 18.1604L5.07512 18.9868L5.91434 16.5109C5.94148 16.4307 5.92791 16.3423 5.87791 16.274C4.90882 14.9499 4.39655 13.3854 4.39655 11.7496C4.39655 7.49351 7.88707 4.03091 12.1775 4.03091C16.4673 4.03091 19.9575 7.49351 19.9575 11.7496C19.9575 16.0051 16.4675 19.4672 12.1775 19.4672Z" />
-        </svg>
-      ),
-    },
-  ],
-};
+import { useTranslation } from "react-i18next";
+import { socials } from "~/common/socials";
 
 type FooterProps = {
   content: Common["footer"];
@@ -69,6 +12,7 @@ type FooterProps = {
 };
 
 export function Footer({ content, allBrands }: FooterProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const puertaBrand = allBrands.find((b) => b.id === "puerta");
   if (!puertaBrand) throw new Error("Puerta brand not found");
@@ -78,7 +22,7 @@ export function Footer({ content, allBrands }: FooterProps) {
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
-        Footer
+        {t("footer.heading")}
       </h2>
       <div className="mx-auto max-w-5xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -95,70 +39,41 @@ export function Footer({ content, allBrands }: FooterProps) {
               ))}
             </p>
             <div className="flex space-x-6">
-              {navigation.social.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-neutral-400 hover:text-neutral-500"
-                >
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
-                </a>
-              ))}
+              {content.socialLinks?.map((socialLink) => {
+                const social = socials[socialLink.platform];
+                return (
+                  <a
+                    key={socialLink.platform}
+                    href={socialLink.url}
+                    className="text-neutral-400 hover:text-neutral-500"
+                  >
+                    <span className="sr-only">{social.name}</span>
+                    <social.icon className="h-6 w-6" aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
           </div>
           <div className="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Hotel
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.hotel.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Experiences
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.experiences.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Legal
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.legal.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {content.linkGroups?.map((linkGroup) => (
+              <div key={linkGroup.title}>
+                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                  {linkGroup.title}
+                </h3>
+                <ul className="mt-6 space-y-4">
+                  {linkGroup.links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.url}
+                        className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 

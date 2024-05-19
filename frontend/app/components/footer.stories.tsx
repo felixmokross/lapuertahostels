@@ -20,6 +20,49 @@ Calle 18 #5-66
 Santa Marta 470004
 Colombia`,
       copyright: "La Puerta Hostels S.A.S. All rights reserved.",
+      socialLinks: [
+        {
+          platform: "facebook",
+          url: "#",
+        },
+        {
+          platform: "instagram",
+          url: "#",
+        },
+        {
+          platform: "whatsapp",
+          url: "#",
+        },
+      ],
+      linkGroups: [
+        {
+          title: "Hotel",
+          links: [
+            { name: "About Us", url: ".#about-us" },
+            { name: "Puerta Aqua", url: "/aqua" },
+            { name: "La Puerta Azul", url: "/azul" },
+            { name: "Contact", url: "#" },
+          ],
+        },
+        {
+          title: "Experiences",
+          links: [
+            { name: "Santa Marta", url: ".#santa-marta" },
+            { name: "Lost City", url: "#" },
+            { name: "Tayrona Park", url: "#" },
+            { name: "Minca", url: "#" },
+          ],
+        },
+        {
+          title: "Legal",
+          links: [
+            { name: "Terms", url: "#" },
+            { name: "Cancelation", url: "#" },
+            { name: "Privacy", url: "#" },
+            { name: "FAQ", url: "#" },
+          ],
+        },
+      ],
     },
     allBrands: [
       {
