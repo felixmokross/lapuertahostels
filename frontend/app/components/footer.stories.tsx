@@ -34,6 +34,35 @@ Colombia`,
           url: "#",
         },
       ],
+      linkGroups: [
+        {
+          title: "Hotel",
+          links: [
+            { name: "About Us", url: ".#about-us" },
+            { name: "Puerta Aqua", url: "/aqua" },
+            { name: "La Puerta Azul", url: "/azul" },
+            { name: "Contact", url: "#" },
+          ],
+        },
+        {
+          title: "Experiences",
+          links: [
+            { name: "Santa Marta", url: ".#santa-marta" },
+            { name: "Lost City", url: "#" },
+            { name: "Tayrona Park", url: "#" },
+            { name: "Minca", url: "#" },
+          ],
+        },
+        {
+          title: "Legal",
+          links: [
+            { name: "Terms", url: "#" },
+            { name: "Cancelation", url: "#" },
+            { name: "Privacy", url: "#" },
+            { name: "FAQ", url: "#" },
+          ],
+        },
+      ],
     },
     allBrands: [
       {

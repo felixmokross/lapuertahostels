@@ -113,6 +113,66 @@ export const Common: GlobalConfig = {
             },
           },
         },
+        {
+          name: "linkGroups",
+          label: {
+            en: "Link Groups",
+            es: "Grupos de Enlaces",
+          },
+          type: "array",
+          fields: [
+            {
+              name: "title",
+              label: {
+                en: "Title",
+                es: "Título",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+            },
+            {
+              name: "links",
+              label: {
+                en: "Links",
+                es: "Enlaces",
+              },
+              type: "array",
+              required: true,
+              fields: [
+                {
+                  name: "name",
+                  label: {
+                    en: "Name",
+                    es: "Nombre",
+                  },
+                  localized: true,
+                  required: true,
+                  type: "text",
+                },
+                {
+                  name: "url",
+                  label: {
+                    en: "URL",
+                    es: "URL",
+                  },
+                  required: true,
+                  type: "text",
+                },
+              ],
+              admin: {
+                components: {
+                  RowLabel: ({ data }) => data?.name,
+                },
+              },
+            },
+          ],
+          admin: {
+            components: {
+              RowLabel: ({ data }) => data?.title,
+            },
+          },
+        },
       ],
     },
   ],

@@ -6,27 +6,6 @@ import { Brand, Common } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 
-const navigation = {
-  hotel: [
-    { name: "About Us", href: ".#about-us" },
-    { name: "Puerta Aqua", href: "/aqua" },
-    { name: "La Puerta Azul", href: "/azul" },
-    { name: "Contact", href: "#" },
-  ],
-  experiences: [
-    { name: "Santa Marta", href: ".#santa-marta" },
-    { name: "Lost City", href: "#" },
-    { name: "Tayrona Park", href: "#" },
-    { name: "Minca", href: "#" },
-  ],
-  legal: [
-    { name: "Terms", href: "#" },
-    { name: "Cancelation", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "FAQ", href: "#" },
-  ],
-};
-
 type FooterProps = {
   content: Common["footer"];
   allBrands: Brand[];
@@ -76,57 +55,25 @@ export function Footer({ content, allBrands }: FooterProps) {
             </div>
           </div>
           <div className="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Hotel
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.hotel.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Experiences
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.experiences.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                Legal
-              </h3>
-              <ul className="mt-6 space-y-4">
-                {navigation.legal.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {content.linkGroups?.map((linkGroup) => (
+              <div key={linkGroup.title}>
+                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                  {linkGroup.title}
+                </h3>
+                <ul className="mt-6 space-y-4">
+                  {linkGroup.links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.url}
+                        className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
