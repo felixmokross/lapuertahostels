@@ -77,40 +77,41 @@ export function Footer({ content, allBrands }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
-          <div>
-            <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-              Subscribe to our newsletter
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-neutral-600">
-              Don&rsquo;t miss out on new experiences, discounts, or any other
-              news from us!
-            </p>
-          </div>
-          <form className="mt-6 sm:flex sm:max-w-md lg:mt-0">
-            <label htmlFor="email-address" className="sr-only">
-              Email address
-            </label>
-            <input
-              type="email"
-              name="email-address"
-              id="email-address"
-              autoComplete="email"
-              required
-              className="w-full min-w-0 appearance-none rounded-md border-0 bg-white px-3 py-1.5 text-base text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-puerta-600 sm:w-56 sm:text-sm sm:leading-6"
-              placeholder="Enter your email"
-            />
-            <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-              <Button
-                size="small"
-                type="submit"
-                className="flex h-full w-full items-center justify-center"
-              >
-                Subscribe
-              </Button>
+        {content.newsletter && content.newsletter.show && (
+          <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
+            <div>
+              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                {content.newsletter.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                {content.newsletter.description}
+              </p>
             </div>
-          </form>
-        </div>
+            <form className="mt-6 sm:flex sm:max-w-md lg:mt-0">
+              <label htmlFor="email-address" className="sr-only">
+                {t("footer.newsletter.emailLabel")}
+              </label>
+              <input
+                type="email"
+                name="email-address"
+                id="email-address"
+                autoComplete="email"
+                required
+                className="w-full min-w-0 appearance-none rounded-md border-0 bg-white px-3 py-1.5 text-base text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-puerta-600 sm:w-56 sm:text-sm sm:leading-6"
+                placeholder={content.newsletter.emailPlaceholder}
+              />
+              <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
+                <Button
+                  size="small"
+                  type="submit"
+                  className="flex h-full w-full items-center justify-center"
+                >
+                  {content.newsletter.buttonLabel}
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
         <div className="mt-8 border-t border-neutral-900/10 pt-8 sm:mt-10 lg:mt-12">
           <p className="text-xs leading-5 text-neutral-500">
             &copy; {new Date().getFullYear()} {content.copyright}

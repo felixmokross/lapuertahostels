@@ -1,1 +1,9 @@
-{}
+{
+  "bannerDismiss": "Fermer",
+  "footer": {
+    "heading": "Pied de page",
+    "newsletter": {
+      "emailLabel": "Adresse électronique"
+    }
+  }
+}

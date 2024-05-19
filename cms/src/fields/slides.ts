@@ -110,6 +110,7 @@ export const slidesField = {
     },
   ],
   admin: {
+    initCollapsed: true,
     components: {
       RowLabel: ({ data }: RowLabelArgs) => data?.name,
     },

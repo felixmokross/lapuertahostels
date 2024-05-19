@@ -7,6 +7,9 @@
   },
   "bannerDismiss": "Dismiss",
   "footer": {
-    "heading": "Footer"
+    "heading": "Footer",
+    "newsletter": {
+      "emailLabel": "Email"
+    }
   }
 }

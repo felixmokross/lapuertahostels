@@ -1,6 +1,9 @@
 {
   "bannerDismiss": "Cerrar",
   "footer": {
-    "heading": "Pie de página"
+    "heading": "Pie de página",
+    "newsletter": {
+      "emailLabel": "Correo electrónico"
+    }
   }
 }

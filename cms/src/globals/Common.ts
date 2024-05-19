@@ -1,4 +1,5 @@
 import { GlobalConfig } from "payload/types";
+import { Common as CommonType } from "../payload-types";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -106,10 +107,15 @@ export const Common: GlobalConfig = {
             },
           ],
           admin: {
+            initCollapsed: true,
             components: {
               RowLabel: ({ data }) =>
-                socialPlatformOptions.find((p) => p.value === data?.platform)
-                  ?.label,
+                socialPlatformOptions.find(
+                  (p) =>
+                    p.value ===
+                    (data as CommonType["footer"]["socialLinks"][number])
+                      .platform,
+                )?.label,
             },
           },
         },
@@ -161,17 +167,93 @@ export const Common: GlobalConfig = {
                 },
               ],
               admin: {
+                initCollapsed: true,
                 components: {
-                  RowLabel: ({ data }) => data?.name,
+                  RowLabel: ({ data }) =>
+                    (
+                      data as CommonType["footer"]["linkGroups"][number]["links"][number]
+                    )?.name,
                 },
               },
             },
           ],
           admin: {
+            initCollapsed: true,
             components: {
-              RowLabel: ({ data }) => data?.title,
+              RowLabel: ({ data }) =>
+                (data as CommonType["footer"]["linkGroups"][number]).title,
             },
           },
+        },
+        {
+          name: "newsletter",
+          label: {
+            en: "Newsletter",
+            es: "Boletín",
+          },
+          type: "group",
+          fields: [
+            {
+              name: "show",
+              label: {
+                en: "Show Newsletter Form",
+                es: "Mostrar Formulario de Boletín",
+              },
+              type: "checkbox",
+            },
+            {
+              name: "title",
+              label: {
+                en: "Title",
+                es: "Título",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+              admin: {
+                condition: (data: CommonType) => data.footer.newsletter.show,
+              },
+            },
+            {
+              name: "description",
+              label: {
+                en: "Description",
+                es: "Descripción",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+              admin: {
+                condition: (data: CommonType) => data.footer.newsletter.show,
+              },
+            },
+            {
+              name: "emailPlaceholder",
+              label: {
+                en: "Email Placeholder",
+                es: "Marcador de Correo Electrónico",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+              admin: {
+                condition: (data: CommonType) => data.footer.newsletter.show,
+              },
+            },
+            {
+              name: "buttonLabel",
+              label: {
+                en: "Button Label",
+                es: "Etiqueta del Botón",
+              },
+              localized: true,
+              required: true,
+              type: "text",
+              admin: {
+                condition: (data: CommonType) => data.footer.newsletter.show,
+              },
+            },
+          ],
         },
       ],
     },

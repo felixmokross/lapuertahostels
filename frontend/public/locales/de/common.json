@@ -1,6 +1,9 @@
 {
   "bannerDismiss": "Schließen",
   "footer": {
-    "heading": "Fußzeile"
+    "heading": "Fußzeile",
+    "newsletter": {
+      "emailLabel": "E-Mail"
+    }
   }
 }

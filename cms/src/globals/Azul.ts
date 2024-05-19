@@ -88,6 +88,7 @@ export const Azul: GlobalConfig = {
         },
       ],
       admin: {
+        initCollapsed: true,
         components: {
           RowLabel: ({ data }: RowLabelArgs) => data?.title,
         },
