@@ -19,7 +19,7 @@ export function FeaturesBlock({ id, items }: FeaturesBlockProps) {
   return (
     <div
       id={id}
-      className="mx-auto my-20 max-w-6xl space-y-24 px-8 md:my-32 lg:px-0"
+      className="mx-auto my-36 max-w-6xl space-y-36 sm:px-8 lg:my-32 lg:space-y-24 lg:px-0"
     >
       {items?.map((item, i) => (
         <ImageWithTextSection
