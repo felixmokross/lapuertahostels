@@ -1,17 +1,18 @@
 import { RichTextObject, RichTextParagraph } from "~/common/rich-text";
-import { cn } from "~/components/cn";
 import { Heading } from "~/components/heading";
 
 export type LeadBlockProps = {
   heading: string;
   text: RichTextObject;
   id?: string;
-  className?: string;
 };
 
-export function LeadBlock({ heading, text, id, className }: LeadBlockProps) {
+export function LeadBlock({ heading, text, id }: LeadBlockProps) {
   return (
-    <div id={id} className={cn("mx-auto max-w-4xl px-8 lg:px-0", className)}>
+    <div
+      id={id}
+      className="mx-auto mb-14 mt-12 max-w-4xl px-8 md:mb-36 md:mt-24 lg:px-0"
+    >
       <Heading as="h1" size="medium">
         {heading}
       </Heading>

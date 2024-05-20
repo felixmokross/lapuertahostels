@@ -16,7 +16,6 @@ export type ImageWithFloatingTextBlockProps = {
     overlay?: "subtle" | "moderate" | "intense";
   };
   id?: string;
-  className?: string;
 };
 
 export function ImageWithFloatingTextBlock({
@@ -25,12 +24,14 @@ export function ImageWithFloatingTextBlock({
   textPosition = "right",
   image,
   id,
-  className,
 }: ImageWithFloatingTextBlockProps) {
   const imageOverlay = image.overlay || "moderate";
   return (
-    <div className={cn("relative mx-auto lg:max-w-4xl", className)} id={id}>
-      <div className="h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
+    <div
+      className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
+      id={id}
+    >
+      <div className="relative max-h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
         <Image
           src={image.src}
           alt={image.alt}

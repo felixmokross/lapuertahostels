@@ -12,25 +12,17 @@ export type StoryBlockProps = {
     grayscale?: boolean;
     position?: "left" | "right";
   };
-  className?: string;
   id?: string;
 };
 
-export function StoryBlock({
-  heading,
-  text,
-  image,
-  className,
-  id,
-}: StoryBlockProps) {
+export function StoryBlock({ heading, text, image, id }: StoryBlockProps) {
   const imagePosition = image.position || "left";
   return (
     <div
       id={id}
-      className={cn(
-        "mx-auto max-w-4xl lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16",
-        className,
-      )}
+      className={
+        "mx-auto mb-24 mt-20 max-w-4xl lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16"
+      }
     >
       <div
         className={cn("px-8 lg:px-0", {

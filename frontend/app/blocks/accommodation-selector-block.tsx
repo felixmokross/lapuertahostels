@@ -1,10 +1,10 @@
-import { Link } from "@remix-run/react";
 import { RichTextObject, RichTextParagraph } from "~/common/rich-text";
 import { Brand } from "~/payload-types";
 import { cn } from "../components/cn";
 import { Heading } from "../components/heading";
 import { Paragraph } from "../components/paragraph";
 import { Image } from "~/components/image";
+import { Link } from "~/components/link";
 
 export type AccommodationSelectorBlockProps = {
   heading: string;
@@ -19,7 +19,6 @@ export type AccommodationSelectorBlockProps = {
     id: string;
   }[];
   id?: string;
-  className?: string;
 };
 
 export function AccommodationSelectorBlock({
@@ -27,12 +26,11 @@ export function AccommodationSelectorBlock({
   text,
   accommodationCards,
   id,
-  className,
 }: AccommodationSelectorBlockProps) {
   return (
-    <div id={id} className={cn("relative", className)}>
+    <div id={id} className="relative">
       <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
-      <div className="py-8 md:py-16">
+      <div className="pb-12 pt-8 md:pb-20 md:pt-16">
         <div className="lg-px-0 mx-auto max-w-4xl px-8">
           <Heading as="h2" size="large" variant="white">
             {heading}

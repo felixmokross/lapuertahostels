@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "./cn";
 import { Transition } from "@headlessui/react";
-import { Link } from "@remix-run/react";
 import { useTheme } from "~/brands";
+import { Link } from "./link";
 
 export type BannerProps = {
   children: string;

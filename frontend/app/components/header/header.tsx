@@ -2,12 +2,12 @@ import { cn } from "../cn";
 import { useTranslation } from "react-i18next";
 import { HeaderBrandLogo } from "./header-brand-logo";
 import { LocaleSwitcher, MobileLocaleSwitcher } from "./locale-switcher";
-import { Link, LinkProps } from "@remix-run/react";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { Brand } from "~/payload-types";
+import { Link, LinkProps } from "../link";
 
 export type HeaderProps = {
   brand: Brand;

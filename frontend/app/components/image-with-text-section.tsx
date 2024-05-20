@@ -17,12 +17,13 @@ export function ImageWithTextSection({
   return (
     <div
       className={cn(
-        "flex items-center gap-10",
-        orientation === "image-right" && "flex-row-reverse",
+        "flex flex-col items-center gap-16 md:gap-10 lg:flex-row",
+        orientation === "image-left" && "lg:flex-row-reverse",
         className,
       )}
     >
-      <div className="max-w-md shrink-0 overflow-hidden rounded-md shadow-lg">
+      <div className="px-16 text-center md:px-0">{children}</div>
+      <div className="shrink-0 overflow-hidden shadow-lg sm:max-w-md sm:rounded-md">
         <Image
           {...image}
           transformation={{
@@ -31,7 +32,6 @@ export function ImageWithTextSection({
           }}
         />
       </div>
-      <div className="text-center">{children}</div>
     </div>
   );
 }
