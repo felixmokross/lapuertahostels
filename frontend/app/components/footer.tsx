@@ -5,6 +5,7 @@ import { useTheme } from "../brands";
 import { Brand, Common } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
+import { Link } from "@remix-run/react";
 
 type FooterProps = {
   content: Common["footer"];
@@ -46,6 +47,8 @@ export function Footer({ content, allBrands }: FooterProps) {
                     key={socialLink.platform}
                     href={socialLink.url}
                     className="text-neutral-400 hover:text-neutral-500"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     <span className="sr-only">{social.name}</span>
                     <social.icon className="h-6 w-6" aria-hidden="true" />
@@ -63,12 +66,12 @@ export function Footer({ content, allBrands }: FooterProps) {
                 <ul className="mt-6 space-y-4">
                   {linkGroup.links.map((link) => (
                     <li key={link.name}>
-                      <a
-                        href={link.url}
+                      <Link
+                        to={link.url}
                         className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
                       >
                         {link.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
