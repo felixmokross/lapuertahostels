@@ -1,8 +1,4 @@
-import {
-  RichText,
-  RichTextParagraph,
-  RichTextHeading,
-} from "~/common/rich-text";
+import { RichText, RichTextParagraph } from "~/common/rich-text";
 import { Carousel } from "~/components/carousel";
 import { HeadingHighlight, Heading } from "~/components/heading";
 import { StoryBlock } from "~/components/story-block";
@@ -11,6 +7,7 @@ import { Image } from "~/components/image";
 import { Link } from "@remix-run/react";
 import { cn } from "~/components/cn";
 import { Paragraph } from "~/components/paragraph";
+import { ImageWithFloatingTextBlock } from "~/components/image-with-floating-text-block";
 
 export type PageProps = {
   content: Home;
@@ -85,41 +82,17 @@ export function Page({ content }: PageProps) {
           </div>
         </div>
       </div>
-      <div
-        className="relative mx-auto mt-14 lg:mt-32 lg:max-w-4xl"
+
+      <ImageWithFloatingTextBlock
         id="santa-marta"
-      >
-        <div className="h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
-          <Image
-            src={content.aboutSantaMarta.imageUrl}
-            alt={content.aboutSantaMarta.imageAlt}
-            className="h-full w-full object-cover"
-            transformation={{
-              width: 1000,
-              aspectRatio: { width: 16, height: 9 },
-              cropStrategy: "maintain_ratio",
-              focus: "auto",
-            }}
-          />
-          <div className="absolute inset-0 flex bg-gradient-to-t from-transparent to-black/40 px-6 py-4 md:px-8 md:py-6 lg:rounded-lg">
-            <RichTextHeading
-              as="h3"
-              size="extra-large"
-              variant="white"
-              textShadow
-            >
-              {content.aboutSantaMarta.heading}
-            </RichTextHeading>
-          </div>
-        </div>
-        <div className="lg:absolute lg:inset-0 lg:flex lg:items-end lg:justify-end">
-          <div className="bg-gradient-to-bl from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-x-12 lg:translate-y-20">
-            <RichTextParagraph variant="puerta" justify>
-              {content.aboutSantaMarta.text}
-            </RichTextParagraph>
-          </div>
-        </div>
-      </div>
+        className="mt-14 lg:mt-32"
+        heading={content.aboutSantaMarta.heading}
+        text={content.aboutSantaMarta.text}
+        image={{
+          src: content.aboutSantaMarta.imageUrl,
+          alt: content.aboutSantaMarta.imageAlt,
+        }}
+      />
 
       <StoryBlock
         className="mb-20 mt-24 lg:mt-72"
