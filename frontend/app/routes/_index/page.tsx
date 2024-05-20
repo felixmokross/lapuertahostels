@@ -1,54 +1,26 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { Carousel } from "~/components/carousel";
-import { cn } from "~/components/cn";
-import { Image } from "~/components/image";
-import { Heading, HeadingHighlight } from "~/components/heading";
-import { Paragraph } from "~/components/paragraph";
-import i18next from "~/i18next.server";
-import { Brand, Home } from "~/payload-types";
-import { useLivePreview } from "@payloadcms/live-preview-react";
 import {
   RichText,
-  RichTextHeading,
   RichTextParagraph,
+  RichTextHeading,
 } from "~/common/rich-text";
+import { Carousel } from "~/components/carousel";
+import { HeadingHighlight, Heading } from "~/components/heading";
 import { StoryBlock } from "~/components/story-block";
+import { Brand, Home } from "~/payload-types";
+import { Image } from "~/components/image";
+import { Link } from "@remix-run/react";
+import { cn } from "~/components/cn";
+import { Paragraph } from "~/components/paragraph";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "LA PUERTA HOSTELS" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+export type PageProps = {
+  content: Home;
 };
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  if (!process.env.PAYLOAD_CMS_BASE_URL) {
-    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
-  }
-
-  const locale = await i18next.getLocale(request);
-  // TODO provide an function for this
-  return {
-    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
-    homeData: (await (
-      await fetch(
-        `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
-      )
-    ).json()) as Home,
-  };
-}
-
-export default function Route() {
-  const { homeData, payloadCmsBaseUrl } = useLoaderData<typeof loader>();
-  const { data: homeData2 } = useLivePreview({
-    initialData: homeData,
-    serverURL: payloadCmsBaseUrl,
-  });
+export function Page({ content }: PageProps) {
   return (
     <>
       <Carousel
-        items={homeData2.slides.map((slide) => ({
+        items={content.slides.map((slide) => ({
           src: slide.imageUrl,
           alt: slide.imageAlt,
           title: {
@@ -58,7 +30,7 @@ export default function Route() {
               </RichText>
             ),
             position: slide.titlePosition || undefined,
-            cta: { text: homeData2.slideCta, to: slide.ctaUrl },
+            cta: { text: content.slideCta, to: slide.ctaUrl },
             imageOverlay: slide.imageOverlay || undefined,
           },
         }))}
@@ -70,10 +42,10 @@ export default function Route() {
 
       <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
         <Heading as="h1" size="medium">
-          {homeData2.intro.heading}
+          {content.intro.heading}
         </Heading>
         <RichTextParagraph justify size="extra-large" className="mt-4 md:mt-6">
-          {homeData2.intro.text}
+          {content.intro.text}
         </RichTextParagraph>
       </div>
 
@@ -82,7 +54,7 @@ export default function Route() {
         <div className="py-8 md:py-16">
           <div className="lg-px-0 mx-auto max-w-4xl px-8">
             <Heading as="h2" size="large" variant="white">
-              {homeData2.accommodations.heading}
+              {content.accommodations.heading}
             </Heading>
             <RichTextParagraph
               className="mt-4 md:mt-6"
@@ -90,11 +62,11 @@ export default function Route() {
               size="large"
               variant="white"
             >
-              {homeData2.accommodations.text}
+              {content.accommodations.text}
             </RichTextParagraph>
           </div>
           <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-            {homeData2.accommodations.cards.map((card) => {
+            {content.accommodations.cards.map((card) => {
               const cardBrand = card.brand as Brand;
               return (
                 <AccommodationCard
@@ -119,8 +91,8 @@ export default function Route() {
       >
         <div className="h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
           <Image
-            src={homeData2.aboutSantaMarta.imageUrl}
-            alt={homeData2.aboutSantaMarta.imageAlt}
+            src={content.aboutSantaMarta.imageUrl}
+            alt={content.aboutSantaMarta.imageAlt}
             className="h-full w-full object-cover"
             transformation={{
               width: 1000,
@@ -136,14 +108,14 @@ export default function Route() {
               variant="white"
               textShadow
             >
-              {homeData2.aboutSantaMarta.heading}
+              {content.aboutSantaMarta.heading}
             </RichTextHeading>
           </div>
         </div>
         <div className="lg:absolute lg:inset-0 lg:flex lg:items-end lg:justify-end">
           <div className="bg-gradient-to-bl from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-x-12 lg:translate-y-20">
             <RichTextParagraph variant="puerta" justify>
-              {homeData2.aboutSantaMarta.text}
+              {content.aboutSantaMarta.text}
             </RichTextParagraph>
           </div>
         </div>
@@ -152,12 +124,12 @@ export default function Route() {
       <StoryBlock
         className="mb-20 mt-24 lg:mt-72"
         id="about-us"
-        heading={homeData2.aboutUs.heading}
-        text={homeData2.aboutUs.text}
+        heading={content.aboutUs.heading}
+        text={content.aboutUs.text}
         image={{
-          src: homeData2.aboutUs.imageUrl,
-          alt: homeData2.aboutUs.imageAlt,
-          grayscale: homeData2.aboutUs.grayscale || false,
+          src: content.aboutUs.imageUrl,
+          alt: content.aboutUs.imageAlt,
+          grayscale: content.aboutUs.grayscale || false,
         }}
       />
     </>
