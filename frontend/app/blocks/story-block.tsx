@@ -9,7 +9,8 @@ export type StoryBlockProps = {
   image: {
     src: string;
     alt: string;
-    grayscale: boolean;
+    grayscale?: boolean;
+    position?: "left" | "right";
   };
   className?: string;
   id?: string;
@@ -22,6 +23,7 @@ export function StoryBlock({
   className,
   id,
 }: StoryBlockProps) {
+  const imagePosition = image.position || "left";
   return (
     <div
       id={id}
@@ -30,7 +32,12 @@ export function StoryBlock({
         className,
       )}
     >
-      <div className="px-8 lg:order-last lg:px-0">
+      <div
+        className={cn("px-8 lg:px-0", {
+          "lg:order-last": imagePosition === "left",
+          "lg:order-first": imagePosition === "right",
+        })}
+      >
         <Heading as="h3" size="medium">
           {heading}
         </Heading>
@@ -38,7 +45,15 @@ export function StoryBlock({
           <RichTextParagraphGroup justify>{text}</RichTextParagraphGroup>
         </div>
       </div>
-      <div className="mx-auto mt-32 aspect-[3/4] max-w-xs -rotate-6 overflow-hidden rounded-md shadow-lg lg:-ml-10 lg:mr-12 lg:mt-0 lg:max-w-none">
+      <div
+        className={cn(
+          "mx-auto mt-32 aspect-[3/4] max-w-xs overflow-hidden rounded-md shadow-lg lg:mt-0 lg:max-w-none",
+          {
+            "-rotate-6 lg:-ml-10 lg:mr-12": imagePosition === "left",
+            "rotate-6 lg:-mr-10 lg:ml-12": imagePosition === "right",
+          },
+        )}
+      >
         <Image
           src={image.src}
           alt={image.alt}
