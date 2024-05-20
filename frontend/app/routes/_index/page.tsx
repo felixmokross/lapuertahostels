@@ -41,23 +41,28 @@ export function Page({ content }: PageProps) {
         text={content.intro.text}
       />
 
-      <AccommodationSelectorBlock
-        className="mt-14 md:mt-36"
-        heading={content.accommodations.heading}
-        text={content.accommodations.text}
-        accommodationCards={content.accommodations.cards.map((card) => ({
-          brand: card.brand as Brand,
-          image: { src: card.imageUrl, alt: card.imageAlt },
-          description: card.description,
-          id: card.id!,
-        }))}
-      />
-
       {content.layout?.map((block) => {
         switch (block.blockType) {
+          case "AccommodationSelector":
+            return (
+              <AccommodationSelectorBlock
+                key={block.id}
+                id={block.elementId || undefined}
+                className="mt-14 md:mt-36"
+                heading={block.heading}
+                text={block.text}
+                accommodationCards={block.cards.map((card) => ({
+                  brand: card.brand as Brand,
+                  image: { src: card.imageUrl, alt: card.imageAlt },
+                  description: card.description,
+                  id: card.id!,
+                }))}
+              />
+            );
           case "ImageWithFloatingText":
             return (
               <ImageWithFloatingTextBlock
+                key={block.id}
                 id={block.elementId || undefined}
                 className="mt-14 lg:mt-32"
                 heading={block.heading}

@@ -23,7 +23,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
               blockName: "Santa Marta",
             },
           ],
-          $position: -1,
+          $position: 0,
         },
       },
       $unset: { aboutSantaMarta: "" },

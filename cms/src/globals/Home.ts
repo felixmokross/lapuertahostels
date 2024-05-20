@@ -4,6 +4,7 @@ import { GlobalConfig } from "payload/types";
 import { slidesField } from "../fields/slides";
 import { StoryBlock } from "../blocks/Story";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
+import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -61,101 +62,6 @@ export const Home: GlobalConfig = {
       ],
     },
     {
-      name: "accommodations",
-      label: {
-        en: "Accommodations",
-        es: "Alojamientos",
-      },
-      type: "group",
-      fields: [
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-        {
-          name: "cards",
-          label: {
-            en: "Cards",
-            es: "Tarjetas",
-          },
-          type: "array",
-          minRows: 2,
-          maxRows: 2,
-          required: true,
-          fields: [
-            {
-              name: "brand",
-              label: {
-                en: "Brand",
-                es: "Marca",
-              },
-              type: "relationship",
-              relationTo: "brands",
-              filterOptions: { id: { not_equals: "puerta" } },
-              required: true,
-            },
-            {
-              name: "imageUrl",
-              label: {
-                en: "Image URL",
-                es: "URL de la Imagen",
-              },
-              type: "text",
-              required: true,
-            },
-            {
-              name: "imageAlt",
-              label: {
-                en: "Alternative Text of the Image",
-                es: "Texto Alternativo de la Imagen",
-              },
-              type: "text",
-              required: true,
-              localized: true,
-            },
-            {
-              name: "description",
-              label: {
-                en: "Description",
-                es: "Descripción",
-              },
-              type: "text",
-              required: true,
-              localized: true,
-            },
-          ],
-          admin: {
-            initCollapsed: true,
-            components: {
-              RowLabel: ({ data }: RowLabelArgs) => data?.name,
-            },
-          },
-        },
-      ],
-    },
-    {
       name: "layout",
       label: {
         en: "Layout",
@@ -174,7 +80,11 @@ export const Home: GlobalConfig = {
       type: "blocks",
       minRows: 0,
       maxRows: 20,
-      blocks: [StoryBlock, ImageWithFloatingTextBlock],
+      blocks: [
+        AccommodationSelectorBlock,
+        ImageWithFloatingTextBlock,
+        StoryBlock,
+      ],
       admin: {
         initCollapsed: true,
       },
