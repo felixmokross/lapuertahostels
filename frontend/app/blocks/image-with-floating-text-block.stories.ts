@@ -9,7 +9,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     image: {
       src: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
@@ -79,5 +79,26 @@ export const Primary: Story = {
         ],
       },
     ],
+  },
+};
+
+export const TextLeft: Story = {
+  args: {
+    ...Default.args,
+    textPosition: "left",
+  },
+};
+
+export const ImageOverlaySubtle: Story = {
+  args: {
+    ...Default.args,
+    image: { ...Default.args.image, overlay: "subtle" },
+  },
+};
+
+export const ImageOverlayIntense: Story = {
+  args: {
+    ...Default.args,
+    image: { ...Default.args.image, overlay: "intense" },
   },
 };

@@ -71,9 +71,11 @@ export function Page({ content }: PageProps) {
                 className="mt-14 lg:mt-32"
                 heading={block.heading}
                 text={block.text}
+                textPosition={block.textPosition || undefined}
                 image={{
                   src: block.imageUrl,
                   alt: block.imageAlt,
+                  overlay: block.imageOverlay || undefined,
                 }}
               />
             );

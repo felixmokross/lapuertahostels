@@ -83,5 +83,32 @@ export const ImageWithFloatingTextBlock: Block = {
         },
       }),
     },
+    {
+      name: "textPosition",
+      label: {
+        en: "Text Position",
+        es: "Posición del Texto",
+      },
+      type: "radio",
+      options: [
+        { label: { en: "Left", es: "Izquierda" }, value: "left" },
+        { label: { en: "Right", es: "Derecha" }, value: "right" },
+      ],
+      defaultValue: "right",
+    },
+    {
+      name: "imageOverlay",
+      label: {
+        en: "Image Overlay",
+        es: "Superposición de la Imagen",
+      },
+      type: "radio",
+      options: [
+        { label: { en: "Subtle", es: "Sutil" }, value: "subtle" },
+        { label: { en: "Moderate", es: "Moderada" }, value: "moderate" },
+        { label: { en: "Intense", es: "Intensa" }, value: "intense" },
+      ],
+      defaultValue: "moderate",
+    },
   ],
 };
