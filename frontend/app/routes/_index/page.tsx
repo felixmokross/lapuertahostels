@@ -78,6 +78,7 @@ export function Page({ content }: PageProps) {
                 image={{
                   src: block.imageUrl,
                   alt: block.imageAlt,
+                  position: block.imagePosition || undefined,
                   grayscale: block.grayscale || false,
                 }}
               />
