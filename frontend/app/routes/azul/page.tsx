@@ -32,9 +32,7 @@ export function Page({ content }: PageProps) {
           width: 1600,
         }}
       />
-      <div className="mx-auto mt-12 max-w-6xl px-8 md:mt-24 lg:px-0">
-        {content.layout && <Blocks data={content.layout} />}
-      </div>
+      {content.layout && <Blocks data={content.layout} />}
     </>
   );
 }

@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { ImageWithTextSection } from "../components/image-with-text-section";
 import { Heading } from "../components/heading";
 import { Paragraph } from "../components/paragraph";
-import { cn } from "~/components/cn";
 
 export type FeaturesBlockProps = {
   items: Feature[];
@@ -16,9 +15,12 @@ type Feature = {
   paragraphContent: ReactNode;
 };
 
-export function FeaturesBlock({ id, className, items }: FeaturesBlockProps) {
+export function FeaturesBlock({ id, items }: FeaturesBlockProps) {
   return (
-    <div id={id} className={cn("space-y-24", className)}>
+    <div
+      id={id}
+      className="mx-auto my-20 max-w-6xl space-y-24 px-8 md:my-32 lg:px-0"
+    >
       {items?.map((item, i) => (
         <ImageWithTextSection
           key={i}

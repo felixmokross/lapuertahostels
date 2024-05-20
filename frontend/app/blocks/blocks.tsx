@@ -20,7 +20,6 @@ export function Blocks({ data }: BlocksProps) {
           <LeadBlock
             key={block.id}
             id={block.elementId || undefined}
-            className="mt-12 md:mt-24"
             heading={block.heading}
             text={block.text}
           />
@@ -30,7 +29,6 @@ export function Blocks({ data }: BlocksProps) {
           <AccommodationSelectorBlock
             key={block.id}
             id={block.elementId || undefined}
-            className="mt-14 md:mt-36"
             heading={block.heading}
             text={block.text}
             accommodationCards={block.cards.map((card) => ({
@@ -46,7 +44,6 @@ export function Blocks({ data }: BlocksProps) {
           <ImageWithFloatingTextBlock
             key={block.id}
             id={block.elementId || undefined}
-            className="mt-14 lg:mt-32"
             heading={block.heading}
             text={block.text}
             textPosition={block.textPosition || undefined}
@@ -61,7 +58,6 @@ export function Blocks({ data }: BlocksProps) {
         return (
           <StoryBlock
             key={block.id}
-            className="mb-20 mt-24 lg:mt-72"
             id={block.elementId || undefined}
             heading={block.heading}
             text={block.text}
