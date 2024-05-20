@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 
 const meta = {
-  title: "Image with Floating Text Block",
+  title: "blocks/Image with Floating Text Block",
   component: ImageWithFloatingTextBlock,
 } satisfies Meta<typeof ImageWithFloatingTextBlock>;
 

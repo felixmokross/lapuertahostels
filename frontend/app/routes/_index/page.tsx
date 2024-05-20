@@ -1,10 +1,11 @@
-import { RichText, RichTextParagraph } from "~/common/rich-text";
+import { RichText } from "~/common/rich-text";
 import { Carousel } from "~/components/carousel";
-import { HeadingHighlight, Heading } from "~/components/heading";
-import { StoryBlock } from "~/components/story-block";
+import { HeadingHighlight } from "~/components/heading";
+import { StoryBlock } from "~/blocks/story-block";
 import { Brand, Home } from "~/payload-types";
-import { ImageWithFloatingTextBlock } from "~/components/image-with-floating-text-block";
-import { AccommodationSelectorBlock } from "~/components/accommodation-selector-block";
+import { ImageWithFloatingTextBlock } from "~/blocks/image-with-floating-text-block";
+import { AccommodationSelectorBlock } from "~/blocks/accommodation-selector-block";
+import { LeadBlock } from "~/blocks/lead-block";
 
 export type PageProps = {
   content: Home;
@@ -34,14 +35,11 @@ export function Page({ content }: PageProps) {
         }}
       />
 
-      <div className="mx-auto mt-12 max-w-4xl px-8 md:mt-24 lg:px-0">
-        <Heading as="h1" size="medium">
-          {content.intro.heading}
-        </Heading>
-        <RichTextParagraph justify size="extra-large" className="mt-4 md:mt-6">
-          {content.intro.text}
-        </RichTextParagraph>
-      </div>
+      <LeadBlock
+        className="mt-12 md:mt-24"
+        heading={content.intro.heading}
+        text={content.intro.text}
+      />
 
       <AccommodationSelectorBlock
         className="mt-14 md:mt-36"

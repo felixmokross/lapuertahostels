@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 
 const meta = {
-  title: "Accommodation Selector Block",
+  title: "blocks/Accommodation Selector Block",
   component: AccommodationSelectorBlock,
 } satisfies Meta<typeof AccommodationSelectorBlock>;
 

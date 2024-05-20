@@ -1,7 +1,7 @@
 import { RichTextObject, RichTextParagraphGroup } from "~/common/rich-text";
-import { Heading } from "./heading";
-import { Image } from "./image";
-import { cn } from "./cn";
+import { Heading } from "../components/heading";
+import { Image } from "../components/image";
+import { cn } from "../components/cn";
 
 export type StoryBlockProps = {
   heading: string;

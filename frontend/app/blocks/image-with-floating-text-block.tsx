@@ -4,7 +4,7 @@ import {
   RichTextParagraph,
 } from "~/common/rich-text";
 import { Image } from "~/components/image";
-import { cn } from "./cn";
+import { cn } from "../components/cn";
 
 export type ImageWithFloatingTextBlockProps = {
   heading: RichTextObject;
