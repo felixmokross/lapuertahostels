@@ -53,26 +53,27 @@ export function Page({ content }: PageProps) {
         }))}
       />
 
-      <ImageWithFloatingTextBlock
-        id="santa-marta"
-        className="mt-14 lg:mt-32"
-        heading={content.aboutSantaMarta.heading}
-        text={content.aboutSantaMarta.text}
-        image={{
-          src: content.aboutSantaMarta.imageUrl,
-          alt: content.aboutSantaMarta.imageAlt,
-        }}
-      />
-
       {content.layout?.map((block) => {
         switch (block.blockType) {
-          // TODO the ID should also be configurable
+          case "ImageWithFloatingText":
+            return (
+              <ImageWithFloatingTextBlock
+                id={block.elementId || undefined}
+                className="mt-14 lg:mt-32"
+                heading={block.heading}
+                text={block.text}
+                image={{
+                  src: block.imageUrl,
+                  alt: block.imageAlt,
+                }}
+              />
+            );
           case "Story":
             return (
               <StoryBlock
                 key={block.id}
                 className="mb-20 mt-24 lg:mt-72"
-                id="about-us"
+                id={block.elementId || undefined}
                 heading={block.heading}
                 text={block.text}
                 image={{
