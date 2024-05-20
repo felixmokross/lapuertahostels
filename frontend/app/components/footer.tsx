@@ -5,7 +5,7 @@ import { useTheme } from "../brands";
 import { Brand, Common } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
-import { Link } from "@remix-run/react";
+import { Link } from "./link";
 
 type FooterProps = {
   content: Common["footer"];

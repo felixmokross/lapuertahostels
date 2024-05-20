@@ -1,10 +1,10 @@
-import { Link } from "@remix-run/react";
 import { RichTextObject, RichTextParagraph } from "~/common/rich-text";
 import { Brand } from "~/payload-types";
 import { cn } from "../components/cn";
 import { Heading } from "../components/heading";
 import { Paragraph } from "../components/paragraph";
 import { Image } from "~/components/image";
+import { Link } from "~/components/link";
 
 export type AccommodationSelectorBlockProps = {
   heading: string;

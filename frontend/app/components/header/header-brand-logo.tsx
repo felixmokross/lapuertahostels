@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { BrandLogo } from "../brand-logo";
-import { Link } from "@remix-run/react";
 import { Brand } from "~/payload-types";
+import { Link } from "../link";
 
 export type HeaderBrandLogoProps = {
   brand: Brand;
