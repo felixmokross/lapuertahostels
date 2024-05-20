@@ -8,12 +8,12 @@ import {
   ParagraphProps,
 } from "~/components/paragraph";
 
-type RichTextProps = {
+export type RichTextProps = {
   children: RichTextObject;
   HighlightComponent: ComponentType<PropsWithChildren>;
 };
 
-type RichTextObject = SerializeFrom<{
+export type RichTextObject = SerializeFrom<{
   [k: string]: unknown;
 }>[];
 
