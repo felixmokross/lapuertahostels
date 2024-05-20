@@ -26,7 +26,8 @@ export const Primary: Story = {
     content: {
       slides: [
         {
-          imageUrl: "/azul/piscina/10.jpg?updatedAt=1714162021839",
+          imageUrl:
+            "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
           imageAlt: "Atrium of La Puerta Azul",
           ctaUrl: "/booking",
           name: "Atrium",
@@ -43,7 +44,8 @@ export const Primary: Story = {
           imagePosition: "bottom",
         },
         {
-          imageUrl: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+          imageUrl:
+            "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
           imageAlt: "Room view of La Puerta Azul",
           ctaUrl: "/booking",
           name: "Atrium",
@@ -56,70 +58,174 @@ export const Primary: Story = {
         },
       ],
       slideCta: "Book Now",
-      features: [
+      layout: [
         {
-          imageUrl:
-            "/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
-          imageAlt: "Example image",
-          title: "Feel Newborn",
-          text: [
+          items: [
             {
-              children: [
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+              imageAlt: "View of a room",
+              title: "Feel Newborn",
+              text: [
                 {
-                  type: "text",
-                  text: "A day full of exploring the city can be tiring. Our ",
-                },
-                { type: "text", text: "air-conditioned", bold: true },
-                { type: "text", text: " rooms with " },
-                { type: "text", text: "tasteful", bold: true },
-                {
-                  type: "text",
-                  text: " details give you the perfect place to relax and unwind.",
+                  children: [
+                    {
+                      text: "A day full of exploring the city can be tiring. Our ",
+                    },
+                    {
+                      text: "air-conditioned",
+                      bold: true,
+                    },
+                    {
+                      text: " rooms with ",
+                    },
+                    {
+                      text: "tasteful",
+                      bold: true,
+                    },
+                    {
+                      text: " details give you the perfect place to relax and unwind.",
+                    },
+                  ],
                 },
               ],
+              id: "664904b75b1291dc0b0a9fa5",
             },
-          ],
-        },
-        {
-          imageUrl: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-          imageAlt: "Example image",
-          title: "Cool Down by the Pool",
-          text: [
             {
-              children: [
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+              imageAlt: "View of a Twin Room with two double beds",
+              title: "Bring Your Family",
+              text: [
                 {
-                  type: "text",
-                  text: "Our ",
-                },
-                { type: "text", text: "courtyard pool", bold: true },
-                {
-                  type: "text",
-                  text: " is the perfect place to cool down after a hot day under the Carribean sun.",
+                  children: [
+                    {
+                      text: "Traveling with your loved ones? We offer ",
+                    },
+                    {
+                      text: "Twin Rooms",
+                      bold: true,
+                    },
+                    {
+                      text: " allowing an occupancy of up to four people. Perfect for your family get-away.\n",
+                    },
+                  ],
                 },
               ],
+              id: "6649076a43cd15be5c01796e",
             },
-          ],
-        },
-        {
-          imageUrl:
-            "/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
-          imageAlt: "Example image",
-          title: "Bring Your Family",
-          text: [
             {
-              children: [
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+              imageAlt: "View of the courtyard pool",
+              title: "Cool Down by the Pool",
+              text: [
                 {
-                  type: "text",
-                  text: "Traveling with your loved ones? We offer ",
-                },
-                { type: "text", text: "Twin Rooms", bold: true },
-                {
-                  type: "text",
-                  text: " allowing an occupancy of up to four people. Perfect for your family get-away.",
+                  children: [
+                    {
+                      text: "Our ",
+                    },
+                    {
+                      text: "courtyard pool",
+                      bold: true,
+                    },
+                    {
+                      text: " is the perfect place to cool down after a hot day under the                  Carribean sun.",
+                    },
+                  ],
                 },
               ],
+              id: "6649070543cd15be5c01796d",
+            },
+            {
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+              imageAlt: "Picture of the courtyard",
+              title: "A Beautiful Courtyard",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Our courtyard is the perfect place to enjoy a cocktail or two. With the nice little ",
+                    },
+                    {
+                      text: "pool",
+                      bold: true,
+                    },
+                    {
+                      text: " and the lush greenery, you",
+                    },
+                    {
+                      text: "’",
+                      underline: true,
+                    },
+                    {
+                      text: "ll feel like you",
+                    },
+                    {
+                      text: "’",
+                      underline: true,
+                    },
+                    {
+                      text: "re in paradise.",
+                    },
+                  ],
+                },
+              ],
+              id: "664907e143cd15be5c01796f",
+            },
+            {
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
+              imageAlt:
+                "Picture of the bathroom table with the hairdryer on it",
+              title: "Freshen Up",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Experience our impeccably appointed bathrooms, ",
+                    },
+                    {
+                      text: "thoughtfully equipped",
+                      bold: true,
+                    },
+                    {
+                      text: " to ensure you’re primed for a night out in the historic center or refreshed for a restful night’s sleep.\n",
+                    },
+                  ],
+                },
+              ],
+              id: "6649090d43cd15be5c017970",
+            },
+            {
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+              imageAlt:
+                "Picture of the room terrace with two coffee cups on the table",
+              title: "Enjoy the Morning",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Start your day right with a tinto on your ",
+                    },
+                    {
+                      text: "private terrace",
+                      bold: true,
+                    },
+                    {
+                      text: " and listen to Santa Marta coming to life.",
+                    },
+                  ],
+                },
+              ],
+              id: "664909b4f949fd4d1b850f24",
             },
           ],
+          id: "664b5b879e149f43ef4874c8",
+          blockType: "Features",
+          blockName: "Features",
         },
       ],
     },

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { FeaturesSection } from "./features-section";
-import { ParagraphHighlight } from "./paragraph";
+import { FeaturesBlock } from "./features-block";
+import { ParagraphHighlight } from "../components/paragraph";
 
 const meta = {
-  title: "Features Section",
-  component: FeaturesSection,
+  title: "blocks/Features Block",
+  component: FeaturesBlock,
   argTypes: {},
-} satisfies Meta<typeof FeaturesSection>;
+} satisfies Meta<typeof FeaturesBlock>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

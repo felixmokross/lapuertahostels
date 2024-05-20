@@ -4,6 +4,7 @@ import { StoryBlock } from "../blocks/Story";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { LeadBlock } from "../blocks/Lead";
+import { FeaturesBlock } from "../blocks/Features";
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -48,6 +49,7 @@ export const Home: GlobalConfig = {
         AccommodationSelectorBlock,
         ImageWithFloatingTextBlock,
         StoryBlock,
+        FeaturesBlock,
       ],
       admin: {
         initCollapsed: true,

@@ -1,7 +1,10 @@
 import { GlobalConfig } from "payload/types";
 import { slidesField } from "../fields/slides";
-import { slateEditor } from "@payloadcms/richtext-slate";
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
+import { LeadBlock } from "../blocks/Lead";
+import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
+import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
+import { StoryBlock } from "../blocks/Story";
+import { FeaturesBlock } from "../blocks/Features";
 
 export const Azul: GlobalConfig = {
   slug: "azul",
@@ -23,75 +26,33 @@ export const Azul: GlobalConfig = {
       localized: true,
     },
     {
-      name: "features",
+      name: "layout",
       label: {
-        en: "Features",
-        es: "Características",
+        en: "Layout",
+        es: "Diseño",
       },
       labels: {
         singular: {
-          en: "Feature",
-          es: "Característica",
+          en: "Block",
+          es: "Bloque",
         },
         plural: {
-          en: "Features",
-          es: "Características",
+          en: "Blocks",
+          es: "Bloques",
         },
       },
-      type: "array",
-      required: true,
-      fields: [
-        {
-          name: "imageUrl",
-          label: {
-            en: "Image URL",
-            es: "URL de la Imagen",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "imageAlt",
-          label: {
-            en: "Alternative Text of the Image",
-            es: "Texto Alternativo de la Imagen",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "title",
-          label: {
-            en: "Title",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-          required: true,
-          localized: true,
-        },
+      type: "blocks",
+      minRows: 0,
+      maxRows: 20,
+      blocks: [
+        LeadBlock,
+        AccommodationSelectorBlock,
+        ImageWithFloatingTextBlock,
+        StoryBlock,
+        FeaturesBlock,
       ],
       admin: {
         initCollapsed: true,
-        components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.title,
-        },
       },
     },
   ],
