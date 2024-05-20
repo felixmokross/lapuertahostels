@@ -18,7 +18,7 @@ export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
     image: {
-      src: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+      src: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
       alt: "Example image",
     },
     children: (

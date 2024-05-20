@@ -25,9 +25,11 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
   const { imagekitBaseUrl } = rootLoaderData;
   if (!imagekitBaseUrl) throw new Error("imagekitBaseUrl not available");
 
-  if (src.startsWith(imagekitBaseUrl)) {
-    src = src.slice(imagekitBaseUrl.length);
+  if (src && !src.startsWith(imagekitBaseUrl)) {
+    throw new Error(`Image URL must start with ${imagekitBaseUrl}`);
   }
+
+  src = src?.slice(imagekitBaseUrl.length);
 
   return (
     <img

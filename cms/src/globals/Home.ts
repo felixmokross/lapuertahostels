@@ -1,7 +1,10 @@
-import { slateEditor } from "@payloadcms/richtext-slate";
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { GlobalConfig } from "payload/types";
 import { slidesField } from "../fields/slides";
+import { StoryBlock } from "../blocks/Story";
+import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
+import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
+import { LeadBlock } from "../blocks/Lead";
+import { FeaturesBlock } from "../blocks/Features";
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -23,259 +26,34 @@ export const Home: GlobalConfig = {
       localized: true,
     },
     {
-      name: "intro",
+      name: "layout",
       label: {
-        en: "Intro",
-        es: "Introducción",
+        en: "Layout",
+        es: "Diseño",
       },
-      type: "group",
-      fields: [
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
+      labels: {
+        singular: {
+          en: "Block",
+          es: "Bloque",
         },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
+        plural: {
+          en: "Blocks",
+          es: "Bloques",
         },
-      ],
-    },
-    {
-      name: "accommodations",
-      label: {
-        en: "Accommodations",
-        es: "Alojamientos",
       },
-      type: "group",
-      fields: [
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-        {
-          name: "cards",
-          label: {
-            en: "Cards",
-            es: "Tarjetas",
-          },
-          type: "array",
-          minRows: 2,
-          maxRows: 2,
-          required: true,
-          fields: [
-            {
-              name: "brand",
-              label: {
-                en: "Brand",
-                es: "Marca",
-              },
-              type: "relationship",
-              relationTo: "brands",
-              filterOptions: { id: { not_equals: "puerta" } },
-              required: true,
-            },
-            {
-              name: "imageUrl",
-              label: {
-                en: "Image URL",
-                es: "URL de la Imagen",
-              },
-              type: "text",
-              required: true,
-            },
-            {
-              name: "imageAlt",
-              label: {
-                en: "Alternative Text of the Image",
-                es: "Texto Alternativo de la Imagen",
-              },
-              type: "text",
-              required: true,
-              localized: true,
-            },
-            {
-              name: "description",
-              label: {
-                en: "Description",
-                es: "Descripción",
-              },
-              type: "text",
-              required: true,
-              localized: true,
-            },
-          ],
-          admin: {
-            initCollapsed: true,
-            components: {
-              RowLabel: ({ data }: RowLabelArgs) => data?.name,
-            },
-          },
-        },
+      type: "blocks",
+      minRows: 0,
+      maxRows: 20,
+      blocks: [
+        LeadBlock,
+        AccommodationSelectorBlock,
+        ImageWithFloatingTextBlock,
+        StoryBlock,
+        FeaturesBlock,
       ],
-    },
-    {
-      name: "aboutSantaMarta",
-      label: {
-        en: "About Santa Marta",
-        es: "Sobre Santa Marta",
+      admin: {
+        initCollapsed: true,
       },
-      type: "group",
-      fields: [
-        {
-          name: "imageUrl",
-          label: {
-            en: "Image URL",
-            es: "URL de la Imagen",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "imageAlt",
-          label: {
-            en: "Alternative Text of the Image",
-            es: "Texto Alternativo de la Imagen",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-      ],
-    },
-    {
-      name: "aboutUs",
-      label: {
-        en: "About Us",
-        es: "Sobre Nosotros",
-      },
-      type: "group",
-      fields: [
-        {
-          name: "imageUrl",
-          label: {
-            en: "Image URL",
-            es: "URL de la Imagen",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "imageAlt",
-          label: {
-            en: "Alternative Text of the Image",
-            es: "Texto Alternativo de la Imagen",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "grayscale",
-          label: {
-            en: "Grayscale",
-            es: "Escala de Grises",
-          },
-          type: "checkbox",
-        },
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-      ],
     },
   ],
 };

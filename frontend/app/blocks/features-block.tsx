@@ -1,22 +1,25 @@
 import { ReactNode } from "react";
-import { ImageWithTextSection } from "./image-with-text-section";
-import { Heading } from "./heading";
-import { Paragraph } from "./paragraph";
+import { ImageWithTextSection } from "../components/image-with-text-section";
+import { Heading } from "../components/heading";
+import { Paragraph } from "../components/paragraph";
+import { cn } from "~/components/cn";
 
-export type FeaturesSectionProps = {
-  items: FeaturesSectionItem[];
+export type FeaturesBlockProps = {
+  items: Feature[];
+  id?: string;
+  className?: string;
 };
 
-type FeaturesSectionItem = {
+type Feature = {
   image: { src: string; alt: string };
   title: string;
   paragraphContent: ReactNode;
 };
 
-export function FeaturesSection({ items }: FeaturesSectionProps) {
+export function FeaturesBlock({ id, className, items }: FeaturesBlockProps) {
   return (
-    <div className="space-y-24">
-      {items.map((item, i) => (
+    <div id={id} className={cn("space-y-24", className)}>
+      {items?.map((item, i) => (
         <ImageWithTextSection
           key={i}
           image={item.image}

@@ -1,9 +1,8 @@
 import { RichText } from "~/common/rich-text";
 import { Carousel } from "~/components/carousel";
-import { FeaturesSection } from "~/components/features-section";
 import { HeadingHighlight } from "~/components/heading";
-import { ParagraphHighlight } from "~/components/paragraph";
 import { Azul } from "~/payload-types";
+import { Blocks } from "~/blocks/blocks";
 
 export type PageProps = {
   content: Omit<Azul, "id">;
@@ -34,20 +33,7 @@ export function Page({ content }: PageProps) {
         }}
       />
       <div className="mx-auto mt-12 max-w-6xl px-8 md:mt-24 lg:px-0">
-        <FeaturesSection
-          items={content.features.map((feature) => ({
-            image: {
-              src: feature.imageUrl,
-              alt: feature.imageAlt,
-            },
-            title: feature.title,
-            paragraphContent: (
-              <RichText HighlightComponent={ParagraphHighlight}>
-                {feature.text}
-              </RichText>
-            ),
-          }))}
-        />
+        {content.layout && <Blocks data={content.layout} />}
       </div>
     </>
   );

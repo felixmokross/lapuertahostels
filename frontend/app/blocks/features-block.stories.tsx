@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { FeaturesSection } from "./features-section";
-import { ParagraphHighlight } from "./paragraph";
+import { FeaturesBlock } from "./features-block";
+import { ParagraphHighlight } from "../components/paragraph";
 
 const meta = {
-  title: "Features Section",
-  component: FeaturesSection,
+  title: "blocks/Features Block",
+  component: FeaturesBlock,
   argTypes: {},
-} satisfies Meta<typeof FeaturesSection>;
+} satisfies Meta<typeof FeaturesBlock>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -17,7 +17,7 @@ export const Primary: Story = {
     items: [
       {
         image: {
-          src: "/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+          src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
           alt: "Example image",
         },
         title: "Feel Refreshed",
@@ -32,7 +32,7 @@ export const Primary: Story = {
       },
       {
         image: {
-          src: "/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+          src: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
           alt: "Example image",
         },
         title: "Cool Down in the Pool",
@@ -45,7 +45,7 @@ export const Primary: Story = {
       },
       {
         image: {
-          src: "/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+          src: "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
           alt: "Example image",
         },
         title: "Bring Your Family",

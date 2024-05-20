@@ -18,9 +18,9 @@ export type RichTextObject = SerializeFrom<{
 }>[];
 
 export function RichText({ children, HighlightComponent }: RichTextProps) {
-  return children.map((line, index, allLines) => (
+  return children?.map((line, index, allLines) => (
     <Fragment key={index}>
-      {(line.children as Record<string, unknown>[]).map((c, j) => (
+      {(line.children as Record<string, unknown>[])?.map((c, j) => (
         <Fragment key={j}>
           {c.bold ? (
             <HighlightComponent>{c.text as string}</HighlightComponent>
