@@ -64,17 +64,26 @@ export function Page({ content }: PageProps) {
         }}
       />
 
-      <StoryBlock
-        className="mb-20 mt-24 lg:mt-72"
-        id="about-us"
-        heading={content.aboutUs.heading}
-        text={content.aboutUs.text}
-        image={{
-          src: content.aboutUs.imageUrl,
-          alt: content.aboutUs.imageAlt,
-          grayscale: content.aboutUs.grayscale || false,
-        }}
-      />
+      {content.layout?.map((block) => {
+        switch (block.blockType) {
+          // TODO the ID should also be configurable
+          case "Story":
+            return (
+              <StoryBlock
+                key={block.id}
+                className="mb-20 mt-24 lg:mt-72"
+                id="about-us"
+                heading={block.heading}
+                text={block.text}
+                image={{
+                  src: block.imageUrl,
+                  alt: block.imageAlt,
+                  grayscale: block.grayscale || false,
+                }}
+              />
+            );
+        }
+      })}
     </>
   );
 }

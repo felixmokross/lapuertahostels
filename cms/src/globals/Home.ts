@@ -1,7 +1,68 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
-import { GlobalConfig } from "payload/types";
+import { Block, GlobalConfig } from "payload/types";
 import { slidesField } from "../fields/slides";
+
+const StoryBlock: Block = {
+  slug: "Story", // required
+  // imageURL: 'https://google.com/path/to/image.jpg',
+  // imageAltText: 'A nice thumbnail image to show what this block looks like',
+  fields: [
+    {
+      name: "imageUrl",
+      label: {
+        en: "Image URL",
+        es: "URL de la Imagen",
+      },
+      type: "text",
+      required: true,
+    },
+    {
+      name: "imageAlt",
+      label: {
+        en: "Alternative Text of the Image",
+        es: "Texto Alternativo de la Imagen",
+      },
+      type: "text",
+      required: true,
+      localized: true,
+    },
+    {
+      name: "grayscale",
+      label: {
+        en: "Grayscale",
+        es: "Escala de Grises",
+      },
+      type: "checkbox",
+    },
+    {
+      name: "heading",
+      label: {
+        en: "Heading",
+        es: "Título",
+      },
+      type: "text",
+      required: true,
+      localized: true,
+    },
+    {
+      name: "text",
+      label: {
+        en: "Text",
+        es: "Texto",
+      },
+      type: "richText",
+      required: true,
+      localized: true,
+      editor: slateEditor({
+        admin: {
+          elements: [],
+          leaves: ["bold"],
+        },
+      }),
+    },
+  ],
+};
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -215,67 +276,14 @@ export const Home: GlobalConfig = {
       ],
     },
     {
-      name: "aboutUs",
-      label: {
-        en: "About Us",
-        es: "Sobre Nosotros",
+      name: "layout",
+      type: "blocks",
+      minRows: 0,
+      maxRows: 20,
+      blocks: [StoryBlock],
+      admin: {
+        initCollapsed: true,
       },
-      type: "group",
-      fields: [
-        {
-          name: "imageUrl",
-          label: {
-            en: "Image URL",
-            es: "URL de la Imagen",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "imageAlt",
-          label: {
-            en: "Alternative Text of the Image",
-            es: "Texto Alternativo de la Imagen",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "grayscale",
-          label: {
-            en: "Grayscale",
-            es: "Escala de Grises",
-          },
-          type: "checkbox",
-        },
-        {
-          name: "heading",
-          label: {
-            en: "Heading",
-            es: "Título",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "text",
-          label: {
-            en: "Text",
-            es: "Texto",
-          },
-          type: "richText",
-          required: true,
-          localized: true,
-          editor: slateEditor({
-            admin: {
-              elements: [],
-              leaves: ["bold"],
-            },
-          }),
-        },
-      ],
     },
   ],
 };
