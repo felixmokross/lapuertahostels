@@ -98,16 +98,7 @@ export function Carousel({ items, transformation }: CarouselProps) {
                   >
                     {item.title.text}
                   </Heading>
-                  {item.title.cta && (
-                    <Button
-                      as={Link}
-                      size="large"
-                      blackShadow
-                      to={item.title.cta.to || "#"}
-                    >
-                      {item.title.cta.text}
-                    </Button>
-                  )}
+                  {item.title.cta && <CallToActionButton {...item.title.cta} />}
                 </div>
               </>
             )}
@@ -134,6 +125,24 @@ export function Carousel({ items, transformation }: CarouselProps) {
         ))}
       </div>
     </div>
+  );
+}
+
+type CallToActionButtonProps = CarouselItemCallToAction;
+
+function CallToActionButton({ text, to }: CallToActionButtonProps) {
+  const isExternal =
+    to && (to.startsWith("http://") || to.startsWith("https://"));
+  return (
+    <Button
+      as={Link}
+      size="large"
+      blackShadow
+      to={to || "#"}
+      {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
+    >
+      {text}
+    </Button>
   );
 }
 
