@@ -114,7 +114,7 @@ export const AccommodationSelectorBlock: Block = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.name,
+          RowLabel: ({ data }: RowLabelArgs) => data?.brand,
         },
       },
     },

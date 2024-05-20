@@ -35,14 +35,18 @@ export function Page({ content }: PageProps) {
         }}
       />
 
-      <LeadBlock
-        className="mt-12 md:mt-24"
-        heading={content.intro.heading}
-        text={content.intro.text}
-      />
-
       {content.layout?.map((block) => {
         switch (block.blockType) {
+          case "Lead":
+            return (
+              <LeadBlock
+                key={block.id}
+                id={block.elementId || undefined}
+                className="mt-12 md:mt-24"
+                heading={block.heading}
+                text={block.text}
+              />
+            );
           case "AccommodationSelector":
             return (
               <AccommodationSelectorBlock
