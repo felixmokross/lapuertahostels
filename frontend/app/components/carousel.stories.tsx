@@ -19,7 +19,7 @@ export const Primary: Story = {
     },
     items: [
       {
-        src: "/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+        src: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
         alt: "Lost City",
         title: {
           text: "Lost City",
@@ -28,7 +28,7 @@ export const Primary: Story = {
         },
       },
       {
-        src: "/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
+        src: "https://ik.imagekit.io/lapuertahostels/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
         alt: "Parque Tayrona",
         title: {
           text: "Parque Tayrona",
@@ -37,7 +37,7 @@ export const Primary: Story = {
         },
       },
       {
-        src: "/david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
+        src: "https://ik.imagekit.io/lapuertahostels/david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
         alt: "Santa Marta",
         title: {
           text: "Santa Marta",
@@ -46,7 +46,7 @@ export const Primary: Story = {
         },
       },
       {
-        src: "/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+        src: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
         alt: "Minca",
         title: {
           text: "Minca",

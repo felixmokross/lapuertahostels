@@ -9,7 +9,7 @@ export function Page() {
         Tayrona National Park
       </Heading>
       <Image
-        src="/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241"
+        src="https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241"
         alt="Tayrona"
         className="aspect-[16/9] w-96"
         transformation={{
