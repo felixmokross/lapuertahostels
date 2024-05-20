@@ -91,6 +91,26 @@ export function shouldRevalidate({
   return defaultShouldRevalidate;
 }
 
+async function getBrands(locale: string) {
+  // TODO provide an function for this
+  return (
+    await (
+      await fetch(
+        `${process.env.PAYLOAD_CMS_BASE_URL}/api/brands?locale=${locale}`,
+      )
+    ).json()
+  ).docs as Brand[];
+}
+
+async function getCommon(locale: string) {
+  // TODO provide an function for this
+  return (await (
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/common?locale=${locale}`,
+    )
+  ).json()) as Common;
+}
+
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
@@ -99,23 +119,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const brandId = getBrandIdFromPath(new URL(request.url).pathname);
   const locale = await i18next.getLocale(request);
 
-  const allBrands = (
-    await (
-      await fetch(
-        `${process.env.PAYLOAD_CMS_BASE_URL}/api/brands?locale=${locale}`,
-      )
-    ).json()
-  ).docs as Brand[];
+  const [allBrands, common] = await Promise.all([
+    getBrands(locale),
+    getCommon(locale),
+  ]);
 
   const brand = allBrands.find((b) => b.id === brandId);
   if (!brand) throw new Error(`Brand not found: ${brandId}`);
-
-  // TODO provide an function for this
-  const common = (await (
-    await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/common?locale=${locale}`,
-    )
-  ).json()) as Common;
 
   return json({
     brand,
