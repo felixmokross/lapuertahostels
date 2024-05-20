@@ -12,6 +12,8 @@ import { Common } from "./globals/Common";
 import { getConfig } from "./common/config";
 import { Azul } from "./globals/Azul";
 import { Brands } from "./collections/Brands";
+import { LaPuertaHostelsLogo } from "./components/LaPuertaHostelsLogo";
+import { LaPuertaHostelsLogoTiny } from "./components/LaPuertaHostelsLogoTiny";
 
 export default buildConfig({
   admin: {
@@ -24,6 +26,12 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
+    },
+    components: {
+      graphics: {
+        Logo: LaPuertaHostelsLogo,
+        Icon: LaPuertaHostelsLogoTiny,
+      },
     },
   },
   editor: slateEditor({}),
