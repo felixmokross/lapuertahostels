@@ -12,8 +12,7 @@ import { Common } from "./globals/Common";
 import { getConfig } from "./common/config";
 import { Azul } from "./globals/Azul";
 import { Brands } from "./collections/Brands";
-import { LaPuertaHostelsLogo } from "./components/LaPuertaHostelsLogo";
-import { LaPuertaHostelsLogoTiny } from "./components/LaPuertaHostelsLogoTiny";
+import { Logo, LogoSmall } from "./components/logo";
 
 export default buildConfig({
   admin: {
@@ -30,8 +29,8 @@ export default buildConfig({
     },
     components: {
       graphics: {
-        Logo: LaPuertaHostelsLogo,
-        Icon: LaPuertaHostelsLogoTiny,
+        Logo: Logo,
+        Icon: LogoSmall,
       },
     },
   },
