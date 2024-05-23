@@ -4,6 +4,7 @@ import i18next from "~/i18next.server";
 import { Home } from "~/payload-types";
 import { useLivePreview } from "@payloadcms/live-preview-react";
 import { Page } from "./page";
+import fs from "fs/promises";
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,6 +12,38 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
+
+async function loadHomeDataFromDbAndCache(locale: string) {
+  const result = await loadHomeDataFromDb(locale);
+
+  // store to cache
+  await fs.writeFile(
+    `./.cms-cache/home-${locale}.json`,
+    JSON.stringify(result),
+  );
+
+  return result;
+}
+
+async function getHomeData(locale: string) {
+  try {
+    const cache = await fs.readFile(`./.cms-cache/home-${locale}.json`, "utf8");
+
+    queueMicrotask(() => loadHomeDataFromDbAndCache(locale));
+
+    return JSON.parse(cache) as Home;
+  } catch (e) {
+    return await loadHomeDataFromDbAndCache(locale);
+  }
+}
+
+async function loadHomeDataFromDb(locale: string) {
+  return (await (
+    await fetch(
+      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
+    )
+  ).json()) as Home;
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
@@ -21,11 +54,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   // TODO provide an function for this
   return {
     payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
-    homeData: (await (
-      await fetch(
-        `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
-      )
-    ).json()) as Home,
+    homeData: await getHomeData(locale),
   };
 }
 
