@@ -13,8 +13,7 @@ export const ImageWithFloatingTextBlock: Block = {
       es: "Imágenes con Texto Flotante",
     },
   },
-  imageURL:
-    "https://ik.imagekit.io/lapuertahostels/cms/blocks/ImageWithFloatingText?updatedAt=1716208418879",
+  imageURL: "/assets/blocks/ImageWithFloatingText.png",
   imageAltText:
     "Preview of the Image with Floating Text block, showing a large image with an integrated heading and a text box on the bottom right.",
   fields: [

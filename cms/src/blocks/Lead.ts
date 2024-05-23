@@ -13,8 +13,7 @@ export const LeadBlock: Block = {
       es: "Encabezados",
     },
   },
-  imageURL:
-    "https://ik.imagekit.io/lapuertahostels/cms/blocks/Lead.png?updatedAt=1716211463095",
+  imageURL: "/assets/blocks/Lead.png",
   imageAltText: "Preview of the Lead block, showing a heading and a large text",
   fields: [
     {

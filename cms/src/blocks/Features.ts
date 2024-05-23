@@ -13,8 +13,7 @@ export const FeaturesBlock: Block = {
       es: "Características",
     },
   },
-  imageURL:
-    "https://ik.imagekit.io/lapuertahostels/cms/blocks/Features.png?updatedAt=1716213968324",
+  imageURL: "/assets/blocks/Features.png",
   imageAltText:
     "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
   fields: [
