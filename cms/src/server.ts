@@ -1,5 +1,6 @@
 import express from "express";
 import payload from "payload";
+import path from "path";
 import { Config } from "./common/config";
 
 require("dotenv").config();
@@ -18,6 +19,8 @@ app.get("/config", (_, res) => {
     livePreviewUrl: process.env.LIVE_PREVIEW_URL,
   } as Config);
 });
+
+app.use("/assets", express.static(path.resolve(__dirname, "./assets")));
 
 const start = async () => {
   // Initialize Payload

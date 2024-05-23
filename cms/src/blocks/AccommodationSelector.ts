@@ -14,8 +14,7 @@ export const AccommodationSelectorBlock: Block = {
       es: "Selectores de Alojamiento",
     },
   },
-  imageURL:
-    "https://ik.imagekit.io/lapuertahostels/cms/blocks/AccommodationSelector.png?updatedAt=1716209920946",
+  imageURL: "/assets/blocks/AccommodationSelector.png",
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [

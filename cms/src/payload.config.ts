@@ -12,6 +12,7 @@ import { Common } from "./globals/Common";
 import { getConfig } from "./common/config";
 import { Azul } from "./globals/Azul";
 import { Brands } from "./collections/Brands";
+import { Logo, LogoSmall } from "./components/logo";
 
 export default buildConfig({
   admin: {
@@ -24,6 +25,13 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
+      favicon: "/assets/favicon.ico",
+    },
+    components: {
+      graphics: {
+        Logo: Logo,
+        Icon: LogoSmall,
+      },
     },
   },
   editor: slateEditor({}),

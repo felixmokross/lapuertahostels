@@ -13,8 +13,7 @@ export const StoryBlock: Block = {
       es: "Historias",
     },
   },
-  imageURL:
-    "https://ik.imagekit.io/lapuertahostels/cms/blocks/Story.png?updatedAt=1716207873579",
+  imageURL: "/assets/blocks/Story.png",
   imageAltText:
     "Preview of the Story block, showing an image on the left and text on the right",
   fields: [
