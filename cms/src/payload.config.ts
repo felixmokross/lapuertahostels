@@ -26,6 +26,7 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
+      favicon: "/assets/favicon.ico",
     },
     components: {
       graphics: {
