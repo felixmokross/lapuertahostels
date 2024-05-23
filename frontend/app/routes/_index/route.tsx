@@ -16,6 +16,11 @@ export const meta: MetaFunction = () => {
 async function loadHomeDataFromDbAndCache(locale: string) {
   const result = await loadHomeDataFromDb(locale);
 
+  try {
+    await fs.mkdir("./.cms-cache");
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException)?.code !== "EEXIST") throw e;
+  }
   // store to cache
   await fs.writeFile(
     `./.cms-cache/home-${locale}.json`,
