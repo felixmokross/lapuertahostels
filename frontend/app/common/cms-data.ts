@@ -20,20 +20,25 @@ async function cacheData(cacheFilePath: string, data: unknown) {
   await fs.writeFile(cacheFilePath, JSON.stringify(data));
 }
 
-function getCacheFilePath(url: string, locale: string) {
-  return `${CACHE_DIR}/${url.replace("/", "_")}.${locale}.json`;
+function getCacheDocumentFolder(url: string) {
+  return `${CACHE_DIR}/${url.replace("/", "_")}`;
+}
+
+function getCacheDocumentAndLocaleFile(url: string, locale: string) {
+  return `${getCacheDocumentFolder(url)}/${locale}.json`;
 }
 
 async function getData(url: string, locale: string) {
-  const cacheFilePath = getCacheFilePath(url, locale);
+  const filePath = getCacheDocumentAndLocaleFile(url, locale);
   try {
-    const cache = await fs.readFile(cacheFilePath, "utf8");
+    const cache = await fs.readFile(filePath, "utf8");
 
-    queueMicrotask(() => loadAndCacheData(url, locale, cacheFilePath));
+    queueMicrotask(() => loadAndCacheData(url, locale, filePath));
 
     return JSON.parse(cache) as Home;
   } catch (e) {
-    return await loadAndCacheData(url, locale, cacheFilePath);
+    if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
+    return await loadAndCacheData(url, locale, filePath);
   }
 }
 
@@ -47,14 +52,6 @@ async function loadData(url: string, locale: string) {
       `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
     )
   ).json();
-}
-
-async function ensureDirectoryExists(dir: string) {
-  try {
-    await fs.mkdir(dir, { recursive: true });
-  } catch (e) {
-    if ((e as NodeJS.ErrnoException)?.code !== "EEXIST") throw e;
-  }
 }
 
 export async function getHome(locale: string) {
@@ -71,4 +68,21 @@ export async function getCommon(locale: string) {
 
 export async function getBrands(locale: string) {
   return (await getData("brands", locale)).docs as Brand[];
+}
+
+export async function purgeCacheFor(url: string) {
+  const cacheFolderPath = getCacheDocumentFolder(url);
+  await deleteFolderIfExists(cacheFolderPath);
+}
+
+async function deleteFolderIfExists(folderPath: string) {
+  await fs.rm(folderPath, { recursive: true, force: true });
+}
+
+async function ensureDirectoryExists(dir: string) {
+  try {
+    await fs.mkdir(dir, { recursive: true });
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException)?.code !== "EEXIST") throw e;
+  }
 }
