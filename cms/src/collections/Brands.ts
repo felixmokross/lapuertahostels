@@ -1,5 +1,6 @@
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { CollectionConfig } from "payload/types";
+import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -20,6 +21,9 @@ export const Brands: CollectionConfig = {
     read: () => true,
     create: () => false,
     delete: () => false,
+  },
+  hooks: {
+    afterChange: [makeCachePurgeHook("brands")],
   },
   fields: [
     {
