@@ -18,6 +18,13 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    webpack: (config) => {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        dns: false,
+      };
+      return config;
+    },
     livePreview: {
       url: async ({ locale, documentInfo }) =>
         `${(await getConfig()).livePreviewUrl}${documentInfo.global.custom.route || ""}?lng=${locale}`,

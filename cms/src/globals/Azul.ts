@@ -5,6 +5,7 @@ import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { StoryBlock } from "../blocks/Story";
 import { FeaturesBlock } from "../blocks/Features";
+import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
 
 export const Azul: GlobalConfig = {
   slug: "azul",
@@ -13,6 +14,9 @@ export const Azul: GlobalConfig = {
     es: "Azul",
   },
   access: { read: () => true },
+  hooks: {
+    afterChange: [makeCachePurgeHook("globals/azul", "/azul")],
+  },
   fields: [
     slidesField,
     {

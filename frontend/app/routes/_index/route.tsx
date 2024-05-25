@@ -1,9 +1,9 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
-import { Home } from "~/payload-types";
 import { useLivePreview } from "@payloadcms/live-preview-react";
 import { Page } from "./page";
+import { getHome } from "~/common/cms-data";
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,14 +18,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   const locale = await i18next.getLocale(request);
-  // TODO provide an function for this
   return {
     payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
-    homeData: (await (
-      await fetch(
-        `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/home?locale=${locale}`,
-      )
-    ).json()) as Home,
+    homeData: await getHome(locale),
   };
 }
 

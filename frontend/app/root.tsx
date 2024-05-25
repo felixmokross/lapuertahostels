@@ -21,7 +21,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
 import { getBrandIdFromPath, ThemeProvider } from "./brands";
 import i18next from "./i18next.server";
-import { Brand, Common } from "./payload-types";
+import { getBrands, getCommon } from "./common/cms-data";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -89,26 +89,6 @@ export function shouldRevalidate({
   }
 
   return defaultShouldRevalidate;
-}
-
-async function getBrands(locale: string) {
-  // TODO provide an function for this
-  return (
-    await (
-      await fetch(
-        `${process.env.PAYLOAD_CMS_BASE_URL}/api/brands?locale=${locale}`,
-      )
-    ).json()
-  ).docs as Brand[];
-}
-
-async function getCommon(locale: string) {
-  // TODO provide an function for this
-  return (await (
-    await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/api/globals/common?locale=${locale}`,
-    )
-  ).json()) as Common;
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {

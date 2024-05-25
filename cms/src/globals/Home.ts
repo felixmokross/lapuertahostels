@@ -5,6 +5,7 @@ import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { LeadBlock } from "../blocks/Lead";
 import { FeaturesBlock } from "../blocks/Features";
+import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -13,6 +14,9 @@ export const Home: GlobalConfig = {
     es: "Inicio",
   },
   access: { read: () => true },
+  hooks: {
+    afterChange: [makeCachePurgeHook("globals/home", "/")],
+  },
   fields: [
     slidesField,
     {
