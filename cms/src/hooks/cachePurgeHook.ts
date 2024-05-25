@@ -26,7 +26,9 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
 
           const targetUrls = await queryFlyVmUrls(appName, parseInt(port, 10));
 
-          console.log(`Purging cache at ${targetUrls.length} frontend VMs`);
+          console.log(
+            `Purging and priming cache at ${targetUrls.length} frontend VMs`,
+          );
 
           const results = await Promise.allSettled(
             targetUrls.map((targetUrl) =>
@@ -37,11 +39,11 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
 
           if (failed.length === 0) {
             console.log(
-              `Successfully purged cache at ${targetUrls.length} frontend VMs`,
+              `Successfully purged and primed cache at ${targetUrls.length} frontend VMs`,
             );
           } else {
             console.error(
-              `Failed to purge cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
+              `Failed to purge or prime cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
             );
           }
           break;
@@ -51,7 +53,7 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
           );
       }
     } catch (e) {
-      console.error("Failed to purge cache:", e);
+      console.error("Failed to purge or prime cache:", e);
     }
   };
 }
@@ -82,16 +84,12 @@ async function purgeAndPrimeCache(
     throw new Error(`Failed to purge cache at ${targetUrl} for ${dataUrl}`);
   }
 
-  console.log(
-    `Priming cache at ${targetUrl} using priming URL ${primingUrl}...`,
-  );
+  const absolutePrimingUrl = `${targetUrl}/${primingUrl}`;
+  console.log(`Priming cache at ${absolutePrimingUrl}...`);
 
-  await fetch(`${targetUrl}/${primingUrl}`);
-
+  await fetch(absolutePrimingUrl);
   if (!response.ok) {
-    throw new Error(
-      `Failed to prime cache at ${targetUrl} using priming URL ${primingUrl}`,
-    );
+    throw new Error(`Failed to prime cache at ${absolutePrimingUrl}`);
   }
 }
 
