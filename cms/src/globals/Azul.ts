@@ -15,7 +15,7 @@ export const Azul: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/azul")],
+    afterChange: [makeCachePurgeHook("globals/azul", "/azul")],
   },
   fields: [
     slidesField,

@@ -1,6 +1,6 @@
 import { resolve6 } from "dns/promises";
 
-export function makeCachePurgeHook(dataUrl: string) {
+export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
   return async function () {
     try {
       if (!process.env.CACHE_PURGE_TARGET_TYPE) {
@@ -12,7 +12,11 @@ export function makeCachePurgeHook(dataUrl: string) {
 
       switch (process.env.CACHE_PURGE_TARGET_TYPE) {
         case "single":
-          await purgeCache(process.env.CACHE_PURGE_TARGET_ARG, dataUrl);
+          await purgeAndPrimeCache(
+            process.env.CACHE_PURGE_TARGET_ARG,
+            dataUrl,
+            primingUrl,
+          );
           break;
         case "fly":
           const [appName, port] = process.env.CACHE_PURGE_TARGET_ARG.split(",");
@@ -25,7 +29,9 @@ export function makeCachePurgeHook(dataUrl: string) {
           console.log(`Purging cache at ${targetUrls.length} frontend VMs`);
 
           const results = await Promise.allSettled(
-            targetUrls.map((targetUrl) => purgeCache(targetUrl, dataUrl)),
+            targetUrls.map((targetUrl) =>
+              purgeAndPrimeCache(targetUrl, dataUrl, primingUrl),
+            ),
           );
           const failed = results.filter(isPromiseRejectedResult);
 
@@ -58,8 +64,12 @@ async function queryFlyVmUrls(appName: string, port: number) {
   return urls;
 }
 
-async function purgeCache(targetUrl: string, dataUrl: string) {
-  console.log(`Purging cache at ${targetUrl} for ${dataUrl}`);
+async function purgeAndPrimeCache(
+  targetUrl: string,
+  dataUrl: string,
+  primingUrl: string,
+) {
+  console.log(`Purging cache at ${targetUrl} for ${dataUrl}...`);
   const response = await fetch(`${targetUrl}/purge-cache`, {
     method: "POST",
     headers: {
@@ -70,6 +80,18 @@ async function purgeCache(targetUrl: string, dataUrl: string) {
 
   if (!response.ok) {
     throw new Error(`Failed to purge cache at ${targetUrl} for ${dataUrl}`);
+  }
+
+  console.log(
+    `Priming cache at ${targetUrl} using priming URL ${primingUrl}...`,
+  );
+
+  await fetch(`${targetUrl}/${primingUrl}`);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to prime cache at ${targetUrl} using priming URL ${primingUrl}`,
+    );
   }
 }
 

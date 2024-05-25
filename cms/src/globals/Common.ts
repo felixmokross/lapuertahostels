@@ -16,7 +16,7 @@ export const Common: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/common")],
+    afterChange: [makeCachePurgeHook("globals/common", "/")],
   },
   fields: [
     {

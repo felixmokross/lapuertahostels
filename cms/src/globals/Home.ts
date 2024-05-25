@@ -15,7 +15,7 @@ export const Home: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/home")],
+    afterChange: [makeCachePurgeHook("globals/home", "/")],
   },
   fields: [
     slidesField,

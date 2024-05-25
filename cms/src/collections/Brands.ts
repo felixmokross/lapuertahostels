@@ -23,7 +23,7 @@ export const Brands: CollectionConfig = {
     delete: () => false,
   },
   hooks: {
-    afterChange: [makeCachePurgeHook("brands")],
+    afterChange: [makeCachePurgeHook("brands", "/")],
   },
   fields: [
     {
