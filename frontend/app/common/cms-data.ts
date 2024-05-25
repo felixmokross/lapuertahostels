@@ -3,6 +3,7 @@ import { Azul, Brand, Common, Home } from "~/payload-types";
 import path from "path";
 
 const CACHE_DIR = "./.cms-cache";
+const CACHE_EXPIRY_IN_MS = 1000 * 60; // 1 min
 
 async function loadAndCacheData(
   url: string,
@@ -37,7 +38,7 @@ async function getData(url: string, locale: string) {
       const cacheLastModified = (await fs.stat(filePath)).mtime;
 
       const cacheExpired =
-        cacheLastModified.getTime() + 1000 * 60 * 60 * 24 < Date.now();
+        cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
       if (!cacheExpired) return;
 
       console.log(
