@@ -84,7 +84,7 @@ async function purgeAndPrimeCache(
     throw new Error(`Failed to purge cache at ${targetUrl} for ${dataUrl}`);
   }
 
-  const absolutePrimingUrl = `${targetUrl}/${primingUrl}`;
+  const absolutePrimingUrl = `${targetUrl}${primingUrl}`;
   console.log(`Priming cache at ${absolutePrimingUrl}...`);
 
   await fetch(absolutePrimingUrl);
