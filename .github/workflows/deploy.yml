@@ -18,6 +18,7 @@ on:
 env:
   NODE_VERSION: 20
   IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  FRONTEND_APP_INTERNAL_PORT: 3000
 
 jobs:
   check:
@@ -120,6 +121,8 @@ jobs:
             --remote-only \
             --image-label v${{ steps.version.outputs.version }} \
             --env LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
+            --env CACHE_PURGE_TARGET_TYPE=fly \
+            --env CACHE_PURGE_TARGET_ARG=${{ needs.define-env.outputs.fly_app_frontend }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
         working-directory: cms
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

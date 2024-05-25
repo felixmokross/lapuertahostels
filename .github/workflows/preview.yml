@@ -5,6 +5,7 @@ on:
 env:
   NODE_VERSION: 20
   IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  FRONTEND_APP_INTERNAL_PORT: 3000
 
 jobs:
   frontend-preview:
@@ -95,6 +96,8 @@ jobs:
             --ha=false \
             --image-label v${{ steps.version.outputs.version }} \
             --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
+            --env CACHE_PURGE_TARGET_TYPE=fly \
+            --env CACHE_PURGE_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
         working-directory: cms
 
   clean-preview:
