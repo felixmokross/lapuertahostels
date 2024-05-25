@@ -43,9 +43,15 @@ export const Home: GlobalConfig = {
               const results = await Promise.allSettled(urls.map(purgeCache));
               const failed = results.filter(isPromiseRejectedResult);
 
-              console.error(
-                `Failed to purge cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
-              );
+              if (failed.length === 0) {
+                console.log(
+                  `Successfully purged cache at ${urls.length} frontend VMs`,
+                );
+              } else {
+                console.error(
+                  `Failed to purge cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
+                );
+              }
               break;
             default:
               throw new Error(

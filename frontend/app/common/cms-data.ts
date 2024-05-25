@@ -33,9 +33,20 @@ async function getData(url: string, locale: string) {
   try {
     const cache = await fs.readFile(filePath, "utf8");
 
-    queueMicrotask(() => loadAndCacheData(url, locale, filePath));
+    queueMicrotask(async () => {
+      const cacheLastModified = (await fs.stat(filePath)).mtime;
 
-    return JSON.parse(cache) as Home;
+      const cacheExpired =
+        cacheLastModified.getTime() + 1000 * 60 * 60 * 24 < Date.now();
+      if (!cacheExpired) return;
+
+      console.log(
+        `Cache expired for ${url} in ${locale}, loading data from CMS...`,
+      );
+      await loadAndCacheData(url, locale, filePath);
+    });
+
+    return JSON.parse(cache);
   } catch (e) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
     return await loadAndCacheData(url, locale, filePath);
