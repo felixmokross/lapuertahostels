@@ -6,62 +6,88 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
   return async function ({
     req,
   }: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]) {
+    // afterChangeHook runs before the transaction is committed
+    // – so we need to commit it before refreshing the cache to avoid
+    // that the app pulls old data when priming the cache
+    // As suggested by the Payload team
+    // See https://github.com/payloadcms/payload/issues/5886
     console.log("Committing transaction before refreshing cache.");
     const { payload, transactionID } = req;
     payload.db.commitTransaction(transactionID);
 
     try {
-      if (!process.env.CACHE_PURGE_TARGET_TYPE) {
-        throw new Error("CACHE_PURGE_TARGET is not set");
-      }
-      if (!process.env.CACHE_PURGE_TARGET_ARG) {
-        throw new Error("CACHE_PURGE_TARGET_ARG is not set");
-      }
-
-      switch (process.env.CACHE_PURGE_TARGET_TYPE) {
-        case "single":
-          await refreshCache(
-            process.env.CACHE_PURGE_TARGET_ARG,
-            dataUrl,
-            primingUrl,
-          );
-          break;
-        case "fly":
-          const [appName, port] = process.env.CACHE_PURGE_TARGET_ARG.split(",");
-          console.log(
-            `Determining Fly frontend VM URLs for cache purge (app=${appName}, port=${port})`,
-          );
-
-          const targetUrls = await queryFlyVmUrls(appName, parseInt(port, 10));
-
-          console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
-
-          const results = await Promise.allSettled(
-            targetUrls.map((targetUrls) =>
-              refreshCache(targetUrls, dataUrl, primingUrl),
-            ),
-          );
-          const failed = results.filter(isPromiseRejectedResult);
-
-          if (failed.length === 0) {
-            console.log(
-              `Successfully refreshed cache at ${targetUrls.length} frontend VMs`,
-            );
-          } else {
-            console.error(
-              `Failed to refresh cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
-            );
-          }
-          break;
-        default:
-          throw new Error(
-            `Unsupported CACHE_PURGE_TARGET type: ${process.env.CACHE_PURGE_TARGET_TYPE}`,
-          );
-      }
+      await refreshCacheForTarget(dataUrl, primingUrl);
     } catch (e) {
       console.error("Failed to refresh cache:", e);
     }
   };
+}
+
+async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {
+  if (!process.env.CACHE_REFRESH_TARGET_TYPE) {
+    throw new Error("CACHE_REFRESH_TARGET is not set");
+  }
+  if (!process.env.CACHE_REFRESH_TARGET_ARG) {
+    throw new Error("CACHE_REFRESH_TARGET_ARG is not set");
+  }
+
+  switch (process.env.CACHE_REFRESH_TARGET_TYPE) {
+    case "single":
+      await refreshCache(
+        process.env.CACHE_REFRESH_TARGET_TYPE,
+        dataUrl,
+        primingUrl,
+      );
+      return;
+
+    case "fly":
+      const [appName, internalPort] =
+        process.env.CACHE_REFRESH_TARGET_ARG.split(",");
+      await refreshCacheForFlyTarget(
+        appName,
+        internalPort,
+        dataUrl,
+        primingUrl,
+      );
+      return;
+
+    default:
+      throw new Error(
+        `Unsupported CACHE_REFRESH_TARGET type: ${process.env.CACHE_REFRESH_TARGET_TYPE}`,
+      );
+  }
+}
+
+async function refreshCacheForFlyTarget(
+  appName: string,
+  internalPort: string,
+  dataUrl: string,
+  primingUrl: string,
+) {
+  console.log(
+    `Determining Fly frontend VM URLs for cache refresh (app=${appName}, internalPort=${internalPort})`,
+  );
+
+  const targetUrls = await queryFlyVmUrls(appName, parseInt(internalPort, 10));
+
+  console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
+
+  const results = await Promise.allSettled(
+    targetUrls.map((targetUrls) =>
+      refreshCache(targetUrls, dataUrl, primingUrl),
+    ),
+  );
+  const failed = results.filter(isPromiseRejectedResult);
+
+  if (failed.length === 0) {
+    console.log(
+      `Successfully refreshed cache at ${targetUrls.length} frontend VMs`,
+    );
+  } else {
+    console.error(
+      `Failed to refresh cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
+    );
+  }
 }
 
 async function queryFlyVmUrls(appName: string, port: number) {
