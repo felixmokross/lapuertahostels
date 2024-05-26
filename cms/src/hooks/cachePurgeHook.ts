@@ -72,6 +72,10 @@ async function refreshCache(
   primingUrl: string,
 ) {
   await purgeCache(targetUrl, dataUrl);
+
+  // Wait for the DB to become consistent before priming the cache
+  await delay(1_000);
+
   await primeCache(targetUrl, primingUrl);
 }
 
@@ -104,4 +108,8 @@ function isPromiseRejectedResult(
   result: PromiseSettledResult<unknown>,
 ): result is PromiseRejectedResult {
   return result.status === "rejected";
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
