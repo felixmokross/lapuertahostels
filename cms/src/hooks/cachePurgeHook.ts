@@ -1,7 +1,15 @@
 import { resolve6 } from "dns/promises";
+import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
+import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
 
 export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
-  return async function () {
+  return async function ({
+    req,
+  }: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]) {
+    console.log("Committing transaction before refreshing cache.");
+    const { payload, transactionID } = req;
+    payload.db.commitTransaction(transactionID);
+
     try {
       if (!process.env.CACHE_PURGE_TARGET_TYPE) {
         throw new Error("CACHE_PURGE_TARGET is not set");
@@ -26,9 +34,7 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
 
           const targetUrls = await queryFlyVmUrls(appName, parseInt(port, 10));
 
-          console.log(
-            `Purging and priming cache at ${targetUrls.length} frontend VMs`,
-          );
+          console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
 
           const results = await Promise.allSettled(
             targetUrls.map((targetUrls) =>
@@ -39,11 +45,11 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
 
           if (failed.length === 0) {
             console.log(
-              `Successfully purged and primed cache at ${targetUrls.length} frontend VMs`,
+              `Successfully refreshed cache at ${targetUrls.length} frontend VMs`,
             );
           } else {
             console.error(
-              `Failed to purge or prime cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
+              `Failed to refresh cache at ${failed.length} frontend VMs:\n${failed.map((r, i) => `[${i}] ${r}`).join("\n")}`,
             );
           }
           break;
@@ -53,7 +59,7 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
           );
       }
     } catch (e) {
-      console.error("Failed to purge or prime cache:", e);
+      console.error("Failed to refresh cache:", e);
     }
   };
 }
@@ -71,13 +77,8 @@ async function refreshCache(
   dataUrl: string,
   primingUrl: string,
 ) {
-  // Wait for the DB to become consistent before purging and priming the cache
-  queueMicrotask(async () => {
-    // await delay(5_000);
-
-    await purgeCache(targetUrl, dataUrl);
-    await primeCache(targetUrl, primingUrl);
-  });
+  await purgeCache(targetUrl, dataUrl);
+  await primeCache(targetUrl, primingUrl);
 }
 
 async function purgeCache(targetUrl: string, dataUrl: string) {
@@ -109,8 +110,4 @@ function isPromiseRejectedResult(
   result: PromiseSettledResult<unknown>,
 ): result is PromiseRejectedResult {
   return result.status === "rejected";
-}
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

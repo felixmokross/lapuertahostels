@@ -45,9 +45,7 @@ async function getData(url: string, locale: string) {
         return;
       }
 
-      console.log(
-        `Cache expired for ${url} in ${locale}, loading data from CMS...`,
-      );
+      console.log(`Cache expired for ${url} in ${locale}`);
       await loadAndCacheData(url, locale, filePath);
     });
 
