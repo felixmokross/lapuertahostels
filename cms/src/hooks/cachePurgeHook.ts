@@ -12,7 +12,7 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
 
       switch (process.env.CACHE_PURGE_TARGET_TYPE) {
         case "single":
-          await purgeAndPrimeCache(
+          await refreshCache(
             process.env.CACHE_PURGE_TARGET_ARG,
             dataUrl,
             primingUrl,
@@ -31,8 +31,8 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
           );
 
           const results = await Promise.allSettled(
-            targetUrls.map((targetUrl) =>
-              purgeAndPrimeCache(targetUrl, dataUrl, primingUrl),
+            targetUrls.map((targetUrls) =>
+              refreshCache(targetUrls, dataUrl, primingUrl),
             ),
           );
           const failed = results.filter(isPromiseRejectedResult);
@@ -66,11 +66,16 @@ async function queryFlyVmUrls(appName: string, port: number) {
   return urls;
 }
 
-async function purgeAndPrimeCache(
+async function refreshCache(
   targetUrl: string,
   dataUrl: string,
   primingUrl: string,
 ) {
+  await purgeCache(targetUrl, dataUrl);
+  await primeCache(targetUrl, primingUrl);
+}
+
+async function purgeCache(targetUrl: string, dataUrl: string) {
   console.log(`Purging cache at ${targetUrl} for ${dataUrl}...`);
   const response = await fetch(`${targetUrl}/purge-cache`, {
     method: "POST",
@@ -83,11 +88,13 @@ async function purgeAndPrimeCache(
   if (!response.ok) {
     throw new Error(`Failed to purge cache at ${targetUrl} for ${dataUrl}`);
   }
+}
 
+async function primeCache(targetUrl: string, primingUrl: string) {
   const absolutePrimingUrl = `${targetUrl}${primingUrl}`;
   console.log(`Priming cache at ${absolutePrimingUrl}...`);
 
-  await fetch(absolutePrimingUrl);
+  const response = await fetch(absolutePrimingUrl);
   if (!response.ok) {
     throw new Error(`Failed to prime cache at ${absolutePrimingUrl}`);
   }
