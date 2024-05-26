@@ -73,7 +73,7 @@ async function refreshCache(
 ) {
   // Wait for the DB to become consistent before purging and priming the cache
   queueMicrotask(async () => {
-    await delay(5_000);
+    // await delay(5_000);
 
     await purgeCache(targetUrl, dataUrl);
     await primeCache(targetUrl, primingUrl);
