@@ -74,7 +74,7 @@ async function refreshCache(
   await purgeCache(targetUrl, dataUrl);
 
   // Wait for the DB to become consistent before priming the cache
-  await delay(500);
+  await delay(5_000);
 
   await primeCache(targetUrl, primingUrl);
 }
