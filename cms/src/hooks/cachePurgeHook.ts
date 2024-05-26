@@ -13,7 +13,7 @@ export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
     // See https://github.com/payloadcms/payload/issues/5886
     console.log("Committing transaction before refreshing cache.");
     const { payload, transactionID } = req;
-    payload.db.commitTransaction(transactionID);
+    await payload.db.commitTransaction(transactionID);
 
     try {
       await refreshCacheForTarget(dataUrl, primingUrl);
