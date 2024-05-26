@@ -34,7 +34,7 @@ async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {
   switch (process.env.CACHE_REFRESH_TARGET_TYPE) {
     case "single":
       await refreshCache(
-        process.env.CACHE_REFRESH_TARGET_TYPE,
+        process.env.CACHE_REFRESH_TARGET_ARG,
         dataUrl,
         primingUrl,
       );
