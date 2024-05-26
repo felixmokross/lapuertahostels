@@ -96,8 +96,8 @@ jobs:
             --ha=false \
             --image-label v${{ steps.version.outputs.version }} \
             --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
-            --env CACHE_PURGE_TARGET_TYPE=fly \
-            --env CACHE_PURGE_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
+            --env CACHE_REFRESH_TARGET_TYPE=fly \
+            --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
         working-directory: cms
 
   clean-preview:

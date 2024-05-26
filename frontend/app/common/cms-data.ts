@@ -17,20 +17,21 @@ async function loadAndCacheData(
 }
 
 async function cacheData(cacheFilePath: string, data: unknown) {
+  console.log(`Caching data to ${cacheFilePath}`);
   await ensureDirectoryExists(path.dirname(cacheFilePath));
   await fs.writeFile(cacheFilePath, JSON.stringify(data));
 }
 
-function getCacheDocumentFolder(url: string) {
+function getCacheFolder(url: string) {
   return `${CACHE_DIR}/${url.replace("/", "_")}`;
 }
 
-function getCacheDocumentAndLocaleFile(url: string, locale: string) {
-  return `${getCacheDocumentFolder(url)}/${locale}.json`;
+function getCacheFilePath(url: string, locale: string) {
+  return `${getCacheFolder(url)}/${locale}.json`;
 }
 
 async function getData(url: string, locale: string) {
-  const filePath = getCacheDocumentAndLocaleFile(url, locale);
+  const filePath = getCacheFilePath(url, locale);
   try {
     const cache = await fs.readFile(filePath, "utf8");
 
@@ -39,17 +40,21 @@ async function getData(url: string, locale: string) {
 
       const cacheExpired =
         cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
-      if (!cacheExpired) return;
+      if (!cacheExpired) {
+        console.log(`Cache not expired for ${url} in ${locale}`);
+        return;
+      }
 
-      console.log(
-        `Cache expired for ${url} in ${locale}, loading data from CMS...`,
-      );
+      console.log(`Cache expired for ${url} in ${locale}`);
       await loadAndCacheData(url, locale, filePath);
     });
 
+    console.log(`Cache hit for ${url} in ${locale}`);
     return JSON.parse(cache);
   } catch (e) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
+
+    console.log(`Cache miss for ${url} in ${locale}`);
     return await loadAndCacheData(url, locale, filePath);
   }
 }
@@ -59,6 +64,7 @@ async function loadData(url: string, locale: string) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
 
+  console.log(`Loading data from CMS for ${url} in ${locale}`);
   return await (
     await fetch(
       `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
@@ -83,7 +89,7 @@ export async function getBrands(locale: string) {
 }
 
 export async function purgeCacheFor(url: string) {
-  const cacheFolderPath = getCacheDocumentFolder(url);
+  const cacheFolderPath = getCacheFolder(url);
   await deleteFolderIfExists(cacheFolderPath);
 }
 
