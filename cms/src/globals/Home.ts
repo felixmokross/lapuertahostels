@@ -1,11 +1,12 @@
 import { GlobalConfig } from "payload/types";
-import { slidesField } from "../fields/slides";
 import { StoryBlock } from "../blocks/Story";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { LeadBlock } from "../blocks/Lead";
 import { FeaturesBlock } from "../blocks/Features";
 import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
+import { SlidesBlock } from "../blocks/Slides";
+import { HeroVideoBlock } from "../blocks/HeroVideo";
 
 export const Home: GlobalConfig = {
   slug: "home",
@@ -18,16 +19,29 @@ export const Home: GlobalConfig = {
     afterChange: [makeCachePurgeHook("globals/home", "/")],
   },
   fields: [
-    slidesField,
     {
-      name: "slideCta",
+      name: "hero",
       label: {
-        en: "Slide CTA",
-        es: "CTA de Diapositiva",
+        en: "Hero",
+        es: "Héroe",
       },
-      type: "text",
-      required: true,
-      localized: true,
+      labels: {
+        singular: {
+          en: "Hero",
+          es: "Héroe",
+        },
+        plural: {
+          en: "Heroes",
+          es: "Héroes",
+        },
+      },
+      type: "blocks",
+      minRows: 0,
+      maxRows: 1,
+      blocks: [SlidesBlock, HeroVideoBlock],
+      admin: {
+        initCollapsed: true,
+      },
     },
     {
       name: "layout",
