@@ -1,4 +1,5 @@
 import { Block } from "payload/types";
+import { overlayTitle } from "../fields/overlay-title";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -24,6 +25,18 @@ export const HeroVideoBlock: Block = {
       },
       type: "text",
       required: true,
+    },
+    {
+      name: "showOverlayTitle",
+      label: {
+        en: "Show Overlay Title",
+        es: "Mostrar Título con Superposición",
+      },
+      type: "checkbox",
+    },
+    {
+      ...overlayTitle,
+      admin: { condition: (_, siblingData) => siblingData.showOverlayTitle },
     },
   ],
 };

@@ -15,7 +15,31 @@ export function Page({ content }: PageProps) {
       {content.hero?.map((block) => {
         switch (block.blockType) {
           case "HeroVideo":
-            return <HeroVideo key={block.id} src={block.videoUrl} />;
+            return (
+              <HeroVideo
+                key={block.id}
+                src={block.videoUrl}
+                overlayTitle={
+                  block.showOverlayTitle
+                    ? {
+                        children: (
+                          <RichText HighlightComponent={HeadingHighlight}>
+                            {block.overlayTitle!.text!}
+                          </RichText>
+                        ),
+                        overlay: block.overlayTitle!.overlay || undefined,
+                        position: block.overlayTitle!.position || undefined,
+                        cta: block.overlayTitle!.showCta
+                          ? {
+                              text: block.overlayTitle!.cta!.text,
+                              to: block.overlayTitle!.cta!.url,
+                            }
+                          : undefined,
+                      }
+                    : undefined
+                }
+              />
+            );
           case "Slides":
             return (
               <Carousel

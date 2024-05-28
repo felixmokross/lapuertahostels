@@ -2,10 +2,8 @@ import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { CarouselImage } from "./carousel-image";
 import { Transition } from "@headlessui/react";
-import { Heading } from "./heading";
-import { Button } from "./button";
 import { ImageTransformation } from "./image";
-import { Link } from "./link";
+import { OverlayTitle } from "./overlay-title";
 
 export type CarouselProps = {
   items: CarouselItem[];
@@ -33,7 +31,7 @@ export type CarouselItemTitle = {
 
 export type CarouselItemCallToAction = {
   text: string;
-  to?: string;
+  to: string;
 };
 
 export function Carousel({ items, transformation }: CarouselProps) {
@@ -68,48 +66,13 @@ export function Carousel({ items, transformation }: CarouselProps) {
               position={item.position}
             />
             {item.title && (
-              <>
-                <div
-                  className={cn("absolute top-0 h-full w-full bg-black", {
-                    "opacity-15": item.title.imageOverlay === "subtle",
-                    "opacity-20":
-                      !item.title.imageOverlay ||
-                      item.title.imageOverlay === "moderate",
-                    "opacity-25": item.title.imageOverlay === "intense",
-                  })}
-                ></div>
-                <div
-                  className={cn("absolute max-w-xl space-y-6", {
-                    "left-8 top-8": item.title.position === "top-left",
-                    "right-8 top-8 text-right":
-                      item.title.position === "top-right",
-                    "bottom-8 left-8": item.title.position === "bottom-left",
-                    "bottom-8 right-8 text-right":
-                      item.title.position === "bottom-right",
-                    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
-                      !item.title.position || item.title.position === "center",
-                  })}
-                >
-                  <Heading
-                    as="h3"
-                    size="extra-large"
-                    variant="white"
-                    textShadow
-                  >
-                    {item.title.text}
-                  </Heading>
-                  {item.title.cta && (
-                    <Button
-                      as={Link}
-                      size="large"
-                      blackShadow
-                      to={item.title.cta.to || "#"}
-                    >
-                      {item.title.cta.text}
-                    </Button>
-                  )}
-                </div>
-              </>
+              <OverlayTitle
+                overlay={item.title.imageOverlay}
+                position={item.title.position}
+                cta={item.title.cta}
+              >
+                {item.title.text}
+              </OverlayTitle>
             )}
           </Transition>
         );
