@@ -25,8 +25,8 @@ export const heroField: Field = {
   admin: {
     initCollapsed: true,
     description: {
-      en: "A hero section is the first thing a user sees when they visit a page. It is used to set the tone and provide a visual introduction to the content of the page.",
-      es: "Una sección de héroe es lo primero que ve un usuario cuando visita una página. Se utiliza para establecer el tono y proporcionar una introducción visual al contenido de la página.",
+      en: "A hero section is the first thing a user sees when they visit a page. Only one hero block can be added to a page. To replace the current hero block by a different block type, remove it and add a new one.",
+      es: "Una sección de héroe es lo primero que ve un usuario cuando visita una página. Solo se puede añadir un bloque de héroe a una página. Para reemplazar el bloque de héroe actual por un tipo de bloque diferente, elimínalo y añade uno nuevo.",
     },
   },
 };

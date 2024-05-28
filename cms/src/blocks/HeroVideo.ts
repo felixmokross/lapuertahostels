@@ -1,5 +1,8 @@
 import { Block, Field } from "payload/types";
-import { overlayTitleField } from "../fields/overlay-title";
+import {
+  optionalOverlayTitleFields,
+  overlayTitleField,
+} from "../fields/overlay-title";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 
 export const HeroVideoBlock: Block = {
@@ -49,20 +52,6 @@ export const HeroVideoBlock: Block = {
         placeholder: mediaUrlFieldPlaceholder,
       },
     },
-    {
-      name: "showOverlayTitle",
-      label: {
-        en: "Show Overlay Title",
-        es: "Mostrar título superpuesto",
-      },
-      type: "checkbox",
-    },
-    {
-      ...overlayTitleField,
-      admin: {
-        ...overlayTitleField.admin,
-        condition: (_, siblingData) => siblingData.showOverlayTitle,
-      },
-    } as Field,
+    ...optionalOverlayTitleFields,
   ],
 };

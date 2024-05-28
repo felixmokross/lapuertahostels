@@ -101,3 +101,21 @@ export const overlayTitleField = {
     hideGutter: true,
   },
 } as Field;
+
+export const optionalOverlayTitleFields = [
+  {
+    name: "showOverlayTitle",
+    label: {
+      en: "Show Overlay Title",
+      es: "Mostrar título superpuesto",
+    },
+    type: "checkbox",
+  },
+  {
+    ...overlayTitleField,
+    admin: {
+      ...overlayTitleField.admin,
+      condition: (_, siblingData) => siblingData.showOverlayTitle,
+    },
+  },
+] as Field[];
