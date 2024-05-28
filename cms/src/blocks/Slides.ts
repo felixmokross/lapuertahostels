@@ -13,9 +13,9 @@ export const SlidesBlock: Block = {
       es: "Diapositivas",
     },
   },
-  // imageURL: "/assets/blocks/Features.png",
-  // imageAltText:
-  //   "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
+  imageURL: "/assets/blocks/Slides.png",
+  imageAltText:
+    "Preview of the Slides block, showing an image with an overlay title, CTA, and controls to switch slides.",
   fields: [
     slidesField,
     {

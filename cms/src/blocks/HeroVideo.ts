@@ -13,9 +13,9 @@ export const HeroVideoBlock: Block = {
       es: "Videos de Héroe",
     },
   },
-  // imageURL: "/assets/blocks/Features.png",
-  // imageAltText:
-  //   "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
+  imageURL: "/assets/blocks/HeroVideo.png",
+  imageAltText:
+    "Preview of the Hero Video block, showing a image with an overlay title and a CTA.",
   fields: [
     {
       name: "videoUrl",

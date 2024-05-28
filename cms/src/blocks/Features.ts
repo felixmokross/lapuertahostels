@@ -15,7 +15,7 @@ export const FeaturesBlock: Block = {
   },
   imageURL: "/assets/blocks/Features.png",
   imageAltText:
-    "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
+    "Preview of the Features block, showing images with short texts on the side, in alternating manner.",
   fields: [
     {
       name: "elementId",
