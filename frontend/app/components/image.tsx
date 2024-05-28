@@ -12,11 +12,11 @@ export type ImageProps = {
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   >,
-  "onLoad"
+  "onLoad" | "loading"
 >;
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { src, alt, className, transformation },
+  { src, alt, className, transformation, loading },
   ref,
 ) {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -37,6 +37,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
       className={className}
       alt={alt}
       ref={ref}
+      loading={loading}
     />
   );
 });

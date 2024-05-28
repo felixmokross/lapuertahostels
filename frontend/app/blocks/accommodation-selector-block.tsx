@@ -100,6 +100,7 @@ function AccommodationCard({
             width: 1200,
             focus: "custom",
           }}
+          loading="lazy"
         />
       </div>
       <div
