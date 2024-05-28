@@ -28,40 +28,57 @@ export const Primary: Story = {
         {
           slides: [
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
-              imageAlt: "Atrium of La Puerta Azul",
-              ctaUrl: "/booking",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                alt: "Atrium of La Puerta Azul",
+              },
               name: "Atrium",
-              title: [
-                {
-                  children: [
-                    { type: "text", text: "Welcome to Your " },
-                    { type: "text", text: "Vacation Home", bold: true },
-                  ],
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  {
+                    children: [
+                      { type: "text", text: "Welcome to Your " },
+                      { type: "text", text: "Vacation Home", bold: true },
+                    ],
+                  },
+                ],
+                overlay: "intense",
+                position: "center",
+                showCta: true,
+                cta: {
+                  text: "Reserve Now",
+                  url: "/booking",
                 },
-              ],
-              titlePosition: "center",
-              imageOverlay: "intense",
-              imagePosition: "bottom",
+              },
+              imageAlignment: "bottom",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-              imageAlt: "Room view of La Puerta Azul",
-              ctaUrl: "/booking",
-              name: "Atrium",
-              title: [
-                { children: [{ type: "text", text: "Cool Down" }] },
-                {
-                  children: [{ type: "text", text: "by the Pool", bold: true }],
+              name: "Room View",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+                alt: "Room view of La Puerta Azul",
+              },
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  {
+                    children: [
+                      { type: "text", text: "Cool Down" },
+                      { type: "text", text: " by the Pool", bold: true },
+                    ],
+                  },
+                ],
+                overlay: "subtle",
+                position: "bottom-left",
+                showCta: true,
+                cta: {
+                  text: "Book Now",
+                  url: "/booking",
                 },
-              ],
-              titlePosition: "bottom-left",
-              imageOverlay: "subtle",
+              },
             },
           ],
-          slideCta: "Book Now",
           id: "664b5b879e149f43ef4874c8",
           blockType: "Slides",
         },

@@ -31,25 +31,32 @@ export const Primary: Story = {
           slides: [
             {
               id: "slide-1",
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
-              imageAlt: "Front view of Puerta Aqua",
-              title: [
-                {
-                  children: [{ type: "text", text: "Welcome to Your " }],
-                },
-                {
-                  children: [
-                    { type: "text", text: "Vacation Home", bold: true },
-                  ],
-                },
-              ],
               name: "Front View",
-              ctaUrl: "/booking",
-              imageOverlay: "intense",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
+                alt: "Front view of Puerta Aqua",
+              },
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  {
+                    children: [{ type: "text", text: "Welcome to Your " }],
+                  },
+                  {
+                    children: [
+                      { type: "text", text: "Vacation Home", bold: true },
+                    ],
+                  },
+                ],
+                overlay: "intense",
+                showCta: true,
+                cta: {
+                  text: "Reserve Now",
+                  url: "/booking",
+                },
+              },
             },
           ],
-          slideCta: "Reserve Now",
         },
       ],
       layout: [

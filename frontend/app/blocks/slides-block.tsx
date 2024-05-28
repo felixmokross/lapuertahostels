@@ -14,7 +14,7 @@ export type Slide = {
   src: string;
   alt: string;
   title?: SlideTitle;
-  position?: "center" | "bottom";
+  imageAlignment?: "center" | "bottom";
 };
 
 export type SlideTitle = {
@@ -63,7 +63,7 @@ export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
               transformation={transformation}
               withPreview={i === 0}
               className="absolute top-0"
-              position={slide.position}
+              alignment={slide.imageAlignment}
             />
             {slide.title && (
               <OverlayTitle

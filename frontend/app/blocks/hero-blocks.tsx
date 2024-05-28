@@ -1,5 +1,5 @@
 import { RichText } from "~/common/rich-text";
-import { SlidesBlock } from "~/blocks/slides-block";
+import { Slide, SlidesBlock } from "~/blocks/slides-block";
 import { HeadingHighlight } from "~/components/heading";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
 import { Home } from "~/payload-types";
@@ -42,20 +42,27 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
         return (
           <SlidesBlock
             key={block.id}
-            slides={block.slides.map((slide) => ({
-              src: slide.imageUrl,
-              alt: slide.imageAlt,
-              title: {
-                text: (
-                  <RichText HighlightComponent={HeadingHighlight}>
-                    {slide.title}
-                  </RichText>
-                ),
-                position: slide.titlePosition || undefined,
-                cta: { text: block.slideCta, to: slide.ctaUrl },
-                imageOverlay: slide.imageOverlay || undefined,
-              },
-              position: slide.imagePosition || undefined,
+            slides={block.slides.map<Slide>((slide) => ({
+              src: slide.image.url,
+              alt: slide.image.alt,
+              title: slide.showOverlayTitle
+                ? {
+                    text: (
+                      <RichText HighlightComponent={HeadingHighlight}>
+                        {slide.overlayTitle!.text}
+                      </RichText>
+                    ),
+                    position: slide.overlayTitle!.position || undefined,
+                    cta: slide.overlayTitle!.showCta
+                      ? {
+                          text: slide.overlayTitle!.cta!.text,
+                          to: slide.overlayTitle!.cta!.url,
+                        }
+                      : undefined,
+                    imageOverlay: slide.overlayTitle!.overlay || undefined,
+                  }
+                : undefined,
+              imageAlignment: slide.imageAlignment || undefined,
             }))}
             transformation={{
               aspectRatio: { width: 4, height: 3 },

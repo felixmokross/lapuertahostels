@@ -4,7 +4,7 @@ import { Image, ImageProps } from "./image";
 
 export type SlideImageProps = ImageProps & {
   withPreview?: boolean;
-  position?: "center" | "bottom";
+  alignment?: "center" | "bottom";
 };
 
 export function SlideImage({
@@ -12,7 +12,7 @@ export function SlideImage({
   alt,
   className,
   withPreview = false,
-  position,
+  alignment,
   ...props
 }: SlideImageProps) {
   const [state, setState] = useState<"loading" | "loaded">("loading");
@@ -25,7 +25,7 @@ export function SlideImage({
     }
   }, [state]);
   const imageClassName = cn("absolute top-0 h-full w-full object-cover", {
-    "object-[center_90%]": position === "bottom",
+    "object-[center_90%]": alignment === "bottom",
   });
 
   return (
