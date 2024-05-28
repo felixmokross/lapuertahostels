@@ -54,8 +54,8 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
                 position: slide.titlePosition || undefined,
                 cta: { text: block.slideCta, to: slide.ctaUrl },
                 imageOverlay: slide.imageOverlay || undefined,
-                imagePosition: slide.imagePosition || undefined,
               },
+              position: slide.imagePosition || undefined,
             }))}
             transformation={{
               aspectRatio: { width: 4, height: 3 },
