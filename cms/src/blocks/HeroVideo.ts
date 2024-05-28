@@ -1,4 +1,4 @@
-import { Block } from "payload/types";
+import { Block, Field } from "payload/types";
 import { overlayTitleField } from "../fields/overlay-title";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 
@@ -7,11 +7,11 @@ export const HeroVideoBlock: Block = {
   labels: {
     singular: {
       en: "Hero Video",
-      es: "Video de Héroe",
+      es: "Video de héroe",
     },
     plural: {
       en: "Hero Videos",
-      es: "Videos de Héroe",
+      es: "Videos de héroe",
     },
   },
   imageURL: "/assets/blocks/HeroVideo.png",
@@ -38,13 +38,13 @@ export const HeroVideoBlock: Block = {
       name: "previewUrl",
       label: {
         en: "Preview Image URL",
-        es: "URL de la Imagen de Vista Previa",
+        es: "URL de la imagen de vista previa",
       },
       type: "text",
       admin: {
         description: {
           en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately to ImageKit.",
-          es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Suele ser el primer fotograma del video para proporcionar una transición perfecta. Debe cargarse por separado en ImageKit.",
+          es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado a ImageKit.",
         },
         placeholder: mediaUrlFieldPlaceholder,
       },
@@ -53,13 +53,16 @@ export const HeroVideoBlock: Block = {
       name: "showOverlayTitle",
       label: {
         en: "Show Overlay Title",
-        es: "Mostrar Título con Superposición",
+        es: "Mostrar título superpuesto",
       },
       type: "checkbox",
     },
     {
       ...overlayTitleField,
-      admin: { condition: (_, siblingData) => siblingData.showOverlayTitle },
-    },
+      admin: {
+        ...overlayTitleField.admin,
+        condition: (_, siblingData) => siblingData.showOverlayTitle,
+      },
+    } as Field,
   ],
 };

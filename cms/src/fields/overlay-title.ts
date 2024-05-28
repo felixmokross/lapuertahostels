@@ -6,7 +6,7 @@ export const overlayTitleField = {
   name: "overlayTitle",
   label: {
     en: "Overlay Title",
-    es: "Título con Superposición",
+    es: "Título superpuesto",
   },
   type: "group",
   required: true,
@@ -74,6 +74,12 @@ export const overlayTitleField = {
         { value: "intense", label: { en: "Intense", es: "Intenso" } },
       ],
       defaultValue: "moderate",
+      admin: {
+        description: {
+          en: "The overlay is a semi-transparent black layer that is placed on top of the image to make the text more readable. Choose the intensity that is the best trade-off between readability of the text and brightness of the image.",
+          es: "La superposición es una capa negra semitransparente que se coloca sobre la imagen para que el texto sea más legible. Elige la intensidad que sea el mejor compromiso entre la legibilidad del texto y el brillo de la imagen.",
+        },
+      },
     },
     {
       name: "showCta",
@@ -85,7 +91,13 @@ export const overlayTitleField = {
     },
     {
       ...callToActionField,
-      admin: { condition: (_, siblingData) => siblingData.showCta },
+      admin: {
+        ...callToActionField.admin,
+        condition: (_, siblingData) => siblingData.showCta,
+      },
     },
   ],
+  admin: {
+    hideGutter: true,
+  },
 } as Field;

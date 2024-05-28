@@ -28,4 +28,7 @@ export const callToActionField = {
       required: true,
     },
   ],
+  admin: {
+    hideGutter: true,
+  },
 } as Field;
