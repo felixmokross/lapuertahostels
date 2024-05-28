@@ -24,7 +24,7 @@ export const Primary: Story = {
         title: {
           text: "Lost City",
           position: "top-right",
-          cta: { text: "Read More" },
+          cta: { text: "Read More", to: "#" },
         },
       },
       {
@@ -33,7 +33,7 @@ export const Primary: Story = {
         title: {
           text: "Parque Tayrona",
           position: "bottom-left",
-          cta: { text: "Read More" },
+          cta: { text: "Read More", to: "#" },
         },
       },
       {
@@ -42,7 +42,7 @@ export const Primary: Story = {
         title: {
           text: "Santa Marta",
           position: "bottom-right",
-          cta: { text: "Read More" },
+          cta: { text: "Read More", to: "#" },
         },
       },
       {
@@ -51,7 +51,7 @@ export const Primary: Story = {
         title: {
           text: "Minca",
           position: "top-left",
-          cta: { text: "Read More" },
+          cta: { text: "Read More", to: "#" },
         },
       },
     ],

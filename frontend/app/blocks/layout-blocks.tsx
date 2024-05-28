@@ -7,12 +7,11 @@ import { FeaturesBlock } from "./features-block";
 import { RichText } from "~/common/rich-text";
 import { ParagraphHighlight } from "~/components/paragraph";
 
-type BlocksProps = {
-  // TODO define a block type
+type LayoutBlocksProps = {
   data: NonNullable<Home["layout"]>;
 };
 
-export function Blocks({ data }: BlocksProps) {
+export function LayoutBlocks({ data }: LayoutBlocksProps) {
   return data.map((block) => {
     switch (block.blockType) {
       case "Lead":

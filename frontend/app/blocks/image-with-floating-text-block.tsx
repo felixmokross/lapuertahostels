@@ -42,6 +42,7 @@ export function ImageWithFloatingTextBlock({
             cropStrategy: "maintain_ratio",
             focus: "auto",
           }}
+          loading="lazy"
         />
         <div
           className={cn(

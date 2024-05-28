@@ -24,8 +24,6 @@ export function CarouselImage({
       setState("loaded");
     }
   }, [state]);
-
-  const previewImageSrc = `${src},bl-10`;
   const imageClassName = cn("absolute top-0 h-full w-full object-cover", {
     "object-[center_90%]": position === "bottom",
   });
@@ -34,10 +32,11 @@ export function CarouselImage({
     <div className={cn("h-full w-full", className)}>
       {withPreview && state === "loading" && (
         <Image
-          src={previewImageSrc}
+          {...props}
+          transformation={{ ...props.transformation, blur: 20 }}
+          src={src}
           alt={alt}
           className={imageClassName}
-          {...props}
         />
       )}
       <Image

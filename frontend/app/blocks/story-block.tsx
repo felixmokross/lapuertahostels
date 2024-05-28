@@ -55,6 +55,7 @@ export function StoryBlock({ heading, text, image, id }: StoryBlockProps) {
             width: 1600,
             enhancement: image.grayscale ? "grayscale" : undefined,
           }}
+          loading="lazy"
         />
       </div>
     </div>

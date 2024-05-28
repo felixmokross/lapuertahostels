@@ -30,6 +30,7 @@ export function ImageWithTextSection({
             width: 1000,
             aspectRatio: { width: 4, height: 3 },
           }}
+          loading="lazy"
         />
       </div>
     </div>

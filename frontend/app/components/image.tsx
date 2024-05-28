@@ -12,11 +12,11 @@ export type ImageProps = {
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   >,
-  "onLoad"
+  "onLoad" | "loading"
 >;
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { src, alt, className, transformation },
+  { src, alt, className, transformation, loading },
   ref,
 ) {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -37,6 +37,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
       className={className}
       alt={alt}
       ref={ref}
+      loading={loading}
     />
   );
 });
@@ -48,6 +49,7 @@ export type ImageTransformation = {
   cropStrategy?: "maintain_ratio";
   focus?: "auto" | "custom";
   enhancement?: "grayscale";
+  blur?: number;
 };
 
 function toImagekitTransformationString(transformation: ImageTransformation) {
@@ -78,6 +80,8 @@ function toImagekitTransformationItemString(
       return `fo-${transformation.focus!}`;
     case "enhancement":
       return `e-${transformation.enhancement!}`;
+    case "blur":
+      return `bl-${transformation.blur!}`;
     default:
       throw new Error(`Unsupported key: ${key}`);
   }

@@ -5,8 +5,8 @@ export const FeaturesBlock: Block = {
   slug: "Features",
   labels: {
     singular: {
-      en: "Feature",
-      es: "Característica",
+      en: "Features",
+      es: "Características",
     },
     plural: {
       en: "Features",
