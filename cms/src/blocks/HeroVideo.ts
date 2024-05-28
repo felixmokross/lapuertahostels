@@ -27,6 +27,14 @@ export const HeroVideoBlock: Block = {
       required: true,
     },
     {
+      name: "previewUrl",
+      label: {
+        en: "Preview Image URL",
+        es: "URL de la Imagen de Vista Previa",
+      },
+      type: "text",
+    },
+    {
       name: "showOverlayTitle",
       label: {
         en: "Show Overlay Title",

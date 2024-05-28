@@ -1,7 +1,7 @@
 import { RichText } from "~/common/rich-text";
 import { Carousel } from "~/components/carousel";
 import { HeadingHighlight } from "~/components/heading";
-import { HeroVideo } from "~/components/hero-video";
+import { HeroVideoBlock } from "~/blocks/hero-video-block";
 import { Home } from "~/payload-types";
 
 export type HeroBlocksProps = {
@@ -13,9 +13,10 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
     switch (block.blockType) {
       case "HeroVideo":
         return (
-          <HeroVideo
+          <HeroVideoBlock
             key={block.id}
             src={block.videoUrl}
+            previewSrc={block.previewUrl || undefined}
             overlayTitle={
               block.showOverlayTitle
                 ? {
