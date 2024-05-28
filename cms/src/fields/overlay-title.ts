@@ -1,8 +1,8 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { Field } from "payload/types";
-import { callToAction } from "./call-to-action";
+import { callToActionField } from "./call-to-action";
 
-export const overlayTitle = {
+export const overlayTitleField = {
   name: "overlayTitle",
   label: {
     en: "Overlay Title",
@@ -78,7 +78,7 @@ export const overlayTitle = {
       type: "checkbox",
     },
     {
-      ...callToAction,
+      ...callToActionField,
       admin: { condition: (_, siblingData) => siblingData.showCta },
     },
   ],

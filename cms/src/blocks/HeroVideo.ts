@@ -1,5 +1,5 @@
 import { Block } from "payload/types";
-import { overlayTitle } from "../fields/overlay-title";
+import { overlayTitleField } from "../fields/overlay-title";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -43,7 +43,7 @@ export const HeroVideoBlock: Block = {
       type: "checkbox",
     },
     {
-      ...overlayTitle,
+      ...overlayTitleField,
       admin: { condition: (_, siblingData) => siblingData.showOverlayTitle },
     },
   ],

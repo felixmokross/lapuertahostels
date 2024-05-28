@@ -1,6 +1,6 @@
 import { Field } from "payload/types";
 
-export const callToAction = {
+export const callToActionField = {
   name: "cta",
   label: {
     en: "Call to Action (CTA)",
