@@ -24,59 +24,66 @@ export const Primary: Story = {
     content: {
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
-      slides: [
+      hero: [
         {
-          name: "Tayrona",
-          title: [
-            { children: [{ text: "Hike Through" }] },
+          slides: [
             {
-              children: [
-                { text: "the " },
-                { text: "Tayrona Park", bold: true },
+              name: "Tayrona",
+              title: [
+                { children: [{ text: "Hike Through" }] },
+                {
+                  children: [
+                    { text: "the " },
+                    { text: "Tayrona Park", bold: true },
+                  ],
+                },
               ],
+              titlePosition: "top-left",
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+              imageAlt: "View of the beach in Tayrona National Park",
+              ctaUrl: "/experiences/tayrona",
+              id: "663e6ee0caac5f81e3216b3e",
+              imageOverlay: "moderate",
+              imagePosition: "center",
+            },
+            {
+              name: "Lost City",
+              title: [
+                { children: [{ text: "Find the" }] },
+                { children: [{ text: "Lost City", bold: true }] },
+              ],
+              titlePosition: "top-right",
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+              imageAlt: "View of the Lost City",
+              ctaUrl: "/experiences/lost-city",
+              id: "663e6fbacaac5f81e3216b7d",
+              imageOverlay: "moderate",
+              imagePosition: "center",
+            },
+            {
+              name: "Minca",
+              title: [
+                { children: [{ text: "Follow the" }] },
+                { children: [{ text: "Minca River", bold: true }] },
+              ],
+              titlePosition: "bottom-left",
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+              imageAlt: "View of the forest in the Minca region",
+              ctaUrl: "/experiences/minca",
+              id: "663e8b33c79934cdb011e7d0",
+              imageOverlay: "moderate",
+              imagePosition: "center",
             },
           ],
-          titlePosition: "top-left",
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
-          imageAlt: "View of the beach in Tayrona National Park",
-          ctaUrl: "/experiences/tayrona",
-          id: "663e6ee0caac5f81e3216b3e",
-          imageOverlay: "moderate",
-          imagePosition: "center",
-        },
-        {
-          name: "Lost City",
-          title: [
-            { children: [{ text: "Find the" }] },
-            { children: [{ text: "Lost City", bold: true }] },
-          ],
-          titlePosition: "top-right",
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
-          imageAlt: "View of the Lost City",
-          ctaUrl: "/experiences/lost-city",
-          id: "663e6fbacaac5f81e3216b7d",
-          imageOverlay: "moderate",
-          imagePosition: "center",
-        },
-        {
-          name: "Minca",
-          title: [
-            { children: [{ text: "Follow the" }] },
-            { children: [{ text: "Minca River", bold: true }] },
-          ],
-          titlePosition: "bottom-left",
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
-          imageAlt: "View of the forest in the Minca region",
-          ctaUrl: "/experiences/minca",
-          id: "663e8b33c79934cdb011e7d0",
-          imageOverlay: "moderate",
-          imagePosition: "center",
+          slideCta: "Read More",
+          id: "663e6ee0caac5f81e3216b3d",
+          blockType: "Slides",
         },
       ],
-      slideCta: "Read More",
+
       layout: [
         {
           heading: "Discover the Colombian Costa Caribe",

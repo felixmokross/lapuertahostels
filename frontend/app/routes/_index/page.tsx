@@ -1,9 +1,6 @@
-import { RichText } from "~/common/rich-text";
-import { Carousel } from "~/components/carousel";
-import { HeadingHighlight } from "~/components/heading";
 import { Home } from "~/payload-types";
-import { Blocks } from "~/blocks/blocks";
-import { HeroVideo } from "~/components/hero-video";
+import { LayoutBlocks } from "~/blocks/layout-blocks";
+import { HeroBlocks } from "~/blocks/hero-blocks";
 
 export type PageProps = {
   content: Home;
@@ -12,61 +9,9 @@ export type PageProps = {
 export function Page({ content }: PageProps) {
   return (
     <>
-      {content.hero?.map((block) => {
-        switch (block.blockType) {
-          case "HeroVideo":
-            return (
-              <HeroVideo
-                key={block.id}
-                src={block.videoUrl}
-                overlayTitle={
-                  block.showOverlayTitle
-                    ? {
-                        children: (
-                          <RichText HighlightComponent={HeadingHighlight}>
-                            {block.overlayTitle!.text!}
-                          </RichText>
-                        ),
-                        overlay: block.overlayTitle!.overlay || undefined,
-                        position: block.overlayTitle!.position || undefined,
-                        cta: block.overlayTitle!.showCta
-                          ? {
-                              text: block.overlayTitle!.cta!.text,
-                              to: block.overlayTitle!.cta!.url,
-                            }
-                          : undefined,
-                      }
-                    : undefined
-                }
-              />
-            );
-          case "Slides":
-            return (
-              <Carousel
-                items={block.slides.map((slide) => ({
-                  src: slide.imageUrl,
-                  alt: slide.imageAlt,
-                  title: {
-                    text: (
-                      <RichText HighlightComponent={HeadingHighlight}>
-                        {slide.title}
-                      </RichText>
-                    ),
-                    position: slide.titlePosition || undefined,
-                    cta: { text: block.slideCta, to: slide.ctaUrl },
-                    imageOverlay: slide.imageOverlay || undefined,
-                  },
-                }))}
-                transformation={{
-                  aspectRatio: { width: 4, height: 3 },
-                  width: 1600,
-                }}
-              />
-            );
-        }
-      })}
+      {content.hero && <HeroBlocks data={content.hero} />}
 
-      {content.layout && <Blocks data={content.layout} />}
+      {content.layout && <LayoutBlocks data={content.layout} />}
     </>
   );
 }

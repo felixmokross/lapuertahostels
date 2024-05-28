@@ -2,7 +2,7 @@ import { RichText } from "~/common/rich-text";
 import { Carousel } from "~/components/carousel";
 import { HeadingHighlight } from "~/components/heading";
 import { Azul } from "~/payload-types";
-import { Blocks } from "~/blocks/blocks";
+import { LayoutBlocks } from "~/blocks/layout-blocks";
 
 export type PageProps = {
   content: Omit<Azul, "id">;
@@ -32,7 +32,7 @@ export function Page({ content }: PageProps) {
           width: 1600,
         }}
       />
-      {content.layout && <Blocks data={content.layout} />}
+      {content.layout && <LayoutBlocks data={content.layout} />}
     </>
   );
 }
