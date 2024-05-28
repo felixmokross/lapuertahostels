@@ -1,5 +1,5 @@
 import { RichText } from "~/common/rich-text";
-import { Carousel } from "~/components/carousel";
+import { SlidesBlock } from "~/blocks/slides-block";
 import { HeadingHighlight } from "~/components/heading";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
 import { Home } from "~/payload-types";
@@ -40,9 +40,9 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
         );
       case "Slides":
         return (
-          <Carousel
+          <SlidesBlock
             key={block.id}
-            items={block.slides.map((slide) => ({
+            slides={block.slides.map((slide) => ({
               src: slide.imageUrl,
               alt: slide.imageAlt,
               title: {

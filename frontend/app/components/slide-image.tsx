@@ -2,19 +2,19 @@ import { cn } from "./cn";
 import { useEffect, useRef, useState } from "react";
 import { Image, ImageProps } from "./image";
 
-export type CarouselImageProps = ImageProps & {
+export type SlideImageProps = ImageProps & {
   withPreview?: boolean;
   position?: "center" | "bottom";
 };
 
-export function CarouselImage({
+export function SlideImage({
   src,
   alt,
   className,
   withPreview = false,
   position,
   ...props
-}: CarouselImageProps) {
+}: SlideImageProps) {
   const [state, setState] = useState<"loading" | "loaded">("loading");
   const imgRef = useRef<HTMLImageElement>(null);
 

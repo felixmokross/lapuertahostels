@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Carousel } from "./carousel";
+import { SlidesBlock } from "./slides-block";
 
 const meta = {
-  title: "Carousel",
-  component: Carousel,
+  title: "blocks/Slides Block",
+  component: SlidesBlock,
   argTypes: {},
-} satisfies Meta<typeof Carousel>;
+} satisfies Meta<typeof SlidesBlock>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -17,7 +17,7 @@ export const Primary: Story = {
       aspectRatio: { width: 4, height: 3 },
       width: 1600,
     },
-    items: [
+    slides: [
       {
         src: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
         alt: "Lost City",
