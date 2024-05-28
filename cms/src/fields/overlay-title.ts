@@ -26,6 +26,12 @@ export const overlayTitleField = {
           leaves: ["bold"],
         },
       }),
+      admin: {
+        description: {
+          en: "Mark text as bold to make it stand out. You can use line breaks to ensure that the text is displayed as you want.",
+          es: "Marca el texto en negrita para que destaque. Puedes usar saltos de línea para asegurarte de que el texto se muestre como deseas.",
+        },
+      },
     },
     {
       name: "position",

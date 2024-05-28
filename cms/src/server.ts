@@ -14,6 +14,7 @@ app.get("/", (_, res) => {
 // PAYLOAD_PUBLIC variables don't work in deployed environments without an .env file
 // So we use server-side variables which we expose via an endpoint to the client
 // See https://github.com/payloadcms/payload/discussions/3758
+// TODO to get sync access to the variables, we now use the dotenv-based approach suggested by the Payload team – migrate to that
 app.get("/config", (_, res) => {
   res.json({
     livePreviewUrl: process.env.LIVE_PREVIEW_URL,
