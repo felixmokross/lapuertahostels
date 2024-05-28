@@ -24,40 +24,48 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     content: {
-      slides: [
+      hero: [
         {
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
-          imageAlt: "Atrium of La Puerta Azul",
-          ctaUrl: "/booking",
-          name: "Atrium",
-          title: [
+          slides: [
             {
-              children: [
-                { type: "text", text: "Welcome to Your " },
-                { type: "text", text: "Vacation Home", bold: true },
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+              imageAlt: "Atrium of La Puerta Azul",
+              ctaUrl: "/booking",
+              name: "Atrium",
+              title: [
+                {
+                  children: [
+                    { type: "text", text: "Welcome to Your " },
+                    { type: "text", text: "Vacation Home", bold: true },
+                  ],
+                },
               ],
+              titlePosition: "center",
+              imageOverlay: "intense",
+              imagePosition: "bottom",
+            },
+            {
+              imageUrl:
+                "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+              imageAlt: "Room view of La Puerta Azul",
+              ctaUrl: "/booking",
+              name: "Atrium",
+              title: [
+                { children: [{ type: "text", text: "Cool Down" }] },
+                {
+                  children: [{ type: "text", text: "by the Pool", bold: true }],
+                },
+              ],
+              titlePosition: "bottom-left",
+              imageOverlay: "subtle",
             },
           ],
-          titlePosition: "center",
-          imageOverlay: "intense",
-          imagePosition: "bottom",
-        },
-        {
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-          imageAlt: "Room view of La Puerta Azul",
-          ctaUrl: "/booking",
-          name: "Atrium",
-          title: [
-            { children: [{ type: "text", text: "Cool Down" }] },
-            { children: [{ type: "text", text: "by the Pool", bold: true }] },
-          ],
-          titlePosition: "bottom-left",
-          imageOverlay: "subtle",
+          slideCta: "Book Now",
+          id: "664b5b879e149f43ef4874c8",
+          blockType: "Slides",
         },
       ],
-      slideCta: "Book Now",
       layout: [
         {
           items: [
