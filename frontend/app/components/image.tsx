@@ -48,6 +48,7 @@ export type ImageTransformation = {
   cropStrategy?: "maintain_ratio";
   focus?: "auto" | "custom";
   enhancement?: "grayscale";
+  blur?: number;
 };
 
 function toImagekitTransformationString(transformation: ImageTransformation) {
@@ -78,6 +79,8 @@ function toImagekitTransformationItemString(
       return `fo-${transformation.focus!}`;
     case "enhancement":
       return `e-${transformation.enhancement!}`;
+    case "blur":
+      return `bl-${transformation.blur!}`;
     default:
       throw new Error(`Unsupported key: ${key}`);
   }

@@ -40,6 +40,7 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
       case "Slides":
         return (
           <Carousel
+            key={block.id}
             items={block.slides.map((slide) => ({
               src: slide.imageUrl,
               alt: slide.imageAlt,
