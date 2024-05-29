@@ -9,7 +9,12 @@ import { cn } from "../components/cn";
 export type ImageWithFloatingTextBlockProps = {
   heading: RichTextObject;
   text: RichTextObject;
-  textPosition?: "left" | "right";
+  textPosition?:
+    | "center"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right";
   image: {
     src: string;
     alt: string;
@@ -21,7 +26,7 @@ export type ImageWithFloatingTextBlockProps = {
 export function ImageWithFloatingTextBlock({
   heading,
   text,
-  textPosition = "right",
+  textPosition = "top-right",
   image,
   id,
 }: ImageWithFloatingTextBlockProps) {
@@ -53,8 +58,8 @@ export function ImageWithFloatingTextBlock({
               "to-black/50": imageOverlay === "intense",
             },
             {
-              "justify-start": textPosition === "right",
-              "justify-end": textPosition === "left",
+              "justify-start": textPosition === "top-right",
+              "justify-end": textPosition === "top-left",
             },
           )}
         >
@@ -70,16 +75,18 @@ export function ImageWithFloatingTextBlock({
       </div>
       <div
         className={cn("lg:absolute lg:inset-0 lg:flex lg:items-end", {
-          "lg:justify-end": textPosition === "right",
-          "lg:justify-start": textPosition === "left",
+          "lg:justify-end": textPosition === "top-right",
+          "lg:justify-start": textPosition === "top-left",
         })}
       >
         <div
           className={cn(
             "from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-y-20",
             {
-              "bg-gradient-to-bl lg:translate-x-12": textPosition === "right",
-              "bg-gradient-to-br lg:-translate-x-12": textPosition === "left",
+              "bg-gradient-to-bl lg:translate-x-12":
+                textPosition === "top-right",
+              "bg-gradient-to-br lg:-translate-x-12":
+                textPosition === "top-left",
             },
           )}
         >

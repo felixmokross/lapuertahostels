@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { imageField } from "../fields/image";
-import { overlayTitleField } from "../fields/overlay-title";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -81,7 +81,7 @@ export const SlidesBlock: Block = {
             },
           ],
         },
-        overlayTitleField,
+        makeOverlayTitleField({ optional: true }),
       ],
       admin: {
         initCollapsed: true,

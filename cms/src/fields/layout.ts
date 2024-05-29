@@ -33,5 +33,9 @@ export const layoutField: BlockField = {
   ],
   admin: {
     initCollapsed: true,
+    description: {
+      en: "Add blocks to create the layout of the page. You can reorder the blocks by dragging and dropping them using the handle on the left side.",
+      es: "Agrega bloques para crear el diseño de la página. Puedes reordenar los bloques arrastrándolos y soltándolos usando la manija en el lado izquierdo.",
+    },
   },
 };

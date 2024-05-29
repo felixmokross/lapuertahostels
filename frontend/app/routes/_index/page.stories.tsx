@@ -187,9 +187,10 @@ export const Primary: Story = {
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
-              imageAlt: "Puerta Aqua",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
+                alt: "Puerta Aqua",
+              },
               description:
                 "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
             },
@@ -211,9 +212,10 @@ export const Primary: Story = {
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
-              imageAlt: "La Puerta Azul",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                alt: "La Puerta Azul",
+              },
               description:
                 "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
             },
@@ -222,22 +224,18 @@ export const Primary: Story = {
         },
         {
           elementId: "santa-marta",
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
-          imageAlt: "View of Santa Marta",
-          heading: [
-            {
-              children: [
-                {
-                  text: "Do You Know ",
-                },
-                {
-                  text: "Santa Marta?",
-                  bold: true,
-                },
-              ],
-            },
-          ],
+          image: {
+            url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
+            alt: "View of Santa Marta",
+          },
+          overlayTitle: {
+            text: [
+              { children: [{ text: "Do You Know " }] },
+              { children: [{ text: "Santa Marta?", bold: true }] },
+            ],
+            position: "top-right",
+            overlay: "moderate",
+          },
           text: [
             {
               children: [
@@ -292,8 +290,6 @@ export const Primary: Story = {
           id: "664b56be7f9772bcf6dffcae",
           blockType: "ImageWithFloatingText",
           blockName: "Santa Marta",
-          textPosition: "right",
-          imageOverlay: "moderate",
         },
         {
           heading: "About Us",

@@ -1,6 +1,6 @@
 import { Block } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
-import { overlayTitleField } from "../fields/overlay-title";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 import { imageUrlField } from "../fields/image";
 import { text } from "payload/dist/fields/validations";
 
@@ -58,7 +58,7 @@ export const HeroVideoBlock: Block = {
         },
       },
     },
-    overlayTitleField,
+    makeOverlayTitleField({ optional: true }),
   ],
 };
 
