@@ -1,5 +1,6 @@
 import { GroupField } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
+import { text } from "payload/dist/fields/validations";
 
 export const imageField: GroupField = {
   name: "image",
@@ -17,6 +18,18 @@ export const imageField: GroupField = {
       },
       type: "text",
       required: true,
+      validate: (val, args) => {
+        if (
+          val &&
+          !val.startsWith(process.env.PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL)
+        ) {
+          return args.t("custom:validation.imageUrlMustBeImageKit", {
+            exampleUrl: `${process.env.PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL}/…`,
+          });
+        }
+
+        return text(val, args);
+      },
       admin: {
         description: {
           en: "Link to an image on ImageKit. You don’t need to optimize the image before uploading it to ImageKit.",

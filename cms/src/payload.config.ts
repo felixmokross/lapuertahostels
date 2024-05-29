@@ -63,4 +63,23 @@ export default buildConfig({
   cors: process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL
     ? [process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL]
     : undefined,
+  i18n: {
+    resources: {
+      en: {
+        custom: {
+          validation: {
+            imageUrlMustBeImageKit: "Must be an ImageKit URL ({{exampleUrl}})",
+          },
+        },
+      },
+      es: {
+        custom: {
+          validation: {
+            imageUrlMustBeImageKit:
+              "Debe ser una URL de ImageKit ({{exampleUrl}})",
+          },
+        },
+      },
+    },
+  },
 });
