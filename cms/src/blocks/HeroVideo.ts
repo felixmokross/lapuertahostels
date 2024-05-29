@@ -1,9 +1,8 @@
-import { Block, Field } from "payload/types";
-import {
-  optionalOverlayTitleFields,
-  overlayTitleField,
-} from "../fields/overlay-title";
+import { Block } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
+import { makeOverlayTitleField } from "../fields/overlay-title";
+import { imageUrlField } from "../fields/image";
+import { text } from "payload/dist/fields/validations";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -29,6 +28,13 @@ export const HeroVideoBlock: Block = {
       },
       type: "text",
       required: true,
+      validate: (val, args) => {
+        if (val && !isValidHttpUrl(val)) {
+          return args.t("custom:validation.mustBeValidUrl");
+        }
+
+        return text(val, args);
+      },
       admin: {
         description: {
           en: "The video should be optimized for web pages before uploading it to ImageKit.",
@@ -38,20 +44,32 @@ export const HeroVideoBlock: Block = {
       },
     },
     {
+      ...imageUrlField,
       name: "previewUrl",
       label: {
         en: "Preview Image URL",
         es: "URL de la imagen de vista previa",
       },
-      type: "text",
       admin: {
+        ...imageUrlField.admin,
         description: {
           en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately to ImageKit.",
           es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado a ImageKit.",
         },
-        placeholder: mediaUrlFieldPlaceholder,
       },
     },
-    ...optionalOverlayTitleFields,
+    makeOverlayTitleField({ optional: true }),
   ],
 };
+
+function isValidHttpUrl(input: string) {
+  let url: URL;
+
+  try {
+    url = new URL(input);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}

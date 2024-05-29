@@ -31,10 +31,11 @@ export const Primary: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "Atrium of La Puerta Azul",
+                alignment: "bottom",
               },
               name: "Atrium",
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   {
                     children: [
@@ -45,13 +46,12 @@ export const Primary: Story = {
                 ],
                 overlay: "intense",
                 position: "center",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Reserve Now",
                   url: "/booking",
                 },
               },
-              imageAlignment: "bottom",
             },
             {
               name: "Room View",
@@ -59,8 +59,8 @@ export const Primary: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
                 alt: "Room view of La Puerta Azul",
               },
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   {
                     children: [
@@ -71,8 +71,8 @@ export const Primary: Story = {
                 ],
                 overlay: "subtle",
                 position: "bottom-left",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Book Now",
                   url: "/booking",
                 },

@@ -1,11 +1,11 @@
-import { Field } from "payload/types";
+import { BlockField } from "payload/types";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { FeaturesBlock } from "../blocks/Features";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { LeadBlock } from "../blocks/Lead";
 import { StoryBlock } from "../blocks/Story";
 
-export const layoutField: Field = {
+export const layoutField: BlockField = {
   name: "layout",
   label: {
     en: "Layout",
@@ -33,5 +33,9 @@ export const layoutField: Field = {
   ],
   admin: {
     initCollapsed: true,
+    description: {
+      en: "Add blocks to create the layout of the page. You can reorder the blocks by dragging and dropping them using the handle on the left side.",
+      es: "Agrega bloques para crear el diseño de la página. Puedes reordenar los bloques arrastrándolos y soltándolos usando la manija en el lado izquierdo.",
+    },
   },
 };

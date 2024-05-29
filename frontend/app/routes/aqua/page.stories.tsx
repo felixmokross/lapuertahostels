@@ -36,8 +36,8 @@ export const Primary: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
                 alt: "Front view of Puerta Aqua",
               },
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   {
                     children: [{ type: "text", text: "Welcome to Your " }],
@@ -49,8 +49,8 @@ export const Primary: Story = {
                   },
                 ],
                 overlay: "intense",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Reserve Now",
                   url: "/booking",
                 },

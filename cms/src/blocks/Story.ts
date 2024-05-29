@@ -1,5 +1,7 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { Block } from "payload/types";
+import { elementIdField } from "../fields/element-id";
+import { imageUrlField } from "../fields/image";
 
 export const StoryBlock: Block = {
   slug: "Story",
@@ -28,6 +30,7 @@ export const StoryBlock: Block = {
       localized: true,
     },
     {
+      // TODO reuse richTextField
       name: "text",
       label: {
         en: "Text",
@@ -42,35 +45,27 @@ export const StoryBlock: Block = {
           leaves: ["bold"],
         },
       }),
-    },
-    {
-      name: "elementId",
-      label: {
-        en: "Element ID",
-        es: "ID de Elemento",
-      },
-      type: "text",
       admin: {
         description: {
-          en: "An element ID allows you to link to this element from other parts of the site. If the ID is 'about-us', you can link to it with an URL ending in '#about-us'.",
-          es: "Un ID de elemento te permite enlazar a este elemento desde otras partes del sitio. Si el ID es 'about-us', puedes enlazar a él con una URL que termine en '#about-us'.",
+          en: "Mark parts of the text as bold to make it stand out. Use two line breaks to create a new paragraph.",
+          es: "Marca partes del texto como negrita para que destaque. Usa dos saltos de línea para crear un nuevo párrafo.",
         },
       },
     },
+    // TODO re-use imageField
     {
+      ...imageUrlField,
       name: "imageUrl",
       label: {
         en: "Image URL",
-        es: "URL de la Imagen",
+        es: "URL de la imagen",
       },
-      type: "text",
-      required: true,
     },
     {
       name: "imageAlt",
       label: {
         en: "Alternative Text of the Image",
-        es: "Texto Alternativo de la Imagen",
+        es: "Texto alternativo de la imagen",
       },
       type: "text",
       required: true,
@@ -80,7 +75,7 @@ export const StoryBlock: Block = {
       name: "imagePosition",
       label: {
         en: "Image Position",
-        es: "Posición de la Imagen",
+        es: "Posición de la imagen",
       },
       type: "radio",
       options: [
@@ -92,9 +87,26 @@ export const StoryBlock: Block = {
       name: "grayscale",
       label: {
         en: "Grayscale",
-        es: "Escala de Grises",
+        es: "Escala de grises",
       },
       type: "checkbox",
+      admin: {
+        description: {
+          en: "Check this box to display the image in grayscale.",
+          es: "Marca esta casilla para mostrar la imagen en escala de grises.",
+        },
+      },
+    },
+    {
+      type: "collapsible",
+      label: {
+        en: "More Options",
+        es: "Más opciones",
+      },
+      fields: [elementIdField],
+      admin: {
+        initCollapsed: true,
+      },
     },
   ],
 };

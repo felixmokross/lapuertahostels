@@ -32,7 +32,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
             text={block.text}
             accommodationCards={block.cards.map((card) => ({
               brand: card.brand as Brand,
-              image: { src: card.imageUrl, alt: card.imageAlt },
+              image: { src: card.image.url, alt: card.image.alt },
               description: card.description,
               id: card.id!,
             }))}
@@ -43,13 +43,13 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
           <ImageWithFloatingTextBlock
             key={block.id}
             id={block.elementId || undefined}
-            heading={block.heading}
+            heading={block.overlayTitle.text}
             text={block.text}
-            textPosition={block.textPosition || undefined}
+            textPosition={block.overlayTitle.position || undefined}
             image={{
-              src: block.imageUrl,
-              alt: block.imageAlt,
-              overlay: block.imageOverlay || undefined,
+              src: block.image.url,
+              alt: block.image.alt,
+              overlay: block.overlayTitle.overlay || undefined,
             }}
           />
         );

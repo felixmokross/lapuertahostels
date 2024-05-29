@@ -85,7 +85,7 @@ export const Default: Story = {
 export const TextLeft: Story = {
   args: {
     ...Default.args,
-    textPosition: "left",
+    textPosition: "top-left",
   },
 };
 

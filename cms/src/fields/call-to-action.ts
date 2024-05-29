@@ -1,6 +1,7 @@
-import { Field } from "payload/types";
+import { GroupField } from "payload/types";
+import { showField } from "./show";
 
-export const callToActionField = {
+export const callToActionField: GroupField = {
   name: "cta",
   label: {
     en: "Call to Action (CTA)",
@@ -8,6 +9,7 @@ export const callToActionField = {
   },
   type: "group",
   fields: [
+    showField,
     {
       name: "text",
       label: {
@@ -17,6 +19,9 @@ export const callToActionField = {
       type: "text",
       localized: true,
       required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData.show,
+      },
     },
     {
       name: "url",
@@ -26,9 +31,9 @@ export const callToActionField = {
       },
       type: "text",
       required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData.show,
+      },
     },
   ],
-  admin: {
-    hideGutter: true,
-  },
-} as Field;
+};
