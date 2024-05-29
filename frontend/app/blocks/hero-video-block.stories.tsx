@@ -4,7 +4,7 @@ import { HeroVideoBlock } from "./hero-video-block";
 import { HeadingHighlight } from "../components/heading";
 
 const meta = {
-  title: "HeroVideoBlock",
+  title: "blocks/Hero Video Block",
   component: HeroVideoBlock,
   argTypes: {},
 } satisfies Meta<typeof Image>;

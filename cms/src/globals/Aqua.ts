@@ -3,15 +3,18 @@ import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 
-export const Home: GlobalConfig = {
-  slug: "home",
+export const Aqua: GlobalConfig = {
+  slug: "aqua",
   label: {
-    en: "Home",
-    es: "Inicio",
+    en: "Aqua",
+    es: "Aqua",
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/home", "/")],
+    afterChange: [makeCachePurgeHook("globals/aqua", "/aqua")],
   },
   fields: [heroField, layoutField],
+  custom: {
+    route: "/aqua",
+  },
 };

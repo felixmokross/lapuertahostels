@@ -1,6 +1,6 @@
 import { Field } from "payload/types";
 
-export const callToAction = {
+export const callToActionField = {
   name: "cta",
   label: {
     en: "Call to Action (CTA)",
@@ -28,4 +28,7 @@ export const callToAction = {
       required: true,
     },
   ],
+  admin: {
+    hideGutter: true,
+  },
 } as Field;

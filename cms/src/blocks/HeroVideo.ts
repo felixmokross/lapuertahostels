@@ -1,21 +1,25 @@
-import { Block } from "payload/types";
-import { overlayTitle } from "../fields/overlay-title";
+import { Block, Field } from "payload/types";
+import {
+  optionalOverlayTitleFields,
+  overlayTitleField,
+} from "../fields/overlay-title";
+import { mediaUrlFieldPlaceholder } from "../common/constants";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
   labels: {
     singular: {
       en: "Hero Video",
-      es: "Video de Héroe",
+      es: "Video de héroe",
     },
     plural: {
       en: "Hero Videos",
-      es: "Videos de Héroe",
+      es: "Videos de héroe",
     },
   },
-  // imageURL: "/assets/blocks/Features.png",
-  // imageAltText:
-  //   "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
+  imageURL: "/assets/blocks/HeroVideo.png",
+  imageAltText:
+    "Preview of the Hero Video block, showing a image with an overlay title and a CTA.",
   fields: [
     {
       name: "videoUrl",
@@ -25,26 +29,29 @@ export const HeroVideoBlock: Block = {
       },
       type: "text",
       required: true,
+      admin: {
+        description: {
+          en: "The video should be optimized for web pages before uploading it to ImageKit.",
+          es: "El video debe estar optimizado para páginas web antes de subirlo a ImageKit.",
+        },
+        placeholder: mediaUrlFieldPlaceholder,
+      },
     },
     {
       name: "previewUrl",
       label: {
         en: "Preview Image URL",
-        es: "URL de la Imagen de Vista Previa",
+        es: "URL de la imagen de vista previa",
       },
       type: "text",
-    },
-    {
-      name: "showOverlayTitle",
-      label: {
-        en: "Show Overlay Title",
-        es: "Mostrar Título con Superposición",
+      admin: {
+        description: {
+          en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately to ImageKit.",
+          es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado a ImageKit.",
+        },
+        placeholder: mediaUrlFieldPlaceholder,
       },
-      type: "checkbox",
     },
-    {
-      ...overlayTitle,
-      admin: { condition: (_, siblingData) => siblingData.showOverlayTitle },
-    },
+    ...optionalOverlayTitleFields,
   ],
 };

@@ -1,23 +1,23 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "./cn";
-import { CarouselImage } from "./carousel-image";
+import { cn } from "../components/cn";
+import { SlideImage } from "../components/slide-image";
 import { Transition } from "@headlessui/react";
-import { ImageTransformation } from "./image";
-import { OverlayTitle } from "./overlay-title";
+import { ImageTransformation } from "../components/image";
+import { OverlayTitle } from "../components/overlay-title";
 
-export type CarouselProps = {
-  items: CarouselItem[];
+export type SlidesBlockProps = {
+  slides: Slide[];
   transformation?: ImageTransformation;
 };
 
-export type CarouselItem = {
+export type Slide = {
   src: string;
   alt: string;
-  title?: CarouselItemTitle;
-  position?: "center" | "bottom";
+  title?: SlideTitle;
+  imageAlignment?: "center" | "bottom";
 };
 
-export type CarouselItemTitle = {
+export type SlideTitle = {
   text: string | ReactNode;
   position?:
     | "top-left"
@@ -26,29 +26,29 @@ export type CarouselItemTitle = {
     | "bottom-right"
     | "center";
   imageOverlay?: "subtle" | "moderate" | "intense";
-  cta?: CarouselItemCallToAction;
+  cta?: SlideCallToAction;
 };
 
-export type CarouselItemCallToAction = {
+export type SlideCallToAction = {
   text: string;
   to: string;
 };
 
-export function Carousel({ items, transformation }: CarouselProps) {
-  if (items.length === 0) {
-    throw new Error("Carousel must have at least one item");
+export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
+  if (slides.length === 0) {
+    throw new Error("Slides Block must have at least one slide");
   }
 
-  const { itemIndex, goTo } = useCarouselState(items);
+  const { slideIndex, goTo } = useSlidesState(slides);
 
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
-      {items.map((item, i) => {
+      {slides.map((slide, i) => {
         return (
           <Transition
             key={i}
             className="h-full"
-            show={i === itemIndex}
+            show={i === slideIndex}
             unmount={false}
             enter="transition-opacity duration-1000"
             enterFrom="opacity-0"
@@ -57,28 +57,28 @@ export function Carousel({ items, transformation }: CarouselProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <CarouselImage
-              src={item.src}
-              alt={item.alt}
+            <SlideImage
+              src={slide.src}
+              alt={slide.alt}
               transformation={transformation}
               withPreview={i === 0}
               className="absolute top-0"
-              position={item.position}
+              alignment={slide.imageAlignment}
             />
-            {item.title && (
+            {slide.title && (
               <OverlayTitle
-                overlay={item.title.imageOverlay}
-                position={item.title.position}
-                cta={item.title.cta}
+                overlay={slide.title.imageOverlay}
+                position={slide.title.position}
+                cta={slide.title.cta}
               >
-                {item.title.text}
+                {slide.title.text}
               </OverlayTitle>
             )}
           </Transition>
         );
       })}
       <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
-        {items.map((item, i) => (
+        {slides.map((slide, i) => (
           <button
             className={cn("group inline-flex h-10 items-center px-2")}
             key={i}
@@ -87,12 +87,12 @@ export function Carousel({ items, transformation }: CarouselProps) {
             <span
               className={cn(
                 "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
-                i === itemIndex
+                i === slideIndex
                   ? "bg-white opacity-100"
                   : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
               )}
             ></span>
-            <span className="sr-only">Go to {item.alt}</span>
+            <span className="sr-only">Go to {slide.alt}</span>
           </button>
         ))}
       </div>
@@ -100,17 +100,17 @@ export function Carousel({ items, transformation }: CarouselProps) {
   );
 }
 
-function useCarouselState(items: CarouselItem[]) {
-  const [itemIndex, setItemIndex] = useState(0);
+function useSlidesState(slides: Slide[]) {
+  const [slideIndex, setSlideIndex] = useState(0);
 
   const intervalRef = useRef(0);
 
   const startInterval = useCallback(() => {
     intervalRef.current = window.setInterval(
-      () => setItemIndex((currentIndex) => (currentIndex + 1) % items.length),
+      () => setSlideIndex((currentIndex) => (currentIndex + 1) % slides.length),
       10_000,
     );
-  }, [items.length]);
+  }, [slides.length]);
 
   function stopInterval() {
     if (intervalRef.current) window.clearInterval(intervalRef.current);
@@ -122,11 +122,11 @@ function useCarouselState(items: CarouselItem[]) {
   }, [startInterval]);
 
   return {
-    itemIndex,
-    goTo(newItemIndex: number) {
+    slideIndex,
+    goTo(newSlideIndex: number) {
       stopInterval();
 
-      setItemIndex(newItemIndex);
+      setSlideIndex(newSlideIndex);
     },
   };
 }

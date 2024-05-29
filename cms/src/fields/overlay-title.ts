@@ -1,12 +1,12 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { Field } from "payload/types";
-import { callToAction } from "./call-to-action";
+import { callToActionField } from "./call-to-action";
 
-export const overlayTitle = {
+export const overlayTitleField = {
   name: "overlayTitle",
   label: {
     en: "Overlay Title",
-    es: "Título con Superposición",
+    es: "Título superpuesto",
   },
   type: "group",
   required: true,
@@ -26,6 +26,12 @@ export const overlayTitle = {
           leaves: ["bold"],
         },
       }),
+      admin: {
+        description: {
+          en: "Mark parts of the text as bold to make it stand out. You can use line breaks to ensure that the text is displayed as you want.",
+          es: "Marca partes del texto como negrita para que destaque. Puedes usar saltos de línea para asegurarte de que el texto se muestre como deseas.",
+        },
+      },
     },
     {
       name: "position",
@@ -68,6 +74,12 @@ export const overlayTitle = {
         { value: "intense", label: { en: "Intense", es: "Intenso" } },
       ],
       defaultValue: "moderate",
+      admin: {
+        description: {
+          en: "The overlay is a semi-transparent black layer that is placed on top of the image to make the text more readable. Choose the intensity that is the best trade-off between readability of the text and brightness of the image.",
+          es: "La superposición es una capa negra semitransparente que se coloca sobre la imagen para que el texto sea más legible. Elige la intensidad que sea el mejor compromiso entre la legibilidad del texto y el brillo de la imagen.",
+        },
+      },
     },
     {
       name: "showCta",
@@ -78,8 +90,32 @@ export const overlayTitle = {
       type: "checkbox",
     },
     {
-      ...callToAction,
-      admin: { condition: (_, siblingData) => siblingData.showCta },
+      ...callToActionField,
+      admin: {
+        ...callToActionField.admin,
+        condition: (_, siblingData) => siblingData.showCta,
+      },
     },
   ],
+  admin: {
+    hideGutter: true,
+  },
 } as Field;
+
+export const optionalOverlayTitleFields = [
+  {
+    name: "showOverlayTitle",
+    label: {
+      en: "Show Overlay Title",
+      es: "Mostrar título superpuesto",
+    },
+    type: "checkbox",
+  },
+  {
+    ...overlayTitleField,
+    admin: {
+      ...overlayTitleField.admin,
+      condition: (_, siblingData) => siblingData.showOverlayTitle,
+    },
+  },
+] as Field[];

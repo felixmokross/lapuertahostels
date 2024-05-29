@@ -29,56 +29,79 @@ export const Primary: Story = {
           slides: [
             {
               name: "Tayrona",
-              title: [
-                { children: [{ text: "Hike Through" }] },
-                {
-                  children: [
-                    { text: "the " },
-                    { text: "Tayrona Park", bold: true },
-                  ],
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+                alt: "View of the beach in Tayrona National Park",
+              },
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  { children: [{ text: "Hike Through" }] },
+                  {
+                    children: [
+                      { text: "the " },
+                      { text: "Tayrona Park", bold: true },
+                    ],
+                  },
+                ],
+                position: "top-left",
+                overlay: "moderate",
+                showCta: true,
+                cta: {
+                  text: "Read More",
+                  url: "/experiences/tayrona",
                 },
-              ],
-              titlePosition: "top-left",
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
-              imageAlt: "View of the beach in Tayrona National Park",
-              ctaUrl: "/experiences/tayrona",
+              },
+              imageAlignment: "center",
               id: "663e6ee0caac5f81e3216b3e",
-              imageOverlay: "moderate",
-              imagePosition: "center",
             },
             {
               name: "Lost City",
-              title: [
-                { children: [{ text: "Find the" }] },
-                { children: [{ text: "Lost City", bold: true }] },
-              ],
-              titlePosition: "top-right",
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
-              imageAlt: "View of the Lost City",
-              ctaUrl: "/experiences/lost-city",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+                alt: "View of the Lost City",
+              },
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  { children: [{ text: "Find the" }] },
+                  { children: [{ text: "Lost City", bold: true }] },
+                ],
+                position: "top-right",
+                overlay: "moderate",
+                showCta: true,
+                cta: {
+                  text: "Read More",
+                  url: "/experiences/lost-city",
+                },
+              },
               id: "663e6fbacaac5f81e3216b7d",
-              imageOverlay: "moderate",
-              imagePosition: "center",
+              imageAlignment: "center",
             },
             {
               name: "Minca",
-              title: [
-                { children: [{ text: "Follow the" }] },
-                { children: [{ text: "Minca River", bold: true }] },
-              ],
-              titlePosition: "bottom-left",
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
-              imageAlt: "View of the forest in the Minca region",
-              ctaUrl: "/experiences/minca",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+                alt: "View of the forest in the Minca region",
+              },
+              showOverlayTitle: true,
+              overlayTitle: {
+                text: [
+                  { children: [{ text: "Follow the" }] },
+                  { children: [{ text: "Minca River", bold: true }] },
+                ],
+                position: "bottom-left",
+                overlay: "moderate",
+                showCta: true,
+                cta: {
+                  text: "Read More",
+                  url: "/experiences/minca",
+                },
+              },
               id: "663e8b33c79934cdb011e7d0",
-              imageOverlay: "moderate",
-              imagePosition: "center",
+              imageAlignment: "center",
             },
           ],
-          slideCta: "Read More",
           id: "663e6ee0caac5f81e3216b3d",
           blockType: "Slides",
         },

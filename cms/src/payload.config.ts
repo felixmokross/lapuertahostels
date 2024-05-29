@@ -9,8 +9,8 @@ import { buildConfig } from "payload/config";
 import { Users } from "./collections/Users";
 import { Home } from "./globals/Home";
 import { Common } from "./globals/Common";
-import { getConfig } from "./common/config";
 import { Azul } from "./globals/Azul";
+import { Aqua } from "./globals/Aqua";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 
@@ -26,9 +26,9 @@ export default buildConfig({
       return config;
     },
     livePreview: {
-      url: async ({ locale, documentInfo }) =>
-        `${(await getConfig()).livePreviewUrl}${documentInfo.global.custom.route || ""}?lng=${locale}`,
-      globals: [Home.slug, Azul.slug],
+      url: ({ locale, documentInfo }) =>
+        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${documentInfo.global.custom.route || ""}?lng=${locale}`,
+      globals: [Home.slug, Azul.slug, Aqua.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
@@ -43,7 +43,7 @@ export default buildConfig({
   },
   editor: slateEditor({}),
   collections: [Users, Brands],
-  globals: [Home, Azul, Common],
+  globals: [Home, Azul, Common, Aqua],
   localization: {
     locales: ["en", "es", "de", "fr"],
     defaultLocale: "en",
@@ -60,7 +60,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
-  cors: process.env.LIVE_PREVIEW_URL
-    ? [process.env.LIVE_PREVIEW_URL]
+  cors: process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL
+    ? [process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL]
     : undefined,
 });

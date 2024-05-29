@@ -1,5 +1,7 @@
 import { Block } from "payload/types";
-import { slidesField } from "../fields/slides";
+import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
+import { imageField } from "../fields/image";
+import { optionalOverlayTitleFields } from "../fields/overlay-title";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -13,20 +15,79 @@ export const SlidesBlock: Block = {
       es: "Diapositivas",
     },
   },
-  // imageURL: "/assets/blocks/Features.png",
-  // imageAltText:
-  //   "Preview of the Features block, showing an images with a short texts on the side, in alternating manner.",
+  imageURL: "/assets/blocks/Slides.png",
+  imageAltText:
+    "Preview of the Slides block, showing an image with an overlay title, CTA, and controls to switch slides.",
   fields: [
-    slidesField,
     {
-      name: "slideCta",
+      name: "slides",
       label: {
-        en: "Slide CTA",
-        es: "CTA de Diapositiva",
+        en: "Slides",
+        es: "Diapositivas",
       },
-      type: "text",
+      labels: {
+        singular: {
+          en: "Slide",
+          es: "Diapositiva",
+        },
+        plural: {
+          en: "Slides",
+          es: "Diapositivas",
+        },
+      },
+      type: "array",
       required: true,
-      localized: true,
+      minRows: 1,
+      maxRows: 6,
+      fields: [
+        {
+          name: "name",
+          label: {
+            en: "Name",
+            es: "Nombre",
+          },
+          type: "text",
+          required: true,
+          admin: {
+            description: {
+              en: "Give the slide a name to identify it in the list. This name is not shown to the user.",
+              es: "Dale a la diapositiva un nombre para identificarla en la lista. Este nombre no se muestra al usuario.",
+            },
+          },
+        },
+        imageField,
+        {
+          // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
+          name: "imageAlignment",
+          label: {
+            en: "Image Alignment",
+            es: "Alineación de la imagen",
+          },
+          type: "radio",
+          options: [
+            { value: "center", label: { en: "Center", es: "Centro" } },
+            { value: "bottom", label: { en: "Bottom", es: "Abajo" } },
+          ],
+          defaultValue: "center",
+          admin: {
+            description: {
+              en: "Depending on the user’s device or window size, the slide often has a different aspect ratio than the image. This setting defines how the image is aligned within the slide area.",
+              es: "Dependiendo del dispositivo del usuario o del tamaño de la ventana, la diapositiva a menudo tiene una relación de aspecto diferente a la de la imagen. Este ajuste define cómo se alinea la imagen dentro del área de la diapositiva.",
+            },
+          },
+        },
+        ...optionalOverlayTitleFields,
+      ],
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: ({ data }: RowLabelArgs) => data?.name,
+        },
+        description: {
+          en: "When the user visits the page, the slides are automatically displayed in a loop. The user can also switch slides using the controls. You can add up to six slides.",
+          es: "Cuando el usuario visita la página, las diapositivas se muestran automáticamente en un bucle. El usuario también puede cambiar las diapositivas utilizando los controles. Puedes añadir hasta seis diapositivas.",
+        },
+      },
     },
   ],
 };
