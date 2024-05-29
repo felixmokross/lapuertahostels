@@ -69,6 +69,7 @@ export default buildConfig({
         custom: {
           validation: {
             imageUrlMustBeImageKit: "Must be an ImageKit URL ({{exampleUrl}})",
+            mustBeValidUrl: "Must be a valid URL",
           },
         },
       },
@@ -77,6 +78,7 @@ export default buildConfig({
           validation: {
             imageUrlMustBeImageKit:
               "Debe ser una URL de ImageKit ({{exampleUrl}})",
+            mustBeValidUrl: "Debe ser una URL válida",
           },
         },
       },
