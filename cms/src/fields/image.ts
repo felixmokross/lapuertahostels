@@ -1,7 +1,7 @@
-import { Field } from "payload/types";
+import { GroupField } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 
-export const imageField = {
+export const imageField: GroupField = {
   name: "image",
   label: {
     en: "Image",
@@ -42,4 +42,4 @@ export const imageField = {
       },
     },
   ],
-} as Field;
+};

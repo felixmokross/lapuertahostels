@@ -1,11 +1,11 @@
-import { Field } from "payload/types";
+import { BlockField } from "payload/types";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { FeaturesBlock } from "../blocks/Features";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { LeadBlock } from "../blocks/Lead";
 import { StoryBlock } from "../blocks/Story";
 
-export const layoutField: Field = {
+export const layoutField: BlockField = {
   name: "layout",
   label: {
     en: "Layout",

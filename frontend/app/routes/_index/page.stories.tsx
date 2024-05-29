@@ -33,8 +33,8 @@ export const Primary: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
                 alt: "View of the beach in Tayrona National Park",
               },
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   { children: [{ text: "Hike Through" }] },
                   {
@@ -46,13 +46,12 @@ export const Primary: Story = {
                 ],
                 position: "top-left",
                 overlay: "moderate",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Read More",
                   url: "/experiences/tayrona",
                 },
               },
-              imageAlignment: "center",
               id: "663e6ee0caac5f81e3216b3e",
             },
             {
@@ -61,22 +60,21 @@ export const Primary: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
                 alt: "View of the Lost City",
               },
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   { children: [{ text: "Find the" }] },
                   { children: [{ text: "Lost City", bold: true }] },
                 ],
                 position: "top-right",
                 overlay: "moderate",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Read More",
                   url: "/experiences/lost-city",
                 },
               },
               id: "663e6fbacaac5f81e3216b7d",
-              imageAlignment: "center",
             },
             {
               name: "Minca",
@@ -84,22 +82,21 @@ export const Primary: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
                 alt: "View of the forest in the Minca region",
               },
-              showOverlayTitle: true,
               overlayTitle: {
+                show: true,
                 text: [
                   { children: [{ text: "Follow the" }] },
                   { children: [{ text: "Minca River", bold: true }] },
                 ],
                 position: "bottom-left",
                 overlay: "moderate",
-                showCta: true,
                 cta: {
+                  show: true,
                   text: "Read More",
                   url: "/experiences/minca",
                 },
               },
               id: "663e8b33c79934cdb011e7d0",
-              imageAlignment: "center",
             },
           ],
           id: "663e6ee0caac5f81e3216b3d",

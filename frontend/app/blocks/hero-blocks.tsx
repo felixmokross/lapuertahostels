@@ -18,19 +18,19 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
             src={block.videoUrl}
             previewSrc={block.previewUrl || undefined}
             overlayTitle={
-              block.showOverlayTitle
+              block.overlayTitle?.show
                 ? {
                     children: (
                       <RichText HighlightComponent={HeadingHighlight}>
-                        {block.overlayTitle!.text!}
+                        {block.overlayTitle.text!}
                       </RichText>
                     ),
-                    overlay: block.overlayTitle!.overlay || undefined,
-                    position: block.overlayTitle!.position || undefined,
-                    cta: block.overlayTitle!.showCta
+                    overlay: block.overlayTitle.overlay || undefined,
+                    position: block.overlayTitle.position || undefined,
+                    cta: block.overlayTitle.cta?.show
                       ? {
-                          text: block.overlayTitle!.cta!.text,
-                          to: block.overlayTitle!.cta!.url,
+                          text: block.overlayTitle.cta.text!,
+                          to: block.overlayTitle.cta.url!,
                         }
                       : undefined,
                   }
@@ -45,24 +45,24 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
             slides={block.slides.map<Slide>((slide) => ({
               src: slide.image.url,
               alt: slide.image.alt,
-              title: slide.showOverlayTitle
+              title: slide.overlayTitle?.show
                 ? {
                     text: (
                       <RichText HighlightComponent={HeadingHighlight}>
-                        {slide.overlayTitle!.text}
+                        {slide.overlayTitle.text!}
                       </RichText>
                     ),
-                    position: slide.overlayTitle!.position || undefined,
-                    cta: slide.overlayTitle!.showCta
+                    position: slide.overlayTitle.position || undefined,
+                    cta: slide.overlayTitle.cta?.show
                       ? {
-                          text: slide.overlayTitle!.cta!.text,
-                          to: slide.overlayTitle!.cta!.url,
+                          text: slide.overlayTitle.cta.text!,
+                          to: slide.overlayTitle.cta.url!,
                         }
                       : undefined,
-                    imageOverlay: slide.overlayTitle!.overlay || undefined,
+                    imageOverlay: slide.overlayTitle?.overlay || undefined,
                   }
                 : undefined,
-              imageAlignment: slide.imageAlignment || undefined,
+              imageAlignment: slide.image.alignment || undefined,
             }))}
             transformation={{
               aspectRatio: { width: 4, height: 3 },

@@ -1,9 +1,6 @@
-import { Block, Field } from "payload/types";
-import {
-  optionalOverlayTitleFields,
-  overlayTitleField,
-} from "../fields/overlay-title";
+import { Block } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
+import { overlayTitleField } from "../fields/overlay-title";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -52,6 +49,6 @@ export const HeroVideoBlock: Block = {
         placeholder: mediaUrlFieldPlaceholder,
       },
     },
-    ...optionalOverlayTitleFields,
+    overlayTitleField,
   ],
 };
