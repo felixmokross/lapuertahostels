@@ -230,8 +230,12 @@ export const Primary: Story = {
           },
           overlayTitle: {
             text: [
-              { children: [{ text: "Do You Know " }] },
-              { children: [{ text: "Santa Marta?", bold: true }] },
+              {
+                children: [
+                  { text: "Do You Know " },
+                  { text: "Santa Marta?", bold: true },
+                ],
+              },
             ],
             position: "top-right",
             overlay: "moderate",
