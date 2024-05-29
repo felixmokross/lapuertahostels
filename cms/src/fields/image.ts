@@ -1,7 +1,39 @@
-import { Field } from "payload/types";
+import { GroupField, TextField, ValidateOptions } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
+import { text } from "payload/dist/fields/validations";
 
-export const imageField = {
+export const imageUrlField: TextField = {
+  name: "url",
+  label: {
+    en: "URL",
+    es: "URL",
+  },
+  type: "text",
+  required: true,
+  validate: validateImageUrl,
+  admin: {
+    description: {
+      en: "Link to an image on ImageKit. You don’t need to optimize the image before uploading it to ImageKit.",
+      es: "Enlace a una imagen en ImageKit. No es necesario optimizar la imagen antes de subirla a ImageKit.",
+    },
+    placeholder: mediaUrlFieldPlaceholder,
+  },
+};
+
+function validateImageUrl(
+  val: string,
+  args: ValidateOptions<unknown, unknown, unknown>,
+) {
+  if (val && !val.startsWith(process.env.PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL)) {
+    return args.t("custom:validation.imageUrlMustBeImageKit", {
+      exampleUrl: `${process.env.PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL}/…`,
+    });
+  }
+
+  return text(val, args);
+}
+
+export const imageField: GroupField = {
   name: "image",
   label: {
     en: "Image",
@@ -9,22 +41,7 @@ export const imageField = {
   },
   type: "group",
   fields: [
-    {
-      name: "url",
-      label: {
-        en: "URL",
-        es: "URL",
-      },
-      type: "text",
-      required: true,
-      admin: {
-        description: {
-          en: "Link to an image on ImageKit. You don’t need to optimize the image before uploading it to ImageKit.",
-          es: "Enlace a una imagen en ImageKit. No es necesario optimizar la imagen antes de subirla a ImageKit.",
-        },
-        placeholder: mediaUrlFieldPlaceholder,
-      },
-    },
+    imageUrlField,
     {
       name: "alt",
       label: {
@@ -42,4 +59,4 @@ export const imageField = {
       },
     },
   ],
-} as Field;
+};

@@ -1,63 +1,28 @@
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { Block } from "payload/types";
+import { elementIdField } from "../fields/element-id";
+import { headingField } from "../fields/heading";
+import { richTextField } from "../fields/rich-text";
+import { imageField } from "../fields/image";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
   labels: {
     singular: {
       en: "Accommodation Selector",
-      es: "Selector de Alojamiento",
+      es: "Selector de alojamiento",
     },
     plural: {
       en: "Accommodation Selectors",
-      es: "Selectores de Alojamiento",
+      es: "Selectores de alojamiento",
     },
   },
   imageURL: "/assets/blocks/AccommodationSelector.png",
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
-    {
-      name: "elementId",
-      label: {
-        en: "Element ID",
-        es: "ID de Elemento",
-      },
-      type: "text",
-      admin: {
-        description: {
-          en: "An element ID allows you to link to this element from other parts of the site. If the ID is 'about-us', you can link to it with an URL ending in '#about-us'.",
-          es: "Un ID de elemento te permite enlazar a este elemento desde otras partes del sitio. Si el ID es 'about-us', puedes enlazar a él con una URL que termine en '#about-us'.",
-        },
-      },
-    },
-    {
-      name: "heading",
-      label: {
-        en: "Heading",
-        es: "Título",
-      },
-      type: "text",
-      required: true,
-      localized: true,
-    },
-    {
-      name: "text",
-      label: {
-        en: "Text",
-        es: "Texto",
-      },
-      type: "richText",
-      required: true,
-      localized: true,
-      editor: slateEditor({
-        admin: {
-          elements: [],
-          leaves: ["bold"],
-        },
-      }),
-    },
+    headingField,
+    richTextField,
     {
       name: "cards",
       label: {
@@ -80,32 +45,14 @@ export const AccommodationSelectorBlock: Block = {
           filterOptions: { id: { not_equals: "puerta" } },
           required: true,
         },
-        {
-          name: "imageUrl",
-          label: {
-            en: "Image URL",
-            es: "URL de la Imagen",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "imageAlt",
-          label: {
-            en: "Alternative Text of the Image",
-            es: "Texto Alternativo de la Imagen",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
+        imageField,
         {
           name: "description",
           label: {
             en: "Description",
             es: "Descripción",
           },
-          type: "text",
+          type: "textarea",
           required: true,
           localized: true,
         },
@@ -115,6 +62,21 @@ export const AccommodationSelectorBlock: Block = {
         components: {
           RowLabel: ({ data }: RowLabelArgs) => data?.brand,
         },
+        description: {
+          en: "Each card represents an accommodation brand. You can change their order and update their image and description here.",
+          es: "Cada tarjeta representa una marca de alojamiento. Puedes cambiar su orden y actualizar su imagen y descripción aquí.",
+        },
+      },
+    },
+    {
+      type: "collapsible",
+      label: {
+        en: "More Options",
+        es: "Más opciones",
+      },
+      fields: [elementIdField],
+      admin: {
+        initCollapsed: true,
       },
     },
   ],

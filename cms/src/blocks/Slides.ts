@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { imageField } from "../fields/image";
-import { optionalOverlayTitleFields } from "../fields/overlay-title";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -55,28 +55,33 @@ export const SlidesBlock: Block = {
             },
           },
         },
-        imageField,
         {
-          // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
-          name: "imageAlignment",
-          label: {
-            en: "Image Alignment",
-            es: "Alineación de la imagen",
-          },
-          type: "radio",
-          options: [
-            { value: "center", label: { en: "Center", es: "Centro" } },
-            { value: "bottom", label: { en: "Bottom", es: "Abajo" } },
-          ],
-          defaultValue: "center",
-          admin: {
-            description: {
-              en: "Depending on the user’s device or window size, the slide often has a different aspect ratio than the image. This setting defines how the image is aligned within the slide area.",
-              es: "Dependiendo del dispositivo del usuario o del tamaño de la ventana, la diapositiva a menudo tiene una relación de aspecto diferente a la de la imagen. Este ajuste define cómo se alinea la imagen dentro del área de la diapositiva.",
+          ...imageField,
+          fields: [
+            ...imageField.fields,
+            {
+              // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
+              name: "alignment",
+              label: {
+                en: "Alignment",
+                es: "Alineación",
+              },
+              type: "radio",
+              options: [
+                { value: "center", label: { en: "Center", es: "Centro" } },
+                { value: "bottom", label: { en: "Bottom", es: "Abajo" } },
+              ],
+              defaultValue: "center",
+              admin: {
+                description: {
+                  en: "Depending on the user’s device or window size, the slide often has a different aspect ratio than the image. This setting defines how the image is aligned within the slide area.",
+                  es: "Dependiendo del dispositivo del usuario o del tamaño de la ventana, la diapositiva a menudo tiene una relación de aspecto diferente a la de la imagen. Este ajuste define cómo se alinea la imagen dentro del área de la diapositiva.",
+                },
+              },
             },
-          },
+          ],
         },
-        ...optionalOverlayTitleFields,
+        makeOverlayTitleField({ optional: true }),
       ],
       admin: {
         initCollapsed: true,
