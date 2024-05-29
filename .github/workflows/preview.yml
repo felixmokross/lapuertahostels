@@ -97,6 +97,7 @@ jobs:
             --image-label v${{ steps.version.outputs.version }} \
             --env CACHE_REFRESH_TARGET_TYPE=fly \
             --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
+            --env PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --build-arg PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
             --build-arg PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
         working-directory: cms
