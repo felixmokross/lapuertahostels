@@ -2,10 +2,10 @@ import { RichText } from "~/common/rich-text";
 import { Slide, SlidesBlock } from "~/blocks/slides-block";
 import { HeadingHighlight } from "~/components/heading";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
-import { Home } from "~/payload-types";
+import { Page } from "~/payload-types";
 
 export type HeroBlocksProps = {
-  data: NonNullable<Home["hero"]>;
+  data: NonNullable<Page["hero"]>;
 };
 
 export function HeroBlocks({ data }: HeroBlocksProps) {
