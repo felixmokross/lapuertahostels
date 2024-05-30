@@ -3,6 +3,7 @@ import { Common as CommonType } from "../payload-types";
 import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { showField } from "../fields/show";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { validateUrl } from "../common/validation";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -122,6 +123,7 @@ export const Common: GlobalConfig = {
                 es: "URL",
               },
               required: true,
+              validate: validateUrl,
             },
           ],
           admin: {
