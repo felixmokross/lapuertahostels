@@ -8,8 +8,8 @@ import { Link } from "./link";
 
 export type BannerProps = {
   children: string;
-  cta: string;
-  ctaTo: string;
+  cta?: string;
+  ctaTo?: string;
 };
 
 export function Banner({ children, cta, ctaTo }: BannerProps) {
@@ -29,10 +29,16 @@ export function Banner({ children, cta, ctaTo }: BannerProps) {
       leaveTo="-translate-y-full"
     >
       <div className="leading-6">
-        {children} <span className="mx-1">&middot;</span>{" "}
-        <Link to={ctaTo} className="text-nowrap font-bold hover:underline">
-          <strong>{cta}</strong>
-        </Link>
+        {children}
+        {cta && ctaTo && (
+          <>
+            {" "}
+            <span className="mx-1">&middot;</span>{" "}
+            <Link to={ctaTo} className="text-nowrap font-bold hover:underline">
+              <strong>{cta}</strong>
+            </Link>
+          </>
+        )}
       </div>
       <div className="flex flex-1 justify-end">
         <button

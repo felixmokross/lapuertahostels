@@ -18,3 +18,11 @@ export const Primary: Story = {
     ctaTo: "/cta",
   },
 };
+
+export const WithoutCallToAction: Story = {
+  args: {
+    ...Primary.args,
+    cta: undefined,
+    ctaTo: undefined,
+  },
+};

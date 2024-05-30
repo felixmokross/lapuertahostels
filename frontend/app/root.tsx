@@ -151,12 +151,18 @@ export default function App() {
           </div>
         ) : (
           <ThemeProvider brand={brand}>
-            {common.banner?.message && (
+            {common.banner?.show && (
               <Banner
-                cta={`${common.banner.cta} →`}
-                ctaTo={common.banner.ctaUrl || "#"}
+                cta={
+                  common.banner.cta?.show
+                    ? `${common.banner.cta.text} →`
+                    : undefined
+                }
+                ctaTo={
+                  common.banner.cta?.show ? common.banner.cta.url! : undefined
+                }
               >
-                {common.banner.message}
+                {common.banner.message!}
               </Banner>
             )}
             <Header brand={brand} allBrands={allBrands} />
