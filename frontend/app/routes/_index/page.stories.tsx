@@ -22,8 +22,10 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     content: {
+      id: "home",
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
+      url: "/",
       hero: [
         {
           slides: [
@@ -388,7 +390,6 @@ export const Primary: Story = {
           blockName: "About Us",
         },
       ],
-      id: "663e72f1fb66f2adea0300f9",
     },
   },
 };

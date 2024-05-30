@@ -1,9 +1,9 @@
 import { LayoutBlocks } from "~/blocks/layout-blocks";
 import { HeroBlocks } from "~/blocks/hero-blocks";
-import { Aqua } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 
 export type PageProps = {
-  content: Omit<Aqua, "id">;
+  content: PageType;
 };
 
 export function Page({ content }: PageProps) {

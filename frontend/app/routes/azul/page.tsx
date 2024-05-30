@@ -1,9 +1,9 @@
-import { Azul } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 import { LayoutBlocks } from "~/blocks/layout-blocks";
 import { HeroBlocks } from "~/blocks/hero-blocks";
 
 export type PageProps = {
-  content: Omit<Azul, "id">;
+  content: PageType;
 };
 
 export function Page({ content }: PageProps) {

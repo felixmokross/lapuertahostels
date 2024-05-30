@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { Aqua, Azul, Brand, Common, Home } from "~/payload-types";
+import { Brand, Common, Page } from "~/payload-types";
 import path from "path";
 
 const CACHE_DIR = "./.cms-cache";
@@ -73,15 +73,15 @@ async function loadData(url: string, locale: string) {
 }
 
 export async function getHome(locale: string) {
-  return (await getData("globals/home", locale)) as Home;
+  return (await getData("pages/home", locale)) as Page;
 }
 
 export async function getAzul(locale: string) {
-  return (await getData("globals/azul", locale)) as Azul;
+  return (await getData("pages/azul", locale)) as Page;
 }
 
 export async function getAqua(locale: string) {
-  return (await getData("globals/aqua", locale)) as Aqua;
+  return (await getData("pages/aqua", locale)) as Page;
 }
 
 export async function getCommon(locale: string) {

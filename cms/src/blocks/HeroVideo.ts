@@ -2,7 +2,7 @@ import { Block } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { imageUrlField } from "../fields/image";
-import { text } from "payload/dist/fields/validations";
+import { validateUrl } from "../common/validation";
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -28,13 +28,7 @@ export const HeroVideoBlock: Block = {
       },
       type: "text",
       required: true,
-      validate: (val, args) => {
-        if (val && !isValidHttpUrl(val)) {
-          return args.t("custom:validation.mustBeValidUrl");
-        }
-
-        return text(val, args);
-      },
+      validate: validateUrl,
       admin: {
         description: {
           en: "The video should be optimized for web pages before uploading it to ImageKit.",
@@ -61,15 +55,3 @@ export const HeroVideoBlock: Block = {
     makeOverlayTitleField({ optional: true }),
   ],
 };
-
-function isValidHttpUrl(input: string) {
-  let url: URL;
-
-  try {
-    url = new URL(input);
-  } catch (_) {
-    return false;
-  }
-
-  return url.protocol === "http:" || url.protocol === "https:";
-}

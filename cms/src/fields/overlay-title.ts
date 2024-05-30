@@ -1,12 +1,18 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { GroupField } from "payload/types";
-import { callToActionField } from "./call-to-action";
+import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsCallToAction?: boolean;
 };
+
+const callToActionField = makeCallToActionField({
+  optional: true,
+  showByDefault: false,
+});
+
 export function makeOverlayTitleField({
   optional = false,
   supportsCallToAction = true,

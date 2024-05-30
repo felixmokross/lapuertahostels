@@ -1,4 +1,4 @@
-import { Brand, Home } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadBlock } from "./lead-block";
@@ -8,7 +8,7 @@ import { RichText } from "~/common/rich-text";
 import { ParagraphHighlight } from "~/components/paragraph";
 
 type LayoutBlocksProps = {
-  data: NonNullable<Home["layout"]>;
+  data: NonNullable<Page["layout"]>;
 };
 
 export function LayoutBlocks({ data }: LayoutBlocksProps) {

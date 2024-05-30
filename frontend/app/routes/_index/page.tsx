@@ -1,9 +1,9 @@
-import { Home } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 import { LayoutBlocks } from "~/blocks/layout-blocks";
 import { HeroBlocks } from "~/blocks/hero-blocks";
 
 export type PageProps = {
-  content: Home;
+  content: PageType;
 };
 
 export function Page({ content }: PageProps) {

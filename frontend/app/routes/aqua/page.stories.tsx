@@ -24,6 +24,10 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     content: {
+      id: "aqua",
+      createdAt: "2024-05-10T19:18:09.727Z",
+      updatedAt: "2024-05-18T16:01:55.117Z",
+      url: "/aqua",
       hero: [
         {
           blockType: "Slides",

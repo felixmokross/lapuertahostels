@@ -1,12 +1,17 @@
 import { GlobalConfig } from "payload/types";
 import { Common as CommonType } from "../payload-types";
-import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cachePurgeHook";
+import { showField } from "../fields/show";
+import { makeCallToActionField } from "../fields/call-to-action";
+import { validateUrl } from "../common/validation";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
   { label: "Instagram", value: "instagram" },
   { label: "WhatsApp", value: "whatsapp" },
 ];
+
+const callToActionField = makeCallToActionField({ optional: true });
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -16,7 +21,7 @@ export const Common: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/common", "/")],
+    afterChange: [({ req }) => cachePurgeHook("globals/common", "/", req)],
   },
   fields: [
     {
@@ -26,7 +31,14 @@ export const Common: GlobalConfig = {
         es: "Banner",
       },
       type: "group",
+      admin: {
+        description: {
+          en: "The banner is useful to announce promotions or important news and can have a call to action. It is shown on all pages.",
+          es: "El banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Se muestra en todas las páginas.",
+        },
+      },
       fields: [
+        showField,
         {
           name: "message",
           label: {
@@ -35,23 +47,16 @@ export const Common: GlobalConfig = {
           },
           localized: true,
           type: "text",
+          admin: {
+            condition: (_, siblingData) => siblingData.show,
+          },
         },
         {
-          name: "cta",
-          label: {
-            en: "CTA",
-            es: "CTA",
+          ...callToActionField,
+          admin: {
+            ...callToActionField.admin,
+            condition: (_, siblingData) => siblingData.show,
           },
-          localized: true,
-          type: "text",
-        },
-        {
-          name: "ctaUrl",
-          label: {
-            en: "CTA URL",
-            es: "URL del CTA",
-          },
-          type: "text",
         },
       ],
     },
@@ -59,7 +64,7 @@ export const Common: GlobalConfig = {
       name: "footer",
       label: {
         en: "Footer",
-        es: "Pie de Página",
+        es: "Pie de página",
       },
       type: "group",
       fields: [
@@ -76,7 +81,7 @@ export const Common: GlobalConfig = {
           name: "copyright",
           label: {
             en: "Copyright",
-            es: "Derechos de Autor",
+            es: "Derechos de autor",
           },
           type: "text",
           required: true,
@@ -87,7 +92,17 @@ export const Common: GlobalConfig = {
           name: "socialLinks",
           label: {
             en: "Social Links",
-            es: "Enlaces Sociales",
+            es: "Enlaces sociales",
+          },
+          labels: {
+            singular: {
+              en: "Social Link",
+              es: "Enlace social",
+            },
+            plural: {
+              en: "Social Links",
+              es: "Enlaces sociales",
+            },
           },
           fields: [
             {
@@ -108,6 +123,7 @@ export const Common: GlobalConfig = {
                 es: "URL",
               },
               required: true,
+              validate: validateUrl,
             },
           ],
           admin: {
@@ -127,7 +143,17 @@ export const Common: GlobalConfig = {
           name: "linkGroups",
           label: {
             en: "Link Groups",
-            es: "Grupos de Enlaces",
+            es: "Grupos de enlaces",
+          },
+          labels: {
+            singular: {
+              en: "Link Group",
+              es: "Grupo de enlaces",
+            },
+            plural: {
+              en: "Link Groups",
+              es: "Grupos de enlaces",
+            },
           },
           type: "array",
           fields: [
@@ -146,6 +172,16 @@ export const Common: GlobalConfig = {
               label: {
                 en: "Links",
                 es: "Enlaces",
+              },
+              labels: {
+                singular: {
+                  en: "Link",
+                  es: "Enlace",
+                },
+                plural: {
+                  en: "Links",
+                  es: "Enlaces",
+                },
               },
               type: "array",
               required: true,
@@ -192,16 +228,16 @@ export const Common: GlobalConfig = {
         {
           name: "newsletter",
           label: {
-            en: "Newsletter",
-            es: "Boletín",
+            en: "Newsletter Form",
+            es: "Formulario de Boletín",
           },
           type: "group",
           fields: [
             {
               name: "show",
               label: {
-                en: "Show Newsletter Form",
-                es: "Mostrar Formulario de Boletín",
+                en: "Show",
+                es: "Mostrar",
               },
               type: "checkbox",
             },
@@ -235,7 +271,7 @@ export const Common: GlobalConfig = {
               name: "emailPlaceholder",
               label: {
                 en: "Email Placeholder",
-                es: "Marcador de Correo Electrónico",
+                es: "Marcador de correo electrónico",
               },
               localized: true,
               required: true,
@@ -248,7 +284,7 @@ export const Common: GlobalConfig = {
               name: "buttonLabel",
               label: {
                 en: "Button Label",
-                es: "Etiqueta del Botón",
+                es: "Etiqueta del botón",
               },
               localized: true,
               required: true,
