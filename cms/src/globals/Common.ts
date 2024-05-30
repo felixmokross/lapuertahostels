@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload/types";
 import { Common as CommonType } from "../payload-types";
-import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cachePurgeHook";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -16,7 +16,7 @@ export const Common: GlobalConfig = {
   },
   access: { read: () => true },
   hooks: {
-    afterChange: [makeCachePurgeHook("globals/common", "/")],
+    afterChange: [({ req }) => cachePurgeHook("globals/common", "/", req)],
   },
   fields: [
     {

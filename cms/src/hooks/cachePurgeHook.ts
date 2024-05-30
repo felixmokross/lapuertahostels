@@ -2,25 +2,25 @@ import { resolve6 } from "dns/promises";
 import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
 import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
 
-export function makeCachePurgeHook(dataUrl: string, primingUrl: string) {
-  return async function ({
-    req,
-  }: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]) {
-    // afterChangeHook runs before the transaction is committed
-    // – so we need to commit it before refreshing the cache to avoid
-    // that the app pulls old data when priming the cache
-    // As suggested by the Payload team
-    // See https://github.com/payloadcms/payload/issues/5886
-    console.log("Committing transaction before refreshing cache.");
-    const { payload, transactionID } = req;
-    await payload.db.commitTransaction(transactionID);
+export async function cachePurgeHook(
+  dataUrl: string,
+  primingUrl: string,
+  req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
+) {
+  // afterChangeHook runs before the transaction is committed
+  // – so we need to commit it before refreshing the cache to avoid
+  // that the app pulls old data when priming the cache
+  // As suggested by the Payload team
+  // See https://github.com/payloadcms/payload/issues/5886
+  console.log("Committing transaction before refreshing cache.");
+  const { payload, transactionID } = req;
+  await payload.db.commitTransaction(transactionID);
 
-    try {
-      await refreshCacheForTarget(dataUrl, primingUrl);
-    } catch (e) {
-      console.error("Failed to refresh cache:", e);
-    }
-  };
+  try {
+    await refreshCacheForTarget(dataUrl, primingUrl);
+  } catch (e) {
+    console.error("Failed to refresh cache:", e);
+  }
 }
 
 async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {

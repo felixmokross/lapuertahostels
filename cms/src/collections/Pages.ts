@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { makeCachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 
@@ -24,9 +24,8 @@ export const Pages: CollectionConfig = {
     delete: () => false,
   },
   hooks: {
-    // TODO improve this
     afterChange: [
-      (args) => makeCachePurgeHook(`pages/${args.doc.id}`, args.doc.url)(args),
+      ({ doc, req }) => cachePurgeHook(`pages/${doc.id}`, doc.url, req),
     ],
   },
   fields: [
