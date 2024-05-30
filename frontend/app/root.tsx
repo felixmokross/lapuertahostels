@@ -130,7 +130,7 @@ export default function App() {
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
   return (
-    <html lang={i18n.language} dir={i18n.dir()}>
+    <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
