@@ -51,6 +51,10 @@ export const Brands: CollectionConfig = {
         es: "URL del enlace de inicio",
       },
       type: "text",
+      access: {
+        create: () => false,
+        update: () => false,
+      },
       required: true,
     },
     {

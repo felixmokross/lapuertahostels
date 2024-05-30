@@ -46,6 +46,10 @@ export const Pages: CollectionConfig = {
       },
       type: "text",
       required: true,
+      access: {
+        create: () => false,
+        update: () => false,
+      },
     },
     heroField,
     layoutField,
