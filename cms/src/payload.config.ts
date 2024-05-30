@@ -24,8 +24,8 @@ export default buildConfig({
       return config;
     },
     livePreview: {
-      url: ({ locale, documentInfo }) =>
-        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${documentInfo.global.custom.route || ""}?lng=${locale}`,
+      url: ({ locale, data }) =>
+        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${data.url}?lng=${locale}`,
       collections: [Pages.slug],
     },
     meta: {
