@@ -1,21 +1,16 @@
-import { LoaderFunctionArgs, SerializeFrom } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/components/live-preview";
 import i18next from "~/i18next.server";
 import { Page } from "../components/page";
 import { getPage } from "~/common/cms-data";
-import { type loader as rootLoader } from "~/root";
 import { getPageTitle } from "~/common/meta";
 
-export const meta: MetaFunction<typeof loader> = ({ matches, data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) throw new Error("No loader data");
 
-  const rootMatch = matches.find((match) => match.id === "root");
-  if (!rootMatch) throw new Error("No root match");
-
-  const { brand } = rootMatch.data as SerializeFrom<typeof rootLoader>;
   return [
-    { title: getPageTitle(data.content, brand) },
+    { title: getPageTitle(data.content) },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

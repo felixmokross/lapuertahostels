@@ -10,7 +10,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  ShouldRevalidateFunctionArgs,
   useLoaderData,
 } from "@remix-run/react";
 
@@ -19,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Banner } from "./components/banner";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer";
-import { getBrandIdFromPath, ThemeProvider } from "./brands";
+import { ThemeProvider, useBrand } from "./brands";
 import i18next from "./i18next.server";
 import { getBrands, getCommon } from "./common/cms-data";
 import { OptInLivePreview } from "./components/live-preview";
@@ -77,21 +76,6 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export function shouldRevalidate({
-  currentUrl,
-  nextUrl,
-  defaultShouldRevalidate,
-}: ShouldRevalidateFunctionArgs) {
-  const currentBrandId = getBrandIdFromPath(currentUrl.pathname);
-  const nextBrandId = getBrandIdFromPath(nextUrl.pathname);
-  if (currentBrandId !== nextBrandId) {
-    console.log("Brand changed, revalidating");
-    return true;
-  }
-
-  return defaultShouldRevalidate;
-}
-
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
@@ -100,7 +84,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
 
-  const brandId = getBrandIdFromPath(new URL(request.url).pathname);
   const locale = await i18next.getLocale(request);
 
   const [allBrands, common] = await Promise.all([
@@ -108,11 +91,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     getCommon(locale),
   ]);
 
-  const brand = allBrands.find((b) => b.id === brandId);
-  if (!brand) throw new Error(`Brand not found: ${brandId}`);
-
   return json({
-    brand,
     allBrands,
     common,
     environment: {
@@ -134,9 +113,12 @@ export const handle = {
 };
 
 export default function App() {
-  const { common, analyticsDomain, comingSoon, brand, allBrands } =
+  const { common, analyticsDomain, comingSoon, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
+
+  const brand = useBrand();
+
   return (
     <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
       <head>

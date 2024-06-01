@@ -82,6 +82,39 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: "brand",
+      label: {
+        en: "Brand",
+        es: "Marca",
+      },
+      type: "relationship",
+      relationTo: "brands",
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            // ensures data is not stored in DB
+            delete data.brand;
+          },
+        ],
+        afterRead: [
+          ({ data }) => {
+            return brandForId(data.id as string);
+          },
+        ],
+      },
+      admin: {
+        position: "sidebar",
+        description: {
+          en: "The brand is automatically determined based on the page’s URL.",
+          es: "La marca se determina automáticamente en función de la URL de la página.",
+        },
+      },
+    },
+    {
       name: "title",
       label: {
         en: "Title",
@@ -108,4 +141,16 @@ function idToUrl(id: string) {
 
 function urlToId(url: string) {
   return url.replaceAll("/", ":");
+}
+
+function brandForId(id: string) {
+  if (id === ":azul" || id.startsWith(":azul:")) {
+    return "azul";
+  }
+
+  if (id === ":aqua" || id.startsWith(":aqua:")) {
+    return "aqua";
+  }
+
+  return "puerta";
 }
