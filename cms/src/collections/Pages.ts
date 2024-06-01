@@ -50,6 +50,9 @@ export const Pages: CollectionConfig = {
         create: () => false,
         update: () => false,
       },
+      admin: {
+        position: "sidebar",
+      },
     },
     heroField,
     layoutField,

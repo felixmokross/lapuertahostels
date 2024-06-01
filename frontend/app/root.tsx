@@ -159,31 +159,35 @@ export default function App() {
           </div>
         ) : (
           <ThemeProvider brand={brand}>
-            <OptInLivePreview path="globals/common" data={common}>
-              {(common) => (
-                <>
-                  {common.banner?.show && (
-                    <Banner
-                      cta={
-                        common.banner.cta?.show
-                          ? `${common.banner.cta.text} →`
-                          : undefined
-                      }
-                      ctaTo={
-                        common.banner.cta?.show
-                          ? common.banner.cta.url!
-                          : undefined
-                      }
-                    >
-                      {common.banner.message!}
-                    </Banner>
+            <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+              {(brand) => (
+                <OptInLivePreview path="globals/common" data={common}>
+                  {(common) => (
+                    <>
+                      {common.banner?.show && (
+                        <Banner
+                          cta={
+                            common.banner.cta?.show
+                              ? `${common.banner.cta.text} →`
+                              : undefined
+                          }
+                          ctaTo={
+                            common.banner.cta?.show
+                              ? common.banner.cta.url!
+                              : undefined
+                          }
+                        >
+                          {common.banner.message!}
+                        </Banner>
+                      )}
+                      <Header brand={brand} allBrands={allBrands} />
+                      <main>
+                        <Outlet />
+                      </main>
+                      <Footer allBrands={allBrands} content={common.footer} />
+                    </>
                   )}
-                  <Header brand={brand} allBrands={allBrands} />
-                  <main>
-                    <Outlet />
-                  </main>
-                  <Footer allBrands={allBrands} content={common.footer} />
-                </>
+                </OptInLivePreview>
               )}
             </OptInLivePreview>
           </ThemeProvider>
