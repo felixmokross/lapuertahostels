@@ -21,6 +21,8 @@ export const Pages: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req: { user } }) => user?.role === "admin",
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
   hooks: {
     afterChange: [
@@ -73,6 +75,26 @@ export const Pages: CollectionConfig = {
       },
       admin: {
         position: "sidebar",
+        description: {
+          en: "The URL used to navigate to this page. It must be unique and cannot be changed after the page has been created.",
+          es: "La URL utilizada para navegar a esta página. Debe ser única y no se puede cambiar después de que se haya creado la página.",
+        },
+      },
+    },
+    {
+      name: "title",
+      label: {
+        en: "Title",
+        es: "Título",
+      },
+      type: "text",
+      localized: true,
+      admin: {
+        position: "sidebar",
+        description: {
+          en: "The title is shown in the title bar of the browser and in search engine results.",
+          es: "El título se muestra en la barra de título del navegador y en los resultados de los motores de búsqueda.",
+        },
       },
     },
     heroField,
