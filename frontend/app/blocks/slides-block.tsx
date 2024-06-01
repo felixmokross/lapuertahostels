@@ -62,6 +62,48 @@ export function SlidesBlock({
       {...handlers}
       className="relative h-[30rem] bg-puerta-100 md:h-[40rem]"
     >
+      {slides.length > 1 && (
+        <>
+          <div className="absolute bottom-10 hidden w-full justify-center md:flex">
+            {slides.map((slide, i) => (
+              <button
+                className="group z-10 inline-flex h-10 items-center px-2"
+                key={i}
+                onClick={() => goTo(i)}
+              >
+                <span
+                  className={cn(
+                    "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
+                    i === slideIndex
+                      ? "bg-white opacity-100"
+                      : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
+                  )}
+                ></span>
+                <span className="sr-only">Go to {slide.alt}</span>
+              </button>
+            ))}
+          </div>
+          <div className="absolute bottom-0 flex w-full justify-center md:hidden">
+            {slides.map((slide, i) => (
+              <button
+                className="group z-10 inline-flex h-10 flex-grow items-end"
+                key={i}
+                onClick={() => goTo(i)}
+              >
+                <span
+                  className={cn(
+                    "h-1.5 flex-grow transition-[background-color,opacity] duration-200 ease-in",
+                    i === slideIndex
+                      ? "bg-white opacity-85"
+                      : "bg-neutral-200 opacity-65 group-hover:bg-white group-hover:opacity-85",
+                  )}
+                ></span>
+                <span className="sr-only">Go to {slide.alt}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
       {slides.map((slide, i) => {
         return (
           <Transition
@@ -96,29 +138,6 @@ export function SlidesBlock({
           </Transition>
         );
       })}
-      {slides.length > 1 && (
-        <div className="absolute bottom-0 flex w-full justify-center md:bottom-10">
-          {slides.map((slide, i) => (
-            <button
-              className={cn(
-                "group inline-flex h-10 flex-grow items-end md:flex-none md:items-center md:px-2",
-              )}
-              key={i}
-              onClick={() => goTo(i)}
-            >
-              <span
-                className={cn(
-                  "h-1.5 flex-grow transition-[background-color,opacity] duration-200 ease-in md:h-1 md:w-10 md:flex-none md:rounded-full",
-                  i === slideIndex
-                    ? "bg-neutral-100 opacity-100 md:bg-white"
-                    : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
-                )}
-              ></span>
-              <span className="sr-only">Go to {slide.alt}</span>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
