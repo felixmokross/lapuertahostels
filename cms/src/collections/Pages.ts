@@ -103,9 +103,9 @@ export const Pages: CollectionConfig = {
 };
 
 function idToUrl(id: string) {
-  return id.replace(":", "/");
+  return id.replaceAll(":", "/");
 }
 
 function urlToId(url: string) {
-  return url.replace("/", ":");
+  return url.replaceAll("/", ":");
 }

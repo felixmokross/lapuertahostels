@@ -43,5 +43,5 @@ export default function Route() {
 }
 
 function urlToId(url: string) {
-  return url.replace("/", ":");
+  return url.replaceAll("/", ":");
 }

@@ -35,5 +35,5 @@ export async function down({ payload }: MigrateDownArgs): Promise<void> {
 }
 
 function urlToId(url: string) {
-  return url.replace("/", ":");
+  return url.replaceAll("/", ":");
 }

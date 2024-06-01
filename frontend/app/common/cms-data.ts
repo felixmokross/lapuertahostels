@@ -23,7 +23,7 @@ async function cacheData(cacheFilePath: string, data: unknown) {
 }
 
 function getCacheFolder(url: string) {
-  return `${CACHE_DIR}/${url.replace("/", "_")}`;
+  return `${CACHE_DIR}/${url.replaceAll("/", "_")}`;
 }
 
 function getCacheFilePath(url: string, locale: string) {
