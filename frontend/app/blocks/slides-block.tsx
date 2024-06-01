@@ -5,6 +5,7 @@ import { Transition } from "@headlessui/react";
 import { ImageTransformation } from "../components/image";
 import { OverlayTitle } from "../components/overlay-title";
 import { useEnvironment } from "~/environment";
+import { useSwipeable } from "react-swipeable";
 
 export type SlidesBlockProps = {
   slides: Slide[];
@@ -40,10 +41,19 @@ export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
     throw new Error("Slides Block must have at least one slide");
   }
 
-  const { slideIndex, goTo } = useSlidesState(slides);
+  const { slideIndex, goTo, goToNext, goToPrevious } = useSlidesState(slides);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: goToNext,
+    onSwipedRight: goToPrevious,
+    preventScrollOnSwipe: true,
+  });
 
   return (
-    <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
+    <div
+      {...handlers}
+      className="relative h-[30rem] bg-puerta-100 md:h-[40rem]"
+    >
       {slides.map((slide, i) => {
         return (
           <Transition
@@ -78,25 +88,29 @@ export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
           </Transition>
         );
       })}
-      <div className="absolute bottom-8 flex w-full -translate-y-1/2 justify-center">
-        {slides.map((slide, i) => (
-          <button
-            className={cn("group inline-flex h-10 items-center px-2")}
-            key={i}
-            onClick={() => goTo(i)}
-          >
-            <span
+      {slides.length > 1 && (
+        <div className="absolute bottom-0 flex w-full justify-center md:bottom-10">
+          {slides.map((slide, i) => (
+            <button
               className={cn(
-                "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
-                i === slideIndex
-                  ? "bg-white opacity-100"
-                  : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
+                "group inline-flex h-10 flex-grow items-end md:flex-none md:items-center md:px-2",
               )}
-            ></span>
-            <span className="sr-only">Go to {slide.alt}</span>
-          </button>
-        ))}
-      </div>
+              key={i}
+              onClick={() => goTo(i)}
+            >
+              <span
+                className={cn(
+                  "h-1.5 flex-grow transition-[background-color,opacity] duration-200 ease-in md:h-1 md:w-10 md:flex-none md:rounded-full",
+                  i === slideIndex
+                    ? "bg-neutral-100 opacity-100 md:bg-white"
+                    : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
+                )}
+              ></span>
+              <span className="sr-only">Go to {slide.alt}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -118,20 +132,31 @@ function useSlidesState(slides: Slide[]) {
     if (intervalRef.current) window.clearInterval(intervalRef.current);
   }
 
+  function goTo(newSlideIndex: number) {
+    stopInterval();
+
+    setSlideIndex(newSlideIndex);
+  }
+
   useEffect(() => {
     // Do not auto-advance slides in preview mode
     if (preview) return;
 
+    // Do not auto-advance if there is only one slide
+    if (slides.length === 1) return;
+
     startInterval();
     return stopInterval;
-  }, [startInterval, preview]);
+  }, [startInterval, preview, slides.length]);
 
   return {
     slideIndex,
-    goTo(newSlideIndex: number) {
-      stopInterval();
-
-      setSlideIndex(newSlideIndex);
+    goTo,
+    goToNext() {
+      goTo((slideIndex + 1) % slides.length);
+    },
+    goToPrevious() {
+      goTo((slideIndex - 1 + slides.length) % slides.length);
     },
   };
 }

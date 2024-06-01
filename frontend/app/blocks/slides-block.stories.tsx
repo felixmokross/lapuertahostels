@@ -11,7 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     transformation: {
       aspectRatio: { width: 4, height: 3 },
@@ -55,5 +55,12 @@ export const Primary: Story = {
         },
       },
     ],
+  },
+};
+
+export const SingleSlide: Story = {
+  args: {
+    ...Default.args,
+    slides: Default.args.slides.slice(0, 1),
   },
 };
