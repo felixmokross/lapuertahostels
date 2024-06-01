@@ -114,7 +114,7 @@ export function SlidesBlock({
         return (
           <Transition
             key={i}
-            className="h-full"
+            className="h-full transform-gpu"
             show={i === slideIndex}
             unmount={false}
             enter="transition-opacity duration-1000"
