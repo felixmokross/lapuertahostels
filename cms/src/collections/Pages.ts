@@ -18,6 +18,9 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: "url",
+    defaultColumns: ["url", "title", "hero", "layout"],
+    disableDuplicate: true,
+    listSearchableFields: ["url", "title"],
   },
   access: {
     read: () => true,
