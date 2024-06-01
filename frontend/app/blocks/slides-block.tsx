@@ -79,7 +79,7 @@ export function SlidesBlock({
               >
                 <span
                   className={cn(
-                    "h-1 w-10 rounded-full transition-[background-color,opacity] duration-200 ease-in",
+                    "h-1 w-10 rounded-full shadow-md shadow-black/50 transition-[background-color,opacity] duration-200 ease-in",
                     i === slideIndex
                       ? "bg-white opacity-100"
                       : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
@@ -114,7 +114,7 @@ export function SlidesBlock({
         return (
           <Transition
             key={i}
-            className="h-full transform-gpu"
+            className="absolute top-0 h-full w-full transform-gpu"
             show={i === slideIndex}
             unmount={false}
             enter="transition-opacity duration-1000"
@@ -129,7 +129,6 @@ export function SlidesBlock({
               alt={slide.alt}
               transformation={transformation}
               withPreview={i === 0}
-              className="absolute top-0"
               alignment={slide.imageAlignment}
             />
             {slide.title && (
