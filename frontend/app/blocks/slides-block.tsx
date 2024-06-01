@@ -60,7 +60,13 @@ export function SlidesBlock({
   return (
     <div
       {...handlers}
-      className="relative h-[30rem] bg-puerta-100 md:h-[40rem]"
+      className="relative h-[30rem] bg-puerta-100 focus:outline-none md:h-[40rem]"
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft") goToPrevious();
+        if (e.key === "ArrowRight") goToNext();
+      }}
+      tabIndex={0}
+      role="tablist"
     >
       {slides.length > 1 && (
         <>
