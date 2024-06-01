@@ -23,30 +23,38 @@ async function cacheData(cacheFilePath: string, data: unknown) {
 }
 
 function getCacheFolder(url: string) {
-  return `${CACHE_DIR}/${url.replace("/", "_")}`;
+  return `${CACHE_DIR}/${url.replaceAll("/", "_")}`;
 }
 
 function getCacheFilePath(url: string, locale: string) {
   return `${getCacheFolder(url)}/${locale}.json`;
 }
 
-async function getData(url: string, locale: string) {
+export async function getData(url: string, locale: string) {
   const filePath = getCacheFilePath(url, locale);
   try {
     const cache = await fs.readFile(filePath, "utf8");
 
+    // refresh cache in the background _after_ returning the cached data (stale-while-revalidate)
     queueMicrotask(async () => {
-      const cacheLastModified = (await fs.stat(filePath)).mtime;
+      try {
+        const cacheLastModified = (await fs.stat(filePath)).mtime;
 
-      const cacheExpired =
-        cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
-      if (!cacheExpired) {
-        console.log(`Cache not expired for ${url} in ${locale}`);
-        return;
+        const cacheExpired =
+          cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
+        if (!cacheExpired) {
+          console.log(`Cache not expired for ${url} in ${locale}`);
+          return;
+        }
+
+        console.log(`Cache expired for ${url} in ${locale}`);
+        await loadAndCacheData(url, locale, filePath);
+      } catch (e) {
+        // As this runs in the background, just log the error
+        console.error(
+          `Failed to refresh cache in microtask for ${url} in ${locale}: ${e}`,
+        );
       }
-
-      console.log(`Cache expired for ${url} in ${locale}`);
-      await loadAndCacheData(url, locale, filePath);
     });
 
     console.log(`Cache hit for ${url} in ${locale}`);
@@ -65,23 +73,21 @@ async function loadData(url: string, locale: string) {
   }
 
   console.log(`Loading data from CMS for ${url} in ${locale}`);
-  return await (
-    await fetch(
-      `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
-    )
-  ).json();
+  const response = await fetch(
+    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
+  );
+
+  if (!response.ok) {
+    if (response.status === 404) throw new Response(null, { status: 404 });
+
+    throw new Error(`Failed to load data from CMS: ${response.status}`);
+  }
+
+  return await response.json();
 }
 
-export async function getHome(locale: string) {
-  return (await getData("pages/home", locale)) as Page;
-}
-
-export async function getAzul(locale: string) {
-  return (await getData("pages/azul", locale)) as Page;
-}
-
-export async function getAqua(locale: string) {
-  return (await getData("pages/aqua", locale)) as Page;
+export async function getPage(pageId: string, locale: string) {
+  return (await getData(`pages/${pageId}`, locale)) as Page;
 }
 
 export async function getCommon(locale: string) {
