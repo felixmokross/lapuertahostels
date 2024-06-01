@@ -17,7 +17,7 @@ export function ImageWithTextSection({
   return (
     <div
       className={cn(
-        "flex flex-col items-center gap-16 md:gap-10 lg:flex-row",
+        "flex flex-col items-center gap-16 md:gap-10 lg:flex-row lg:gap-20 xl:gap-32",
         orientation === "image-left" && "lg:flex-row-reverse",
         className,
       )}
