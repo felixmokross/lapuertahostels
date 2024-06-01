@@ -4,6 +4,7 @@ import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
 import { richTextField } from "../fields/rich-text";
 import { imageField } from "../fields/image";
+import { makeMoreOptionsField } from "../fields/more-options";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -68,16 +69,6 @@ export const AccommodationSelectorBlock: Block = {
         },
       },
     },
-    {
-      type: "collapsible",
-      label: {
-        en: "More Options",
-        es: "Más opciones",
-      },
-      fields: [elementIdField],
-      admin: {
-        initCollapsed: true,
-      },
-    },
+    makeMoreOptionsField(elementIdField),
   ],
 };

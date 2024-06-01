@@ -23,7 +23,7 @@ export function ImageWithTextSection({
       )}
     >
       <div className="px-16 text-center md:px-0">{children}</div>
-      <div className="shrink-0 overflow-hidden shadow-lg sm:max-w-md sm:rounded-md">
+      <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
         <Image
           {...image}
           transformation={{

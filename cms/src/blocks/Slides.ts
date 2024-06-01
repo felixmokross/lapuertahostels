@@ -2,6 +2,7 @@ import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { imageField } from "../fields/image";
 import { makeOverlayTitleField } from "../fields/overlay-title";
+import { makeMoreOptionsField } from "../fields/more-options";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -94,5 +95,14 @@ export const SlidesBlock: Block = {
         },
       },
     },
+    makeMoreOptionsField({
+      name: "autoplayIntervalInSeconds",
+      type: "number",
+      label: {
+        en: "Autoplay Interval in Seconds",
+        es: "Intervalo de reproducción automática en segundos",
+      },
+      defaultValue: 10,
+    }),
   ],
 };

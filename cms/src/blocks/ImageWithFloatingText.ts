@@ -3,6 +3,7 @@ import { elementIdField } from "../fields/element-id";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { imageField } from "../fields/image";
 import { richTextField } from "../fields/rich-text";
+import { makeMoreOptionsField } from "../fields/more-options";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",
@@ -23,16 +24,6 @@ export const ImageWithFloatingTextBlock: Block = {
     imageField,
     makeOverlayTitleField({ supportsCallToAction: false }),
     richTextField,
-    {
-      type: "collapsible",
-      label: {
-        en: "More Options",
-        es: "Más opciones",
-      },
-      fields: [elementIdField],
-      admin: {
-        initCollapsed: true,
-      },
-    },
+    makeMoreOptionsField(elementIdField),
   ],
 };

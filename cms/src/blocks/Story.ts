@@ -2,6 +2,7 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { imageUrlField } from "../fields/image";
+import { makeMoreOptionsField } from "../fields/more-options";
 
 export const StoryBlock: Block = {
   slug: "Story",
@@ -97,16 +98,6 @@ export const StoryBlock: Block = {
         },
       },
     },
-    {
-      type: "collapsible",
-      label: {
-        en: "More Options",
-        es: "Más opciones",
-      },
-      fields: [elementIdField],
-      admin: {
-        initCollapsed: true,
-      },
-    },
+    makeMoreOptionsField(elementIdField),
   ],
 };
