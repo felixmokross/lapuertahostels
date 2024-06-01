@@ -1,9 +1,9 @@
-import { useLivePreview } from "@payloadcms/live-preview-react";
 import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Page } from "./page";
 import { getAqua } from "~/common/cms-data";
+import { OptInLivePreview } from "~/components/live-preview";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,22 +13,17 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  if (!process.env.PAYLOAD_CMS_BASE_URL) {
-    throw new Error("PAYLOAD_CMS_BASE_URL is not set");
-  }
-
   const locale = await i18next.getLocale(request);
   return {
-    payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
-    content: await getAqua(locale),
+    data: await getAqua(locale),
   };
 }
 
 export default function Route() {
-  const { content, payloadCmsBaseUrl } = useLoaderData<typeof loader>();
-  const { data: liveContent } = useLivePreview({
-    initialData: content,
-    serverURL: payloadCmsBaseUrl,
-  });
-  return <Page content={liveContent} />;
+  const { data } = useLoaderData<typeof loader>();
+  return (
+    <OptInLivePreview path="pages/aqua" data={data}>
+      {(data) => <Page content={data} />}
+    </OptInLivePreview>
+  );
 }

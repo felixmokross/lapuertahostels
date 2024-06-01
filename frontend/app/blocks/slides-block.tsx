@@ -4,6 +4,7 @@ import { SlideImage } from "../components/slide-image";
 import { Transition } from "@headlessui/react";
 import { ImageTransformation } from "../components/image";
 import { OverlayTitle } from "../components/overlay-title";
+import { useEnvironment } from "~/environment";
 
 export type SlidesBlockProps = {
   slides: Slide[];
@@ -102,6 +103,7 @@ export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
 
 function useSlidesState(slides: Slide[]) {
   const [slideIndex, setSlideIndex] = useState(0);
+  const { preview } = useEnvironment();
 
   const intervalRef = useRef(0);
 
@@ -117,9 +119,12 @@ function useSlidesState(slides: Slide[]) {
   }
 
   useEffect(() => {
+    // Do not auto-advance slides in preview mode
+    if (preview) return;
+
     startInterval();
     return stopInterval;
-  }, [startInterval]);
+  }, [startInterval, preview]);
 
   return {
     slideIndex,

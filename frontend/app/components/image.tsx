@@ -1,6 +1,5 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { ImgHTMLAttributes, forwardRef } from "react";
-import { type loader as rootLoader } from "~/root";
+import { useEnvironment } from "~/environment";
 
 export type ImageProps = {
   src: string;
@@ -19,11 +18,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
   { src, alt, className, transformation, loading },
   ref,
 ) {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
-  const { imagekitBaseUrl } = rootLoaderData;
-  if (!imagekitBaseUrl) throw new Error("imagekitBaseUrl not available");
+  const { imagekitBaseUrl } = useEnvironment();
 
   if (src && !src.startsWith(imagekitBaseUrl)) {
     throw new Error(`Image URL must start with ${imagekitBaseUrl}`);

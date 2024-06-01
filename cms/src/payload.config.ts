@@ -4,13 +4,15 @@ import { payloadCloud } from "@payloadcms/plugin-cloud";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { slateEditor } from "@payloadcms/richtext-slate";
-import { buildConfig } from "payload/config";
+import { Locale, buildConfig } from "payload/config";
 
 import { Users } from "./collections/Users";
 import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 import { Pages } from "./collections/Pages";
+import { Brand, Page } from "./payload-types";
+import { ContextType } from "payload/dist/admin/components/utilities/DocumentInfo/types";
 
 export default buildConfig({
   admin: {
@@ -24,9 +26,9 @@ export default buildConfig({
       return config;
     },
     livePreview: {
-      url: ({ locale, data }) =>
-        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${data.url}?lng=${locale}`,
-      collections: [Pages.slug],
+      url: getPreviewUrl,
+      collections: [Pages.slug, Brands.slug],
+      globals: [Common.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
@@ -83,3 +85,32 @@ export default buildConfig({
     },
   },
 });
+
+function getPreviewUrl({
+  locale,
+  documentInfo,
+  data,
+}: {
+  data: Record<string, any>;
+  documentInfo: ContextType;
+  locale: Locale;
+}) {
+  return `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${getPreviewPath(documentInfo.slug, data)}?lng=${locale}&preview=${getPreviewId(documentInfo)}`;
+}
+
+function getPreviewPath(slug: string, data: Record<string, any>) {
+  switch (slug) {
+    case Pages.slug:
+      return (data as Page).url;
+    case Brands.slug:
+      return (data as Brand).homeLinkUrl;
+    default:
+      return "";
+  }
+}
+
+function getPreviewId(documentInfo: ContextType) {
+  return documentInfo.id
+    ? `${documentInfo.slug}/${documentInfo.id}`
+    : `globals/${documentInfo.slug}`;
+}

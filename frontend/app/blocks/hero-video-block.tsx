@@ -1,6 +1,5 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { OverlayTitle, OverlayTitleProps } from "../components/overlay-title";
-import { type loader as rootLoader } from "~/root";
+import { useEnvironment } from "~/environment";
 
 export type HeroVideoBlockProps = {
   src: string;
@@ -13,11 +12,7 @@ export function HeroVideoBlock({
   previewSrc,
   overlayTitle,
 }: HeroVideoBlockProps) {
-  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
-  if (!rootLoaderData) throw new Error("root loader not found");
-
-  const { imagekitBaseUrl } = rootLoaderData;
-  if (!imagekitBaseUrl) throw new Error("imagekitBaseUrl not available");
+  const { imagekitBaseUrl } = useEnvironment();
 
   if (previewSrc && !previewSrc.startsWith(imagekitBaseUrl)) {
     throw new Error(`Preview Image URL must start with ${imagekitBaseUrl}`);
