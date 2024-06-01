@@ -68,6 +68,9 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
               aspectRatio: { width: 4, height: 3 },
               width: 1600,
             }}
+            autoplayIntervalInSeconds={
+              block.autoplayIntervalInSeconds || undefined
+            }
           />
         );
     }

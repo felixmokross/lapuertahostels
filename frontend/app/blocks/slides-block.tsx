@@ -10,6 +10,7 @@ import { useSwipeable } from "react-swipeable";
 export type SlidesBlockProps = {
   slides: Slide[];
   transformation?: ImageTransformation;
+  autoplayIntervalInSeconds?: number;
 };
 
 export type Slide = {
@@ -36,12 +37,19 @@ export type SlideCallToAction = {
   to: string;
 };
 
-export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
+export function SlidesBlock({
+  slides,
+  transformation,
+  autoplayIntervalInSeconds = 10,
+}: SlidesBlockProps) {
   if (slides.length === 0) {
     throw new Error("Slides Block must have at least one slide");
   }
 
-  const { slideIndex, goTo, goToNext, goToPrevious } = useSlidesState(slides);
+  const { slideIndex, goTo, goToNext, goToPrevious } = useSlidesState(
+    slides,
+    autoplayIntervalInSeconds,
+  );
 
   const handlers = useSwipeable({
     onSwipedLeft: goToNext,
@@ -115,21 +123,26 @@ export function SlidesBlock({ slides, transformation }: SlidesBlockProps) {
   );
 }
 
-function useSlidesState(slides: Slide[]) {
+function useSlidesState(slides: Slide[], autoplayIntervalInSeconds: number) {
   const [slideIndex, setSlideIndex] = useState(0);
   const { preview } = useEnvironment();
 
   const intervalRef = useRef(0);
 
   const startInterval = useCallback(() => {
+    if (intervalRef.current) return;
+
     intervalRef.current = window.setInterval(
       () => setSlideIndex((currentIndex) => (currentIndex + 1) % slides.length),
-      10_000,
+      autoplayIntervalInSeconds * 1000,
     );
-  }, [slides.length]);
+  }, [slides.length, autoplayIntervalInSeconds]);
 
   function stopInterval() {
-    if (intervalRef.current) window.clearInterval(intervalRef.current);
+    if (intervalRef.current) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = 0;
+    }
   }
 
   function goTo(newSlideIndex: number) {
