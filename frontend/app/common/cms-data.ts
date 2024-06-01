@@ -30,7 +30,7 @@ function getCacheFilePath(url: string, locale: string) {
   return `${getCacheFolder(url)}/${locale}.json`;
 }
 
-async function getData(url: string, locale: string) {
+export async function getData(url: string, locale: string) {
   const filePath = getCacheFilePath(url, locale);
   try {
     const cache = await fs.readFile(filePath, "utf8");
@@ -72,16 +72,8 @@ async function loadData(url: string, locale: string) {
   ).json();
 }
 
-export async function getHome(locale: string) {
-  return (await getData("pages/home", locale)) as Page;
-}
-
-export async function getAzul(locale: string) {
-  return (await getData("pages/azul", locale)) as Page;
-}
-
-export async function getAqua(locale: string) {
-  return (await getData("pages/aqua", locale)) as Page;
+export async function getPage(pageId: string, locale: string) {
+  return (await getData(`pages/${pageId}`, locale)) as Page;
 }
 
 export async function getCommon(locale: string) {

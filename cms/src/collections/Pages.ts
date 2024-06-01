@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
+import { text } from "payload/dist/fields/validations";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -16,12 +17,10 @@ export const Pages: CollectionConfig = {
     },
   },
   admin: {
-    useAsTitle: "id",
+    useAsTitle: "url",
   },
   access: {
     read: () => true,
-    create: () => false,
-    delete: () => false,
   },
   hooks: {
     afterChange: [
@@ -36,7 +35,13 @@ export const Pages: CollectionConfig = {
         es: "ID",
       },
       type: "text",
-      required: true,
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+      admin: {
+        hidden: true,
+      },
     },
     {
       name: "url",
@@ -46,9 +51,25 @@ export const Pages: CollectionConfig = {
       },
       type: "text",
       required: true,
+      validate: (_, args) =>
+        text(args.data._id ? idToUrl(args.data._id) : "", args),
       access: {
-        create: () => false,
         update: () => false,
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            data._id = data.url ? urlToId(data.url as string) : "";
+
+            // ensures data is not stored in DB
+            delete data["url"];
+          },
+        ],
+        afterRead: [
+          ({ data }) => {
+            return idToUrl(data.id as string);
+          },
+        ],
       },
       admin: {
         position: "sidebar",
@@ -58,3 +79,11 @@ export const Pages: CollectionConfig = {
     layoutField,
   ],
 };
+
+function idToUrl(id: string) {
+  return id.replace(":", "/");
+}
+
+function urlToId(url: string) {
+  return url.replace("/", ":");
+}
