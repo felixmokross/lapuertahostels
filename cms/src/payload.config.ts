@@ -24,9 +24,10 @@ export default buildConfig({
       return config;
     },
     livePreview: {
-      url: ({ locale, data }) =>
-        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${data.url}?lng=${locale}`,
+      url: ({ locale, documentInfo, data }) =>
+        `${process.env.PAYLOAD_PUBLIC_LIVE_PREVIEW_URL}${documentInfo.slug === Pages.slug ? data.url : ""}?lng=${locale}&preview=${documentInfo.id ? `${documentInfo.slug}/${documentInfo.id}` : `globals/${documentInfo.slug}`}`,
       collections: [Pages.slug],
+      globals: [Common.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",

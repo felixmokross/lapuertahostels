@@ -19,8 +19,10 @@ const withRemix: Decorator = (Story) => {
       hydrationData={{
         loaderData: {
           root: {
-            // @ts-ignore
-            imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
+            environment: {
+              // @ts-ignore
+              imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
+            },
           },
         },
       }}

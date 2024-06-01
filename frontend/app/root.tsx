@@ -22,6 +22,7 @@ import { Footer } from "./components/footer";
 import { getBrandIdFromPath, ThemeProvider } from "./brands";
 import i18next from "./i18next.server";
 import { getBrands, getCommon } from "./common/cms-data";
+import { OptInLivePreview } from "./components/live-preview";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -95,6 +96,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
+  if (!process.env.IMAGEKIT_BASE_URL) {
+    throw new Error("IMAGEKIT_BASE_URL is not set");
+  }
 
   const brandId = getBrandIdFromPath(new URL(request.url).pathname);
   const locale = await i18next.getLocale(request);
@@ -111,7 +115,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     brand,
     allBrands,
     common,
-    imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
+    environment: {
+      payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
+      imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
+      preview: new URL(request.url).searchParams.get("preview") || undefined,
+    },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
     comingSoon: !!process.env.COMING_SOON,
   });
@@ -151,25 +159,33 @@ export default function App() {
           </div>
         ) : (
           <ThemeProvider brand={brand}>
-            {common.banner?.show && (
-              <Banner
-                cta={
-                  common.banner.cta?.show
-                    ? `${common.banner.cta.text} →`
-                    : undefined
-                }
-                ctaTo={
-                  common.banner.cta?.show ? common.banner.cta.url! : undefined
-                }
-              >
-                {common.banner.message!}
-              </Banner>
-            )}
-            <Header brand={brand} allBrands={allBrands} />
-            <main>
-              <Outlet />
-            </main>
-            <Footer allBrands={allBrands} content={common.footer} />
+            <OptInLivePreview path="globals/common" data={common}>
+              {(common) => (
+                <>
+                  {common.banner?.show && (
+                    <Banner
+                      cta={
+                        common.banner.cta?.show
+                          ? `${common.banner.cta.text} →`
+                          : undefined
+                      }
+                      ctaTo={
+                        common.banner.cta?.show
+                          ? common.banner.cta.url!
+                          : undefined
+                      }
+                    >
+                      {common.banner.message!}
+                    </Banner>
+                  )}
+                  <Header brand={brand} allBrands={allBrands} />
+                  <main>
+                    <Outlet />
+                  </main>
+                  <Footer allBrands={allBrands} content={common.footer} />
+                </>
+              )}
+            </OptInLivePreview>
           </ThemeProvider>
         )}
         <ScrollRestoration />
