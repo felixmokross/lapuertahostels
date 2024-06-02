@@ -25,9 +25,18 @@ export type Theme = {
   bannerBackgroundColor: string;
   footerBackgroundColor: string;
   buttonColors: {
-    backgroundColor: string;
-    hoverBackgroundColor: string;
-    hoverTextColor: string;
+    primary: {
+      backgroundColor: string;
+      textColor: string;
+      hoverBackgroundColor: string;
+      hoverTextColor: string;
+    };
+    secondary: {
+      backgroundColor: string;
+      textColor: string;
+      hoverBackgroundColor: string;
+      hoverTextColor: string;
+    };
     focusOutlineColor: string;
   };
   navButtonClassName: string;
@@ -69,9 +78,18 @@ export const themesByBrand: Record<BrandId, Theme> = {
     bannerBackgroundColor: "bg-puerta-800",
     footerBackgroundColor: "bg-puerta-100",
     buttonColors: {
-      backgroundColor: "bg-puerta-500",
-      hoverBackgroundColor: "hover:bg-puerta-200",
-      hoverTextColor: "hover:text-puerta-800",
+      primary: {
+        backgroundColor: "bg-puerta-500",
+        textColor: "text-white",
+        hoverBackgroundColor: "hover:bg-puerta-200",
+        hoverTextColor: "hover:text-puerta-800",
+      },
+      secondary: {
+        backgroundColor: "bg-puerta-200",
+        textColor: "text-puerta-800",
+        hoverBackgroundColor: "hover:bg-puerta-300",
+        hoverTextColor: "hover:text-puerta-900",
+      },
       focusOutlineColor: "focus-visible:outline-puerta-600",
     },
     navButtonClassName: "border-puerta-500 bg-puerta-50 text-puerta-700",
@@ -85,9 +103,18 @@ export const themesByBrand: Record<BrandId, Theme> = {
     bannerBackgroundColor: "bg-aqua-500",
     footerBackgroundColor: "bg-aqua-50",
     buttonColors: {
-      backgroundColor: "bg-aqua-400",
-      hoverBackgroundColor: "hover:bg-aqua-200",
-      hoverTextColor: "hover:text-aqua-800",
+      primary: {
+        backgroundColor: "bg-aqua-400",
+        textColor: "text-white",
+        hoverBackgroundColor: "hover:bg-aqua-200",
+        hoverTextColor: "hover:text-aqua-800",
+      },
+      secondary: {
+        backgroundColor: "bg-aqua-100",
+        textColor: "text-aqua-800",
+        hoverBackgroundColor: "hover:bg-aqua-300",
+        hoverTextColor: "hover:text-aqua-950",
+      },
       focusOutlineColor: "focus-visible:outline-aqua-600",
     },
     navButtonClassName: "border-aqua-400 bg-aqua-50 text-aqua-700",
@@ -101,9 +128,18 @@ export const themesByBrand: Record<BrandId, Theme> = {
     bannerBackgroundColor: "bg-azul-950",
     footerBackgroundColor: "bg-azul-50",
     buttonColors: {
-      backgroundColor: "bg-azul-950",
-      hoverBackgroundColor: "hover:bg-azul-200",
-      hoverTextColor: "hover:text-azul-900",
+      primary: {
+        backgroundColor: "bg-azul-950",
+        textColor: "text-white",
+        hoverBackgroundColor: "hover:bg-azul-200",
+        hoverTextColor: "hover:text-azul-900",
+      },
+      secondary: {
+        backgroundColor: "bg-azul-100",
+        textColor: "text-azul-900",
+        hoverBackgroundColor: "hover:bg-azul-300",
+        hoverTextColor: "hover:text-azul-950",
+      },
       focusOutlineColor: "focus-visible:outline-azul-900",
     },
     navButtonClassName: "border-azul-950 bg-azul-50 text-azul-800",
