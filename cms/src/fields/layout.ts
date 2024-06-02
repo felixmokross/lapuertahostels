@@ -5,6 +5,7 @@ import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
 import { LeadBlock } from "../blocks/Lead";
 import { StoryBlock } from "../blocks/Story";
 import { SeparatorBlock } from "../blocks/Separator";
+import { WideImageBlock } from "../blocks/WideImage";
 
 export const layoutField: BlockField = {
   name: "layout",
@@ -32,6 +33,7 @@ export const layoutField: BlockField = {
     StoryBlock,
     FeaturesBlock,
     SeparatorBlock,
+    WideImageBlock,
   ],
   admin: {
     initCollapsed: true,

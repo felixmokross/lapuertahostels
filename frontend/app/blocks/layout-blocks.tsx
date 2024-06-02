@@ -5,6 +5,7 @@ import { LeadBlock } from "./lead-block";
 import { StoryBlock } from "./story-block";
 import { FeaturesBlock } from "./features-block";
 import { SeparatorBlock } from "./separator-block";
+import { WideImageBlock } from "./wide-image-block";
 
 type LayoutBlocksProps = {
   data: NonNullable<Page["layout"]>;
@@ -25,6 +26,8 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
         return <FeaturesBlock key={block.id} {...block} />;
       case "Separator":
         return <SeparatorBlock key={block.id} />;
+      case "WideImage":
+        return <WideImageBlock key={block.id} {...block} />;
     }
   });
 }
