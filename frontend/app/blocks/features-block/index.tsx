@@ -3,7 +3,11 @@ import { type FeaturesBlock } from "./types";
 
 export type FeaturesBlockProps = FeaturesBlock;
 
-export function FeaturesBlock({ elementId, items }: FeaturesBlockProps) {
+export function FeaturesBlock({
+  elementId,
+  items,
+  orientation,
+}: FeaturesBlockProps) {
   return (
     <div
       id={elementId || undefined}
@@ -13,7 +17,7 @@ export function FeaturesBlock({ elementId, items }: FeaturesBlockProps) {
         <Feature
           key={i}
           image={item.image}
-          orientation={i % 2 === 0 ? "image-left" : "image-right"}
+          orientation={getFeatureOrientation(i)}
           heading={item.heading}
           text={item.text}
           cta={item.cta}
@@ -21,4 +25,12 @@ export function FeaturesBlock({ elementId, items }: FeaturesBlockProps) {
       ))}
     </div>
   );
+
+  function getFeatureOrientation(index: number) {
+    if (orientation === "first-image-right") {
+      return index % 2 === 1 ? "image-left" : "image-right";
+    }
+
+    return index % 2 === 0 ? "image-left" : "image-right";
+  }
 }

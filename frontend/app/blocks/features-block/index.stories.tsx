@@ -11,7 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     blockType: "Features",
     items: [
@@ -84,5 +84,12 @@ export const Primary: Story = {
         ],
       },
     ],
+  },
+};
+
+export const OrientationFirstImageRight: Story = {
+  args: {
+    ...Default.args,
+    orientation: "first-image-right",
   },
 };
