@@ -446,19 +446,197 @@ export const Aqua: Story = {
       ],
       layout: [
         {
-          blockType: "Lead",
-          id: "lead",
-          heading: "Under Construction",
+          heading: "Welcome to Our Boutique Hostel",
           text: [
             {
               children: [
                 {
-                  type: "text",
-                  text: "We are currently working on this page. Please check back soon.",
+                  text: "Nestled in the vibrant heart of Santa Marta, our ",
+                },
+                {
+                  text: "boutique hostel",
+                  bold: true,
+                },
+                {
+                  text: " offers an intimate escape with a touch of ",
+                },
+                {
+                  text: "local charm, ",
+                  bold: true,
+                },
+                {
+                  text: "where ",
+                },
+                {
+                  text: "comfort meets culture",
+                  bold: true,
+                },
+                {
+                  text: " just steps away from the city's most captivating attractions.",
                 },
               ],
             },
           ],
+          cta: {
+            show: false,
+            variant: "secondary",
+          },
+          id: "665b9c90f1606522b13acc31",
+          blockType: "Lead",
+        },
+        {
+          id: "665cb2cea786af09309d3c40",
+          blockType: "Separator",
+        },
+        {
+          orientation: "first-image-left",
+          items: [
+            {
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6244.jpg?updatedAt=1714161153045",
+                alt: "Person playing a board game on a table in the hostel’s community areas.",
+              },
+              heading: "Time to Play",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Join fellow travelers in our ",
+                    },
+                    {
+                      text: "cozy community area",
+                      bold: true,
+                    },
+                    {
+                      text: " to unwind and connect over a friendly board game, creating ",
+                    },
+                    {
+                      text: "unforgettable memories and new friendships",
+                      bold: true,
+                    },
+                    {
+                      text: ".",
+                    },
+                  ],
+                },
+              ],
+              cta: {
+                show: false,
+                variant: "secondary",
+              },
+              id: "665cb2a2a786af09309d3c3c",
+            },
+            {
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/aqua/deluxe-con-terraza/IMG_6591.jpg?updatedAt=1717280340182",
+                alt: "View of the Deluxe room’s terrace",
+              },
+              heading: "Relax on the Terrace",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Indulge in our ",
+                    },
+                    {
+                      text: "Deluxe room",
+                      bold: true,
+                    },
+                    {
+                      text: ", featuring a ",
+                    },
+                    {
+                      text: "private terrace",
+                      bold: true,
+                    },
+                    {
+                      text: " where you can unwind and soak up the serene atmosphere.",
+                    },
+                  ],
+                },
+              ],
+              cta: {
+                show: false,
+                variant: "secondary",
+              },
+              id: "665cb2a2a786af09309d3c3d",
+            },
+            {
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
+                alt: "Front view of the hotel",
+              },
+              heading: "Right in the City Center",
+              text: [
+                {
+                  children: [
+                    {
+                      text: "Located in the ",
+                    },
+                    {
+                      text: "historic city center,",
+                      bold: true,
+                    },
+                    {
+                      text: " our hostel is just a short stroll from the ",
+                    },
+                    {
+                      text: "beach and all the major sights",
+                      bold: true,
+                    },
+                    {
+                      text: ", offering the perfect base for your Santa Marta adventure.",
+                    },
+                  ],
+                },
+              ],
+              cta: {
+                show: false,
+                variant: "secondary",
+              },
+              id: "665cb2a2a786af09309d3c3e",
+            },
+          ],
+          elementId: null,
+          id: "665b9cfaf1606522b13acc32",
+          blockName: null,
+          blockType: "Features",
+        },
+        {
+          heading: "Come By",
+          text: [
+            {
+              children: [
+                {
+                  text: "\nDiscover the charm of Santa Marta at our boutique hostel, ideally located in the historic city center. Steps from pristine beaches and local attractions, our welcoming community area is perfect for connecting with fellow travelers over a board game.",
+                },
+              ],
+            },
+            {
+              children: [
+                {
+                  text: "",
+                },
+              ],
+            },
+            {
+              children: [
+                {
+                  text: "For a touch of luxury, our deluxe room with a private terrace offers a tranquil retreat. Relax with a cool drink and enjoy the beautiful surroundings after a day of adventure. Experience our warm hospitality and make unforgettable memories in the heart of Santa Marta.",
+                },
+              ],
+            },
+          ],
+          image: {
+            url: "https://ik.imagekit.io/lapuertahostels/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325",
+            alt: "Woman looking at the viewer with a cup of coffee in her hand",
+            position: "right",
+            grayscale: false,
+          },
+          elementId: null,
+          id: "665b9f33f1606522b13acc36",
+          blockName: null,
+          blockType: "Story",
         },
       ],
     },

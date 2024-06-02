@@ -4,6 +4,7 @@ import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadBlock } from "./lead-block";
 import { StoryBlock } from "./story-block";
 import { FeaturesBlock } from "./features-block";
+import { SeparatorBlock } from "./separator-block";
 
 type LayoutBlocksProps = {
   data: NonNullable<Page["layout"]>;
@@ -22,6 +23,8 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
         return <StoryBlock key={block.id} {...block} />;
       case "Features":
         return <FeaturesBlock key={block.id} {...block} />;
+      case "Separator":
+        return <SeparatorBlock key={block.id} />;
     }
   });
 }
