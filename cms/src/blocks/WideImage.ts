@@ -1,5 +1,14 @@
 import { Block } from "payload/types";
 import { imageField } from "../fields/image";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/rich-text";
+import { makeCallToActionField } from "../fields/call-to-action";
+
+const textField = makeRichTextField();
+const callToActionField = makeCallToActionField({
+  optional: true,
+  showByDefault: false,
+});
 
 export const WideImageBlock: Block = {
   slug: "WideImage",
@@ -16,5 +25,75 @@ export const WideImageBlock: Block = {
   // imageURL: "/assets/blocks/HeroVideo.png",
   // imageAltText:
   //   "Preview of the Hero Video block, showing a image with an overlay title and a CTA.",
-  fields: [imageField],
+  fields: [
+    imageField,
+    {
+      name: "overlayTextBox",
+      label: {
+        en: "Overlay Text Box",
+        es: "Caja de texto superpuesta",
+      },
+      type: "group",
+      fields: [
+        {
+          name: "show",
+          type: "checkbox",
+          label: {
+            en: "Show",
+            es: "Mostrar",
+          },
+        },
+        {
+          ...headingField,
+          admin: {
+            ...headingField.admin,
+            condition: (_, siblingData) => siblingData.show,
+          },
+        },
+        {
+          ...textField,
+          admin: {
+            ...textField.admin,
+            condition: (_, siblingData) => siblingData.show,
+          },
+        },
+        {
+          ...callToActionField,
+          admin: {
+            ...callToActionField.admin,
+            condition: (_, siblingData) => siblingData.show,
+          },
+        },
+        {
+          name: "position",
+          label: {
+            en: "Position",
+            es: "Posición",
+          },
+          type: "radio",
+          options: [
+            {
+              label: { en: "Top Left", es: "Arriba a la izquierda" },
+              value: "top-left",
+            },
+            {
+              label: { en: "Top Right", es: "Arriba a la derecha" },
+              value: "top-right",
+            },
+            {
+              label: { en: "Bottom Left", es: "Abajo a la izquierda" },
+              value: "bottom-left",
+            },
+            {
+              label: { en: "Bottom Right", es: "Abajo a la derecha" },
+              value: "bottom-right",
+            },
+          ],
+          admin: {
+            condition: (_, siblingData) => siblingData.show,
+          },
+        },
+      ],
+    },
+  ],
 };
