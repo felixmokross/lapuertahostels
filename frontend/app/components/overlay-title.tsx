@@ -47,7 +47,13 @@ export function OverlayTitle({
           {children}
         </Heading>
         {cta && (
-          <Button as={Link} size="large" blackShadow to={cta.to}>
+          <Button
+            as={Link}
+            size="large"
+            variant="primary"
+            blackShadow
+            to={cta.to}
+          >
             {cta.text}
           </Button>
         )}
