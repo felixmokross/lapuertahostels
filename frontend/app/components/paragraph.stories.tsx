@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Paragraph, ParagraphHighlight } from "./paragraph";
 import { cn } from "./cn";
+import { BrandId, themesByBrand } from "~/brands";
 
 const meta = {
   title: "Paragraph",
@@ -18,18 +19,21 @@ const meta = {
         <Story />
       </div>
     ),
-    // TODO make this re-usable
-    (Story, { parameters }) => (
-      <div
-        className={cn("h-screen py-8", {
-          "bg-white": parameters.background === "white",
-          "bg-puerta-700": parameters.background === "puerta",
-          "bg-puerta-200": parameters.background === "puerta-light",
-        })}
-      >
-        <Story />
-      </div>
-    ),
+    (Story, { parameters, globals }) => {
+      const theme = themesByBrand[globals.brand as BrandId];
+      return (
+        <div
+          className={cn("h-screen py-8", {
+            "bg-white": parameters.background === "white",
+            [theme.bannerBackgroundColor]: parameters.background === "brand",
+            [theme.footerBackgroundColor]:
+              parameters.background === "brand-light",
+          })}
+        >
+          <Story />
+        </div>
+      );
+    },
   ],
 } satisfies Meta<typeof Paragraph>;
 
@@ -59,10 +63,10 @@ export const VariantNeutral: Story = {
 export const VariantPuerta: Story = {
   args: {
     ...VariantNeutral.args,
-    variant: "puerta",
+    variant: "brand",
   },
   parameters: {
-    background: "puerta-light",
+    background: "brand-light",
   },
 };
 
@@ -72,6 +76,6 @@ export const VariantWhite: Story = {
     variant: "white",
   },
   parameters: {
-    background: "puerta",
+    background: "brand",
   },
 };

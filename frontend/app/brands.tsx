@@ -31,6 +31,8 @@ export type Theme = {
     focusOutlineColor: string;
   };
   navButtonClassName: string;
+  strongBackgroundGradientColors: string;
+  paragraphTextColor: string;
 };
 
 export type ThemeProviderProps = {
@@ -73,6 +75,8 @@ export const themesByBrand: Record<BrandId, Theme> = {
       focusOutlineColor: "focus-visible:outline-puerta-600",
     },
     navButtonClassName: "border-puerta-500 bg-puerta-50 text-puerta-700",
+    strongBackgroundGradientColors: "from-puerta-100 to-puerta-300",
+    paragraphTextColor: "text-puerta-800",
   },
   aqua: {
     logoTextColor: "text-aqua-600",
@@ -87,6 +91,8 @@ export const themesByBrand: Record<BrandId, Theme> = {
       focusOutlineColor: "focus-visible:outline-aqua-600",
     },
     navButtonClassName: "border-aqua-400 bg-aqua-50 text-aqua-700",
+    strongBackgroundGradientColors: "from-aqua-50 to-aqua-200",
+    paragraphTextColor: "text-aqua-950",
   },
   azul: {
     logoTextColor: "text-azul-900",
@@ -101,5 +107,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
       focusOutlineColor: "focus-visible:outline-azul-900",
     },
     navButtonClassName: "border-azul-950 bg-azul-50 text-azul-800",
+    strongBackgroundGradientColors: "from-azul-50 to-azul-200",
+    paragraphTextColor: "text-azul-950",
   },
 };

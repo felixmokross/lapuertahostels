@@ -5,6 +5,7 @@ import {
 } from "~/common/rich-text";
 import { Image } from "~/components/image";
 import { cn } from "../components/cn";
+import { useTheme } from "~/brands";
 
 export type ImageWithFloatingTextBlockProps = {
   heading: RichTextObject;
@@ -31,6 +32,7 @@ export function ImageWithFloatingTextBlock({
   id,
 }: ImageWithFloatingTextBlockProps) {
   const imageOverlay = image.overlay || "moderate";
+  const theme = useTheme();
   return (
     <div
       className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
@@ -81,16 +83,17 @@ export function ImageWithFloatingTextBlock({
       >
         <div
           className={cn(
-            "from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-y-20",
+            "px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-y-20",
             {
               "bg-gradient-to-bl lg:translate-x-12":
                 textPosition === "top-left",
               "bg-gradient-to-br lg:-translate-x-12":
                 textPosition === "top-right",
             },
+            theme.strongBackgroundGradientColors,
           )}
         >
-          <RichTextParagraph variant="puerta" justify>
+          <RichTextParagraph variant="brand" justify>
             {text}
           </RichTextParagraph>
         </div>
