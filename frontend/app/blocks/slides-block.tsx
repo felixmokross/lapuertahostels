@@ -1,47 +1,22 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../components/cn";
 import { SlideImage } from "../components/slide-image";
 import { Transition } from "@headlessui/react";
-import { ImageTransformation } from "../components/image";
 import { OverlayTitle } from "../components/overlay-title";
 import { useEnvironment } from "~/environment";
 import { useSwipeable } from "react-swipeable";
+import { Page } from "~/payload-types";
 
-export type SlidesBlockProps = {
-  slides: Slide[];
-  transformation?: ImageTransformation;
-  autoplayIntervalInSeconds?: number;
-};
-
-export type Slide = {
-  src: string;
-  alt: string;
-  title?: SlideTitle;
-  imageAlignment?: "center" | "bottom";
-};
-
-export type SlideTitle = {
-  text: string | ReactNode;
-  position?:
-    | "top-left"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right"
-    | "center";
-  imageOverlay?: "subtle" | "moderate" | "intense";
-  cta?: SlideCallToAction;
-};
-
-export type SlideCallToAction = {
-  text: string;
-  to: string;
+export type SlidesBlockProps = NonNullable<Page["hero"]>[number] & {
+  blockType: "Slides";
 };
 
 export function SlidesBlock({
   slides,
-  transformation,
-  autoplayIntervalInSeconds = 10,
+  autoplayIntervalInSeconds,
 }: SlidesBlockProps) {
+  autoplayIntervalInSeconds = autoplayIntervalInSeconds || 10;
+
   if (slides.length === 0) {
     throw new Error("Slides Block must have at least one slide");
   }
@@ -85,7 +60,7 @@ export function SlidesBlock({
                       : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
                   )}
                 ></span>
-                <span className="sr-only">Go to {slide.alt}</span>
+                <span className="sr-only">Go to {slide.image.alt}</span>
               </button>
             ))}
           </div>
@@ -104,7 +79,7 @@ export function SlidesBlock({
                       : "bg-neutral-200 opacity-65 group-hover:bg-white group-hover:opacity-85",
                   )}
                 ></span>
-                <span className="sr-only">Go to {slide.alt}</span>
+                <span className="sr-only">Go to {slide.image.alt}</span>
               </button>
             ))}
           </div>
@@ -125,20 +100,17 @@ export function SlidesBlock({
             leaveTo="opacity-0"
           >
             <SlideImage
-              src={slide.src}
-              alt={slide.alt}
-              transformation={transformation}
+              src={slide.image.url}
+              alt={slide.image.alt}
+              transformation={{
+                aspectRatio: { width: 4, height: 3 },
+                width: 1600,
+              }}
               withPreview={i === 0}
-              alignment={slide.imageAlignment}
+              alignment={slide.image.alignment || "center"}
             />
-            {slide.title && (
-              <OverlayTitle
-                overlay={slide.title.imageOverlay}
-                position={slide.title.position}
-                cta={slide.title.cta}
-              >
-                {slide.title.text}
-              </OverlayTitle>
+            {slide.overlayTitle?.show && (
+              <OverlayTitle {...slide.overlayTitle} />
             )}
           </Transition>
         );
@@ -147,7 +119,10 @@ export function SlidesBlock({
   );
 }
 
-function useSlidesState(slides: Slide[], autoplayIntervalInSeconds: number) {
+function useSlidesState(
+  slides: SlidesBlockProps["slides"],
+  autoplayIntervalInSeconds: number,
+) {
   const [slideIndex, setSlideIndex] = useState(0);
   const { preview } = useEnvironment();
 

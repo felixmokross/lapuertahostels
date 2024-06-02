@@ -13,45 +13,58 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    transformation: {
-      aspectRatio: { width: 4, height: 3 },
-      width: 1600,
-    },
+    blockType: "Slides",
     slides: [
       {
-        src: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
-        alt: "Lost City",
-        title: {
-          text: "Lost City",
+        name: "Lost City",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+          alt: "Lost City",
+        },
+        overlayTitle: {
+          show: true,
+          text: [{ children: [{ text: "Lost City" }] }],
           position: "top-right",
-          cta: { text: "Read More", to: "#" },
+          cta: { show: true, text: "Read More", url: "#" },
         },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
-        alt: "Parque Tayrona",
-        title: {
-          text: "Parque Tayrona",
+        name: "Parque Tayrona",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
+          alt: "Parque Tayrona",
+        },
+        overlayTitle: {
+          show: true,
+          text: [{ children: [{ text: "Parque Tayrona" }] }],
           position: "bottom-left",
-          cta: { text: "Read More", to: "#" },
+          cta: { show: true, text: "Read More", url: "#" },
         },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
-        alt: "Santa Marta",
-        title: {
-          text: "Santa Marta",
+        name: "Santa Marta",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
+          alt: "Santa Marta",
+        },
+        overlayTitle: {
+          show: true,
+          text: [{ children: [{ text: "Santa Marta" }] }],
           position: "bottom-right",
-          cta: { text: "Read More", to: "#" },
+          cta: { show: true, text: "Read More", url: "#" },
         },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
-        alt: "Minca",
-        title: {
-          text: "Minca",
+        name: "Minca",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+          alt: "Minca",
+        },
+        overlayTitle: {
+          show: true,
+          text: [{ children: [{ text: "Minca" }] }],
           position: "top-left",
-          cta: { text: "Read More", to: "#" },
+          cta: { show: true, text: "Read More", url: "#" },
         },
       },
     ],
