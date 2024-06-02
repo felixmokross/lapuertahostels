@@ -543,10 +543,11 @@ export const Azul: Story = {
         {
           items: [
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
-              imageAlt: "View of a room",
-              title: "Feel Newborn",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+                alt: "View of a room",
+              },
+              heading: "Feel Newborn",
               text: [
                 {
                   children: [
@@ -573,10 +574,11 @@ export const Azul: Story = {
               id: "664904b75b1291dc0b0a9fa5",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
-              imageAlt: "View of a Twin Room with two double beds",
-              title: "Bring Your Family",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+                alt: "View of a Twin Room with two double beds",
+              },
+              heading: "Bring Your Family",
               text: [
                 {
                   children: [
@@ -596,10 +598,11 @@ export const Azul: Story = {
               id: "6649076a43cd15be5c01796e",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-              imageAlt: "View of the courtyard pool",
-              title: "Cool Down by the Pool",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+                alt: "View of the courtyard pool",
+              },
+              heading: "Cool Down by the Pool",
               text: [
                 {
                   children: [
@@ -619,10 +622,11 @@ export const Azul: Story = {
               id: "6649070543cd15be5c01796d",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
-              imageAlt: "Picture of the courtyard",
-              title: "A Beautiful Courtyard",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                alt: "Picture of the courtyard",
+              },
+              heading: "A Beautiful Courtyard",
               text: [
                 {
                   children: [
@@ -656,11 +660,11 @@ export const Azul: Story = {
               id: "664907e143cd15be5c01796f",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
-              imageAlt:
-                "Picture of the bathroom table with the hairdryer on it",
-              title: "Freshen Up",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
+                alt: "Picture of the bathroom table with the hairdryer on it",
+              },
+              heading: "Freshen Up",
               text: [
                 {
                   children: [
@@ -680,11 +684,11 @@ export const Azul: Story = {
               id: "6649090d43cd15be5c017970",
             },
             {
-              imageUrl:
-                "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
-              imageAlt:
-                "Picture of the room terrace with two coffee cups on the table",
-              title: "Enjoy the Morning",
+              image: {
+                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_DSC0989.jpg?updatedAt=1714162269331",
+                alt: "Picture of the room terrace with two coffee cups on the table",
+              },
+              heading: "Enjoy the Morning",
               text: [
                 {
                   children: [

@@ -4,8 +4,6 @@ import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadBlock } from "./lead-block";
 import { StoryBlock } from "./story-block";
 import { FeaturesBlock } from "./features-block";
-import { RichText } from "~/common/rich-text";
-import { ParagraphHighlight } from "~/components/paragraph";
 
 type LayoutBlocksProps = {
   data: NonNullable<Page["layout"]>;
@@ -69,21 +67,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
           />
         );
       case "Features":
-        return (
-          <FeaturesBlock
-            key={block.id}
-            id={block.elementId || undefined}
-            items={block.items?.map((item) => ({
-              image: { src: item.imageUrl, alt: item.imageAlt },
-              title: item.title,
-              paragraphContent: (
-                <RichText HighlightComponent={ParagraphHighlight}>
-                  {item.text}
-                </RichText>
-              ),
-            }))}
-          />
-        );
+        return <FeaturesBlock key={block.id} {...block} />;
     }
   });
 }
