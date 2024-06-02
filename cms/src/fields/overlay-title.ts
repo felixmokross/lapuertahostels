@@ -1,11 +1,15 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
-import { GroupField } from "payload/types";
+import { GroupField, RadioField } from "payload/types";
 import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
+import { Page } from "payload/generated-types";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsCallToAction?: boolean;
+  supportsPositions?: (NonNullable<Page["layout"]>[number] & {
+    blockType: "ImageWithFloatingText";
+  })["overlayTitle"]["position"][];
 };
 
 const callToActionField = makeCallToActionField({
@@ -16,6 +20,7 @@ const callToActionField = makeCallToActionField({
 export function makeOverlayTitleField({
   optional = false,
   supportsCallToAction = true,
+  supportsPositions,
 }: OverlayTitleFieldOptions = {}): GroupField {
   const condition = optional ? (_, siblingData) => siblingData.show : undefined;
 
@@ -62,38 +67,7 @@ export function makeOverlayTitleField({
             },
           ]
         : []),
-      {
-        name: "position",
-        label: {
-          en: "Position",
-          es: "Posición",
-        },
-        type: "radio",
-        options: [
-          { value: "center", label: { en: "Center", es: "Centro" } },
-          {
-            value: "top-left",
-            label: { en: "Top Left", es: "Arriba a la Izquierda" },
-          },
-          {
-            value: "top-right",
-            label: { en: "Top Right", es: "Arriba a la Derecha" },
-          },
-          {
-            value: "bottom-right",
-            label: { en: "Bottom Right", es: "Abajo a la Derecha" },
-          },
-          {
-            value: "bottom-left",
-            label: { en: "Bottom Left", es: "Abajo a la Izquierda" },
-          },
-        ],
-        defaultValue: "center",
-        admin: {
-          layout: "vertical",
-          condition,
-        },
-      },
+      getPositionField(),
       {
         name: "overlay",
         label: {
@@ -117,4 +91,53 @@ export function makeOverlayTitleField({
       },
     ],
   };
+
+  function getPositionField(): RadioField {
+    const options = getPositionOptions();
+
+    return {
+      name: "position",
+      label: {
+        en: "Position",
+        es: "Posición",
+      },
+      type: "radio",
+      options,
+      defaultValue: "center",
+      admin: {
+        layout: options.length > 2 ? "vertical" : "horizontal",
+        condition,
+      },
+    };
+  }
+
+  function getPositionOptions(): RadioField["options"] {
+    const allOptions = [
+      { value: "center", label: { en: "Center", es: "Centro" } },
+      {
+        value: "top-left",
+        label: { en: "Top Left", es: "Arriba a la Izquierda" },
+      },
+      {
+        value: "top-right",
+        label: { en: "Top Right", es: "Arriba a la Derecha" },
+      },
+      {
+        value: "bottom-right",
+        label: { en: "Bottom Right", es: "Abajo a la Derecha" },
+      },
+      {
+        value: "bottom-left",
+        label: { en: "Bottom Left", es: "Abajo a la Izquierda" },
+      },
+    ];
+
+    return supportsPositions
+      ? allOptions.filter((option) =>
+          supportsPositions.includes(
+            option.value as (typeof supportsPositions)[number],
+          ),
+        )
+      : allOptions;
+  }
 }

@@ -1,7 +1,8 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
+import { useTheme } from "~/brands";
 
-type ParagraphVariant = "neutral" | "puerta" | "white" | "inherit";
+type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 
 export type ParagraphProps = PropsWithChildren<{
   className?: string;
@@ -17,6 +18,7 @@ export function Paragraph({
   justify = false,
   className,
 }: ParagraphProps) {
+  const theme = useTheme();
   return (
     <VariantContext.Provider value={variant}>
       <p
@@ -31,7 +33,7 @@ export function Paragraph({
           },
           {
             "text-white": variant === "white",
-            "text-puerta-800": variant === "puerta",
+            [theme.paragraphTextColor]: variant === "brand",
             "text-inherit": variant === "inherit",
           },
           className,

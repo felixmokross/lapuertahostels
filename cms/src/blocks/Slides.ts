@@ -90,8 +90,8 @@ export const SlidesBlock: Block = {
           RowLabel: ({ data }: RowLabelArgs) => data?.name,
         },
         description: {
-          en: "When the user visits the page, the slides are automatically displayed in a loop. The user can also switch slides using the controls. You can add up to six slides.",
-          es: "Cuando el usuario visita la página, las diapositivas se muestran automáticamente en un bucle. El usuario también puede cambiar las diapositivas utilizando los controles. Puedes añadir hasta seis diapositivas.",
+          en: "You can use this either for a single hero image or a slideshow with multiple images. Each slide can have an overlay title and a call-to-action button. You can add up to six slides.",
+          es: "Puedes usar esto para una sola imagen de héroe o una presentación de diapositivas con varias imágenes. Cada diapositiva puede tener un título superpuesto y un botón de call to action. Puedes agregar hasta seis diapositivas.",
         },
       },
     },

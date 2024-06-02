@@ -22,7 +22,10 @@ export const ImageWithFloatingTextBlock: Block = {
     "Preview of the Image with Floating Text block, showing a large image with an integrated heading and a text box on the bottom right.",
   fields: [
     imageField,
-    makeOverlayTitleField({ supportsCallToAction: false }),
+    makeOverlayTitleField({
+      supportsCallToAction: false,
+      supportsPositions: ["top-left", "top-right"],
+    }),
     richTextField,
     makeMoreOptionsField(elementIdField),
   ],
