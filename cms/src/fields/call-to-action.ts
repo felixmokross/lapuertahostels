@@ -9,7 +9,7 @@ export type CallToActionFieldOptions = {
 export function makeCallToActionField({
   optional = false,
   showByDefault = true,
-}: CallToActionFieldOptions): GroupField {
+}: CallToActionFieldOptions = {}): GroupField {
   const condition = optional ? (_, siblingData) => siblingData.show : undefined;
   return {
     name: "cta",
