@@ -685,7 +685,7 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_DSC0989.jpg?updatedAt=1714162269331",
+                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
                 alt: "Picture of the room terrace with two coffee cups on the table",
               },
               heading: "Enjoy the Morning",

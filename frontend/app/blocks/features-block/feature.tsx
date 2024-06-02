@@ -4,6 +4,8 @@ import { Image } from "../../components/image";
 import { RichTextParagraph } from "~/common/rich-text";
 import { type Feature } from "./types";
 import { Heading } from "~/components/heading";
+import { Button } from "~/components/button";
+import { Link } from "~/components/link";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -15,6 +17,7 @@ export function Feature({
   image,
   heading,
   text,
+  cta,
 }: FeatureProps) {
   return (
     <div
@@ -30,6 +33,11 @@ export function Feature({
         <RichTextParagraph size="large" className="mt-2">
           {text}
         </RichTextParagraph>
+        {cta && (
+          <Button className="mt-6" size="large" as={Link} to={cta.url || "#"}>
+            {cta.text}
+          </Button>
+        )}
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
         <Image
