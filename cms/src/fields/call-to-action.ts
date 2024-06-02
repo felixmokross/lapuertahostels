@@ -69,6 +69,7 @@ export function makeCallToActionField({
                 },
               ],
               defaultValue: variant.default,
+              admin: { condition },
             } as RadioField,
           ]
         : []),
