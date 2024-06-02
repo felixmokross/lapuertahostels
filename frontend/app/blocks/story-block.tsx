@@ -10,14 +10,11 @@ export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
 
 export function StoryBlock({
   heading,
-  imageUrl,
-  imageAlt,
-  imagePosition,
+  image,
   text,
   elementId,
-  grayscale,
 }: StoryBlockProps) {
-  imagePosition = imagePosition || "left";
+  const imagePosition = image.position || "left";
   return (
     <div
       id={elementId || undefined}
@@ -48,13 +45,13 @@ export function StoryBlock({
         )}
       >
         <Image
-          src={imageUrl}
-          alt={imageAlt}
+          src={image.url}
+          alt={image.alt}
           className="h-full w-full object-cover"
           transformation={{
             aspectRatio: { width: 3, height: 4 },
             width: 1600,
-            enhancement: grayscale ? "grayscale" : undefined,
+            enhancement: image.grayscale ? "grayscale" : undefined,
           }}
           loading="lazy"
         />

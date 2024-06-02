@@ -2,7 +2,7 @@ import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { imageField } from "../fields/image";
-import { richTextField } from "../fields/rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 
 export const ImageWithFloatingTextBlock: Block = {
@@ -26,7 +26,7 @@ export const ImageWithFloatingTextBlock: Block = {
       supportsCallToAction: false,
       supportsPositions: ["top-left", "top-right"],
     }),
-    richTextField,
+    makeRichTextField(),
     makeMoreOptionsField(elementIdField),
   ],
 };

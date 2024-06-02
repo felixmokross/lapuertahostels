@@ -1,8 +1,9 @@
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
-import { imageUrlField } from "../fields/image";
+import { imageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/rich-text";
 
 export const StoryBlock: Block = {
   slug: "Story",
@@ -20,83 +21,39 @@ export const StoryBlock: Block = {
   imageAltText:
     "Preview of the Story block, showing an image on the left and text on the right",
   fields: [
+    headingField,
+    makeRichTextField({ supportsParagraphs: true }),
     {
-      name: "heading",
-      label: {
-        en: "Heading",
-        es: "Título",
-      },
-      type: "text",
-      required: true,
-      localized: true,
-    },
-    {
-      // TODO reuse richTextField
-      name: "text",
-      label: {
-        en: "Text",
-        es: "Texto",
-      },
-      type: "richText",
-      required: true,
-      localized: true,
-      editor: slateEditor({
-        admin: {
-          elements: [],
-          leaves: ["bold"],
+      ...imageField,
+      fields: [
+        ...imageField.fields,
+        {
+          name: "position",
+          label: {
+            en: "Position",
+            es: "Posición",
+          },
+          type: "radio",
+          options: [
+            { label: { en: "Left", es: "Izquierda" }, value: "left" },
+            { label: { en: "Right", es: "Derecha" }, value: "right" },
+          ],
         },
-      }),
-      admin: {
-        description: {
-          en: "Mark parts of the text as bold to make it stand out. Use two line breaks to create a new paragraph.",
-          es: "Marca partes del texto como negrita para que destaque. Usa dos saltos de línea para crear un nuevo párrafo.",
+        {
+          name: "grayscale",
+          label: {
+            en: "Grayscale",
+            es: "Escala de grises",
+          },
+          type: "checkbox",
+          admin: {
+            description: {
+              en: "Check this box to display the image in grayscale.",
+              es: "Marca esta casilla para mostrar la imagen en escala de grises.",
+            },
+          },
         },
-      },
-    },
-    // TODO re-use imageField
-    {
-      ...imageUrlField,
-      name: "imageUrl",
-      label: {
-        en: "Image URL",
-        es: "URL de la imagen",
-      },
-    },
-    {
-      name: "imageAlt",
-      label: {
-        en: "Alternative Text of the Image",
-        es: "Texto alternativo de la imagen",
-      },
-      type: "text",
-      required: true,
-      localized: true,
-    },
-    {
-      name: "imagePosition",
-      label: {
-        en: "Image Position",
-        es: "Posición de la imagen",
-      },
-      type: "radio",
-      options: [
-        { label: { en: "Left", es: "Izquierda" }, value: "left" },
-        { label: { en: "Right", es: "Derecha" }, value: "right" },
       ],
-    },
-    {
-      name: "grayscale",
-      label: {
-        en: "Grayscale",
-        es: "Escala de grises",
-      },
-      type: "checkbox",
-      admin: {
-        description: {
-          en: "Check this box to display the image in grayscale.",
-          es: "Marca esta casilla para mostrar la imagen en escala de grises.",
-        },
-      },
     },
     makeMoreOptionsField(elementIdField),
   ],
