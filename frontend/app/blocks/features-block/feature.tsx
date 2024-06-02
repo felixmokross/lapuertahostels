@@ -34,7 +34,13 @@ export function Feature({
           {text}
         </RichTextParagraph>
         {cta?.show && (
-          <Button className="mt-6" size="large" as={Link} to={cta.url || "#"}>
+          <Button
+            className="mt-6"
+            size="medium"
+            variant={cta.variant || undefined}
+            as={Link}
+            to={cta.url || "#"}
+          >
             {cta.text}
           </Button>
         )}

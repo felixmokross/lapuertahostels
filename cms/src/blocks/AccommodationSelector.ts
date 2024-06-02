@@ -2,7 +2,7 @@ import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
-import { richTextField } from "../fields/rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { imageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
 
@@ -23,7 +23,7 @@ export const AccommodationSelectorBlock: Block = {
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
     headingField,
-    richTextField,
+    makeRichTextField(),
     {
       name: "cards",
       label: {

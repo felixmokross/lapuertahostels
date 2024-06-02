@@ -379,12 +379,12 @@ export const Puerta: Story = {
             },
           ],
           elementId: "about-us",
-          imageUrl:
-            "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
-          imageAlt:
-            "Two persons chatting with each other and sitting in a relaxed manner at a table",
-          imagePosition: "left",
-          grayscale: true,
+          image: {
+            url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
+            alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
+            position: "left",
+            grayscale: true,
+          },
           id: "664b56be7f9772bcf6dffcab",
           blockType: "Story",
           blockName: "About Us",

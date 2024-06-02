@@ -9,8 +9,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Simple: Story = {
   args: {
+    blockType: "Lead",
+    id: "lead-1",
     heading: "Discover the Colombian Costa Caribe",
     text: [
       {
@@ -49,5 +51,16 @@ export const Primary: Story = {
         ],
       },
     ],
+  },
+};
+
+export const WithCallToAction: Story = {
+  args: {
+    ...Simple.args,
+    cta: {
+      show: true,
+      text: "Book now",
+      url: "/santa-marta",
+    },
   },
 };

@@ -1,8 +1,9 @@
-import { Block, TextField } from "payload/types";
+import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
-import { richTextField } from "../fields/rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const LeadBlock: Block = {
   slug: "Lead",
@@ -18,5 +19,10 @@ export const LeadBlock: Block = {
   },
   imageURL: "/assets/blocks/Lead.png",
   imageAltText: "Preview of the Lead block, showing a heading and a large text",
-  fields: [headingField, richTextField, makeMoreOptionsField(elementIdField)],
+  fields: [
+    headingField,
+    makeRichTextField(),
+    makeCallToActionField({ optional: true, showByDefault: false }),
+    makeMoreOptionsField(elementIdField),
+  ],
 };

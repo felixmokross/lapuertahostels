@@ -1,25 +1,24 @@
-import { PropsWithChildren } from "react";
-import { Button } from "./button";
-import { cn } from "./cn";
-import { Heading } from "./heading";
-import { Link } from "./link";
+import { RichTextHeading, RichTextObject } from "~/common/rich-text";
+import { Button } from "../../components/button";
+import { cn } from "../../components/cn";
+import { Link } from "../../components/link";
 
-export type OverlayTitleProps = PropsWithChildren<{
-  position?:
-    | "top-left"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right"
-    | "center";
+export type OverlayTitleProps = {
+  text?: RichTextObject | null;
   cta?: {
-    to: string;
-    text: string;
+    show?: boolean | null;
+    text?: string | null;
+    url?: string | null;
+    variant?: ("primary" | "secondary") | null;
   };
-  overlay?: "subtle" | "moderate" | "intense";
-}>;
+  position?:
+    | ("center" | "top-left" | "top-right" | "bottom-right" | "bottom-left")
+    | null;
+  overlay?: ("subtle" | "moderate" | "intense") | null;
+};
 
 export function OverlayTitle({
-  children,
+  text,
   position = "center",
   cta,
   overlay = "moderate",
@@ -43,11 +42,17 @@ export function OverlayTitle({
             position === "center",
         })}
       >
-        <Heading as="h3" size="extra-large" variant="white" textShadow>
-          {children}
-        </Heading>
-        {cta && (
-          <Button as={Link} size="large" blackShadow to={cta.to}>
+        <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
+          {text!}
+        </RichTextHeading>
+        {cta?.show && (
+          <Button
+            as={Link}
+            size="large"
+            variant={cta.variant || "primary"}
+            blackShadow
+            to={cta.url!}
+          >
             {cta.text}
           </Button>
         )}

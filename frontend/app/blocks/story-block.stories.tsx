@@ -11,6 +11,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    blockType: "Story",
     heading: "About Us",
     text: [
       {
@@ -92,7 +93,7 @@ export const Default: Story = {
       },
     ],
     image: {
-      src: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
+      url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
       alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
     },
   },

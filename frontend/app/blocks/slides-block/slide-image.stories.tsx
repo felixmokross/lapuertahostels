@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { SlideImage } from "./slide-image";
 
 const meta = {
-  title: "SlideImage",
   component: SlideImage,
+  title: "blocks/Slides Block/Slide Image",
   argTypes: {},
 } satisfies Meta<typeof SlideImage>;
 

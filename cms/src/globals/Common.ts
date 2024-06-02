@@ -11,7 +11,10 @@ const socialPlatformOptions = [
   { label: "WhatsApp", value: "whatsapp" },
 ];
 
-const callToActionField = makeCallToActionField({ optional: true });
+const callToActionField = makeCallToActionField({
+  optional: true,
+  variant: false,
+});
 
 export const Common: GlobalConfig = {
   slug: "common",

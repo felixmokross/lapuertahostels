@@ -15,6 +15,7 @@ type OverlayTitleFieldOptions = {
 const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
+  variant: { default: "primary" },
 });
 
 export function makeOverlayTitleField({

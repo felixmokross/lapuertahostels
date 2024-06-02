@@ -11,24 +11,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    blockType: "AccommodationSelector",
     heading: "Your Home Base for a Perfect Trip",
     text: [
       {
         children: [
-          {
-            text: "Choose between our ",
-          },
-          {
-            text: "two accommodations",
-            bold: true,
-          },
-          {
-            text: " in Santa Marta. ",
-          },
+          { text: "Choose between our " },
+          { text: "two accommodations", bold: true },
+          { text: " in Santa Marta. " },
         ],
       },
     ],
-    accommodationCards: [
+    cards: [
       {
         id: "6647dbf8f50fb271d132f9c6",
         brand: {
@@ -48,7 +42,7 @@ export const Primary: Story = {
           updatedAt: "2024-05-19T10:04:05.148Z",
         },
         image: {
-          src: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
+          url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
           alt: "Puerta Aqua",
         },
         description:
@@ -73,7 +67,7 @@ export const Primary: Story = {
           updatedAt: "2024-05-19T10:04:05.148Z",
         },
         image: {
-          src: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+          url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
           alt: "La Puerta Azul",
         },
         description:

@@ -1,34 +1,26 @@
-import { RichTextObject, RichTextParagraph } from "~/common/rich-text";
-import { Brand } from "~/payload-types";
+import { RichTextParagraph } from "~/common/rich-text";
+import { Brand, Page } from "~/payload-types";
 import { cn } from "../components/cn";
 import { Heading } from "../components/heading";
 import { Paragraph } from "../components/paragraph";
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
+import { BrandId } from "~/brands";
 
-export type AccommodationSelectorBlockProps = {
-  heading: string;
-  text: RichTextObject;
-  accommodationCards: {
-    brand: Brand;
-    image: {
-      src: string;
-      alt: string;
-    };
-    description: string;
-    id: string;
-  }[];
-  id?: string;
+export type AccommodationSelectorBlockProps = NonNullable<
+  Page["layout"]
+>[number] & {
+  blockType: "AccommodationSelector";
 };
 
 export function AccommodationSelectorBlock({
   heading,
   text,
-  accommodationCards,
-  id,
+  cards,
+  elementId,
 }: AccommodationSelectorBlockProps) {
   return (
-    <div id={id} className="relative">
+    <div id={elementId || undefined} className="relative">
       <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
       <div className="pb-12 pt-8 md:pb-20 md:pt-16">
         <div className="lg-px-0 mx-auto max-w-4xl px-8">
@@ -45,15 +37,8 @@ export function AccommodationSelectorBlock({
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-          {accommodationCards.map((card) => (
-            <AccommodationCard
-              key={card.id}
-              name={card.brand.name}
-              to={card.brand.homeLinkUrl}
-              color={card.brand.id as "aqua" | "azul"}
-              image={card.image}
-              description={card.description}
-            />
+          {cards.map((card) => (
+            <AccommodationCard key={card.id} {...card} />
           ))}
         </div>
       </div>
@@ -61,38 +46,30 @@ export function AccommodationSelectorBlock({
   );
 }
 
-type AccommodationCardProps = {
-  name: string;
-  to: string;
-  image: {
-    src: string;
-    alt: string;
-  };
-  description: string;
-  color: "aqua" | "azul";
-};
+type AccommodationCardProps = AccommodationSelectorBlockProps["cards"][number];
 
 function AccommodationCard({
-  name,
-  to,
-  image,
+  brand,
   description,
-  color,
+  image,
 }: AccommodationCardProps) {
+  brand = brand as Brand;
+  const brandId = brand.id as BrandId;
+
   return (
     <Link
-      to={to}
+      to={brand.homeLinkUrl}
       className={cn(
         "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
         {
-          "bg-aqua-600 hover:bg-aqua-200": color === "aqua",
-          "bg-azul-600 hover:bg-azul-200": color === "azul",
+          "bg-aqua-600 hover:bg-aqua-200": brandId === "aqua",
+          "bg-azul-600 hover:bg-azul-200": brandId === "azul",
         },
       )}
     >
       <div className="relative aspect-[16/9] bg-white">
         <Image
-          src={image.src}
+          src={image.url}
           alt={image.alt}
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
           transformation={{
@@ -107,13 +84,13 @@ function AccommodationCard({
         className={cn(
           "space-y-1 px-8 py-6 text-white md:space-y-2 md:px-6 md:py-4",
           {
-            "group-hover:text-azul-800": color === "azul",
-            "group-hover:text-aqua-800": color === "aqua",
+            "group-hover:text-azul-800": brandId === "azul",
+            "group-hover:text-aqua-800": brandId === "aqua",
           },
         )}
       >
         <Heading as="h4" variant="inherit" size="small">
-          {name}
+          {brand.name}
         </Heading>
         <Paragraph variant="inherit" justify>
           {description}

@@ -1,46 +1,32 @@
-import {
-  RichTextHeading,
-  RichTextObject,
-  RichTextParagraph,
-} from "~/common/rich-text";
+import { RichTextHeading, RichTextParagraph } from "~/common/rich-text";
 import { Image } from "~/components/image";
 import { cn } from "../components/cn";
 import { useTheme } from "~/brands";
+import { Page } from "~/payload-types";
 
-export type ImageWithFloatingTextBlockProps = {
-  heading: RichTextObject;
-  text: RichTextObject;
-  textPosition?:
-    | "center"
-    | "top-left"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right";
-  image: {
-    src: string;
-    alt: string;
-    overlay?: "subtle" | "moderate" | "intense";
-  };
-  id?: string;
+export type ImageWithFloatingTextBlockProps = NonNullable<
+  Page["layout"]
+>[number] & {
+  blockType: "ImageWithFloatingText";
 };
 
 export function ImageWithFloatingTextBlock({
-  heading,
-  text,
-  textPosition = "top-left",
+  overlayTitle,
+  elementId,
   image,
-  id,
+  text,
 }: ImageWithFloatingTextBlockProps) {
-  const imageOverlay = image.overlay || "moderate";
+  const overlay = overlayTitle.overlay || "moderate";
+  const textPosition = overlayTitle.position || "top-left";
   const theme = useTheme();
   return (
     <div
       className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
-      id={id}
+      id={elementId || undefined}
     >
       <div className="relative max-h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
         <Image
-          src={image.src}
+          src={image.url}
           alt={image.alt}
           className="h-full w-full object-cover"
           transformation={{
@@ -55,9 +41,9 @@ export function ImageWithFloatingTextBlock({
           className={cn(
             "absolute inset-0 flex bg-gradient-to-t from-transparent to-black/40 px-6 py-4 md:px-8 md:py-6 lg:rounded-lg",
             {
-              "to-black/30": imageOverlay === "subtle",
-              "to-black/40": imageOverlay === "moderate",
-              "to-black/50": imageOverlay === "intense",
+              "to-black/30": overlay === "subtle",
+              "to-black/40": overlay === "moderate",
+              "to-black/50": overlay === "intense",
             },
             {
               "justify-start": textPosition === "top-left",
@@ -71,7 +57,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {heading}
+            {overlayTitle.text}
           </RichTextHeading>
         </div>
       </div>
