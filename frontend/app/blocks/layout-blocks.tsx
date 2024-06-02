@@ -13,14 +13,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
   return data.map((block) => {
     switch (block.blockType) {
       case "Lead":
-        return (
-          <LeadBlock
-            key={block.id}
-            id={block.elementId || undefined}
-            heading={block.heading}
-            text={block.text}
-          />
-        );
+        return <LeadBlock key={block.id} {...block} />;
       case "AccommodationSelector":
         return (
           <AccommodationSelectorBlock
