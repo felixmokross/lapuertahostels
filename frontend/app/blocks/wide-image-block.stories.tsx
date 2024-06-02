@@ -11,35 +11,66 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    blockType: "WideImage",
     image: {
-      url: "https://ik.imagekit.io/lapuertahostels/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
-      alt: "Example image",
+      url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6303.jpg?updatedAt=1714161153434",
+      alt: "Test",
     },
-  },
-};
-
-export const WithOverlayTextBox: Story = {
-  args: {
-    ...Default.args,
     overlayTextBox: {
       show: true,
-      heading: "Example Heading",
+      heading: "Feel at Home",
       text: [
         {
           children: [
-            { text: "Example text with " },
-            { text: "bold text", bold: true },
-            { text: "." },
+            {
+              text: "Experience ",
+            },
+            {
+              text: "Colombian hospitality",
+              bold: true,
+            },
+            {
+              text: " in our boutique hostel's ",
+            },
+            {
+              text: "inviting community areas",
+              bold: true,
+            },
+            {
+              text: ", perfect for ",
+            },
+            {
+              text: "connecting ",
+              bold: true,
+            },
+            {
+              text: "and creating ",
+            },
+            {
+              text: "unforgettable",
+              bold: true,
+            },
+            {
+              text: " memories.",
+            },
           ],
         },
       ],
-      position: "top-right",
       cta: {
         show: true,
-        text: "Example CTA",
-        url: "/example",
+        text: "Discover More",
+        url: "/discover",
+        variant: "secondary",
       },
+      position: "top-right",
     },
+    id: "665cbd27ebb1f68ede783782",
+    blockType: "WideImage",
+  },
+};
+
+export const WithoutOverlayTextBox: Story = {
+  args: {
+    ...Default.args,
+    overlayTextBox: undefined,
   },
 };
