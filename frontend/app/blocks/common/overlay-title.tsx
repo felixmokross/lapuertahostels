@@ -1,7 +1,7 @@
 import { RichTextHeading, RichTextObject } from "~/common/rich-text";
-import { Button } from "./button";
-import { cn } from "./cn";
-import { Link } from "./link";
+import { Button } from "../../components/button";
+import { cn } from "../../components/cn";
+import { Link } from "../../components/link";
 
 export type OverlayTitleProps = {
   text?: RichTextObject | null;

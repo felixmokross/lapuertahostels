@@ -1,5 +1,5 @@
 import { Page } from "~/payload-types";
-import { OverlayTitle } from "../components/overlay-title";
+import { OverlayTitle } from "./common/overlay-title";
 import { useEnvironment } from "~/environment";
 
 export type HeroVideoBlockProps = NonNullable<Page["hero"]>[number] & {

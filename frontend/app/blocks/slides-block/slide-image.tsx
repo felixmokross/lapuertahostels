@@ -1,6 +1,6 @@
-import { cn } from "./cn";
+import { cn } from "../../components/cn";
 import { useEffect, useRef, useState } from "react";
-import { Image, ImageProps } from "./image";
+import { Image, ImageProps } from "../../components/image";
 
 export type SlideImageProps = ImageProps & {
   withPreview?: boolean;

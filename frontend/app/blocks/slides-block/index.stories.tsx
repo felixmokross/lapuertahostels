@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { SlidesBlock } from "./slides-block";
+import { SlidesBlock } from ".";
 
 const meta = {
-  title: "blocks/Slides Block",
+  title: "blocks/Slides Block/Slides Block",
   component: SlidesBlock,
   argTypes: {},
 } satisfies Meta<typeof SlidesBlock>;

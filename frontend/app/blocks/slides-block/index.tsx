@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "../components/cn";
-import { SlideImage } from "../components/slide-image";
+import { cn } from "../../components/cn";
+import { SlideImage } from "./slide-image";
 import { Transition } from "@headlessui/react";
-import { OverlayTitle } from "../components/overlay-title";
+import { OverlayTitle } from "../common/overlay-title";
 import { useEnvironment } from "~/environment";
 import { useSwipeable } from "react-swipeable";
 import { Page } from "~/payload-types";
