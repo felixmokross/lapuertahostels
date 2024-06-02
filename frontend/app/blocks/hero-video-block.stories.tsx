@@ -27,7 +27,7 @@ export const WithOverlayTitle: Story = {
     overlayTitle: {
       show: true,
       text: [
-        { children: [{ text: "Expore " }, { text: "Tayrona", bold: true }] },
+        { children: [{ text: "Explore " }, { text: "Tayrona", bold: true }] },
       ],
       overlay: "subtle",
       position: "top-right",
