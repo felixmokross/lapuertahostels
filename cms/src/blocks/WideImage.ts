@@ -22,9 +22,9 @@ export const WideImageBlock: Block = {
       es: "Imágenes anchas",
     },
   },
-  // imageURL: "/assets/blocks/HeroVideo.png",
-  // imageAltText:
-  //   "Preview of the Hero Video block, showing a image with an overlay title and a CTA.",
+  imageURL: "/assets/blocks/WideImage.png",
+  imageAltText:
+    "Preview of the Wide Image block, showing an image spanning the whole page width with an overlay text box including a call to action.",
   fields: [
     imageField,
     {
