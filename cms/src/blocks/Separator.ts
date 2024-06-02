@@ -12,7 +12,7 @@ export const SeparatorBlock: Block = {
       es: "Separadores",
     },
   },
-  // imageURL: "/assets/blocks/Lead.png",
-  // imageAltText: "Preview of the Lead block, showing a heading and a large text",
+  imageURL: "/assets/blocks/Separator.png",
+  imageAltText: "Preview of the Separator block, showing a horizontal line",
   fields: [],
 };
