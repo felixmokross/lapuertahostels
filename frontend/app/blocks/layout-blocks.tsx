@@ -45,20 +45,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
           />
         );
       case "Story":
-        return (
-          <StoryBlock
-            key={block.id}
-            id={block.elementId || undefined}
-            heading={block.heading}
-            text={block.text}
-            image={{
-              src: block.imageUrl,
-              alt: block.imageAlt,
-              position: block.imagePosition || undefined,
-              grayscale: block.grayscale || false,
-            }}
-          />
-        );
+        return <StoryBlock key={block.id} {...block} />;
       case "Features":
         return <FeaturesBlock key={block.id} {...block} />;
     }

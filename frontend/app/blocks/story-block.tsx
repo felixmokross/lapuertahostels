@@ -1,25 +1,26 @@
-import { RichTextObject, RichTextParagraphGroup } from "~/common/rich-text";
+import { RichTextParagraphGroup } from "~/common/rich-text";
 import { Heading } from "../components/heading";
 import { Image } from "../components/image";
 import { cn } from "../components/cn";
+import { Page } from "~/payload-types";
 
-export type StoryBlockProps = {
-  heading: string;
-  text: RichTextObject;
-  image: {
-    src: string;
-    alt: string;
-    grayscale?: boolean;
-    position?: "left" | "right";
-  };
-  id?: string;
+export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
+  blockType: "Story";
 };
 
-export function StoryBlock({ heading, text, image, id }: StoryBlockProps) {
-  const imagePosition = image.position || "left";
+export function StoryBlock({
+  heading,
+  imageUrl,
+  imageAlt,
+  imagePosition,
+  text,
+  elementId,
+  grayscale,
+}: StoryBlockProps) {
+  imagePosition = imagePosition || "left";
   return (
     <div
-      id={id}
+      id={elementId || undefined}
       className={
         "mx-auto mb-24 mt-20 max-w-4xl lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16"
       }
@@ -47,13 +48,13 @@ export function StoryBlock({ heading, text, image, id }: StoryBlockProps) {
         )}
       >
         <Image
-          src={image.src}
-          alt={image.alt}
+          src={imageUrl}
+          alt={imageAlt}
           className="h-full w-full object-cover"
           transformation={{
             aspectRatio: { width: 3, height: 4 },
             width: 1600,
-            enhancement: image.grayscale ? "grayscale" : undefined,
+            enhancement: grayscale ? "grayscale" : undefined,
           }}
           loading="lazy"
         />
