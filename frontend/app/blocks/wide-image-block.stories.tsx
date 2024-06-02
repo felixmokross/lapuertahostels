@@ -18,3 +18,28 @@ export const Default: Story = {
     },
   },
 };
+
+export const WithOverlayTextBox: Story = {
+  args: {
+    ...Default.args,
+    overlayTextBox: {
+      show: true,
+      heading: "Example Heading",
+      text: [
+        {
+          children: [
+            { text: "Example text with " },
+            { text: "bold text", bold: true },
+            { text: "." },
+          ],
+        },
+      ],
+      position: "top-right",
+      cta: {
+        show: true,
+        text: "Example CTA",
+        url: "/example",
+      },
+    },
+  },
+};

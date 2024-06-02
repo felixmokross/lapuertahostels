@@ -26,26 +26,30 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
       {overlayTextBox?.show && (
         <div
           className={cn(
-            "absolute max-w-md rounded-md bg-white px-8 pb-8 pt-5 shadow-lg",
+            "absolute max-w-md rounded-md bg-white px-6 pb-6 pt-3 shadow-lg md:px-8 md:pb-8 md:pt-5",
             {
-              "left-32 top-32": overlayTextBoxPosition === "top-left",
-              "right-32 top-32": overlayTextBoxPosition === "top-right",
-              "bottom-32 left-32": overlayTextBoxPosition === "bottom-left",
-              "bottom-32 right-32": overlayTextBoxPosition === "bottom-right",
+              "left-8 top-8 md:left-16 md:top-16 xl:left-32 xl:top-32":
+                overlayTextBoxPosition === "top-left",
+              "right-8 top-8 md:right-16 md:top-16 xl:right-32 xl:top-32":
+                overlayTextBoxPosition === "top-right",
+              "bottom-8 left-8 md:bottom-16 md:left-16 xl:bottom-32 xl:left-32":
+                overlayTextBoxPosition === "bottom-left",
+              "bottom-8 right-8 md:bottom-16 md:right-16 xl:bottom-32 xl:right-32":
+                overlayTextBoxPosition === "bottom-right",
             },
           )}
         >
           <Heading as="h4" size="medium">
             {overlayTextBox.heading}
           </Heading>
-          <RichTextParagraph className="mt-4">
+          <RichTextParagraph className="mt-2 md:mt-4">
             {overlayTextBox.text!}
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button
               as={Link}
               to={overlayTextBox.cta.url!}
-              className="mt-8"
+              className="mt-5 md:mt-8"
               variant={overlayTextBox.cta.variant || undefined}
             >
               {overlayTextBox.cta.text}
