@@ -26,7 +26,7 @@ export type ImageWithFloatingTextBlockProps = {
 export function ImageWithFloatingTextBlock({
   heading,
   text,
-  textPosition = "top-right",
+  textPosition = "top-left",
   image,
   id,
 }: ImageWithFloatingTextBlockProps) {
@@ -58,8 +58,8 @@ export function ImageWithFloatingTextBlock({
               "to-black/50": imageOverlay === "intense",
             },
             {
-              "justify-start": textPosition === "top-right",
-              "justify-end": textPosition === "top-left",
+              "justify-start": textPosition === "top-left",
+              "justify-end": textPosition === "top-right",
             },
           )}
         >
@@ -75,8 +75,8 @@ export function ImageWithFloatingTextBlock({
       </div>
       <div
         className={cn("lg:absolute lg:inset-0 lg:flex lg:items-end", {
-          "lg:justify-end": textPosition === "top-right",
-          "lg:justify-start": textPosition === "top-left",
+          "lg:justify-start": textPosition === "top-right",
+          "lg:justify-end": textPosition === "top-left",
         })}
       >
         <div
@@ -84,9 +84,9 @@ export function ImageWithFloatingTextBlock({
             "from-puerta-100 to-puerta-300 px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-y-20",
             {
               "bg-gradient-to-bl lg:translate-x-12":
-                textPosition === "top-right",
-              "bg-gradient-to-br lg:-translate-x-12":
                 textPosition === "top-left",
+              "bg-gradient-to-br lg:-translate-x-12":
+                textPosition === "top-right",
             },
           )}
         >
