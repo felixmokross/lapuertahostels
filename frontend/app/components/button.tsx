@@ -8,7 +8,7 @@ import { useTheme } from "~/brands";
 
 export type ButtonProps<T extends ElementType> = PropsWithChildren<{
   as?: T;
-  size: "small" | "large";
+  size: "small" | "medium" | "large";
   blackShadow?: boolean;
 }> &
   Omit<ComponentPropsWithoutRef<T>, "as">;
@@ -34,6 +34,8 @@ export function Button<T extends ElementType>({
         {
           "px-4 py-2 text-sm tracking-wider shadow-md hover:shadow-lg md:px-6 md:py-3 md:text-base":
             size === "large",
+          "px-4 py-2 text-xs tracking-wide shadow-md hover:shadow-lg md:px-4 md:py-3 md:text-sm":
+            size === "medium",
           "px-3 py-2 text-xs tracking-wide shadow-sm hover:shadow-md":
             size === "small",
         },

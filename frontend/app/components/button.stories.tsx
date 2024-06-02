@@ -11,9 +11,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Large: Story = {
   args: {
     children: "Click Here",
     size: "large",
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    children: "Click Here",
+    size: "medium",
+  },
+};
+
+export const Small: Story = {
+  args: {
+    children: "Click Here",
+    size: "small",
   },
 };
