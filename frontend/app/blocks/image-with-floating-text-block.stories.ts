@@ -11,23 +11,26 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    blockType: "ImageWithFloatingText",
     image: {
-      src: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
+      url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
       alt: "View of Santa Marta",
     },
-    heading: [
-      {
-        children: [
-          {
-            text: "Do You Know ",
-          },
-          {
-            text: "Santa Marta?",
-            bold: true,
-          },
-        ],
-      },
-    ],
+    overlayTitle: {
+      text: [
+        {
+          children: [
+            {
+              text: "Do You Know ",
+            },
+            {
+              text: "Santa Marta?",
+              bold: true,
+            },
+          ],
+        },
+      ],
+    },
     text: [
       {
         children: [
@@ -82,23 +85,32 @@ export const Default: Story = {
   },
 };
 
-export const TextLeft: Story = {
+export const TextRight: Story = {
   args: {
     ...Default.args,
-    textPosition: "top-left",
+    overlayTitle: {
+      ...Default.args.overlayTitle,
+      position: "top-right",
+    },
   },
 };
 
 export const ImageOverlaySubtle: Story = {
   args: {
     ...Default.args,
-    image: { ...Default.args.image, overlay: "subtle" },
+    overlayTitle: {
+      ...Default.args.overlayTitle,
+      overlay: "subtle",
+    },
   },
 };
 
 export const ImageOverlayIntense: Story = {
   args: {
     ...Default.args,
-    image: { ...Default.args.image, overlay: "intense" },
+    overlayTitle: {
+      ...Default.args.overlayTitle,
+      overlay: "intense",
+    },
   },
 };

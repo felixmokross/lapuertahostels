@@ -30,20 +30,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
           />
         );
       case "ImageWithFloatingText":
-        return (
-          <ImageWithFloatingTextBlock
-            key={block.id}
-            id={block.elementId || undefined}
-            heading={block.overlayTitle.text}
-            text={block.text}
-            textPosition={block.overlayTitle.position || undefined}
-            image={{
-              src: block.image.url,
-              alt: block.image.alt,
-              overlay: block.overlayTitle.overlay || undefined,
-            }}
-          />
-        );
+        return <ImageWithFloatingTextBlock key={block.id} {...block} />;
       case "Story":
         return <StoryBlock key={block.id} {...block} />;
       case "Features":
