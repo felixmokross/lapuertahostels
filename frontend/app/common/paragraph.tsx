@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
-import { useTheme } from "~/brands";
+import { useTheme } from "~/themes";
 
 type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 

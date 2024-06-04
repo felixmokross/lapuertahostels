@@ -1,7 +1,8 @@
 import { Brand } from "~/payload-types";
-import { BrandId, themesByBrand } from "../brands";
+import { type BrandId } from "../brands";
 import { cn } from "./cn";
 import { Image } from "./image";
+import { themesByBrand } from "~/themes";
 
 export type BrandLogoProps = {
   size: "small" | "large";

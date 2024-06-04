@@ -3,7 +3,7 @@ import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadBlock } from "./lead-block";
 import { StoryBlock } from "./story-block";
-import { FeaturesBlock } from "./features-block";
+import { FeaturesBlock } from "./features-block/features-block";
 import { SeparatorBlock } from "./separator-block";
 import { WideImageBlock } from "./wide-image-block";
 

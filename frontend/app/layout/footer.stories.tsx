@@ -4,7 +4,7 @@ import { Footer } from "./footer";
 import { Brand } from "~/payload-types";
 
 const meta = {
-  title: "Footer",
+  title: "layout/Footer",
   component: Footer,
   argTypes: {},
 } satisfies Meta<typeof Footer>;
@@ -12,7 +12,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     content: {
       address: `La Puerta Hostels S.A.S.

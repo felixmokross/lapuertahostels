@@ -1,4 +1,4 @@
-import { SlidesBlock } from "~/blocks/slides-block";
+import { SlidesBlock } from "~/blocks/slides-block/slides-block";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
 import { Page } from "~/payload-types";
 

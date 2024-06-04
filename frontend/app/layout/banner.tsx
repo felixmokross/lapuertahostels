@@ -1,10 +1,10 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { cn } from "./cn";
+import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
-import { useTheme } from "~/brands";
-import { Link } from "./link";
+import { Link } from "~/common/link";
+import { useTheme } from "~/themes";
 
 export type BannerProps = {
   children: string;

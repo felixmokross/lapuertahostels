@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LocaleSwitcher } from "./locale-switcher";
 
 const meta = {
-  title: "header/LocaleSwitcher",
+  title: "layout/Header/Locale Switcher",
   component: LocaleSwitcher,
   argTypes: {
     currentLocale: {
@@ -19,7 +19,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     currentLocale: "en",
   },

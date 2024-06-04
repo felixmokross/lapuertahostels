@@ -1,7 +1,7 @@
 import { RichTextParagraphGroup } from "~/common/rich-text";
-import { Heading } from "../components/heading";
-import { Image } from "../components/image";
-import { cn } from "../components/cn";
+import { Heading } from "../common/heading";
+import { Image } from "../common/image";
+import { cn } from "../common/cn";
 import { Page } from "~/payload-types";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {

@@ -4,7 +4,7 @@ import { Heading, HeadingHighlight } from "./heading";
 import { cn } from "./cn";
 
 const meta = {
-  title: "Heading",
+  title: "common/Heading",
   component: Heading,
   argTypes: {
     as: { control: "select", options: ["h1", "h2", "h3", "h4", "h5", "h6"] },

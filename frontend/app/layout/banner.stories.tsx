@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Banner } from "./banner";
 
 const meta = {
-  title: "Banner",
+  title: "layout/Banner",
   component: Banner,
   argTypes: {},
 } satisfies Meta<typeof Banner>;
@@ -11,7 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     children: "Travel before 20 September and get 20% off!",
     cta: "Book now →",
@@ -21,7 +21,7 @@ export const Primary: Story = {
 
 export const WithoutCallToAction: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     cta: undefined,
     ctaTo: undefined,
   },

@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { purgeCacheFor } from "~/common/cms-data";
+import { purgeCacheFor } from "~/cms-data";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { url } = await request.json();

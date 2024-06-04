@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
-import { cn } from "../../components/cn";
-import { Image } from "../../components/image";
+import { cn } from "../../common/cn";
+import { Image } from "../../common/image";
 import { RichTextParagraph } from "~/common/rich-text";
 import { type Feature } from "./types";
-import { Heading } from "~/components/heading";
-import { Button } from "~/components/button";
-import { Link } from "~/components/link";
+import { Heading } from "~/common/heading";
+import { Button } from "~/common/button";
+import { Link } from "~/common/link";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";

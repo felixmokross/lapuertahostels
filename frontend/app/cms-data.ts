@@ -30,7 +30,7 @@ function getCacheFilePath(url: string, locale: string) {
   return `${getCacheFolder(url)}/${locale}.json`;
 }
 
-export async function getData(url: string, locale: string) {
+async function getData(url: string, locale: string) {
   const filePath = getCacheFilePath(url, locale);
   try {
     const cache = await fs.readFile(filePath, "utf8");

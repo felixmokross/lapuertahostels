@@ -1,10 +1,10 @@
 import { Page } from "~/payload-types";
-import { Image } from "~/components/image";
-import { Heading } from "~/components/heading";
-import { Button } from "~/components/button";
+import { Image } from "~/common/image";
+import { Heading } from "~/common/heading";
+import { Button } from "~/common/button";
 import { RichTextParagraph } from "~/common/rich-text";
-import { Link } from "~/components/link";
-import { cn } from "~/components/cn";
+import { Link } from "~/common/link";
+import { cn } from "~/common/cn";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";

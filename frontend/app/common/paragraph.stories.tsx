@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Paragraph, ParagraphHighlight } from "./paragraph";
 import { cn } from "./cn";
-import { BrandId, themesByBrand } from "~/brands";
+import { BrandId } from "~/brands";
+import { themesByBrand } from "~/themes";
 
 const meta = {
-  title: "Paragraph",
+  title: "common/Paragraph",
   component: Paragraph,
   argTypes: {
     size: { control: "select", options: ["medium", "large", "extra-large"] },

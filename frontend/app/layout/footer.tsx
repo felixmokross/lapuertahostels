@@ -1,11 +1,11 @@
 import { Fragment } from "react";
-import { Button } from "./button";
-import { BrandLogo } from "./brand-logo";
-import { useTheme } from "../brands";
+import { Button } from "../common/button";
+import { BrandLogo } from "../common/brand-logo";
 import { Brand, Common } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
-import { Link } from "./link";
+import { Link } from "../common/link";
+import { useTheme } from "~/themes";
 
 type FooterProps = {
   content: Common["footer"];
