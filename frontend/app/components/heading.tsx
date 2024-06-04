@@ -7,7 +7,7 @@ type HeadingVariant = "brand" | "white" | "inherit";
 export type HeadingProps = PropsWithChildren<{
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   variant?: HeadingVariant;
-  size: "small" | "medium" | "large" | "extra-large";
+  size: "extra-small" | "small" | "medium" | "large" | "extra-large";
   textShadow?: boolean;
   className?: string;
 }>;
@@ -33,6 +33,8 @@ export function Heading({
               },
           {
             "font-sans text-sm font-bold uppercase leading-relaxed tracking-wider":
+              size === "extra-small",
+            "font-sans text-sm font-bold uppercase leading-relaxed tracking-wider md:text-xl md:font-normal md:leading-relaxed md:tracking-normal":
               size === "small",
             "font-serif text-3xl leading-relaxed tracking-tight md:text-4xl md:leading-relaxed":
               size === "medium",

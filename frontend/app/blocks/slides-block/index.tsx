@@ -104,7 +104,7 @@ export function SlidesBlock({
               alt={slide.image.alt}
               transformation={{
                 aspectRatio: { width: 4, height: 3 },
-                width: 1600,
+                width: 3200,
               }}
               withPreview={i === 0}
               alignment={slide.image.alignment || "center"}

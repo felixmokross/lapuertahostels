@@ -89,7 +89,7 @@ function AccommodationCard({
           },
         )}
       >
-        <Heading as="h4" variant="inherit" size="small">
+        <Heading as="h4" variant="inherit" size="extra-small">
           {brand.name}
         </Heading>
         <Paragraph variant="inherit" justify>
