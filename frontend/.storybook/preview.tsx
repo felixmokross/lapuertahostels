@@ -3,7 +3,7 @@ import { createRemixStub } from "@remix-run/testing";
 import "../app/tailwind.css";
 import React from "react";
 import i18n from "./i18next";
-import { ThemeProvider } from "../app/brands";
+import { ThemeProvider } from "../app/themes";
 import { Brand } from "../app/payload-types";
 
 const withRemix: Decorator = (Story) => {
