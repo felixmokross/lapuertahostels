@@ -15,26 +15,35 @@ export function SlidesBlock({
   slides,
   autoplayIntervalInSeconds,
 }: SlidesBlockProps) {
-  autoplayIntervalInSeconds = autoplayIntervalInSeconds || 10;
+  autoplayIntervalInSeconds = autoplayIntervalInSeconds || 7;
 
   if (slides.length === 0) {
     throw new Error("Slides Block must have at least one slide");
   }
 
-  const { slideIndex, goTo, goToNext, goToPrevious } = useSlidesState(
-    slides,
-    autoplayIntervalInSeconds,
-  );
+  const {
+    slideIndex,
+    goTo,
+    goToNext,
+    goToPrevious,
+    startInterval,
+    stopInterval,
+  } = useSlidesState(slides, autoplayIntervalInSeconds);
 
-  const handlers = useSwipeable({
+  const swipeHandlers = useSwipeable({
     onSwipedLeft: goToNext,
     onSwipedRight: goToPrevious,
     preventScrollOnSwipe: true,
   });
 
+  const pauseIntervalHandlers = {
+    onMouseEnter: () => stopInterval(),
+    onMouseLeave: () => startInterval(),
+  };
+
   return (
     <div
-      {...handlers}
+      {...swipeHandlers}
       className="relative h-[30rem] bg-puerta-100 focus:outline-none md:h-[40rem]"
       onKeyDown={(e) => {
         if (e.key === "ArrowLeft") goToPrevious();
@@ -45,7 +54,10 @@ export function SlidesBlock({
     >
       {slides.length > 1 && (
         <>
-          <div className="absolute bottom-10 hidden w-full justify-center md:flex">
+          <div
+            className="absolute bottom-10 hidden w-full justify-center md:flex"
+            {...pauseIntervalHandlers}
+          >
             {slides.map((slide, i) => (
               <button
                 className="group z-10 inline-flex h-10 items-center px-2"
@@ -64,7 +76,10 @@ export function SlidesBlock({
               </button>
             ))}
           </div>
-          <div className="absolute bottom-0 flex w-full justify-center md:hidden">
+          <div
+            className="absolute bottom-0 flex w-full justify-center md:hidden"
+            {...pauseIntervalHandlers}
+          >
             {slides.map((slide, i) => (
               <button
                 className="group z-10 inline-flex h-10 flex-grow items-end"
@@ -110,7 +125,10 @@ export function SlidesBlock({
               alignment={slide.image.alignment || "center"}
             />
             {slide.overlayTitle?.show && (
-              <OverlayTitle {...slide.overlayTitle} />
+              <OverlayTitle
+                {...slide.overlayTitle}
+                {...pauseIntervalHandlers}
+              />
             )}
           </Transition>
         );
@@ -131,11 +149,17 @@ function useSlidesState(
   const startInterval = useCallback(() => {
     if (intervalRef.current) return;
 
+    // Do not auto-advance slides in preview mode
+    if (preview) return;
+
+    // Do not auto-advance if there is only one slide
+    if (slides.length === 1) return;
+
     intervalRef.current = window.setInterval(
       () => setSlideIndex((currentIndex) => (currentIndex + 1) % slides.length),
       autoplayIntervalInSeconds * 1000,
     );
-  }, [slides.length, autoplayIntervalInSeconds]);
+  }, [slides.length, autoplayIntervalInSeconds, preview]);
 
   function stopInterval() {
     if (intervalRef.current) {
@@ -151,18 +175,14 @@ function useSlidesState(
   }
 
   useEffect(() => {
-    // Do not auto-advance slides in preview mode
-    if (preview) return;
-
-    // Do not auto-advance if there is only one slide
-    if (slides.length === 1) return;
-
     startInterval();
     return stopInterval;
-  }, [startInterval, preview, slides.length]);
+  }, [startInterval]);
 
   return {
     slideIndex,
+    stopInterval,
+    startInterval,
     goTo,
     goToNext() {
       goTo((slideIndex + 1) % slides.length);
