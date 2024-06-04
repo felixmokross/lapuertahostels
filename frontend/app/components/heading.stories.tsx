@@ -18,8 +18,7 @@ const meta = {
   decorators: [
     (Story, { parameters }) => (
       <div
-        className={cn("h-screen px-8 py-2", {
-          "bg-white": parameters.background === "white",
+        className={cn("h-screen px-8 py-2 text-neutral-900", {
           "bg-puerta-700": parameters.background === "puerta",
         })}
       >
@@ -32,30 +31,60 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const VariantPuerta: Story = {
+export const Default: Story = {
   args: {
     as: "h1",
     children: "Discover the Colombian Costa Caribe",
     size: "extra-large",
-    variant: "brand",
-  },
-  parameters: {
-    background: "white",
   },
 };
 
-export const VariantWhite: Story = {
+export const VariantInherit: Story = {
   args: {
-    as: "h1",
+    ...Default.args,
+    variant: "inherit",
+  },
+};
+
+export const VariantWhiteWithHighlight: Story = {
+  args: {
+    ...Default.args,
     children: (
       <>
         Discover the <HeadingHighlight>Colombian Costa Caribe</HeadingHighlight>
       </>
     ),
-    size: "extra-large",
     variant: "white",
   },
   parameters: {
     background: "puerta",
+  },
+};
+
+export const SizeLarge: Story = {
+  args: {
+    ...Default.args,
+    size: "large",
+  },
+};
+
+export const SizeMedium: Story = {
+  args: {
+    ...Default.args,
+    size: "medium",
+  },
+};
+
+export const SizeSmall: Story = {
+  args: {
+    ...Default.args,
+    size: "small",
+  },
+};
+
+export const SizeExtraSmall: Story = {
+  args: {
+    ...Default.args,
+    size: "extra-small",
   },
 };
