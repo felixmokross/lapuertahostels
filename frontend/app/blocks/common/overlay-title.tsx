@@ -2,6 +2,7 @@ import { RichTextHeading, RichTextObject } from "~/common/rich-text";
 import { Button } from "../../components/button";
 import { cn } from "../../components/cn";
 import { Link } from "../../components/link";
+import { MouseEventHandler } from "react";
 
 export type OverlayTitleProps = {
   text?: RichTextObject | null;
@@ -15,6 +16,8 @@ export type OverlayTitleProps = {
     | ("center" | "top-left" | "top-right" | "bottom-right" | "bottom-left")
     | null;
   overlay?: ("subtle" | "moderate" | "intense") | null;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 };
 
 export function OverlayTitle({
@@ -22,6 +25,8 @@ export function OverlayTitle({
   position = "center",
   cta,
   overlay = "moderate",
+  onMouseEnter,
+  onMouseLeave,
 }: OverlayTitleProps) {
   return (
     <>
@@ -41,6 +46,8 @@ export function OverlayTitle({
           "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
             position === "center",
         })}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
           {text!}

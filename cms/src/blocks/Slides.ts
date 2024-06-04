@@ -102,7 +102,13 @@ export const SlidesBlock: Block = {
         en: "Autoplay Interval in Seconds",
         es: "Intervalo de reproducción automática en segundos",
       },
-      defaultValue: 10,
+      defaultValue: 7,
+      admin: {
+        description: {
+          en: "Depending on the amount of information in the slides (title, CTA), different intervals might be more suitable. The default value is 7 seconds.",
+          es: "Dependiendo de la cantidad de información en las diapositivas (título, CTA), pueden ser más adecuados diferentes intervalos. El valor predeterminado es de 7 segundos.",
+        },
+      },
     }),
   ],
 };
