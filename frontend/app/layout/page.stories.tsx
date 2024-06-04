@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Page } from "./page";
-import { ThemeProvider } from "~/brands";
 import { Brand } from "~/payload-types";
+import { ThemeProvider } from "~/themes";
 
 const meta = {
-  title: "Page",
+  title: "layout/Page",
   component: Page,
 } satisfies Meta<typeof Page>;
 

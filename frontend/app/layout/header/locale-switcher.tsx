@@ -1,12 +1,12 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { Dropdown } from "../dropdown";
 import { useTranslation } from "react-i18next";
-import i18nConfig from "../../i18n";
 import { useLocation } from "@remix-run/react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { cn } from "../cn";
-import { useTheme } from "~/brands";
+import { cn } from "~/common/cn";
+import { Dropdown } from "~/common/dropdown";
+import i18nConfig from "~/i18n";
+import { useTheme } from "~/themes";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;

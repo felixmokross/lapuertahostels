@@ -1,7 +1,7 @@
 import { RichTextHeading, RichTextObject } from "~/common/rich-text";
-import { Button } from "../../components/button";
-import { cn } from "../../components/cn";
-import { Link } from "../../components/link";
+import { Button } from "../../common/button";
+import { cn } from "../../common/cn";
+import { Link } from "../../common/link";
 import { MouseEventHandler } from "react";
 
 export type OverlayTitleProps = {

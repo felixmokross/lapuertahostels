@@ -4,7 +4,7 @@ import { Dropdown } from "./dropdown";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 
 const meta = {
-  title: "Dropdown",
+  title: "common/Dropdown",
   component: Dropdown,
   argTypes: {},
 } satisfies Meta<typeof Dropdown>;
@@ -12,7 +12,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     button: (
       <Dropdown.Button className="inline-flex w-full items-center gap-x-1.5 text-sm font-semibold text-neutral-900">

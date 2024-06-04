@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "../../components/cn";
+import { cn } from "../../common/cn";
 import { SlideImage } from "./slide-image";
 import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";

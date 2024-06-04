@@ -1,8 +1,8 @@
 import { RichTextHeading, RichTextParagraph } from "~/common/rich-text";
-import { Image } from "~/components/image";
-import { cn } from "../components/cn";
-import { useTheme } from "~/brands";
+import { Image } from "~/common/image";
+import { cn } from "../common/cn";
 import { Page } from "~/payload-types";
+import { useTheme } from "~/themes";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   Page["layout"]

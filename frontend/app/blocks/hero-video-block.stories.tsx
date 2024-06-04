@@ -11,31 +11,32 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Simple: Story = {
+export const Default: Story = {
   args: {
     blockType: "HeroVideo",
     videoUrl:
       "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed.mp4?updatedAt=1716840200792",
     previewUrl:
       "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed-preview.png?updatedAt=1716908602638",
-  },
-};
-
-export const WithOverlayTitle: Story = {
-  args: {
-    ...Simple.args,
     overlayTitle: {
       show: true,
       text: [
         { children: [{ text: "Explore " }, { text: "Tayrona", bold: true }] },
       ],
       overlay: "subtle",
-      position: "top-right",
+      position: "center",
       cta: {
         show: true,
         url: "/tayrona",
         text: "Book Now",
       },
     },
+  },
+};
+
+export const WithoutOverlayTitle: Story = {
+  args: {
+    ...Default.args,
+    overlayTitle: { show: false },
   },
 };

@@ -9,7 +9,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Simple: Story = {
+export const Default: Story = {
   args: {
     blockType: "Lead",
     id: "lead-1",
@@ -56,7 +56,7 @@ export const Simple: Story = {
 
 export const WithCallToAction: Story = {
   args: {
-    ...Simple.args,
+    ...Default.args,
     cta: {
       show: true,
       text: "Book now",

@@ -1,9 +1,9 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
-import { OptInLivePreview } from "~/components/live-preview";
+import { OptInLivePreview } from "~/common/live-preview";
 import i18next from "~/i18next.server";
-import { Page } from "../components/page";
-import { getPage } from "~/common/cms-data";
+import { Page } from "../layout/page";
+import { getPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {

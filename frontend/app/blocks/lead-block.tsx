@@ -1,7 +1,7 @@
 import { RichTextParagraph } from "~/common/rich-text";
-import { Button } from "~/components/button";
-import { Heading } from "~/components/heading";
-import { Link } from "~/components/link";
+import { Button } from "~/common/button";
+import { Heading } from "~/common/heading";
+import { Link } from "~/common/link";
 import { Page } from "~/payload-types";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {

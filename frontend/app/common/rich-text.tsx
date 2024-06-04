@@ -1,12 +1,12 @@
 import { SerializeFrom } from "@remix-run/node";
 import { ComponentType, PropsWithChildren } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { Heading, HeadingHighlight, HeadingProps } from "~/components/heading";
+import { Heading, HeadingHighlight, HeadingProps } from "~/common/heading";
 import {
   Paragraph,
   ParagraphHighlight,
   ParagraphProps,
-} from "~/components/paragraph";
+} from "~/common/paragraph";
 
 export type RichTextProps = {
   children: RichTextObject;

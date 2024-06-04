@@ -4,7 +4,7 @@ import {
   PropsWithChildren,
 } from "react";
 import { cn } from "./cn";
-import { useTheme } from "~/brands";
+import { useTheme } from "~/themes";
 
 export type ButtonProps<T extends ElementType> = PropsWithChildren<{
   as?: T;

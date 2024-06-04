@@ -15,13 +15,14 @@ import {
 
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
-import { Banner } from "./components/banner";
-import { Header } from "./components/header/header";
-import { Footer } from "./components/footer";
-import { ThemeProvider, useBrand } from "./brands";
+import { Banner } from "./layout/banner";
+import { Header } from "./layout/header/header";
+import { Footer } from "./layout/footer";
+import { useBrand } from "./brands";
 import i18next from "./i18next.server";
-import { getBrands, getCommon } from "./common/cms-data";
-import { OptInLivePreview } from "./components/live-preview";
+import { getBrands, getCommon } from "./cms-data";
+import { OptInLivePreview } from "./common/live-preview";
+import { ThemeProvider } from "./themes";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },

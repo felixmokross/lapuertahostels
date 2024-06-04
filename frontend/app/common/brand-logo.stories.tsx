@@ -4,7 +4,7 @@ import { BrandLogo } from "./brand-logo";
 import { Brand } from "~/payload-types";
 
 const meta = {
-  title: "BrandLogo",
+  title: "common/Brand Logo",
   component: BrandLogo,
   argTypes: {
     brand: {

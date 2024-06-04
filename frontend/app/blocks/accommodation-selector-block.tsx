@@ -1,10 +1,10 @@
 import { RichTextParagraph } from "~/common/rich-text";
 import { Brand, Page } from "~/payload-types";
-import { cn } from "../components/cn";
-import { Heading } from "../components/heading";
-import { Paragraph } from "../components/paragraph";
-import { Image } from "~/components/image";
-import { Link } from "~/components/link";
+import { cn } from "../common/cn";
+import { Heading } from "../common/heading";
+import { Paragraph } from "../common/paragraph";
+import { Image } from "~/common/image";
+import { Link } from "~/common/link";
 import { BrandId } from "~/brands";
 
 export type AccommodationSelectorBlockProps = NonNullable<

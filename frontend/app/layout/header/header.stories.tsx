@@ -1,26 +1,47 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HeaderBrandLogo } from "./header-brand-logo";
+import { Header } from "./header";
 import { Brand } from "~/payload-types";
 
 const meta = {
-  title: "header/HeaderBrandLogo",
-  component: HeaderBrandLogo,
+  title: "layout/Header",
+  component: Header,
   argTypes: {},
-} satisfies Meta<typeof HeaderBrandLogo>;
+} satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const puertaBrand = {
   id: "puerta",
-  homeLinkUrl: "/",
+  name: "La Puerta Hostels",
+  navLinks: [
+    {
+      url: "/aqua",
+      label: "Puerta Aqua",
+    },
+    {
+      url: "/azul",
+      label: "La Puerta Azul",
+    },
+    {
+      url: ".#santa-marta",
+      label: "Santa Marta",
+    },
+    {
+      url: ".#about-us",
+      label: "About Us",
+    },
+    {
+      url: "#",
+      label: "Contact",
+    },
+  ],
   logoUrl:
     "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
-  name: "La Puerta Hostels",
 } as Brand;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     allBrands: [
       puertaBrand,
