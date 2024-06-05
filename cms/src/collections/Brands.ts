@@ -19,7 +19,6 @@ export const Brands: CollectionConfig = {
     useAsTitle: "id",
   },
   access: {
-    read: () => true,
     create: () => false,
     update: canManageContent,
     delete: () => false,

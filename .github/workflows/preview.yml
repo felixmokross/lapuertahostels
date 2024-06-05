@@ -39,6 +39,12 @@ jobs:
         run: |
           echo Creating app ${{ steps.app-name.outputs.app-name }}:
           flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+
+          echo Setting secrets:
+          flyctl secrets set PAYLOAD_CMS_API_KEY=$PREVIEW_PAYLOAD_CMS_API_KEY \
+            --app ${{ steps.app-name.outputs.app-name }} --stage
+        env:
+          PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
       - uses: ./.github/actions/version
         id: version
       - name: Deploy

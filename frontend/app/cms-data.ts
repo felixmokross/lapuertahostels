@@ -71,10 +71,18 @@ async function loadData(url: string, locale: string) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
+  if (!process.env.PAYLOAD_CMS_API_KEY) {
+    throw new Error("PAYLOAD_CMS_API_KEY is not set");
+  }
 
   console.log(`Loading data from CMS for ${url} in ${locale}`);
   const response = await fetch(
     `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
+    {
+      headers: {
+        Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
+      },
+    },
   );
 
   if (!response.ok) {

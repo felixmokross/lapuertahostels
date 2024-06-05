@@ -24,7 +24,6 @@ export const Pages: CollectionConfig = {
     listSearchableFields: ["url", "title"],
   },
   access: {
-    read: () => true,
     create: ({ req: { user } }) => user?.role === "admin",
     update: canManageContent,
     delete: ({ req: { user } }) => user?.role === "admin",
