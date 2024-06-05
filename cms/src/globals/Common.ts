@@ -4,6 +4,7 @@ import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { showField } from "../fields/show";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { validateUrl } from "../common/validation";
+import { canManageContent } from "../common/access-control";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -22,7 +23,10 @@ export const Common: GlobalConfig = {
     en: "Common",
     es: "Común",
   },
-  access: { read: () => true },
+  access: {
+    read: () => true,
+    update: canManageContent,
+  },
   hooks: {
     afterChange: [({ req }) => cachePurgeHook("globals/common", "/", req)],
   },

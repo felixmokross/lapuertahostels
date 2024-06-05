@@ -3,6 +3,7 @@ import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { text } from "payload/dist/fields/validations";
+import { canManageContent } from "../common/access-control";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -25,6 +26,7 @@ export const Pages: CollectionConfig = {
   access: {
     read: () => true,
     create: ({ req: { user } }) => user?.role === "admin",
+    update: canManageContent,
     delete: ({ req: { user } }) => user?.role === "admin",
   },
   hooks: {
