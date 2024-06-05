@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { isAdmin, isSelf } from "../common/access-control";
+import { canManageContent, isAdmin, isSelf } from "../common/access-control";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -13,7 +13,9 @@ export const Users: CollectionConfig = {
       es: "Usuarios",
     },
   },
-  auth: true,
+  auth: {
+    useAPIKey: true,
+  },
   admin: {
     useAsTitle: "email",
   },
@@ -22,6 +24,7 @@ export const Users: CollectionConfig = {
     create: ({ req }) => isAdmin(req),
     update: ({ req, id }) => isSelf(req, id) || isAdmin(req),
     delete: ({ req }) => isAdmin(req),
+    admin: canManageContent,
   },
   fields: [
     {
@@ -32,6 +35,7 @@ export const Users: CollectionConfig = {
       },
       type: "radio",
       options: [
+        { value: "frontend", label: { en: "Frontend", es: "Frontend" } },
         { value: "editor", label: { en: "Editor", es: "Editor" } },
         { value: "admin", label: { en: "Admin", es: "Administrador" } },
       ],

@@ -1,6 +1,7 @@
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cachePurgeHook";
+import { canManageContent } from "../common/access-control";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -20,6 +21,7 @@ export const Brands: CollectionConfig = {
   access: {
     read: () => true,
     create: () => false,
+    update: canManageContent,
     delete: () => false,
   },
   hooks: {
