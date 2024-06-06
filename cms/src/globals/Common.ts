@@ -24,7 +24,6 @@ export const Common: GlobalConfig = {
     es: "Común",
   },
   access: {
-    read: () => true,
     update: canManageContent,
   },
   hooks: {
