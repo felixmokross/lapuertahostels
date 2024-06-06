@@ -20,9 +20,10 @@ import { Header } from "./layout/header/header";
 import { Footer } from "./layout/footer";
 import { useBrand } from "./brands";
 import i18next from "./i18next.server";
-import { getBrands, getCommon } from "./cms-data";
+import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
+import { MaintenanceScreen } from "./layout/maintenance-screen";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -87,13 +88,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const locale = await i18next.getLocale(request);
 
-  const [allBrands, common] = await Promise.all([
+  const [allBrands, common, maintenance] = await Promise.all([
     getBrands(locale),
     getCommon(locale),
+    getMaintenance(locale),
   ]);
 
   return json({
     allBrands,
+    maintenance,
     common,
     environment: {
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
@@ -101,7 +104,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
       preview: new URL(request.url).searchParams.get("preview") || undefined,
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
-    comingSoon: !!process.env.COMING_SOON,
   });
 }
 
@@ -114,7 +116,7 @@ export const handle = {
 };
 
 export default function App() {
-  const { common, analyticsDomain, comingSoon, allBrands } =
+  const { common, maintenance, analyticsDomain, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
@@ -136,45 +138,50 @@ export default function App() {
         )}
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        {comingSoon ? (
-          <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
-            Coming soon…
-          </div>
-        ) : (
-          <ThemeProvider brand={brand}>
-            <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
-              {(brand) => (
-                <OptInLivePreview path="globals/common" data={common}>
-                  {(common) => (
-                    <>
-                      {common.banner?.show && (
-                        <Banner
-                          cta={
-                            common.banner.cta?.show
-                              ? `${common.banner.cta.text} →`
-                              : undefined
-                          }
-                          ctaTo={
-                            common.banner.cta?.show
-                              ? common.banner.cta.url!
-                              : undefined
-                          }
-                        >
-                          {common.banner.message!}
-                        </Banner>
+        <OptInLivePreview path="globals/maintenance" data={maintenance}>
+          {(maintenance) =>
+            maintenance.maintenanceScreen?.show ? (
+              <MaintenanceScreen {...maintenance.maintenanceScreen} />
+            ) : (
+              <ThemeProvider brand={brand}>
+                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+                  {(brand) => (
+                    <OptInLivePreview path="globals/common" data={common}>
+                      {(common) => (
+                        <>
+                          {common.banner?.show && (
+                            <Banner
+                              cta={
+                                common.banner.cta?.show
+                                  ? `${common.banner.cta.text} →`
+                                  : undefined
+                              }
+                              ctaTo={
+                                common.banner.cta?.show
+                                  ? common.banner.cta.url!
+                                  : undefined
+                              }
+                            >
+                              {common.banner.message!}
+                            </Banner>
+                          )}
+                          <Header brand={brand} allBrands={allBrands} />
+                          <main>
+                            <Outlet />
+                          </main>
+                          <Footer
+                            allBrands={allBrands}
+                            content={common.footer}
+                          />
+                        </>
                       )}
-                      <Header brand={brand} allBrands={allBrands} />
-                      <main>
-                        <Outlet />
-                      </main>
-                      <Footer allBrands={allBrands} content={common.footer} />
-                    </>
+                    </OptInLivePreview>
                   )}
                 </OptInLivePreview>
-              )}
-            </OptInLivePreview>
-          </ThemeProvider>
-        )}
+              </ThemeProvider>
+            )
+          }
+        </OptInLivePreview>
         <ScrollRestoration />
         <Scripts />
       </body>
