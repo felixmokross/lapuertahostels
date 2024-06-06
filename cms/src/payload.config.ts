@@ -7,6 +7,7 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { Locale, buildConfig } from "payload/config";
 
 import { Users } from "./collections/Users";
+import { Maintenance } from "./globals/Maintenance";
 import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
@@ -28,7 +29,7 @@ export default buildConfig({
     livePreview: {
       url: getPreviewUrl,
       collections: [Pages.slug, Brands.slug],
-      globals: [Common.slug],
+      globals: [Common.slug, Maintenance.slug],
     },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
@@ -43,7 +44,7 @@ export default buildConfig({
   },
   editor: slateEditor({}),
   collections: [Users, Brands, Pages],
-  globals: [Common],
+  globals: [Common, Maintenance],
   localization: {
     locales: ["en", "es", "de", "fr"],
     defaultLocale: "en",

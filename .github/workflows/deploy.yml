@@ -49,7 +49,6 @@ jobs:
       fly_app_cms: ${{ steps.define-env.outputs.fly_app_cms }}
       domain_frontend: ${{ steps.define-env.outputs.domain_frontend }}
       domain_cms: ${{ steps.define-env.outputs.domain_cms }}
-      coming_soon: ${{ steps.define-env.outputs.coming_soon }}
     steps:
       - run: |
           environment=${{ inputs.environment || 'staging' }}
@@ -61,14 +60,12 @@ jobs:
               echo "fly_app_cms=lapuertahostels-cms" >> "$GITHUB_OUTPUT"
               echo "domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=lapuertahostels-cms.fly.dev" >> "$GITHUB_OUTPUT"
-              echo "coming_soon=1" >> "$GITHUB_OUTPUT"
               ;;
             staging)
               echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
               echo "fly_app_cms=lapuertahostels-cms-staging" >> "$GITHUB_OUTPUT"
               echo "domain_frontend=staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=admin.staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
-              echo "coming_soon=" >> "$GITHUB_OUTPUT"
               ;;
           esac
         id: define-env
@@ -97,7 +94,6 @@ jobs:
             --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }} \
-            --env COMING_SOON=${{ needs.define-env.outputs.coming_soon }} \
         working-directory: frontend
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
