@@ -59,7 +59,7 @@ jobs:
               echo "fly_app_frontend=lapuertahostels-2" >> "$GITHUB_OUTPUT"
               echo "fly_app_cms=lapuertahostels-cms" >> "$GITHUB_OUTPUT"
               echo "domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
-              echo "domain_cms=lapuertahostels-cms.fly.dev" >> "$GITHUB_OUTPUT"
+              echo "domain_cms=admin.laypuertahostels.co" >> "$GITHUB_OUTPUT"
               ;;
             staging)
               echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
