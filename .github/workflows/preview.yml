@@ -89,10 +89,11 @@ jobs:
 
           echo Setting secrets:
           flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
-            PAYLOAD_SECRET=$(openssl rand -hex 12) \
+            PAYLOAD_SECRET=$PREVIEW_PAYLOAD_SECRET \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
+          PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
       - uses: ./.github/actions/version
         id: version
       - name: Deploy
