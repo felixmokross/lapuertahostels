@@ -36,6 +36,8 @@ const preview: Preview = {
     locales: {
       en: "English",
       es: "Español",
+      de: "Deutsch",
+      fr: "Français",
     },
   },
   globalTypes: {

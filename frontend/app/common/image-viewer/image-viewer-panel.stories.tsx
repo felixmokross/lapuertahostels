@@ -52,5 +52,6 @@ export const Default: Story = {
         alt: "",
       },
     ],
+    onDismiss: () => {},
   },
 };

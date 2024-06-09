@@ -9,6 +9,8 @@
   "imageViewer": {
     "previous": "Vorheriges",
     "next": "Nächstes",
-    "fullscreen": "Vollbild"
+    "fullscreen": "Vollbild",
+    "exitFullscreen": "Vollbild beenden",
+    "close": "Schließen"
   }
 }

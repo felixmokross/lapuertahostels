@@ -40,6 +40,7 @@ export function ImageViewerDialog({
           images={images}
           zoomButtonRef={initialFocusRef}
           defaultImageIndex={defaultImageIndex}
+          onDismiss={onDismiss}
         />
       </Dialog>
     </Transition>

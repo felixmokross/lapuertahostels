@@ -18,19 +18,23 @@ import { useTranslation } from "react-i18next";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
+  XMarkIcon,
 } from "@heroicons/react/20/solid";
 
 export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
   images: ImageViewerImage[];
   zoomButtonRef?: RefObject<HTMLButtonElement>;
+  onDismiss: () => void;
 };
 
 export function ImageViewerPanel({
   defaultImageIndex,
   images,
   zoomButtonRef,
+  onDismiss,
 }: ImageViewerPanelProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(
     defaultImageIndex ?? 0,
@@ -164,13 +168,23 @@ export function ImageViewerPanel({
       </button>
       {isUserActive && <NextButton onClick={goToNextImage} />}
       {isUserActive && (
-        <div className="fixed inset-0 flex h-12 w-full items-center justify-between gap-4 bg-black/60 px-4 text-sm text-neutral-300 shadow-lg">
-          <div>
-            {currentImageIndex + 1} / {images.length}
+        <Transition.Child
+          as={Fragment}
+          enter="delay-200"
+          enterFrom="invisible"
+          enterTo="visible"
+        >
+          <div className="fixed inset-0 flex h-12 w-full items-center justify-between gap-4 bg-black/60 px-4 text-sm text-neutral-300 shadow-lg">
+            <div>
+              {currentImageIndex + 1} / {images.length}
+            </div>
+            <div>{images[currentImageIndex].caption}</div>
+            <div className="space-x-2">
+              {isFullscreen ? <ExitFullscreenButton /> : <FullscreenButton />}
+              {!isFullscreen && <CloseButton onClick={onDismiss} />}
+            </div>
           </div>
-          <div>{images[currentImageIndex].caption}</div>
-          <div>{!isFullscreen && <FullscreenButton />}</div>
-        </div>
+        </Transition.Child>
       )}
     </div>
   );
@@ -203,6 +217,17 @@ function NextButton({ onClick }: Pick<PreviousNextButtonProps, "onClick">) {
   );
 }
 
+function ExitFullscreenButton() {
+  const { t } = useTranslation();
+  return (
+    <IconButton
+      icon={ArrowsPointingInIcon}
+      onClick={() => document.exitFullscreen()}
+      title={t("imageViewer.exitFullscreen")}
+    />
+  );
+}
+
 function FullscreenButton() {
   const { t } = useTranslation();
   return (
@@ -210,6 +235,21 @@ function FullscreenButton() {
       icon={ArrowsPointingOutIcon}
       onClick={() => document.documentElement.requestFullscreen()}
       title={t("imageViewer.fullscreen")}
+    />
+  );
+}
+
+type CloseButtonProps = {
+  onClick: () => void;
+};
+
+function CloseButton({ onClick }: CloseButtonProps) {
+  const { t } = useTranslation();
+  return (
+    <IconButton
+      onClick={onClick}
+      icon={XMarkIcon}
+      title={t("imageViewer.close")}
     />
   );
 }
