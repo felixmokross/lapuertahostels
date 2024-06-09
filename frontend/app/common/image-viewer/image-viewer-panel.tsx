@@ -1,7 +1,6 @@
 import {
   ForwardedRef,
   Fragment,
-  RefObject,
   SetStateAction,
   forwardRef,
   useCallback,
@@ -9,32 +8,25 @@ import {
   useRef,
   useState,
 } from "react";
-import { cn } from "../cn";
 import { ImageViewerImage } from "./types";
 import { Transition } from "@headlessui/react";
 import { Image } from "~/common/image";
 import { ImageViewerControlsOverlay } from "./image-viewer-controls-overlay";
+import { cn } from "../cn";
 
 export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
   images: ImageViewerImage[];
-  zoomButtonRef?: RefObject<HTMLButtonElement>;
   onDismiss: () => void;
 };
 
 export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
-  {
-    defaultImageIndex,
-    images,
-    zoomButtonRef,
-    onDismiss,
-  }: ImageViewerPanelProps,
+  { defaultImageIndex, images, onDismiss }: ImageViewerPanelProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
   const [currentImageIndex, setCurrentImageIndex] = useState(
     defaultImageIndex ?? 0,
   );
-  const [isZoomed, setIsZoomed] = useState(false);
   const [isUserActive, setIsUserActive] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(isInFullscreen());
   const activityTimeoutRef = useRef(0);
@@ -56,10 +48,6 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
         handleFullscreenChange,
       );
   }, []);
-
-  useEffect(() => {
-    if (!isFullscreen) setIsZoomed(false);
-  }, [isFullscreen]);
 
   useEffect(() => {
     function handleActivity() {
@@ -111,65 +99,36 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
         goToPreviousImage();
       } else if (e.key === "ArrowRight") {
         goToNextImage();
-      } else if (isZoomed && e.key === "Escape") {
-        e.stopPropagation();
-        setIsZoomed(false);
       }
     }
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [goToNextImage, goToPreviousImage, isZoomed]);
+  }, [goToNextImage, goToPreviousImage]);
 
   function goToImage(value: SetStateAction<number>) {
-    setIsZoomed(false);
     setCurrentImageIndex(value);
   }
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "m-auto",
-        isZoomed
-          ? "fixed inset-0 overflow-auto"
-          : cn(
-              "fixed inset-0 w-max",
-              !isFullscreen &&
-                "max-h-[calc(100%-6rem)] max-w-[calc(100%-6rem)]",
-            ),
-      )}
-    >
-      <button
-        ref={zoomButtonRef}
-        className={cn(
-          "block h-full w-full focus:outline-none",
-          isZoomed ? "cursor-all-scroll" : "cursor-zoom-in",
-        )}
-        onClick={() => setIsZoomed(!isZoomed)}
+    <div ref={ref} className="fixed inset-0 m-auto h-fit w-fit">
+      <Transition.Child
+        as={Fragment}
+        enter="ease-out duration-300"
+        enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
+        enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
+        leave="ease-in duration-200"
+        leaveFrom="translate-x-0 translate-y-0 scale-100 opacity-100"
+        leaveTo="-translate-x-96 -translate-y-24 scale-50 opacity-0"
       >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
-          enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="translate-x-0 translate-y-0 scale-100 opacity-100"
-          leaveTo="-translate-x-96 -translate-y-24 scale-50 opacity-0"
-        >
-          <Image
-            src={images[currentImageIndex].src}
-            alt={images[currentImageIndex].alt}
-            className={cn(isZoomed ? "h-max w-max scale-110" : "h-full w-full")}
-            {...(isZoomed
-              ? undefined
-              : {
-                  transformation: {
-                    height: document.body.clientHeight * 2,
-                  },
-                })}
-          />
-        </Transition.Child>
-      </button>
+        <Image
+          src={images[currentImageIndex].src}
+          alt={images[currentImageIndex].alt}
+          className={cn("max-w-screen max-h-screen", !isFullscreen && "py-12")}
+          transformation={{
+            height: document.body.clientHeight * 2,
+          }}
+        />
+      </Transition.Child>
       {isUserActive && (
         <Transition.Child
           enter="delay-200"

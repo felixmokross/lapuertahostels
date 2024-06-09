@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 import { ImageViewerImage } from "./types";
 import { ImageViewerPanel } from "./image-viewer-panel";
 
@@ -16,14 +16,9 @@ export function ImageViewerDialog({
   images,
   defaultImageIndex,
 }: ImageViewerDialogProps) {
-  const initialFocusRef = useRef<HTMLButtonElement>(null);
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog
-        onClose={() => onDismiss()}
-        className="relative z-50"
-        initialFocus={initialFocusRef}
-      >
+      <Dialog onClose={() => onDismiss()} className="relative z-50">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -38,7 +33,6 @@ export function ImageViewerDialog({
         <Dialog.Panel
           as={ImageViewerPanel}
           images={images}
-          zoomButtonRef={initialFocusRef}
           defaultImageIndex={defaultImageIndex}
           onDismiss={onDismiss}
         />
