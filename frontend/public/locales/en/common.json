@@ -11,5 +11,10 @@
     "newsletter": {
       "emailLabel": "Email"
     }
+  },
+  "imageViewer": {
+    "previous": "Previous",
+    "next": "Next",
+    "fullscreen": "Full Screen"
   }
 }

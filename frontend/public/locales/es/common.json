@@ -5,5 +5,10 @@
     "newsletter": {
       "emailLabel": "Correo electrónico"
     }
+  },
+  "imageViewer": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "fullscreen": "Pantalla completa"
   }
 }
