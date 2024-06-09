@@ -86,12 +86,10 @@ type PreviousNextButtonProps = {
   title: string;
 };
 
-function PreviousNextButton({
-  className,
-  onClick,
-  icon,
-  title,
-}: PreviousNextButtonProps) {
+const PreviousNextButton = forwardRef(function PreviousNextButton(
+  { className, onClick, icon, title }: PreviousNextButtonProps,
+  ref: ForwardedRef<HTMLButtonElement>,
+) {
   return (
     <IconButton
       icon={icon}
@@ -101,9 +99,10 @@ function PreviousNextButton({
         "fixed z-10 m-4 rounded-full bg-black/60 shadow-md",
         className,
       )}
+      ref={ref}
     />
   );
-}
+});
 
 type IconButtonProps = {
   className?: string;

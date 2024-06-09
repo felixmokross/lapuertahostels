@@ -95,6 +95,13 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+      // blur the focused button to avoid confusion when navigating with arrow keys
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+
       if (e.key === "ArrowLeft") {
         goToPreviousImage();
       } else if (e.key === "ArrowRight") {
