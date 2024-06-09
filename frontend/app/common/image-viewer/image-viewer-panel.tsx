@@ -132,8 +132,8 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
       {isUserActive && (
         <Transition.Child
           enter="delay-200"
-          enterFrom="invisible"
-          enterTo="visible"
+          enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
+          enterTo="opacity-100"
         >
           <ImageViewerControlsOverlay
             currentImageIndex={currentImageIndex}
