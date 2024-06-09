@@ -15,7 +15,7 @@ export type ImageProps = {
 >;
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { src, alt, className, transformation, loading },
+  { src, alt, className, transformation, ...props },
   ref,
 ) {
   const { imagekitBaseUrl } = useEnvironment();
@@ -28,11 +28,11 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
 
   return (
     <img
+      {...props}
       src={`${imagekitBaseUrl}/${transformation ? toImagekitTransformationString(transformation) : ""}${src}`}
       className={className}
       alt={alt}
       ref={ref}
-      loading={loading}
     />
   );
 });
