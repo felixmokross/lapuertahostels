@@ -1,5 +1,4 @@
 import { Image } from "../image";
-import { cn } from "../cn";
 import { ImageViewerImage } from "./types";
 import { useState } from "react";
 import { ImageViewerDialog } from "./image-viewer-dialog";
@@ -9,18 +8,21 @@ export type ImageViewerProps = {
 };
 
 export function ImageViewer({ images }: ImageViewerProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState<
+    number | undefined
+  >(undefined);
   return (
     <>
       <div className="grid w-[40rem] grid-cols-5 grid-rows-[auto,auto] gap-2">
         <button
           className="col-span-5 aspect-[16/9]"
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setCurrentImageIndex(0);
+          }}
         >
           <Image
-            src={images[currentImageIndex].src}
-            alt={images[currentImageIndex].alt}
+            src={images[0].src}
+            alt={images[0].alt}
             className="h-full w-full object-cover"
             transformation={{
               width: 1280,
@@ -33,9 +35,9 @@ export function ImageViewer({ images }: ImageViewerProps) {
           <button
             className="relative block w-full"
             key={image.src}
-            onClick={() => setIsOpen(true)}
-            onMouseOver={() => setCurrentImageIndex(index)}
-            onFocus={() => setCurrentImageIndex(index)}
+            onClick={() => {
+              setCurrentImageIndex(index);
+            }}
           >
             <Image
               src={image.src}
@@ -47,19 +49,18 @@ export function ImageViewer({ images }: ImageViewerProps) {
               }}
               loading="lazy"
             />
-            {currentImageIndex === index && (
-              <div className={cn("absolute inset-0 bg-white/50")}></div>
-            )}
           </button>
         ))}
       </div>
-      <ImageViewerDialog
-        key={currentImageIndex}
-        images={images}
-        isOpen={isOpen}
-        onDismiss={() => setIsOpen(false)}
-        defaultImageIndex={currentImageIndex}
-      />
+      {images.map((_, i) => (
+        <ImageViewerDialog
+          key={i}
+          images={images}
+          isOpen={currentImageIndex === i}
+          onDismiss={() => setCurrentImageIndex(undefined)}
+          defaultImageIndex={currentImageIndex}
+        />
+      ))}
     </>
   );
 }
