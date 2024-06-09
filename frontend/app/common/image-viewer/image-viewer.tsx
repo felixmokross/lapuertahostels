@@ -120,16 +120,46 @@ export function ImageViewer({ images }: ImageViewerProps) {
 
   return (
     <>
-      <button
-        className="aspect-[16/10] w-[40rem]"
-        onClick={() => setIsOpen(true)}
-      >
-        <Image
-          src={images[0].src}
-          alt={images[0].alt}
-          className="h-full w-full object-cover"
-        />
-      </button>
+      <div className="grid w-[40rem] grid-cols-5 grid-rows-[auto,auto] gap-2">
+        <button
+          className="col-span-5 aspect-[16/9]"
+          onClick={() => setIsOpen(true)}
+        >
+          <Image
+            src={images[currentImageIndex].src}
+            alt={images[currentImageIndex].alt}
+            className="h-full w-full object-cover"
+            transformation={{
+              width: 1280,
+              aspectRatio: { width: 16, height: 9 },
+            }}
+            loading="lazy"
+          />
+        </button>
+        {images.map((image, index) => (
+          <button
+            className="relative block w-full"
+            key={image.src}
+            onClick={() => setIsOpen(true)}
+            onMouseOver={() => setCurrentImageIndex(index)}
+            onFocus={() => setCurrentImageIndex(index)}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              className="aspect-[4/3] object-cover"
+              transformation={{
+                width: 244,
+                aspectRatio: { width: 4, height: 3 },
+              }}
+              loading="lazy"
+            />
+            {currentImageIndex === index && (
+              <div className={cn("absolute inset-0 bg-white/50")}></div>
+            )}
+          </button>
+        ))}
+      </div>
 
       <Transition show={isOpen} as={Fragment}>
         <Dialog
@@ -184,6 +214,13 @@ export function ImageViewer({ images }: ImageViewerProps) {
                   className={cn(
                     isZoomed ? "h-max w-max scale-110" : "h-full w-full",
                   )}
+                  {...(isZoomed
+                    ? undefined
+                    : {
+                        transformation: {
+                          height: document.body.clientHeight * 2,
+                        },
+                      })}
                 />
               </Transition.Child>
             </button>
