@@ -13,6 +13,7 @@ import { Transition } from "@headlessui/react";
 import { Image } from "~/common/image";
 import { ImageViewerControlsOverlay } from "./image-viewer-controls-overlay";
 import { cn } from "../cn";
+import { useSwipeable } from "react-swipeable";
 
 export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
@@ -57,7 +58,10 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
 
     function resetTimer() {
       clearTimer();
+      startTimer();
+    }
 
+    function startTimer() {
       activityTimeoutRef.current = window.setTimeout(() => {
         setIsUserActive(false);
       }, 3000);
@@ -67,13 +71,15 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
       if (activityTimeoutRef.current) clearTimeout(activityTimeoutRef.current);
     }
 
-    resetTimer();
+    startTimer();
 
     document.addEventListener("mousemove", handleActivity);
     document.addEventListener("keydown", handleActivity);
+    document.addEventListener("touchstart", handleActivity);
     return () => {
       document.removeEventListener("mousemove", handleActivity);
       document.removeEventListener("keydown", handleActivity);
+      document.removeEventListener("touchstart", handleActivity);
 
       clearTimer();
     };
@@ -92,6 +98,12 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
     },
     [images.length],
   );
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: goToNextImage,
+    onSwipedRight: goToPreviousImage,
+    preventScrollOnSwipe: true,
+  });
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -134,6 +146,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
           transformation={{
             height: document.body.clientHeight * 2,
           }}
+          {...swipeHandlers}
         />
       </Transition.Child>
       {isUserActive && (
