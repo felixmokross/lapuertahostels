@@ -157,6 +157,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
         >
           <ImageViewerControlsOverlay
             currentImageIndex={currentImageIndex}
+            supportsFullscreen={!!document.fullscreenEnabled}
             isFullscreen={isFullscreen}
             numberOfImages={images.length}
             caption={images[currentImageIndex].caption}

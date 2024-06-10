@@ -10,6 +10,7 @@ import { cn } from "../cn";
 import { ElementType, ForwardedRef, forwardRef } from "react";
 
 export type ImageViewerControlsOverlayProps = {
+  supportsFullscreen: boolean;
   isFullscreen: boolean;
   currentImageIndex: number;
   numberOfImages: number;
@@ -25,6 +26,7 @@ export function ImageViewerControlsOverlay({
   currentImageIndex,
   numberOfImages,
   caption,
+  supportsFullscreen,
   isFullscreen,
   onDismiss,
   onGoToNextImage,
@@ -53,19 +55,20 @@ export function ImageViewerControlsOverlay({
         </div>
         <div className="flex items-center justify-center">{caption}</div>
         <div className="flex items-center justify-end gap-2">
-          {isFullscreen ? (
-            <IconButton
-              icon={ArrowsPointingInIcon}
-              onClick={onExitFullscreen}
-              title={t("imageViewer.exitFullscreen")}
-            />
-          ) : (
-            <IconButton
-              icon={ArrowsPointingOutIcon}
-              onClick={onEnterFullscreen}
-              title={t("imageViewer.fullscreen")}
-            />
-          )}
+          {supportsFullscreen &&
+            (isFullscreen ? (
+              <IconButton
+                icon={ArrowsPointingInIcon}
+                onClick={onExitFullscreen}
+                title={t("imageViewer.exitFullscreen")}
+              />
+            ) : (
+              <IconButton
+                icon={ArrowsPointingOutIcon}
+                onClick={onEnterFullscreen}
+                title={t("imageViewer.fullscreen")}
+              />
+            ))}
           {!isFullscreen && (
             <IconButton
               onClick={onDismiss}

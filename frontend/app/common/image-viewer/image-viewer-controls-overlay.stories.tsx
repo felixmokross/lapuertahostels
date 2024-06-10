@@ -22,6 +22,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    supportsFullscreen: true,
     isFullscreen: false,
     currentImageIndex: 1,
     numberOfImages: 6,
