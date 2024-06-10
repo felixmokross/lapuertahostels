@@ -149,11 +149,19 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
           {...swipeHandlers}
         />
       </Transition.Child>
-      {isUserActive && (
-        <Transition.Child
-          enter="delay-200"
-          enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
+      <Transition.Child
+        enter="delay-200"
+        enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
+        enterTo="opacity-100"
+      >
+        <Transition
+          show={isUserActive}
+          enter="duration-300"
+          enterFrom="opacity-0"
           enterTo="opacity-100"
+          leave="duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
           <ImageViewerControlsOverlay
             currentImageIndex={currentImageIndex}
@@ -169,8 +177,8 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
             }
             onExitFullscreen={() => document.exitFullscreen()}
           />
-        </Transition.Child>
-      )}
+        </Transition>
+      </Transition.Child>
     </div>
   );
 });
