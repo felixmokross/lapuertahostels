@@ -28,6 +28,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
   const [currentImageIndex, setCurrentImageIndex] = useState(
     defaultImageIndex ?? 0,
   );
+  const [isControlsHovered, setIsControlsHovered] = useState(false);
   const [isUserActive, setIsUserActive] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(isInFullscreen());
   const activityTimeoutRef = useRef(0);
@@ -62,13 +63,18 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
     }
 
     function startTimer() {
+      if (activityTimeoutRef.current) return;
+
       activityTimeoutRef.current = window.setTimeout(() => {
         setIsUserActive(false);
       }, 3000);
     }
 
     function clearTimer() {
-      if (activityTimeoutRef.current) clearTimeout(activityTimeoutRef.current);
+      if (activityTimeoutRef.current) {
+        window.clearTimeout(activityTimeoutRef.current);
+        activityTimeoutRef.current = 0;
+      }
     }
 
     startTimer();
@@ -76,6 +82,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
     document.addEventListener("mousemove", handleActivity);
     document.addEventListener("keydown", handleActivity);
     document.addEventListener("touchstart", handleActivity);
+
     return () => {
       document.removeEventListener("mousemove", handleActivity);
       document.removeEventListener("keydown", handleActivity);
@@ -155,7 +162,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
         enterTo="opacity-100"
       >
         <Transition
-          show={isUserActive}
+          show={isUserActive || isControlsHovered}
           enter="duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -176,6 +183,8 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
               document.documentElement.requestFullscreen()
             }
             onExitFullscreen={() => document.exitFullscreen()}
+            onMouseEnter={() => setIsControlsHovered(true)}
+            onMouseLeave={() => setIsControlsHovered(false)}
           />
         </Transition>
       </Transition.Child>

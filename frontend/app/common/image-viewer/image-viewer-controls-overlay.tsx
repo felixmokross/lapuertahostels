@@ -20,6 +20,8 @@ export type ImageViewerControlsOverlayProps = {
   onGoToPreviousImage: () => void;
   onEnterFullscreen: () => void;
   onExitFullscreen: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 export function ImageViewerControlsOverlay({
@@ -33,6 +35,8 @@ export function ImageViewerControlsOverlay({
   onGoToPreviousImage,
   onEnterFullscreen,
   onExitFullscreen,
+  onMouseEnter,
+  onMouseLeave,
 }: ImageViewerControlsOverlayProps) {
   const { t } = useTranslation();
   return (
@@ -42,14 +46,22 @@ export function ImageViewerControlsOverlay({
         icon={ArrowRightIcon}
         onClick={onGoToNextImage}
         title={t("imageViewer.next")}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
       <PreviousNextButton
         className={cn("left-0 top-1/2 -translate-y-1/2")}
         icon={ArrowLeftIcon}
         onClick={onGoToPreviousImage}
         title={t("imageViewer.previous")}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
-      <div className="fixed inset-0 grid h-12 w-full grid-cols-[12rem,minmax(0,1fr),12rem] gap-4 bg-black/60 px-4 text-sm text-neutral-300 shadow-lg">
+      <div
+        className="fixed inset-0 grid h-12 w-full grid-cols-[12rem,minmax(0,1fr),12rem] gap-4 bg-black/60 px-4 text-sm text-neutral-300 shadow-lg"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         <div className="flex items-center justify-start">
           {currentImageIndex + 1} / {numberOfImages}
         </div>
@@ -87,10 +99,19 @@ type PreviousNextButtonProps = {
   icon: ElementType;
   onClick: () => void;
   title: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 const PreviousNextButton = forwardRef(function PreviousNextButton(
-  { className, onClick, icon, title }: PreviousNextButtonProps,
+  {
+    className,
+    onClick,
+    icon,
+    title,
+    onMouseEnter,
+    onMouseLeave,
+  }: PreviousNextButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
   return (
@@ -103,6 +124,8 @@ const PreviousNextButton = forwardRef(function PreviousNextButton(
         className,
       )}
       ref={ref}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     />
   );
 });
@@ -112,10 +135,19 @@ type IconButtonProps = {
   icon: ElementType;
   onClick: () => void;
   title: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 const IconButton = forwardRef(function IconButton(
-  { className, icon: Icon, onClick, title }: IconButtonProps,
+  {
+    className,
+    icon: Icon,
+    onClick,
+    title,
+    onMouseEnter,
+    onMouseLeave,
+  }: IconButtonProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
   return (
@@ -127,6 +159,8 @@ const IconButton = forwardRef(function IconButton(
       onClick={onClick}
       title={title}
       ref={ref}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <span className="sr-only">{title}</span>
       <Icon className="h-5 w-5" />
