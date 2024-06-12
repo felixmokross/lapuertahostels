@@ -74,6 +74,14 @@ const preview: Preview = {
           },
           type: "desktop",
         },
+        "large-desktop": {
+          name: "Large desktop",
+          styles: {
+            width: "1536px",
+            height: "1000px",
+          },
+          type: "desktop",
+        },
       },
     },
     chromatic: {
@@ -82,6 +90,7 @@ const preview: Preview = {
         "viewport-large-mobile": allModes["viewport-large-mobile"],
         "viewport-tablet": allModes["viewport-tablet"],
         "viewport-desktop": allModes["viewport-desktop"],
+        "viewport-large-desktop": allModes["viewport-large-desktop"],
       },
     },
   },

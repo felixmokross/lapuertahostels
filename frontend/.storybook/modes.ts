@@ -11,6 +11,9 @@ export const allModes = {
   "viewport-desktop": {
     viewport: "desktop",
   },
+  "viewport-large-desktop": {
+    viewport: "large-desktop",
+  },
   "brand-aqua": {
     brand: "aqua",
   },
