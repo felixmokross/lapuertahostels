@@ -109,6 +109,8 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
   const swipeHandlers = useSwipeable({
     onSwipedLeft: goToNextImage,
     onSwipedRight: goToPreviousImage,
+    onSwipedUp: onDismiss,
+    onSwipedDown: onDismiss,
     preventScrollOnSwipe: true,
   });
 
@@ -136,62 +138,78 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
     setCurrentImageIndex(value);
   }
   return (
-    <div ref={ref} className="fixed inset-0 m-auto h-fit w-fit">
-      <Transition.Child
-        as={Fragment}
-        enter="ease-out duration-300"
-        enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
-        enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
-        leave="ease-in duration-200"
-        leaveFrom="translate-x-0 translate-y-0 scale-100 opacity-100"
-        leaveTo="-translate-x-96 -translate-y-24 scale-50 opacity-0"
-      >
-        <Image
-          src={images[currentImageIndex].src}
-          alt={images[currentImageIndex].alt}
-          className={cn("max-w-screen max-h-screen", !isFullscreen && "py-12")}
-          transformation={{
-            height: document.body.clientHeight * 2,
-          }}
-          {...swipeHandlers}
-        />
-      </Transition.Child>
-      <Transition.Child
-        enter="delay-200"
-        enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
-        enterTo="opacity-100"
-      >
-        <Transition
-          show={isUserActive || isControlsHovered}
-          enter="duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-500"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+    <div
+      ref={ref}
+      // use a full screen panel on touch devices to
+      // gather swipe gestures from the whole screen
+      // as a side effect, this prevents accidental dismissals when left/right swiping
+      // up/down swipes are set up to dismiss it
+      className={cn(isTouchDevice() && "fixed inset-0 h-full w-full")}
+    >
+      <div className="fixed inset-0 m-auto h-fit w-fit">
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
+          enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="translate-x-0 translate-y-0 scale-100 opacity-100"
+          leaveTo="-translate-x-96 -translate-y-24 scale-50 opacity-0"
         >
-          <ImageViewerControlsOverlay
-            currentImageIndex={currentImageIndex}
-            supportsFullscreen={!!document.fullscreenEnabled}
-            isFullscreen={isFullscreen}
-            numberOfImages={images.length}
-            caption={images[currentImageIndex].caption}
-            onDismiss={onDismiss}
-            onGoToNextImage={goToNextImage}
-            onGoToPreviousImage={goToPreviousImage}
-            onEnterFullscreen={() =>
-              document.documentElement.requestFullscreen()
-            }
-            onExitFullscreen={() => document.exitFullscreen()}
-            onMouseEnter={() => setIsControlsHovered(true)}
-            onMouseLeave={() => setIsControlsHovered(false)}
+          <Image
+            src={images[currentImageIndex].src}
+            alt={images[currentImageIndex].alt}
+            className={cn(
+              "max-w-screen max-h-screen",
+              !isFullscreen && "py-12",
+            )}
+            transformation={{
+              height: document.body.clientHeight * 2,
+            }}
+            {...swipeHandlers}
           />
-        </Transition>
-      </Transition.Child>
+        </Transition.Child>
+        <Transition.Child
+          enter="delay-200"
+          enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
+          enterTo="opacity-100"
+        >
+          <Transition
+            show={isUserActive || isControlsHovered}
+            enter="duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <ImageViewerControlsOverlay
+              currentImageIndex={currentImageIndex}
+              supportsFullscreen={!!document.fullscreenEnabled}
+              isFullscreen={isFullscreen}
+              numberOfImages={images.length}
+              caption={images[currentImageIndex].caption}
+              onDismiss={onDismiss}
+              onGoToNextImage={goToNextImage}
+              onGoToPreviousImage={goToPreviousImage}
+              onEnterFullscreen={() =>
+                document.documentElement.requestFullscreen()
+              }
+              onExitFullscreen={() => document.exitFullscreen()}
+              onMouseEnter={() => setIsControlsHovered(true)}
+              onMouseLeave={() => setIsControlsHovered(false)}
+            />
+          </Transition>
+        </Transition.Child>
+      </div>
     </div>
   );
 });
 
 function isInFullscreen() {
   return !!document.fullscreenElement;
+}
+
+function isTouchDevice() {
+  return window.matchMedia("(pointer: coarse)").matches;
 }
