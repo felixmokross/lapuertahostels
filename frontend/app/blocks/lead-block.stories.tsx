@@ -1,9 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { LeadBlock } from "./lead-block";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Lead Block",
   component: LeadBlock,
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
+  },
 } satisfies Meta<typeof LeadBlock>;
 
 export default meta;

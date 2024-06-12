@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { MaintenanceScreen } from "./maintenance-screen";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "layout/Maintenance Screen",
@@ -9,8 +10,9 @@ const meta = {
   parameters: {
     chromatic: {
       modes: {
-        aqua: { disable: true },
-        azul: { disable: true },
+        "locale-es": allModes["locale-es"],
+        "locale-de": allModes["locale-de"],
+        "locale-fr": allModes["locale-fr"],
       },
     },
   },

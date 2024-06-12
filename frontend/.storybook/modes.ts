@@ -1,29 +1,29 @@
 export const allModes = {
-  smallMobile: {
+  "viewport-small-mobile": {
     viewport: "mobile1",
   },
-  largeMobile: {
+  "viewport-large-mobile": {
     viewport: "mobile2",
   },
-  tablet: {
+  "viewport-tablet": {
     viewport: "tablet",
   },
-  desktop: {
+  "viewport-desktop": {
     viewport: "desktop",
   },
-  aqua: {
+  "brand-aqua": {
     brand: "aqua",
   },
-  azul: {
+  "brand-azul": {
     brand: "azul",
   },
-  es: {
+  "locale-es": {
     locale: "es",
   },
-  de: {
+  "locale-de": {
     locale: "de",
   },
-  fr: {
+  "locale-fr": {
     locale: "fr",
   },
 };

@@ -2,11 +2,23 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Footer } from "./footer";
 import { Brand } from "~/payload-types";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "layout/Footer",
   component: Footer,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+        "locale-es": allModes["locale-es"],
+        "locale-de": allModes["locale-de"],
+        "locale-fr": allModes["locale-fr"],
+      },
+    },
+  },
 } satisfies Meta<typeof Footer>;
 
 export default meta;

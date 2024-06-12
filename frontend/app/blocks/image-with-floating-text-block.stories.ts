@@ -1,9 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Image with Floating Text Block",
   component: ImageWithFloatingTextBlock,
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
+  },
 } satisfies Meta<typeof ImageWithFloatingTextBlock>;
 
 export default meta;

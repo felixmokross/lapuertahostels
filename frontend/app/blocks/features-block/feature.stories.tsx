@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { allModes } from ".storybook/modes";
 
 import { Feature } from "./feature";
 
@@ -6,6 +7,14 @@ const meta = {
   title: "blocks/Features Block/Feature",
   component: Feature,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
+  },
 } satisfies Meta<typeof Feature>;
 
 export default meta;

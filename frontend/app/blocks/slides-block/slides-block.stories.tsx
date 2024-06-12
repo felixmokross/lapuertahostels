@@ -1,11 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { SlidesBlock } from "./slides-block";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Slides Block",
   component: SlidesBlock,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
+  },
 } satisfies Meta<typeof SlidesBlock>;
 
 export default meta;

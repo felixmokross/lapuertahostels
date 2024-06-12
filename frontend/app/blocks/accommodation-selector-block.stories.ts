@@ -4,14 +4,6 @@ import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 const meta = {
   title: "blocks/Accommodation Selector Block",
   component: AccommodationSelectorBlock,
-  parameters: {
-    chromatic: {
-      modes: {
-        aqua: { disable: true },
-        azul: { disable: true },
-      },
-    },
-  },
 } satisfies Meta<typeof AccommodationSelectorBlock>;
 
 export default meta;

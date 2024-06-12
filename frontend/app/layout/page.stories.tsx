@@ -8,12 +8,6 @@ const meta = {
   component: Page,
   parameters: {
     layout: "fullscreen",
-    chromatic: {
-      modes: {
-        aqua: { disable: true },
-        azul: { disable: true },
-      },
-    },
   },
 } satisfies Meta<typeof Page>;
 
