@@ -16,6 +16,14 @@ const meta = {
       options: ["large", "small"],
     },
   },
+  parameters: {
+    chromatic: {
+      modes: {
+        aqua: { disable: true },
+        azul: { disable: true },
+      },
+    },
+  },
 } satisfies Meta<typeof BrandLogo>;
 
 export default meta;

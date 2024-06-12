@@ -6,6 +6,15 @@ import { ThemeProvider } from "~/themes";
 const meta = {
   title: "layout/Page",
   component: Page,
+  parameters: {
+    layout: "fullscreen",
+    chromatic: {
+      modes: {
+        aqua: { disable: true },
+        azul: { disable: true },
+      },
+    },
+  },
 } satisfies Meta<typeof Page>;
 
 export default meta;

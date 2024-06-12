@@ -7,6 +7,14 @@ const meta = {
   title: "layout/Header/Header Brand Logo",
   component: HeaderBrandLogo,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        aqua: { disable: true },
+        azul: { disable: true },
+      },
+    },
+  },
 } satisfies Meta<typeof HeaderBrandLogo>;
 
 export default meta;

@@ -6,6 +6,9 @@ import i18n from "./i18next";
 import { ThemeProvider } from "../app/themes";
 import { Brand } from "../app/payload-types";
 
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
+import { allModes } from "./modes";
+
 const withRemix: Decorator = (Story) => {
   const RemixStub = createRemixStub([
     {
@@ -57,6 +60,33 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+      },
+    },
+    viewport: {
+      defaultViewport: "desktop",
+      viewports: {
+        ...MINIMAL_VIEWPORTS,
+        desktop: {
+          name: "Desktop",
+          styles: {
+            width: "1280px",
+            height: "800px",
+          },
+          type: "desktop",
+        },
+      },
+    },
+    chromatic: {
+      modes: {
+        smallMobile: allModes["smallMobile"],
+        largeMobile: allModes["largeMobile"],
+        tablet: allModes["tablet"],
+        desktop: allModes["desktop"],
+        es: allModes["es"],
+        de: allModes["de"],
+        fr: allModes["fr"],
+        aqua: allModes["aqua"],
+        azul: allModes["azul"],
       },
     },
   },

@@ -6,6 +6,14 @@ const meta = {
   title: "layout/Maintenance Screen",
   component: MaintenanceScreen,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        aqua: { disable: true },
+        azul: { disable: true },
+      },
+    },
+  },
 } satisfies Meta<typeof MaintenanceScreen>;
 
 export default meta;
