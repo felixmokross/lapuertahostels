@@ -1,6 +1,5 @@
 import {
   ForwardedRef,
-  Fragment,
   SetStateAction,
   forwardRef,
   useCallback,
@@ -14,6 +13,7 @@ import { Image } from "~/common/image";
 import { ImageViewerControlsOverlay } from "./image-viewer-controls-overlay";
 import { cn } from "../cn";
 import { useSwipeable } from "react-swipeable";
+import { SpinnerIcon } from "../icons/SpinnerIcon";
 
 export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
@@ -32,6 +32,31 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
   const [isUserActive, setIsUserActive] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(isInFullscreen());
   const activityTimeoutRef = useRef(0);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [showImageLoadingIndicator, setShowImageLoadingIndicator] =
+    useState(false);
+
+  useEffect(() => {
+    let timeout = 0;
+
+    if (isImageLoading) {
+      timeout = window.setTimeout(
+        () => setShowImageLoadingIndicator(true),
+        100,
+      );
+    } else {
+      setShowImageLoadingIndicator(false);
+      cancelTimer();
+    }
+
+    function cancelTimer() {
+      if (timeout) window.clearTimeout(timeout);
+    }
+
+    return () => {
+      cancelTimer();
+    };
+  }, [isImageLoading]);
 
   // sync fullscreen state with browser
   useEffect(() => {
@@ -135,6 +160,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
   }, [goToNextImage, goToPreviousImage]);
 
   function goToImage(value: SetStateAction<number>) {
+    setIsImageLoading(true);
     setCurrentImageIndex(value);
   }
   return (
@@ -148,7 +174,6 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
     >
       <div className="fixed inset-0 m-auto h-fit w-fit">
         <Transition.Child
-          as={Fragment}
           enter="ease-out duration-300"
           enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
           enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
@@ -157,6 +182,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
           leaveTo="-translate-x-96 -translate-y-24 scale-50 opacity-0"
         >
           <Image
+            key={currentImageIndex} // ensure an old image is not rendered anymore while a new one is loading
             src={images[currentImageIndex].src}
             alt={images[currentImageIndex].alt}
             className={cn(
@@ -166,8 +192,14 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
             transformation={{
               height: document.body.clientHeight * 2,
             }}
+            onLoadingFinished={() => setIsImageLoading(false)}
             {...swipeHandlers}
           />
+          {showImageLoadingIndicator && (
+            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <SpinnerIcon className="size-10 text-neutral-300" />
+            </div>
+          )}
         </Transition.Child>
         <Transition.Child
           enter="delay-200"
