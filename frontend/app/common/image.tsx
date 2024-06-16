@@ -28,7 +28,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
   ref,
 ) {
   const { imagekitBaseUrl } = useEnvironment();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const localRef = useRef<HTMLImageElement>(null);
 
   const onLoad = useCallback(

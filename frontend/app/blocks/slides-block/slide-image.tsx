@@ -5,6 +5,7 @@ import { Image, ImageProps } from "../../common/image";
 export type SlideImageProps = ImageProps & {
   withPreview?: boolean;
   alignment?: "center" | "bottom";
+  onLoadingFinished?: () => void;
 };
 
 export function SlideImage({
@@ -13,6 +14,7 @@ export function SlideImage({
   className,
   withPreview = false,
   alignment,
+  onLoadingFinished,
   ...props
 }: SlideImageProps) {
   const [state, setState] = useState<"loading" | "loaded">("loading");
@@ -36,6 +38,7 @@ export function SlideImage({
         src={src}
         onLoadingFinished={() => {
           setState("loaded");
+          onLoadingFinished?.();
         }}
         alt={alt}
         className={imageClassName}
