@@ -1,11 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { ImageViewer } from "./image-viewer";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "common/Image Viewer",
   component: ImageViewer,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        "locale-es": allModes["locale-es"],
+        "locale-de": allModes["locale-de"],
+        "locale-fr": allModes["locale-fr"],
+      },
+    },
+  },
 } satisfies Meta<typeof ImageViewer>;
 
 export default meta;
