@@ -63,7 +63,6 @@ const preview: Preview = {
       },
     },
     viewport: {
-      defaultViewport: "desktop",
       viewports: {
         ...MINIMAL_VIEWPORTS,
         desktop: {

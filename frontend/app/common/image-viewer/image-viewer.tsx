@@ -2,6 +2,8 @@ import { Image } from "../image";
 import { ImageViewerImage } from "./types";
 import { useState } from "react";
 import { ImageViewerDialog } from "./image-viewer-dialog";
+import { Heading } from "../heading";
+import { useTranslation } from "react-i18next";
 
 export type ImageViewerProps = {
   images: ImageViewerImage[];
@@ -11,11 +13,12 @@ export function ImageViewer({ images }: ImageViewerProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState<
     number | undefined
   >(undefined);
+  const [t] = useTranslation();
   return (
     <>
-      <div className="grid w-[40rem] grid-cols-5 grid-rows-[auto,auto] gap-2">
+      <div className="grid w-[40rem] grid-cols-4 grid-rows-[auto,auto] gap-2">
         <button
-          className="col-span-5 aspect-[16/9]"
+          className="col-span-4 aspect-[16/9]"
           onClick={() => {
             setCurrentImageIndex(0);
           }}
@@ -31,12 +34,12 @@ export function ImageViewer({ images }: ImageViewerProps) {
             loading="lazy"
           />
         </button>
-        {images.map((image, index) => (
+        {images.slice(1, 5).map((image, index) => (
           <button
             className="relative block w-full"
             key={image.src}
             onClick={() => {
-              setCurrentImageIndex(index);
+              setCurrentImageIndex(index + 1);
             }}
           >
             <Image
@@ -49,6 +52,15 @@ export function ImageViewer({ images }: ImageViewerProps) {
               }}
               loading="lazy"
             />
+            {images.length > 5 && index === 3 && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-6">
+                <Heading as="h6" size="extra-small" variant="white">
+                  {t("imageViewer.seeMoreImages", {
+                    count: images.length - 4,
+                  })}
+                </Heading>
+              </div>
+            )}
           </button>
         ))}
       </div>

@@ -39,6 +39,62 @@ export const Default: Story = {
         src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
         alt: "",
       },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+        alt: "Private balcony",
+      },
+    ],
+  },
+};
+
+export const SlotsFilledExactly: Story = {
+  args: {
+    images: [
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+        alt: "",
+        caption: "This is a caption",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+        alt: "",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+        alt: "",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+        alt: "",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/15.jpg?updatedAt=1714162349358",
+        alt: "",
+      },
+    ],
+  },
+};
+
+export const LessSlotsFilled: Story = {
+  args: {
+    images: [
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+        alt: "",
+        caption: "This is a caption",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+        alt: "",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+        alt: "",
+      },
+      {
+        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+        alt: "",
+      },
     ],
   },
 };

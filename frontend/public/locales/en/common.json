@@ -17,6 +17,8 @@
     "next": "Next",
     "fullscreen": "Full Screen",
     "exitFullscreen": "Exit Full Screen",
-    "close": "Close"
+    "close": "Close",
+    "seeMoreImages_one": "+{{count}} Photo",
+    "seeMoreImages_other": "+{{count}} Photos"
   }
 }
