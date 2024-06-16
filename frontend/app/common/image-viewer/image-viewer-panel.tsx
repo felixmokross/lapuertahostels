@@ -190,7 +190,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
               !isFullscreen && "py-12",
             )}
             transformation={{
-              height: document.body.clientHeight * 2,
+              height: window.innerHeight * 2,
             }}
             onLoadingFinished={() => setIsImageLoading(false)}
             {...swipeHandlers}
