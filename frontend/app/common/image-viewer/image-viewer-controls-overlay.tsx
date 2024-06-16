@@ -58,15 +58,17 @@ export function ImageViewerControlsOverlay({
         onMouseLeave={onMouseLeave}
       />
       <div
-        className="fixed inset-0 grid h-12 w-full grid-cols-[12rem,minmax(0,1fr),12rem] gap-4 bg-black/60 px-4 text-sm text-neutral-300 shadow-lg"
+        className="fixed inset-0 flex h-12 w-full items-center justify-between gap-2 bg-black/60 px-2 text-sm text-neutral-300 shadow-lg md:gap-4 md:px-4"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <div className="flex items-center justify-start">
+        <div className="whitespace-nowrap p-2 text-center">
           {currentImageIndex + 1} / {numberOfImages}
         </div>
-        <div className="flex items-center justify-center">{caption}</div>
-        <div className="flex items-center justify-end gap-2">
+        <div className="invisible flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap p-2 text-center sm:visible">
+          {caption}
+        </div>
+        <div className="flex items-center justify-end gap-1 md:gap-2">
           {supportsFullscreen &&
             (isFullscreen ? (
               <IconButton
@@ -88,6 +90,11 @@ export function ImageViewerControlsOverlay({
               title={t("imageViewer.close")}
             />
           )}
+        </div>
+      </div>
+      <div className="fixed bottom-0 left-0 flex h-12 w-full items-center justify-center bg-black/60 px-4 text-sm text-neutral-300 shadow-lg sm:hidden">
+        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap px-2 text-center ">
+          {caption}
         </div>
       </div>
     </>

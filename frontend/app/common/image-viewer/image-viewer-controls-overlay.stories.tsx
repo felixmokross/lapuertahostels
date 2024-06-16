@@ -26,7 +26,7 @@ export const Default: Story = {
     isFullscreen: false,
     currentImageIndex: 1,
     numberOfImages: 6,
-    caption: "This is a caption",
+    caption: "This is a long caption which will overflow on smaller devices",
     onDismiss: () => {},
     onGoToNextImage: () => {},
     onGoToPreviousImage: () => {},
