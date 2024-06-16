@@ -6,17 +6,18 @@ import { Heading } from "../heading";
 import { useTranslation } from "react-i18next";
 
 export type ImageViewerProps = {
+  className?: string;
   images: ImageViewerImage[];
 };
 
-export function ImageViewer({ images }: ImageViewerProps) {
+export function ImageViewer({ images, className }: ImageViewerProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState<
     number | undefined
   >(undefined);
   const [t] = useTranslation();
   return (
-    <>
-      <div className="grid w-[40rem] grid-cols-4 grid-rows-[auto,auto] gap-2">
+    <div className={className}>
+      <div className="grid w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-2">
         <button
           className="col-span-4 aspect-[16/9]"
           onClick={() => {
@@ -28,7 +29,7 @@ export function ImageViewer({ images }: ImageViewerProps) {
             alt={images[0].alt}
             className="h-full w-full object-cover"
             transformation={{
-              width: 1280,
+              width: 1120,
               aspectRatio: { width: 16, height: 9 },
             }}
             loading="lazy"
@@ -47,7 +48,7 @@ export function ImageViewer({ images }: ImageViewerProps) {
               alt={image.alt}
               className="aspect-[4/3] object-cover"
               transformation={{
-                width: 244,
+                width: 280,
                 aspectRatio: { width: 4, height: 3 },
               }}
               loading="lazy"
@@ -73,6 +74,6 @@ export function ImageViewer({ images }: ImageViewerProps) {
           defaultImageIndex={currentImageIndex}
         />
       ))}
-    </>
+    </div>
   );
 }
