@@ -39,24 +39,29 @@ export function ImageViewerControlsOverlay({
   onMouseLeave,
 }: ImageViewerControlsOverlayProps) {
   const { t } = useTranslation();
+  const hasMultipleImages = numberOfImages > 1;
   return (
     <>
-      <PreviousNextButton
-        className={cn("right-0 top-1/2 -translate-y-1/2")}
-        icon={ArrowRightIcon}
-        onClick={onGoToNextImage}
-        title={t("imageViewer.next")}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      />
-      <PreviousNextButton
-        className={cn("left-0 top-1/2 -translate-y-1/2")}
-        icon={ArrowLeftIcon}
-        onClick={onGoToPreviousImage}
-        title={t("imageViewer.previous")}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      />
+      {hasMultipleImages && (
+        <>
+          <PreviousNextButton
+            className={cn("right-0 top-1/2 -translate-y-1/2")}
+            icon={ArrowRightIcon}
+            onClick={onGoToNextImage}
+            title={t("imageViewer.next")}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          />
+          <PreviousNextButton
+            className={cn("left-0 top-1/2 -translate-y-1/2")}
+            icon={ArrowLeftIcon}
+            onClick={onGoToPreviousImage}
+            title={t("imageViewer.previous")}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          />
+        </>
+      )}
       <div
         className="fixed inset-0 flex h-12 w-full items-center justify-between gap-2 bg-black/60 px-2 text-sm text-neutral-300 shadow-lg md:gap-4 md:px-4"
         onMouseEnter={onMouseEnter}

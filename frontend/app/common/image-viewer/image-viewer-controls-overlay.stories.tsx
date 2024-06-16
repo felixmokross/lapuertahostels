@@ -41,3 +41,11 @@ export const Fullscreen: Story = {
     isFullscreen: true,
   },
 };
+
+export const SingleImage: Story = {
+  args: {
+    ...Default.args,
+    currentImageIndex: 0,
+    numberOfImages: 1,
+  },
+};
