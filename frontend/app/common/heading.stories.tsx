@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Heading, HeadingHighlight } from "./heading";
 import { cn } from "./cn";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "common/Heading",
@@ -14,6 +15,12 @@ const meta = {
   },
   parameters: {
     layout: "fullscreen",
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
   },
   decorators: [
     (Story, { parameters }) => (

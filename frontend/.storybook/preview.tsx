@@ -6,6 +6,9 @@ import i18n from "./i18next";
 import { ThemeProvider } from "../app/themes";
 import { Brand } from "../app/payload-types";
 
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
+import { allModes } from "./modes";
+
 const withRemix: Decorator = (Story) => {
   const RemixStub = createRemixStub([
     {
@@ -36,6 +39,8 @@ const preview: Preview = {
     locales: {
       en: "English",
       es: "Español",
+      de: "Deutsch",
+      fr: "Français",
     },
   },
   globalTypes: {
@@ -55,6 +60,36 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+      },
+    },
+    viewport: {
+      viewports: {
+        ...MINIMAL_VIEWPORTS,
+        desktop: {
+          name: "Desktop",
+          styles: {
+            width: "1280px",
+            height: "800px",
+          },
+          type: "desktop",
+        },
+        "large-desktop": {
+          name: "Large desktop",
+          styles: {
+            width: "1536px",
+            height: "1000px",
+          },
+          type: "desktop",
+        },
+      },
+    },
+    chromatic: {
+      modes: {
+        "viewport-small-mobile": allModes["viewport-small-mobile"],
+        "viewport-large-mobile": allModes["viewport-large-mobile"],
+        "viewport-tablet": allModes["viewport-tablet"],
+        "viewport-desktop": allModes["viewport-desktop"],
+        "viewport-large-desktop": allModes["viewport-large-desktop"],
       },
     },
   },

@@ -6,6 +6,9 @@ import { ThemeProvider } from "~/themes";
 const meta = {
   title: "layout/Page",
   component: Page,
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof Page>;
 
 export default meta;

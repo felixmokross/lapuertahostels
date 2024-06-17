@@ -17,6 +17,7 @@ export function SlidesBlock({
 }: SlidesBlockProps) {
   autoplayIntervalInSeconds = autoplayIntervalInSeconds || 7;
 
+  const [isReady, setIsReady] = useState(false);
   if (slides.length === 0) {
     throw new Error("Slides Block must have at least one slide");
   }
@@ -28,7 +29,7 @@ export function SlidesBlock({
     goToPrevious,
     startInterval,
     stopInterval,
-  } = useSlidesState(slides, autoplayIntervalInSeconds);
+  } = useSlidesState(slides, autoplayIntervalInSeconds, isReady);
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: goToNext,
@@ -123,6 +124,7 @@ export function SlidesBlock({
               }}
               withPreview={i === 0}
               alignment={slide.image.alignment || "center"}
+              onLoadingFinished={i === 0 ? () => setIsReady(true) : undefined}
             />
             {slide.overlayTitle?.show && (
               <OverlayTitle
@@ -140,6 +142,7 @@ export function SlidesBlock({
 function useSlidesState(
   slides: SlidesBlockProps["slides"],
   autoplayIntervalInSeconds: number,
+  isReady: boolean,
 ) {
   const [slideIndex, setSlideIndex] = useState(0);
   const { preview } = useEnvironment();
@@ -175,9 +178,9 @@ function useSlidesState(
   }
 
   useEffect(() => {
-    startInterval();
+    if (isReady) startInterval();
     return stopInterval;
-  }, [startInterval]);
+  }, [startInterval, isReady]);
 
   return {
     slideIndex,

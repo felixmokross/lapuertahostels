@@ -1,10 +1,11 @@
 import { cn } from "../../common/cn";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Image, ImageProps } from "../../common/image";
 
 export type SlideImageProps = ImageProps & {
   withPreview?: boolean;
   alignment?: "center" | "bottom";
+  onLoadingFinished?: () => void;
 };
 
 export function SlideImage({
@@ -13,17 +14,11 @@ export function SlideImage({
   className,
   withPreview = false,
   alignment,
+  onLoadingFinished,
   ...props
 }: SlideImageProps) {
   const [state, setState] = useState<"loading" | "loaded">("loading");
-  const imgRef = useRef<HTMLImageElement>(null);
 
-  // Image might already be loaded, see https://stackoverflow.com/a/59153135
-  useEffect(() => {
-    if (state === "loading" && imgRef.current!.complete) {
-      setState("loaded");
-    }
-  }, [state]);
   const imageClassName = cn("absolute top-0 h-full w-full object-cover", {
     "object-[center_90%]": alignment === "bottom",
   });
@@ -41,9 +36,9 @@ export function SlideImage({
       )}
       <Image
         src={src}
-        ref={imgRef}
-        onLoad={() => {
+        onLoadingFinished={() => {
           setState("loaded");
+          onLoadingFinished?.();
         }}
         alt={alt}
         className={imageClassName}

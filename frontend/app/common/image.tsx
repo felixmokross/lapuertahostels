@@ -1,24 +1,50 @@
-import { ImgHTMLAttributes, forwardRef } from "react";
+import {
+  ImgHTMLAttributes,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useEnvironment } from "~/environment";
+import { mergeRefs } from "./utils";
 
 export type ImageProps = {
   src: string;
   alt: string;
   className?: string;
   transformation?: ImageTransformation;
+  onLoadingFinished?: () => void;
 } & Pick<
   React.DetailedHTMLProps<
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   >,
-  "onLoad" | "loading"
+  "loading"
 >;
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { src, alt, className, transformation, ...props },
+  { src, alt, className, transformation, onLoadingFinished, ...props },
   ref,
 ) {
   const { imagekitBaseUrl } = useEnvironment();
+  const [isLoading, setIsLoading] = useState(true);
+  const localRef = useRef<HTMLImageElement>(null);
+
+  const onLoad = useCallback(
+    function onLoad() {
+      setIsLoading(false);
+      onLoadingFinished?.();
+    },
+    [onLoadingFinished],
+  );
+
+  // Image might already be loaded, see https://stackoverflow.com/a/59153135
+  useEffect(() => {
+    if (isLoading && localRef.current!.complete) {
+      onLoad();
+    }
+  }, [onLoad, isLoading, localRef]);
 
   if (src && !src.startsWith(imagekitBaseUrl)) {
     throw new Error(`Image URL must start with ${imagekitBaseUrl}`);
@@ -32,7 +58,8 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
       src={`${imagekitBaseUrl}/${transformation ? toImagekitTransformationString(transformation) : ""}${src}`}
       className={className}
       alt={alt}
-      ref={ref}
+      ref={mergeRefs(ref, localRef)}
+      onLoad={onLoad}
     />
   );
 });

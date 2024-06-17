@@ -1,11 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { HeroVideoBlock } from "./hero-video-block";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Hero Video Block",
   component: HeroVideoBlock,
   argTypes: {},
+  parameters: {
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
+  },
 } satisfies Meta<typeof Image>;
 
 export default meta;

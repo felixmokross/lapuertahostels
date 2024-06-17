@@ -4,6 +4,7 @@ import { Paragraph, ParagraphHighlight } from "./paragraph";
 import { cn } from "./cn";
 import { BrandId } from "~/brands";
 import { themesByBrand } from "~/themes";
+import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "common/Paragraph",
@@ -13,6 +14,12 @@ const meta = {
   },
   parameters: {
     layout: "fullscreen",
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
   },
   decorators: [
     (Story) => (

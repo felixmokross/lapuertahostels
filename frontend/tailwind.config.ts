@@ -4,7 +4,7 @@ import colors from "tailwindcss/colors";
 import formsPlugin from "@tailwindcss/forms";
 
 export default {
-  content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}", ".storybook/**/*.{js,jsx,ts,tsx}"],
   theme: {
     colors: {
       inherit: colors.inherit,

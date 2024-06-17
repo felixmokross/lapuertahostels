@@ -4,7 +4,7 @@ import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 const ns = ["common"];
-const supportedLngs = ["en", "es"];
+const supportedLngs = ["en", "es", "de", "fr"];
 
 async function loadResources() {
   const resources = {};

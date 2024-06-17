@@ -3,10 +3,12 @@ import { RichTextField } from "payload/types";
 
 export type RichTextFieldOptions = {
   supportsParagraphs?: boolean;
+  optional?: boolean;
 };
 
 export function makeRichTextField({
   supportsParagraphs = false,
+  optional = false,
 }: RichTextFieldOptions = {}): RichTextField {
   return {
     name: "text",
@@ -15,7 +17,7 @@ export function makeRichTextField({
       es: "Texto",
     },
     type: "richText",
-    required: true,
+    required: !optional,
     localized: true,
     editor: slateEditor({
       admin: {
