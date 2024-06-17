@@ -21,39 +21,65 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: "Standard Room with Terrace",
-    description:
-      "Our standard room with terrace is perfect for those who want to enjoy the outdoors from the comfort of their own room. The room features a private terrace with a hammock and a view of the garden.",
+    heading: "Standard Room with Terrace",
+    text: [
+      {
+        children: [
+          {
+            text: "Our standard room with terrace is perfect for those who want to enjoy the outdoors from the comfort of their own room. The room features a private terrace with a hammock and a view of the garden.",
+          },
+        ],
+      },
+    ],
     images: [
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+          alt: "",
+        },
         caption: "This is a caption",
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+          alt: "",
+        },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+          alt: "",
+        },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+          alt: "",
+        },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/15.jpg?updatedAt=1714162349358",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/15.jpg?updatedAt=1714162349358",
+          alt: "",
+        },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
-        alt: "",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
+          alt: "",
+        },
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
-        alt: "Private balcony",
+        image: {
+          url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+          alt: "Private balcony",
+        },
       },
     ],
+    ctaTemplate: {
+      show: true,
+      text: "Reserve Now",
+    },
+    ctaUrl: "/book",
   },
 };

@@ -1,12 +1,19 @@
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { ImageViewer } from "~/common/image-viewer/image-viewer";
-import { Room } from "./types";
+import { Room, RoomListBlock } from "./types";
 import { RichTextParagraph } from "~/common/rich-text";
+import { Link } from "~/common/link";
 
-export type RoomCardProps = Room;
+export type RoomCardProps = Room & Pick<RoomListBlock, "ctaTemplate">;
 
-export function RoomCard({ heading, text, images }: RoomCardProps) {
+export function RoomCard({
+  heading,
+  text,
+  images,
+  ctaUrl,
+  ctaTemplate,
+}: RoomCardProps) {
   return (
     <div className="flex w-[35rem] flex-col items-center gap-8">
       <Heading as="h4" size="medium">
@@ -20,7 +27,15 @@ export function RoomCard({ heading, text, images }: RoomCardProps) {
         }))}
       />
       {text && <RichTextParagraph>{text}</RichTextParagraph>}
-      <Button>Reserve Now</Button>
+      {ctaTemplate?.show && (
+        <Button
+          as={Link}
+          to={ctaUrl || "#"}
+          variant={ctaTemplate.variant || undefined}
+        >
+          {ctaTemplate.text}
+        </Button>
+      )}
     </div>
   );
 }

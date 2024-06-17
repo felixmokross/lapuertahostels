@@ -3,6 +3,12 @@ import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { imageField } from "../fields/image";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
+import { makeCallToActionField } from "../fields/call-to-action";
+
+const ctaTemplateField = makeCallToActionField({
+  isTemplate: true,
+  optional: true,
+});
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -65,6 +71,14 @@ export const RoomListBlock: Block = {
             },
           ],
         },
+        {
+          name: "ctaUrl",
+          label: {
+            en: "Call to Action URL",
+            es: "URL de Call to Action",
+          },
+          type: "text",
+        },
       ],
       admin: {
         components: {
@@ -72,5 +86,6 @@ export const RoomListBlock: Block = {
         },
       },
     },
+    ctaTemplateField,
   ],
 };
