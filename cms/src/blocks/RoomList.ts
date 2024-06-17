@@ -22,13 +22,18 @@ export const RoomListBlock: Block = {
       es: "Listas de habitaciones",
     },
   },
-  // imageURL: "/assets/blocks/Lead.png",
-  // imageAltText: "Preview of the Lead block, showing a heading and a large text",
+  imageURL: "/assets/blocks/RoomList.png",
+  imageAltText:
+    "Preview of the Room List block, showing three room cards which each have title, images, a description, and a CTA button.",
   fields: [
     {
       name: "rooms",
       type: "array",
       required: true,
+      label: {
+        en: "Rooms",
+        es: "Habitaciones",
+      },
       labels: {
         singular: {
           en: "Room",
@@ -86,6 +91,15 @@ export const RoomListBlock: Block = {
         },
       },
     },
-    ctaTemplateField,
+    {
+      ...ctaTemplateField,
+      admin: {
+        ...ctaTemplateField.admin,
+        description: {
+          en: "If enabled, shows a Call to Action button on each room card. The button text and variant will be the same for each card. The URL is defined for each room individually.",
+          es: "Si está habilitado, muestra un botón de Call to Action en cada tarjeta de habitación. El texto y la variante del botón serán los mismos para cada tarjeta. La URL se define para cada habitación individualmente.",
+        },
+      },
+    },
   ],
 };
