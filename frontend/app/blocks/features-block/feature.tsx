@@ -47,7 +47,7 @@ export function Feature({
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
         <Image
-          alt={image.alt}
+          alt={image.alt || undefined}
           src={image.url}
           transformation={{
             width: 1000,

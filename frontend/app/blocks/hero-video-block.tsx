@@ -7,17 +7,17 @@ export type HeroVideoBlockProps = NonNullable<Page["hero"]>[number] & {
 };
 
 export function HeroVideoBlock({
-  previewUrl,
+  previewImage,
   videoUrl,
   overlayTitle,
 }: HeroVideoBlockProps) {
   const { imagekitBaseUrl } = useEnvironment();
 
-  if (previewUrl && !previewUrl.startsWith(imagekitBaseUrl)) {
+  if (previewImage?.url && !previewImage.url.startsWith(imagekitBaseUrl)) {
     throw new Error(`Preview Image URL must start with ${imagekitBaseUrl}`);
   }
 
-  previewUrl = previewUrl?.slice(imagekitBaseUrl.length);
+  const previewUrl = previewImage?.url.slice(imagekitBaseUrl.length);
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
       <video

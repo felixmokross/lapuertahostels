@@ -22,7 +22,7 @@ export function RoomCard({
       <ImageViewer
         images={images.map((image) => ({
           src: image.image.url,
-          alt: image.image.alt,
+          alt: image.image.alt || undefined,
           caption: image.caption!,
         }))}
       />

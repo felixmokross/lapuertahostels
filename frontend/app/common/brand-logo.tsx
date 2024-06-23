@@ -35,7 +35,7 @@ export function BrandLogo({
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={brand.logoUrl}
+        src={brand.logo.url}
         alt={`${brand.name} Logo`}
         transformation={{
           height: size === "small" ? 56 : size === "large" ? 80 : undefined,

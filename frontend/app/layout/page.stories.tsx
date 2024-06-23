@@ -187,8 +187,9 @@ export const Puerta: Story = {
                     label: "La Puerta Hostels",
                   },
                 ],
-                logoUrl:
-                  "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
+                logo: {
+                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
+                },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },
@@ -212,8 +213,9 @@ export const Puerta: Story = {
                     label: "La Puerta Hostels",
                   },
                 ],
-                logoUrl:
-                  "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
+                logo: {
+                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
+                },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },

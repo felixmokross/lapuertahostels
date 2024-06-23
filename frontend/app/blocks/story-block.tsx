@@ -46,7 +46,7 @@ export function StoryBlock({
       >
         <Image
           src={image.url}
-          alt={image.alt}
+          alt={image.alt || undefined}
           className="h-full w-full object-cover"
           transformation={{
             aspectRatio: { width: 3, height: 4 },
