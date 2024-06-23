@@ -5,24 +5,6 @@ import { fieldBaseClass } from "payload/dist/admin/components/forms/field-types/
 import React from "react";
 import { useField } from "payload/components/forms";
 
-export const imageUrlField: TextField = {
-  name: "url",
-  label: {
-    en: "URL",
-    es: "URL",
-  },
-  type: "text",
-  required: true,
-  validate: validateImageUrl,
-  admin: {
-    description: {
-      en: "Link to an image on ImageKit. You don’t need to optimize the image before uploading it to ImageKit.",
-      es: "Enlace a una imagen en ImageKit. No es necesario optimizar la imagen antes de subirla a ImageKit.",
-    },
-    placeholder: mediaUrlFieldPlaceholder,
-  },
-};
-
 function validateImageUrl(
   val: string,
   args: ValidateOptions<unknown, unknown, unknown>,
@@ -44,7 +26,23 @@ export const imageField: GroupField = {
   },
   type: "group",
   fields: [
-    imageUrlField,
+    {
+      name: "url",
+      label: {
+        en: "URL",
+        es: "URL",
+      },
+      type: "text",
+      required: true,
+      validate: validateImageUrl,
+      admin: {
+        description: {
+          en: "Link to an image on ImageKit. You don’t need to optimize the image before uploading it to ImageKit.",
+          es: "Enlace a una imagen en ImageKit. No es necesario optimizar la imagen antes de subirla a ImageKit.",
+        },
+        placeholder: mediaUrlFieldPlaceholder,
+      },
+    },
     {
       name: "alt",
       label: {
