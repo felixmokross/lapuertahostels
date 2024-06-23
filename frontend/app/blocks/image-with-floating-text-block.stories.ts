@@ -24,6 +24,7 @@ export const Default: Story = {
     image: {
       url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
       alt: "View of Santa Marta",
+      aspectRatio: undefined!,
     },
     overlayTitle: {
       text: [

@@ -30,12 +30,15 @@ export function ImageWithFloatingTextBlock({
           alt={image.alt || undefined}
           className="h-full w-full object-cover"
           transformation={{
-            width: 1000,
+            width: 800,
             aspectRatio: { width: 16, height: 9 },
             cropStrategy: "maintain_ratio",
             focus: "auto",
           }}
           loading="lazy"
+          layout="responsive"
+          srcMultiplier={4}
+          sizes="(min-width: 1024px) 896px, 100vw"
         />
         <div
           className={cn(

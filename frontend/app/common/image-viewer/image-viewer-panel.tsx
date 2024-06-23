@@ -190,9 +190,17 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
               !isFullscreen && "py-12",
             )}
             transformation={{
-              height: window.innerHeight * 2,
+              width: 400,
             }}
             onLoadingFinished={() => setIsImageLoading(false)}
+            layout="responsive"
+            srcMultiplier={8}
+            sizes={
+              images[currentImageIndex].aspectRatio <
+              window.innerWidth / window.innerHeight
+                ? `${Math.round(window.innerHeight * images[currentImageIndex].aspectRatio)}px`
+                : "100vw"
+            }
             {...swipeHandlers}
           />
           {showImageLoadingIndicator && (

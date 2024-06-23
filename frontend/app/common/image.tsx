@@ -15,16 +15,27 @@ export type ImageProps = {
   className?: string;
   transformation?: ImageTransformation;
   onLoadingFinished?: () => void;
+  layout: "fixed" | "responsive";
+  srcMultiplier?: number;
 } & Pick<
   React.DetailedHTMLProps<
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   >,
-  "loading"
+  "loading" | "sizes"
 >;
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  { src, alt, className, transformation, onLoadingFinished, ...props },
+  {
+    src,
+    alt,
+    layout = "responsive",
+    srcMultiplier = 3,
+    className,
+    transformation,
+    onLoadingFinished,
+    ...props
+  },
   ref,
 ) {
   const { imagekitBaseUrl } = useEnvironment();
@@ -52,10 +63,38 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
 
   src = src?.slice(imagekitBaseUrl.length);
 
+  let srcSet = undefined;
+  if (layout === "fixed") {
+    srcSet = `${getSrc()}, ${getSrc(2)} 2x, ${getSrc(3)} 3x`;
+  } else if (layout === "responsive") {
+    if (!transformation?.width) {
+      throw new Error("transformation.width is required for responsive layout");
+    }
+
+    srcSet = Array.from({ length: srcMultiplier })
+      .map((_, i) => `${getSrc(i + 1)} ${transformation.width! * (i + 1)}w`)
+      .join(", ");
+  }
+
+  function getSrc(devicePixelRatio: number = 1) {
+    const ratioAdjustedTransformation = transformation
+      ? {
+          ...transformation,
+          width: transformation.width
+            ? transformation.width * devicePixelRatio
+            : undefined,
+          height: transformation.height
+            ? transformation.height * devicePixelRatio
+            : undefined,
+        }
+      : undefined;
+    return `${imagekitBaseUrl}/${ratioAdjustedTransformation ? toImagekitTransformationString(ratioAdjustedTransformation) : ""}${src}`;
+  }
+
   return (
     <img
       {...props}
-      src={`${imagekitBaseUrl}/${transformation ? toImagekitTransformationString(transformation) : ""}${src}`}
+      srcSet={srcSet}
       className={className}
       alt={alt}
       ref={mergeRefs(ref, localRef)}
@@ -75,12 +114,14 @@ export type ImageTransformation = {
 };
 
 function toImagekitTransformationString(transformation: ImageTransformation) {
-  const transformationItems = Object.keys(transformation).map((key) =>
-    toImagekitTransformationItemString(
-      transformation,
-      key as keyof ImageTransformation,
-    ),
-  );
+  const transformationItems = Object.entries(transformation)
+    .filter(([, value]) => value != null)
+    .map(([key]) =>
+      toImagekitTransformationItemString(
+        transformation,
+        key as keyof ImageTransformation,
+      ),
+    );
 
   return `tr:${transformationItems.join(",")}`;
 }

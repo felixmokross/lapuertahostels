@@ -104,6 +104,7 @@ export const Default: Story = {
     image: {
       url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
       alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
+      aspectRatio: undefined!,
     },
   },
 };

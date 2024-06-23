@@ -29,10 +29,11 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
             alt={images[0].alt}
             className="h-full w-full object-cover"
             transformation={{
-              width: 1120,
+              width: 560,
               aspectRatio: { width: 16, height: 9 },
             }}
             loading="lazy"
+            layout="fixed"
           />
         </button>
         {images.slice(1, 5).map((image, index) => (
@@ -48,10 +49,11 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
               alt={image.alt}
               className="aspect-[4/3] object-cover"
               transformation={{
-                width: 280,
+                width: 140,
                 aspectRatio: { width: 4, height: 3 },
               }}
               loading="lazy"
+              layout="fixed"
             />
             {images.length > 5 && index === 3 && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-6">

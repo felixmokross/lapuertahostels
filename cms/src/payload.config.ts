@@ -23,6 +23,13 @@ export default buildConfig({
       config.resolve.fallback = {
         ...config.resolve.fallback,
         dns: false,
+        stream: false,
+        assert: false,
+        url: false,
+        util: false,
+        querystring: false,
+        zlib: false,
+        fs: false,
       };
       return config;
     },

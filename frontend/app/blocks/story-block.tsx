@@ -50,9 +50,12 @@ export function StoryBlock({
           className="h-full w-full object-cover"
           transformation={{
             aspectRatio: { width: 3, height: 4 },
-            width: 1600,
+            width: 400,
             enhancement: image.grayscale ? "grayscale" : undefined,
           }}
+          layout="responsive"
+          srcMultiplier={5}
+          sizes="(min-width: 896px) 448px, 320px"
           loading="lazy"
         />
       </div>

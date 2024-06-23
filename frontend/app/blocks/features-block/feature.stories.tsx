@@ -14,6 +14,7 @@ const meta = {
         "brand-azul": allModes["brand-azul"],
       },
     },
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof Feature>;
 
@@ -26,6 +27,7 @@ export const ImageLeft: Story = {
     image: {
       url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
       alt: "Example image",
+      aspectRatio: undefined!,
     },
     heading: "Beautiful Rooms",
     text: [

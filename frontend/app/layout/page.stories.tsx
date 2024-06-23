@@ -37,6 +37,7 @@ export const Puerta: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
                 alt: "View of the beach in Tayrona National Park",
+                aspectRatio: undefined!,
               },
               overlayTitle: {
                 show: true,
@@ -64,6 +65,7 @@ export const Puerta: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
                 alt: "View of the Lost City",
+                aspectRatio: undefined!,
               },
               overlayTitle: {
                 show: true,
@@ -86,6 +88,7 @@ export const Puerta: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
                 alt: "View of the forest in the Minca region",
+                aspectRatio: undefined!,
               },
               overlayTitle: {
                 show: true,
@@ -189,6 +192,7 @@ export const Puerta: Story = {
                 ],
                 logo: {
                   url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
+                  aspectRatio: undefined!,
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -196,6 +200,7 @@ export const Puerta: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
                 alt: "Puerta Aqua",
+                aspectRatio: undefined!,
               },
               description:
                 "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
@@ -215,6 +220,7 @@ export const Puerta: Story = {
                 ],
                 logo: {
                   url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
+                  aspectRatio: undefined!,
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -222,6 +228,7 @@ export const Puerta: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "La Puerta Azul",
+                aspectRatio: undefined!,
               },
               description:
                 "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
@@ -234,6 +241,7 @@ export const Puerta: Story = {
           image: {
             url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
             alt: "View of Santa Marta",
+            aspectRatio: undefined!,
           },
           overlayTitle: {
             text: [
@@ -389,6 +397,7 @@ export const Puerta: Story = {
             alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
             position: "left",
             grayscale: true,
+            aspectRatio: undefined!,
           },
           id: "664b56be7f9772bcf6dffcab",
           blockType: "Story",
@@ -425,6 +434,7 @@ export const Aqua: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
                 alt: "Front view of Puerta Aqua",
+                aspectRatio: undefined!,
               },
               overlayTitle: {
                 show: true,
@@ -500,6 +510,7 @@ export const Aqua: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6244.jpg?updatedAt=1714161153045",
                 alt: "Person playing a board game on a table in the hostel’s community areas.",
+                aspectRatio: undefined!,
               },
               heading: "Time to Play",
               text: [
@@ -535,6 +546,7 @@ export const Aqua: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/deluxe-con-terraza/IMG_6591.jpg?updatedAt=1717280340182",
                 alt: "View of the Deluxe room’s terrace",
+                aspectRatio: undefined!,
               },
               heading: "Relax on the Terrace",
               text: [
@@ -570,6 +582,7 @@ export const Aqua: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
                 alt: "Front view of the hotel",
+                aspectRatio: undefined!,
               },
               heading: "Right in the City Center",
               text: [
@@ -637,6 +650,7 @@ export const Aqua: Story = {
             alt: "Woman looking at the viewer with a cup of coffee in her hand",
             position: "right",
             grayscale: false,
+            aspectRatio: undefined!,
           },
           elementId: null,
           id: "665b9f33f1606522b13acc36",
@@ -671,6 +685,7 @@ export const Azul: Story = {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "Atrium of La Puerta Azul",
                 alignment: "bottom",
+                aspectRatio: undefined!,
               },
               name: "Atrium",
               overlayTitle: {
@@ -697,6 +712,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
                 alt: "Room view of La Puerta Azul",
+                aspectRatio: undefined!,
               },
               overlayTitle: {
                 show: true,
@@ -729,6 +745,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
                 alt: "View of a room",
+                aspectRatio: undefined!,
               },
               heading: "Feel Newborn",
               text: [
@@ -760,6 +777,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
                 alt: "View of a Twin Room with two double beds",
+                aspectRatio: undefined!,
               },
               heading: "Bring Your Family",
               text: [
@@ -784,6 +802,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
                 alt: "View of the courtyard pool",
+                aspectRatio: undefined!,
               },
               heading: "Cool Down by the Pool",
               text: [
@@ -808,6 +827,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
                 alt: "Picture of the courtyard",
+                aspectRatio: undefined!,
               },
               heading: "A Beautiful Courtyard",
               text: [
@@ -846,6 +866,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
                 alt: "Picture of the bathroom table with the hairdryer on it",
+                aspectRatio: undefined!,
               },
               heading: "Freshen Up",
               text: [
@@ -870,6 +891,7 @@ export const Azul: Story = {
               image: {
                 url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
                 alt: "Picture of the room terrace with two coffee cups on the table",
+                aspectRatio: undefined!,
               },
               heading: "Enjoy the Morning",
               text: [

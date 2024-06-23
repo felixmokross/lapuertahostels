@@ -19,9 +19,12 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
         alt={image.alt || undefined}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
-          width: 3200,
+          width: 800,
         }}
         className="h-full w-full object-cover"
+        layout="responsive"
+        srcMultiplier={6}
+        sizes="100vw"
       />
       {overlayTextBox?.show && (
         <div
