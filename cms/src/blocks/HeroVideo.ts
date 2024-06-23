@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 import { makeOverlayTitleField } from "../fields/overlay-title";
-import { imageUrlField } from "../fields/image";
+import { imageField } from "../fields/image";
 import { validateUrl } from "../common/validation";
 
 export const HeroVideoBlock: Block = {
@@ -38,14 +38,18 @@ export const HeroVideoBlock: Block = {
       },
     },
     {
-      ...imageUrlField,
-      name: "previewUrl",
+      ...imageField,
+      name: "previewImage",
       label: {
-        en: "Preview Image URL",
-        es: "URL de la imagen de vista previa",
+        en: "Preview Image",
+        es: "Imagen de vista previa",
       },
+      fields: [
+        // We dont' need the 'alt' field for the preview image as it is generated
+        ...imageField.fields.filter((field) => field["name"] !== "alt"),
+      ],
       admin: {
-        ...imageUrlField.admin,
+        ...imageField.admin,
         description: {
           en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately to ImageKit.",
           es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado a ImageKit.",
