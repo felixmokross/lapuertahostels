@@ -1,5 +1,5 @@
 export type ImageViewerImage = {
   src: string;
-  alt: string;
+  alt?: string;
   caption?: string;
 };

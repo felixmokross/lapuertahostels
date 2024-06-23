@@ -117,7 +117,7 @@ export function SlidesBlock({
           >
             <SlideImage
               src={slide.image.url}
-              alt={slide.image.alt}
+              alt={slide.image.alt || undefined}
               transformation={{
                 aspectRatio: { width: 4, height: 3 },
                 width: 3200,

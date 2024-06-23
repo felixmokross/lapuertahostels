@@ -27,7 +27,7 @@ export function ImageWithFloatingTextBlock({
       <div className="relative max-h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
         <Image
           src={image.url}
-          alt={image.alt}
+          alt={image.alt || undefined}
           className="h-full w-full object-cover"
           transformation={{
             width: 1000,

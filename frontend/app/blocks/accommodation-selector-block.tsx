@@ -70,7 +70,7 @@ function AccommodationCard({
       <div className="relative aspect-[16/9] bg-white">
         <Image
           src={image.url}
-          alt={image.alt}
+          alt={image.alt || undefined}
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
           transformation={{
             aspectRatio: { width: 16, height: 9 },

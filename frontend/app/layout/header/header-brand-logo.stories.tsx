@@ -15,8 +15,9 @@ type Story = StoryObj<typeof meta>;
 const puertaBrand = {
   id: "puerta",
   homeLinkUrl: "/",
-  logoUrl:
-    "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+  logo: {
+    url: "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+  },
   name: "La Puerta Hostels",
 } as Brand;
 
@@ -27,15 +28,17 @@ export const Default: Story = {
       {
         id: "aqua",
         homeLinkUrl: "/aqua",
-        logoUrl:
-          "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703906701749",
+        logo: {
+          url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703906701749",
+        },
         name: "Puerta Aqua",
       } as Brand,
       {
         id: "azul",
         homeLinkUrl: "/azul",
-        logoUrl:
-          "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703906701749",
+        logo: {
+          url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703906701749",
+        },
         name: "La Puerta Azul",
       } as Brand,
     ],

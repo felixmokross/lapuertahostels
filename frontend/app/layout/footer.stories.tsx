@@ -87,8 +87,9 @@ Colombia`,
     allBrands: [
       {
         id: "puerta",
-        logoUrl:
-          "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+        logo: {
+          url: "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+        },
         name: "La Puerta Hostels",
       } as Brand,
     ],

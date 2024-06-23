@@ -16,7 +16,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
     <div className="relative my-44 h-[25rem] md:h-[35rem]">
       <Image
         src={image.url}
-        alt={image.alt}
+        alt={image.alt || undefined}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 3200,

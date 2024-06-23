@@ -11,7 +11,7 @@ import { mergeRefs } from "./utils";
 
 export type ImageProps = {
   src: string;
-  alt: string;
+  alt?: string;
   className?: string;
   transformation?: ImageTransformation;
   onLoadingFinished?: () => void;
