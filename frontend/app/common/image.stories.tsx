@@ -19,5 +19,6 @@ export const Default: Story = {
       height: 160,
     },
     className: "h-[80px]",
+    layout: "fixed",
   },
 };

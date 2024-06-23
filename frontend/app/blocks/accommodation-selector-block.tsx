@@ -74,10 +74,13 @@ function AccommodationCard({
           className="h-full w-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-75"
           transformation={{
             aspectRatio: { width: 16, height: 9 },
-            width: 1200,
+            width: 592,
             focus: "custom",
           }}
           loading="lazy"
+          layout="responsive"
+          sizes="(min-width: 1280px) 592px, (min-width: 768px) 50vw, 100vw"
+          srcMultiplier={4}
         />
       </div>
       <div

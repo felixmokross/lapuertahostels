@@ -118,10 +118,6 @@ export function SlidesBlock({
             <SlideImage
               src={slide.image.url}
               alt={slide.image.alt || undefined}
-              transformation={{
-                aspectRatio: { width: 4, height: 3 },
-                width: 3200,
-              }}
               withPreview={i === 0}
               alignment={slide.image.alignment || "center"}
               onLoadingFinished={i === 0 ? () => setIsReady(true) : undefined}

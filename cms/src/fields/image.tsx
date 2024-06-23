@@ -81,5 +81,35 @@ export const imageField: GroupField = {
         },
       },
     },
+    {
+      name: "aspectRatio",
+      type: "number",
+      hidden: true,
+      required: true,
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            // ensures data is not stored in DB
+            delete data.aspectRatio;
+          },
+        ],
+        afterRead: [
+          async ({ siblingData }) => {
+            try {
+              const probeImageSize = require("probe-image-size");
+              const result = await probeImageSize(siblingData.url);
+              return result.width / result.height;
+            } catch (e) {
+              console.error(e);
+              return undefined;
+            }
+          },
+        ],
+      },
+    },
   ],
 };

@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
 import { cn } from "../../common/cn";
-import { Image } from "../../common/image";
 import { RichTextParagraph } from "~/common/rich-text";
 import { type Feature } from "./types";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { Link } from "~/common/link";
+import { Image } from "~/common/image";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -50,10 +50,13 @@ export function Feature({
           alt={image.alt || undefined}
           src={image.url}
           transformation={{
-            width: 1000,
+            width: 448,
             aspectRatio: { width: 4, height: 3 },
           }}
           loading="lazy"
+          layout="responsive"
+          sizes="(min-width: 640px) 448px, 100vw"
+          srcMultiplier={4}
         />
       </div>
     </div>

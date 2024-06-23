@@ -27,6 +27,7 @@ export const Default: Story = {
       "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed.mp4?updatedAt=1716840200792",
     previewImage: {
       url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed-preview.png?updatedAt=1716908602638",
+      aspectRatio: undefined!,
     },
     overlayTitle: {
       show: true,

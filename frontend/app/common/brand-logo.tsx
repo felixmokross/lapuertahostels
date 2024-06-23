@@ -38,8 +38,9 @@ export function BrandLogo({
         src={brand.logo.url}
         alt={`${brand.name} Logo`}
         transformation={{
-          height: size === "small" ? 56 : size === "large" ? 80 : undefined,
+          height: size === "small" ? 28 : size === "large" ? 40 : undefined,
         }}
+        layout="fixed"
       />
       {type === "with-wordmark" && brand.name}
     </span>

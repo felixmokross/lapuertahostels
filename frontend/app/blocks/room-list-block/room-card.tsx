@@ -24,6 +24,7 @@ export function RoomCard({
           src: image.image.url,
           alt: image.image.alt || undefined,
           caption: image.caption!,
+          aspectRatio: image.image.aspectRatio,
         }))}
       />
       {text && <RichTextParagraph>{text}</RichTextParagraph>}

@@ -23,6 +23,7 @@ export const Default: Story = {
     image: {
       url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6303.jpg?updatedAt=1714161153434",
       alt: "Test",
+      aspectRatio: undefined!,
     },
     overlayTextBox: {
       show: true,
