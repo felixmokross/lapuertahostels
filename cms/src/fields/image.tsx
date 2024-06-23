@@ -85,7 +85,6 @@ export const imageField: GroupField = {
       name: "aspectRatio",
       type: "number",
       hidden: true,
-      required: true,
       access: {
         create: () => false,
         update: () => false,
