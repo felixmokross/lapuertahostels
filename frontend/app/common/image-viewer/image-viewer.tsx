@@ -17,7 +17,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
   const [t] = useTranslation();
   return (
     <div className={className}>
-      <div className="grid w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-2">
+      <div className="grid max-w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-1 sm:gap-2">
         <button
           className="col-span-4 aspect-[16/9]"
           onClick={() => {
