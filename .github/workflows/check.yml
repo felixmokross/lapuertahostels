@@ -84,7 +84,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
-          onlyChanged: true
+          onlyChanged: false
           workingDir: frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.IMAGEKIT_BASE_URL }}
