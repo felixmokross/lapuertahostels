@@ -9,6 +9,7 @@ const meta = {
   component: Footer,
   argTypes: {},
   parameters: {
+    layout: "fullscreen",
     chromatic: {
       modes: {
         "brand-aqua": allModes["brand-aqua"],

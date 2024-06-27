@@ -9,3 +9,18 @@ export default {
   // Disabling suspense is recommended
   react: { useSuspense: false },
 };
+
+export function getLocaleLabel(locale: string) {
+  switch (locale) {
+    case "en":
+      return "English";
+    case "es":
+      return "Español";
+    case "de":
+      return "Deutsch";
+    case "fr":
+      return "Français";
+    default:
+      throw new Error(`Unsupported locale: ${locale}`);
+  }
+}

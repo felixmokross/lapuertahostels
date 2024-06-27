@@ -6,6 +6,9 @@ const meta = {
   component: SlideImage,
   title: "blocks/Slides Block/Slide Image",
   argTypes: {},
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof SlideImage>;
 
 export default meta;

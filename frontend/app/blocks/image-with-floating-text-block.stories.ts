@@ -6,6 +6,7 @@ const meta = {
   title: "blocks/Image with Floating Text Block",
   component: ImageWithFloatingTextBlock,
   parameters: {
+    layout: "fullscreen",
     chromatic: {
       modes: {
         "brand-aqua": allModes["brand-aqua"],

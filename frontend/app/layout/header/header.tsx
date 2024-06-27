@@ -1,13 +1,15 @@
 import { cn } from "~/common/cn";
 import { useTranslation } from "react-i18next";
 import { HeaderBrandLogo } from "./header-brand-logo";
-import { LocaleSwitcher, MobileLocaleSwitcher } from "./locale-switcher";
+import { LocaleSwitcher } from "./locale-switcher";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "~/common/link";
+import { getLocaleLabel } from "~/i18n";
+import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 
 export type HeaderProps = {
   brand: Brand;
@@ -71,7 +73,7 @@ export function Header({ brand, allBrands }: HeaderProps) {
                     className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                   >
                     <GlobeAmericasIcon className="h-5" />
-                    {t(`languages.${i18n.language}`)}
+                    {getLocaleLabel(i18n.language)}
                   </Disclosure.Button>
                 </div>
               </div>

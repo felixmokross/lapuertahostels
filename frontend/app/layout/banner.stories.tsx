@@ -17,6 +17,7 @@ const meta = {
         "locale-fr": allModes["locale-fr"],
       },
     },
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof Banner>;
 
