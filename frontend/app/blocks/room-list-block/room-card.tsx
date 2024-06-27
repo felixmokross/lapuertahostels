@@ -28,7 +28,9 @@ export function RoomCard({
         }))}
       />
       {text && (
-        <RichTextParagraph className="px-6 sm:px-0">{text}</RichTextParagraph>
+        <RichTextParagraph justify={true} className="px-6 sm:px-0">
+          {text}
+        </RichTextParagraph>
       )}
       {ctaTemplate?.show && (
         <Button
