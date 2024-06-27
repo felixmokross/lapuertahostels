@@ -17,7 +17,7 @@ export type HeaderProps = {
 };
 
 export function Header({ brand, allBrands }: HeaderProps) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
   return (

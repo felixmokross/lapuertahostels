@@ -1,6 +1,5 @@
 import { Transition, Dialog } from "@headlessui/react";
 import { useLocation } from "@remix-run/react";
-import { useTranslation } from "react-i18next";
 import { Fragment } from "react";
 import { cn } from "~/common/cn";
 import { useTheme } from "~/themes";
@@ -17,7 +16,6 @@ export function MobileLocaleSwitcher({
   open,
   onClose,
 }: MobileLocaleSwitcherProps) {
-  const { t } = useTranslation();
   const location = useLocation();
   const theme = useTheme();
 

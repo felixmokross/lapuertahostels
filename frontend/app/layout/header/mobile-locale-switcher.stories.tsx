@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
-import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "layout/Header/Mobile Locale Switcher",
