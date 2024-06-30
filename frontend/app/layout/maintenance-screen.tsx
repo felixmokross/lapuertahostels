@@ -6,7 +6,7 @@ export type MaintenanceScreenProps = NonNullable<
 
 export function MaintenanceScreen({ message }: MaintenanceScreenProps) {
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-br text-6xl font-light tracking-tighter text-neutral-800">
+    <div className="flex h-screen items-center justify-center bg-gradient-to-br text-center text-4xl font-light tracking-tighter text-neutral-800 sm:text-6xl">
       {message}
     </div>
   );

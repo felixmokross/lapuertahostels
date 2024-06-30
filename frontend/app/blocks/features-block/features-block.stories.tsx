@@ -1,19 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { FeaturesBlock } from "./features-block";
-import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Features Block",
   component: FeaturesBlock,
   argTypes: {},
   parameters: {
-    chromatic: {
-      modes: {
-        "brand-aqua": allModes["brand-aqua"],
-        "brand-azul": allModes["brand-azul"],
-      },
-    },
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof FeaturesBlock>;
 

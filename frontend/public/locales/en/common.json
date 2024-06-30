@@ -1,10 +1,4 @@
 {
-  "languages": {
-    "en": "English",
-    "es": "Español",
-    "de": "Deutsch",
-    "fr": "Français"
-  },
   "bannerDismiss": "Dismiss",
   "footer": {
     "heading": "Footer",

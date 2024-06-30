@@ -1,17 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { WideImageBlock } from "./wide-image-block";
-import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "blocks/Wide Image Block",
   component: WideImageBlock,
   parameters: {
-    chromatic: {
-      modes: {
-        "brand-aqua": allModes["brand-aqua"],
-        "brand-azul": allModes["brand-azul"],
-      },
-    },
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof WideImageBlock>;
 

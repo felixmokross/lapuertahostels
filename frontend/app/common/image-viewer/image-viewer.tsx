@@ -17,9 +17,9 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
   const [t] = useTranslation();
   return (
     <div className={className}>
-      <div className="grid max-w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-1 sm:gap-2">
+      <div className="grid max-w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-1.5 overflow-hidden sm:gap-2 sm:rounded-md">
         <button
-          className="col-span-4 aspect-[16/9]"
+          className="group col-span-4 aspect-[16/9] overflow-hidden bg-white shadow-md"
           onClick={() => {
             setCurrentImageIndex(0);
           }}
@@ -27,7 +27,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
           <Image
             src={images[0].src}
             alt={images[0].alt}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
             transformation={{
               width: 560,
               aspectRatio: { width: 16, height: 9 },
@@ -38,7 +38,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
         </button>
         {images.slice(1, 5).map((image, index) => (
           <button
-            className="relative block w-full"
+            className="group relative block w-full overflow-hidden bg-white shadow-md"
             key={image.src}
             onClick={() => {
               setCurrentImageIndex(index + 1);
@@ -47,7 +47,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
             <Image
               src={image.src}
               alt={image.alt}
-              className="aspect-[4/3] object-cover"
+              className="aspect-[4/3] object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
               transformation={{
                 width: 140,
                 aspectRatio: { width: 4, height: 3 },

@@ -1,4 +1,3 @@
-import { allModes } from ".storybook/modes";
 import { RoomCard } from "./room-card";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -6,14 +5,15 @@ const meta = {
   title: "blocks/Room List Block/Room Card",
   component: RoomCard,
   parameters: {
-    chromatic: {
-      modes: {
-        "brand-aqua": allModes["brand-aqua"],
-        "brand-azul": allModes["brand-azul"],
-      },
-    },
-    layout: "centered",
+    layout: "fullscreen",
   },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto my-36 flex flex-row flex-wrap justify-center gap-32">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof RoomCard>;
 
 export default meta;

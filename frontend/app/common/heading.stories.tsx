@@ -23,10 +23,15 @@ const meta = {
     },
   },
   decorators: [
-    (Story, { parameters }) => (
+    (Story, { parameters, globals }) => (
       <div
         className={cn("h-screen px-8 py-2 text-neutral-900", {
-          "bg-puerta-700": parameters.background === "puerta",
+          "bg-puerta-950":
+            parameters.background === "brand" && globals.brand === "puerta",
+          "bg-aqua-950":
+            parameters.background === "brand" && globals.brand === "aqua",
+          "bg-azul-950":
+            parameters.background === "brand" && globals.brand === "azul",
         })}
       >
         <Story />
@@ -64,7 +69,7 @@ export const VariantWhiteWithHighlight: Story = {
     variant: "white",
   },
   parameters: {
-    background: "puerta",
+    background: "brand",
   },
 };
 

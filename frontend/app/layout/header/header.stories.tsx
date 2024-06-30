@@ -7,6 +7,9 @@ const meta = {
   title: "layout/Header",
   component: Header,
   argTypes: {},
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof Header>;
 
 export default meta;

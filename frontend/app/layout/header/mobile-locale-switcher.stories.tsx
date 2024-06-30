@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { LocaleSwitcher } from "./locale-switcher";
+import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 
 const meta = {
-  title: "layout/Header/Locale Switcher",
-  component: LocaleSwitcher,
+  title: "layout/Header/Mobile Locale Switcher",
+  component: MobileLocaleSwitcher,
   argTypes: {
     currentLocale: {
       options: ["en", "es", "de", "fr"],
@@ -12,21 +12,23 @@ const meta = {
     },
   },
   parameters: {
-    layout: "centered",
     chromatic: {
       modes: {
-        "viewport-small-mobile": { disable: true },
-        "viewport-large-mobile": { disable: true },
+        "viewport-tablet": { disable: true },
+        "viewport-desktop": { disable: true },
+        "viewport-large-desktop": { disable: true },
       },
     },
   },
-} satisfies Meta<typeof LocaleSwitcher>;
+} satisfies Meta<typeof MobileLocaleSwitcher>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    open: true,
     currentLocale: "en",
+    onClose: () => {},
   },
 };
