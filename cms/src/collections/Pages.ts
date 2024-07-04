@@ -19,10 +19,11 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: "url",
-    defaultColumns: ["url", "title", "hero", "layout"],
+    defaultColumns: ["url", "title", "brand"],
     disableDuplicate: true,
     listSearchableFields: ["url", "title"],
   },
+  defaultSort: "id",
   access: {
     create: ({ req: { user } }) => user?.role === "admin",
     update: canManageContent,
