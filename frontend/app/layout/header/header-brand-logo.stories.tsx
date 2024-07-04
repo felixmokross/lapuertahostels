@@ -7,6 +7,9 @@ const meta = {
   title: "layout/Header/Header Brand Logo",
   component: HeaderBrandLogo,
   argTypes: {},
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof HeaderBrandLogo>;
 
 export default meta;

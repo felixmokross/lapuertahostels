@@ -26,7 +26,7 @@ export function Feature({
         orientation === "image-left" && "lg:flex-row-reverse",
       )}
     >
-      <div className="px-16 text-center md:px-0">
+      <div className="px-8 text-center sm:px-16 md:px-0">
         <Heading size="medium" variant="brand" as="h4" className="-mt-4">
           {heading}
         </Heading>

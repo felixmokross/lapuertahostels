@@ -8,6 +8,7 @@ const meta = {
   component: ImageViewer,
   argTypes: {},
   parameters: {
+    layout: "fullscreen",
     chromatic: {
       modes: {
         "locale-es": allModes["locale-es"],
@@ -16,6 +17,13 @@ const meta = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-[35rem]">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof ImageViewer>;
 
 export default meta;

@@ -14,16 +14,10 @@ const meta = {
   },
   parameters: {
     layout: "fullscreen",
-    chromatic: {
-      modes: {
-        "brand-aqua": allModes["brand-aqua"],
-        "brand-azul": allModes["brand-azul"],
-      },
-    },
   },
   decorators: [
     (Story) => (
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl px-6">
         <Story />
       </div>
     ),
@@ -75,6 +69,12 @@ export const VariantPuerta: Story = {
   },
   parameters: {
     background: "brand-light",
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
   },
 };
 
@@ -85,5 +85,11 @@ export const VariantWhite: Story = {
   },
   parameters: {
     background: "brand",
+    chromatic: {
+      modes: {
+        "brand-aqua": allModes["brand-aqua"],
+        "brand-azul": allModes["brand-azul"],
+      },
+    },
   },
 };

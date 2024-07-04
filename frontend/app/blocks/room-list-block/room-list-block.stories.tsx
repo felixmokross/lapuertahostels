@@ -1,4 +1,3 @@
-import { allModes } from ".storybook/modes";
 import { RoomListBlock } from "./room-list-block";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -6,12 +5,7 @@ const meta = {
   title: "blocks/Room List Block",
   component: RoomListBlock,
   parameters: {
-    chromatic: {
-      modes: {
-        "brand-aqua": allModes["brand-aqua"],
-        "brand-azul": allModes["brand-azul"],
-      },
-    },
+    layout: "fullscreen",
   },
 } satisfies Meta<typeof RoomListBlock>;
 
