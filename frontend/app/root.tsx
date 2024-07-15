@@ -15,8 +15,6 @@ import {
 
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
-import { Banner } from "./layout/banner";
-import { Header } from "./layout/header/header";
 import { Footer } from "./layout/footer";
 import { useBrand } from "./brands";
 import i18next from "./i18next.server";
@@ -24,6 +22,8 @@ import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
+import { useState } from "react";
+import { Header } from "./layout/header";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -120,10 +120,16 @@ export default function App() {
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
+  const [headerHeight, setHeaderHeight] = useState(0);
   const brand = useBrand();
 
   return (
-    <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
+    <html
+      lang={i18n.language}
+      dir={i18n.dir()}
+      className="scroll-smooth"
+      style={{ scrollPaddingTop: getScrollTopPadding(headerHeight) }}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -149,23 +155,12 @@ export default function App() {
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (
                         <>
-                          {common.banner?.show && (
-                            <Banner
-                              cta={
-                                common.banner.cta?.show
-                                  ? `${common.banner.cta.text} →`
-                                  : undefined
-                              }
-                              ctaTo={
-                                common.banner.cta?.show
-                                  ? common.banner.cta.url!
-                                  : undefined
-                              }
-                            >
-                              {common.banner.message!}
-                            </Banner>
-                          )}
-                          <Header brand={brand} allBrands={allBrands} />
+                          <Header
+                            brand={brand}
+                            banner={common.banner}
+                            allBrands={allBrands}
+                            onHeightChanged={setHeaderHeight}
+                          />
                           <main>
                             <Outlet />
                           </main>
@@ -187,4 +182,10 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+const ADDITIONAL_SCROLL_PADDING = 16;
+
+function getScrollTopPadding(headerHeight: number) {
+  return headerHeight + ADDITIONAL_SCROLL_PADDING;
 }

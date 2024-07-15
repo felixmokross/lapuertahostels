@@ -1,5 +1,4 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
@@ -10,16 +9,23 @@ export type BannerProps = {
   children: string;
   cta?: string;
   ctaTo?: string;
+  isDismissed?: boolean;
+  onDismiss?: () => void;
 };
 
-export function Banner({ children, cta, ctaTo }: BannerProps) {
-  const [bannerVisible, setBannerVisible] = useState(true);
+export function Banner({
+  children,
+  cta,
+  ctaTo,
+  isDismissed,
+  onDismiss,
+}: BannerProps) {
   const { t } = useTranslation();
   const theme = useTheme();
 
   return (
     <Transition
-      show={bannerVisible}
+      show={!isDismissed}
       className={cn(
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
         theme.bannerBackgroundColor,
@@ -42,7 +48,7 @@ export function Banner({ children, cta, ctaTo }: BannerProps) {
       </div>
       <div className="flex flex-1 justify-end">
         <button
-          onClick={() => setBannerVisible(false)}
+          onClick={onDismiss}
           type="button"
           className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
         >

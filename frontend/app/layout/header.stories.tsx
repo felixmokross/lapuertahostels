@@ -1,5 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
+import { Meta, StoryObj } from "@storybook/react";
 import { Header } from "./header";
 import { Brand } from "~/payload-types";
 
@@ -47,6 +46,16 @@ const puertaBrand = {
 
 export const Default: Story = {
   args: {
+    banner: {
+      show: true,
+      message: "Travel before 20 September and get 20% off!",
+      cta: {
+        show: true,
+        text: "Book now",
+        url: "/cta",
+      },
+    },
+    brand: puertaBrand,
     allBrands: [
       puertaBrand,
       {
@@ -66,6 +75,6 @@ export const Default: Story = {
         name: "La Puerta Azul",
       } as Brand,
     ],
-    brand: puertaBrand,
+    onHeightChanged: () => {},
   },
 };
