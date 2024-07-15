@@ -15,8 +15,6 @@ import {
 
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
-import { Banner } from "./layout/banner";
-import { Navbar } from "./layout/navbar/navbar";
 import { Footer } from "./layout/footer";
 import { useBrand } from "./brands";
 import i18next from "./i18next.server";
@@ -24,8 +22,8 @@ import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
-import { cn } from "./common/cn";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { Header } from "./layout/header";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -121,24 +119,8 @@ export default function App() {
   const { common, maintenance, analyticsDomain, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
-  const headerRef = useRef<HTMLDivElement>(null);
 
   const [headerHeight, setHeaderHeight] = useState(0);
-
-  useEffect(() => {
-    if (!headerRef.current) return;
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setHeaderHeight(entry.borderBoxSize[0].blockSize);
-      }
-    });
-    observer.observe(headerRef.current, { box: "border-box" });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const [isBannerDismissed, setIsBannerDismissed] = useState(false);
   const brand = useBrand();
 
   return (
@@ -173,30 +155,12 @@ export default function App() {
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (
                         <>
-                          <header
-                            className="sticky inset-0 z-50 bg-white shadow-lg"
-                            ref={headerRef}
-                          >
-                            {common.banner?.show && (
-                              <Banner
-                                cta={
-                                  common.banner.cta?.show
-                                    ? `${common.banner.cta.text} →`
-                                    : undefined
-                                }
-                                ctaTo={
-                                  common.banner.cta?.show
-                                    ? common.banner.cta.url!
-                                    : undefined
-                                }
-                                isDismissed={isBannerDismissed}
-                                onDismiss={() => setIsBannerDismissed(true)}
-                              >
-                                {common.banner.message!}
-                              </Banner>
-                            )}
-                            <Navbar brand={brand} allBrands={allBrands} />
-                          </header>
+                          <Header
+                            brand={brand}
+                            banner={common.banner}
+                            allBrands={allBrands}
+                            onHeightChanged={setHeaderHeight}
+                          />
                           <main>
                             <Outlet />
                           </main>
