@@ -16,7 +16,7 @@ import {
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Banner } from "./layout/banner";
-import { Header } from "./layout/header/header";
+import { Navbar } from "./layout/navbar/navbar";
 import { Footer } from "./layout/footer";
 import { useBrand } from "./brands";
 import i18next from "./i18next.server";
@@ -24,6 +24,8 @@ import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
+import { cn } from "./common/cn";
+import { useEffect, useRef, useState } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -119,11 +121,33 @@ export default function App() {
   const { common, maintenance, analyticsDomain, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
+  const headerRef = useRef<HTMLDivElement>(null);
 
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    if (!headerRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setHeaderHeight(entry.borderBoxSize[0].blockSize);
+      }
+    });
+    observer.observe(headerRef.current, { box: "border-box" });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const [isBannerDismissed, setIsBannerDismissed] = useState(false);
   const brand = useBrand();
 
   return (
-    <html lang={i18n.language} dir={i18n.dir()} className="scroll-smooth">
+    <html
+      lang={i18n.language}
+      dir={i18n.dir()}
+      className="scroll-smooth"
+      style={{ scrollPaddingTop: getScrollTopPadding(headerHeight) }}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -149,23 +173,30 @@ export default function App() {
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (
                         <>
-                          {common.banner?.show && (
-                            <Banner
-                              cta={
-                                common.banner.cta?.show
-                                  ? `${common.banner.cta.text} →`
-                                  : undefined
-                              }
-                              ctaTo={
-                                common.banner.cta?.show
-                                  ? common.banner.cta.url!
-                                  : undefined
-                              }
-                            >
-                              {common.banner.message!}
-                            </Banner>
-                          )}
-                          <Header brand={brand} allBrands={allBrands} />
+                          <header
+                            className="sticky inset-0 z-50 bg-white shadow-lg"
+                            ref={headerRef}
+                          >
+                            {common.banner?.show && (
+                              <Banner
+                                cta={
+                                  common.banner.cta?.show
+                                    ? `${common.banner.cta.text} →`
+                                    : undefined
+                                }
+                                ctaTo={
+                                  common.banner.cta?.show
+                                    ? common.banner.cta.url!
+                                    : undefined
+                                }
+                                isDismissed={isBannerDismissed}
+                                onDismiss={() => setIsBannerDismissed(true)}
+                              >
+                                {common.banner.message!}
+                              </Banner>
+                            )}
+                            <Navbar brand={brand} allBrands={allBrands} />
+                          </header>
                           <main>
                             <Outlet />
                           </main>
@@ -187,4 +218,10 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+const ADDITIONAL_SCROLL_PADDING = 16;
+
+function getScrollTopPadding(headerHeight: number) {
+  return headerHeight + ADDITIONAL_SCROLL_PADDING;
 }

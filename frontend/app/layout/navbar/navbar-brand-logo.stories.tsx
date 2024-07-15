@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HeaderBrandLogo } from "./header-brand-logo";
+import { NavbarBrandLogo } from "./navbar-brand-logo";
 import { Brand } from "~/payload-types";
 
 const meta = {
-  title: "layout/Header/Header Brand Logo",
-  component: HeaderBrandLogo,
+  title: "layout/Navbar/Navbar Brand Logo",
+  component: NavbarBrandLogo,
   argTypes: {},
   parameters: {
     layout: "fullscreen",
   },
-} satisfies Meta<typeof HeaderBrandLogo>;
+} satisfies Meta<typeof NavbarBrandLogo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

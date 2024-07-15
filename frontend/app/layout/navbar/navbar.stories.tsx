@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Header } from "./header";
+import { Navbar } from "./navbar";
 import { Brand } from "~/payload-types";
 
 const meta = {
-  title: "layout/Header",
-  component: Header,
+  title: "layout/Navbar",
+  component: Navbar,
   argTypes: {},
   parameters: {
     layout: "fullscreen",
   },
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof Navbar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

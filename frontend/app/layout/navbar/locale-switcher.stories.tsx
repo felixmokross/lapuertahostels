@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LocaleSwitcher } from "./locale-switcher";
 
 const meta = {
-  title: "layout/Header/Locale Switcher",
+  title: "layout/Navbar/Locale Switcher",
   component: LocaleSwitcher,
   argTypes: {
     currentLocale: {

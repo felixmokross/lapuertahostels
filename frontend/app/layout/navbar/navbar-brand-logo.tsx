@@ -3,12 +3,12 @@ import { BrandLogo } from "~/common/brand-logo";
 import { Link } from "~/common/link";
 import { Brand } from "~/payload-types";
 
-export type HeaderBrandLogoProps = {
+export type NavbarBrandLogoProps = {
   brand: Brand;
   allBrands: Brand[];
 };
 
-export function HeaderBrandLogo({ allBrands, brand }: HeaderBrandLogoProps) {
+export function NavbarBrandLogo({ allBrands, brand }: NavbarBrandLogoProps) {
   return (
     <h1 className="h-10 lg:h-7 xl:h-10">
       <Link to={brand.homeLinkUrl}>
