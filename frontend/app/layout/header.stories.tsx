@@ -55,6 +55,7 @@ export const Default: Story = {
         url: "/cta",
       },
     },
+    brand: puertaBrand,
     allBrands: [
       puertaBrand,
       {
