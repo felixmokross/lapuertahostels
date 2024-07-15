@@ -51,7 +51,7 @@ export const Default: Story = {
       message: "Travel before 20 September and get 20% off!",
       cta: {
         show: true,
-        text: "Book now →",
+        text: "Book now",
         url: "/cta",
       },
     },
