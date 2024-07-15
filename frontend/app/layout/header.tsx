@@ -53,5 +53,5 @@ function useElementHeightObserver(
     observer.observe(ref.current, { box: "border-box" });
 
     return () => observer.disconnect();
-  }, []);
+  }, [onHeightChanged, ref]);
 }
