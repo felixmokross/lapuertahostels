@@ -52,7 +52,6 @@ export function Navbar({ brand, allBrands }: NavbarProps) {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {brand.navLinks?.map((navLink) => (
-                // current: block border-l-4 border-puerta-500 bg-puerta-50 py-2 pl-3 pr-4 text-base font-bold text-puerta-700
                 <Disclosure.Button
                   key={navLink.id}
                   as={Link}
