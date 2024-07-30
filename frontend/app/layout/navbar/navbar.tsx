@@ -5,23 +5,39 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "~/common/link";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 
 export type NavbarProps = {
+  className?: string;
   brand: Brand;
   allBrands: Brand[];
+  onHeightChanged: (height: number) => void;
 };
 
-export function Navbar({ brand, allBrands }: NavbarProps) {
+export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
   const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
+  const navbarRef = useRef<HTMLDivElement>(null);
+
+  useElementHeightObserver(navbarRef, onHeightChanged);
+  const isScrolled = useIsScrolled();
+
   return (
-    <Disclosure as="nav">
+    <Disclosure
+      as="nav"
+      className={cn(
+        "sticky inset-0 z-40 shadow-lg backdrop-blur-sm transition-all duration-1000",
+        isScrolled
+          ? "top-4 mx-4 rounded-lg bg-white bg-opacity-75 ring-1 ring-black ring-opacity-5"
+          : "top-0 mx-0 rounded-none bg-white bg-opacity-100 ring-0 ring-white ring-opacity-0",
+      )}
+      ref={navbarRef}
+    >
       {({ open }) => (
         <>
           <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
@@ -92,5 +108,39 @@ type NavLinkProps = LinkProps;
 function NavLink({ className, ...props }: NavLinkProps) {
   return (
     <Link className={cn("hover:text-neutral-900", className)} {...props} />
+  );
+}
+
+function useElementHeightObserver(
+  ref: RefObject<HTMLElement>,
+  onHeightChanged: (height: number) => void,
+) {
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        onHeightChanged(entry.borderBoxSize[0].blockSize);
+      }
+    });
+    observer.observe(ref.current, { box: "border-box" });
+
+    return () => observer.disconnect();
+  }, [onHeightChanged, ref]);
+}
+
+const SCROLL_THRESHOLD = 0.3;
+
+function useIsScrolled() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    typeof window !== "undefined" &&
+    SCROLL_THRESHOLD * window.innerHeight < scrollY
   );
 }
