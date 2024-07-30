@@ -184,7 +184,7 @@ export default function App() {
   );
 }
 
-const ADDITIONAL_SCROLL_PADDING = 16;
+const ADDITIONAL_SCROLL_PADDING = 32;
 
 function getScrollTopPadding(headerHeight: number) {
   return headerHeight + ADDITIONAL_SCROLL_PADDING;

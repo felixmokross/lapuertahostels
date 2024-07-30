@@ -10,7 +10,6 @@ import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "~/common/link";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
-import { useTheme } from "~/themes";
 
 export type NavbarProps = {
   className?: string;
@@ -27,7 +26,6 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
 
   useElementHeightObserver(navbarRef, onHeightChanged);
   const isScrolled = useIsScrolled();
-  const theme = useTheme();
 
   return (
     <Disclosure
