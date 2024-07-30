@@ -67,5 +67,6 @@ export const Default: Story = {
       } as Brand,
     ],
     brand: puertaBrand,
+    onHeightChanged: () => {},
   },
 };
