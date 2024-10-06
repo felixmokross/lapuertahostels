@@ -127,7 +127,6 @@ export default function App() {
     <html
       lang={i18n.language}
       dir={i18n.dir()}
-      className="scroll-smooth"
       style={{ scrollPaddingTop: getScrollTopPadding(headerHeight) }}
     >
       <head>
