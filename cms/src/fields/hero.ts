@@ -1,6 +1,7 @@
 import { BlockField } from "payload/types";
 import { SlidesBlock } from "../blocks/Slides";
 import { HeroVideoBlock } from "../blocks/HeroVideo";
+import { HeroHeading } from "../blocks/HeroHeading";
 
 export const heroField: BlockField = {
   name: "hero",
@@ -21,7 +22,7 @@ export const heroField: BlockField = {
   type: "blocks",
   minRows: 0,
   maxRows: 1,
-  blocks: [SlidesBlock, HeroVideoBlock],
+  blocks: [SlidesBlock, HeroVideoBlock, HeroHeading],
   admin: {
     initCollapsed: true,
     description: {

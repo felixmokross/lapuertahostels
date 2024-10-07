@@ -28,7 +28,7 @@ const meta = {
           className={cn("h-screen py-8", {
             "bg-white": parameters.background === "white",
             [theme.bannerBackgroundColor]: parameters.background === "brand",
-            [theme.footerBackgroundColor]:
+            [theme.lightBackgroundColor]:
               parameters.background === "brand-light",
           })}
         >

@@ -19,7 +19,7 @@ export function Footer({ content, allBrands }: FooterProps) {
   if (!puertaBrand) throw new Error("Puerta brand not found");
   return (
     <footer
-      className={`mt-40 ${theme.footerBackgroundColor}`}
+      className={`mt-40 ${theme.lightBackgroundColor}`}
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
