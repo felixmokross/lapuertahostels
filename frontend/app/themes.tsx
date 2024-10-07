@@ -7,7 +7,7 @@ export type Theme = {
   headingTextColor: string;
   headingWhiteHighlightTextColor: string;
   bannerBackgroundColor: string;
-  footerBackgroundColor: string;
+  lightBackgroundColor: string;
   buttonColors: {
     primary: {
       backgroundColor: string;
@@ -60,7 +60,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
     headingTextColor: "text-puerta-600",
     headingWhiteHighlightTextColor: "text-puerta-200",
     bannerBackgroundColor: "bg-puerta-800",
-    footerBackgroundColor: "bg-puerta-100",
+    lightBackgroundColor: "bg-puerta-100",
     buttonColors: {
       primary: {
         backgroundColor: "bg-puerta-500",
@@ -85,7 +85,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
     headingTextColor: "text-aqua-600",
     headingWhiteHighlightTextColor: "text-aqua-200",
     bannerBackgroundColor: "bg-aqua-500",
-    footerBackgroundColor: "bg-aqua-50",
+    lightBackgroundColor: "bg-aqua-50",
     buttonColors: {
       primary: {
         backgroundColor: "bg-aqua-400",
@@ -110,7 +110,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
     headingTextColor: "text-azul-900",
     headingWhiteHighlightTextColor: "text-azul-200",
     bannerBackgroundColor: "bg-azul-950",
-    footerBackgroundColor: "bg-azul-50",
+    lightBackgroundColor: "bg-azul-50",
     buttonColors: {
       primary: {
         backgroundColor: "bg-azul-950",
