@@ -1,6 +1,6 @@
 export type RichTextObject = {
   children: { text: string; bold?: boolean }[];
-  type?: "h4" | "h5" | "link";
+  type?: "h4" | "h5" | "link" | "ul";
 }[];
 
 export function transformRichTextToElements(lines: RichTextObject) {
@@ -8,7 +8,7 @@ export function transformRichTextToElements(lines: RichTextObject) {
   let startNewParagraph = true;
 
   for (const line of lines) {
-    if (line.type === "h4" || line.type === "h5") {
+    if (line.type === "h4" || line.type === "h5" || line.type === "ul") {
       elements.push({ type: line.type, richText: [line] });
       startNewParagraph = true;
     } else if (line.children.length === 1 && line.children[0].text === "") {
@@ -25,6 +25,6 @@ export function transformRichTextToElements(lines: RichTextObject) {
 }
 
 type RichTextElement = {
-  type: "p" | "h4" | "h5";
+  type: "p" | "h4" | "h5" | "ul";
   richText: RichTextObject;
 };

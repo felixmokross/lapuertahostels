@@ -14,10 +14,13 @@ import { Link } from "./link";
 
 export type RichTextProps = {
   children: RichTextObject;
-  HighlightComponent: ComponentType<PropsWithChildren>;
+  HighlightComponent?: ComponentType<PropsWithChildren>;
 };
 
-export function RichText({ children, HighlightComponent }: RichTextProps) {
+export function RichText({
+  children,
+  HighlightComponent = Fragment,
+}: RichTextProps) {
   return children?.map((line, index, allLines) => (
     <Fragment key={index}>
       {(line.children as Record<string, unknown>[])?.map((c, j) => (
@@ -71,21 +74,41 @@ export function RichTextParagraphGroup({
     switch (element.type) {
       case "h4":
         return (
-          <RichTextHeading as="h4" size="small" key={index}>
+          <RichTextHeading
+            as="h4"
+            size="small"
+            key={index}
+            className="mt-6 md:mt-8"
+          >
             {element.richText}
           </RichTextHeading>
         );
       case "h5":
         return (
-          <RichTextHeading as="h5" size="extra-small" key={index}>
+          <RichTextHeading
+            as="h5"
+            size="extra-small"
+            key={index}
+            className="mt-6 md:mt-8"
+          >
             {element.richText}
           </RichTextHeading>
         );
       case "p":
         return (
-          <RichTextParagraph key={index} {...props}>
+          <RichTextParagraph key={index} {...props} className="mt-2 md:mt-3">
             {element.richText}
           </RichTextParagraph>
+        );
+      case "ul":
+        return (
+          <ul>
+            {element.richText[0].children.map((line, j) => (
+              <li key={j} className="my-2 ms-6 list-disc">
+                <RichText>{[line] as unknown as RichTextObject}</RichText>
+              </li>
+            ))}
+          </ul>
         );
     }
   });

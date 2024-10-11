@@ -21,7 +21,7 @@ export function makeRichTextField({
     localized: true,
     editor: slateEditor({
       admin: {
-        elements: supportsParagraphs ? ["h4", "h5", "link"] : [],
+        elements: supportsParagraphs ? ["h4", "h5", "link", "ul"] : [],
         leaves: ["bold"],
       },
     }),

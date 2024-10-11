@@ -36,9 +36,7 @@ export function StoryBlock({
             {heading}
           </Heading>
         )}
-        <div
-          className={cn(heading && "mt-4 md:mt-6", "space-y-3 md:space-y-4")}
-        >
+        <div className={cn(heading && "mt-4 md:mt-6")}>
           <RichTextParagraphGroup justify>
             {text as RichTextObject}
           </RichTextParagraphGroup>
