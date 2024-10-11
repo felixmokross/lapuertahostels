@@ -1,4 +1,3 @@
-import { SerializeFrom } from "@remix-run/node";
 import { ComponentType, PropsWithChildren } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { Heading, HeadingHighlight, HeadingProps } from "~/common/heading";
@@ -7,15 +6,15 @@ import {
   ParagraphHighlight,
   ParagraphProps,
 } from "~/common/paragraph";
+import {
+  RichTextObject,
+  transformRichTextToElements,
+} from "./rich-text-transform";
 
 export type RichTextProps = {
   children: RichTextObject;
   HighlightComponent: ComponentType<PropsWithChildren>;
 };
-
-export type RichTextObject = SerializeFrom<{
-  [k: string]: unknown;
-}>[];
 
 export function RichText({ children, HighlightComponent }: RichTextProps) {
   return children?.map((line, index, allLines) => (
@@ -57,12 +56,29 @@ export function RichTextParagraphGroup({
   children,
   ...props
 }: RichTextParagraphGroupProps) {
-  const paragraphs = groupIntoParagraphs(children);
-  return paragraphs.map((paragraph, index) => (
-    <RichTextParagraph {...props} key={index}>
-      {paragraph}
-    </RichTextParagraph>
-  ));
+  const elements = transformRichTextToElements(children);
+  return elements.map((element, index) => {
+    switch (element.type) {
+      case "h4":
+        return (
+          <RichTextHeading as="h4" size="small" key={index}>
+            {element.richText}
+          </RichTextHeading>
+        );
+      case "h5":
+        return (
+          <RichTextHeading as="h5" size="extra-small" key={index}>
+            {element.richText}
+          </RichTextHeading>
+        );
+      case "p":
+        return (
+          <RichTextParagraph key={index} {...props}>
+            {element.richText}
+          </RichTextParagraph>
+        );
+    }
+  });
 }
 
 export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {
@@ -75,22 +91,4 @@ export function RichTextHeading({ children, ...props }: RichTextHeadingProps) {
       <RichText HighlightComponent={HeadingHighlight}>{children}</RichText>
     </Heading>
   );
-}
-
-function groupIntoParagraphs(richText: RichTextObject) {
-  const paragraphs: RichTextObject[] = [];
-  let currentParagraph: RichTextObject = [];
-  for (const line of richText) {
-    if (
-      (line.children as Record<string, unknown>[]).length === 1 &&
-      (line.children as Record<string, unknown>[])[0].text === ""
-    ) {
-      paragraphs.push(currentParagraph);
-      currentParagraph = [];
-    } else {
-      currentParagraph.push(line);
-    }
-  }
-  paragraphs.push(currentParagraph);
-  return paragraphs;
 }

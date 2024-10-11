@@ -21,15 +21,15 @@ export function makeRichTextField({
     localized: true,
     editor: slateEditor({
       admin: {
-        elements: [],
+        elements: supportsParagraphs ? ["h4", "h5"] : [],
         leaves: ["bold"],
       },
     }),
     admin: {
       description: supportsParagraphs
         ? {
-            en: "Mark parts of the text as bold to make it stand out. Use two line breaks to create a new paragraph.",
-            es: "Marca partes del texto como negrita para que destaque. Usa dos saltos de línea para crear un nuevo párrafo.",
+            en: "Mark parts of the text as bold to make it stand out. Use two line breaks to create a new paragraph. You can also use headings to structure the text.",
+            es: "Marca partes del texto como negrita para que destaque. Usa dos saltos de línea para crear un nuevo párrafo. También puedes usar títulos para estructurar el texto.",
           }
         : {
             en: "Mark parts of the text as bold to make it stand out.",

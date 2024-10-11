@@ -96,6 +96,7 @@ export const Default: Story = {
       },
     ],
     image: {
+      show: true,
       url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
       alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
       aspectRatio: undefined!,
@@ -120,5 +121,19 @@ export const Grayscale: Story = {
       ...Default.args.image,
       grayscale: true,
     },
+  },
+};
+
+export const WithoutImage: Story = {
+  args: {
+    ...Default.args,
+    image: undefined,
+  },
+};
+
+export const WithoutHeading: Story = {
+  args: {
+    ...Default.args,
+    heading: undefined,
   },
 };
