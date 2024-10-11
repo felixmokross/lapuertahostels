@@ -20,7 +20,7 @@ export const LeadBlock: Block = {
   imageURL: "/assets/blocks/Lead.png",
   imageAltText: "Preview of the Lead block, showing a heading and a large text",
   fields: [
-    headingField,
+    { ...headingField, required: false },
     makeRichTextField(),
     makeCallToActionField({ optional: true, showByDefault: false }),
     makeMoreOptionsField(elementIdField),
