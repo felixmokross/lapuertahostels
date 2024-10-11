@@ -91,7 +91,10 @@ export function makeImageField({
               );
             },
           },
-          condition,
+          // API seems to be inconsistent here, the condition seems to get the parent's siblingData for UI fields
+          condition: optional
+            ? (_, siblingData) => siblingData.image.show
+            : undefined,
         },
       },
       {
