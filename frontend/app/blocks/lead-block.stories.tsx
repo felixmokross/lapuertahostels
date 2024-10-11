@@ -67,3 +67,10 @@ export const WithCallToAction: Story = {
     },
   },
 };
+
+export const WithoutHeading: Story = {
+  args: {
+    ...Default.args,
+    heading: undefined,
+  },
+};
