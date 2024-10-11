@@ -31,9 +31,9 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
     <Disclosure
       as="nav"
       className={cn(
-        "sticky inset-0 z-40 shadow-lg backdrop-blur-sm transition-all duration-1000",
+        "sticky inset-0 z-40 backdrop-blur-sm transition-all duration-1000",
         isScrolled
-          ? "top-4 mx-4 rounded-lg bg-white bg-opacity-75 ring-1 ring-black ring-opacity-5"
+          ? "top-4 mx-4 rounded-lg bg-white bg-opacity-75 shadow-lg ring-1 ring-black ring-opacity-5"
           : "top-0 mx-0 rounded-none bg-white bg-opacity-100 ring-0 ring-white ring-opacity-0",
       )}
       ref={navbarRef}
