@@ -1,6 +1,6 @@
 export type RichTextObject = {
   children: { text: string; bold?: boolean }[];
-  type?: "h4" | "h5";
+  type?: "h4" | "h5" | "link";
 }[];
 
 export function transformRichTextToElements(lines: RichTextObject) {

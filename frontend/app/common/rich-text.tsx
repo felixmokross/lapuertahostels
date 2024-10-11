@@ -10,6 +10,7 @@ import {
   RichTextObject,
   transformRichTextToElements,
 } from "./rich-text-transform";
+import { Link } from "./link";
 
 export type RichTextProps = {
   children: RichTextObject;
@@ -23,6 +24,15 @@ export function RichText({ children, HighlightComponent }: RichTextProps) {
         <Fragment key={j}>
           {c.bold ? (
             <HighlightComponent>{c.text as string}</HighlightComponent>
+          ) : c.type === "link" ? (
+            <Link
+              className="text-puerta-600 hover:text-puerta-700 hover:underline active:text-puerta-700 active:underline"
+              to={c.url as string}
+            >
+              <RichText HighlightComponent={HighlightComponent}>
+                {[c] as RichTextObject}
+              </RichText>
+            </Link>
           ) : (
             (c.text as string)
           )}
