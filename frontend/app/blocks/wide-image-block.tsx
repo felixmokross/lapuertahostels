@@ -5,7 +5,7 @@ import { Button } from "~/common/button";
 import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { cn } from "~/common/cn";
-import { NewRichTextObject } from "~/common/new-rich-text";
+import { RichTextObject } from "~/common/rich-text";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
@@ -47,7 +47,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
             {overlayTextBox.heading}
           </Heading>
           <RichTextParagraph className="mt-1 md:mt-2">
-            {overlayTextBox.text! as NewRichTextObject}
+            {overlayTextBox.text! as RichTextObject}
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button

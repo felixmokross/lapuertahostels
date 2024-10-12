@@ -3,7 +3,7 @@ import { Image } from "~/common/image";
 import { cn } from "../common/cn";
 import { Page } from "~/payload-types";
 import { useTheme } from "~/themes";
-import { NewRichTextObject } from "~/common/new-rich-text";
+import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
@@ -62,7 +62,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {overlayTitle.text as NewRichTextObject}
+            {overlayTitle.text as RichTextObject}
           </RichTextHeading>
         </div>
       </div>
@@ -85,7 +85,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {text as NewRichTextObject}
+            {text as RichTextObject}
           </RichTextParagraph>
         </div>
       </div>

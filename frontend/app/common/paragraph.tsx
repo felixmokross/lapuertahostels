@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
-import { NewRichText, NewRichTextObject } from "./new-rich-text";
+import { RichText, RichTextObject } from "./rich-text";
 
 type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 
@@ -66,7 +66,7 @@ export function ParagraphHighlight({ children }: PropsWithChildren) {
 }
 
 export type RichTextParagraphProps = Omit<ParagraphProps, "children"> & {
-  children: NewRichTextObject;
+  children: RichTextObject;
 };
 
 export function RichTextParagraph({
@@ -75,7 +75,7 @@ export function RichTextParagraph({
 }: RichTextParagraphProps) {
   return (
     <Paragraph {...props}>
-      <NewRichText
+      <RichText
         content={children}
         elements={{ bold: ParagraphHighlight }}
         lineBreakHandling="line-break"

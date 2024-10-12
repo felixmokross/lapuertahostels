@@ -1,11 +1,7 @@
 import { Heading } from "../common/heading";
 import { Image } from "../common/image";
 import { cn } from "../common/cn";
-import {
-  NewRichText,
-  NewRichTextObject,
-  NewRichTextProps,
-} from "~/common/new-rich-text";
+import { RichText, RichTextObject, RichTextProps } from "~/common/rich-text";
 import { Paragraph } from "~/common/paragraph";
 import { PropsWithChildren } from "react";
 import { Link } from "~/common/link";
@@ -43,8 +39,8 @@ export function StoryBlock({
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
-          <NewRichText
-            content={text as NewRichTextObject}
+          <RichText
+            content={text as RichTextObject}
             elements={richTextElements}
           />
         </div>
@@ -79,7 +75,7 @@ export function StoryBlock({
   );
 }
 
-const richTextElements: NewRichTextProps["elements"] = {
+const richTextElements: RichTextProps["elements"] = {
   bold: "strong", // TODO consider to refactor Paragraph to be able to use variant-dependent highlighting here
   h4: (props: PropsWithChildren) => (
     <Heading {...props} as="h4" size="small" className="mt-6 md:mt-8" />

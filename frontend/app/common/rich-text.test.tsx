@@ -2,18 +2,16 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import {
   ElementNode,
-  NewRichText,
+  RichText,
   Node,
   PlainElementNode,
   TextNode,
-} from "./new-rich-text";
+} from "./rich-text";
 import { PropsWithChildren } from "react";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(
-    <NewRichText
-      content={[plain(text("Hello, "), bold("world"), text("!"))]}
-    />,
+    <RichText content={[plain(text("Hello, "), bold("world"), text("!"))]} />,
   );
 
   expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
@@ -22,9 +20,7 @@ test("Bold text node is rendered as <strong> element.", () => {
 
 test("Italic text node is rendered as <em> element.", () => {
   render(
-    <NewRichText
-      content={[plain(text("Hello, "), italic("world"), text("!"))]}
-    />,
+    <RichText content={[plain(text("Hello, "), italic("world"), text("!"))]} />,
   );
 
   expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
@@ -33,7 +29,7 @@ test("Italic text node is rendered as <em> element.", () => {
 
 test("Underline text node is rendered as <u> element.", () => {
   render(
-    <NewRichText
+    <RichText
       content={[plain(text("Hello, "), underline("world"), text("!"))]}
     />,
   );
@@ -44,7 +40,7 @@ test("Underline text node is rendered as <u> element.", () => {
 
 test("Root element nodes are rendered as paragraphs.", () => {
   render(
-    <NewRichText
+    <RichText
       content={[
         plain(text("Hello, "), underline("world"), text("!")),
         plain(text("This is the next line")),
@@ -62,9 +58,7 @@ test("Root element nodes are rendered as paragraphs.", () => {
 });
 
 test("h4 element nodes are rendered as <h4> elements.", () => {
-  render(
-    <NewRichText content={[simpleElement("h4", text("Hello, world!"))]} />,
-  );
+  render(<RichText content={[simpleElement("h4", text("Hello, world!"))]} />);
 
   expect(screen.getByRole("heading", { level: 4 })).toHaveTextContent(
     "Hello, world!",
@@ -72,9 +66,7 @@ test("h4 element nodes are rendered as <h4> elements.", () => {
 });
 
 test("h5 element nodes are rendered as <h5> elements.", () => {
-  render(
-    <NewRichText content={[simpleElement("h5", text("Hello, world!"))]} />,
-  );
+  render(<RichText content={[simpleElement("h5", text("Hello, world!"))]} />);
 
   expect(screen.getByRole("heading", { level: 5 })).toHaveTextContent(
     "Hello, world!",
@@ -85,7 +77,7 @@ test("h5 element nodes are rendered as <h5> elements.", () => {
 
 test("ul element nodes with li as children are rendered as <ul> and <li> elements.", () => {
   render(
-    <NewRichText
+    <RichText
       content={[
         simpleElement(
           "ul",
@@ -107,7 +99,7 @@ test("ul element nodes with li as children are rendered as <ul> and <li> element
 
 test("ol element nodes with li as children are rendered as <ol> and <li> elements.", () => {
   render(
-    <NewRichText
+    <RichText
       content={[
         simpleElement(
           "ol",
@@ -129,9 +121,7 @@ test("ol element nodes with li as children are rendered as <ol> and <li> element
 
 test("link element nodes are rendered as <a> elements with the correct href attribute.", () => {
   render(
-    <NewRichText
-      content={[link("https://example.com", text("Click here!"))]}
-    />,
+    <RichText content={[link("https://example.com", text("Click here!"))]} />,
   );
 
   const linkElement = screen.getByRole("link");
@@ -146,7 +136,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[plain(bold("Hello, world!"))]}
         elements={{
           bold: CustomHighlight,
@@ -165,7 +155,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[plain(italic("Hello, world!"))]}
         elements={{
           italic: CustomItalic,
@@ -184,7 +174,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[plain(underline("Hello, world!"))]}
         elements={{
           underline: CustomUnderline,
@@ -210,7 +200,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[link("https://example.com", text("Click here!"))]}
         elements={{
           link: CustomLink,
@@ -230,7 +220,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[simpleElement("h4", text("Hello, world!"))]}
         elements={{
           h4: CustomH4,
@@ -247,7 +237,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[simpleElement("h5", text("Hello, world!"))]}
         elements={{
           h5: CustomH5,
@@ -264,7 +254,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[
           simpleElement(
             "ul",
@@ -290,7 +280,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[
           simpleElement(
             "ol",
@@ -316,7 +306,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[simpleElement("ul", simpleElement("li", text("First item")))]}
         elements={{
           li: CustomLi,
@@ -333,7 +323,7 @@ describe("custom elements", () => {
     }
 
     render(
-      <NewRichText
+      <RichText
         content={[plain(text("Hello, world!"))]}
         elements={{
           paragraph: CustomParagraph,
@@ -349,7 +339,7 @@ describe("custom elements", () => {
 
 test("if lineBreakHandling is 'paragraph', each plain element node is rendered as paragraph", () => {
   render(
-    <NewRichText
+    <RichText
       content={[
         plain(text("Hello, world!")),
         plain(text("This is the next line")),
@@ -371,7 +361,7 @@ test("if lineBreakHandling is 'paragraph', each plain element node is rendered a
 
 test("if lineBreakHandling is 'line-break', plain element nodes at root level are separated by <br />", () => {
   const { container } = render(
-    <NewRichText
+    <RichText
       content={[
         plain(text("Hello, world!")),
         plain(text("This is the next line")),
@@ -396,7 +386,7 @@ test("if lineBreakHandling is 'line-break', plain element nodes at root level ar
 
 test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels are separated by <br />", () => {
   const { container } = render(
-    <NewRichText
+    <RichText
       content={[
         plain(text("Hello, world!")),
         plain(text("This is the next line")),

@@ -6,8 +6,8 @@ import {
   useContext,
 } from "react";
 
-export type NewRichTextProps = {
-  content: NewRichTextObject;
+export type RichTextProps = {
+  content: RichTextObject;
   lineBreakHandling?: LineBreakHandling;
   elements?: Partial<CustomElementConfig>;
 };
@@ -25,14 +25,14 @@ type CustomElementConfig = {
   paragraph: ElementType;
 };
 
-type NewRichTextContextValue = {
+type RichTextContextValue = {
   elements: CustomElementConfig;
   lineBreakHandling: LineBreakHandling;
 };
 
 type LineBreakHandling = "line-break" | "paragraph";
 
-const NewRichTextContext = createContext<NewRichTextContextValue | null>(null);
+const RichTextContext = createContext<RichTextContextValue | null>(null);
 
 const defaultElements: CustomElementConfig = {
   bold: "strong",
@@ -47,19 +47,19 @@ const defaultElements: CustomElementConfig = {
   paragraph: "p",
 };
 
-function useNewRichTextContext() {
-  const context = useContext(NewRichTextContext);
-  if (!context) throw new Error("NewRichTextContext is not provided.");
+function useRichTextContext() {
+  const context = useContext(RichTextContext);
+  if (!context) throw new Error("RichTextContext is not provided.");
   return context;
 }
 
-export function NewRichText({
+export function RichText({
   content,
   elements,
   lineBreakHandling = "paragraph",
-}: NewRichTextProps) {
+}: RichTextProps) {
   return (
-    <NewRichTextContext.Provider
+    <RichTextContext.Provider
       value={{
         elements: { ...defaultElements, ...elements },
         lineBreakHandling,
@@ -72,7 +72,7 @@ export function NewRichText({
           isLast={i === content.length - 1}
         />
       ))}
-    </NewRichTextContext.Provider>
+    </RichTextContext.Provider>
   );
 }
 
@@ -83,7 +83,7 @@ function RenderedElementNode({
   node: ElementNode;
   isLast: boolean;
 }) {
-  const { elements } = useNewRichTextContext();
+  const { elements } = useRichTextContext();
   const renderedChildren = node.children.map((child, i) => (
     <RenderedNode
       key={i}
@@ -113,7 +113,7 @@ function RenderedElementNode({
 }
 
 function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
-  const { elements, lineBreakHandling } = useNewRichTextContext();
+  const { elements, lineBreakHandling } = useRichTextContext();
 
   switch (lineBreakHandling) {
     case "line-break":
@@ -137,7 +137,7 @@ function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
 }
 
 function RenderedTextNode({ node }: { node: TextNode }) {
-  const { elements } = useNewRichTextContext();
+  const { elements } = useRichTextContext();
 
   if (node.bold) {
     return <elements.bold>{node.text}</elements.bold>;
@@ -151,7 +151,7 @@ function RenderedTextNode({ node }: { node: TextNode }) {
   return <>{node.text}</>;
 }
 
-export type NewRichTextObject = ElementNode[];
+export type RichTextObject = ElementNode[];
 
 export type TextNode = { text: string } & { [key in LeafType]?: boolean };
 

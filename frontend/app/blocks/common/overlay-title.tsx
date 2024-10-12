@@ -3,7 +3,7 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { Link } from "../../common/link";
 import { MouseEventHandler } from "react";
-import { NewRichTextObject } from "~/common/new-rich-text";
+import { RichTextObject } from "~/common/rich-text";
 
 export type OverlayTitleProps = {
   text?: { [key: string]: unknown }[] | null;
@@ -51,7 +51,7 @@ export function OverlayTitle({
         onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
-          {text! as NewRichTextObject}
+          {text! as RichTextObject}
         </RichTextHeading>
         {cta?.show && (
           <Button

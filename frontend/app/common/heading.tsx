@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
-import { NewRichText, NewRichTextObject } from "./new-rich-text";
+import { RichText, RichTextObject } from "./rich-text";
 
 type HeadingVariant = "brand" | "white" | "inherit";
 
@@ -76,13 +76,13 @@ export function HeadingHighlight({ children }: PropsWithChildren) {
 }
 
 export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {
-  children: NewRichTextObject;
+  children: RichTextObject;
 };
 
 export function RichTextHeading({ children, ...props }: RichTextHeadingProps) {
   return (
     <Heading {...props}>
-      <NewRichText
+      <RichText
         content={children}
         elements={{
           bold: HeadingHighlight,
