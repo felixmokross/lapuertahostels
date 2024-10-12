@@ -1,8 +1,7 @@
-import { RichTextParagraph } from "~/common/rich-text";
 import { Brand, Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
-import { Paragraph } from "../common/paragraph";
+import { Paragraph, RichTextParagraph } from "../common/paragraph";
 import { Image } from "~/common/image";
 import { Link } from "~/common/link";
 import { BrandId } from "~/brands";

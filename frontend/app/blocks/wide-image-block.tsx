@@ -2,7 +2,7 @@ import { Page } from "~/payload-types";
 import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
-import { RichTextParagraph } from "~/common/rich-text";
+import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { cn } from "~/common/cn";
 import { NewRichTextObject } from "~/common/new-rich-text";

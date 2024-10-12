@@ -1,4 +1,4 @@
-import { RichTextParagraph } from "~/common/rich-text";
+import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { Link } from "~/common/link";

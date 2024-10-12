@@ -1,4 +1,4 @@
-import { RichTextHeading } from "~/common/rich-text";
+import { RichTextHeading } from "~/common/heading";
 import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { Link } from "../../common/link";

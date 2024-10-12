@@ -2,7 +2,7 @@ import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { ImageViewer } from "~/common/image-viewer/image-viewer";
 import { Room, RoomListBlock } from "./types";
-import { RichTextParagraph } from "~/common/rich-text";
+import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { NewRichTextObject } from "~/common/new-rich-text";
 
