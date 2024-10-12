@@ -24,7 +24,7 @@ export const StoryBlock: Block = {
     "Preview of the Story block, showing an image on the left and text on the right",
   fields: [
     { ...headingField, required: false },
-    makeRichTextField({ supportsParagraphs: true }),
+    makeRichTextField({ mode: "long-form" }),
     {
       ...imageField,
       fields: [
