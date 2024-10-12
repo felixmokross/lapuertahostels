@@ -5,7 +5,7 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "~/common/link";
 import { getLocaleLabel } from "~/i18n";
@@ -25,16 +25,18 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
   const navbarRef = useRef<HTMLDivElement>(null);
 
   useElementHeightObserver(navbarRef, onHeightChanged);
-  const isScrolled = useIsScrolled();
+  const scrollPhase = useScrollPhase();
 
   return (
     <Disclosure
       as="nav"
       className={cn(
         "sticky inset-0 z-40 backdrop-blur-sm transition-all duration-1000",
-        isScrolled
+        scrollPhase === "over-threshold"
           ? "top-4 mx-4 rounded-lg bg-white bg-opacity-75 shadow-lg ring-1 ring-black ring-opacity-5"
           : "top-0 mx-0 rounded-none bg-white bg-opacity-100 ring-0 ring-white ring-opacity-0",
+
+        scrollPhase === "under-threshold" && "shadow-md",
       )}
       ref={navbarRef}
     >
@@ -42,7 +44,7 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
         <>
           <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
             <NavbarBrandLogo brand={brand} allBrands={allBrands} />
-            <div className="hidden space-x-4 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-y-6 xl:space-x-8">
+            <div className="hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
               {brand.navLinks?.map((navLink) => (
                 <NavLink key={navLink.id} to={navLink.url}>
                   {navLink.label}
@@ -53,7 +55,7 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
               <LocaleSwitcher currentLocale={i18n.language} />
             </div>
             <div className="-mr-2 flex items-center sm:hidden">
-              <Disclosure.Button className="focus:ring-indigo-500 relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset">
+              <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open main menu</span>
                 {open ? (
@@ -131,16 +133,21 @@ function useElementHeightObserver(
 
 const SCROLL_THRESHOLD = 0.3;
 
-function useIsScrolled() {
+function useScrollPhase(): ScrollPhase {
   const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
+
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    typeof window !== "undefined" &&
-    SCROLL_THRESHOLD * window.innerHeight < scrollY
-  );
+  if (typeof window === "undefined" || scrollY === 0) return "unscrolled";
+
+  if (scrollY < SCROLL_THRESHOLD * window.innerHeight) return "under-threshold";
+
+  return "over-threshold";
 }
+
+type ScrollPhase = "unscrolled" | "under-threshold" | "over-threshold";
