@@ -15,9 +15,9 @@ export function TextHighlight({
     <strong
       className={cn({
         "text-neutral-900": variant === "neutral",
-        [cn(theme.whiteHighlightTextColor)]: variant === "white",
+        [cn(theme.whiteHighlightTextColor, "font-inherit")]:
+          variant === "white",
       })}
-      style={variant === "white" ? { fontWeight: "inherit" } : undefined}
     >
       {children}
     </strong>
