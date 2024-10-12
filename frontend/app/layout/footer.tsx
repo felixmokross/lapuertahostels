@@ -29,7 +29,9 @@ export function Footer({ content, allBrands }: FooterProps) {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h6 className="mt-2">
-              <BrandLogo size="small" brand={puertaBrand} />
+              <Link to={puertaBrand.homeLinkUrl}>
+                <BrandLogo size="small" brand={puertaBrand} />
+              </Link>
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
               {content.address.split("\n").map((line, index, allLines) => (
