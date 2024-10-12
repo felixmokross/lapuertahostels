@@ -17,6 +17,10 @@ export default defineConfig({
       }),
     tsconfigPaths(),
   ],
+  test: {
+    environment: "jsdom",
+    setupFiles: "./tests/setup.ts",
+  },
 });
 
 function isStorybook() {
