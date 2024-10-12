@@ -4,6 +4,7 @@ import { ImageViewer } from "~/common/image-viewer/image-viewer";
 import { Room, RoomListBlock } from "./types";
 import { RichTextParagraph } from "~/common/rich-text";
 import { Link } from "~/common/link";
+import { NewRichTextObject } from "~/common/new-rich-text";
 
 export type RoomCardProps = Room & Pick<RoomListBlock, "ctaTemplate">;
 
@@ -29,7 +30,7 @@ export function RoomCard({
       />
       {text && (
         <RichTextParagraph justify={true} className="px-6 sm:px-0">
-          {text}
+          {text as NewRichTextObject}
         </RichTextParagraph>
       )}
       {ctaTemplate?.show && (

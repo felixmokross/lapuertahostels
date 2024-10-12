@@ -4,6 +4,7 @@ import { Heading } from "~/common/heading";
 import { Link } from "~/common/link";
 import { Page } from "~/payload-types";
 import { cn } from "~/common/cn";
+import { NewRichTextObject } from "~/common/new-rich-text";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Lead";
@@ -26,7 +27,7 @@ export function LeadBlock({ heading, text, elementId, cta }: LeadBlockProps) {
         size="extra-large"
         className={cn(heading && "mt-4 md:mt-6")}
       >
-        {text}
+        {text as NewRichTextObject}
       </RichTextParagraph>
 
       {cta?.show && (

@@ -6,6 +6,7 @@ import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { Link } from "~/common/link";
 import { Image } from "~/common/image";
+import { NewRichTextObject } from "~/common/new-rich-text";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -31,7 +32,7 @@ export function Feature({
           {heading}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">
-          {text}
+          {text as NewRichTextObject}
         </RichTextParagraph>
         {cta?.show && (
           <Button
