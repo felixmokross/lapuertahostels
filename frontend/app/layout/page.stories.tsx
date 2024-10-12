@@ -647,6 +647,7 @@ export const Aqua: Story = {
             },
           ],
           image: {
+            show: true,
             url: "https://ik.imagekit.io/lapuertahostels/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325",
             alt: "Woman looking at the viewer with a cup of coffee in her hand",
             position: "right",
