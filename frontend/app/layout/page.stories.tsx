@@ -843,21 +843,7 @@ export const Azul: Story = {
                       bold: true,
                     },
                     {
-                      text: " and the lush greenery, you",
-                    },
-                    {
-                      text: "’",
-                      underline: true,
-                    },
-                    {
-                      text: "ll feel like you",
-                    },
-                    {
-                      text: "’",
-                      underline: true,
-                    },
-                    {
-                      text: "re in paradise.",
+                      text: " and the lush greenery, you’ll feel like you’re in paradise.",
                     },
                   ],
                 },
