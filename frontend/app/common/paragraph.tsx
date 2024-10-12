@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
 import { RichText, RichTextObject } from "./rich-text";
+import { TextHighlight } from "./text-highlight";
 
 type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 
@@ -57,11 +58,14 @@ function useVariant() {
 }
 
 export function ParagraphHighlight({ children }: PropsWithChildren) {
-  const variant = useVariant();
+  const paragraphVariant = useVariant();
+
   return (
-    <strong className={cn(variant === "neutral" && "text-neutral-900")}>
+    <TextHighlight
+      variant={paragraphVariant === "neutral" ? "neutral" : "inherit"}
+    >
       {children}
-    </strong>
+    </TextHighlight>
   );
 }
 

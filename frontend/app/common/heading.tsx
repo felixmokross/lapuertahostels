@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
 import { RichText, RichTextObject } from "./rich-text";
+import { TextHighlight } from "./text-highlight";
 
 type HeadingVariant = "brand" | "white" | "inherit";
 
@@ -65,14 +66,13 @@ function useVariant() {
 }
 
 export function HeadingHighlight({ children }: PropsWithChildren) {
-  const variant = useVariant();
-  const theme = useTheme();
+  const headingVariant = useVariant();
 
-  if (variant !== "white") throw new Error("Only white variant is supported");
+  if (headingVariant !== "white") {
+    throw new Error("Only white heading variant is supported");
+  }
 
-  return (
-    <span className={theme.headingWhiteHighlightTextColor}>{children}</span>
-  );
+  return <TextHighlight variant="white">{children}</TextHighlight>;
 }
 
 export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {

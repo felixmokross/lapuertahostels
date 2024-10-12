@@ -5,7 +5,7 @@ import { BrandId } from "./brands";
 export type Theme = {
   logoTextColor: string;
   headingTextColor: string;
-  headingWhiteHighlightTextColor: string;
+  whiteHighlightTextColor: string;
   bannerBackgroundColor: string;
   lightBackgroundColor: string;
   buttonColors: {
@@ -58,7 +58,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
   puerta: {
     logoTextColor: "text-neutral-900",
     headingTextColor: "text-puerta-600",
-    headingWhiteHighlightTextColor: "text-puerta-200",
+    whiteHighlightTextColor: "text-puerta-200",
     bannerBackgroundColor: "bg-puerta-800",
     lightBackgroundColor: "bg-puerta-100",
     buttonColors: {
@@ -83,7 +83,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
   aqua: {
     logoTextColor: "text-aqua-600",
     headingTextColor: "text-aqua-600",
-    headingWhiteHighlightTextColor: "text-aqua-200",
+    whiteHighlightTextColor: "text-aqua-200",
     bannerBackgroundColor: "bg-aqua-500",
     lightBackgroundColor: "bg-aqua-50",
     buttonColors: {
@@ -108,7 +108,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
   azul: {
     logoTextColor: "text-azul-900",
     headingTextColor: "text-azul-900",
-    headingWhiteHighlightTextColor: "text-azul-200",
+    whiteHighlightTextColor: "text-azul-200",
     bannerBackgroundColor: "bg-azul-950",
     lightBackgroundColor: "bg-azul-50",
     buttonColors: {

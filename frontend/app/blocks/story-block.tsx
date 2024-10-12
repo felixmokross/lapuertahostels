@@ -6,6 +6,7 @@ import { Paragraph } from "~/common/paragraph";
 import { PropsWithChildren } from "react";
 import { Link } from "~/common/link";
 import { Page } from "~/payload-types";
+import { TextHighlight } from "~/common/text-highlight";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Story";
@@ -76,7 +77,9 @@ export function StoryBlock({
 }
 
 const richTextElements: RichTextProps["elements"] = {
-  bold: "strong", // TODO consider to refactor Paragraph to be able to use variant-dependent highlighting here
+  bold: (props: PropsWithChildren) => (
+    <TextHighlight variant="neutral" {...props} />
+  ),
   h4: (props: PropsWithChildren) => (
     <Heading {...props} as="h4" size="small" className="mt-6 md:mt-8" />
   ),
