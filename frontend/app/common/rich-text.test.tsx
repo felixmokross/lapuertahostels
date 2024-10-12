@@ -1,13 +1,16 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import {
-  ElementNode,
-  RichText,
-  Node,
-  PlainElementNode,
-  TextNode,
-} from "./rich-text";
+import { RichText } from "./rich-text";
 import { PropsWithChildren } from "react";
+import {
+  plain,
+  text,
+  bold,
+  italic,
+  underline,
+  simpleElement,
+  link,
+} from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(
@@ -425,34 +428,3 @@ test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels
     </div>
   `);
 });
-
-function plain(...children: Node[]): PlainElementNode {
-  return { children };
-}
-
-function text(text: string): TextNode {
-  return { text };
-}
-
-function bold(text: string): TextNode {
-  return { text, bold: true };
-}
-
-function italic(text: string): TextNode {
-  return { text, italic: true };
-}
-
-function underline(text: string): TextNode {
-  return { text, underline: true };
-}
-
-function simpleElement(
-  type: "h4" | "h5" | "ul" | "ol" | "li",
-  ...children: Node[]
-): ElementNode {
-  return { type, children };
-}
-
-function link(url: string, ...children: Node[]): ElementNode {
-  return { type: "link", linkType: "custom", url, children };
-}

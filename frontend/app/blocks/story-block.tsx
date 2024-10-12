@@ -1,12 +1,9 @@
 import { Heading } from "../common/heading";
 import { Image } from "../common/image";
 import { cn } from "../common/cn";
-import { RichText, RichTextObject, RichTextProps } from "~/common/rich-text";
-import { Paragraph } from "~/common/paragraph";
-import { PropsWithChildren } from "react";
-import { Link } from "~/common/link";
+import { RichTextObject } from "~/common/rich-text";
 import { Page } from "~/payload-types";
-import { TextHighlight } from "~/common/text-highlight";
+import { LongFormRichText } from "~/common/long-form-rich-text";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Story";
@@ -40,10 +37,7 @@ export function StoryBlock({
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
-          <RichText
-            content={text as RichTextObject}
-            elements={richTextElements}
-          />
+          <LongFormRichText content={text as RichTextObject} />
         </div>
       </div>
       {image?.show && (
@@ -75,28 +69,3 @@ export function StoryBlock({
     </div>
   );
 }
-
-const richTextElements: RichTextProps["elements"] = {
-  bold: (props: PropsWithChildren) => (
-    <TextHighlight variant="neutral" {...props} />
-  ),
-  h4: (props: PropsWithChildren) => (
-    <Heading {...props} as="h4" size="small" className="mt-6 md:mt-8" />
-  ),
-  h5: (props: PropsWithChildren) => (
-    <Heading {...props} as="h5" size="extra-small" className="mt-6 md:mt-8" />
-  ),
-  paragraph: (props: PropsWithChildren) => (
-    <Paragraph {...props} justify className="mt-2 md:mt-3" />
-  ),
-  li: (props: PropsWithChildren) => (
-    <li {...props} className="my-2 ms-6 list-disc" />
-  ),
-  link: ({ href, ...props }: PropsWithChildren<{ href: string }>) => (
-    <Link
-      {...props}
-      className="text-puerta-600 hover:text-puerta-700 hover:underline active:text-puerta-700 active:underline"
-      to={href}
-    />
-  ),
-};
