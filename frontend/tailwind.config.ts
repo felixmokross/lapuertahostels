@@ -37,6 +37,9 @@ export default {
         sans: ["Lato", ...defaultTheme.fontFamily.sans],
         serif: ["Playfair Display", ...defaultTheme.fontFamily.serif],
       },
+      fontWeight: {
+        inherit: "inherit",
+      },
     },
   },
   plugins: [formsPlugin],
