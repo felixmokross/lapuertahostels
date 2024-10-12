@@ -1,96 +1,177 @@
-import { SerializeFrom } from "@remix-run/node";
-import { ComponentType, PropsWithChildren } from "react";
-import { Fragment } from "react/jsx-runtime";
-import { Heading, HeadingHighlight, HeadingProps } from "~/common/heading";
 import {
-  Paragraph,
-  ParagraphHighlight,
-  ParagraphProps,
-} from "~/common/paragraph";
+  ComponentType,
+  createContext,
+  ElementType,
+  PropsWithChildren,
+  useContext,
+} from "react";
 
 export type RichTextProps = {
-  children: RichTextObject;
-  HighlightComponent: ComponentType<PropsWithChildren>;
+  content: RichTextObject;
+  lineBreakHandling?: LineBreakHandling;
+  elements?: Partial<CustomElementConfig>;
 };
 
-export type RichTextObject = SerializeFrom<{
-  [k: string]: unknown;
-}>[];
+type CustomElementConfig = {
+  bold: ElementType;
+  italic: ElementType;
+  underline: ElementType;
+  ul: ElementType;
+  ol: ElementType;
+  li: ElementType;
+  h4: ElementType;
+  h5: ElementType;
+  link: ComponentType<{ href: string }> | "a";
+  paragraph: ElementType;
+};
 
-export function RichText({ children, HighlightComponent }: RichTextProps) {
-  return children?.map((line, index, allLines) => (
-    <Fragment key={index}>
-      {(line.children as Record<string, unknown>[])?.map((c, j) => (
-        <Fragment key={j}>
-          {c.bold ? (
-            <HighlightComponent>{c.text as string}</HighlightComponent>
-          ) : (
-            (c.text as string)
-          )}
-        </Fragment>
+type RichTextContextValue = {
+  elements: CustomElementConfig;
+  lineBreakHandling: LineBreakHandling;
+};
+
+type LineBreakHandling = "line-break" | "paragraph";
+
+const RichTextContext = createContext<RichTextContextValue | null>(null);
+
+const defaultElements: CustomElementConfig = {
+  bold: "strong",
+  italic: "em",
+  underline: "u",
+  ul: "ul",
+  ol: "ol",
+  li: "li",
+  h4: "h4",
+  h5: "h5",
+  link: "a",
+  paragraph: "p",
+};
+
+function useRichTextContext() {
+  const context = useContext(RichTextContext);
+  if (!context) throw new Error("RichTextContext is not provided.");
+  return context;
+}
+
+export function RichText({
+  content,
+  elements,
+  lineBreakHandling = "paragraph",
+}: RichTextProps) {
+  return (
+    <RichTextContext.Provider
+      value={{
+        elements: { ...defaultElements, ...elements },
+        lineBreakHandling,
+      }}
+    >
+      {content.map((elementNode, i) => (
+        <RenderedElementNode
+          key={i}
+          node={elementNode}
+          isLast={i === content.length - 1}
+        />
       ))}
-      {index < allLines.length - 1 && <br />}
-    </Fragment>
-  ));
-}
-
-export type RichTextParagraphProps = Omit<ParagraphProps, "children"> & {
-  children: RichTextObject;
-};
-
-export function RichTextParagraph({
-  children,
-  ...props
-}: RichTextParagraphProps) {
-  return (
-    <Paragraph {...props}>
-      <RichText HighlightComponent={ParagraphHighlight}>{children}</RichText>
-    </Paragraph>
+    </RichTextContext.Provider>
   );
 }
 
-export type RichTextParagraphGroupProps = Omit<ParagraphProps, "children"> & {
-  children: RichTextObject;
-};
-
-export function RichTextParagraphGroup({
-  children,
-  ...props
-}: RichTextParagraphGroupProps) {
-  const paragraphs = groupIntoParagraphs(children);
-  return paragraphs.map((paragraph, index) => (
-    <RichTextParagraph {...props} key={index}>
-      {paragraph}
-    </RichTextParagraph>
+function RenderedElementNode({
+  node,
+  isLast,
+}: {
+  node: ElementNode;
+  isLast: boolean;
+}) {
+  const { elements } = useRichTextContext();
+  const renderedChildren = node.children.map((child, i) => (
+    <RenderedNode
+      key={i}
+      node={child}
+      isLast={i === node.children.length - 1}
+    />
   ));
-}
 
-export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {
-  children: RichTextObject;
-};
-
-export function RichTextHeading({ children, ...props }: RichTextHeadingProps) {
-  return (
-    <Heading {...props}>
-      <RichText HighlightComponent={HeadingHighlight}>{children}</RichText>
-    </Heading>
-  );
-}
-
-function groupIntoParagraphs(richText: RichTextObject) {
-  const paragraphs: RichTextObject[] = [];
-  let currentParagraph: RichTextObject = [];
-  for (const line of richText) {
-    if (
-      (line.children as Record<string, unknown>[]).length === 1 &&
-      (line.children as Record<string, unknown>[])[0].text === ""
-    ) {
-      paragraphs.push(currentParagraph);
-      currentParagraph = [];
-    } else {
-      currentParagraph.push(line);
-    }
+  if (!("type" in node)) {
+    return <Line isLast={isLast}>{renderedChildren}</Line>;
   }
-  paragraphs.push(currentParagraph);
-  return paragraphs;
+
+  switch (node.type) {
+    case "h4":
+      return <elements.h4>{renderedChildren}</elements.h4>;
+    case "h5":
+      return <elements.h5>{renderedChildren}</elements.h5>;
+    case "ul":
+      return <elements.ul>{renderedChildren}</elements.ul>;
+    case "ol":
+      return <elements.ol>{renderedChildren}</elements.ol>;
+    case "li":
+      return <elements.li>{renderedChildren}</elements.li>;
+    case "link":
+      return <elements.link href={node.url}>{renderedChildren}</elements.link>;
+  }
 }
+
+function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
+  const { elements, lineBreakHandling } = useRichTextContext();
+
+  switch (lineBreakHandling) {
+    case "line-break":
+      return (
+        <>
+          {children}
+          {!isLast && <br />}
+        </>
+      );
+    case "paragraph":
+      return <elements.paragraph>{children}</elements.paragraph>;
+  }
+}
+
+function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
+  if ("text" in node) {
+    return <RenderedTextNode node={node} />;
+  }
+
+  return <RenderedElementNode node={node} isLast={isLast} />;
+}
+
+function RenderedTextNode({ node }: { node: TextNode }) {
+  const { elements } = useRichTextContext();
+
+  if (node.bold) {
+    return <elements.bold>{node.text}</elements.bold>;
+  }
+  if (node.italic) {
+    return <elements.italic>{node.text}</elements.italic>;
+  }
+  if (node.underline) {
+    return <elements.underline>{node.text}</elements.underline>;
+  }
+  return <>{node.text}</>;
+}
+
+export type RichTextObject = ElementNode[];
+
+export type TextNode = { text: string } & { [key in LeafType]?: boolean };
+
+export type LeafType = "bold" | "italic" | "underline";
+
+export type ElementNode =
+  | PlainElementNode
+  | SimpleElementNode
+  | LinkElementNode;
+
+export type Node = ElementNode | TextNode;
+
+type BaseElementNode = { children: Node[] };
+
+export type PlainElementNode = BaseElementNode & { type?: never };
+export type SimpleElementNode = BaseElementNode & {
+  type: "h4" | "h5" | "ul" | "ol" | "li";
+};
+export type LinkElementNode = BaseElementNode & {
+  type: "link";
+  linkType: "custom";
+  url: string;
+};

@@ -5,7 +5,7 @@ import { BrandId } from "./brands";
 export type Theme = {
   logoTextColor: string;
   headingTextColor: string;
-  headingWhiteHighlightTextColor: string;
+  whiteHighlightTextColor: string;
   bannerBackgroundColor: string;
   lightBackgroundColor: string;
   buttonColors: {
@@ -26,6 +26,10 @@ export type Theme = {
   navButtonClassName: string;
   strongBackgroundGradientColors: string;
   paragraphTextColor: string;
+  linkColors: {
+    textColor: string;
+    hoverTextColor: string;
+  };
 };
 
 export type ThemeProviderProps = {
@@ -58,7 +62,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
   puerta: {
     logoTextColor: "text-neutral-900",
     headingTextColor: "text-puerta-600",
-    headingWhiteHighlightTextColor: "text-puerta-200",
+    whiteHighlightTextColor: "text-puerta-200",
     bannerBackgroundColor: "bg-puerta-800",
     lightBackgroundColor: "bg-puerta-100",
     buttonColors: {
@@ -79,11 +83,15 @@ export const themesByBrand: Record<BrandId, Theme> = {
     navButtonClassName: "border-puerta-500 bg-puerta-50 text-puerta-700",
     strongBackgroundGradientColors: "from-puerta-100 to-puerta-300",
     paragraphTextColor: "text-puerta-800",
+    linkColors: {
+      textColor: "text-puerta-600",
+      hoverTextColor: "hover:text-puerta-700",
+    },
   },
   aqua: {
     logoTextColor: "text-aqua-600",
     headingTextColor: "text-aqua-600",
-    headingWhiteHighlightTextColor: "text-aqua-200",
+    whiteHighlightTextColor: "text-aqua-200",
     bannerBackgroundColor: "bg-aqua-500",
     lightBackgroundColor: "bg-aqua-50",
     buttonColors: {
@@ -104,11 +112,15 @@ export const themesByBrand: Record<BrandId, Theme> = {
     navButtonClassName: "border-aqua-400 bg-aqua-50 text-aqua-700",
     strongBackgroundGradientColors: "from-aqua-50 to-aqua-200",
     paragraphTextColor: "text-aqua-950",
+    linkColors: {
+      textColor: "text-aqua-600",
+      hoverTextColor: "hover:text-aqua-700",
+    },
   },
   azul: {
     logoTextColor: "text-azul-900",
     headingTextColor: "text-azul-900",
-    headingWhiteHighlightTextColor: "text-azul-200",
+    whiteHighlightTextColor: "text-azul-200",
     bannerBackgroundColor: "bg-azul-950",
     lightBackgroundColor: "bg-azul-50",
     buttonColors: {
@@ -129,5 +141,9 @@ export const themesByBrand: Record<BrandId, Theme> = {
     navButtonClassName: "border-azul-950 bg-azul-50 text-azul-800",
     strongBackgroundGradientColors: "from-azul-50 to-azul-200",
     paragraphTextColor: "text-azul-950",
+    linkColors: {
+      textColor: "text-azul-800",
+      hoverTextColor: "hover:text-azul-900",
+    },
   },
 };

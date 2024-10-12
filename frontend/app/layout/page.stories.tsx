@@ -393,6 +393,7 @@ export const Puerta: Story = {
           ],
           elementId: "about-us",
           image: {
+            show: true,
             url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
             alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
             position: "left",
@@ -646,6 +647,7 @@ export const Aqua: Story = {
             },
           ],
           image: {
+            show: true,
             url: "https://ik.imagekit.io/lapuertahostels/366944756_17942281163690648_3066160991932660286_n.jpg?updatedAt=1704147703325",
             alt: "Woman looking at the viewer with a cup of coffee in her hand",
             position: "right",
@@ -841,21 +843,7 @@ export const Azul: Story = {
                       bold: true,
                     },
                     {
-                      text: " and the lush greenery, you",
-                    },
-                    {
-                      text: "’",
-                      underline: true,
-                    },
-                    {
-                      text: "ll feel like you",
-                    },
-                    {
-                      text: "’",
-                      underline: true,
-                    },
-                    {
-                      text: "re in paradise.",
+                      text: " and the lush greenery, you’ll feel like you’re in paradise.",
                     },
                   ],
                 },

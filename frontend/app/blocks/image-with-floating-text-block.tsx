@@ -1,8 +1,10 @@
-import { RichTextHeading, RichTextParagraph } from "~/common/rich-text";
+import { RichTextParagraph } from "~/common/paragraph";
 import { Image } from "~/common/image";
 import { cn } from "../common/cn";
 import { Page } from "~/payload-types";
 import { useTheme } from "~/themes";
+import { RichTextObject } from "~/common/rich-text";
+import { RichTextHeading } from "~/common/heading";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   Page["layout"]
@@ -60,7 +62,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {overlayTitle.text}
+            {overlayTitle.text as RichTextObject}
           </RichTextHeading>
         </div>
       </div>
@@ -83,7 +85,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {text}
+            {text as RichTextObject}
           </RichTextParagraph>
         </div>
       </div>

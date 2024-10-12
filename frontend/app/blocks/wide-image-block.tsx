@@ -2,9 +2,10 @@ import { Page } from "~/payload-types";
 import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
-import { RichTextParagraph } from "~/common/rich-text";
+import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { cn } from "~/common/cn";
+import { RichTextObject } from "~/common/rich-text";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
@@ -46,7 +47,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
             {overlayTextBox.heading}
           </Heading>
           <RichTextParagraph className="mt-1 md:mt-2">
-            {overlayTextBox.text!}
+            {overlayTextBox.text! as RichTextObject}
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button

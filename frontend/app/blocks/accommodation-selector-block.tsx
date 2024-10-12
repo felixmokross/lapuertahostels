@@ -1,11 +1,11 @@
-import { RichTextParagraph } from "~/common/rich-text";
 import { Brand, Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
-import { Paragraph } from "../common/paragraph";
+import { Paragraph, RichTextParagraph } from "../common/paragraph";
 import { Image } from "~/common/image";
 import { Link } from "~/common/link";
 import { BrandId } from "~/brands";
+import { RichTextObject } from "~/common/rich-text";
 
 export type AccommodationSelectorBlockProps = NonNullable<
   Page["layout"]
@@ -33,7 +33,7 @@ export function AccommodationSelectorBlock({
             size="large"
             variant="white"
           >
-            {text}
+            {text as RichTextObject}
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
