@@ -10,12 +10,19 @@ export function text(
     bold,
     italic,
     underline,
-  }: { bold?: true; italic?: true; underline?: true } = {},
+    strikethrough,
+  }: {
+    bold?: true;
+    italic?: true;
+    underline?: true;
+    strikethrough?: true;
+  } = {},
 ): TextNode {
   const node = { text } as TextNode;
   if (bold) node.bold = true;
   if (italic) node.italic = true;
   if (underline) node.underline = true;
+  if (strikethrough) node.strikethrough = true;
   return node;
 }
 
@@ -29,6 +36,10 @@ export function italic(text: string): TextNode {
 
 export function underline(text: string): TextNode {
   return { text, underline: true };
+}
+
+export function strikethrough(text: string): TextNode {
+  return { text, strikethrough: true };
 }
 
 export function simpleElement(

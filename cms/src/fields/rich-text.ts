@@ -26,7 +26,9 @@ export function makeRichTextField({
             ? ["h4", "h5", "link", "ul", "ol", "indent"]
             : [],
         leaves:
-          mode === "long-form" ? ["bold", "italic", "underline"] : ["bold"],
+          mode === "long-form"
+            ? ["bold", "italic", "underline", "strikethrough"]
+            : ["bold"],
       },
     }),
     admin: {

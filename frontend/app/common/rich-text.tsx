@@ -17,6 +17,7 @@ type CustomElementConfig = {
   bold: ElementType;
   italic: ElementType;
   underline: ElementType;
+  strikethrough: ElementType;
   ul: ElementType;
   ol: ElementType;
   li: ElementType;
@@ -39,6 +40,7 @@ const defaultElements: CustomElementConfig = {
   bold: "strong",
   italic: "em",
   underline: "u",
+  strikethrough: "s",
   ul: "ul",
   ol: "ol",
   li: "li",
@@ -154,6 +156,10 @@ function RenderedTextNode({ node }: { node: TextNode }) {
     result = <elements.underline>{result}</elements.underline>;
   }
 
+  if (node.strikethrough) {
+    result = <elements.strikethrough>{result}</elements.strikethrough>;
+  }
+
   return result;
 }
 
@@ -171,7 +177,7 @@ export type RichTextObject = ElementNode[];
 
 export type TextNode = { text: string } & { [key in LeafType]?: boolean };
 
-export type LeafType = "bold" | "italic" | "underline";
+export type LeafType = "bold" | "italic" | "underline" | "strikethrough";
 
 export type ElementNode =
   | PlainElementNode

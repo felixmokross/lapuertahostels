@@ -10,6 +10,7 @@ import {
   underline,
   simpleElement,
   link,
+  strikethrough,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
@@ -39,6 +40,19 @@ test("Underline text node is rendered as <u> element.", () => {
 
   expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
   expect(screen.getByText("world")).toHaveStyle("text-decoration: underline");
+});
+
+test("Strikethrough text node is rendered as <s> element.", () => {
+  render(
+    <RichText
+      content={[plain(text("Hello, "), strikethrough("world"), text("!"))]}
+    />,
+  );
+
+  expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
+  expect(screen.getByText("world")).toHaveStyle(
+    "text-decoration: line-through",
+  );
 });
 
 test("Text nodes with multiple styles on the same node are rendered correctly", () => {
@@ -218,6 +232,25 @@ describe("custom elements", () => {
     );
 
     expect(screen.getByTestId("custom-underline")).toHaveTextContent(
+      "Hello, world!",
+    );
+  });
+
+  test("if a custom strikethrough element is specified, it is used for strikethrough text nodes", () => {
+    function CustomStrikethrough({ children }: PropsWithChildren) {
+      return <span data-testid="custom-strikethrough">{children}</span>;
+    }
+
+    render(
+      <RichText
+        content={[plain(strikethrough("Hello, world!"))]}
+        elements={{
+          strikethrough: CustomStrikethrough,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-strikethrough")).toHaveTextContent(
       "Hello, world!",
     );
   });
