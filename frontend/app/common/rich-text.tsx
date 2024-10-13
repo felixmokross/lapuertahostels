@@ -184,7 +184,7 @@ type BaseElementNode = { children: Node[] };
 
 export type PlainElementNode = BaseElementNode & { type?: never };
 export type SimpleElementNode = BaseElementNode & {
-  type: "h4" | "h5" | "ul" | "ol" | "li";
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent";
 };
 export type LinkElementNode = BaseElementNode & {
   type: "link";

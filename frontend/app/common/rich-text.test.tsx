@@ -480,3 +480,24 @@ test("newline characters are replaced with <br /> elements", () => {
     </div>
   `);
 });
+
+// TODO consider supporting this element node type instead of just ignoring it
+// So far we just enabled indent to allow for nesting lists in the Slate editor
+test("element nodes with type 'indent' are ignored", () => {
+  const { container } = render(
+    <RichText
+      content={[
+        plain(text("Hello, world!")),
+        simpleElement("indent", text("This is indented")),
+      ]}
+    />,
+  );
+
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <p>
+        Hello, world!
+      </p>
+    </div>
+  `);
+});

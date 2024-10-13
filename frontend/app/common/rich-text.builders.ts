@@ -32,7 +32,7 @@ export function underline(text: string): TextNode {
 }
 
 export function simpleElement(
-  type: "h4" | "h5" | "ul" | "ol" | "li",
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent",
   ...children: Node[]
 ): ElementNode {
   return { type, children };
