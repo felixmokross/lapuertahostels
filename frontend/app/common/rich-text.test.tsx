@@ -41,6 +41,40 @@ test("Underline text node is rendered as <u> element.", () => {
   expect(screen.getByText("world")).toHaveStyle("text-decoration: underline");
 });
 
+test("Text nodes with multiple styles on the same node are rendered correctly", () => {
+  const { container } = render(
+    <RichText
+      content={[
+        plain(
+          text("Hello, "),
+          text("world", {
+            bold: true,
+            italic: true,
+            underline: true,
+          }),
+          text("!"),
+        ),
+      ]}
+    />,
+  );
+
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <p>
+        Hello, 
+        <u>
+          <em>
+            <strong>
+              world
+            </strong>
+          </em>
+        </u>
+        !
+      </p>
+    </div>
+  `);
+});
+
 test("Root element nodes are rendered as paragraphs.", () => {
   render(
     <RichText
@@ -74,8 +108,6 @@ test("h5 element nodes are rendered as <h5> elements.", () => {
   expect(screen.getByRole("heading", { level: 5 })).toHaveTextContent(
     "Hello, world!",
   );
-
-  screen.logTestingPlaygroundURL();
 });
 
 test("ul element nodes with li as children are rendered as <ul> and <li> elements.", () => {

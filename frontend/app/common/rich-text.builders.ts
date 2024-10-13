@@ -4,8 +4,19 @@ export function plain(...children: Node[]): PlainElementNode {
   return { children };
 }
 
-export function text(text: string): TextNode {
-  return { text };
+export function text(
+  text: string,
+  {
+    bold,
+    italic,
+    underline,
+  }: { bold?: true; italic?: true; underline?: true } = {},
+): TextNode {
+  const node = { text } as TextNode;
+  if (bold) node.bold = true;
+  if (italic) node.italic = true;
+  if (underline) node.underline = true;
+  return node;
 }
 
 export function bold(text: string): TextNode {

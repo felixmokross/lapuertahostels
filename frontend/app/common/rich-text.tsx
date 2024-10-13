@@ -140,19 +140,21 @@ function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
 function RenderedTextNode({ node }: { node: TextNode }) {
   const { elements } = useRichTextContext();
 
-  const result = <RenderedTextLines text={node.text} />;
+  let result = <RenderedTextLines text={node.text} />;
 
-  // TODO this doesn't work because a node can have multiple leaf types
   if (node.bold) {
-    return <elements.bold>{result}</elements.bold>;
+    result = <elements.bold>{result}</elements.bold>;
   }
+
   if (node.italic) {
-    return <elements.italic>{result}</elements.italic>;
+    result = <elements.italic>{result}</elements.italic>;
   }
+
   if (node.underline) {
-    return <elements.underline>{result}</elements.underline>;
+    result = <elements.underline>{result}</elements.underline>;
   }
-  return <>{result}</>;
+
+  return result;
 }
 
 function RenderedTextLines({ text }: { text: string }) {
