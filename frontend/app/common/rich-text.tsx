@@ -2,6 +2,7 @@ import {
   ComponentType,
   createContext,
   ElementType,
+  Fragment,
   PropsWithChildren,
   useContext,
 } from "react";
@@ -16,6 +17,8 @@ type CustomElementConfig = {
   bold: ElementType;
   italic: ElementType;
   underline: ElementType;
+  strikethrough: ElementType;
+  code: ElementType;
   ul: ElementType;
   ol: ElementType;
   li: ElementType;
@@ -38,6 +41,8 @@ const defaultElements: CustomElementConfig = {
   bold: "strong",
   italic: "em",
   underline: "u",
+  strikethrough: "s",
+  code: "code",
   ul: "ul",
   ol: "ol",
   li: "li",
@@ -139,23 +144,51 @@ function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
 function RenderedTextNode({ node }: { node: TextNode }) {
   const { elements } = useRichTextContext();
 
+  let result = <RenderedTextLines text={node.text} />;
+
   if (node.bold) {
-    return <elements.bold>{node.text}</elements.bold>;
+    result = <elements.bold>{result}</elements.bold>;
   }
+
   if (node.italic) {
-    return <elements.italic>{node.text}</elements.italic>;
+    result = <elements.italic>{result}</elements.italic>;
   }
+
   if (node.underline) {
-    return <elements.underline>{node.text}</elements.underline>;
+    result = <elements.underline>{result}</elements.underline>;
   }
-  return <>{node.text}</>;
+
+  if (node.strikethrough) {
+    result = <elements.strikethrough>{result}</elements.strikethrough>;
+  }
+
+  if (node.code) {
+    result = <elements.code>{result}</elements.code>;
+  }
+
+  return result;
+}
+
+function RenderedTextLines({ text }: { text: string }) {
+  const lines = text.split("\n");
+  return lines.map((line, i) => (
+    <Fragment key={i}>
+      {line}
+      {i < lines.length - 1 && <br />}
+    </Fragment>
+  ));
 }
 
 export type RichTextObject = ElementNode[];
 
 export type TextNode = { text: string } & { [key in LeafType]?: boolean };
 
-export type LeafType = "bold" | "italic" | "underline";
+export type LeafType =
+  | "bold"
+  | "italic"
+  | "underline"
+  | "strikethrough"
+  | "code";
 
 export type ElementNode =
   | PlainElementNode
@@ -168,7 +201,7 @@ type BaseElementNode = { children: Node[] };
 
 export type PlainElementNode = BaseElementNode & { type?: never };
 export type SimpleElementNode = BaseElementNode & {
-  type: "h4" | "h5" | "ul" | "ol" | "li";
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent";
 };
 export type LinkElementNode = BaseElementNode & {
   type: "link";

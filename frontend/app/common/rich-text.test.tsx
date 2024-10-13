@@ -10,6 +10,8 @@ import {
   underline,
   simpleElement,
   link,
+  strikethrough,
+  code,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
@@ -39,6 +41,62 @@ test("Underline text node is rendered as <u> element.", () => {
 
   expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
   expect(screen.getByText("world")).toHaveStyle("text-decoration: underline");
+});
+
+test("Strikethrough text node is rendered as <s> element.", () => {
+  render(
+    <RichText
+      content={[plain(text("Hello, "), strikethrough("world"), text("!"))]}
+    />,
+  );
+
+  expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
+  expect(screen.getByText("world")).toHaveStyle(
+    "text-decoration: line-through",
+  );
+});
+
+test("Code text node is rendered as <code> element.", () => {
+  render(
+    <RichText content={[plain(text("Hello, "), code("world"), text("!"))]} />,
+  );
+
+  expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world");
+  expect(screen.getByRole("code")).toHaveTextContent("world");
+});
+
+test("Text nodes with multiple styles on the same node are rendered correctly", () => {
+  const { container } = render(
+    <RichText
+      content={[
+        plain(
+          text("Hello, "),
+          text("world", {
+            bold: true,
+            italic: true,
+            underline: true,
+          }),
+          text("!"),
+        ),
+      ]}
+    />,
+  );
+
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <p>
+        Hello, 
+        <u>
+          <em>
+            <strong>
+              world
+            </strong>
+          </em>
+        </u>
+        !
+      </p>
+    </div>
+  `);
 });
 
 test("Root element nodes are rendered as paragraphs.", () => {
@@ -74,8 +132,6 @@ test("h5 element nodes are rendered as <h5> elements.", () => {
   expect(screen.getByRole("heading", { level: 5 })).toHaveTextContent(
     "Hello, world!",
   );
-
-  screen.logTestingPlaygroundURL();
 });
 
 test("ul element nodes with li as children are rendered as <ul> and <li> elements.", () => {
@@ -186,6 +242,44 @@ describe("custom elements", () => {
     );
 
     expect(screen.getByTestId("custom-underline")).toHaveTextContent(
+      "Hello, world!",
+    );
+  });
+
+  test("if a custom strikethrough element is specified, it is used for strikethrough text nodes", () => {
+    function CustomStrikethrough({ children }: PropsWithChildren) {
+      return <span data-testid="custom-strikethrough">{children}</span>;
+    }
+
+    render(
+      <RichText
+        content={[plain(strikethrough("Hello, world!"))]}
+        elements={{
+          strikethrough: CustomStrikethrough,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-strikethrough")).toHaveTextContent(
+      "Hello, world!",
+    );
+  });
+
+  test("if a custom code element is specified, it is used for code text nodes", () => {
+    function CustomCode({ children }: PropsWithChildren) {
+      return <span data-testid="custom-code">{children}</span>;
+    }
+
+    render(
+      <RichText
+        content={[plain(code("Hello, world!"))]}
+        elements={{
+          code: CustomCode,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-code")).toHaveTextContent(
       "Hello, world!",
     );
   });
@@ -340,91 +434,132 @@ describe("custom elements", () => {
   });
 });
 
-test("if lineBreakHandling is 'paragraph', each plain element node is rendered as paragraph", () => {
-  render(
-    <RichText
-      content={[
-        plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(text("This is the last line")),
-      ]}
-      lineBreakHandling="paragraph"
-    />,
-  );
+describe("lineBreakHandling", () => {
+  test("if lineBreakHandling is 'paragraph', each plain element node is rendered as paragraph", () => {
+    render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(text("This is the last line")),
+        ]}
+        lineBreakHandling="paragraph"
+      />,
+    );
 
-  const paragraphs = screen.getAllByRole("paragraph");
+    const paragraphs = screen.getAllByRole("paragraph");
 
-  expect(paragraphs).toHaveLength(4);
-  expect(paragraphs[0]).toHaveTextContent("Hello, world!");
-  expect(paragraphs[1]).toHaveTextContent("This is the next line");
-  expect(paragraphs[2]).toHaveTextContent("");
-  expect(paragraphs[3]).toHaveTextContent("This is the last line");
+    expect(paragraphs).toHaveLength(4);
+    expect(paragraphs[0]).toHaveTextContent("Hello, world!");
+    expect(paragraphs[1]).toHaveTextContent("This is the next line");
+    expect(paragraphs[2]).toHaveTextContent("");
+    expect(paragraphs[3]).toHaveTextContent("This is the last line");
+  });
+
+  test("if lineBreakHandling is 'line-break', plain element nodes at root level are separated by <br />", () => {
+    const { container } = render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(text("This is the last line")),
+        ]}
+        lineBreakHandling="line-break"
+      />,
+    );
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        Hello, world!
+        <br />
+        This is the next line
+        <br />
+        <br />
+        This is the last line
+      </div>
+    `);
+  });
+
+  test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels are separated by <br />", () => {
+    const { container } = render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(
+            simpleElement(
+              "ul",
+              simpleElement(
+                "li",
+                plain(text("First line")),
+                plain(text("")),
+                plain(text("Third line")),
+              ),
+            ),
+          ),
+        ]}
+        lineBreakHandling="line-break"
+      />,
+    );
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        Hello, world!
+        <br />
+        This is the next line
+        <br />
+        <br />
+        <ul>
+          <li>
+            First line
+            <br />
+            <br />
+            Third line
+          </li>
+        </ul>
+      </div>
+    `);
+  });
 });
 
-test("if lineBreakHandling is 'line-break', plain element nodes at root level are separated by <br />", () => {
+test("newline characters are replaced with <br /> elements", () => {
   const { container } = render(
     <RichText
-      content={[
-        plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(text("This is the last line")),
-      ]}
-      lineBreakHandling="line-break"
+      content={[plain(text("Hello, world!\nThis is the next line"))]}
     />,
   );
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      Hello, world!
-      <br />
-      This is the next line
-      <br />
-      <br />
-      This is the last line
+      <p>
+        Hello, world!
+        <br />
+        This is the next line
+      </p>
     </div>
   `);
 });
 
-test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels are separated by <br />", () => {
+// TODO consider supporting this element node type instead of just ignoring it
+// So far we just enabled indent to allow for nesting lists in the Slate editor
+test("element nodes with type 'indent' are ignored", () => {
   const { container } = render(
     <RichText
       content={[
         plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(
-          simpleElement(
-            "ul",
-            simpleElement(
-              "li",
-              plain(text("First line")),
-              plain(text("")),
-              plain(text("Third line")),
-            ),
-          ),
-        ),
+        simpleElement("indent", text("This is indented")),
       ]}
-      lineBreakHandling="line-break"
     />,
   );
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      Hello, world!
-      <br />
-      This is the next line
-      <br />
-      <br />
-      <ul>
-        <li>
-          First line
-          <br />
-          <br />
-          Third line
-        </li>
-      </ul>
+      <p>
+        Hello, world!
+      </p>
     </div>
   `);
 });

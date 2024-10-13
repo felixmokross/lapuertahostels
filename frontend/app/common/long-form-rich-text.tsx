@@ -36,13 +36,16 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
           <Paragraph {...props} justify className="mt-3 first:mt-0 md:mt-4" />
         ),
         ul: (props: PropsWithChildren) => (
-          <ul {...props} className="mt-3 first:mt-0 md:mt-4" />
+          <ul
+            {...props}
+            className="mt-3 list-disc first:mt-0 md:mt-4 [&_ul]:list-[revert]"
+          />
         ),
         ol: (props: PropsWithChildren) => (
-          <ol {...props} className="mt-3 first:mt-0 md:mt-4" />
+          <ol {...props} className="mt-3 list-decimal first:mt-0 md:mt-4" />
         ),
         li: (props: PropsWithChildren) => (
-          <li {...props} className="ms-6 mt-1.5 list-disc md:mt-2" />
+          <li {...props} className="ms-6 mt-1.5 md:mt-2" />
         ),
         link: ({ href, ...props }: PropsWithChildren<{ href: string }>) => (
           <Link

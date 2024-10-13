@@ -4,8 +4,29 @@ export function plain(...children: Node[]): PlainElementNode {
   return { children };
 }
 
-export function text(text: string): TextNode {
-  return { text };
+export function text(
+  text: string,
+  {
+    bold,
+    italic,
+    underline,
+    strikethrough,
+    code,
+  }: {
+    bold?: true;
+    italic?: true;
+    underline?: true;
+    strikethrough?: true;
+    code?: true;
+  } = {},
+): TextNode {
+  const node = { text } as TextNode;
+  if (bold) node.bold = true;
+  if (italic) node.italic = true;
+  if (underline) node.underline = true;
+  if (strikethrough) node.strikethrough = true;
+  if (code) node.code = code;
+  return node;
 }
 
 export function bold(text: string): TextNode {
@@ -20,8 +41,16 @@ export function underline(text: string): TextNode {
   return { text, underline: true };
 }
 
+export function strikethrough(text: string): TextNode {
+  return { text, strikethrough: true };
+}
+
+export function code(text: string): TextNode {
+  return { text, code: true };
+}
+
 export function simpleElement(
-  type: "h4" | "h5" | "ul" | "ol" | "li",
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent",
   ...children: Node[]
 ): ElementNode {
   return { type, children };

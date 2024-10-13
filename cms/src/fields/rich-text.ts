@@ -21,9 +21,14 @@ export function makeRichTextField({
     localized: true,
     editor: slateEditor({
       admin: {
-        elements: mode === "long-form" ? ["h4", "h5", "link", "ul", "ol"] : [],
+        elements:
+          mode === "long-form"
+            ? ["h4", "h5", "link", "ul", "ol", "indent"]
+            : [],
         leaves:
-          mode === "long-form" ? ["bold", "italic", "underline"] : ["bold"],
+          mode === "long-form"
+            ? ["bold", "italic", "underline", "strikethrough", "code"]
+            : ["bold"],
       },
     }),
     admin: {
