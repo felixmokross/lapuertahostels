@@ -11,6 +11,7 @@ import {
   simpleElement,
   link,
   strikethrough,
+  code,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
@@ -53,6 +54,15 @@ test("Strikethrough text node is rendered as <s> element.", () => {
   expect(screen.getByText("world")).toHaveStyle(
     "text-decoration: line-through",
   );
+});
+
+test("Code text node is rendered as <code> element.", () => {
+  render(
+    <RichText content={[plain(text("Hello, "), code("world"), text("!"))]} />,
+  );
+
+  expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world");
+  expect(screen.getByRole("code")).toHaveTextContent("world");
 });
 
 test("Text nodes with multiple styles on the same node are rendered correctly", () => {
@@ -251,6 +261,25 @@ describe("custom elements", () => {
     );
 
     expect(screen.getByTestId("custom-strikethrough")).toHaveTextContent(
+      "Hello, world!",
+    );
+  });
+
+  test("if a custom code element is specified, it is used for code text nodes", () => {
+    function CustomCode({ children }: PropsWithChildren) {
+      return <span data-testid="custom-code">{children}</span>;
+    }
+
+    render(
+      <RichText
+        content={[plain(code("Hello, world!"))]}
+        elements={{
+          code: CustomCode,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-code")).toHaveTextContent(
       "Hello, world!",
     );
   });

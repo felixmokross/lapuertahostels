@@ -27,7 +27,7 @@ export function makeRichTextField({
             : [],
         leaves:
           mode === "long-form"
-            ? ["bold", "italic", "underline", "strikethrough"]
+            ? ["bold", "italic", "underline", "strikethrough", "code"]
             : ["bold"],
       },
     }),
