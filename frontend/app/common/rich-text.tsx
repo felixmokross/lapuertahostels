@@ -2,6 +2,7 @@ import {
   ComponentType,
   createContext,
   ElementType,
+  Fragment,
   PropsWithChildren,
   useContext,
 } from "react";
@@ -139,16 +140,29 @@ function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
 function RenderedTextNode({ node }: { node: TextNode }) {
   const { elements } = useRichTextContext();
 
+  const result = <RenderedTextLines text={node.text} />;
+
+  // TODO this doesn't work because a node can have multiple leaf types
   if (node.bold) {
-    return <elements.bold>{node.text}</elements.bold>;
+    return <elements.bold>{result}</elements.bold>;
   }
   if (node.italic) {
-    return <elements.italic>{node.text}</elements.italic>;
+    return <elements.italic>{result}</elements.italic>;
   }
   if (node.underline) {
-    return <elements.underline>{node.text}</elements.underline>;
+    return <elements.underline>{result}</elements.underline>;
   }
-  return <>{node.text}</>;
+  return <>{result}</>;
+}
+
+function RenderedTextLines({ text }: { text: string }) {
+  const lines = text.split("\n");
+  return lines.map((line, i) => (
+    <Fragment key={i}>
+      {line}
+      {i < lines.length - 1 && <br />}
+    </Fragment>
+  ));
 }
 
 export type RichTextObject = ElementNode[];

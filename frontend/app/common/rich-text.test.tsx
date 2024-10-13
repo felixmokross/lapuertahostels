@@ -340,91 +340,111 @@ describe("custom elements", () => {
   });
 });
 
-test("if lineBreakHandling is 'paragraph', each plain element node is rendered as paragraph", () => {
-  render(
-    <RichText
-      content={[
-        plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(text("This is the last line")),
-      ]}
-      lineBreakHandling="paragraph"
-    />,
-  );
+describe("lineBreakHandling", () => {
+  test("if lineBreakHandling is 'paragraph', each plain element node is rendered as paragraph", () => {
+    render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(text("This is the last line")),
+        ]}
+        lineBreakHandling="paragraph"
+      />,
+    );
 
-  const paragraphs = screen.getAllByRole("paragraph");
+    const paragraphs = screen.getAllByRole("paragraph");
 
-  expect(paragraphs).toHaveLength(4);
-  expect(paragraphs[0]).toHaveTextContent("Hello, world!");
-  expect(paragraphs[1]).toHaveTextContent("This is the next line");
-  expect(paragraphs[2]).toHaveTextContent("");
-  expect(paragraphs[3]).toHaveTextContent("This is the last line");
-});
+    expect(paragraphs).toHaveLength(4);
+    expect(paragraphs[0]).toHaveTextContent("Hello, world!");
+    expect(paragraphs[1]).toHaveTextContent("This is the next line");
+    expect(paragraphs[2]).toHaveTextContent("");
+    expect(paragraphs[3]).toHaveTextContent("This is the last line");
+  });
 
-test("if lineBreakHandling is 'line-break', plain element nodes at root level are separated by <br />", () => {
-  const { container } = render(
-    <RichText
-      content={[
-        plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(text("This is the last line")),
-      ]}
-      lineBreakHandling="line-break"
-    />,
-  );
+  test("if lineBreakHandling is 'line-break', plain element nodes at root level are separated by <br />", () => {
+    const { container } = render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(text("This is the last line")),
+        ]}
+        lineBreakHandling="line-break"
+      />,
+    );
 
-  expect(container).toMatchInlineSnapshot(`
-    <div>
-      Hello, world!
-      <br />
-      This is the next line
-      <br />
-      <br />
-      This is the last line
-    </div>
-  `);
-});
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        Hello, world!
+        <br />
+        This is the next line
+        <br />
+        <br />
+        This is the last line
+      </div>
+    `);
+  });
 
-test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels are separated by <br />", () => {
-  const { container } = render(
-    <RichText
-      content={[
-        plain(text("Hello, world!")),
-        plain(text("This is the next line")),
-        plain(text("")),
-        plain(
-          simpleElement(
-            "ul",
+  test("if lineBreakHandling is 'line-break', plain element nodes at deeper levels are separated by <br />", () => {
+    const { container } = render(
+      <RichText
+        content={[
+          plain(text("Hello, world!")),
+          plain(text("This is the next line")),
+          plain(text("")),
+          plain(
             simpleElement(
-              "li",
-              plain(text("First line")),
-              plain(text("")),
-              plain(text("Third line")),
+              "ul",
+              simpleElement(
+                "li",
+                plain(text("First line")),
+                plain(text("")),
+                plain(text("Third line")),
+              ),
             ),
           ),
-        ),
-      ]}
-      lineBreakHandling="line-break"
+        ]}
+        lineBreakHandling="line-break"
+      />,
+    );
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        Hello, world!
+        <br />
+        This is the next line
+        <br />
+        <br />
+        <ul>
+          <li>
+            First line
+            <br />
+            <br />
+            Third line
+          </li>
+        </ul>
+      </div>
+    `);
+  });
+});
+
+test("newline characters are replaced with <br /> elements", () => {
+  const { container } = render(
+    <RichText
+      content={[plain(text("Hello, world!\nThis is the next line"))]}
     />,
   );
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      Hello, world!
-      <br />
-      This is the next line
-      <br />
-      <br />
-      <ul>
-        <li>
-          First line
-          <br />
-          <br />
-          Third line
-        </li>
-      </ul>
+      <p>
+        Hello, world!
+        <br />
+        This is the next line
+      </p>
     </div>
   `);
 });
