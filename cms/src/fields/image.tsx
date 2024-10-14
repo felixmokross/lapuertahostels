@@ -101,11 +101,13 @@ export function makeImageField({
       {
         name: "aspectRatio",
         type: "number",
-        required: true,
-        hidden: true,
         access: {
           create: () => false,
           update: () => false,
+        },
+        label: {
+          en: "Aspect Ratio",
+          es: "Relación de aspecto",
         },
         hooks: {
           beforeChange: [
@@ -121,9 +123,23 @@ export function makeImageField({
               }
             },
           ],
+          afterRead: [
+            async ({ siblingData }) => {
+              if (siblingData.aspectRatio != null) {
+                return siblingData.aspectRatio;
+              }
+
+              console.log("Aspect ratio not cached, fetching from ImageKit");
+              return await getImageAspectRatio(siblingData.url);
+            },
+          ],
         },
         admin: {
           condition,
+          description: {
+            en: "This value is determined automatically when saving.",
+            es: "Este valor se determina automáticamente al guardar.",
+          },
         },
       },
     ],
@@ -131,3 +147,13 @@ export function makeImageField({
 }
 
 export const imageField: GroupField = makeImageField();
+
+async function getImageAspectRatio(imageUrl: string) {
+  try {
+    const result = await getImageKit().getFileMetadata(imageUrl);
+    return result.width / result.height;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+}
