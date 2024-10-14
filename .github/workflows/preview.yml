@@ -5,6 +5,7 @@ on:
 env:
   NODE_VERSION: 20
   IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  IMAGEKIT_PUBLIC_KEY: public_r9qKreefh/uovH1xCSSb5e6H8ZM=
   FRONTEND_APP_INTERNAL_PORT: 3000
 
 jobs:
@@ -90,10 +91,12 @@ jobs:
           echo Setting secrets:
           flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
             PAYLOAD_SECRET=$PREVIEW_PAYLOAD_SECRET \
+            IMAGEKIT_PRIVATE_KEY=$IMAGEKIT_PRIVATE_KEY \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
           PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
+          IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
       - uses: ./.github/actions/version
         id: version
       - name: Deploy
@@ -105,6 +108,7 @@ jobs:
             --env CACHE_REFRESH_TARGET_TYPE=fly \
             --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
             --env PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
+            --env IMAGEKIT_PUBLIC_KEY=${{ env.IMAGEKIT_PUBLIC_KEY }} \
             --build-arg PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
             --build-arg PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
         working-directory: cms
