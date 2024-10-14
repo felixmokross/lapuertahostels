@@ -1,10 +1,11 @@
-import { GroupField, TextField, ValidateOptions } from "payload/types";
+import { GroupField, ValidateOptions } from "payload/types";
 import { mediaUrlFieldPlaceholder } from "../common/constants";
 import { text } from "payload/dist/fields/validations";
 import { fieldBaseClass } from "payload/dist/admin/components/forms/field-types/shared";
 import React from "react";
 import { useField } from "payload/components/forms";
 import { showField } from "./show";
+import { getImageKit } from "../common/imagekit";
 
 function validateImageUrl(
   val: string,
@@ -100,6 +101,7 @@ export function makeImageField({
       {
         name: "aspectRatio",
         type: "number",
+        required: true,
         hidden: true,
         access: {
           create: () => false,
@@ -107,16 +109,11 @@ export function makeImageField({
         },
         hooks: {
           beforeChange: [
-            ({ data }) => {
-              // ensures data is not stored in DB
-              delete data.aspectRatio;
-            },
-          ],
-          afterRead: [
             async ({ siblingData }) => {
               try {
-                const probeImageSize = require("probe-image-size");
-                const result = await probeImageSize(siblingData.url);
+                const result = await getImageKit().getFileMetadata(
+                  siblingData.url,
+                );
                 return result.width / result.height;
               } catch (e) {
                 console.error(e);

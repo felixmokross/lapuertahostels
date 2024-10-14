@@ -18,6 +18,7 @@ on:
 env:
   NODE_VERSION: 20
   IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  IMAGEKIT_PUBLIC_KEY: public_r9qKreefh/uovH1xCSSb5e6H8ZM=
   FRONTEND_APP_INTERNAL_PORT: 3000
 
 jobs:
@@ -119,6 +120,7 @@ jobs:
             --env CACHE_REFRESH_TARGET_TYPE=fly \
             --env CACHE_REFRESH_TARGET_ARG=${{ needs.define-env.outputs.fly_app_frontend }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
             --env PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
+            --env IMAGEKIT_PUBLIC_KEY=${{ env.IMAGEKIT_PUBLIC_KEY }} \
             --build-arg PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
             --build-arg PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
         working-directory: cms
