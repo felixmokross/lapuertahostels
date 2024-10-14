@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
-          version: 0.1.117
+          version: 0.3.18
       - run: |
           flyctl apps list --json --org $FLY_ORG \
             | jq '[map(
