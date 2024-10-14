@@ -46,6 +46,7 @@ jobs:
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
+        working-directory: frontend
       - uses: ./.github/actions/version
         id: version
       - name: Deploy
@@ -97,6 +98,7 @@ jobs:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
           PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+        working-directory: cms
       - uses: ./.github/actions/version
         id: version
       - name: Deploy
