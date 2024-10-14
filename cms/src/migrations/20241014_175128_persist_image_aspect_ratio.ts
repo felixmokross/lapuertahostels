@@ -1,5 +1,7 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
-import { imagekit } from "../common/imagekit";
+import { getImageKit } from "../common/imagekit";
+
+const imagekit = getImageKit();
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   console.log("Migrating pages…");

@@ -5,7 +5,7 @@ import { fieldBaseClass } from "payload/dist/admin/components/forms/field-types/
 import React from "react";
 import { useField } from "payload/components/forms";
 import { showField } from "./show";
-import { imagekit } from "../common/imagekit";
+import { getImageKit } from "../common/imagekit";
 
 function validateImageUrl(
   val: string,
@@ -111,7 +111,9 @@ export function makeImageField({
           beforeChange: [
             async ({ siblingData }) => {
               try {
-                const result = await imagekit.getFileMetadata(siblingData.url);
+                const result = await getImageKit().getFileMetadata(
+                  siblingData.url,
+                );
                 return result.width / result.height;
               } catch (e) {
                 console.error(e);
