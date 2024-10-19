@@ -5,7 +5,7 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "~/common/link";
 import { getLocaleLabel } from "~/i18n";
@@ -15,28 +15,29 @@ export type NavbarProps = {
   className?: string;
   brand: Brand;
   allBrands: Brand[];
+  isScrolled?: boolean;
   onHeightChanged: (height: number) => void;
 };
 
-export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
+export function Navbar({
+  brand,
+  allBrands,
+  isScrolled = false,
+  onHeightChanged,
+}: NavbarProps) {
   const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
   const navbarRef = useRef<HTMLDivElement>(null);
 
   useElementHeightObserver(navbarRef, onHeightChanged);
-  const scrollPhase = useScrollPhase();
 
   return (
     <Disclosure
       as="nav"
       className={cn(
-        "sticky inset-0 z-40 backdrop-blur-sm transition-all duration-1000",
-        scrollPhase === "over-threshold"
-          ? "top-4 mx-4 rounded-lg bg-white bg-opacity-75 shadow-lg ring-1 ring-black ring-opacity-5"
-          : "top-0 mx-0 rounded-none bg-white bg-opacity-100 ring-0 ring-white ring-opacity-0",
-
-        scrollPhase === "under-threshold" && "shadow-md",
+        "sticky inset-0 z-40 bg-white transition-shadow duration-1000 ease-in-out",
+        isScrolled && "shadow-md",
       )}
       ref={navbarRef}
     >
@@ -44,7 +45,7 @@ export function Navbar({ brand, allBrands, onHeightChanged }: NavbarProps) {
         <>
           <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
             <NavbarBrandLogo brand={brand} allBrands={allBrands} />
-            <div className="hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
+            <div className="z-50 hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
               {brand.navLinks?.map((navLink) => (
                 <NavLink key={navLink.id} to={navLink.url}>
                   {navLink.label}
@@ -130,24 +131,3 @@ function useElementHeightObserver(
     return () => observer.disconnect();
   }, [onHeightChanged, ref]);
 }
-
-const SCROLL_THRESHOLD = 0.3;
-
-function useScrollPhase(): ScrollPhase {
-  const [scrollY, setScrollY] = useState(0);
-  useLayoutEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  if (typeof window === "undefined" || scrollY === 0) return "unscrolled";
-
-  if (scrollY < SCROLL_THRESHOLD * window.innerHeight) return "under-threshold";
-
-  return "over-threshold";
-}
-
-type ScrollPhase = "unscrolled" | "under-threshold" | "over-threshold";

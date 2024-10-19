@@ -14,7 +14,7 @@ export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
 export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
   const overlayTextBoxPosition = overlayTextBox?.position || "top-left";
   return (
-    <div className="relative my-44 h-[25rem] md:h-[35rem]">
+    <div className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]">
       <Image
         src={image.url}
         alt={image.alt || undefined}
@@ -22,7 +22,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
           aspectRatio: { width: 4, height: 3 },
           width: 800,
         }}
-        className="h-full w-full object-cover"
+        className="h-[35rem] w-full object-cover md:h-full"
         layout="responsive"
         srcMultiplier={6}
         sizes="100vw"
@@ -30,15 +30,15 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
       {overlayTextBox?.show && (
         <div
           className={cn(
-            "absolute max-w-md rounded-md bg-white px-6 pb-6 pt-3 shadow-lg md:px-8 md:pb-8 md:pt-5",
+            "w-full bg-white px-6 pb-6 pt-3 text-center md:absolute md:w-auto md:max-w-md md:rounded-md md:px-8 md:pb-8 md:pt-5 md:shadow-lg",
             {
-              "left-8 top-8 md:left-12 md:top-12 xl:left-20 xl:top-20":
+              "md:left-12 md:top-12 xl:left-20 xl:top-20":
                 overlayTextBoxPosition === "top-left",
-              "right-8 top-8 md:right-12 md:top-12 xl:right-20 xl:top-20":
+              "md:right-12 md:top-12 xl:right-20 xl:top-20":
                 overlayTextBoxPosition === "top-right",
-              "bottom-8 left-8 md:bottom-12 md:left-12 xl:bottom-20 xl:left-20":
+              "md:bottom-12 md:left-12 xl:bottom-20 xl:left-20":
                 overlayTextBoxPosition === "bottom-left",
-              "bottom-8 right-8 md:bottom-12 md:right-12 xl:bottom-20 xl:right-20":
+              "md:bottom-12 md:right-12 xl:bottom-20 xl:right-20":
                 overlayTextBoxPosition === "bottom-right",
             },
           )}
@@ -46,14 +46,14 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
           <Heading as="h4" size="small">
             {overlayTextBox.heading}
           </Heading>
-          <RichTextParagraph className="mt-1 md:mt-2">
+          <RichTextParagraph className="mt-2">
             {overlayTextBox.text! as RichTextObject}
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button
               as={Link}
               to={overlayTextBox.cta.url!}
-              className="mt-3 md:mt-4"
+              className="mt-4"
               variant={overlayTextBox.cta.variant || undefined}
             >
               {overlayTextBox.cta.text}

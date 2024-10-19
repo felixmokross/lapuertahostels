@@ -1,7 +1,7 @@
 import { Brand, Common } from "~/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 type HeaderProps = {
   banner: Common["banner"];
@@ -16,6 +16,7 @@ export function Header({
   onHeightChanged,
 }: HeaderProps) {
   const [isBannerDismissed, setIsBannerDismissed] = useState(false);
+  const isScrolled = useIsScrolled();
   return (
     <header className="contents">
       {banner?.show && (
@@ -32,7 +33,23 @@ export function Header({
         brand={brand}
         allBrands={allBrands}
         onHeightChanged={onHeightChanged}
+        isScrolled={isScrolled}
       />
     </header>
   );
+}
+
+function useIsScrolled(): boolean {
+  const [scrollY, setScrollY] = useState(0);
+  useLayoutEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (typeof window === "undefined" || scrollY === 0) return false;
+
+  return true;
 }
