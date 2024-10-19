@@ -5,6 +5,7 @@ import { showField } from "../fields/show";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
+import { linkField } from "../fields/link";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -191,34 +192,14 @@ export const Common: GlobalConfig = {
               },
               type: "array",
               required: true,
-              fields: [
-                {
-                  name: "name",
-                  label: {
-                    en: "Name",
-                    es: "Nombre",
-                  },
-                  localized: true,
-                  required: true,
-                  type: "text",
-                },
-                {
-                  name: "url",
-                  label: {
-                    en: "URL",
-                    es: "URL",
-                  },
-                  required: true,
-                  type: "text",
-                },
-              ],
+              fields: linkField.fields,
               admin: {
                 initCollapsed: true,
                 components: {
                   RowLabel: ({ data }) =>
                     (
                       data as CommonType["footer"]["linkGroups"][number]["links"][number]
-                    )?.name,
+                    )?.label,
                 },
               },
             },

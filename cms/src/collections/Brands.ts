@@ -3,6 +3,7 @@ import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
+import { linkField } from "../fields/link";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -76,27 +77,7 @@ export const Brands: CollectionConfig = {
         },
       },
       type: "array",
-      fields: [
-        {
-          name: "url",
-          label: {
-            en: "URL",
-            es: "URL",
-          },
-          type: "text",
-          required: true,
-        },
-        {
-          name: "label",
-          label: {
-            en: "Label",
-            es: "Etiqueta",
-          },
-          type: "text",
-          required: true,
-          localized: true,
-        },
-      ],
+      fields: linkField.fields,
       admin: {
         components: {
           RowLabel: ({ data }: RowLabelArgs) => data?.label,

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 import { Link } from "../common/link";
 import { useTheme } from "~/themes";
+import { PageLink } from "~/common/page-link";
 
 type FooterProps = {
   content: Common["footer"];
@@ -67,13 +68,11 @@ export function Footer({ content, allBrands }: FooterProps) {
                 </h3>
                 <ul className="mt-6 space-y-4">
                   {linkGroup.links.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        to={link.url}
+                    <li key={link.id}>
+                      <PageLink
+                        link={link}
                         className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                      >
-                        {link.name}
-                      </Link>
+                      />
                     </li>
                   ))}
                 </ul>

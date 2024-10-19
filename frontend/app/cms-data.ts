@@ -77,7 +77,7 @@ async function loadData(url: string, locale: string) {
 
   console.log(`Loading data from CMS for ${url} in ${locale}`);
   const response = await fetch(
-    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}`,
+    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}&depth=1`,
     {
       headers: {
         Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,

@@ -7,9 +7,9 @@ import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Brand } from "~/payload-types";
-import { Link, LinkProps } from "~/common/link";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
+import { PageLink, PageLinkProps } from "~/common/page-link";
 
 export type NavbarProps = {
   className?: string;
@@ -32,6 +32,8 @@ export function Navbar({
 
   useElementHeightObserver(navbarRef, onHeightChanged);
 
+  const navLinks = allBrands.find((b) => b.id === brand.id)?.navLinks;
+
   return (
     <Disclosure
       as="nav"
@@ -46,10 +48,8 @@ export function Navbar({
           <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
             <NavbarBrandLogo brand={brand} allBrands={allBrands} />
             <div className="z-50 hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
-              {brand.navLinks?.map((navLink) => (
-                <NavLink key={navLink.id} to={navLink.url}>
-                  {navLink.label}
-                </NavLink>
+              {navLinks?.map((navLink) => (
+                <NavLink key={navLink.id} link={navLink} />
               ))}
             </div>
             <div className="hidden items-center justify-end sm:flex">
@@ -70,15 +70,13 @@ export function Navbar({
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              {brand.navLinks?.map((navLink) => (
+              {navLinks?.map((navLink) => (
                 <Disclosure.Button
                   key={navLink.id}
-                  as={Link}
-                  to={navLink.url}
+                  as={PageLink}
+                  link={navLink}
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                >
-                  {navLink.label}
-                </Disclosure.Button>
+                />
               ))}
             </div>
 
@@ -106,11 +104,11 @@ export function Navbar({
   );
 }
 
-type NavLinkProps = LinkProps;
+type NavLinkProps = PageLinkProps;
 
 function NavLink({ className, ...props }: NavLinkProps) {
   return (
-    <Link className={cn("hover:text-neutral-900", className)} {...props} />
+    <PageLink className={cn("hover:text-neutral-900", className)} {...props} />
   );
 }
 

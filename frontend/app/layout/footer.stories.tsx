@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Footer } from "./footer";
-import { Brand } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 import { allModes } from ".storybook/modes";
 
 const meta = {
@@ -51,28 +51,50 @@ Colombia`,
         {
           title: "Hotel",
           links: [
-            { name: "About Us", url: ".#about-us" },
-            { name: "Puerta Aqua", url: "/aqua" },
-            { name: "La Puerta Azul", url: "/azul" },
-            { name: "Contact", url: "#" },
+            {
+              label: "About Us",
+              type: "internal",
+              page: { url: "/" } as Page,
+              fragment: "about-us",
+            },
+            {
+              label: "Puerta Aqua",
+              type: "internal",
+              page: { url: "/aqua" } as Page,
+            },
+            {
+              label: "La Puerta Azul",
+              type: "internal",
+              page: { url: "/azul" } as Page,
+            },
+            {
+              label: "Contact",
+              type: "internal",
+              page: { url: "/contact" } as Page,
+            },
           ],
         },
         {
           title: "Experiences",
           links: [
-            { name: "Santa Marta", url: ".#santa-marta" },
-            { name: "Lost City", url: "#" },
-            { name: "Tayrona Park", url: "#" },
-            { name: "Minca", url: "#" },
+            {
+              label: "Santa Marta",
+              type: "internal",
+              page: { url: ":" } as Page,
+              fragment: "santa-marta",
+            },
+            { label: "Lost City", type: "external", url: "#" },
+            { label: "Tayrona Park", type: "external", url: "#" },
+            { label: "Minca", type: "external", url: "#" },
           ],
         },
         {
           title: "Legal",
           links: [
-            { name: "Terms", url: "#" },
-            { name: "Cancelation", url: "#" },
-            { name: "Privacy", url: "#" },
-            { name: "FAQ", url: "#" },
+            { label: "Terms", type: "external", url: "#" },
+            { label: "Cancelation", type: "external", url: "#" },
+            { label: "Privacy", type: "external", url: "#" },
+            { label: "FAQ", type: "external", url: "#" },
           ],
         },
       ],
