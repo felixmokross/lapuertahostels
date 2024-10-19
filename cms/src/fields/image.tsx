@@ -112,19 +112,14 @@ export function makeImageField({
         hooks: {
           beforeChange: [
             async ({ siblingData }) => {
-              try {
-                const result = await getImageKit().getFileMetadata(
-                  siblingData.url,
-                );
-                return result.width / result.height;
-              } catch (e) {
-                console.error(e);
-                return undefined;
-              }
+              if (!siblingData.show) return undefined;
+              return getImageAspectRatio(siblingData.url);
             },
           ],
           afterRead: [
             async ({ siblingData }) => {
+              if (!siblingData.show) return undefined;
+
               if (siblingData.aspectRatio != null) {
                 return siblingData.aspectRatio;
               }
