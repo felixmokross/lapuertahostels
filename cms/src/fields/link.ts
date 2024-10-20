@@ -43,6 +43,12 @@ export const linkField: GroupField = {
           value: "external",
         },
       ],
+      admin: {
+        description: {
+          en: "Use 'internal' to link to a page within the site. 'External' allows you to enter a URL.",
+          es: "Usa 'interno' para enlazar a una página dentro del sitio. 'Externo' te permite introducir una URL.",
+        },
+      },
     },
     {
       name: "page",
@@ -58,23 +64,39 @@ export const linkField: GroupField = {
       },
     },
     {
-      name: "fragment",
-      label: {
-        en: "Fragment",
-        es: "Fragmento",
-      },
-      type: "text",
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "internal",
-      },
-    },
-    {
-      name: "search",
-      label: {
-        en: "Search",
-        es: "Búsqueda",
-      },
-      type: "text",
+      type: "row",
+      fields: [
+        {
+          name: "queryString",
+          label: {
+            en: "Query String",
+            es: "Cadena de consulta",
+          },
+          type: "text",
+          admin: {
+            width: "50%",
+            description: {
+              en: "If a query string is provided, it will be appended to the URL with a '?' character.",
+              es: "Si se proporciona una cadena de consulta, se añadirá a la URL con un carácter '?'.",
+            },
+          },
+        },
+        {
+          name: "fragment",
+          label: {
+            en: "Fragment",
+            es: "Fragmento",
+          },
+          type: "text",
+          admin: {
+            width: "50%",
+            description: {
+              en: "If a fragment is provided, it will be appended to the URL with a '#' character. Use this to link to a section of a page, defined by an 'Element ID'.",
+              es: "Si se proporciona un fragmento, se añadirá a la URL con un carácter '#'. Úsalo para enlazar a una sección de una página, definida por un 'ID de elemento'.",
+            },
+          },
+        },
+      ],
       admin: {
         condition: (_, siblingData) => siblingData.type === "internal",
       },
