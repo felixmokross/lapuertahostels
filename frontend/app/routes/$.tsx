@@ -1,10 +1,10 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/common/live-preview";
-import i18next from "~/i18next.server";
 import { Page } from "../layout/page";
 import { getPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
+import { processPath } from "~/common/routing.server";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) throw new Error("No loader data");
@@ -16,11 +16,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  if (!params["*"]) throw new Error("No splat provided.");
+  const { pagePath, locale } = await processPath(request, params);
 
-  const pageId = `:${urlToId(params["*"])}`;
+  const pageId = urlToId(pagePath);
   const dataPath = `pages/${pageId}`;
-  const locale = await i18next.getLocale(request);
   return {
     dataPath,
     content: await getPage(pageId, locale),

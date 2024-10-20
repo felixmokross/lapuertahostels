@@ -31,7 +31,7 @@ export default async function handleRequest(
   loadContext: AppLoadContext,
 ) {
   const i18nInstance = createI18nInstance() as i18n;
-  const lng = await i18next.getLocale(request);
+  const lng = remixContext.staticHandlerContext.loaderData["root"].locale;
   const ns = i18next.getRouteNamespaces(remixContext);
 
   await i18nInstance

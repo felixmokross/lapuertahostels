@@ -17,13 +17,13 @@ import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { useBrand } from "./brands";
-import i18next from "./i18next.server";
 import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
+import { processPath } from "./common/routing.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -78,7 +78,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
@@ -86,7 +86,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
 
-  const locale = await i18next.getLocale(request);
+  const { locale } = await processPath(request, params);
+  if (!locale) throw new Error("Locale has not been determined");
 
   const [allBrands, common, maintenance] = await Promise.all([
     getBrands(locale),
@@ -95,6 +96,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   ]);
 
   return json({
+    locale,
     allBrands,
     maintenance,
     common,

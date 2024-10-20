@@ -35,7 +35,7 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  return redirect(redirectTo, {
+  return redirect(`/${locale}${redirectTo}`, {
     headers: { "Set-Cookie": await localeCookie.serialize(locale) },
   });
 }
