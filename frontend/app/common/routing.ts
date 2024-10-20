@@ -14,3 +14,7 @@ export function getLocaleAndPagePath(fullPath: string) {
     pagePath: `/${match.params["*"]}`,
   };
 }
+
+export function buildPath(locale: string, pagePath: string) {
+  return `/${locale}${pagePath === "/" ? "" : pagePath}`;
+}
