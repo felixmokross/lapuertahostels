@@ -67,7 +67,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction = () => [
+export const meta: MetaFunction<typeof loader> = ({ data }) => [
   {
     name: "msapplication-TileColor",
     content: "#00aba9",
@@ -76,6 +76,7 @@ export const meta: MetaFunction = () => [
     name: "theme-color",
     content: "#e2d0b6",
   },
+  { name: "description", content: data?.common.meta?.description },
 ];
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
