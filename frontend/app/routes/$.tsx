@@ -10,8 +10,8 @@ import { buildPath } from "~/common/routing";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
-  const parentMeta = matches.flatMap((match) => match.meta ?? []);
 
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   return [
     ...parentMeta,
     ...i18n.supportedLngs.map((lng) => ({
@@ -27,7 +27,6 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       hrefLang: "x-default",
     },
     { title: getPageTitle(data.content) },
-    { name: "description", content: "Welcome to Remix!" },
   ];
 };
 

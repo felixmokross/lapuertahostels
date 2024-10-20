@@ -32,6 +32,32 @@ export const Common: GlobalConfig = {
   },
   fields: [
     {
+      name: "meta",
+      label: {
+        en: "Meta",
+        es: "Meta",
+      },
+      type: "group",
+      fields: [
+        {
+          name: "description",
+          label: {
+            en: "Description",
+            es: "Descripción",
+          },
+          localized: true,
+          type: "textarea",
+          maxLength: 500,
+          admin: {
+            description: {
+              en: "A short description of the website that will be shown on search results, social media, and messenger apps.",
+              es: "Una breve descripción del sitio web que se mostrará en los resultados de búsqueda, redes sociales y aplicaciones de mensajería.",
+            },
+          },
+        },
+      ],
+    },
+    {
       name: "banner",
       label: {
         en: "Banner",
