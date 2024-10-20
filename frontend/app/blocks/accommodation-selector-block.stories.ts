@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
+import { Page } from "~/payload-types";
 
 const meta = {
   title: "blocks/Accommodation Selector Block",
@@ -32,7 +33,8 @@ export const Default: Story = {
           navLinks: [
             {
               id: "6649ce958dccc108dcab66ba",
-              url: "/",
+              type: "internal",
+              page: { url: "/" } as Page,
               label: "La Puerta Hostels",
             },
           ],
@@ -60,7 +62,8 @@ export const Default: Story = {
           navLinks: [
             {
               id: "6649ce958dccc108dcab66b9",
-              url: "/",
+              type: "internal",
+              page: { url: "/" } as Page,
               label: "La Puerta Hostels",
             },
           ],
