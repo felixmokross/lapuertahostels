@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Page } from "./page";
-import { Brand } from "~/payload-types";
+import { Brand, Page as PageType } from "~/payload-types";
 import { ThemeProvider } from "~/themes";
 
 const meta = {
@@ -186,7 +186,8 @@ export const Puerta: Story = {
                 navLinks: [
                   {
                     id: "6649ce958dccc108dcab66ba",
-                    url: "/",
+                    page: { url: "/" } as PageType,
+                    type: "internal",
                     label: "La Puerta Hostels",
                   },
                 ],
@@ -214,7 +215,8 @@ export const Puerta: Story = {
                 navLinks: [
                   {
                     id: "6649ce958dccc108dcab66b9",
-                    url: "/",
+                    type: "internal",
+                    page: { url: "/" } as PageType,
                     label: "La Puerta Hostels",
                   },
                 ],

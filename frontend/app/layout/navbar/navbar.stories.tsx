@@ -20,23 +20,30 @@ const puertaBrand = {
   name: "La Puerta Hostels",
   navLinks: [
     {
-      url: "/aqua",
+      page: { url: "/aqua" },
+      type: "internal",
       label: "Puerta Aqua",
     },
     {
-      url: "/azul",
+      page: { url: "/azul" },
+      type: "internal",
       label: "La Puerta Azul",
     },
     {
-      url: ".#santa-marta",
+      page: { url: "/" },
+      fragment: "santa-marta",
+      type: "internal",
       label: "Santa Marta",
     },
     {
-      url: ".#about-us",
+      page: { url: "/" },
+      fragment: "about-us",
+      type: "internal",
       label: "About Us",
     },
     {
-      url: "#",
+      page: { url: "/contact" },
+      type: "internal",
       label: "Contact",
     },
   ],
