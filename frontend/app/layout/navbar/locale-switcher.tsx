@@ -1,7 +1,7 @@
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { useLocation } from "@remix-run/react";
 import { Dropdown } from "~/common/dropdown";
-import { getLocaleAndPagePath } from "~/common/routing";
+import { buildPath, getLocaleAndPagePath } from "~/common/routing";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
 
 export type LocaleSwitcherProps = {
@@ -38,7 +38,7 @@ export function LocaleSwitcher({ currentLocale }: LocaleSwitcherProps) {
             <input
               type="hidden"
               name="redirectTo"
-              value={`${pagePath}${location.search}${location.hash}`}
+              value={`${buildPath(null, pagePath)}${location.search}${location.hash}`}
             />
             <Dropdown.Item as="button" type="submit">
               {getLocaleLabel(locale)}
