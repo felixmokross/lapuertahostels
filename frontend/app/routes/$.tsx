@@ -1,27 +1,44 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/common/live-preview";
-import i18next from "~/i18next.server";
 import { Page } from "../layout/page";
 import { getPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
+import { processPath } from "~/common/routing.server";
+import i18n from "~/i18n";
+import { buildPath } from "~/common/routing";
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
 
   return [
+    ...parentMeta,
+    ...i18n.supportedLngs.map((lng) => ({
+      tagName: "link",
+      rel: "alternate",
+      href: `${data.baseUrl}${buildPath(lng, data.pagePath)}`,
+      hrefLang: lng,
+    })),
+    {
+      tagName: "link",
+      rel: "alternate",
+      href: `${data.baseUrl}${buildPath(null, data.pagePath)}`,
+      hrefLang: "x-default",
+    },
     { title: getPageTitle(data.content) },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  if (!params["*"]) throw new Error("No splat provided.");
+  const { pagePath, locale } = await processPath(request, params);
 
-  const pageId = `:${urlToId(params["*"])}`;
+  const pageId = urlToId(pagePath);
   const dataPath = `pages/${pageId}`;
-  const locale = await i18next.getLocale(request);
   return {
+    baseUrl: new URL(request.url).origin,
+    pagePath,
     dataPath,
     content: await getPage(pageId, locale),
   };

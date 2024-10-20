@@ -14,9 +14,9 @@ export async function action({ request }: ActionFunctionArgs) {
   const locale = form.get("locale") as string;
   const redirectTo = form.get("redirectTo") as string;
 
-  if (!locale || !redirectTo) {
+  if (!locale) {
     return json(
-      { message: "'locale' and 'redirectTo' must be provided" },
+      { message: "'locale' must be provided" },
       { status: 400, statusText: "Bad Request" },
     );
   }
@@ -28,14 +28,7 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  if (!redirectTo.startsWith("/")) {
-    return json(
-      { message: "Invalid redirect URL" },
-      { status: 400, statusText: "Bad Request" },
-    );
-  }
-
-  return redirect(redirectTo, {
+  return redirect(`/${locale}${redirectTo}`, {
     headers: { "Set-Cookie": await localeCookie.serialize(locale) },
   });
 }

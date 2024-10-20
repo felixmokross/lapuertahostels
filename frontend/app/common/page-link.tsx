@@ -11,7 +11,7 @@ export function PageLink({ link, ...props }: PageLinkProps) {
       {...props}
       to={
         link.type === "internal"
-          ? `${(link!.page as Page).url}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
+          ? `${(link.page as Page).url}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
           : link.url!
       }
     >
