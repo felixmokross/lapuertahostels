@@ -15,6 +15,6 @@ export function getLocaleAndPagePath(fullPath: string) {
   };
 }
 
-export function buildPath(locale: string, pagePath: string) {
-  return `/${locale}${pagePath === "/" ? "" : pagePath}`;
+export function buildPath(locale: string | null, pagePath: string) {
+  return `${locale ? `/${locale}` : ""}${pagePath === "/" ? "" : pagePath}`;
 }

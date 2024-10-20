@@ -20,6 +20,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       href: `${data.baseUrl}${buildPath(lng, data.pagePath)}`,
       hrefLang: lng,
     })),
+    {
+      tagName: "link",
+      rel: "alternate",
+      href: `${data.baseUrl}${buildPath(null, data.pagePath)}`,
+      hrefLang: "x-default",
+    },
     { title: getPageTitle(data.content) },
     { name: "description", content: "Welcome to Remix!" },
   ];
