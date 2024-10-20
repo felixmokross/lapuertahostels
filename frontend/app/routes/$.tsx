@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, SerializeFrom } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
@@ -7,11 +7,17 @@ import { getPageTitle } from "~/common/meta";
 import { processPath } from "~/common/routing.server";
 import i18n from "~/i18n";
 import { buildPath } from "~/common/routing";
+import { loader as rootLoader } from "~/root";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
-  const parentMeta = matches.flatMap((match) => match.meta ?? []);
 
+  const rootData = matches.find((m) => m.id === "root")?.data as
+    | SerializeFrom<typeof rootLoader>
+    | undefined;
+  if (!rootData) throw new Error("No root loader data");
+
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   return [
     ...parentMeta,
     ...i18n.supportedLngs.map((lng) => ({
@@ -27,7 +33,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       hrefLang: "x-default",
     },
     { title: getPageTitle(data.content) },
-    { name: "description", content: "Welcome to Remix!" },
+    { name: "description", content: rootData.common.meta?.description },
   ];
 };
 
