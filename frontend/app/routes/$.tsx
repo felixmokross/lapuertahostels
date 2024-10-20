@@ -14,14 +14,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
 
   return [
     ...parentMeta,
-    ...i18n.supportedLngs
-      .filter((lng) => lng !== data.locale)
-      .map((lng) => ({
-        tagName: "link",
-        rel: "alternate",
-        href: `${data.baseUrl}${buildPath(lng, data.pagePath)}`,
-        hrefLang: lng,
-      })),
+    ...i18n.supportedLngs.map((lng) => ({
+      tagName: "link",
+      rel: "alternate",
+      href: `${data.baseUrl}${buildPath(lng, data.pagePath)}`,
+      hrefLang: lng,
+    })),
     { title: getPageTitle(data.content) },
     { name: "description", content: "Welcome to Remix!" },
   ];
@@ -35,7 +33,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   return {
     baseUrl: new URL(request.url).origin,
     pagePath,
-    locale,
     dataPath,
     content: await getPage(pageId, locale),
   };
