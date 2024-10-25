@@ -85,9 +85,13 @@ export function makeImageField({
                 return null;
               }
 
+              const url = new URL(value);
+              url.searchParams.set("tr", "w-700");
+
+              // TODO further reduce bandwidth usage by using a smaller image in the preview
               return (
                 <div className={fieldBaseClass}>
-                  <img src={value} alt="Preview of the image" />
+                  <img src={url.toString()} alt="Preview of the image" />
                 </div>
               );
             },
