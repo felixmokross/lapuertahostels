@@ -24,6 +24,7 @@ import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
 import { processPath } from "./common/routing.server";
+import { getRequestUrl } from "./common/routing";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -104,7 +105,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     environment: {
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
-      preview: new URL(request.url).searchParams.get("preview") || undefined,
+      preview: getRequestUrl(request).searchParams.get("preview") || undefined,
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   });

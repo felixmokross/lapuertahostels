@@ -6,7 +6,7 @@ import { getPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
 import { processPath } from "~/common/routing.server";
 import i18n from "~/i18n";
-import { buildPath } from "~/common/routing";
+import { buildPath, getRequestUrl } from "~/common/routing";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -40,9 +40,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
   const pageId = urlToId(pagePath);
   const dataPath = `pages/${pageId}`;
+  const requestUrl = getRequestUrl(request);
   return {
-    baseUrl: new URL(request.url).origin,
-    canonicalUrl: request.url,
+    baseUrl: requestUrl.origin,
+    canonicalUrl: requestUrl.toString(),
     pagePath,
     dataPath,
     content: await getPage(pageId, locale),
