@@ -36,7 +36,7 @@ export function AccommodationSelectorBlock({
             {text as RichTextObject}
           </RichTextParagraph>
         </div>
-        <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-6 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
+        <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
           {cards.map((card) => (
             <AccommodationCard key={card.id} {...card} />
           ))}
@@ -67,13 +67,13 @@ function AccommodationCard({
         },
       )}
     >
-      <div className="relative aspect-[16/9] overflow-hidden bg-white">
+      <div className="relative aspect-[1/1] overflow-hidden bg-white sm:aspect-[4/3] md:aspect-[1/1] lg:aspect-[4/3] xl:aspect-[16/9]">
         <Image
           src={image.url}
           alt={image.alt || undefined}
           className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
           transformation={{
-            aspectRatio: { width: 16, height: 9 },
+            aspectRatio: { width: 1, height: 1 },
             width: 592,
             focus: "custom",
           }}
