@@ -17,6 +17,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import Backend from "i18next-fs-backend";
 import i18nConfig from "./i18n";
 import { resolve } from "node:path";
+import { getRequestUrl } from "./common/routing";
 
 const ABORT_DELAY = 5_000;
 
@@ -31,7 +32,7 @@ export default async function handleRequest(
   loadContext: AppLoadContext,
 ) {
   const canonicalHostname = process.env.CANONICAL_HOSTNAME;
-  const url = new URL(request.url);
+  const url = getRequestUrl(request);
   if (canonicalHostname && url.hostname !== canonicalHostname) {
     url.hostname = canonicalHostname;
     return redirect(url.toString(), { status: 301 });
@@ -81,7 +82,7 @@ function handleBotRequest(
       <I18nextProvider i18n={i18nInstance}>
         <RemixServer
           context={remixContext}
-          url={request.url}
+          url={getRequestUrl(request)}
           abortDelay={ABORT_DELAY}
         />
       </I18nextProvider>,
@@ -134,7 +135,7 @@ function handleBrowserRequest(
       <I18nextProvider i18n={i18nInstance}>
         <RemixServer
           context={remixContext}
-          url={request.url}
+          url={getRequestUrl(request)}
           abortDelay={ABORT_DELAY}
         />
       </I18nextProvider>,

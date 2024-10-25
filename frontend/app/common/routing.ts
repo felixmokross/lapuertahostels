@@ -18,3 +18,12 @@ export function getLocaleAndPagePath(fullPath: string) {
 export function buildPath(locale: string | null, pagePath: string) {
   return `${locale ? `/${locale}` : ""}${pagePath === "/" ? "" : pagePath}`;
 }
+
+export function getRequestUrl(request: Request) {
+  const url = new URL(request.url);
+  if (request.headers.get("X-Forwarded-Proto") === "https") {
+    url.protocol = "https";
+  }
+
+  return url;
+}
