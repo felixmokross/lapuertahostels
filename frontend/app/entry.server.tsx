@@ -7,7 +7,7 @@
 import { PassThrough } from "node:stream";
 
 import type { AppLoadContext, EntryContext } from "@remix-run/node";
-import { createReadableStreamFromReadable } from "@remix-run/node";
+import { createReadableStreamFromReadable, redirect } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
@@ -30,6 +30,13 @@ export default async function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext,
 ) {
+  const canonicalHostname = process.env.CANONICAL_HOSTNAME;
+  const url = new URL(request.url);
+  if (canonicalHostname && url.hostname !== canonicalHostname) {
+    url.hostname = canonicalHostname;
+    return redirect(url.toString(), { status: 301 });
+  }
+
   const i18nInstance = createI18nInstance() as i18n;
   const lng = remixContext.staticHandlerContext.loaderData["root"].locale;
   const ns = i18next.getRouteNamespaces(remixContext);

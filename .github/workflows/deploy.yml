@@ -93,6 +93,7 @@ jobs:
             --remote-only \
             --image-label v${{ steps.version.outputs.version }} \
             --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
+            --env CANONICAL_HOSTNAME=www.${{ needs.define-env.outputs.domain_frontend }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         working-directory: frontend

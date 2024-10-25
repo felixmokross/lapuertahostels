@@ -26,6 +26,11 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       href: `${data.baseUrl}${buildPath(null, data.pagePath)}`,
       hrefLang: "x-default",
     },
+    {
+      tagName: "link",
+      name: "canonical",
+      href: data?.canonicalUrl,
+    },
     { title: getPageTitle(data.content) },
   ];
 };
@@ -37,6 +42,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const dataPath = `pages/${pageId}`;
   return {
     baseUrl: new URL(request.url).origin,
+    canonicalUrl: request.url,
     pagePath,
     dataPath,
     content: await getPage(pageId, locale),
