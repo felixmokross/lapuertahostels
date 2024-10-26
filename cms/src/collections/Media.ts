@@ -15,6 +15,14 @@ export const Media: CollectionConfig = {
   upload: {
     staticURL: "/media",
     disableLocalStorage: true,
+    mimeTypes: ["image/*"],
+    imageSizes: [
+      {
+        name: "thumbnail",
+        width: 200,
+      },
+    ],
+    adminThumbnail: "thumbnail",
   },
   fields: [],
 };
