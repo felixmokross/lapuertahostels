@@ -1,25 +1,23 @@
 import { Transition, Dialog } from "@headlessui/react";
-import { useLocation } from "@remix-run/react";
 import { Fragment } from "react";
 import { cn } from "~/common/cn";
 import { useTheme } from "~/themes";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
-import { buildPath, getLocaleAndPagePath } from "~/common/routing";
 
 export type MobileLocaleSwitcherProps = {
   currentLocale: string;
   open: boolean;
   onClose: () => void;
+  redirectTo: string;
 };
 
 export function MobileLocaleSwitcher({
   currentLocale,
   open,
   onClose,
+  redirectTo,
 }: MobileLocaleSwitcherProps) {
-  const location = useLocation();
   const theme = useTheme();
-  const { pagePath } = getLocaleAndPagePath(location.pathname);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -55,11 +53,7 @@ export function MobileLocaleSwitcher({
                     className="contents"
                   >
                     <input type="hidden" name="locale" value={locale} />
-                    <input
-                      type="hidden"
-                      name="redirectTo"
-                      value={`${buildPath(null, pagePath)}${location.search}${location.hash}`}
-                    />
+                    <input type="hidden" name="redirectTo" value={redirectTo} />
                     <button
                       type="submit"
                       className={cn(

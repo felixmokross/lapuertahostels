@@ -1,7 +1,7 @@
 import { Brand, Common } from "~/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type HeaderProps = {
   banner: Common["banner"];
@@ -41,7 +41,7 @@ export function Header({
 
 function useIsScrolled(): boolean {
   const [scrollY, setScrollY] = useState(0);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
 
     onScroll();

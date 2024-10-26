@@ -10,6 +10,12 @@ import { Brand } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
+import { useLocation } from "@remix-run/react";
+import {
+  buildLocalizedRelativeUrl,
+  getLocaleAndPageUrl,
+  toRelativeUrl,
+} from "~/common/routing";
 
 export type NavbarProps = {
   className?: string;
@@ -34,6 +40,10 @@ export function Navbar({
 
   const navLinks = allBrands.find((b) => b.id === brand.id)?.navLinks;
 
+  const location = useLocation();
+  const { pageUrl } = getLocaleAndPageUrl(toRelativeUrl(location));
+  const localeSwitcherRedirectTo = buildLocalizedRelativeUrl(null, pageUrl);
+
   return (
     <Disclosure
       as="nav"
@@ -53,7 +63,10 @@ export function Navbar({
               ))}
             </div>
             <div className="hidden items-center justify-end sm:flex">
-              <LocaleSwitcher currentLocale={i18n.language} />
+              <LocaleSwitcher
+                currentLocale={i18n.language}
+                redirectTo={localeSwitcherRedirectTo}
+              />
             </div>
             <div className="-mr-2 flex items-center sm:hidden">
               <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
@@ -97,6 +110,7 @@ export function Navbar({
             currentLocale={i18n.language}
             onClose={() => setLocaleSwitcherOpen(false)}
             open={localeSwitcherOpen}
+            redirectTo={localeSwitcherRedirectTo}
           />
         </>
       )}

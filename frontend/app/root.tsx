@@ -23,8 +23,11 @@ import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
-import { processPath } from "./common/routing.server";
-import { getRequestUrl } from "./common/routing";
+import {
+  getLocaleAndPageUrl,
+  getRequestUrl,
+  toRelativeUrl,
+} from "./common/routing";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -80,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
   { name: "description", content: data?.common.meta?.description },
 ];
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
@@ -88,7 +91,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
 
-  const { locale } = await processPath(request, params);
+  const url = getRequestUrl(request);
+  const { locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
   const [allBrands, common, maintenance] = await Promise.all([
