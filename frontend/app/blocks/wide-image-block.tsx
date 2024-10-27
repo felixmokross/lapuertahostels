@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
 import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
@@ -13,11 +13,12 @@ export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
 
 export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
   const overlayTextBoxPosition = overlayTextBox?.position || "top-left";
+  const imageMedia = image as Media;
   return (
     <div className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]">
       <Image
-        src={image.url}
-        alt={image.alt || undefined}
+        src={`/${imageMedia.filename}`}
+        alt={imageMedia.alt ?? undefined}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 800,
