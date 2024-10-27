@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Page } from "./page";
-import { Brand, Page as PageType } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 import { ThemeProvider } from "~/themes";
 
 const meta = {
