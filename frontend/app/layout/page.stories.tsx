@@ -247,9 +247,11 @@ export const Puerta: Story = {
         {
           elementId: "santa-marta",
           image: {
-            url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
+            id: "1",
+            filename: "oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg",
             alt: "View of Santa Marta",
-            aspectRatio: undefined!,
+            createdAt: "2024-05-19T10:04:05.148Z",
+            updatedAt: "2024-05-19T10:04:05.148Z",
           },
           overlayTitle: {
             text: [
