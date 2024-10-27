@@ -5,6 +5,7 @@ import { Media, Page } from "~/payload-types";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
+import { getSrcFromMedia } from "~/common/media";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   Page["layout"]
@@ -29,7 +30,7 @@ export function ImageWithFloatingTextBlock({
     >
       <div className="relative max-h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
         <Image
-          src={`/${imageMedia.filename}`}
+          src={getSrcFromMedia(imageMedia)}
           alt={imageMedia.alt ?? undefined}
           className="h-full w-full object-cover"
           transformation={{

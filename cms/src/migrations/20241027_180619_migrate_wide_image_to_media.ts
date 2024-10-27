@@ -49,7 +49,9 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     originalMediaUrl.searchParams.set("ik-attachment", "true");
 
     console.log(`Fetching media ${originalMediaUrl}`);
-    const fileName = originalMediaUrl.pathname.split("/").pop();
+    const fileName = decodeURIComponent(
+      originalMediaUrl.pathname.split("/").pop(),
+    );
 
     const matchingMedia = await payload.find<"media">({
       collection: "media",

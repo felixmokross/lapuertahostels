@@ -6,6 +6,7 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { RichTextObject } from "~/common/rich-text";
 import { Media } from "~/payload-types";
+import { getSrcFromMedia } from "~/common/media";
 
 export type RoomCardProps = Room & Pick<RoomListBlock, "ctaTemplate">;
 
@@ -25,7 +26,7 @@ export function RoomCard({
         images={images.map((image) => {
           const imageMedia = image.image as Media;
           return {
-            src: `/${imageMedia.filename}`,
+            src: getSrcFromMedia(imageMedia),
             alt: imageMedia.alt ?? undefined,
             caption: image.caption!,
             aspectRatio: imageMedia.width! / imageMedia.height!,
