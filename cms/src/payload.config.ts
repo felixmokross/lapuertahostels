@@ -16,6 +16,7 @@ import { ContextType } from "payload/dist/admin/components/utilities/DocumentInf
 import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
+import { MediaCategory } from "./collections/MediaCategory";
 
 export default buildConfig({
   admin: {
@@ -52,7 +53,7 @@ export default buildConfig({
     },
   },
   editor: slateEditor({}),
-  collections: [Users, Brands, Pages, Media],
+  collections: [Users, Brands, Pages, Media, MediaCategory],
   globals: [Common, Maintenance],
   localization: {
     locales: ["en", "es", "de", "fr"],
