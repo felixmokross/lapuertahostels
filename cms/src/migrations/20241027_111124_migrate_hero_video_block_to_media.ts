@@ -7,9 +7,9 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     const heroBlock = page.hero[0];
     if (!heroBlock || heroBlock.blockType !== "HeroVideo") continue;
 
-    const video = await migrateMedia(heroBlock.videoUrl);
+    const video = await migrateMedia(heroBlock["videoUrl"]);
     const previewImage = heroBlock.previewImage
-      ? await migrateMedia(heroBlock.previewImage.url)
+      ? await migrateMedia(heroBlock["previewImage"]["url"])
       : undefined;
 
     await payload.update<"pages">({
