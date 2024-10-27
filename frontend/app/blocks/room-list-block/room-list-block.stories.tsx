@@ -30,31 +30,34 @@ export const Default: Story = {
         images: [
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
-              alt: "",
-              aspectRatio: 1.5,
-            },
-            caption: "This is a caption",
-          },
-          {
-            image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
-              alt: "",
-              aspectRatio: 1.4234693878,
+              id: "1",
+              filename: "_DSC0358.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
-              alt: "",
-              aspectRatio: 1.5,
+              id: "2",
+              filename: "_DSC0337.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
-              alt: "",
-              aspectRatio: 1.4566326531,
+              id: "3",
+              filename: "_DSC0360.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
+            },
+          },
+          {
+            image: {
+              id: "4",
+              filename: "_DSC0334.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
         ],
@@ -73,23 +76,26 @@ export const Default: Story = {
         images: [
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
-              alt: "",
-              aspectRatio: 1.4566326531,
+              id: "1",
+              filename: "_DSC0334.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
-              alt: "",
-              aspectRatio: 1.7755102041,
+              id: "2",
+              filename: "16.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
-              alt: "Private balcony",
-              aspectRatio: 1.4742990654,
+              id: "3",
+              filename: "_dsc0989.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
         ],
@@ -108,23 +114,26 @@ export const Default: Story = {
         images: [
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
-              alt: "",
-              aspectRatio: 1.4566326531,
+              id: "1",
+              filename: "_DSC0334.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
-              alt: "",
-              aspectRatio: 1.7755102041,
+              id: "2",
+              filename: "16.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
           {
             image: {
-              url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
-              alt: "Private balcony",
-              aspectRatio: 1.4742990654,
+              id: "3",
+              filename: "_dsc0989.jpg",
+              createdAt: "2021-09-07T15:25:16.000Z",
+              updatedAt: "2021-09-07T15:25:16.000Z",
             },
           },
         ],
