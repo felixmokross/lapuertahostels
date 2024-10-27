@@ -55,8 +55,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       collection: "brands",
       id: brand.id,
       data: {
-        // @ts-expect-error
-        logo: logo.id,
+        logo: logo.id as string,
       },
     });
   }
