@@ -96,7 +96,7 @@ const preview: Preview = {
   decorators: [
     withRemix,
     (Story, { globals }) => (
-      <ThemeProvider brand={{ id: globals.brand } as Brand}>
+      <ThemeProvider brandId={globals.brand}>
         <Story />
       </ThemeProvider>
     ),

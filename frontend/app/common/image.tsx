@@ -57,11 +57,11 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
     }
   }, [onLoad, isLoading, localRef]);
 
-  if (src && !src.startsWith(imagekitBaseUrl)) {
+  if (src && src.startsWith(imagekitBaseUrl)) {
+    src = src?.slice(imagekitBaseUrl.length);
+  } else if (src && isExternalUrl(src)) {
     throw new Error(`Image URL must start with ${imagekitBaseUrl}`);
   }
-
-  src = src?.slice(imagekitBaseUrl.length);
 
   let srcSet = undefined;
   if (layout === "fixed") {
@@ -148,4 +148,8 @@ function toImagekitTransformationItemString(
     default:
       throw new Error(`Unsupported key: ${key}`);
   }
+}
+
+function isExternalUrl(url: string) {
+  return url.startsWith("http://") || url.startsWith("https://");
 }

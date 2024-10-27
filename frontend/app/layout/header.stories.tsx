@@ -17,6 +17,7 @@ type Story = StoryObj<typeof meta>;
 const puertaBrand = {
   id: "puerta",
   name: "La Puerta Hostels",
+  homeLinkUrl: "/",
   navLinks: [
     {
       url: "/aqua",
@@ -40,7 +41,8 @@ const puertaBrand = {
     },
   ],
   logo: {
-    url: "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+    filename: "logo-puerta-simple.png",
+    alt: "La Puerta Hostels Logo",
   },
 } as Brand;
 

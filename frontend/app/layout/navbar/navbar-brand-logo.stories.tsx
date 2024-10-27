@@ -19,7 +19,8 @@ const puertaBrand = {
   id: "puerta",
   homeLinkUrl: "/",
   logo: {
-    url: "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+    filename: "logo-puerta-simple.png",
+    alt: "La Puerta Hostels Logo",
   },
   name: "La Puerta Hostels",
 } as Brand;
@@ -32,7 +33,8 @@ export const Default: Story = {
         id: "aqua",
         homeLinkUrl: "/aqua",
         logo: {
-          url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703906701749",
+          filename: "logo-puerta-aqua.png",
+          alt: "Puerta Aqua Logo",
         },
         name: "Puerta Aqua",
       } as Brand,
@@ -40,7 +42,8 @@ export const Default: Story = {
         id: "azul",
         homeLinkUrl: "/azul",
         logo: {
-          url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703906701749",
+          filename: "logo-puerta-azul.png",
+          alt: "La Puerta Azul Logo",
         },
         name: "La Puerta Azul",
       } as Brand,
