@@ -19,26 +19,25 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       continue;
     }
 
-    if (heroBlock.image.show || heroBlock.image.show == null) {
+    if (heroBlock["image"]["show"] || heroBlock["image"]["show"] == null) {
       const altByLocale = pageDocs.find(
         (p) => (p._id as unknown as string) === page.id,
       )!.hero[0].image.alt as Record<string, string>;
 
       heroBlock["image"] = await migrateMedia(
-        heroBlock["image"].url,
+        heroBlock["image"]["url"],
         altByLocale,
       );
     } else {
       heroBlock["image"] = null;
     }
 
-    await payload.update<"pages">({
-      collection: "pages",
-      id: page.id,
-      data: {
-        hero: [heroBlock],
+    await payload.db.connection.collection("pages").updateOne(
+      { _id: page.id },
+      {
+        $set: { "hero.0.image": heroBlock["image"] },
       },
-    });
+    );
   }
 
   async function migrateMedia(
