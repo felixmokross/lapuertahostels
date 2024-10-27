@@ -36,7 +36,7 @@ export function BrandLogo({
           "h-10": size === "large",
         })}
         src={`/${(brand.logo as Media).filename}`}
-        alt={`${brand.name} Logo`}
+        alt={(brand.logo as Media).alt ?? undefined}
         transformation={{
           height: size === "small" ? 28 : size === "large" ? 40 : undefined,
         }}
