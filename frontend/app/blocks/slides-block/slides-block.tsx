@@ -5,7 +5,9 @@ import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";
 import { useEnvironment } from "~/environment";
 import { useSwipeable } from "react-swipeable";
-import { Page } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
+import { useTranslation } from "react-i18next";
+import { getSrcFromMedia } from "~/common/media";
 
 export type SlidesBlockProps = NonNullable<Page["hero"]>[number] & {
   blockType: "Slides";
@@ -17,6 +19,7 @@ export function SlidesBlock({
 }: SlidesBlockProps) {
   autoplayIntervalInSeconds = autoplayIntervalInSeconds || 7;
 
+  const { t } = useTranslation();
   const [isReady, setIsReady] = useState(false);
   if (slides.length === 0) {
     throw new Error("Slides Block must have at least one slide");
@@ -59,7 +62,7 @@ export function SlidesBlock({
             className="absolute bottom-10 hidden w-full justify-center md:flex"
             {...pauseIntervalHandlers}
           >
-            {slides.map((slide, i) => (
+            {slides.map((_, i) => (
               <button
                 className="group z-10 inline-flex h-10 items-center px-2"
                 key={i}
@@ -73,7 +76,9 @@ export function SlidesBlock({
                       : "bg-neutral-200 opacity-75 group-hover:bg-white group-hover:opacity-100",
                   )}
                 ></span>
-                <span className="sr-only">Go to {slide.image.alt}</span>
+                <span className="sr-only">
+                  {t("slidesBlock.goToSlide", { slide: i + 1 })}
+                </span>
               </button>
             ))}
           </div>
@@ -81,7 +86,7 @@ export function SlidesBlock({
             className="absolute bottom-0 flex w-full justify-center md:hidden"
             {...pauseIntervalHandlers}
           >
-            {slides.map((slide, i) => (
+            {slides.map((_, i) => (
               <button
                 className="group z-10 inline-flex h-10 flex-grow items-end"
                 key={i}
@@ -95,13 +100,16 @@ export function SlidesBlock({
                       : "bg-neutral-200 opacity-65 group-hover:bg-white group-hover:opacity-85",
                   )}
                 ></span>
-                <span className="sr-only">Go to {slide.image.alt}</span>
+                <span className="sr-only">
+                  {t("slidesBlock.goToSlide", { slide: i + 1 })}
+                </span>
               </button>
             ))}
           </div>
         </>
       )}
       {slides.map((slide, i) => {
+        const imageMedia = slide.image as Media;
         return (
           <Transition
             key={i}
@@ -116,10 +124,10 @@ export function SlidesBlock({
             leaveTo="opacity-0"
           >
             <SlideImage
-              src={slide.image.url}
-              alt={slide.image.alt || undefined}
+              src={getSrcFromMedia(imageMedia)}
+              alt={imageMedia.alt ?? undefined}
               withPreview={i === 0}
-              alignment={slide.image.alignment || "center"}
+              alignment={slide.imageAlignment ?? "center"}
               onLoadingFinished={i === 0 ? () => setIsReady(true) : undefined}
             />
             {slide.overlayTitle?.show && (

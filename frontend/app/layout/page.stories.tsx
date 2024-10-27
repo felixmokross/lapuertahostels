@@ -35,9 +35,12 @@ export const Puerta: Story = {
             {
               name: "Tayrona",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+                id: "1",
+                filename:
+                  "mesmerizing-scenery-seascape-with-lush-nature-daytime.jpg",
                 alt: "View of the beach in Tayrona National Park",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -63,9 +66,11 @@ export const Puerta: Story = {
             {
               name: "Lost City",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+                id: "2",
+                filename: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg",
                 alt: "View of the Lost City",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -86,9 +91,11 @@ export const Puerta: Story = {
             {
               name: "Minca",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+                id: "3",
+                filename: "denise-leisner-8eVV287ST0E-unsplash.jpg",
                 alt: "View of the forest in the Minca region",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -443,9 +450,11 @@ export const Aqua: Story = {
               id: "slide-1",
               name: "Front View",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
+                id: "4",
+                filename: "Frente.jpg",
                 alt: "Front view of Puerta Aqua",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -694,11 +703,13 @@ export const Azul: Story = {
           slides: [
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                id: "1",
+                filename: "10.jpg",
                 alt: "Atrium of La Puerta Azul",
-                alignment: "bottom",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
+              imageAlignment: "bottom",
               name: "Atrium",
               overlayTitle: {
                 show: true,
@@ -722,9 +733,11 @@ export const Azul: Story = {
             {
               name: "Room View",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+                id: "8",
+                filename: "_DSC0299.jpg",
                 alt: "Room view of La Puerta Azul",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
