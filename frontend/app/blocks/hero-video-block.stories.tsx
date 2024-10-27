@@ -17,11 +17,18 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "HeroVideo",
-    videoUrl:
-      "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed.mp4?updatedAt=1716840200792",
+    video: {
+      id: "1",
+      filename: "video-compressed.mp4",
+      alt: "Video of Tayrona",
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
+    },
     previewImage: {
-      url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/video-compressed-preview.png?updatedAt=1716908602638",
-      aspectRatio: undefined!,
+      id: "1",
+      filename: "video-compressed-preview.png",
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
     },
     overlayTitle: {
       show: true,

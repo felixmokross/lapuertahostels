@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Page } from "./page";
-import { Brand, Page as PageType } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 import { ThemeProvider } from "~/themes";
 
 const meta = {
@@ -18,7 +18,7 @@ export const Puerta: Story = {
   decorators: [
     // override the brand context, this is a Puerta-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "puerta" } as Brand}>
+      <ThemeProvider brandId="puerta">
         <Story />
       </ThemeProvider>
     ),
@@ -192,8 +192,11 @@ export const Puerta: Story = {
                   },
                 ],
                 logo: {
-                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
-                  aspectRatio: undefined!,
+                  id: "6647dc15f50fb271d132f9c7",
+                  filename: "logo-aqua-simple.png",
+                  alt: "Puerta Aqua Logo",
+                  createdAt: "2024-05-19T10:04:05.148Z",
+                  updatedAt: "2024-05-19T10:04:05.148Z",
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -221,8 +224,11 @@ export const Puerta: Story = {
                   },
                 ],
                 logo: {
-                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
-                  aspectRatio: undefined!,
+                  id: "6647dc15f50fb271d132f9c7",
+                  filename: "logo-azul-simple.png",
+                  alt: "La Puerta Azul Logo",
+                  createdAt: "2024-05-19T10:04:05.148Z",
+                  updatedAt: "2024-05-19T10:04:05.148Z",
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -415,7 +421,7 @@ export const Aqua: Story = {
   decorators: [
     // override the brand context, this is a Aqua-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "aqua" } as Brand}>
+      <ThemeProvider brandId="aqua">
         <Story />
       </ThemeProvider>
     ),
@@ -670,7 +676,7 @@ export const Azul: Story = {
   decorators: [
     // override the brand context, this is a Azul-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "azul" } as Brand}>
+      <ThemeProvider brandId="azul">
         <Story />
       </ThemeProvider>
     ),

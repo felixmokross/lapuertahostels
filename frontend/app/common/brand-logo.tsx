@@ -1,4 +1,4 @@
-import { Brand } from "~/payload-types";
+import { Brand, Media } from "~/payload-types";
 import { type BrandId } from "../brands";
 import { cn } from "./cn";
 import { Image } from "./image";
@@ -35,8 +35,8 @@ export function BrandLogo({
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={brand.logo.url}
-        alt={`${brand.name} Logo`}
+        src={`/${(brand.logo as Media).filename}`}
+        alt={(brand.logo as Media).alt ?? undefined}
         transformation={{
           height: size === "small" ? 28 : size === "large" ? 40 : undefined,
         }}

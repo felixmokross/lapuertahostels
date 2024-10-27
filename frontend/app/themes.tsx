@@ -1,5 +1,4 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import { Brand } from "./payload-types";
 import { BrandId } from "./brands";
 
 export type Theme = {
@@ -33,14 +32,14 @@ export type Theme = {
 };
 
 export type ThemeProviderProps = {
-  brand: Brand;
+  brandId: BrandId;
 };
 
 export function ThemeProvider({
-  brand,
+  brandId,
   children,
 }: PropsWithChildren<ThemeProviderProps>) {
-  const theme = themesByBrand[brand.id as BrandId];
+  const theme = themesByBrand[brandId];
 
   return (
     <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>

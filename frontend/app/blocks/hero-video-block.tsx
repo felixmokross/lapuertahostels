@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
 import { OverlayTitle } from "./common/overlay-title";
 import { useEnvironment } from "~/environment";
 
@@ -8,21 +8,20 @@ export type HeroVideoBlockProps = NonNullable<Page["hero"]>[number] & {
 
 export function HeroVideoBlock({
   previewImage,
-  videoUrl,
+  video,
   overlayTitle,
 }: HeroVideoBlockProps) {
   const { imagekitBaseUrl } = useEnvironment();
 
-  if (previewImage?.url && !previewImage.url.startsWith(imagekitBaseUrl)) {
-    throw new Error(`Preview Image URL must start with ${imagekitBaseUrl}`);
-  }
-
-  const previewUrl = previewImage?.url.slice(imagekitBaseUrl.length);
+  const previewUrl = (previewImage as Media).filename;
+  const videoMedia = video as Media;
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
       <video
-        src={videoUrl}
-        poster={previewUrl && `${imagekitBaseUrl}/tr:h-720${previewUrl}`}
+        src={`${imagekitBaseUrl}/${videoMedia.filename}`}
+        poster={
+          previewUrl ? `${imagekitBaseUrl}/tr:h-720/${previewUrl}` : undefined
+        }
         autoPlay
         muted
         loop
@@ -31,7 +30,9 @@ export function HeroVideoBlock({
         disablePictureInPicture
         disableRemotePlayback
         className="pointer-events-none absolute top-0 h-full w-full object-cover"
-      />
+      >
+        {videoMedia.alt && <p>${videoMedia.alt}</p>}
+      </video>
       {overlayTitle?.show && <OverlayTitle {...overlayTitle} />}
     </div>
   );

@@ -18,7 +18,8 @@ export const Large: Story = {
     brand: {
       id: "puerta",
       logo: {
-        url: "https://ik.imagekit.io/lapuertahostels/logos/logo-puerta-simple.png?updatedAt=1703906701749",
+        filename: "logo-puerta-simple.png",
+        alt: "La Puerta Hostels Logo",
       },
       name: "La Puerta Hostels",
     } as Brand,
@@ -46,7 +47,8 @@ export const Aqua: Story = {
     brand: {
       id: "aqua",
       logo: {
-        url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
+        filename: "logo-aqua-simple.png",
+        alt: "Puerta Aqua Logo",
       },
       name: "Puerta Aqua",
     } as Brand,
@@ -59,7 +61,8 @@ export const Azul: Story = {
     brand: {
       id: "azul",
       logo: {
-        url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915191239",
+        filename: "logo-azul-simple.png",
+        alt: "La Puerta Azul Logo",
       },
       name: "La Puerta Azul",
     } as Brand,

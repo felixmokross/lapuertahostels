@@ -16,7 +16,7 @@ import {
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
-import { useBrand } from "./brands";
+import { useBrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
@@ -129,7 +129,9 @@ export default function App() {
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
-  const brand = useBrand();
+  const brandId = useBrandId();
+  const brand = allBrands.find((b) => b.id === brandId);
+  if (!brand) throw new Error("Brand not found");
 
   return (
     <html
@@ -156,8 +158,8 @@ export default function App() {
             maintenance.maintenanceScreen?.show ? (
               <MaintenanceScreen {...maintenance.maintenanceScreen} />
             ) : (
-              <ThemeProvider brand={brand}>
-                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+              <ThemeProvider brandId={brandId}>
+                <OptInLivePreview path={`brands/${brandId}`} data={brand}>
                   {(brand) => (
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (
