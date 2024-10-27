@@ -5,6 +5,7 @@ import { Room, RoomListBlock } from "./types";
 import { RichTextParagraph } from "~/common/paragraph";
 import { Link } from "~/common/link";
 import { RichTextObject } from "~/common/rich-text";
+import { Media } from "~/payload-types";
 
 export type RoomCardProps = Room & Pick<RoomListBlock, "ctaTemplate">;
 
@@ -21,12 +22,15 @@ export function RoomCard({
         {heading}
       </Heading>
       <ImageViewer
-        images={images.map((image) => ({
-          src: image.image.url,
-          alt: image.image.alt || undefined,
-          caption: image.caption!,
-          aspectRatio: image.image.aspectRatio!,
-        }))}
+        images={images.map((image) => {
+          const imageMedia = image.image as Media;
+          return {
+            src: `/${imageMedia.filename}`,
+            alt: imageMedia.alt ?? undefined,
+            caption: image.caption!,
+            aspectRatio: imageMedia.width! / imageMedia.height!,
+          };
+        })}
       />
       {text && (
         <RichTextParagraph justify={true} className="px-6 sm:px-0">
