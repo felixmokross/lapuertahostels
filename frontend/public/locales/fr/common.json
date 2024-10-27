@@ -14,5 +14,8 @@
     "close": "Fermer",
     "seeMoreImages_one": "+{{count}} photo",
     "seeMoreImages_other": "+{{count}} photos"
+  },
+  "slidesBlock": {
+    "goToSlide": "Aller à la diapositive {{slide}}"
   }
 }

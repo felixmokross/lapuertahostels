@@ -21,9 +21,11 @@ export const Default: Story = {
       {
         name: "Lost City",
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+          id: "1",
+          filename: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg",
           alt: "Lost City",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         overlayTitle: {
           show: true,
@@ -35,9 +37,11 @@ export const Default: Story = {
       {
         name: "Parque Tayrona",
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
+          id: "2",
+          filename: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg",
           alt: "Parque Tayrona",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         overlayTitle: {
           show: true,
@@ -49,9 +53,11 @@ export const Default: Story = {
       {
         name: "Santa Marta",
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/david-hertle-3YCkAhD--Ic-unsplash.jpg?updatedAt=1703468865964",
+          id: "3",
+          filename: "david-hertle-3YCkAhD--Ic-unsplash.jpg",
           alt: "Santa Marta",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         overlayTitle: {
           show: true,
@@ -63,9 +69,11 @@ export const Default: Story = {
       {
         name: "Minca",
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+          id: "4",
+          filename: "denise-leisner-8eVV287ST0E-unsplash.jpg",
           alt: "Minca",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         overlayTitle: {
           show: true,

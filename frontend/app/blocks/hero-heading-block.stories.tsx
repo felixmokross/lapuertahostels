@@ -25,8 +25,11 @@ export const WithImage: Story = {
   args: {
     ...Default.args,
     image: {
-      show: true,
-      url: "https://ik.imagekit.io/lapuertahostels/aqua/deluxe-con-terraza/IMG_6591.jpg?updatedAt=1717280340182",
+      id: "1",
+      filename: "IMG_6591.jpg",
+      alt: "Terrace with two chairs and a coffee table",
+      createdAt: "2021-08-31T00:00:00.000Z",
+      updatedAt: "2021-08-31T00:00:00.000Z",
     },
   },
 };
