@@ -22,7 +22,11 @@ export const Media: CollectionConfig = {
         width: 400,
       },
     ],
-    adminThumbnail: "thumbnail",
+    // TODO support for video thumbnails coming soon (see https://github.com/payloadcms/payload/pull/7374)
+    adminThumbnail: ({ doc }) =>
+      (doc.mimeType as string).startsWith("video/")
+        ? undefined
+        : doc.sizes["thumbnail"].filename,
   },
   fields: [
     {
