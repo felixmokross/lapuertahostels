@@ -2,7 +2,7 @@ import { Block } from "payload/types";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
-import { newImageField } from "../fields/new-image";
+import { imageField } from "../fields/image";
 
 const textField = makeRichTextField();
 const callToActionField = makeCallToActionField({
@@ -26,7 +26,7 @@ export const WideImageBlock: Block = {
   imageAltText:
     "Preview of the Wide Image block, showing an image spanning the whole page width with an overlay text box including a call to action.",
   fields: [
-    newImageField,
+    imageField,
     {
       name: "overlayTextBox",
       label: {

@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { makeOverlayTitleField } from "../fields/overlay-title";
-import { makeNewImageField } from "../fields/new-image";
+import { makeImageField } from "../fields/image";
 import { Media } from "../collections/Media";
 
-const optionalNewImageField = makeNewImageField({ optional: true });
+const optionalImageField = makeImageField({ optional: true });
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
@@ -41,14 +41,14 @@ export const HeroVideoBlock: Block = {
       },
     },
     {
-      ...optionalNewImageField,
+      ...optionalImageField,
       name: "previewImage",
       label: {
         en: "Preview Image",
         es: "Imagen de vista previa",
       },
       admin: {
-        ...optionalNewImageField.admin,
+        ...optionalImageField.admin,
         description: {
           en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately to ImageKit.",
           es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado a ImageKit.",

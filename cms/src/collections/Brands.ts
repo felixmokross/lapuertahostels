@@ -3,7 +3,7 @@ import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cachePurgeHook";
 import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
-import { newImageField } from "../fields/new-image";
+import { imageField } from "../fields/image";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -85,7 +85,7 @@ export const Brands: CollectionConfig = {
       },
     },
     {
-      ...newImageField,
+      ...imageField,
       name: "logo",
       label: {
         en: "Logo",

@@ -4,7 +4,7 @@ import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
-import { newImageField } from "../fields/new-image";
+import { imageField } from "../fields/image";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -70,7 +70,7 @@ export const FeaturesBlock: Block = {
       minRows: 1,
       required: true,
       fields: [
-        newImageField,
+        imageField,
         headingField,
         makeRichTextField(),
         makeCallToActionField({ optional: true, showByDefault: false }),

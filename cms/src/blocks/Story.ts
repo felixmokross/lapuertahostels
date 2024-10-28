@@ -3,9 +3,9 @@ import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { makeNewImageField } from "../fields/new-image";
+import { makeImageField } from "../fields/image";
 
-const newImageField = makeNewImageField({ optional: true });
+const optionalImageField = makeImageField({ optional: true });
 
 export const StoryBlock: Block = {
   slug: "Story",
@@ -25,7 +25,7 @@ export const StoryBlock: Block = {
   fields: [
     { ...headingField, required: false },
     makeRichTextField({ mode: "long-form" }),
-    newImageField,
+    optionalImageField,
     {
       name: "imagePosition",
       label: {
