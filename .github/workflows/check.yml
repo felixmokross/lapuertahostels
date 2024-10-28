@@ -8,7 +8,7 @@ on:
 
 env:
   NODE_VERSION: 20
-  IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/staging
 
 jobs:
   frontend-lint:
@@ -87,7 +87,7 @@ jobs:
           onlyChanged: true
           workingDir: frontend
         env:
-          STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.IMAGEKIT_BASE_URL }}
+          STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
 
   cms-format:
     name: CMS / Format

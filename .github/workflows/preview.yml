@@ -4,7 +4,7 @@ on:
 
 env:
   NODE_VERSION: 20
-  IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
+  IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
   FRONTEND_APP_INTERNAL_PORT: 3000
   MEDIA_S3_BUCKET: lapuertahostels-media-preview
   MEDIA_S3_REGION: eu-west-3
