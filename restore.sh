@@ -2,7 +2,7 @@
 
 . .env
 
-# echo "Restoring database…"
+echo "Restoring database…"
 mongorestore --uri $RESTORE_DATABASE_URI  --nsExclude payload.users --nsExclude payload.payload-preferences --drop .backup/payload
 
 echo "Restoring S3 bucket…"
