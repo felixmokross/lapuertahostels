@@ -17,7 +17,6 @@ on:
 
 env:
   NODE_VERSION: 20
-  IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
   FRONTEND_APP_INTERNAL_PORT: 3000
   MEDIA_S3_REGION: eu-west-3
 
@@ -51,6 +50,7 @@ jobs:
       domain_frontend: ${{ steps.define-env.outputs.domain_frontend }}
       domain_cms: ${{ steps.define-env.outputs.domain_cms }}
       s3_bucket: ${{ steps.define-env.outputs.s3_bucket }}
+      imagekit_base_url: ${{ steps.define-env.outputs.imagekit_base_url }}
     steps:
       - run: |
           environment=${{ inputs.environment || 'staging' }}
@@ -63,6 +63,7 @@ jobs:
               echo "domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=admin.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "s3_bucket=lapuertahostels-media" >> "$GITHUB_OUTPUT"
+              echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels" >> "$GITHUB_OUTPUT"
               ;;
             staging)
               echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
@@ -70,6 +71,7 @@ jobs:
               echo "domain_frontend=staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=admin.staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "s3_bucket=lapuertahostels-media-staging" >> "$GITHUB_OUTPUT"
+              echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
               ;;
           esac
         id: define-env
@@ -97,7 +99,7 @@ jobs:
             --image-label v${{ steps.version.outputs.version }} \
             --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
             --env CANONICAL_HOSTNAME=www.${{ needs.define-env.outputs.domain_frontend }} \
-            --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
+            --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         working-directory: frontend
         env:
