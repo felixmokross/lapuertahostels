@@ -1,5 +1,4 @@
 import {
-  json,
   LoaderFunctionArgs,
   MetaFunction,
   type LinksFunction,
@@ -101,7 +100,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     getMaintenance(locale),
   ]);
 
-  return json({
+  return {
     locale,
     allBrands,
     maintenance,
@@ -112,7 +111,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       preview: getRequestUrl(request).searchParams.get("preview") || undefined,
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
-  });
+  };
 }
 
 export const handle = {
