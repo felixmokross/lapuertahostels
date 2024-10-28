@@ -7,6 +7,8 @@ import { Button } from "~/common/button";
 import { Link } from "~/common/link";
 import { Image } from "~/common/image";
 import { RichTextObject } from "~/common/rich-text";
+import { getSrcFromMedia } from "~/common/media";
+import { Media } from "~/payload-types";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -20,6 +22,7 @@ export function Feature({
   text,
   cta,
 }: FeatureProps) {
+  const imageMedia = image as Media;
   return (
     <div
       className={cn(
@@ -48,8 +51,8 @@ export function Feature({
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
         <Image
-          alt={image.alt || undefined}
-          src={image.url}
+          src={getSrcFromMedia(imageMedia)}
+          alt={imageMedia.alt ?? undefined}
           transformation={{
             width: 448,
             aspectRatio: { width: 4, height: 3 },
