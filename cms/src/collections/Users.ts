@@ -16,8 +16,11 @@ export const Users: CollectionConfig = {
   auth: {
     useAPIKey: true,
   },
+  defaultSort: "email",
   admin: {
     useAsTitle: "email",
+    defaultColumns: ["email", "role", "updatedAt"],
+    listSearchableFields: ["email", "role"],
   },
   access: {
     read: ({ req, id }) => isSelf(req, id) || isAdmin(req),

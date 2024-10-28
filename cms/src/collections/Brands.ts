@@ -17,8 +17,11 @@ export const Brands: CollectionConfig = {
       es: "Marcas",
     },
   },
+  defaultSort: "homeLinkUrl",
   admin: {
-    useAsTitle: "id",
+    useAsTitle: "name",
+    defaultColumns: ["logo", "name", "homeLinkUrl", "updatedAt"],
+    listSearchableFields: ["name"],
   },
   access: {
     create: () => false,
@@ -46,6 +49,9 @@ export const Brands: CollectionConfig = {
       },
       type: "text",
       required: true,
+      admin: {
+        position: "sidebar",
+      },
     },
     {
       name: "homeLinkUrl",
@@ -59,6 +65,17 @@ export const Brands: CollectionConfig = {
         update: () => false,
       },
       required: true,
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      ...imageField,
+      name: "logo",
+      label: {
+        en: "Logo",
+        es: "Logo",
+      },
     },
     {
       name: "navLinks",
@@ -82,14 +99,6 @@ export const Brands: CollectionConfig = {
         components: {
           RowLabel: ({ data }: RowLabelArgs) => data?.label,
         },
-      },
-    },
-    {
-      ...imageField,
-      name: "logo",
-      label: {
-        en: "Logo",
-        es: "Logo",
       },
     },
   ],

@@ -17,13 +17,13 @@ export const Pages: CollectionConfig = {
       es: "Páginas",
     },
   },
+  defaultSort: "id",
   admin: {
     useAsTitle: "url",
-    defaultColumns: ["url", "title", "brand"],
+    defaultColumns: ["url", "title", "brand", "updatedAt"],
     disableDuplicate: true,
     listSearchableFields: ["url", "title"],
   },
-  defaultSort: "id",
   access: {
     create: ({ req: { user } }) => user?.role === "admin",
     update: canManageContent,
