@@ -25,9 +25,11 @@ export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
     image: {
-      url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+      id: "1",
+      filename: "_DSC0299.jpg",
       alt: "Example image",
-      aspectRatio: undefined!,
+      createdAt: "2022-01-01T00:00:00Z",
+      updatedAt: "2022-01-01T00:00:00Z",
     },
     heading: "Beautiful Rooms",
     text: [

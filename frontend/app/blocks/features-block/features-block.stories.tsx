@@ -20,9 +20,11 @@ export const Default: Story = {
     items: [
       {
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+          id: "1",
+          filename: "_DSC0358.jpg",
           alt: "Example image",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         heading: "Feel Refreshed",
         text: [
@@ -45,9 +47,11 @@ export const Default: Story = {
       },
       {
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+          id: "2",
+          filename: "_DSC0299.jpg",
           alt: "Example image",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         heading: "Cool Down in the Pool",
         text: [
@@ -68,9 +72,11 @@ export const Default: Story = {
       },
       {
         image: {
-          url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+          id: "3",
+          filename: "_DSC0325.jpg",
           alt: "Example image",
-          aspectRatio: undefined!,
+          createdAt: "2022-01-01T00:00:00Z",
+          updatedAt: "2022-01-01T00:00:00Z",
         },
         heading: "Bring Your Family",
         text: [

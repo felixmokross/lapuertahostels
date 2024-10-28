@@ -528,9 +528,11 @@ export const Aqua: Story = {
           items: [
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6244.jpg?updatedAt=1714161153045",
+                id: "1",
+                filename: "IMG_6244.jpg",
                 alt: "Person playing a board game on a table in the hostel’s community areas.",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Time to Play",
               text: [
@@ -564,9 +566,11 @@ export const Aqua: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/deluxe-con-terraza/IMG_6591.jpg?updatedAt=1717280340182",
+                id: "2",
+                filename: "IMG_6591.jpg",
                 alt: "View of the Deluxe room’s terrace",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Relax on the Terrace",
               text: [
@@ -600,9 +604,11 @@ export const Aqua: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
-                alt: "Front view of the hotel",
-                aspectRatio: undefined!,
+                id: "3",
+                filename: "IMG_6591.jpg",
+                alt: "View of the Deluxe room’s terrace",
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Right in the City Center",
               text: [
@@ -768,9 +774,11 @@ export const Azul: Story = {
           items: [
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+                id: "4",
+                filename: "_DSC0358.jpg",
                 alt: "View of a room",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Feel Newborn",
               text: [
@@ -800,9 +808,11 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20twin%20with%20terrace/_DSC0325.jpg?updatedAt=1714162301928",
+                id: "5",
+                filename: "_DSC0325.jpg",
                 alt: "View of a Twin Room with two double beds",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Bring Your Family",
               text: [
@@ -825,9 +835,11 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
-                alt: "View of the courtyard pool",
-                aspectRatio: undefined!,
+                id: "6",
+                filename: "_DSC0299.jpg",
+                alt: "Example image",
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Cool Down by the Pool",
               text: [
@@ -850,9 +862,11 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
-                alt: "Picture of the courtyard",
-                aspectRatio: undefined!,
+                id: "8",
+                filename: "_DSC0299.jpg",
+                alt: "Example image",
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "A Beautiful Courtyard",
               text: [
@@ -875,9 +889,11 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/standard%20twin/_DSC0820.jpg?updatedAt=1714162321093",
-                alt: "Picture of the bathroom table with the hairdryer on it",
-                aspectRatio: undefined!,
+                id: "9",
+                filename: "_DSC0820.jpg",
+                alt: "Example image",
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Freshen Up",
               text: [
@@ -900,9 +916,11 @@ export const Azul: Story = {
             },
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
-                alt: "Picture of the room terrace with two coffee cups on the table",
-                aspectRatio: undefined!,
+                id: "10",
+                filename: "_dsc0989.jpg",
+                alt: "Example image",
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               heading: "Enjoy the Morning",
               text: [
