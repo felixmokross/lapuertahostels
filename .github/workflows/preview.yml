@@ -7,7 +7,7 @@ env:
   IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels
   IMAGEKIT_PUBLIC_KEY: public_r9qKreefh/uovH1xCSSb5e6H8ZM=
   FRONTEND_APP_INTERNAL_PORT: 3000
-  MEDIA_S3_BUCKET: lapuertahostels-media
+  MEDIA_S3_BUCKET: lapuertahostels-media-preview
   MEDIA_S3_REGION: eu-west-3
 
 jobs:

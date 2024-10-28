@@ -25,12 +25,12 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
       />
     </div>
   ) : (
-    <div className="flex min-h-28 items-end justify-center py-4 text-neutral-700 md:min-h-40 md:py-8">
+    <div className="flex min-h-28 items-end justify-center px-8 py-4 text-neutral-700 md:min-h-40 md:py-8">
       <Heading
         size="medium"
         as="h1"
         variant="inherit"
-        className="border-b-2 border-neutral-300"
+        className="border-b-2 border-neutral-300 pb-2 text-center"
       >
         {heading}
       </Heading>

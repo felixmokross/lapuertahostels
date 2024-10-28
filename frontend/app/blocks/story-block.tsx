@@ -47,10 +47,10 @@ export function StoryBlock({
       {imageMedia && (
         <div
           className={cn(
-            "mx-auto mt-32 aspect-[3/4] max-w-xs overflow-hidden rounded-md shadow-lg lg:mt-0 lg:max-w-none",
+            "mt-32 aspect-[3/4] overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
             {
-              "-rotate-6 lg:-ml-10 lg:mr-12": imagePosition === "left",
-              "rotate-6 lg:-mr-10 lg:ml-12": imagePosition === "right",
+              "sm:-rotate-6 lg:-ml-10 lg:mr-12": imagePosition === "left",
+              "sm:rotate-6 lg:-mr-10 lg:ml-12": imagePosition === "right",
             },
           )}
         >
@@ -65,7 +65,7 @@ export function StoryBlock({
             }}
             layout="responsive"
             srcMultiplier={5}
-            sizes="(min-width: 896px) 448px, 320px"
+            sizes="(min-width: 640px) 320px, (min-width: 896px) 448px, 100vw"
             loading="lazy"
           />
         </div>

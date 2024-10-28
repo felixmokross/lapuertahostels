@@ -28,14 +28,14 @@ export function ImageWithFloatingTextBlock({
       className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
       id={elementId || undefined}
     >
-      <div className="relative max-h-[32rem] overflow-hidden shadow-md lg:rounded-lg">
+      <div className="relative aspect-[1/1] overflow-hidden shadow-md sm:aspect-[4/3] lg:aspect-[16/9] lg:rounded-lg">
         <Image
           src={getSrcFromMedia(imageMedia)}
           alt={imageMedia.alt ?? undefined}
           className="h-full w-full object-cover"
           transformation={{
-            width: 800,
-            aspectRatio: { width: 16, height: 9 },
+            width: 900,
+            aspectRatio: { width: 1, height: 1 },
             cropStrategy: "maintain_ratio",
             focus: "auto",
           }}
@@ -76,7 +76,7 @@ export function ImageWithFloatingTextBlock({
       >
         <div
           className={cn(
-            "px-8 py-6 shadow-lg md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 lg:mx-0 lg:translate-y-20",
+            "px-8 py-6 md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 md:shadow-lg lg:mx-0 lg:translate-y-20",
             {
               "bg-gradient-to-bl lg:translate-x-12":
                 textPosition === "top-left",
