@@ -1,4 +1,4 @@
-import { Brand, Page } from "~/payload-types";
+import { Brand, Media, Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { Paragraph, RichTextParagraph } from "../common/paragraph";
@@ -6,6 +6,7 @@ import { Image } from "~/common/image";
 import { Link } from "~/common/link";
 import { BrandId } from "~/brands";
 import { RichTextObject } from "~/common/rich-text";
+import { getSrcFromMedia } from "~/common/media";
 
 export type AccommodationSelectorBlockProps = NonNullable<
   Page["layout"]
@@ -55,7 +56,7 @@ function AccommodationCard({
 }: AccommodationCardProps) {
   brand = brand as Brand;
   const brandId = brand.id as BrandId;
-
+  const imageMedia = image as Media;
   return (
     <Link
       to={brand.homeLinkUrl}
@@ -69,8 +70,8 @@ function AccommodationCard({
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-white">
         <Image
-          src={image.url}
-          alt={image.alt || undefined}
+          src={getSrcFromMedia(imageMedia)}
+          alt={imageMedia.alt ?? undefined}
           className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
           transformation={{
             aspectRatio: { width: 16, height: 9 },

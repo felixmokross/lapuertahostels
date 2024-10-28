@@ -209,9 +209,11 @@ export const Puerta: Story = {
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161155761",
+                id: "2",
+                filename: "Frente.jpg",
                 alt: "Puerta Aqua",
-                aspectRatio: undefined!,
+                createdAt: "2022-01-01T00:00:00Z",
+                updatedAt: "2022-01-01T00:00:00Z",
               },
               description:
                 "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
@@ -241,9 +243,11 @@ export const Puerta: Story = {
                 updatedAt: "2024-05-19T10:04:05.148Z",
               },
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                id: "1",
+                filename: "10.jpg",
                 alt: "La Puerta Azul",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               description:
                 "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",

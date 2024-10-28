@@ -3,8 +3,8 @@ import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { imageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
+import { newImageField } from "../fields/new-image";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -46,7 +46,7 @@ export const AccommodationSelectorBlock: Block = {
           filterOptions: { id: { not_equals: "puerta" } },
           required: true,
         },
-        imageField,
+        newImageField,
         {
           name: "description",
           label: {

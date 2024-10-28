@@ -141,8 +141,6 @@ export function makeImageField({
   };
 }
 
-export const imageField: GroupField = makeImageField();
-
 async function getImageAspectRatio(imageUrl: string) {
   try {
     const result = await getImageKit().getFileMetadata(imageUrl);
