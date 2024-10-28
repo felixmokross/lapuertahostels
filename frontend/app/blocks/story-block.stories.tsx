@@ -96,10 +96,11 @@ export const Default: Story = {
       },
     ],
     image: {
-      show: true,
-      url: "https://ik.imagekit.io/lapuertahostels//351429301_1381427532589680_2319248312954498147_n.jpg?updatedAt=1703702171449",
+      id: "1",
+      filename: "351429301_1381427532589680_2319248312954498147_n.jpg",
       alt: "Two persons chatting with each other and sitting in a relaxed manner at a table",
-      aspectRatio: undefined!,
+      createdAt: "2022-01-25T15:56:11.449Z",
+      updatedAt: "2022-01-25T15:56:11.449Z",
     },
   },
 };
@@ -107,20 +108,14 @@ export const Default: Story = {
 export const ImageRight: Story = {
   args: {
     ...Default.args,
-    image: {
-      ...Default.args.image,
-      position: "right",
-    },
+    imagePosition: "right",
   },
 };
 
 export const Grayscale: Story = {
   args: {
     ...Default.args,
-    image: {
-      ...Default.args.image,
-      grayscale: true,
-    },
+    grayscaleImage: true,
   },
 };
 
