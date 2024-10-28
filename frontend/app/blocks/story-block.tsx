@@ -2,8 +2,9 @@ import { Heading } from "../common/heading";
 import { Image } from "../common/image";
 import { cn } from "../common/cn";
 import { RichTextObject } from "~/common/rich-text";
-import { Page } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
+import { getSrcFromMedia } from "~/common/media";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Story";
@@ -12,15 +13,18 @@ export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
 export function StoryBlock({
   heading,
   image,
+  imagePosition,
+  grayscaleImage,
   text,
   elementId,
 }: StoryBlockProps) {
-  const imagePosition = image ? (image.position ?? "left") : undefined;
+  const imageMedia = image as Media | null | undefined;
+  imagePosition = imageMedia ? (imagePosition ?? "left") : undefined;
   return (
     <div
       id={elementId || undefined}
       className={cn(
-        image?.show &&
+        imageMedia &&
           "lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16",
         "mx-auto mb-24 mt-20 max-w-4xl",
       )}
@@ -40,7 +44,7 @@ export function StoryBlock({
           <LongFormRichText content={text as RichTextObject} />
         </div>
       </div>
-      {image?.show && (
+      {imageMedia && (
         <div
           className={cn(
             "mt-32 aspect-[3/4] overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
@@ -51,13 +55,13 @@ export function StoryBlock({
           )}
         >
           <Image
-            src={image.url!}
-            alt={image.alt || undefined}
+            src={getSrcFromMedia(imageMedia)}
+            alt={imageMedia.alt ?? undefined}
             className="h-full w-full object-cover"
             transformation={{
               aspectRatio: { width: 3, height: 4 },
               width: 400,
-              enhancement: image.grayscale ? "grayscale" : undefined,
+              enhancement: grayscaleImage ? "grayscale" : undefined,
             }}
             layout="responsive"
             srcMultiplier={5}

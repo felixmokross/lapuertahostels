@@ -3,7 +3,6 @@ FROM node:18.8-alpine as base
 FROM base as builder
 
 ARG PAYLOAD_PUBLIC_LIVE_PREVIEW_URL
-ARG PAYLOAD_PUBLIC_IMAGEKIT_BASE_URL
 
 WORKDIR /home/node/app
 COPY package*.json ./

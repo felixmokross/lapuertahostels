@@ -12,8 +12,10 @@ export const MediaCategory: CollectionConfig = {
       es: "Categorías de medios",
     },
   },
+  defaultSort: "name",
   admin: {
     useAsTitle: "name",
+    defaultColumns: ["name", "updatedAt"],
     description: {
       en: "Use media categories to organize your media as you find it useful. When you select media, you can filter by category.",
       es: "Usa las categorías de medios para organizar tus medios como te sea útil. Al seleccionar medios, puedes filtrar por categoría.",

@@ -2,7 +2,7 @@ import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { makeMoreOptionsField } from "../fields/more-options";
-import { newImageField } from "../fields/new-image";
+import { imageField } from "../fields/image";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -56,7 +56,7 @@ export const SlidesBlock: Block = {
             },
           },
         },
-        newImageField,
+        imageField,
         {
           // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
           name: "imageAlignment",

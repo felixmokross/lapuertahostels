@@ -12,6 +12,11 @@ export const Media: CollectionConfig = {
       es: "Medios",
     },
   },
+  defaultSort: "filename",
+  admin: {
+    defaultColumns: ["filename", "category", "alt", "updatedAt"],
+    listSearchableFields: ["filename", "alt"],
+  },
   upload: {
     staticURL: "/media",
     disableLocalStorage: true,
@@ -57,6 +62,7 @@ export const Media: CollectionConfig = {
           en: "Add a media category to easily find this media. When you select the media, you can filter by this category.",
           es: "Agrega una categoría de medios para encontrar fácilmente este medio. Al seleccionar el medio, puedes filtrar por esta categoría.",
         },
+        position: "sidebar",
       },
     },
   ],

@@ -1,25 +1,11 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
+import { PayloadPreference } from "payload/generated-types";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   await payload.db.connection
-    .collection<Before_Brand & After_Brand>("brands")
-    .updateMany(
-      {},
-      {
-        $rename: {
-          logoUrl: "logo.url",
-        },
-      },
-    );
+    .collection<PayloadPreference>("payload-preferences")
+    .deleteMany({ key: { $ne: "locale" } });
 }
-
-type Before_Brand = {
-  logoUrl: string;
-};
-
-type After_Brand = {
-  logo: { url: string };
-};
 
 export async function down({ payload }: MigrateDownArgs): Promise<void> {
   // Migration code
