@@ -32,6 +32,7 @@ export const Media: CollectionConfig = {
       (doc.mimeType as string).startsWith("video/")
         ? undefined
         : doc.sizes["thumbnail"].filename,
+    displayPreview: true,
   },
   fields: [
     {
