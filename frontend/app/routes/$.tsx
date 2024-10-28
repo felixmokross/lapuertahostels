@@ -4,9 +4,13 @@ import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
 import { getPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
-import { processPath } from "~/common/routing.server";
+import { handleIncomingRequest } from "~/common/routing.server";
 import i18n from "~/i18n";
-import { buildPath } from "~/common/routing";
+import {
+  buildLocalizedRelativeUrl,
+  getRequestUrl,
+  toUrl,
+} from "~/common/routing";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -17,27 +21,40 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
     ...i18n.supportedLngs.map((lng) => ({
       tagName: "link",
       rel: "alternate",
-      href: `${data.baseUrl}${buildPath(lng, data.pagePath)}`,
+      href: toUrl(
+        buildLocalizedRelativeUrl(lng, data.pageUrl),
+        data.origin,
+      ).toString(),
       hrefLang: lng,
     })),
     {
       tagName: "link",
       rel: "alternate",
-      href: `${data.baseUrl}${buildPath(null, data.pagePath)}`,
+      href: toUrl(
+        buildLocalizedRelativeUrl(null, data.pageUrl),
+        data.origin,
+      ).toString(),
       hrefLang: "x-default",
+    },
+    {
+      tagName: "link",
+      name: "canonical",
+      href: data?.canonicalUrl,
     },
     { title: getPageTitle(data.content) },
   ];
 };
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { pagePath, locale } = await processPath(request, params);
+export async function loader({ request }: LoaderFunctionArgs) {
+  const { pageUrl, locale } = await handleIncomingRequest(request);
 
-  const pageId = urlToId(pagePath);
+  const pageId = urlToId(toUrl(pageUrl).pathname);
   const dataPath = `pages/${pageId}`;
+  const requestUrl = getRequestUrl(request);
   return {
-    baseUrl: new URL(request.url).origin,
-    pagePath,
+    origin: requestUrl.origin,
+    canonicalUrl: requestUrl.toString(),
+    pageUrl,
     dataPath,
     content: await getPage(pageId, locale),
   };

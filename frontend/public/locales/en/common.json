@@ -14,5 +14,8 @@
     "close": "Close",
     "seeMoreImages_one": "+{{count}} Photo",
     "seeMoreImages_other": "+{{count}} Photos"
+  },
+  "slidesBlock": {
+    "goToSlide": "Go to slide {{slide}}"
   }
 }

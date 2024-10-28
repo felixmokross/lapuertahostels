@@ -1,18 +1,20 @@
-import { Page } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
+import { getSrcFromMedia } from "~/common/media";
 
 type HeroHeadingBlockProps = NonNullable<Page["hero"]>[number] & {
   blockType: "HeroHeading";
 };
 
 export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
-  return image?.show ? (
+  const imageMedia = image as Media;
+  return imageMedia ? (
     <div className="relative min-h-72 shadow-md md:min-h-96">
       <SlideImage
-        src={image.url!}
-        alt={image.alt || undefined}
+        src={getSrcFromMedia(imageMedia)}
+        alt={imageMedia.alt ?? undefined}
         withPreview={true}
         alignment="center"
       />

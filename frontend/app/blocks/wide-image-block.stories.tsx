@@ -15,9 +15,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     image: {
-      url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/IMG_6303.jpg?updatedAt=1714161153434",
+      id: "1",
+      filename: "IMG_6303.jpg",
       alt: "Test",
-      aspectRatio: undefined!,
+      createdAt: "2022-01-01T00:00:00.000Z",
+      updatedAt: "2022-01-01T00:00:00.000Z",
     },
     overlayTextBox: {
       show: true,

@@ -16,14 +16,18 @@ import {
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
-import { useBrand } from "./brands";
+import { useBrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
-import { processPath } from "./common/routing.server";
+import {
+  getLocaleAndPageUrl,
+  getRequestUrl,
+  toRelativeUrl,
+} from "./common/routing";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -79,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
   { name: "description", content: data?.common.meta?.description },
 ];
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
@@ -87,7 +91,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
 
-  const { locale } = await processPath(request, params);
+  const url = getRequestUrl(request);
+  const { locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
   const [allBrands, common, maintenance] = await Promise.all([
@@ -104,7 +109,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     environment: {
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
-      preview: new URL(request.url).searchParams.get("preview") || undefined,
+      preview: getRequestUrl(request).searchParams.get("preview") || undefined,
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   });
@@ -124,7 +129,9 @@ export default function App() {
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
-  const brand = useBrand();
+  const brandId = useBrandId();
+  const brand = allBrands.find((b) => b.id === brandId);
+  if (!brand) throw new Error("Brand not found");
 
   return (
     <html
@@ -151,8 +158,8 @@ export default function App() {
             maintenance.maintenanceScreen?.show ? (
               <MaintenanceScreen {...maintenance.maintenanceScreen} />
             ) : (
-              <ThemeProvider brand={brand}>
-                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+              <ThemeProvider brandId={brandId}>
+                <OptInLivePreview path={`brands/${brandId}`} data={brand}>
                   {(brand) => (
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (

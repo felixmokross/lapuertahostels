@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { localeCookie } from "~/i18next.server";
 import i18nConfig from "~/i18n";
+import { buildLocalizedRelativeUrl } from "~/common/routing";
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== "POST") {
@@ -28,7 +29,7 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  return redirect(`/${locale}${redirectTo}`, {
+  return redirect(buildLocalizedRelativeUrl(locale, redirectTo), {
     headers: { "Set-Cookie": await localeCookie.serialize(locale) },
   });
 }

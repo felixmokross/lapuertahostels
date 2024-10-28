@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { imageField } from "../fields/image";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { newImageField } from "../fields/new-image";
 
 const ctaTemplateField = makeCallToActionField({
   isTemplate: true,
@@ -64,7 +64,7 @@ export const RoomListBlock: Block = {
           },
           minRows: 1,
           fields: [
-            imageField,
+            newImageField,
             {
               name: "caption",
               type: "text",

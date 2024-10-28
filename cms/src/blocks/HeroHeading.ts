@@ -1,6 +1,6 @@
 import { Block } from "payload/types";
 import { headingField } from "../fields/heading";
-import { makeImageField } from "../fields/image";
+import { makeNewImageField } from "../fields/new-image";
 
 export const HeroHeading: Block = {
   slug: "HeroHeading",
@@ -17,5 +17,5 @@ export const HeroHeading: Block = {
   imageURL: "/assets/blocks/HeroHeading.png",
   imageAltText:
     "Preview of the Hero Heading block, showing a centered heading on a brand color background.",
-  fields: [headingField, makeImageField({ optional: true })],
+  fields: [headingField, makeNewImageField({ optional: true })],
 };

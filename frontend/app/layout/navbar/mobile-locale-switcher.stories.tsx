@@ -30,5 +30,6 @@ export const Default: Story = {
     open: true,
     currentLocale: "en",
     onClose: () => {},
+    redirectTo: "/",
   },
 };

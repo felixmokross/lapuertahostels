@@ -1,7 +1,8 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import i18next from "~/i18next.server";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { handleIncomingRequest } from "~/common/routing.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const locale = await i18next.getLocale(request);
-  return redirect(`/${locale}`);
+  await handleIncomingRequest(request);
+
+  throw new Error("Redirection to localized route failed");
 }

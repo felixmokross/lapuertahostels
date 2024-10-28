@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Page } from "./page";
-import { Brand, Page as PageType } from "~/payload-types";
+import { Page as PageType } from "~/payload-types";
 import { ThemeProvider } from "~/themes";
 
 const meta = {
@@ -18,7 +18,7 @@ export const Puerta: Story = {
   decorators: [
     // override the brand context, this is a Puerta-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "puerta" } as Brand}>
+      <ThemeProvider brandId="puerta">
         <Story />
       </ThemeProvider>
     ),
@@ -35,9 +35,12 @@ export const Puerta: Story = {
             {
               name: "Tayrona",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/experiences/tayrona/images_1684813711570.jpg?updatedAt=1714264025241",
+                id: "1",
+                filename:
+                  "mesmerizing-scenery-seascape-with-lush-nature-daytime.jpg",
                 alt: "View of the beach in Tayrona National Park",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -63,9 +66,11 @@ export const Puerta: Story = {
             {
               name: "Lost City",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/datingjungle-Vv4JB0SMfZ4-unsplash.jpg?updatedAt=1703284394843",
+                id: "2",
+                filename: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg",
                 alt: "View of the Lost City",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -86,9 +91,11 @@ export const Puerta: Story = {
             {
               name: "Minca",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/denise-leisner-8eVV287ST0E-unsplash.jpg?updatedAt=1703369612704",
+                id: "3",
+                filename: "denise-leisner-8eVV287ST0E-unsplash.jpg",
                 alt: "View of the forest in the Minca region",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -192,8 +199,11 @@ export const Puerta: Story = {
                   },
                 ],
                 logo: {
-                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-aqua-simple.png?updatedAt=1703915191239",
-                  aspectRatio: undefined!,
+                  id: "6647dc15f50fb271d132f9c7",
+                  filename: "logo-aqua-simple.png",
+                  alt: "Puerta Aqua Logo",
+                  createdAt: "2024-05-19T10:04:05.148Z",
+                  updatedAt: "2024-05-19T10:04:05.148Z",
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -221,8 +231,11 @@ export const Puerta: Story = {
                   },
                 ],
                 logo: {
-                  url: "https://ik.imagekit.io/lapuertahostels/logos/logo-azul-simple.png?updatedAt=1703915175439",
-                  aspectRatio: undefined!,
+                  id: "6647dc15f50fb271d132f9c7",
+                  filename: "logo-azul-simple.png",
+                  alt: "La Puerta Azul Logo",
+                  createdAt: "2024-05-19T10:04:05.148Z",
+                  updatedAt: "2024-05-19T10:04:05.148Z",
                 },
                 createdAt: "2024-05-19T10:04:05.148Z",
                 updatedAt: "2024-05-19T10:04:05.148Z",
@@ -241,9 +254,11 @@ export const Puerta: Story = {
         {
           elementId: "santa-marta",
           image: {
-            url: "https://ik.imagekit.io/lapuertahostels//oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg?updatedAt=1703778785707",
+            id: "1",
+            filename: "oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg",
             alt: "View of Santa Marta",
-            aspectRatio: undefined!,
+            createdAt: "2024-05-19T10:04:05.148Z",
+            updatedAt: "2024-05-19T10:04:05.148Z",
           },
           overlayTitle: {
             text: [
@@ -415,7 +430,7 @@ export const Aqua: Story = {
   decorators: [
     // override the brand context, this is a Aqua-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "aqua" } as Brand}>
+      <ThemeProvider brandId="aqua">
         <Story />
       </ThemeProvider>
     ),
@@ -435,9 +450,11 @@ export const Aqua: Story = {
               id: "slide-1",
               name: "Front View",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/aqua/spaces/Frente.jpg?updatedAt=1714161502803",
+                id: "4",
+                filename: "Frente.jpg",
                 alt: "Front view of Puerta Aqua",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
@@ -670,7 +687,7 @@ export const Azul: Story = {
   decorators: [
     // override the brand context, this is a Azul-only component
     (Story) => (
-      <ThemeProvider brand={{ id: "azul" } as Brand}>
+      <ThemeProvider brandId="azul">
         <Story />
       </ThemeProvider>
     ),
@@ -686,11 +703,13 @@ export const Azul: Story = {
           slides: [
             {
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/10.jpg?updatedAt=1714162021839",
+                id: "1",
+                filename: "10.jpg",
                 alt: "Atrium of La Puerta Azul",
-                alignment: "bottom",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
+              imageAlignment: "bottom",
               name: "Atrium",
               overlayTitle: {
                 show: true,
@@ -714,9 +733,11 @@ export const Azul: Story = {
             {
               name: "Room View",
               image: {
-                url: "https://ik.imagekit.io/lapuertahostels/azul/piscina/_DSC0299.jpg?updatedAt=1714162023408",
+                id: "8",
+                filename: "_DSC0299.jpg",
                 alt: "Room view of La Puerta Azul",
-                aspectRatio: undefined!,
+                createdAt: "2024-05-19T10:04:05.148Z",
+                updatedAt: "2024-05-19T10:04:05.148Z",
               },
               overlayTitle: {
                 show: true,
