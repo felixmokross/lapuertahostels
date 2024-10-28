@@ -19,7 +19,8 @@ import i18nConfig from "./i18n";
 import { resolve } from "node:path";
 import { getRequestUrl } from "./common/routing";
 
-const ABORT_DELAY = 5_000;
+// Reject/cancel all pending promises after 5 seconds
+export const streamTimeout = 5000;
 
 export default async function handleRequest(
   request: Request,
@@ -73,11 +74,7 @@ function handleBotRequest(
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={i18nInstance}>
-        <RemixServer
-          context={remixContext}
-          url={getRequestUrl(request)}
-          abortDelay={ABORT_DELAY}
-        />
+        <RemixServer context={remixContext} url={getRequestUrl(request)} />
       </I18nextProvider>,
       {
         onAllReady() {
@@ -111,7 +108,9 @@ function handleBotRequest(
       },
     );
 
-    setTimeout(abort, ABORT_DELAY);
+    // Automatically timeout the React renderer after 6 seconds, which ensures
+    // React has enough time to flush down the rejected boundary contents
+    setTimeout(abort, streamTimeout + 1000);
   });
 }
 
@@ -126,11 +125,7 @@ function handleBrowserRequest(
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={i18nInstance}>
-        <RemixServer
-          context={remixContext}
-          url={getRequestUrl(request)}
-          abortDelay={ABORT_DELAY}
-        />
+        <RemixServer context={remixContext} url={getRequestUrl(request)} />
       </I18nextProvider>,
       {
         onShellReady() {
@@ -164,6 +159,8 @@ function handleBrowserRequest(
       },
     );
 
-    setTimeout(abort, ABORT_DELAY);
+    // Automatically timeout the React renderer after 6 seconds, which ensures
+    // React has enough time to flush down the rejected boundary contents
+    setTimeout(abort, streamTimeout + 1000);
   });
 }

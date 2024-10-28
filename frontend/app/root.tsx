@@ -1,5 +1,4 @@
 import {
-  json,
   LoaderFunctionArgs,
   MetaFunction,
   type LinksFunction,
@@ -16,8 +15,8 @@ import {
 import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
-import { useBrandId } from "./brands";
-import { getBrands, getCommon, getMaintenance } from "./cms-data";
+import { BrandId } from "./brands";
+import { getBrands, getCommon, getMaintenance, getPage } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
@@ -27,7 +26,10 @@ import {
   getLocaleAndPageUrl,
   getRequestUrl,
   toRelativeUrl,
+  toUrl,
+  urlToId,
 } from "./common/routing";
+import { Brand } from "./payload-types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -92,17 +94,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   const url = getRequestUrl(request);
-  const { locale } = getLocaleAndPageUrl(toRelativeUrl(url));
+  const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
-  const [allBrands, common, maintenance] = await Promise.all([
+  const pageId = urlToId(toUrl(pageUrl).pathname);
+
+  const [page, allBrands, common, maintenance] = await Promise.all([
+    getPage(pageId, locale),
     getBrands(locale),
     getCommon(locale),
     getMaintenance(locale),
   ]);
 
-  return json({
+  // retrieving the brand from `allBrands`, `page.brand` does not have the right depth
+  const brandId = (page.brand as Brand).id;
+  const brand = allBrands.find((b) => b.id === brandId);
+  if (!brand) throw new Error("Brand not found");
+
+  return {
     locale,
+    brand,
     allBrands,
     maintenance,
     common,
@@ -112,7 +123,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       preview: getRequestUrl(request).searchParams.get("preview") || undefined,
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
-  });
+  };
 }
 
 export const handle = {
@@ -124,14 +135,11 @@ export const handle = {
 };
 
 export default function App() {
-  const { common, maintenance, analyticsDomain, allBrands } =
+  const { brand, common, maintenance, analyticsDomain, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
-  const brandId = useBrandId();
-  const brand = allBrands.find((b) => b.id === brandId);
-  if (!brand) throw new Error("Brand not found");
 
   return (
     <html
@@ -158,8 +166,8 @@ export default function App() {
             maintenance.maintenanceScreen?.show ? (
               <MaintenanceScreen {...maintenance.maintenanceScreen} />
             ) : (
-              <ThemeProvider brandId={brandId}>
-                <OptInLivePreview path={`brands/${brandId}`} data={brand}>
+              <ThemeProvider brandId={brand.id as BrandId}>
+                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
                   {(brand) => (
                     <OptInLivePreview path="globals/common" data={common}>
                       {(common) => (
