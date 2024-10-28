@@ -10,6 +10,7 @@ import {
   buildLocalizedRelativeUrl,
   getRequestUrl,
   toUrl,
+  urlToId,
 } from "~/common/routing";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
@@ -68,8 +69,4 @@ export default function Route() {
       {(data) => <Page content={data} />}
     </OptInLivePreview>
   );
-}
-
-function urlToId(url: string) {
-  return url.replaceAll("/", ":");
 }
