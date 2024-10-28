@@ -10,6 +10,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 
 import styles from "./tailwind.css?url";
@@ -205,4 +206,26 @@ const ADDITIONAL_SCROLL_PADDING = 32;
 
 function getScrollTopPadding(headerHeight: number) {
   return headerHeight + ADDITIONAL_SCROLL_PADDING;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const { i18n } = useTranslation();
+  console.error(error);
+  return (
+    <html lang={i18n.language} dir={i18n.dir()}>
+      <head>
+        <title>Oh no!</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <p>An error occurred</p>
+        {/* add the UI you want your users to see */}
+        <Scripts />
+      </body>
+    </html>
+  );
 }
