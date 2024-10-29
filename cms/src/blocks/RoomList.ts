@@ -2,13 +2,8 @@ import { Block } from "payload/types";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
-import { makeCallToActionField } from "../fields/call-to-action";
 import { imageField } from "../fields/image";
-
-const ctaTemplateField = makeCallToActionField({
-  isTemplate: true,
-  optional: true,
-});
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -76,28 +71,11 @@ export const RoomListBlock: Block = {
             },
           ],
         },
-        {
-          name: "ctaUrl",
-          label: {
-            en: "Call to Action URL",
-            es: "URL de Call to Action",
-          },
-          type: "text",
-        },
+        makeCallToActionField(),
       ],
       admin: {
         components: {
           RowLabel: ({ data }: RowLabelArgs) => data?.heading,
-        },
-      },
-    },
-    {
-      ...ctaTemplateField,
-      admin: {
-        ...ctaTemplateField.admin,
-        description: {
-          en: "If enabled, shows a Call to Action button on each room card. The button text and variant will be the same for each card. The URL is defined for each room individually.",
-          es: "Si está habilitado, muestra un botón de Call to Action en cada tarjeta de habitación. El texto y la variante del botón serán los mismos para cada tarjeta. La URL se define para cada habitación individualmente.",
         },
       },
     },

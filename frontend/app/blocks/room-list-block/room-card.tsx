@@ -1,22 +1,16 @@
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { ImageViewer } from "~/common/image-viewer/image-viewer";
-import { Room, RoomListBlock } from "./types";
+import { Room } from "./types";
 import { RichTextParagraph } from "~/common/paragraph";
-import { Link } from "~/common/link";
 import { RichTextObject } from "~/common/rich-text";
 import { Media } from "~/payload-types";
 import { getSrcFromMedia } from "~/common/media";
+import { PageLink } from "~/common/page-link";
 
-export type RoomCardProps = Room & Pick<RoomListBlock, "ctaTemplate">;
+export type RoomCardProps = Room;
 
-export function RoomCard({
-  heading,
-  text,
-  images,
-  ctaUrl,
-  ctaTemplate,
-}: RoomCardProps) {
+export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
   return (
     <div className="flex max-w-[35rem] flex-col items-center gap-8">
       <Heading as="h4" size="medium" className="px-6 text-center sm:px-0">
@@ -38,15 +32,11 @@ export function RoomCard({
           {text as RichTextObject}
         </RichTextParagraph>
       )}
-      {ctaTemplate?.show && (
-        <Button
-          as={Link}
-          to={ctaUrl || "#"}
-          variant={ctaTemplate.variant || undefined}
-        >
-          {ctaTemplate.text}
-        </Button>
-      )}
+      <Button
+        as={PageLink}
+        link={cta.link}
+        variant={cta.variant || undefined}
+      />
     </div>
   );
 }

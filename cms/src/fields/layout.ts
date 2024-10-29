@@ -2,11 +2,12 @@ import { BlockField } from "payload/types";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { FeaturesBlock } from "../blocks/Features";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
-import { LeadBlock } from "../blocks/Lead";
+import { LeadTextBlock } from "../blocks/LeadText";
 import { StoryBlock } from "../blocks/Story";
 import { SeparatorBlock } from "../blocks/Separator";
 import { WideImageBlock } from "../blocks/WideImage";
 import { RoomListBlock } from "../blocks/RoomList";
+import { TextColumnsWithImagesBlock } from "../blocks/TextColumnsWithImages";
 
 export const layoutField: BlockField = {
   name: "layout",
@@ -28,7 +29,7 @@ export const layoutField: BlockField = {
   minRows: 0,
   maxRows: 20,
   blocks: [
-    LeadBlock,
+    LeadTextBlock,
     AccommodationSelectorBlock,
     ImageWithFloatingTextBlock,
     StoryBlock,
@@ -36,6 +37,7 @@ export const layoutField: BlockField = {
     SeparatorBlock,
     WideImageBlock,
     RoomListBlock,
+    TextColumnsWithImagesBlock,
   ],
   admin: {
     initCollapsed: true,

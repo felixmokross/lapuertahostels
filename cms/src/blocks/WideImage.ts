@@ -1,8 +1,8 @@
 import { Block } from "payload/types";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { makeCallToActionField } from "../fields/call-to-action";
 import { imageField } from "../fields/image";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 const textField = makeRichTextField();
 const callToActionField = makeCallToActionField({

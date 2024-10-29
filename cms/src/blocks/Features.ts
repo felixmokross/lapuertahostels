@@ -3,8 +3,8 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { makeCallToActionField } from "../fields/call-to-action";
 import { imageField } from "../fields/image";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const FeaturesBlock: Block = {
   slug: "Features",

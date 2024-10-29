@@ -31,7 +31,14 @@ export const Default: Story = {
           show: true,
           text: [{ children: [{ text: "Lost City" }] }],
           position: "top-right",
-          cta: { show: true, text: "Read More", url: "#" },
+          cta: {
+            show: true,
+            link: {
+              label: "Read More",
+              type: "external",
+              url: "http://example.com",
+            },
+          },
         },
       },
       {
@@ -47,7 +54,14 @@ export const Default: Story = {
           show: true,
           text: [{ children: [{ text: "Parque Tayrona" }] }],
           position: "bottom-left",
-          cta: { show: true, text: "Read More", url: "#" },
+          cta: {
+            show: true,
+            link: {
+              label: "Read More",
+              type: "external",
+              url: "http://example.com",
+            },
+          },
         },
       },
       {
@@ -63,7 +77,14 @@ export const Default: Story = {
           show: true,
           text: [{ children: [{ text: "Santa Marta" }] }],
           position: "bottom-right",
-          cta: { show: true, text: "Read More", url: "#" },
+          cta: {
+            show: true,
+            link: {
+              label: "Read More",
+              type: "external",
+              url: "http://example.com",
+            },
+          },
         },
       },
       {
@@ -79,7 +100,14 @@ export const Default: Story = {
           show: true,
           text: [{ children: [{ text: "Minca" }] }],
           position: "top-left",
-          cta: { show: true, text: "Read More", url: "#" },
+          cta: {
+            show: true,
+            link: {
+              label: "Read More",
+              type: "external",
+              url: "http://example.com",
+            },
+          },
         },
       },
     ],

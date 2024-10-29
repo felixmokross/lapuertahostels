@@ -1,16 +1,21 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
-import { Link } from "~/common/link";
 import { Page } from "~/payload-types";
 import { cn } from "~/common/cn";
 import { RichTextObject } from "~/common/rich-text";
+import { PageLink } from "~/common/page-link";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Lead";
 };
 
-export function LeadBlock({ heading, text, elementId, cta }: LeadBlockProps) {
+export function LeadTextBlock({
+  heading,
+  text,
+  elementId,
+  cta,
+}: LeadBlockProps) {
   return (
     <div
       id={elementId || undefined}
@@ -32,14 +37,12 @@ export function LeadBlock({ heading, text, elementId, cta }: LeadBlockProps) {
 
       {cta?.show && (
         <Button
-          as={Link}
-          to={cta.url!}
+          as={PageLink}
+          link={cta.link!}
           size="large"
           variant={cta.variant || undefined}
           className="mt-10 text-center sm:self-center md:mt-12"
-        >
-          {cta.text}
-        </Button>
+        />
       )}
     </div>
   );
