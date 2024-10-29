@@ -5,20 +5,21 @@ import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { makeCallToActionField } from "../fields/call-to-action";
 
-export const LeadBlock: Block = {
+export const LeadTextBlock: Block = {
   slug: "Lead",
   labels: {
     singular: {
-      en: "Lead",
-      es: "Encabezado",
+      en: "Lead Text",
+      es: "Texto de introducción",
     },
     plural: {
-      en: "Leads",
-      es: "Encabezados",
+      en: "Lead Texts",
+      es: "Textos de introducción",
     },
   },
-  imageURL: "/assets/blocks/Lead.png",
-  imageAltText: "Preview of the Lead block, showing a heading and a large text",
+  imageURL: "/assets/blocks/LeadText.png",
+  imageAltText:
+    "Preview of the Lead Text block, showing a heading and a large text",
   fields: [
     { ...headingField, required: false },
     makeRichTextField(),

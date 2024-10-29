@@ -1,4 +1,4 @@
-import { GroupField, RelationshipField } from "payload/types";
+import { GroupField } from "payload/types";
 import { validateUrl } from "../common/validation";
 
 export const linkField: GroupField = {
@@ -27,6 +27,7 @@ export const linkField: GroupField = {
       },
       type: "radio",
       required: true,
+      defaultValue: "internal",
       options: [
         {
           label: {
@@ -79,6 +80,7 @@ export const linkField: GroupField = {
               en: "If a query string is provided, it will be appended to the URL with a '?' character.",
               es: "Si se proporciona una cadena de consulta, se añadirá a la URL con un carácter '?'.",
             },
+            condition: (_, siblingData) => siblingData.type === "internal",
           },
         },
         {
@@ -94,12 +96,10 @@ export const linkField: GroupField = {
               en: "If a fragment is provided, it will be appended to the URL with a '#' character. Use this to link to a section of a page, defined by an 'Element ID'.",
               es: "Si se proporciona un fragmento, se añadirá a la URL con un carácter '#'. Úsalo para enlazar a una sección de una página, definida por un 'ID de elemento'.",
             },
+            condition: (_, siblingData) => siblingData.type === "internal",
           },
         },
       ],
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "internal",
-      },
     },
     {
       name: "url",

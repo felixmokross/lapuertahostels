@@ -44,8 +44,11 @@ export const ImageLeft: Story = {
     ],
     cta: {
       show: true,
-      text: "Book Now",
-      url: "/book-now",
+      link: {
+        label: "Book Now",
+        type: "external",
+        url: "http://example.com/booking-engine",
+      },
     },
   },
 };

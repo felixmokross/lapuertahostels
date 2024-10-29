@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Header } from "./header";
-import { Brand } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 
 const meta = {
   title: "layout/Header",
@@ -53,8 +53,11 @@ export const Default: Story = {
       message: "Travel before 20 September and get 20% off!",
       cta: {
         show: true,
-        text: "Book now",
-        url: "/cta",
+        link: {
+          label: "Book Now",
+          type: "internal",
+          page: { url: "/booking" } as Page,
+        },
       },
     },
     brand: puertaBrand,

@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { LeadBlock } from "./lead-block";
+import { LeadTextBlock } from "./lead-text-block";
+import { Page } from "~/payload-types";
 
 const meta = {
-  title: "blocks/Lead Block",
-  component: LeadBlock,
+  title: "blocks/Lead Text Block",
+  component: LeadTextBlock,
   parameters: {
     layout: "fullscreen",
   },
-} satisfies Meta<typeof LeadBlock>;
+} satisfies Meta<typeof LeadTextBlock>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -62,8 +63,12 @@ export const WithCallToAction: Story = {
     ...Default.args,
     cta: {
       show: true,
-      text: "Book now",
-      url: "/santa-marta",
+      link: {
+        label: "Book Now",
+        type: "internal",
+        page: { url: "/" } as Page,
+        fragment: "bookings",
+      },
     },
   },
 };

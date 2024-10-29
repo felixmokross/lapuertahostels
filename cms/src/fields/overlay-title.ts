@@ -1,8 +1,8 @@
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { GroupField, RadioField } from "payload/types";
-import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
 import { Page } from "payload/generated-types";
+import { makeCallToActionField } from "./call-to-action";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;

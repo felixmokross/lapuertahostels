@@ -57,12 +57,6 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
     }
   }, [onLoad, isLoading, localRef]);
 
-  if (src && src.startsWith(imagekitBaseUrl)) {
-    src = src?.slice(imagekitBaseUrl.length);
-  } else if (src && isExternalUrl(src)) {
-    throw new Error(`Image URL must start with ${imagekitBaseUrl}`);
-  }
-
   let srcSet = undefined;
   if (layout === "fixed") {
     srcSet = `${getSrc()}, ${getSrc(2)} 2x, ${getSrc(3)} 3x`;
@@ -88,7 +82,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
             : undefined,
         }
       : undefined;
-    return `${imagekitBaseUrl}/${ratioAdjustedTransformation ? toImagekitTransformationString(ratioAdjustedTransformation) : ""}${src}`;
+    return `${imagekitBaseUrl}${ratioAdjustedTransformation ? `/${toImagekitTransformationString(ratioAdjustedTransformation)}` : ""}${src}`;
   }
 
   return (
@@ -148,8 +142,4 @@ function toImagekitTransformationItemString(
     default:
       throw new Error(`Unsupported key: ${key}`);
   }
-}
-
-function isExternalUrl(url: string) {
-  return url.startsWith("http://") || url.startsWith("https://");
 }
