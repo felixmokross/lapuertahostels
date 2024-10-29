@@ -54,11 +54,20 @@ export function TextColumnsWithImagesBlock({
             {...item}
             imageSizes={
               numberOfColumnsPerRow === 2
-                ? "(min-width: 1280) 50vw, 100vw"
+                ? "(min-width: 1280px) 50vw, 100vw"
                 : numberOfColumnsPerRow === 3
-                  ? "(min-width: 768px) 50vw, (min-width: 1280px) 33vw, 100vw"
+                  ? "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                   : numberOfColumnsPerRow === 4
-                    ? "(min-width: 640px) 50vw, (min-width: 768px) 33vw, (min-width: 1280px) 25vw, 100vw"
+                    ? "(min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    : undefined
+            }
+            imageWidth={
+              numberOfColumnsPerRow === 2
+                ? 640
+                : numberOfColumnsPerRow === 3
+                  ? 430
+                  : numberOfColumnsPerRow === 4
+                    ? 320
                     : undefined
             }
           />
@@ -70,6 +79,7 @@ export function TextColumnsWithImagesBlock({
 
 type TextWithImageItem = TextColumnsWithImagesBlockProps["items"][number] & {
   imageSizes?: string;
+  imageWidth?: number;
 };
 
 function TextWithImageItem({
@@ -79,6 +89,7 @@ function TextWithImageItem({
   cta,
   size,
   imageSizes,
+  imageWidth,
 }: TextWithImageItem) {
   size = size ?? "full";
   return (
@@ -94,11 +105,11 @@ function TextWithImageItem({
           media={image}
           layout="responsive"
           transformation={{
-            width: 1100,
+            width: imageWidth,
             aspectRatio: { width: 9, height: 10 },
           }}
           sizes={imageSizes}
-          srcMultiplier={4}
+          srcMultiplier={5}
         />
       )}
       {heading && (
