@@ -39,8 +39,11 @@ export const Default: Story = {
       position: "center",
       cta: {
         show: true,
-        url: "/tayrona",
-        text: "Book Now",
+        link: {
+          label: "Book Now",
+          type: "external",
+          url: "http://example.com",
+        },
       },
     },
   },

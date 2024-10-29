@@ -61,6 +61,13 @@ export const Default: Story = {
             },
           },
         ],
+        cta: {
+          link: {
+            label: "Reserve Now",
+            type: "external",
+            url: "http://example.com",
+          },
+        },
       },
       {
         heading: "Deluxe King Room",
@@ -99,6 +106,13 @@ export const Default: Story = {
             },
           },
         ],
+        cta: {
+          link: {
+            label: "Reserve Now",
+            type: "external",
+            url: "http://example.com",
+          },
+        },
       },
       {
         heading: "Standard Room",
@@ -137,11 +151,14 @@ export const Default: Story = {
             },
           },
         ],
+        cta: {
+          link: {
+            label: "Reserve Now",
+            type: "external",
+            url: "http://example.com",
+          },
+        },
       },
     ],
-    ctaTemplate: {
-      show: true,
-      text: "Reserve Now",
-    },
   },
 };

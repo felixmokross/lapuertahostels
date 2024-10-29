@@ -90,10 +90,13 @@ export const Default: Story = {
         },
       },
     ],
-    ctaTemplate: {
-      show: true,
-      text: "Reserve Now",
+    cta: {
+      link: {
+        label: "Reserve Now",
+        type: "external",
+        url: "http://example.com",
+      },
+      variant: "secondary",
     },
-    ctaUrl: "/book",
   },
 };

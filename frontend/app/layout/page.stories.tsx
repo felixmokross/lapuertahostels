@@ -57,8 +57,11 @@ export const Puerta: Story = {
                 overlay: "moderate",
                 cta: {
                   show: true,
-                  text: "Read More",
-                  url: "/experiences/tayrona",
+                  link: {
+                    label: "Read More",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
               id: "663e6ee0caac5f81e3216b3e",
@@ -82,8 +85,11 @@ export const Puerta: Story = {
                 overlay: "moderate",
                 cta: {
                   show: true,
-                  text: "Read More",
-                  url: "/experiences/lost-city",
+                  link: {
+                    label: "Read More",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
               id: "663e6fbacaac5f81e3216b7d",
@@ -107,8 +113,11 @@ export const Puerta: Story = {
                 overlay: "moderate",
                 cta: {
                   show: true,
-                  text: "Read More",
-                  url: "/experiences/minca",
+                  link: {
+                    label: "Read More",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
               id: "663e8b33c79934cdb011e7d0",
@@ -476,8 +485,11 @@ export const Aqua: Story = {
                 overlay: "intense",
                 cta: {
                   show: true,
-                  text: "Reserve Now",
-                  url: "/booking",
+                  link: {
+                    label: "Reserve Now",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
             },
@@ -737,8 +749,11 @@ export const Azul: Story = {
                 position: "center",
                 cta: {
                   show: true,
-                  text: "Reserve Now",
-                  url: "/booking",
+                  link: {
+                    label: "Reserve Now",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
             },
@@ -765,8 +780,11 @@ export const Azul: Story = {
                 position: "bottom-left",
                 cta: {
                   show: true,
-                  text: "Book Now",
-                  url: "/booking",
+                  link: {
+                    label: "Book Now",
+                    type: "external",
+                    url: "http://example.com",
+                  },
                 },
               },
             },
