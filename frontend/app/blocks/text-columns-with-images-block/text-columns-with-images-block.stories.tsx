@@ -27,7 +27,7 @@ export const Default: Story = {
         bold("make your life easier."),
       ),
     ],
-    numberOfColumnsPerRow: 3,
+    numberOfColumns: 3,
     items: [
       {
         id: "1",
@@ -47,11 +47,11 @@ export const Default: Story = {
           },
           variant: "secondary",
         },
-        size: "medium",
+        size: "full",
       },
       {
         id: "2",
-        image: media("_DSC0299.jpg"),
+        image: media("Tayrona 4.jpg"),
         heading: "Another Service",
         text: [
           plain(
@@ -69,10 +69,11 @@ export const Default: Story = {
           },
           variant: "secondary",
         },
+        size: "full",
       },
       {
         id: "3",
-        image: media("_DSC0299.jpg"),
+        image: media("CP4.jpg"),
         heading: "This is Interesting",
         text: [
           plain(
@@ -90,11 +91,11 @@ export const Default: Story = {
           },
           variant: "secondary",
         },
-        size: "medium",
+        size: "full",
       },
       {
         id: "4",
-        image: media("_DSC0299.jpg"),
+        image: media("Minca 5.png"),
         heading: "This service",
         text: [
           plain(
@@ -112,6 +113,41 @@ export const Default: Story = {
           },
           variant: "secondary",
         },
+        size: "full",
+      },
+    ],
+  },
+};
+
+export const TwoColumns: Story = {
+  args: {
+    ...Default.args,
+    numberOfColumns: 2,
+  },
+};
+
+export const FourColumns: Story = {
+  args: {
+    ...Default.args,
+    numberOfColumns: 4,
+  },
+};
+
+export const WithDifferentSizes: Story = {
+  args: {
+    ...Default.args,
+    items: [
+      {
+        ...Default.args.items[0],
+        size: "small",
+      },
+      {
+        ...Default.args.items[2],
+        size: "full",
+      },
+      {
+        ...Default.args.items[1],
+        size: "medium",
       },
     ],
   },
