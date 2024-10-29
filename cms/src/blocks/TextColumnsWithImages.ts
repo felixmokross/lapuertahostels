@@ -25,10 +25,10 @@ export const TextColumnsWithImagesBlock: Block = {
     makeHeadingField({ optional: true }),
     makeRichTextField({ optional: true }),
     {
-      name: "numberOfColumnsPerRow",
+      name: "numberOfColumns",
       label: {
-        en: "Number of columns per row",
-        es: "Número de columnas por fila",
+        en: "Number of columns",
+        es: "Número de columnas",
       },
       type: "number",
       defaultValue: 3,

@@ -4,7 +4,6 @@ import "../app/tailwind.css";
 import React from "react";
 import i18n from "./i18next";
 import { ThemeProvider } from "../app/themes";
-import { Brand } from "../app/payload-types";
 
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { allModes } from "./modes";
