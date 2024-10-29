@@ -66,7 +66,7 @@ export const Default: Story = {
         link: {
           label: "Discover More",
           type: "external",
-          url: "https://example.com/discover",  
+          url: "https://example.com/discover",
         },
         variant: "secondary",
       },
