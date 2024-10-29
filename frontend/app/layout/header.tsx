@@ -21,13 +21,10 @@ export function Header({
     <header className="contents">
       {banner?.show && (
         <Banner
-          cta={banner.cta?.show ? `${banner.cta.text} →` : undefined}
-          ctaTo={banner.cta?.show ? banner.cta.url! : undefined}
+          {...banner}
           isDismissed={isBannerDismissed}
           onDismiss={() => setIsBannerDismissed(true)}
-        >
-          {banner.message!}
-        </Banner>
+        />
       )}
       <Navbar
         brand={brand}

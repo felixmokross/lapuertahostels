@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Banner } from "./banner";
 import { allModes } from ".storybook/modes";
+import { Page } from "~/payload-types";
 
 const meta = {
   title: "layout/Banner",
@@ -26,9 +27,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: "Travel before 20 September and get 20% off!",
-    cta: "Book now →",
-    ctaTo: "/cta",
+    message: "Travel before 20 September and get 20% off!",
+    cta: {
+      show: true,
+      link: {
+        label: "Book now",
+        type: "internal",
+        page: { url: "/experiences/tayrona" } as Page,
+      },
+    },
   },
 };
 
@@ -36,6 +43,5 @@ export const WithoutCallToAction: Story = {
   args: {
     ...Default.args,
     cta: undefined,
-    ctaTo: undefined,
   },
 };

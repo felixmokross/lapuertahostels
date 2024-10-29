@@ -96,8 +96,11 @@ export const Default: Story = {
         ],
         cta: {
           show: true,
-          text: "Book Twin Room",
-          url: "https://reservas.azul.lapuertahostels.co/la-puerta-azul/room/33860",
+          link: {
+            label: "Book Twin Room",
+            type: "external",
+            url: "http://example.com/booking-engine",
+          },
         },
       },
     ],

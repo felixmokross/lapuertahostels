@@ -3,10 +3,10 @@ import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { RichTextParagraph } from "~/common/paragraph";
-import { Link } from "~/common/link";
 import { cn } from "~/common/cn";
 import { RichTextObject } from "~/common/rich-text";
 import { getSrcFromMedia } from "~/common/media";
+import { PageLink } from "~/common/page-link";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
@@ -53,13 +53,11 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button
-              as={Link}
-              to={overlayTextBox.cta.url!}
-              className="mt-4"
+              as={PageLink}
+              link={overlayTextBox.cta.link!}
               variant={overlayTextBox.cta.variant || undefined}
-            >
-              {overlayTextBox.cta.text}
-            </Button>
+              className="mt-4"
+            />
           )}
         </div>
       )}

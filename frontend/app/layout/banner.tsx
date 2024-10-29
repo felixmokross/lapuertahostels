@@ -2,24 +2,16 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
-import { Link } from "~/common/link";
 import { useTheme } from "~/themes";
+import { Common } from "~/payload-types";
+import { PageLink } from "~/common/page-link";
 
 export type BannerProps = {
-  children: string;
-  cta?: string;
-  ctaTo?: string;
   isDismissed?: boolean;
   onDismiss?: () => void;
-};
+} & Omit<NonNullable<Common["banner"]>, "show">;
 
-export function Banner({
-  children,
-  cta,
-  ctaTo,
-  isDismissed,
-  onDismiss,
-}: BannerProps) {
+export function Banner({ message, cta, isDismissed, onDismiss }: BannerProps) {
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -35,14 +27,15 @@ export function Banner({
       leaveTo="-translate-y-full"
     >
       <div className="leading-6">
-        {children}
-        {cta && ctaTo && (
+        {message}
+        {cta?.show && (
           <>
             {" "}
             <span className="mx-1">&middot;</span>{" "}
-            <Link to={ctaTo} className="text-nowrap font-bold hover:underline">
-              <strong>{cta}</strong>
-            </Link>
+            <PageLink
+              link={cta.link!}
+              className="text-nowrap font-bold after:content-['_→'] hover:underline"
+            />
           </>
         )}
       </div>

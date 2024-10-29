@@ -50,8 +50,8 @@ export const HeroVideoBlock: Block = {
       admin: {
         ...optionalImageField.admin,
         description: {
-          en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition. It needs to be uploaded separately.",
-          es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones. Debe subirse por separado.",
+          en: "The preview image is shown while the video is still loading. It should be the first frame of the video to provide a seamless transition.",
+          es: "La imagen de vista previa se muestra mientras el video aún se está cargando. Debe ser el primer fotograma del video para proporcionar una transición sin interrupciones.",
         },
       },
     },

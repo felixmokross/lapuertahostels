@@ -20,7 +20,7 @@ export const Brands: CollectionConfig = {
   defaultSort: "homeLinkUrl",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["logo", "name", "homeLinkUrl", "updatedAt"],
+    defaultColumns: ["name", "logo", "homeLinkUrl", "updatedAt"],
     listSearchableFields: ["name"],
   },
   access: {

@@ -1,18 +1,18 @@
 import { RichTextHeading } from "~/common/heading";
 import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
-import { Link } from "../../common/link";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
+import { Page } from "~/payload-types";
+import { PageLink } from "~/common/page-link";
 
 export type OverlayTitleProps = {
   text?: { [key: string]: unknown }[] | null;
-  cta?: {
-    show?: boolean | null;
-    text?: string | null;
-    url?: string | null;
-    variant?: ("primary" | "secondary") | null;
-  };
+  cta?: NonNullable<
+    (NonNullable<Page["hero"]>[number] & {
+      blockType: "HeroVideo";
+    })["overlayTitle"]
+  >["cta"];
   position?:
     | ("center" | "top-left" | "top-right" | "bottom-right" | "bottom-left")
     | null;
@@ -55,14 +55,12 @@ export function OverlayTitle({
         </RichTextHeading>
         {cta?.show && (
           <Button
-            as={Link}
+            as={PageLink}
+            link={cta.link!}
             size="large"
             variant={cta.variant || "primary"}
             blackShadow
-            to={cta.url!}
-          >
-            {cta.text}
-          </Button>
+          />
         )}
       </div>
     </>

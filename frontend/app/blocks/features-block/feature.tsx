@@ -4,11 +4,11 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { type Feature } from "./types";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
-import { Link } from "~/common/link";
 import { Image } from "~/common/image";
 import { RichTextObject } from "~/common/rich-text";
 import { getSrcFromMedia } from "~/common/media";
 import { Media } from "~/payload-types";
+import { PageLink } from "~/common/page-link";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -42,11 +42,9 @@ export function Feature({
             className="mt-6"
             size="medium"
             variant={cta.variant || undefined}
-            as={Link}
-            to={cta.url || "#"}
-          >
-            {cta.text}
-          </Button>
+            as={PageLink}
+            link={cta.link!}
+          />
         )}
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">

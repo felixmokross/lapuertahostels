@@ -63,8 +63,11 @@ export const Default: Story = {
       ],
       cta: {
         show: true,
-        text: "Discover More",
-        url: "/discover",
+        link: {
+          label: "Discover More",
+          type: "external",
+          url: "https://example.com/discover",
+        },
         variant: "secondary",
       },
       position: "top-right",

@@ -1,12 +1,13 @@
 import { Page } from "~/payload-types";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
-import { LeadBlock } from "./lead-block";
+import { LeadTextBlock } from "./lead-text-block";
 import { StoryBlock } from "./story-block";
 import { FeaturesBlock } from "./features-block/features-block";
 import { SeparatorBlock } from "./separator-block";
 import { WideImageBlock } from "./wide-image-block";
 import { RoomListBlock } from "./room-list-block/room-list-block";
+import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block/text-columns-with-images-block";
 
 type LayoutBlocksProps = {
   data: NonNullable<Page["layout"]>;
@@ -16,7 +17,7 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
   return data.map((block) => {
     switch (block.blockType) {
       case "Lead":
-        return <LeadBlock key={block.id} {...block} />;
+        return <LeadTextBlock key={block.id} {...block} />;
       case "AccommodationSelector":
         return <AccommodationSelectorBlock key={block.id} {...block} />;
       case "ImageWithFloatingText":
@@ -31,6 +32,8 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
         return <WideImageBlock key={block.id} {...block} />;
       case "RoomList":
         return <RoomListBlock key={block.id} {...block} />;
+      case "TextColumnsWithImages":
+        return <TextColumnsWithImagesBlock key={block.id} {...block} />;
     }
   });
 }
