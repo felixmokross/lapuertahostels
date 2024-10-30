@@ -11,6 +11,7 @@ import {
   ScrollRestoration,
   useLoaderData,
   useRouteError,
+  useRouteLoaderData,
 } from "@remix-run/react";
 
 import styles from "./tailwind.css?url";
@@ -31,6 +32,7 @@ import {
   urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
+import { HeroHeadingBlock } from "./blocks/hero-heading-block";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -153,13 +155,7 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        {analyticsDomain && (
-          <script
-            defer
-            data-domain={analyticsDomain}
-            src="https://plausible.io/js/script.js"
-          ></script>
-        )}
+        <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <OptInLivePreview path="globals/maintenance" data={maintenance}>
@@ -208,7 +204,27 @@ function getScrollTopPadding(headerHeight: number) {
   return headerHeight + ADDITIONAL_SCROLL_PADDING;
 }
 
+function AnalyticsScript({
+  analyticsDomain,
+}: {
+  analyticsDomain: string | undefined;
+}) {
+  return (
+    !!analyticsDomain && (
+      <script
+        defer
+        data-domain={analyticsDomain}
+        src="https://plausible.io/js/script.js"
+      ></script>
+    )
+  );
+}
+
 export function ErrorBoundary() {
+  // TODO in case of a 404 we have a response thrown in the root loader, so we don't get any root loader data
+  // could we handle this better?
+  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  console.log(rootLoaderData);
   const error = useRouteError();
   const { i18n } = useTranslation();
   console.error(error);
@@ -220,9 +236,23 @@ export function ErrorBoundary() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <AnalyticsScript analyticsDomain={rootLoaderData?.analyticsDomain} />
       </head>
-      <body>
-        <p>An error occurred</p>
+      <body className="bg-white text-neutral-900 antialiased">
+        <ThemeProvider brandId="puerta">
+          <main>
+            <HeroHeadingBlock
+              blockType="HeroHeading"
+              heading="An Error Occurred"
+            />
+          </main>
+          {rootLoaderData && (
+            <Footer
+              allBrands={rootLoaderData.allBrands}
+              content={rootLoaderData.common.footer}
+            />
+          )}
+        </ThemeProvider>
         {/* add the UI you want your users to see */}
         <Scripts />
       </body>
