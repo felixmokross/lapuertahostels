@@ -152,3 +152,11 @@ export const WithDifferentSizes: Story = {
     ],
   },
 };
+
+export const WithoutHeadingAndText: Story = {
+  args: {
+    ...Default.args,
+    heading: undefined,
+    text: undefined,
+  },
+};

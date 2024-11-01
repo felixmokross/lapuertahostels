@@ -17,7 +17,11 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import Backend from "i18next-fs-backend";
 import i18nConfig from "./i18n";
 import { resolve } from "node:path";
-import { getRequestUrl } from "./common/routing";
+import {
+  getLocaleAndPageUrl,
+  getRequestUrl,
+  toRelativeUrl,
+} from "./common/routing";
 
 // Reject/cancel all pending promises after 5 seconds
 export const streamTimeout = 5000;
@@ -33,7 +37,7 @@ export default async function handleRequest(
   loadContext: AppLoadContext,
 ) {
   const i18nInstance = createI18nInstance() as i18n;
-  const lng = remixContext.staticHandlerContext.loaderData["root"].locale;
+  const { locale } = getLocaleAndPageUrl(toRelativeUrl(getRequestUrl(request)));
   const ns = i18next.getRouteNamespaces(remixContext);
 
   await i18nInstance
@@ -41,7 +45,7 @@ export default async function handleRequest(
     .use(Backend) // Setup our backend
     .init({
       ...i18nConfig, // spread the configuration
-      lng, // The locale we detected above
+      lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
       backend: { loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json") },
     });

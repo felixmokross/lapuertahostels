@@ -17,5 +17,9 @@
   },
   "slidesBlock": {
     "goToSlide": "Gehe zu Folie {{slide}}"
+  },
+  "errorBoundary": {
+    "title": "500 – Etwas ist schief gelaufen",
+    "text": "<p>Hoppla! Etwas ist schief gelaufen.</p><p>Diese Seite funktioniert im Moment nicht richtig. Bitte versuchen Sie es erneut oder kommen Sie später zurück.</p><p>Vielen Dank für Ihr Verständnis!</p>"
   }
 }

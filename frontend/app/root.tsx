@@ -16,7 +16,7 @@ import styles from "./tailwind.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";
-import { getBrands, getCommon, getMaintenance, getPage } from "./cms-data";
+import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
@@ -30,6 +30,8 @@ import {
   urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
+import { GlobalErrorBoundary } from "./error-boundary";
+import { AnalyticsScript } from "./analytics-script";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -100,14 +102,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const pageId = urlToId(toUrl(pageUrl).pathname);
 
   const [page, allBrands, common, maintenance] = await Promise.all([
-    getPage(pageId, locale),
+    tryGetPage(pageId, locale),
     getBrands(locale),
     getCommon(locale),
     getMaintenance(locale),
   ]);
 
   // retrieving the brand from `allBrands`, `page.brand` does not have the right depth
-  const brandId = (page.brand as Brand).id;
+  const brandId = page
+    ? ((page.brand as Brand).id as BrandId)
+    : ("puerta" as BrandId);
   const brand = allBrands.find((b) => b.id === brandId);
   if (!brand) throw new Error("Brand not found");
 
@@ -152,13 +156,7 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        {analyticsDomain && (
-          <script
-            defer
-            data-domain={analyticsDomain}
-            src="https://plausible.io/js/script.js"
-          ></script>
-        )}
+        <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <OptInLivePreview path="globals/maintenance" data={maintenance}>
@@ -206,3 +204,5 @@ const ADDITIONAL_SCROLL_PADDING = 32;
 function getScrollTopPadding(headerHeight: number) {
   return headerHeight + ADDITIONAL_SCROLL_PADDING;
 }
+
+export const ErrorBoundary = GlobalErrorBoundary;
