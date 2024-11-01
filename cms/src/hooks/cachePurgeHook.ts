@@ -122,13 +122,27 @@ async function purgeCache(targetUrl: string, dataUrl: string) {
   }
 }
 
-async function primeCache(targetUrl: string, primingUrl: string) {
-  const absolutePrimingUrl = `${targetUrl}${primingUrl}`;
-  console.log(`Priming cache at ${absolutePrimingUrl}...`);
+const supportedLocales = ["en", "es", "de", "fr"];
 
-  const response = await fetch(absolutePrimingUrl);
+async function primeCache(targetUrl: string, primingUrl: string) {
+  const absolutePrimingUrl = new URL(primingUrl, targetUrl);
+
+  await Promise.all(
+    supportedLocales.map((locale) =>
+      primeCacheForLocale(absolutePrimingUrl.toString(), locale),
+    ),
+  );
+}
+
+async function primeCacheForLocale(absolutePrimingUrl: string, locale: string) {
+  const localizedPrimingUrl = new URL(absolutePrimingUrl);
+  localizedPrimingUrl.searchParams.set("lng", locale);
+
+  console.log(`Priming cache at ${localizedPrimingUrl}...`);
+
+  const response = await fetch(localizedPrimingUrl);
   if (!response.ok) {
-    throw new Error(`Failed to prime cache at ${absolutePrimingUrl}`);
+    throw new Error(`Failed to prime cache at ${response.url}`);
   }
 }
 
