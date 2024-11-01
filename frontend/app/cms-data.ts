@@ -11,12 +11,15 @@ async function loadAndCacheData(
   cacheFilePath: string,
 ) {
   const result = await loadData(url, locale);
-  await cacheData(cacheFilePath, result);
+
+  if (result) {
+    await cacheData(cacheFilePath, result);
+  }
 
   return result;
 }
 
-async function cacheData(cacheFilePath: string, data: unknown) {
+async function cacheData(cacheFilePath: string, data: object) {
   console.log(`Caching data to ${cacheFilePath}`);
   await ensureDirectoryExists(path.dirname(cacheFilePath));
   await fs.writeFile(cacheFilePath, JSON.stringify(data));
@@ -58,7 +61,7 @@ async function getData(url: string, locale: string) {
     });
 
     console.log(`Cache hit for ${url} in ${locale}`);
-    return JSON.parse(cache);
+    return JSON.parse(cache) as object;
   } catch (e) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
 
@@ -86,28 +89,40 @@ async function loadData(url: string, locale: string) {
   );
 
   if (!response.ok) {
-    if (response.status === 404) throw new Response(null, { status: 404 });
+    if (response.status === 404) return null;
 
     throw new Error(`Failed to load data from CMS: ${response.status}`);
   }
 
-  return await response.json();
+  return (await response.json()) as object;
 }
 
-export async function getPage(pageId: string, locale: string) {
-  return (await getData(`pages/${pageId}`, locale)) as Page;
+export async function tryGetPage(pageId: string, locale: string) {
+  return (await getData(`pages/${pageId}`, locale)) as Page | null;
 }
 
 export async function getCommon(locale: string) {
-  return (await getData("globals/common", locale)) as Common;
+  const common = (await getData("globals/common", locale)) as Common | null;
+  if (!common) throw new Error("Could not load Common global");
+
+  return common;
 }
 
 export async function getMaintenance(locale: string) {
-  return (await getData("globals/maintenance", locale)) as Maintenance;
+  const maintanance = (await getData(
+    "globals/maintenance",
+    locale,
+  )) as Maintenance | null;
+  if (!maintanance) throw new Error("Could not load Maintenance global");
+
+  return maintanance;
 }
 
 export async function getBrands(locale: string) {
-  return (await getData("brands", locale)).docs as Brand[];
+  const brands = (await getData("brands", locale)) as { docs: Brand[] } | null;
+  if (!brands) throw new Error("Could not load Brands collection");
+
+  return brands.docs;
 }
 
 export async function purgeCacheFor(url: string) {

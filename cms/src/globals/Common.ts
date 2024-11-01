@@ -6,6 +6,8 @@ import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { makeRichTextField } from "../fields/rich-text";
+import { headingField } from "../fields/heading";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -309,6 +311,36 @@ export const Common: GlobalConfig = {
           ],
         },
       ],
+    },
+    {
+      name: "pageNotFoundScreen",
+      label: {
+        en: "Page Not Found Screen",
+        es: "Pantalla de Página No Encontrada",
+      },
+      admin: {
+        description: {
+          en: "This screen is shown when a user tries to access a page that does not exist.",
+          es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
+        },
+      },
+      type: "group",
+      fields: [headingField, makeRichTextField({ mode: "long-form" })],
+    },
+    {
+      name: "errorScreen",
+      label: {
+        en: "Internal Server Error Screen",
+        es: "Pantalla de Error Interno del Servidor",
+      },
+      admin: {
+        description: {
+          en: "This screen is shown when the server encounters an error.",
+          es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
+        },
+      },
+      type: "group",
+      fields: [headingField, makeRichTextField({ mode: "long-form" })],
     },
   ],
 };

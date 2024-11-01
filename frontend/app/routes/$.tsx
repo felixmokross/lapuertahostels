@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
-import { getPage } from "~/cms-data";
+import { tryGetPage } from "~/cms-data";
 import { getPageTitle } from "~/common/meta";
 import { handleIncomingRequest } from "~/common/routing.server";
 import i18n from "~/i18n";
@@ -52,12 +52,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const pageId = urlToId(toUrl(pageUrl).pathname);
   const dataPath = `pages/${pageId}`;
   const requestUrl = getRequestUrl(request);
+  const content = await tryGetPage(pageId, locale);
+  if (!content) {
+    throw new Response(null, { status: 404, statusText: "Not Found" });
+  }
+
   return {
     origin: requestUrl.origin,
     canonicalUrl: requestUrl.toString(),
     pageUrl,
     dataPath,
-    content: await getPage(pageId, locale),
+    content,
   };
 }
 
