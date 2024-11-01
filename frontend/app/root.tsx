@@ -4,19 +4,16 @@ import {
   type LinksFunction,
 } from "@remix-run/node";
 import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useRouteError,
-  useRouteLoaderData,
 } from "@remix-run/react";
 
 import styles from "./tailwind.css?url";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
@@ -33,9 +30,8 @@ import {
   urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
-import { HeroHeadingBlock } from "./blocks/hero-heading-block";
-import { StoryBlock } from "./blocks/story-block";
-import { getTitle } from "./common/meta";
+import { GlobalErrorBoundary } from "./error-boundary";
+import { AnalyticsScript } from "./analytics-script";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -209,112 +205,4 @@ function getScrollTopPadding(headerHeight: number) {
   return headerHeight + ADDITIONAL_SCROLL_PADDING;
 }
 
-function AnalyticsScript({
-  analyticsDomain,
-}: {
-  analyticsDomain: string | undefined;
-}) {
-  return (
-    !!analyticsDomain && (
-      <script
-        defer
-        data-domain={analyticsDomain}
-        src="https://plausible.io/js/script.js"
-      ></script>
-    )
-  );
-}
-
-export function ErrorBoundary() {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
-  const error = useRouteError();
-  const { i18n } = useTranslation();
-
-  console.error(error);
-
-  // Without rootLoaderData, we just render a fatal error screen
-  if (!rootLoaderData) return <FatalErrorScreen />;
-
-  const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
-
-  const errorPageTitle = getTitle(
-    isPageNotFound
-      ? rootLoaderData.common.pageNotFoundScreen.heading
-      : rootLoaderData.common.errorScreen.heading,
-    rootLoaderData.brand,
-  );
-
-  return (
-    <html lang={i18n.language} dir={i18n.dir()}>
-      <head>
-        <title>{errorPageTitle}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-        <AnalyticsScript analyticsDomain={rootLoaderData.analyticsDomain} />
-      </head>
-      <body className="bg-white text-neutral-900 antialiased">
-        <ThemeProvider brandId="puerta">
-          <Header
-            brand={rootLoaderData.brand}
-            banner={rootLoaderData.common.banner}
-            allBrands={rootLoaderData.allBrands}
-            onHeightChanged={() => {}}
-          />
-          <main>
-            <HeroHeadingBlock
-              blockType="HeroHeading"
-              heading={
-                isPageNotFound
-                  ? rootLoaderData.common.pageNotFoundScreen.heading
-                  : rootLoaderData.common.errorScreen.heading
-              }
-            />
-
-            <StoryBlock
-              blockType="Story"
-              text={
-                isPageNotFound
-                  ? rootLoaderData.common.pageNotFoundScreen.text
-                  : rootLoaderData.common.errorScreen.text
-              }
-            />
-          </main>
-          <Footer
-            allBrands={rootLoaderData.allBrands}
-            content={rootLoaderData.common.footer}
-          />
-        </ThemeProvider>
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
-function FatalErrorScreen() {
-  const { i18n, t } = useTranslation();
-  return (
-    <html lang={i18n.language} dir={i18n.dir()}>
-      <head>
-        <title>{getTitle(t("errorBoundary.title"), undefined)}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body className="bg-white text-neutral-900 antialiased">
-        <main className="mx-auto my-36 max-w-xl text-neutral-800">
-          <h1 className="mb-12 font-serif text-4xl leading-relaxed tracking-tight md:text-5xl md:leading-relaxed">
-            {t("errorBoundary.title")}
-          </h1>
-          <Trans
-            i18nKey="errorBoundary.text"
-            components={{ p: <p className="my-6 text-lg" /> }}
-          />
-        </main>
-        <Scripts />
-      </body>
-    </html>
-  );
-}
+export const ErrorBoundary = GlobalErrorBoundary;
