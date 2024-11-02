@@ -63,6 +63,20 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       .updateOne({ _id: brand._id }, { $set: { navLinks: linkIds } });
   }
 
+  const pages = await payload.db.connection
+    .collection("pages")
+    .find()
+    .toArray();
+
+  for (const page of pages) {
+    if (page.title) {
+      page.title = await createTextIfNeeded(page.title);
+      await payload.db.connection
+        .collection("pages")
+        .updateOne({ _id: page._id }, { $set: { title: page.title } });
+    }
+  }
+
   async function createTextIfNeeded(data: any) {
     const matchingText = allTexts.find((text) =>
       isMatchingText(text.text, data),

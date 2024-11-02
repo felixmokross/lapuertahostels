@@ -22,7 +22,7 @@ export const Pages: CollectionConfig = {
     useAsTitle: "url",
     defaultColumns: ["url", "title", "brand", "updatedAt"],
     disableDuplicate: true,
-    listSearchableFields: ["url", "title"],
+    listSearchableFields: ["url"],
   },
   access: {
     create: ({ req: { user } }) => user?.role === "admin",
@@ -125,8 +125,8 @@ export const Pages: CollectionConfig = {
         en: "Title",
         es: "Título",
       },
-      type: "text",
-      localized: true,
+      type: "relationship",
+      relationTo: "texts",
       admin: {
         position: "sidebar",
         description: {
