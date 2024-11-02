@@ -10,10 +10,11 @@ import { PageLink } from "~/common/page-link";
 
 type FooterProps = {
   content: Common["footer"];
+  brand: Brand;
   allBrands: Brand[];
 };
 
-export function Footer({ content, allBrands }: FooterProps) {
+export function Footer({ content, brand, allBrands }: FooterProps) {
   const { t } = useTranslation();
   const theme = useTheme();
   const puertaBrand = allBrands.find((b) => b.id === "puerta");
@@ -61,23 +62,36 @@ export function Footer({ content, allBrands }: FooterProps) {
             </div>
           </div>
           <div className="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
-            {content.linkGroups?.map((linkGroup) => (
-              <div key={linkGroup.title}>
-                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                  {linkGroup.title}
-                </h3>
-                <ul className="mt-6 space-y-4">
-                  {linkGroup.links.map((link) => (
-                    <li key={link.id}>
-                      <PageLink
-                        link={link}
-                        className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {brand.footer?.linkGroups?.map((linkGroup) => {
+              if (typeof linkGroup !== "object") {
+                throw new Error("Invalid link group");
+              }
+
+              if (typeof linkGroup.title !== "object") {
+                throw new Error("Invalid link group title");
+              }
+              return (
+                <div key={linkGroup.id}>
+                  <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                    {linkGroup.title.text}
+                  </h3>
+                  <ul className="mt-6 space-y-4">
+                    {linkGroup.links.map((link) => {
+                      if (typeof link !== "object")
+                        throw new Error("Invalid link");
+                      return (
+                        <li key={link.id}>
+                          <PageLink
+                            link={link}
+                            className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
 

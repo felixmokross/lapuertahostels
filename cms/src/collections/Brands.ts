@@ -5,6 +5,9 @@ import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
 import { imageField } from "../fields/image";
 import { Banners } from "./Banners";
+import { Brand } from "payload/generated-types";
+import { Texts } from "./Texts";
+import { Links } from "./Links";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -99,23 +102,84 @@ export const Brands: CollectionConfig = {
         en: "Navigation Links",
         es: "Enlaces de navegación",
       },
-      labels: {
-        singular: {
-          en: "Navigation Link",
-          es: "Enlace de navegación",
+      type: "relationship",
+      relationTo: Links.slug,
+      hasMany: true,
+    },
+    {
+      name: "footer",
+      type: "group",
+      fields: [
+        {
+          name: "linkGroups",
+          label: {
+            en: "Link Groups",
+            es: "Grupos de enlaces",
+          },
+          labels: {
+            singular: {
+              en: "Link Group",
+              es: "Grupo de enlaces",
+            },
+            plural: {
+              en: "Link Groups",
+              es: "Grupos de enlaces",
+            },
+          },
+          type: "array",
+          fields: [
+            {
+              name: "titleAsTitle",
+              type: "text",
+              hidden: true,
+              hooks: {
+                beforeChange: [
+                  ({ siblingData }) => delete siblingData["titleAsTitle"],
+                ],
+                afterRead: [
+                  async ({ req, siblingData }) => {
+                    const titleText = await req.payload.findByID({
+                      collection: "texts",
+                      id: siblingData.title,
+                      locale: req.locale,
+                    });
+
+                    return titleText.text;
+                  },
+                ],
+              },
+            },
+            {
+              name: "title",
+              label: {
+                en: "Title",
+                es: "Título",
+              },
+              required: true,
+              type: "relationship",
+              relationTo: Texts.slug,
+            },
+            {
+              name: "links",
+              label: {
+                en: "Links",
+                es: "Enlaces",
+              },
+              type: "relationship",
+              required: true,
+              relationTo: Links.slug,
+              hasMany: true,
+            },
+          ],
+          admin: {
+            initCollapsed: true,
+            components: {
+              RowLabel: ({ data }) =>
+                (data as Brand["footer"]["linkGroups"][number]).titleAsTitle,
+            },
+          },
         },
-        plural: {
-          en: "Navigation Links",
-          es: "Enlaces de navegación",
-        },
-      },
-      type: "array",
-      fields: linkField.fields,
-      admin: {
-        components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.label,
-        },
-      },
+      ],
     },
   ],
 };
