@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    src: "https://ik.imagekit.io/lapuertahostels/staging/logos/logo-puerta-with-text.png?updatedAt=1703906701749",
+    src: "/logo-puerta-simple.png",
     alt: "Logo Puerta",
     transformation: {
       height: 160,

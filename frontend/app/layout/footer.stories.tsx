@@ -37,7 +37,7 @@ const brand = {
     linkGroups: [
       {
         name: "Hotel",
-        title: "Hotel",
+        title: { text: "Hotel" },
         links: [
           {
             label: "About Us",
@@ -64,7 +64,7 @@ const brand = {
       },
       {
         name: "Experiences",
-        title: "Experiences",
+        title: { text: "Experiences" },
         links: [
           {
             label: "Santa Marta",
@@ -79,7 +79,7 @@ const brand = {
       },
       {
         name: "Legal",
-        title: "Legal",
+        title: { text: "Legal" },
         links: [
           { label: "Terms", type: "external", url: "#" },
           { label: "Cancelation", type: "external", url: "#" },

@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    src: "https://ik.imagekit.io/lapuertahostels/staging/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg?updatedAt=170328441717",
+    src: "/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg",
     alt: "Example image",
   },
 };

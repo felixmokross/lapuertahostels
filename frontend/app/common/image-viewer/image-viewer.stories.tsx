@@ -33,38 +33,38 @@ export const Default: Story = {
   args: {
     images: [
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+        src: "/_DSC0358.jpg",
         alt: "",
         caption: "This is a caption",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+        src: "/_DSC0337.jpg",
         alt: "",
         aspectRatio: 1.4234693878,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+        src: "/_DSC0360.jpg",
         alt: "",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+        src: "/_DSC0334.jpg",
         alt: "",
         aspectRatio: 1.4566326531,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/15.jpg?updatedAt=1714162349358",
+        src: "/15.jpg",
         alt: "",
         aspectRatio: 0.5612244898,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/16.jpg?updatedAt=1714162348090",
+        src: "/16.jpg",
         alt: "",
         aspectRatio: 1.7755102041,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/delux%20king%20room%20with%20terrace/_dsc0989.jpg?updatedAt=1714162269331",
+        src: "/_dsc0989.jpg",
         alt: "Private balcony",
         aspectRatio: 1.4742990654,
       },
@@ -76,28 +76,28 @@ export const SlotsFilledExactly: Story = {
   args: {
     images: [
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+        src: "/_DSC0358.jpg",
         alt: "",
         caption: "This is a caption",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+        src: "/_DSC0337.jpg",
         alt: "",
         aspectRatio: 1.4234693878,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+        src: "/_DSC0360.jpg",
         alt: "",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+        src: "/_DSC0334.jpg",
         alt: "",
         aspectRatio: 1.4566326531,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/15.jpg?updatedAt=1714162349358",
+        src: "/15.jpg",
         alt: "",
         aspectRatio: 0.5612244898,
       },
@@ -109,23 +109,23 @@ export const LessSlotsFilled: Story = {
   args: {
     images: [
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0358.jpg?updatedAt=1714162350043",
+        src: "/_DSC0358.jpg",
         alt: "",
         caption: "This is a caption",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0337.jpg?updatedAt=1714162350065",
+        src: "/_DSC0337.jpg",
         alt: "",
         aspectRatio: 1.4234693878,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0360.jpg?updatedAt=1714162349855",
+        src: "/_DSC0360.jpg",
         alt: "",
         aspectRatio: 1.5,
       },
       {
-        src: "https://ik.imagekit.io/lapuertahostels/staging/azul/standard%20with%20terrace/_DSC0334.jpg?updatedAt=1714162351642",
+        src: "/_DSC0334.jpg",
         alt: "",
         aspectRatio: 1.4566326531,
       },
