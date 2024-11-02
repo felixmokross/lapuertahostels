@@ -27,30 +27,16 @@ export const Banners: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, req }) => {
-        const brands = (
-          await req.payload.find({
-            collection: "brands",
-            pagination: false,
-            where: { banner: { equals: doc.id } },
-          })
-        ).docs;
+      async () => {
+        console.log(`Refreshing cache for brands`);
 
-        if (brands.length === 0) return;
+        await refreshCacheForTarget({
+          type: "purge-and-prime",
+          pageUrl: "/",
+          dataUrl: Brands.slug,
+        });
 
-        console.log(`Refreshing cache for ${brands.length} affected brands`);
-
-        await Promise.allSettled(
-          brands.map((b) =>
-            refreshCacheForTarget({
-              type: "purge-and-prime",
-              pageUrl: b.homeLinkUrl,
-              dataUrl: `${Brands.slug}/${b.id}`,
-            }),
-          ),
-        );
-
-        console.log(`Refreshed cache for affected brands`);
+        console.log(`Refreshed cache for brands`);
       },
     ],
   },
