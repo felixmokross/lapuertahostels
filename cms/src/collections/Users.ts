@@ -38,6 +38,7 @@ export const Users: CollectionConfig = {
       },
       type: "radio",
       options: [
+        { value: "cicd", label: { en: "CI/CD", es: "CI/CD" } },
         { value: "frontend", label: { en: "Frontend", es: "Frontend" } },
         { value: "editor", label: { en: "Editor", es: "Editor" } },
         { value: "admin", label: { en: "Admin", es: "Administrador" } },

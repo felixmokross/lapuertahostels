@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { cachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { text } from "payload/dist/fields/validations";

@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload/types";
 import { Common as CommonType } from "../payload-types";
-import { cachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
 import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";

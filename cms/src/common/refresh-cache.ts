@@ -1,29 +1,10 @@
 import { resolve6 } from "dns/promises";
-import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
-import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
 
-export async function cachePurgeHook(
-  dataUrl: string,
-  primingUrl: string,
-  req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
-) {
-  // afterChangeHook runs before the transaction is committed
-  // – so we need to commit it before refreshing the cache to avoid
-  // that the app pulls old data when priming the cache
-  // As suggested by the Payload team
-  // See https://github.com/payloadcms/payload/issues/5886
-  console.log("Committing transaction before refreshing cache.");
-  const { payload, transactionID } = req;
-  await payload.db.commitTransaction(transactionID);
+type RefreshCacheAction =
+  | { type: "purge-and-prime"; dataUrl: string; pageUrl: string }
+  | { type: "prime-only"; pageUrl: string };
 
-  try {
-    await refreshCacheForTarget(dataUrl, primingUrl);
-  } catch (e) {
-    console.error("Failed to refresh cache:", e);
-  }
-}
-
-async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {
+export async function refreshCacheForTarget(action: RefreshCacheAction) {
   if (!process.env.CACHE_REFRESH_TARGET_TYPE) {
     throw new Error("CACHE_REFRESH_TARGET is not set");
   }
@@ -33,22 +14,13 @@ async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {
 
   switch (process.env.CACHE_REFRESH_TARGET_TYPE) {
     case "single":
-      await refreshCache(
-        process.env.CACHE_REFRESH_TARGET_ARG,
-        dataUrl,
-        primingUrl,
-      );
+      await refreshCache(process.env.CACHE_REFRESH_TARGET_ARG, action);
       return;
 
     case "fly":
       const [appName, internalPort] =
         process.env.CACHE_REFRESH_TARGET_ARG.split(",");
-      await refreshCacheForFlyTarget(
-        appName,
-        internalPort,
-        dataUrl,
-        primingUrl,
-      );
+      await refreshCacheForFlyTarget(appName, internalPort, action);
       return;
 
     default:
@@ -61,8 +33,7 @@ async function refreshCacheForTarget(dataUrl: string, primingUrl: string) {
 async function refreshCacheForFlyTarget(
   appName: string,
   internalPort: string,
-  dataUrl: string,
-  primingUrl: string,
+  action: RefreshCacheAction,
 ) {
   console.log(
     `Determining Fly frontend VM URLs for cache refresh (app=${appName}, internalPort=${internalPort})`,
@@ -73,9 +44,7 @@ async function refreshCacheForFlyTarget(
   console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
 
   const results = await Promise.allSettled(
-    targetUrls.map((targetUrls) =>
-      refreshCache(targetUrls, dataUrl, primingUrl),
-    ),
+    targetUrls.map((targetUrls) => refreshCache(targetUrls, action)),
   );
   const failed = results.filter(isPromiseRejectedResult);
 
@@ -98,13 +67,12 @@ async function queryFlyVmUrls(appName: string, port: number) {
   return urls;
 }
 
-async function refreshCache(
-  targetUrl: string,
-  dataUrl: string,
-  primingUrl: string,
-) {
-  await purgeCache(targetUrl, dataUrl);
-  await primeCache(targetUrl, primingUrl);
+async function refreshCache(targetUrl: string, action: RefreshCacheAction) {
+  if (action.type === "purge-and-prime") {
+    await purgeCache(targetUrl, action.dataUrl);
+  }
+
+  await primeCache(targetUrl, action.pageUrl);
 }
 
 async function purgeCache(targetUrl: string, dataUrl: string) {
@@ -124,23 +92,23 @@ async function purgeCache(targetUrl: string, dataUrl: string) {
 
 const supportedLocales = ["en", "es", "de", "fr"];
 
-async function primeCache(targetUrl: string, primingUrl: string) {
-  const absolutePrimingUrl = new URL(primingUrl, targetUrl);
+async function primeCache(targetUrl: string, pageUrl: string) {
+  const absolutePageUrl = new URL(pageUrl, targetUrl);
 
-  await Promise.all(
+  await Promise.allSettled(
     supportedLocales.map((locale) =>
-      primeCacheForLocale(absolutePrimingUrl.toString(), locale),
+      primeCacheForLocale(absolutePageUrl.toString(), locale),
     ),
   );
 }
 
-async function primeCacheForLocale(absolutePrimingUrl: string, locale: string) {
-  const localizedPrimingUrl = new URL(absolutePrimingUrl);
-  localizedPrimingUrl.searchParams.set("lng", locale);
+async function primeCacheForLocale(absolutePageUrl: string, locale: string) {
+  const localizedPageUrl = new URL(absolutePageUrl);
+  localizedPageUrl.searchParams.set("lng", locale);
 
-  console.log(`Priming cache at ${localizedPrimingUrl}...`);
+  console.log(`Priming cache at ${localizedPageUrl}...`);
 
-  const response = await fetch(localizedPrimingUrl);
+  const response = await fetch(localizedPageUrl);
   if (!response.ok) {
     throw new Error(`Failed to prime cache at ${response.url}`);
   }

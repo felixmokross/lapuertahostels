@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload/types";
 import { canManageContent } from "../common/access-control";
-import { cachePurgeHook } from "../hooks/cachePurgeHook";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
 
 export const Maintenance: GlobalConfig = {
