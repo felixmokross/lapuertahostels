@@ -139,5 +139,6 @@ jobs:
     steps:
       - run: |
           curl "https://${{ needs.define-env.outputs.domain_cms }}/api/prime-frontend-cache" \
+            -f -s -S
             -X POST \
             -H "Authorization: users API-Key ${{ secrets.CICD_USER_API_KEY }}"
