@@ -25,6 +25,72 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const brand = {
+  id: "puerta",
+  logo: {
+    filename: "logo-puerta-simple.png",
+    alt: "La Puerta Hostels Logo",
+  },
+  name: "La Puerta Hostels",
+  homeLinkUrl: "/",
+  footer: {
+    linkGroups: [
+      {
+        name: "Hotel",
+        title: "Hotel",
+        links: [
+          {
+            label: "About Us",
+            type: "internal",
+            page: { url: "/" } as Page,
+            fragment: "about-us",
+          },
+          {
+            label: "Puerta Aqua",
+            type: "internal",
+            page: { url: "/aqua" } as Page,
+          },
+          {
+            label: "La Puerta Azul",
+            type: "internal",
+            page: { url: "/azul" } as Page,
+          },
+          {
+            label: "Contact",
+            type: "internal",
+            page: { url: "/contact" } as Page,
+          },
+        ],
+      },
+      {
+        name: "Experiences",
+        title: "Experiences",
+        links: [
+          {
+            label: "Santa Marta",
+            type: "internal",
+            page: { url: ":" } as Page,
+            fragment: "santa-marta",
+          },
+          { label: "Lost City", type: "external", url: "#" },
+          { label: "Tayrona Park", type: "external", url: "#" },
+          { label: "Minca", type: "external", url: "#" },
+        ],
+      },
+      {
+        name: "Legal",
+        title: "Legal",
+        links: [
+          { label: "Terms", type: "external", url: "#" },
+          { label: "Cancelation", type: "external", url: "#" },
+          { label: "Privacy", type: "external", url: "#" },
+          { label: "FAQ", type: "external", url: "#" },
+        ],
+      },
+    ],
+  },
+} as Brand;
+
 export const Default: Story = {
   args: {
     content: {
@@ -47,57 +113,6 @@ Colombia`,
           url: "#",
         },
       ],
-      linkGroups: [
-        {
-          title: "Hotel",
-          links: [
-            {
-              label: "About Us",
-              type: "internal",
-              page: { url: "/" } as Page,
-              fragment: "about-us",
-            },
-            {
-              label: "Puerta Aqua",
-              type: "internal",
-              page: { url: "/aqua" } as Page,
-            },
-            {
-              label: "La Puerta Azul",
-              type: "internal",
-              page: { url: "/azul" } as Page,
-            },
-            {
-              label: "Contact",
-              type: "internal",
-              page: { url: "/contact" } as Page,
-            },
-          ],
-        },
-        {
-          title: "Experiences",
-          links: [
-            {
-              label: "Santa Marta",
-              type: "internal",
-              page: { url: ":" } as Page,
-              fragment: "santa-marta",
-            },
-            { label: "Lost City", type: "external", url: "#" },
-            { label: "Tayrona Park", type: "external", url: "#" },
-            { label: "Minca", type: "external", url: "#" },
-          ],
-        },
-        {
-          title: "Legal",
-          links: [
-            { label: "Terms", type: "external", url: "#" },
-            { label: "Cancelation", type: "external", url: "#" },
-            { label: "Privacy", type: "external", url: "#" },
-            { label: "FAQ", type: "external", url: "#" },
-          ],
-        },
-      ],
       newsletter: {
         show: true,
         title: "Subscribe to our newsletter",
@@ -107,16 +122,7 @@ Colombia`,
         buttonLabel: "Subscribe",
       },
     },
-    allBrands: [
-      {
-        id: "puerta",
-        logo: {
-          filename: "logo-puerta-simple.png",
-          alt: "La Puerta Hostels Logo",
-        },
-        name: "La Puerta Hostels",
-        homeLinkUrl: "/",
-      } as Brand,
-    ],
+    allBrands: [brand],
+    brand,
   },
 };
