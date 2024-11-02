@@ -40,7 +40,7 @@ export default buildConfig({
     },
     livePreview: {
       url: getPreviewUrl,
-      collections: [Pages.slug, Brands.slug, Banners.slug],
+      collections: [Pages.slug, Brands.slug],
       globals: [Common.slug, Maintenance.slug],
     },
     meta: {

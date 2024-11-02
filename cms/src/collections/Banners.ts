@@ -27,12 +27,18 @@ export const Banners: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ req }) => {
+      async ({ doc, req }) => {
         const brands = (
-          await req.payload.find({ collection: "brands", pagination: false })
+          await req.payload.find({
+            collection: "brands",
+            pagination: false,
+            where: { banner: { equals: doc.id } },
+          })
         ).docs;
 
-        console.log(`Refreshing cache for all brands`);
+        if (brands.length === 0) return;
+
+        console.log(`Refreshing cache for ${brands.length} affected brands`);
 
         await Promise.allSettled(
           brands.map((b) =>
@@ -44,7 +50,7 @@ export const Banners: CollectionConfig = {
           ),
         );
 
-        console.log(`Refreshed cache for all brands`);
+        console.log(`Refreshed cache for affected brands`);
       },
     ],
   },

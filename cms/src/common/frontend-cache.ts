@@ -10,7 +10,7 @@ export async function refreshCacheForAllPages(
     await req.payload.find({ collection: "pages", pagination: false })
   ).docs;
 
-  console.log("Priming frontend cache for all pages.");
+  console.log(`Refreshing cache for all pages (${actionType}).`);
   await Promise.allSettled(
     pages.map((page) =>
       refreshCacheForTarget({
@@ -21,7 +21,7 @@ export async function refreshCacheForAllPages(
     ),
   );
 
-  console.log("Primed frontend cache for all pages.");
+  console.log(`Refreshed cache for all pages (${actionType}).`);
 }
 
 export type RefreshCacheActionType = RefreshCacheAction["type"];
