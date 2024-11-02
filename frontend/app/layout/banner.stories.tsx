@@ -27,6 +27,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    id: "1",
+    createdAt: "2021-09-01T00:00:00Z",
+    updatedAt: "2021-09-01T00:00:00Z",
     message: "Travel before 20 September and get 20% off!",
     cta: {
       show: true,

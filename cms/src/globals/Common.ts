@@ -60,42 +60,6 @@ export const Common: GlobalConfig = {
       ],
     },
     {
-      name: "banner",
-      label: {
-        en: "Banner",
-        es: "Banner",
-      },
-      type: "group",
-      admin: {
-        description: {
-          en: "The banner is useful to announce promotions or important news and can have a call to action. It is shown on all pages.",
-          es: "El banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Se muestra en todas las páginas.",
-        },
-      },
-      fields: [
-        showField,
-        {
-          name: "message",
-          label: {
-            en: "Message",
-            es: "Mensaje",
-          },
-          localized: true,
-          type: "text",
-          admin: {
-            condition: (_, siblingData) => siblingData.show,
-          },
-        },
-        {
-          ...callToActionField,
-          admin: {
-            ...callToActionField.admin,
-            condition: (_, siblingData) => siblingData.show,
-          },
-        },
-      ],
-    },
-    {
       name: "footer",
       label: {
         en: "Footer",

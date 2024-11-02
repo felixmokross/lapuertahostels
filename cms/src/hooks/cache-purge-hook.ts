@@ -1,6 +1,6 @@
 import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
 import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
-import { refreshCacheForTarget } from "../common/refresh-cache";
+import { refreshCacheForTarget } from "../common/frontend-cache";
 
 export async function cachePurgeHook(
   dataUrl: string,

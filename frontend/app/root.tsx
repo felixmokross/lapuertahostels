@@ -172,7 +172,6 @@ export default function App() {
                         <>
                           <Header
                             brand={brand}
-                            banner={common.banner}
                             allBrands={allBrands}
                             onHeightChanged={setHeaderHeight}
                           />

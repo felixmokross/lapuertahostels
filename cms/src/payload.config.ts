@@ -17,8 +17,8 @@ import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { MediaCategory } from "./collections/MediaCategory";
-import { refreshCacheForTarget } from "./common/refresh-cache";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
+import { Banners } from "./collections/Banners";
 
 export default buildConfig({
   admin: {
@@ -40,7 +40,7 @@ export default buildConfig({
     },
     livePreview: {
       url: getPreviewUrl,
-      collections: [Pages.slug, Brands.slug],
+      collections: [Pages.slug, Brands.slug, Banners.slug],
       globals: [Common.slug, Maintenance.slug],
     },
     meta: {
@@ -55,7 +55,7 @@ export default buildConfig({
     },
   },
   editor: slateEditor({}),
-  collections: [Users, Brands, Pages, Media, MediaCategory],
+  collections: [Users, Brands, Pages, Media, MediaCategory, Banners],
   globals: [Common, Maintenance],
   localization: {
     locales: ["en", "es", "de", "fr"],
