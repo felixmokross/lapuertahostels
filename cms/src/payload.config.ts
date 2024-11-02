@@ -11,12 +11,14 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 import { Pages } from "./collections/Pages";
-import { Brand, Page } from "./payload-types";
+import { Brand, Page, User } from "./payload-types";
 import { ContextType } from "payload/dist/admin/components/utilities/DocumentInfo/types";
 import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { MediaCategory } from "./collections/MediaCategory";
+import { refreshCacheForTarget } from "./common/refresh-cache";
+import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 
 export default buildConfig({
   admin: {
@@ -109,6 +111,7 @@ export default buildConfig({
       },
     },
   },
+  endpoints: [primeFrontendCacheEndpoint],
 });
 
 function getPreviewUrl({
