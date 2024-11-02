@@ -1,4 +1,30 @@
 import { resolve6 } from "dns/promises";
+import { PayloadRequest } from "payload/types";
+import { Pages } from "../collections/Pages";
+
+export async function refreshCacheForAllPages(
+  req: PayloadRequest,
+  actionType: RefreshCacheActionType,
+) {
+  const pages = (
+    await req.payload.find({ collection: "pages", pagination: false })
+  ).docs;
+
+  console.log(`Refreshing cache for all pages (${actionType}).`);
+  await Promise.allSettled(
+    pages.map((page) =>
+      refreshCacheForTarget({
+        type: actionType,
+        pageUrl: page.url,
+        dataUrl: `${Pages.slug}/${page.id}`,
+      }),
+    ),
+  );
+
+  console.log(`Refreshed cache for all pages (${actionType}).`);
+}
+
+export type RefreshCacheActionType = RefreshCacheAction["type"];
 
 type RefreshCacheAction =
   | { type: "purge-and-prime"; dataUrl: string; pageUrl: string }

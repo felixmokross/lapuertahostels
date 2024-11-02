@@ -1,5 +1,5 @@
 import { Endpoint } from "payload/config";
-import { refreshCacheForTarget } from "../common/refresh-cache";
+import { refreshCacheForAllPages } from "../common/frontend-cache";
 import { User } from "payload/generated-types";
 
 const allowedRoles = ["cicd", "admin"];
@@ -14,21 +14,8 @@ export const primeFrontendCacheEndpoint: Endpoint = {
       return res.status(403).send("Forbidden");
     }
 
-    const pages = (
-      await req.payload.find({ collection: "pages", pagination: false })
-    ).docs;
+    await refreshCacheForAllPages(req, "prime-only");
 
-    console.log("Priming frontend cache for all pages.");
-    await Promise.allSettled(
-      pages.map((page) =>
-        refreshCacheForTarget({
-          type: "prime-only",
-          pageUrl: page.url,
-        }),
-      ),
-    );
-
-    console.log("Primed frontend cache for all pages.");
     res.status(204).send();
   },
 };

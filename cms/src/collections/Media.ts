@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload/types";
+import { refreshCacheForAllPages } from "../common/frontend-cache";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -16,6 +17,9 @@ export const Media: CollectionConfig = {
   admin: {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],
+  },
+  hooks: {
+    afterChange: [({ req }) => refreshCacheForAllPages(req, "purge-and-prime")],
   },
   upload: {
     staticURL: "/media",

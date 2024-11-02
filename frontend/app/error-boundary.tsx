@@ -26,6 +26,8 @@ export function GlobalErrorBoundary() {
   // Without rootLoaderData, we just render a fatal error screen
   if (!rootLoaderData) return <FatalErrorScreen />;
 
+  const { common, brand, allBrands, analyticsDomain } = rootLoaderData;
+
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
 
   const errorPageTitle = getTitle(
@@ -43,23 +45,18 @@ export function GlobalErrorBoundary() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <AnalyticsScript analyticsDomain={rootLoaderData.analyticsDomain} />
+        <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId="puerta">
-          <Header
-            brand={rootLoaderData.brand}
-            banner={rootLoaderData.common.banner}
-            allBrands={rootLoaderData.allBrands}
-            onHeightChanged={() => {}}
-          />
+          <Header brand={brand} allBrands={allBrands} />
           <main>
             <HeroHeadingBlock
               blockType="HeroHeading"
               heading={
                 isPageNotFound
-                  ? rootLoaderData.common.pageNotFoundScreen.heading
-                  : rootLoaderData.common.errorScreen.heading
+                  ? common.pageNotFoundScreen.heading
+                  : common.errorScreen.heading
               }
             />
 
@@ -67,15 +64,12 @@ export function GlobalErrorBoundary() {
               blockType="Story"
               text={
                 isPageNotFound
-                  ? rootLoaderData.common.pageNotFoundScreen.text
-                  : rootLoaderData.common.errorScreen.text
+                  ? common.pageNotFoundScreen.text
+                  : common.errorScreen.text
               }
             />
           </main>
-          <Footer
-            allBrands={rootLoaderData.allBrands}
-            content={rootLoaderData.common.footer}
-          />
+          <Footer allBrands={allBrands} content={common.footer} />
         </ThemeProvider>
         <Scripts />
       </body>

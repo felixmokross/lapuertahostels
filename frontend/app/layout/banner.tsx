@@ -3,15 +3,14 @@ import { useTranslation } from "react-i18next";
 import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
 import { useTheme } from "~/themes";
-import { Common } from "~/payload-types";
+import { type Banner } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
+import { useState } from "react";
 
-export type BannerProps = {
-  isDismissed?: boolean;
-  onDismiss?: () => void;
-} & Omit<NonNullable<Common["banner"]>, "show">;
+export type BannerProps = Banner;
 
-export function Banner({ message, cta, isDismissed, onDismiss }: BannerProps) {
+export function Banner({ message, cta }: BannerProps) {
+  const [isDismissed, setIsDismissed] = useState(false);
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -41,7 +40,7 @@ export function Banner({ message, cta, isDismissed, onDismiss }: BannerProps) {
       </div>
       <div className="flex flex-1 justify-end">
         <button
-          onClick={onDismiss}
+          onClick={() => setIsDismissed(true)}
           type="button"
           className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
         >

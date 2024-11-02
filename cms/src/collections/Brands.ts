@@ -4,6 +4,7 @@ import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
 import { imageField } from "../fields/image";
+import { Banners } from "./Banners";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -75,6 +76,21 @@ export const Brands: CollectionConfig = {
       label: {
         en: "Logo",
         es: "Logo",
+      },
+    },
+    {
+      name: "banner",
+      label: {
+        en: "Banner",
+        es: "Banner",
+      },
+      type: "relationship",
+      relationTo: Banners.slug,
+      admin: {
+        description: {
+          en: "A banner is useful to announce promotions or important news and can have a call to action. It will be shown on all pages of the brand.",
+          es: "Un banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Se mostrará en todas las páginas de la marca.",
+        },
       },
     },
     {

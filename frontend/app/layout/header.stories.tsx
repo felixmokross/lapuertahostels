@@ -40,6 +40,17 @@ const puertaBrand = {
       label: "Contact",
     },
   ],
+  banner: {
+    message: "Travel before 20 September and get 20% off!",
+    cta: {
+      show: true,
+      link: {
+        label: "Book Now",
+        type: "internal",
+        page: { url: "/booking" } as Page,
+      },
+    },
+  },
   logo: {
     filename: "logo-puerta-simple.png",
     alt: "La Puerta Hostels Logo",
@@ -48,18 +59,6 @@ const puertaBrand = {
 
 export const Default: Story = {
   args: {
-    banner: {
-      show: true,
-      message: "Travel before 20 September and get 20% off!",
-      cta: {
-        show: true,
-        link: {
-          label: "Book Now",
-          type: "internal",
-          page: { url: "/booking" } as Page,
-        },
-      },
-    },
     brand: puertaBrand,
     allBrands: [
       puertaBrand,

@@ -9,8 +9,9 @@ async function loadAndCacheData(
   url: string,
   locale: string,
   cacheFilePath: string,
+  depth: number,
 ) {
-  const result = await loadData(url, locale);
+  const result = await loadData(url, locale, depth);
 
   if (result) {
     await cacheData(cacheFilePath, result);
@@ -33,7 +34,7 @@ function getCacheFilePath(url: string, locale: string) {
   return `${getCacheFolder(url)}/${locale}.json`;
 }
 
-async function getData(url: string, locale: string) {
+async function getData(url: string, locale: string, depth = 1) {
   const filePath = getCacheFilePath(url, locale);
   try {
     const cache = await fs.readFile(filePath, "utf8");
@@ -51,7 +52,7 @@ async function getData(url: string, locale: string) {
         }
 
         console.log(`Cache expired for ${url} in ${locale}`);
-        await loadAndCacheData(url, locale, filePath);
+        await loadAndCacheData(url, locale, filePath, depth);
       } catch (e) {
         // As this runs in the background, just log the error
         console.error(
@@ -66,11 +67,11 @@ async function getData(url: string, locale: string) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
 
     console.log(`Cache miss for ${url} in ${locale}`);
-    return await loadAndCacheData(url, locale, filePath);
+    return await loadAndCacheData(url, locale, filePath, depth);
   }
 }
 
-async function loadData(url: string, locale: string) {
+async function loadData(url: string, locale: string, depth: number) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
@@ -80,7 +81,7 @@ async function loadData(url: string, locale: string) {
 
   console.log(`Loading data from CMS for ${url} in ${locale}`);
   const response = await fetch(
-    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}&depth=1`,
+    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}&depth=${depth}`,
     {
       headers: {
         Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
@@ -119,7 +120,9 @@ export async function getMaintenance(locale: string) {
 }
 
 export async function getBrands(locale: string) {
-  const brands = (await getData("brands", locale)) as { docs: Brand[] } | null;
+  const brands = (await getData("brands", locale, 2)) as {
+    docs: Brand[];
+  } | null;
   if (!brands) throw new Error("Could not load Brands collection");
 
   return brands.docs;

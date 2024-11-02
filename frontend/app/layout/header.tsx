@@ -1,31 +1,22 @@
-import { Brand, Common } from "~/payload-types";
+import { Brand } from "~/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
 import { useEffect, useState } from "react";
 
 type HeaderProps = {
-  banner: Common["banner"];
   brand: Brand;
   allBrands: Brand[];
 } & Pick<NavbarProps, "onHeightChanged">;
 
-export function Header({
-  banner,
-  brand,
-  allBrands,
-  onHeightChanged,
-}: HeaderProps) {
-  const [isBannerDismissed, setIsBannerDismissed] = useState(false);
+export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
   const isScrolled = useIsScrolled();
+
+  if (brand.banner != null && typeof brand.banner !== "object") {
+    throw new Error("Brand banner is not an object");
+  }
   return (
     <header className="contents">
-      {banner?.show && (
-        <Banner
-          {...banner}
-          isDismissed={isBannerDismissed}
-          onDismiss={() => setIsBannerDismissed(true)}
-        />
-      )}
+      {brand.banner && <Banner key={brand.banner.id} {...brand.banner} />}
       <Navbar
         brand={brand}
         allBrands={allBrands}

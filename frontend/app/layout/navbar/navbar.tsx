@@ -22,7 +22,7 @@ export type NavbarProps = {
   brand: Brand;
   allBrands: Brand[];
   isScrolled?: boolean;
-  onHeightChanged: (height: number) => void;
+  onHeightChanged?: (height: number) => void;
 };
 
 export function Navbar({
@@ -36,7 +36,7 @@ export function Navbar({
 
   const navbarRef = useRef<HTMLDivElement>(null);
 
-  useElementHeightObserver(navbarRef, onHeightChanged);
+  useElementHeightObserver(navbarRef, onHeightChanged || (() => {}));
 
   const navLinks = allBrands.find((b) => b.id === brand.id)?.navLinks;
 
