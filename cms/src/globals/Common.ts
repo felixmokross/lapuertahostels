@@ -1,11 +1,9 @@
 import { GlobalConfig } from "payload/types";
 import { Common as CommonType } from "../payload-types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { showField } from "../fields/show";
 import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
-import { makeCallToActionField } from "../fields/call-to-action";
 import { makeRichTextField } from "../fields/rich-text";
 import { headingField } from "../fields/heading";
 
@@ -14,11 +12,6 @@ const socialPlatformOptions = [
   { label: "Instagram", value: "instagram" },
   { label: "WhatsApp", value: "whatsapp" },
 ];
-
-const callToActionField = makeCallToActionField({
-  optional: true,
-  variant: false,
-});
 
 export const Common: GlobalConfig = {
   slug: "common",
