@@ -10,15 +10,18 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     .findOne<Common>({ globalType: "common" });
 
   for (const linkGroup of common.footer.linkGroups) {
+    linkGroup["name"] = linkGroup.title["en"];
     linkGroup.title = await createTextIfNeeded(linkGroup.title);
 
     const linkIds: string[] = [];
     for (const link of linkGroup.links) {
       delete link.id;
 
+      const name = link.label["en"];
+
       link.label = await createTextIfNeeded(link.label);
 
-      linkIds.push(await createLinkIfNeeded(link));
+      linkIds.push(await createLinkIfNeeded({ ...link, name }));
     }
 
     linkGroup.links = linkIds as any[];
@@ -48,9 +51,11 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 
     for (const navLink of brand.navLinks) {
       delete navLink.id;
+
+      const name = navLink.label["en"];
       navLink.label = await createTextIfNeeded(navLink.label);
 
-      linkIds.push(await createLinkIfNeeded(navLink));
+      linkIds.push(await createLinkIfNeeded({ ...navLink, name }));
     }
 
     await payload.db.connection

@@ -69,7 +69,7 @@ export function GlobalErrorBoundary() {
               }
             />
           </main>
-          <Footer allBrands={allBrands} content={common.footer} />
+          <Footer allBrands={allBrands} brand={brand} content={common.footer} />
         </ThemeProvider>
         <Scripts />
       </body>

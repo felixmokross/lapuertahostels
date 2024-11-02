@@ -129,24 +129,18 @@ export const Brands: CollectionConfig = {
           type: "array",
           fields: [
             {
-              name: "titleAsTitle",
+              name: "name",
               type: "text",
-              hidden: true,
-              hooks: {
-                beforeChange: [
-                  ({ siblingData }) => delete siblingData["titleAsTitle"],
-                ],
-                afterRead: [
-                  async ({ req, siblingData }) => {
-                    const titleText = await req.payload.findByID({
-                      collection: "texts",
-                      id: siblingData.title,
-                      locale: req.locale,
-                    });
-
-                    return titleText.text;
-                  },
-                ],
+              label: {
+                en: "Name",
+                es: "Nombre",
+              },
+              required: true,
+              admin: {
+                description: {
+                  en: "The name is only used within the CMS to easily identify the link group.",
+                  es: "El nombre solo se usa dentro del CMS para identificar fácilmente el grupo de enlaces.",
+                },
               },
             },
             {
@@ -175,7 +169,7 @@ export const Brands: CollectionConfig = {
             initCollapsed: true,
             components: {
               RowLabel: ({ data }) =>
-                (data as Brand["footer"]["linkGroups"][number]).titleAsTitle,
+                (data as Brand["footer"]["linkGroups"][number]).name,
             },
           },
         },

@@ -15,33 +15,30 @@ export const Links: CollectionConfig = {
       es: "Enlaces",
     },
   },
-  defaultSort: "type",
+  defaultSort: "name",
   admin: {
-    useAsTitle: "labelAsTitle",
-    defaultColumns: ["label", "type", "page", "queryString", "fragment", "url"],
-    listSearchableFields: [],
+    useAsTitle: "name",
+    defaultColumns: ["name", "label", "type", "page", "url"],
+    listSearchableFields: ["name"],
   },
   hooks: {
     afterChange: [({ req }) => refreshCacheForAllPages(req, "purge-and-prime")],
   },
   fields: [
     {
-      name: "labelAsTitle",
+      name: "name",
       type: "text",
-      hidden: true,
-      hooks: {
-        beforeChange: [({ data }) => delete data["labelAsTitle"]],
-        afterRead: [
-          async ({ req, data }) => {
-            const labelText = await req.payload.findByID({
-              collection: "texts",
-              id: data.label,
-              locale: req.locale,
-            });
-
-            return labelText.text;
-          },
-        ],
+      label: {
+        en: "Name",
+        es: "Nombre",
+      },
+      required: true,
+      admin: {
+        position: "sidebar",
+        description: {
+          en: "The name is only used within the CMS to easily identify the link.",
+          es: "El nombre solo se usa dentro del CMS para identificar fácilmente el enlace.",
+        },
       },
     },
     {
