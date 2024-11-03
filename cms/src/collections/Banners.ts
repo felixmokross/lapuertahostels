@@ -48,6 +48,7 @@ export const Banners: CollectionConfig = {
         es: "Mensaje",
       },
       localized: true,
+      required: true,
       type: "text",
     },
     makeCallToActionField({

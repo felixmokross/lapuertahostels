@@ -68,7 +68,7 @@ export const Default: Story = {
       {
         image: {
           id: "5",
-          filename: "_DSC0325-12.jpg",
+          filename: "_DSC0325.jpg",
           createdAt: "2022-01-01T00:00:00Z",
           updatedAt: "2022-01-01T00:00:00Z",
         },

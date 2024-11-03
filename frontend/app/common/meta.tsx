@@ -1,7 +1,10 @@
 import { Brand, Page } from "~/payload-types";
 
 export function getPageTitle(page: Page) {
-  return getTitle(page.title ?? undefined, page.brand as Brand);
+  if (page.title != null && typeof page.title !== "object") {
+    throw new Error("Title is not an object");
+  }
+  return getTitle(page.title?.text ?? undefined, page.brand as Brand);
 }
 
 export function getTitle(title: string | undefined, brand: Brand | undefined) {

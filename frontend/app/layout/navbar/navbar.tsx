@@ -58,9 +58,12 @@ export function Navbar({
           <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
             <NavbarBrandLogo brand={brand} allBrands={allBrands} />
             <div className="z-50 hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
-              {navLinks?.map((navLink) => (
-                <NavLink key={navLink.id} link={navLink} />
-              ))}
+              {navLinks?.map((navLink) => {
+                if (typeof navLink !== "object") {
+                  throw new Error("Invalid nav link");
+                }
+                return <NavLink key={navLink.id} link={navLink} />;
+              })}
             </div>
             <div className="hidden items-center justify-end sm:flex">
               <LocaleSwitcher
@@ -83,14 +86,19 @@ export function Navbar({
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              {navLinks?.map((navLink) => (
-                <Disclosure.Button
-                  key={navLink.id}
-                  as={PageLink}
-                  link={navLink}
-                  className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                />
-              ))}
+              {navLinks?.map((navLink) => {
+                if (typeof navLink !== "object") {
+                  throw new Error("Invalid nav link");
+                }
+                return (
+                  <Disclosure.Button
+                    key={navLink.id}
+                    as={PageLink}
+                    link={navLink}
+                    className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
+                  />
+                );
+              })}
             </div>
 
             <div className="border-t border-neutral-200 pb-3 pt-4">

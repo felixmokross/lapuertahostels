@@ -32,10 +32,13 @@ export const Default: Story = {
           homeLinkUrl: "/aqua",
           navLinks: [
             {
+              name: "La Puerta Hostels",
               id: "6649ce958dccc108dcab66ba",
               type: "internal",
               page: { url: "/" } as Page,
               label: "La Puerta Hostels",
+              createdAt: "2024-05-19T10:04:05.148Z",
+              updatedAt: "2024-05-19T10:04:05.148Z",
             },
           ],
           logo: {
@@ -67,9 +70,12 @@ export const Default: Story = {
           navLinks: [
             {
               id: "6649ce958dccc108dcab66b9",
+              name: "La Puerta Hostels",
               type: "internal",
               page: { url: "/" } as Page,
               label: "La Puerta Hostels",
+              createdAt: "2024-05-19T10:04:05.148Z",
+              updatedAt: "2024-05-19T10:04:05.148Z",
             },
           ],
           logo: {

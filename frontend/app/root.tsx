@@ -179,6 +179,7 @@ export default function App() {
                             <Outlet />
                           </main>
                           <Footer
+                            brand={brand}
                             allBrands={allBrands}
                             content={common.footer}
                           />

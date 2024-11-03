@@ -19,6 +19,8 @@ import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
+import { Texts } from "./collections/Texts";
+import { Links } from "./collections/Links";
 
 export default buildConfig({
   admin: {
@@ -55,7 +57,16 @@ export default buildConfig({
     },
   },
   editor: slateEditor({}),
-  collections: [Users, Brands, Pages, Media, MediaCategory, Banners],
+  collections: [
+    Users,
+    Brands,
+    Pages,
+    Media,
+    MediaCategory,
+    Banners,
+    Texts,
+    Links,
+  ],
   globals: [Common, Maintenance],
   localization: {
     locales: ["en", "es", "de", "fr"],

@@ -17,7 +17,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "HeroHeading",
-    heading: "Hello, World!",
+    heading: {
+      id: "1",
+      text: "Hello, World!",
+      updatedAt: "2021-08-31T00:00:00.000Z",
+      createdAt: "2021-08-31T00:00:00.000Z",
+    },
   },
 };
 

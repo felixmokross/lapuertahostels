@@ -201,10 +201,13 @@ export const Puerta: Story = {
                 homeLinkUrl: "/aqua",
                 navLinks: [
                   {
+                    name: "La Puerta Hostels",
                     id: "6649ce958dccc108dcab66ba",
                     page: { url: "/" } as PageType,
                     type: "internal",
                     label: "La Puerta Hostels",
+                    updatedAt: "2024-05-19T10:04:05.148Z",
+                    createdAt: "2024-05-19T10:04:05.148Z",
                   },
                 ],
                 logo: {
@@ -237,8 +240,11 @@ export const Puerta: Story = {
                   {
                     id: "6649ce958dccc108dcab66b9",
                     type: "internal",
+                    name: "La Puerta Hostels",
                     page: { url: "/" } as PageType,
                     label: "La Puerta Hostels",
+                    updatedAt: "2024-05-19T10:04:05.148Z",
+                    createdAt: "2024-05-19T10:04:05.148Z",
                   },
                 ],
                 logo: {
