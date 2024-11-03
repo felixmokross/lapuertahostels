@@ -1,8 +1,8 @@
 import { Block } from "payload/types";
-import { headingField } from "../fields/heading";
 import { makeImageField } from "../fields/image";
 import { FieldDescription } from "payload/components/forms";
 import React from "react";
+import { newHeadingField } from "../fields/new-heading";
 
 const optionalImageField = makeImageField({ optional: true });
 
@@ -40,7 +40,7 @@ export const HeroHeadingBlock: Block = {
         },
       },
     },
-    headingField,
+    newHeadingField,
     optionalImageField,
   ],
 };

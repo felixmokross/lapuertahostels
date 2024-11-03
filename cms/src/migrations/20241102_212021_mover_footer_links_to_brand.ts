@@ -75,6 +75,17 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         .collection("pages")
         .updateOne({ _id: page._id }, { $set: { title: page.title } });
     }
+
+    if (page.hero[0] && page.hero[0].blockType === "HeroHeading") {
+      const block = page.hero[0];
+      block.heading = await createTextIfNeeded(block.heading);
+      await payload.db.connection
+        .collection("pages")
+        .updateOne(
+          { _id: page._id },
+          { $set: { "hero.0.heading": block.heading } },
+        );
+    }
   }
 
   async function createTextIfNeeded(data: any) {
@@ -140,12 +151,7 @@ type Common = {
 };
 
 function isMatchingText(text1: any, text2: any): boolean {
-  return (
-    text1.en === text2.en &&
-    text1.es === text2.es &&
-    text1.fr === text2.fr &&
-    text1.de === text2.de
-  );
+  return text1.en === text2.en;
 }
 
 function isMatchingLink(link1: any, link2: any): boolean {
@@ -153,9 +159,7 @@ function isMatchingLink(link1: any, link2: any): boolean {
     link1.label === link2.label &&
     link1.type === link2.type &&
     link1.page === link2.page &&
-    link1.url === link2.url &&
-    link1.queryString === link2.queryString &&
-    link1.fragment === link2.fragment
+    link1.url === link2.url
   );
 }
 
