@@ -1,10 +1,20 @@
 import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
 import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
-import { refreshCacheForTarget } from "../common/frontend-cache";
+import {
+  refreshCacheForAllPages,
+  refreshCacheForTarget,
+} from "../common/frontend-cache";
+
+type CachePurgeTarget =
+  | { type: "all-pages" }
+  | {
+      type: "target";
+      dataUrl: string;
+      pageUrl: string;
+    };
 
 export async function cachePurgeHook(
-  dataUrl: string,
-  pageUrl: string,
+  target: CachePurgeTarget,
   req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
 ) {
   // afterChangeHook runs before the transaction is committed
@@ -17,7 +27,15 @@ export async function cachePurgeHook(
   await payload.db.commitTransaction(transactionID);
 
   try {
-    await refreshCacheForTarget({ type: "purge-and-prime", dataUrl, pageUrl });
+    if (target.type === "target") {
+      await refreshCacheForTarget({
+        type: "purge-and-prime",
+        dataUrl: target.dataUrl,
+        pageUrl: target.pageUrl,
+      });
+    } else {
+      await refreshCacheForAllPages(req, "purge-and-prime");
+    }
   } catch (e) {
     console.error("Failed to refresh cache:", e);
   }

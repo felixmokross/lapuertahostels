@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { refreshCacheForAllPages } from "../common/frontend-cache";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -19,7 +19,7 @@ export const Media: CollectionConfig = {
     listSearchableFields: ["filename", "alt"],
   },
   hooks: {
-    afterChange: [({ req }) => refreshCacheForAllPages(req, "purge-and-prime")],
+    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   upload: {
     staticURL: "/media",
