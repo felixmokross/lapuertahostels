@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { Node } from "slate";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import { getSupportedLocales } from "../common/locales";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -22,7 +23,19 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["title"],
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
+    afterChange: [
+      async ({ doc, req }) => {
+        console.log(doc.id);
+        console.log(typeof doc.id);
+        const translationLocales = (await getSupportedLocales()).filter(
+          (l) => l !== req.locale,
+        );
+
+        for (const translationLocale of translationLocales) {
+        }
+      },
+      ({ req }) => cachePurgeHook({ type: "all-pages" }, req),
+    ],
   },
   fields: [
     {

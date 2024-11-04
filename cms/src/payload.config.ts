@@ -11,7 +11,7 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 import { Pages } from "./collections/Pages";
-import { Brand, Link, Page, User } from "./payload-types";
+import { Brand, Page } from "./payload-types";
 import { ContextType } from "payload/dist/admin/components/utilities/DocumentInfo/types";
 import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";

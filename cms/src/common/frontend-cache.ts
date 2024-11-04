@@ -1,6 +1,7 @@
 import { resolve6 } from "dns/promises";
 import { PayloadRequest } from "payload/types";
 import { Pages } from "../collections/Pages";
+import { getSupportedLocales } from "./locales";
 
 export async function refreshCacheForAllPages(
   req: PayloadRequest,
@@ -114,13 +115,11 @@ async function purgeCache(targetUrl: string, dataUrl: string) {
   }
 }
 
-const supportedLocales = ["en", "es", "de", "fr"];
-
 async function primeCache(targetUrl: string, pageUrl: string) {
   const absolutePageUrl = new URL(pageUrl, targetUrl);
 
   await Promise.allSettled(
-    supportedLocales.map((locale) =>
+    (await getSupportedLocales()).map((locale) =>
       primeCacheForLocale(absolutePageUrl.toString(), locale),
     ),
   );
