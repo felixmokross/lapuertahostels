@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { refreshCacheForAllPages } from "../common/frontend-cache";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -20,7 +20,7 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["text"],
   },
   hooks: {
-    afterChange: [({ req }) => refreshCacheForAllPages(req, "purge-and-prime")],
+    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   fields: [
     {

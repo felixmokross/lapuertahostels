@@ -1,7 +1,7 @@
 import { CollectionConfig } from "payload/types";
 import { makeCallToActionField } from "../fields/call-to-action";
-import { refreshCacheForTarget } from "../common/frontend-cache";
 import { Brands } from "./Brands";
+import { cachePurgeHook } from "../hooks/cache-purge-hook";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -27,14 +27,13 @@ export const Banners: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async () => {
+      async ({ req }) => {
         console.log(`Refreshing cache for brands`);
 
-        await refreshCacheForTarget({
-          type: "purge-and-prime",
-          pageUrl: "/",
-          dataUrl: Brands.slug,
-        });
+        cachePurgeHook(
+          { type: "target", dataUrl: Brands.slug, pageUrl: "/" },
+          req,
+        );
 
         console.log(`Refreshed cache for brands`);
       },
