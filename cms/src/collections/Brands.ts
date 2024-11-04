@@ -33,7 +33,13 @@ export const Brands: CollectionConfig = {
     delete: () => false,
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook("brands", "/", req)],
+    afterChange: [
+      ({ req }) =>
+        cachePurgeHook(
+          { type: "target", dataUrl: "brands", pageUrl: "/" },
+          req,
+        ),
+    ],
   },
   fields: [
     {

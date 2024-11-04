@@ -31,7 +31,11 @@ export const Pages: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ doc, req }) => cachePurgeHook(`pages/${doc.id}`, doc.url, req),
+      ({ doc, req }) =>
+        cachePurgeHook(
+          { type: "target", dataUrl: `pages/${doc.id}`, pageUrl: doc.url },
+          req,
+        ),
     ],
   },
   fields: [

@@ -13,7 +13,13 @@ export const Maintenance: GlobalConfig = {
     update: canManageContent,
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook("globals/maintenance", "/", req)],
+    afterChange: [
+      ({ req }) =>
+        cachePurgeHook(
+          { type: "target", dataUrl: "globals/maintenance", pageUrl: "/" },
+          req,
+        ),
+    ],
   },
   fields: [
     {

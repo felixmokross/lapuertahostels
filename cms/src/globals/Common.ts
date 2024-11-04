@@ -23,7 +23,13 @@ export const Common: GlobalConfig = {
     update: canManageContent,
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook("globals/common", "/", req)],
+    afterChange: [
+      ({ req }) =>
+        cachePurgeHook(
+          { type: "target", dataUrl: "globals/common", pageUrl: "/" },
+          req,
+        ),
+    ],
   },
   fields: [
     {
