@@ -14,6 +14,9 @@ export function Banner({ message, cta }: BannerProps) {
   const { t } = useTranslation();
   const theme = useTheme();
 
+  if (message != null && typeof message !== "object") {
+    throw new Error("Invalid message");
+  }
   return (
     <Transition
       show={!isDismissed}
@@ -26,13 +29,13 @@ export function Banner({ message, cta }: BannerProps) {
       leaveTo="-translate-y-full"
     >
       <div className="leading-6">
-        {message}
-        {cta?.show && (
+        {message?.text}
+        {cta && (
           <>
             {" "}
             <span className="mx-1">&middot;</span>{" "}
             <PageLink
-              link={cta.link!}
+              link={cta}
               className="text-nowrap font-bold after:content-['_→'] hover:underline"
             />
           </>

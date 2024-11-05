@@ -7,19 +7,17 @@ export async function refreshCacheForAllPages(
   actionType: RefreshCacheActionType,
 ) {
   const pages = (
-    await req.payload.find({ collection: "pages", pagination: false })
+    await req.payload.find({ collection: "pages", pagination: false, depth: 0 })
   ).docs;
 
   console.log(`Refreshing cache for all pages (${actionType}).`);
-  await Promise.allSettled(
-    pages.map((page) =>
-      refreshCacheForTarget({
-        type: actionType,
-        pageUrl: page.url,
-        dataUrl: `${Pages.slug}/${page.id}`,
-      }),
-    ),
-  );
+  for (const page of pages) {
+    await refreshCacheForTarget({
+      type: actionType,
+      pageUrl: page.url,
+      dataUrl: `${Pages.slug}/${page.id}`,
+    });
+  }
 
   console.log(`Refreshed cache for all pages (${actionType}).`);
 }

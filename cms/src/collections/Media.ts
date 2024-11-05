@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { MediaCategory } from "./MediaCategory";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -61,7 +62,7 @@ export const Media: CollectionConfig = {
         es: "Categoría",
       },
       type: "relationship",
-      relationTo: "mediaCategory",
+      relationTo: MediaCategory.slug,
       admin: {
         description: {
           en: "Add a media category to easily find this media. When you select the media, you can filter by this category.",

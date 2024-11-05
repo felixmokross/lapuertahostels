@@ -41,20 +41,40 @@ const puertaBrand = {
     },
   ],
   banner: {
-    message: "Travel before 20 September and get 20% off!",
+    id: "1",
+    createdAt: "2021-09-01T00:00:00Z",
+    updatedAt: "2021-09-01T00:00:00Z",
+    name: "Discount before 20 September",
+    message: {
+      id: "1",
+      text: "Travel before 20 September and get 20% off!",
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
+    },
     cta: {
-      show: true,
-      link: {
-        label: "Book Now",
-        type: "internal",
-        page: { url: "/booking" } as Page,
+      id: "1",
+      name: "Book now",
+      label: {
+        id: "1",
+        text: "Book now",
+        createdAt: "2021-09-01T00:00:00Z",
+        updatedAt: "2021-09-01T00:00:00Z",
       },
+      type: "internal",
+      page: { url: "/experiences/tayrona" } as Page,
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
     },
   },
   logo: {
+    id: "1",
     filename: "logo-puerta-simple.png",
     alt: "La Puerta Hostels Logo",
+    createdAt: "2021-09-01T00:00:00Z",
+    updatedAt: "2021-09-01T00:00:00Z",
   },
+  createdAt: "2021-09-01T00:00:00Z",
+  updatedAt: "2021-09-01T00:00:00Z",
 } as Brand;
 
 export const Default: Story = {
