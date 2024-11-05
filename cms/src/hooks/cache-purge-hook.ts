@@ -28,13 +28,13 @@ export async function cachePurgeHook(
 
   try {
     if (target.type === "target") {
-      await refreshCacheForTarget({
+      refreshCacheForTarget({
         type: "purge-and-prime",
         dataUrl: target.dataUrl,
         pageUrl: target.pageUrl,
       });
     } else {
-      await refreshCacheForAllPages(req, "purge-and-prime");
+      refreshCacheForAllPages(req, "purge-and-prime");
     }
   } catch (e) {
     console.error("Failed to refresh cache:", e);
