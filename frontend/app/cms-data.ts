@@ -120,7 +120,7 @@ export async function getMaintenance(locale: string) {
 }
 
 export async function getBrands(locale: string) {
-  const brands = (await getData("brands", locale, 2)) as {
+  const brands = (await getData("brands", locale, 3)) as {
     docs: Brand[];
   } | null;
   if (!brands) throw new Error("Could not load Brands collection");

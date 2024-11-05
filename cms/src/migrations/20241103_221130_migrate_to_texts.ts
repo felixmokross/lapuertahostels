@@ -21,7 +21,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       banner.message = await createTextIfNeeded(banner.message);
     }
 
-    if (banner.cta) {
+    if (banner.cta?.show) {
       banner.cta = await createLinkIfNeeded(banner.cta.link);
     }
 
