@@ -26,17 +26,22 @@ export async function cachePurgeHook(
   const { payload, transactionID } = req;
   await payload.db.commitTransaction(transactionID);
 
-  try {
-    if (target.type === "target") {
-      refreshCacheForTarget({
-        type: "purge-and-prime",
-        dataUrl: target.dataUrl,
-        pageUrl: target.pageUrl,
-      });
-    } else {
-      refreshCacheForAllPages(req, "purge-and-prime");
-    }
-  } catch (e) {
-    console.error("Failed to refresh cache:", e);
+  refreshCache(target, req).catch((e) =>
+    console.error("Failed to refresh cache:", e),
+  );
+}
+
+async function refreshCache(
+  target: CachePurgeTarget,
+  req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
+) {
+  if (target.type === "target") {
+    await refreshCacheForTarget({
+      type: "purge-and-prime",
+      dataUrl: target.dataUrl,
+      pageUrl: target.pageUrl,
+    });
+  } else {
+    await refreshCacheForAllPages(req, "purge-and-prime");
   }
 }
