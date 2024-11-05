@@ -31,7 +31,12 @@ export const Default: Story = {
     createdAt: "2021-09-01T00:00:00Z",
     updatedAt: "2021-09-01T00:00:00Z",
     name: "Discount before 20 September",
-    message: "Travel before 20 September and get 20% off!",
+    message: {
+      id: "1",
+      text: "Travel before 20 September and get 20% off!",
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
+    },
     cta: {
       id: "1",
       name: "Book now",

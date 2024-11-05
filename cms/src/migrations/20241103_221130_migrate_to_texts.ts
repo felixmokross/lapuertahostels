@@ -67,6 +67,8 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 
     const link = {
       ...data,
+      label: await createTextIfNeeded(data.label),
+      name: data.label.en,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
