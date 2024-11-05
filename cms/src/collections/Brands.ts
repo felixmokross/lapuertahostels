@@ -1,8 +1,6 @@
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { CollectionConfig } from "payload/types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
-import { linkField } from "../fields/link";
 import { imageField } from "../fields/image";
 import { Banners } from "./Banners";
 import { Brand } from "payload/generated-types";

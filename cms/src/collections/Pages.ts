@@ -4,6 +4,8 @@ import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { text } from "payload/dist/fields/validations";
 import { canManageContent } from "../common/access-control";
+import { Brands } from "./Brands";
+import { Texts } from "./Texts";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -97,7 +99,7 @@ export const Pages: CollectionConfig = {
         es: "Marca",
       },
       type: "relationship",
-      relationTo: "brands",
+      relationTo: Brands.slug,
       access: {
         create: () => false,
         update: () => false,
@@ -130,7 +132,7 @@ export const Pages: CollectionConfig = {
         es: "Título",
       },
       type: "relationship",
-      relationTo: "texts",
+      relationTo: Texts.slug,
       admin: {
         position: "sidebar",
         description: {

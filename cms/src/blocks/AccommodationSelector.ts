@@ -5,6 +5,7 @@ import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
+import { Brands } from "../collections/Brands";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -42,7 +43,7 @@ export const AccommodationSelectorBlock: Block = {
             es: "Marca",
           },
           type: "relationship",
-          relationTo: "brands",
+          relationTo: Brands.slug,
           filterOptions: { id: { not_equals: "puerta" } },
           required: true,
         },
