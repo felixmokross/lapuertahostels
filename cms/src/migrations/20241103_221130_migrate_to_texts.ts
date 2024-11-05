@@ -16,7 +16,14 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 
   for (const banner of banners) {
     banner.name = (banner.message.en as string).substring(0, 30) + "…";
-    banner.message = await createTextIfNeeded(banner.message);
+
+    if (banner.message) {
+      banner.message = await createTextIfNeeded(banner.message);
+    }
+
+    if (banner.cta) {
+      banner.cta = await createLinkIfNeeded(banner.cta.link);
+    }
 
     await payload.db.connection.collection("banners").updateOne(
       {
@@ -26,6 +33,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         $set: {
           name: banner.name,
           message: banner.message,
+          cta: banner.cta,
         },
       },
     );

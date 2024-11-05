@@ -30,14 +30,21 @@ export const Default: Story = {
     id: "1",
     createdAt: "2021-09-01T00:00:00Z",
     updatedAt: "2021-09-01T00:00:00Z",
+    name: "Discount before 20 September",
     message: "Travel before 20 September and get 20% off!",
     cta: {
-      show: true,
-      link: {
-        label: "Book now",
-        type: "internal",
-        page: { url: "/experiences/tayrona" } as Page,
+      id: "1",
+      name: "Book now",
+      label: {
+        id: "1",
+        text: "Book now",
+        createdAt: "2021-09-01T00:00:00Z",
+        updatedAt: "2021-09-01T00:00:00Z",
       },
+      type: "internal",
+      page: { url: "/experiences/tayrona" } as Page,
+      createdAt: "2021-09-01T00:00:00Z",
+      updatedAt: "2021-09-01T00:00:00Z",
     },
   },
 };
