@@ -23,6 +23,10 @@ export function TextWithImageItem({
   imageWidth,
 }: TextWithImageItemProps) {
   size = size ?? "full";
+
+  if (heading != null && typeof heading !== "object") {
+    throw new Error("Invalid heading3 " + heading);
+  }
   return (
     <div
       className={cn("text-center", {
@@ -45,7 +49,7 @@ export function TextWithImageItem({
       )}
       {heading && (
         <Heading as="h4" size="small" className={cn(image && "mt-8")}>
-          {heading}
+          {heading.text}
         </Heading>
       )}
       {text && (

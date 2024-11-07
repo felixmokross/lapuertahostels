@@ -1,11 +1,12 @@
 import { GroupField, RadioField } from "payload/types";
 import { showField } from "./show";
 import { linkField } from "./link";
+import { Links } from "../collections/Links";
 
 export type NewCallToActionFieldOptions = {
   optional?: boolean;
   showByDefault?: boolean;
-  variant?: { default: "primary" | "secondary" } | false;
+  variant?: { default: "primary" | "secondary" };
 };
 
 export function makeNewCallToActionField({
@@ -23,37 +24,43 @@ export function makeNewCallToActionField({
     type: "group",
     fields: [
       ...(optional ? [{ ...showField, defaultValue: showByDefault }] : []),
-      { ...linkField, admin: { ...linkField.admin, condition } },
-      ...(variant
-        ? [
-            {
-              name: "variant",
-              type: "radio",
-              label: {
-                en: "Variant",
-                es: "Variante",
-              },
-              options: [
-                {
-                  label: {
-                    en: "Primary",
-                    es: "Primario",
-                  },
-                  value: "primary",
-                },
-                {
-                  label: {
-                    en: "Secondary",
-                    es: "Secundario",
-                  },
-                  value: "secondary",
-                },
-              ],
-              defaultValue: variant.default,
-              admin: { condition },
-            } as RadioField,
-          ]
-        : []),
+      {
+        name: "link",
+        label: {
+          en: "Link",
+          es: "Enlace",
+        },
+        type: "relationship",
+        relationTo: Links.slug,
+        required: true,
+        admin: { condition },
+      },
+      {
+        name: "variant",
+        type: "radio",
+        label: {
+          en: "Variant",
+          es: "Variante",
+        },
+        options: [
+          {
+            label: {
+              en: "Primary",
+              es: "Primario",
+            },
+            value: "primary",
+          },
+          {
+            label: {
+              en: "Secondary",
+              es: "Secundario",
+            },
+            value: "secondary",
+          },
+        ],
+        defaultValue: variant.default,
+        admin: { condition },
+      } as RadioField,
     ],
   };
 }

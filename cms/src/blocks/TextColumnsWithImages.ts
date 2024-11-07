@@ -1,10 +1,10 @@
 import { Block } from "payload/types";
-import { makeHeadingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { makeImageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
-import { makeCallToActionField } from "../fields/call-to-action";
+import { makeNewHeadingField } from "../fields/new-heading";
+import { makeNewCallToActionField } from "../fields/new-call-to-action";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -22,7 +22,7 @@ export const TextColumnsWithImagesBlock: Block = {
   imageAltText:
     "Preview of the Text Columns with Images block, showing a three-column grid in which each columns has a picture, a heading, a text, and a call to action.",
   fields: [
-    makeHeadingField({ optional: true }),
+    makeNewHeadingField({ optional: true }),
     makeRichTextField({ optional: true }),
     {
       name: "numberOfColumns",
@@ -78,15 +78,10 @@ export const TextColumnsWithImagesBlock: Block = {
             layout: "horizontal",
           },
         },
-        makeHeadingField({ optional: true }),
+        makeNewHeadingField({ optional: true }),
         makeRichTextField({ optional: true }),
-        makeCallToActionField({ optional: true, showByDefault: false }),
+        makeNewCallToActionField({ optional: true, showByDefault: false }),
       ],
-      admin: {
-        components: {
-          RowLabel: ({ data }) => data.heading,
-        },
-      },
     },
     makeMoreOptionsField(elementIdField),
   ],

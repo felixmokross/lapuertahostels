@@ -6,6 +6,7 @@ import { canManageContent } from "../common/access-control";
 import { linkField } from "../fields/link";
 import { makeRichTextField } from "../fields/rich-text";
 import { headingField } from "../fields/heading";
+import { newHeadingField } from "../fields/new-heading";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -222,7 +223,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [headingField, makeRichTextField({ mode: "long-form" })],
+      fields: [newHeadingField, makeRichTextField({ mode: "long-form" })],
     },
     {
       name: "errorScreen",
@@ -237,7 +238,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [headingField, makeRichTextField({ mode: "long-form" })],
+      fields: [newHeadingField, makeRichTextField({ mode: "long-form" })],
     },
   ],
 };

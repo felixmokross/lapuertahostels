@@ -12,7 +12,7 @@ export type PageLinkProps = {
 } & Omit<LinkProps, "to">;
 
 export function PageLink({ link, ...props }: PageLinkProps) {
-  if (typeof link !== "object") throw new Error("Invalid link");
+  if (typeof link !== "object") throw new Error("Invalid link 3");
   return (
     <Link
       {...props}

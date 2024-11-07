@@ -14,12 +14,17 @@ export function TextColumnsWithImagesBlock({
   numberOfColumns,
   elementId,
 }: TextColumnsWithImagesBlockProps) {
+  if (heading != null && typeof heading !== "object") {
+    console.log(heading);
+    throw new Error("Invalid heading2 " + heading);
+  }
+
   return (
     <div className="my-36 px-8" id={elementId ?? undefined}>
       <div className="mx-auto max-w-4xl">
         {heading && (
           <Heading as="h3" size="medium" className="text-center">
-            {heading}
+            {heading.text}
           </Heading>
         )}
         {text && (
