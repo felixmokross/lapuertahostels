@@ -49,6 +49,9 @@ export const Links: CollectionConfig = {
       },
       type: "relationship",
       relationTo: Texts.slug,
+      filterOptions: {
+        type: { equals: "plainText" },
+      },
       required: true,
     },
     ...linkField.fields.slice(1),

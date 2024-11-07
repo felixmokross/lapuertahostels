@@ -15,8 +15,11 @@ export function TextColumnsWithImagesBlock({
   elementId,
 }: TextColumnsWithImagesBlockProps) {
   if (heading != null && typeof heading !== "object") {
-    console.log(heading);
-    throw new Error("Invalid heading2 " + heading);
+    throw new Error("Invalid heading");
+  }
+
+  if (text != null && typeof text !== "object") {
+    throw new Error("Invalid text");
   }
 
   return (
@@ -32,7 +35,7 @@ export function TextColumnsWithImagesBlock({
             size="large"
             className={cn(heading && "mt-2", "text-center")}
           >
-            {text as RichTextObject}
+            {text.richText as RichTextObject}
           </RichTextParagraph>
         )}
       </div>

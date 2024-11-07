@@ -1,4 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
+import { Text } from "payload/generated-types";
+import { Node } from "slate";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const pages = await payload.db.connection
@@ -14,6 +16,15 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     .find()
     .toArray();
 
+  for (const text of texts) {
+    await payload.db.connection
+      .collection("texts")
+      .updateOne(
+        { _id: text._id },
+        { $set: { title: text.text, type: "plainText" } },
+      );
+  }
+
   const common = await payload.db.connection
     .collection("globals")
     .findOne({ globalType: "common" });
@@ -25,8 +36,16 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         "errorScreen.heading": await createTextIfNeeded(
           common.errorScreen.heading,
         ),
+        "errorScreen.text": await createTextIfNeeded(
+          common.errorScreen.text,
+          "richText",
+        ),
         "pageNotFoundScreen.heading": await createTextIfNeeded(
           common.pageNotFoundScreen.heading,
+        ),
+        "pageNotFoundScreen.text": await createTextIfNeeded(
+          common.pageNotFoundScreen.text,
+          "richText",
         ),
       },
     },
@@ -43,9 +62,17 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         block.heading = await createTextIfNeeded(block.heading);
       }
 
+      if (block.text) {
+        block.text = await createTextIfNeeded(block.text, "richText");
+      }
+
       for (const item of block.items) {
         if (item.heading) {
           item.heading = await createTextIfNeeded(item.heading);
+        }
+
+        if (item.text) {
+          item.text = await createTextIfNeeded(item.text, "richText");
         }
 
         if (item.cta) {
@@ -59,17 +86,38 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       .updateOne({ _id: page._id }, { $set: { layout: page.layout } });
   }
 
-  async function createTextIfNeeded(data: any) {
-    const matchingText = texts.find((text) => text.text.en === data.en);
+  async function createTextIfNeeded(
+    data: any,
+    type: Text["type"] = "plainText",
+  ) {
+    const matchingText =
+      type === "plainText" &&
+      texts
+        .filter((t) => t.type === "plainText")
+        .find((text) => text.text.en === data.en);
     if (matchingText) {
       return matchingText._id.toString();
     }
 
     const text = {
-      text: data,
+      type,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+
+    if (type === "richText") {
+      text["richText"] = data;
+      text["title"] = Object.fromEntries(
+        Object.entries(data).map(([locale, value]) => [
+          locale,
+          (value as Node[]).map((n) => Node.string(n)).join(" "),
+        ]),
+      );
+    } else if (type === "plainText") {
+      text["text"] = data;
+      text["title"] = data;
+    }
+
     const result = await payload.db.connection
       .collection("texts")
       .insertOne(text);

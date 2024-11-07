@@ -123,6 +123,9 @@ export default buildConfig({
     },
   },
   endpoints: [primeFrontendCacheEndpoint],
+  rateLimit: {
+    max: 1500,
+  },
 });
 
 function getPreviewUrl({

@@ -66,6 +66,9 @@ export const Banners: CollectionConfig = {
       required: true,
       type: "relationship",
       relationTo: Texts.slug,
+      filterOptions: {
+        type: { equals: "plainText" },
+      },
     },
     {
       name: "cta",

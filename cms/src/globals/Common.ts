@@ -3,10 +3,8 @@ import { Common as CommonType } from "../payload-types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
-import { linkField } from "../fields/link";
-import { makeRichTextField } from "../fields/rich-text";
-import { headingField } from "../fields/heading";
 import { newHeadingField } from "../fields/new-heading";
+import { makeNewRichTextField } from "../fields/new-rich-text";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -223,7 +221,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [newHeadingField, makeRichTextField({ mode: "long-form" })],
+      fields: [newHeadingField, makeNewRichTextField()],
     },
     {
       name: "errorScreen",
@@ -238,7 +236,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [newHeadingField, makeRichTextField({ mode: "long-form" })],
+      fields: [newHeadingField, makeNewRichTextField()],
     },
   ],
 };

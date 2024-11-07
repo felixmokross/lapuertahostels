@@ -16,6 +16,9 @@ export function makeNewHeadingField({
     },
     type: "relationship",
     relationTo: Texts.slug,
+    filterOptions: {
+      type: { equals: "plainText" },
+    },
     required: !optional,
   };
 }

@@ -133,6 +133,9 @@ export const Pages: CollectionConfig = {
       },
       type: "relationship",
       relationTo: Texts.slug,
+      filterOptions: {
+        type: { equals: "plainText" },
+      },
       admin: {
         position: "sidebar",
         description: {

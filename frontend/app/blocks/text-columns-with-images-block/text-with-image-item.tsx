@@ -25,7 +25,11 @@ export function TextWithImageItem({
   size = size ?? "full";
 
   if (heading != null && typeof heading !== "object") {
-    throw new Error("Invalid heading3 " + heading);
+    throw new Error("Invalid heading");
+  }
+
+  if (text != null && typeof text !== "object") {
+    throw new Error("Invalid text");
   }
   return (
     <div
@@ -57,7 +61,7 @@ export function TextWithImageItem({
           size="medium"
           className={cn((image || heading) && "mt-2")}
         >
-          {text as RichTextObject}
+          {text.richText as RichTextObject}
         </RichTextParagraph>
       )}
       {cta?.show && (
