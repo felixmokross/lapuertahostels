@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeImageField } from "../fields/image";
+import { newHeadingField } from "../fields/new-heading";
+import { makeNewRichTextField } from "../fields/new-rich-text";
 
 const optionalImageField = makeImageField({ optional: true });
 
@@ -23,8 +23,8 @@ export const StoryBlock: Block = {
   imageAltText:
     "Preview of the Story block, showing an image on the left and text on the right",
   fields: [
-    { ...headingField, required: false },
-    makeRichTextField({ mode: "long-form" }),
+    { ...newHeadingField, required: false },
+    makeNewRichTextField(),
     optionalImageField,
     {
       name: "imagePosition",

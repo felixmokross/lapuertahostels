@@ -236,6 +236,18 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const storyBlocks = page.layout.filter((b) => b.blockType === "Story");
+    if (storyBlocks.length > 0) {
+      updatePage = true;
+      for (const block of storyBlocks) {
+        if (block.heading) {
+          block.heading = await createTextIfNeeded(block.heading);
+        }
+
+        block.text = await createTextIfNeeded(block.text, "richText");
+      }
+    }
+
     if (updatePage) {
       await payload.db.connection
         .collection("pages")
