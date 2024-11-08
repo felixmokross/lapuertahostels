@@ -1,8 +1,6 @@
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { Brands } from "../collections/Brands";

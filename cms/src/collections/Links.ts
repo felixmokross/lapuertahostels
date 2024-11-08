@@ -72,8 +72,8 @@ export const Links: CollectionConfig = {
       },
       admin: {
         description: {
-          en: "This field is generated automatically and is only used internally in the CMS to identity the text.",
-          es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
+          en: "This field is generated automatically and is only used internally in the CMS to identity the link.",
+          es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el enlace.",
         },
         position: "sidebar",
       },

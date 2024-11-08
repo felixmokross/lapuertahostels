@@ -189,6 +189,27 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const featuresBlocks = page.layout.filter(
+      (b) => b.blockType === "Features",
+    );
+
+    if (featuresBlocks.length > 0) {
+      updatePage = true;
+      for (const block of featuresBlocks) {
+        for (const item of block.items) {
+          item.heading = await createTextIfNeeded(item.heading);
+          item.text = await createTextIfNeeded(item.text, "richText");
+
+          if (item.cta?.show) {
+            item.cta.label = await createTextIfNeeded(item.cta.link.label);
+            item.cta.link = await createLinkIfNeeded(item.cta.link);
+          } else {
+            delete item.cta;
+          }
+        }
+      }
+    }
+
     if (updatePage) {
       await payload.db.connection
         .collection("pages")

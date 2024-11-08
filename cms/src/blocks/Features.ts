@@ -1,10 +1,10 @@
 import { Block } from "payload/types";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { imageField } from "../fields/image";
-import { makeCallToActionField } from "../fields/call-to-action";
+import { newHeadingField } from "../fields/new-heading";
+import { makeNewRichTextField } from "../fields/new-rich-text";
+import { makeNewCallToActionField } from "../fields/new-call-to-action";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -71,15 +71,12 @@ export const FeaturesBlock: Block = {
       required: true,
       fields: [
         imageField,
-        headingField,
-        makeRichTextField(),
-        makeCallToActionField({ optional: true, showByDefault: false }),
+        newHeadingField,
+        makeNewRichTextField(),
+        makeNewCallToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {
         initCollapsed: true,
-        components: {
-          RowLabel: ({ data }) => data?.heading,
-        },
       },
     },
     makeMoreOptionsField(elementIdField),
