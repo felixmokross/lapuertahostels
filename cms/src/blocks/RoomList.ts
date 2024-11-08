@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { imageField } from "../fields/image";
-import { newHeadingField } from "../fields/new-heading";
-import { makeNewRichTextField } from "../fields/new-rich-text";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/new-rich-text";
 import { Texts } from "../collections/Texts";
-import { makeNewCallToActionField } from "../fields/new-call-to-action";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -41,8 +41,8 @@ export const RoomListBlock: Block = {
       },
       minRows: 1,
       fields: [
-        newHeadingField,
-        makeNewRichTextField({ optional: true }),
+        headingField,
+        makeRichTextField({ optional: true }),
         {
           name: "images",
           type: "array",
@@ -74,7 +74,7 @@ export const RoomListBlock: Block = {
             },
           ],
         },
-        makeNewCallToActionField(),
+        makeCallToActionField(),
       ],
     },
   ],

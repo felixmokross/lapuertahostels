@@ -1,10 +1,10 @@
 import { GroupField, RadioField } from "payload/types";
 import { showField } from "./show";
 import { Page } from "payload/generated-types";
-import { makeNewCallToActionField } from "./new-call-to-action";
+import { makeCallToActionField } from "./call-to-action";
 import { Texts } from "../collections/Texts";
 
-type NewOverlayTitleFieldOptions = {
+type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsCallToAction?: boolean;
   supportsPositions?: (NonNullable<Page["layout"]>[number] & {
@@ -12,17 +12,17 @@ type NewOverlayTitleFieldOptions = {
   })["overlayTitle"]["position"][];
 };
 
-const newCallToActionField = makeNewCallToActionField({
+const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
   variant: { default: "primary" },
 });
 
-export function makeNewOverlayTitleField({
+export function makeOverlayTitleField({
   optional = false,
   supportsCallToAction = true,
   supportsPositions,
-}: NewOverlayTitleFieldOptions = {}): GroupField {
+}: OverlayTitleFieldOptions = {}): GroupField {
   const condition = optional ? (_, siblingData) => siblingData.show : undefined;
 
   return {
@@ -50,9 +50,9 @@ export function makeNewOverlayTitleField({
       ...(supportsCallToAction
         ? [
             {
-              ...newCallToActionField,
+              ...callToActionField,
               admin: {
-                ...newCallToActionField.admin,
+                ...callToActionField.admin,
                 condition,
               },
             },

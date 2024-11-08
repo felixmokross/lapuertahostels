@@ -3,17 +3,17 @@ import { showField } from "./show";
 import { Links } from "../collections/Links";
 import { Texts } from "../collections/Texts";
 
-export type NewCallToActionFieldOptions = {
+export type CallToActionFieldOptions = {
   optional?: boolean;
   showByDefault?: boolean;
   variant?: { default: "primary" | "secondary" } | false;
 };
 
-export function makeNewCallToActionField({
+export function makeCallToActionField({
   optional = false,
   showByDefault = true,
   variant = { default: "secondary" },
-}: NewCallToActionFieldOptions = {}): GroupField {
+}: CallToActionFieldOptions = {}): GroupField {
   const condition = optional ? (_, siblingData) => siblingData.show : undefined;
   return {
     name: "cta",

@@ -2,13 +2,13 @@ import { slateEditor } from "@payloadcms/richtext-slate";
 import { RelationshipField, RichTextField } from "payload/types";
 import { Texts } from "../collections/Texts";
 
-export type NewRichTextFieldOptions = {
+export type RichTextFieldOptions = {
   optional?: boolean;
 };
 
-export function makeNewRichTextField({
+export function makeRichTextField({
   optional = false,
-}: NewRichTextFieldOptions = {}): RelationshipField {
+}: RichTextFieldOptions = {}): RelationshipField {
   return {
     name: "text",
     label: {

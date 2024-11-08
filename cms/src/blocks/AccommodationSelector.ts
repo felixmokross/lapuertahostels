@@ -4,8 +4,8 @@ import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { Brands } from "../collections/Brands";
-import { newHeadingField } from "../fields/new-heading";
-import { makeNewRichTextField } from "../fields/new-rich-text";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/new-rich-text";
 import { Texts } from "../collections/Texts";
 
 export const AccommodationSelectorBlock: Block = {
@@ -24,8 +24,8 @@ export const AccommodationSelectorBlock: Block = {
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
-    newHeadingField,
-    makeNewRichTextField(),
+    headingField,
+    makeRichTextField(),
     {
       name: "cards",
       label: {

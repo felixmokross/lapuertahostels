@@ -2,7 +2,7 @@ import { CollectionConfig } from "payload/types";
 import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { Texts } from "./Texts";
-import { makeNewCallToActionField } from "../fields/new-call-to-action";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -70,6 +70,6 @@ export const Banners: CollectionConfig = {
         type: { equals: "plainText" },
       },
     },
-    makeNewCallToActionField({ optional: true, variant: false }),
+    makeCallToActionField({ optional: true, variant: false }),
   ],
 };

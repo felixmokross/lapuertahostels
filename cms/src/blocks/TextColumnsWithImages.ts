@@ -2,9 +2,9 @@ import { Block } from "payload/types";
 import { makeImageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
-import { makeNewHeadingField } from "../fields/new-heading";
-import { makeNewCallToActionField } from "../fields/new-call-to-action";
-import { makeNewRichTextField } from "../fields/new-rich-text";
+import { makeHeadingField } from "../fields/heading";
+import { makeCallToActionField } from "../fields/call-to-action";
+import { makeRichTextField } from "../fields/new-rich-text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -22,8 +22,8 @@ export const TextColumnsWithImagesBlock: Block = {
   imageAltText:
     "Preview of the Text Columns with Images block, showing a three-column grid in which each columns has a picture, a heading, a text, and a call to action.",
   fields: [
-    makeNewHeadingField({ optional: true }),
-    makeNewRichTextField({ optional: true }),
+    makeHeadingField({ optional: true }),
+    makeRichTextField({ optional: true }),
     {
       name: "numberOfColumns",
       label: {
@@ -78,9 +78,9 @@ export const TextColumnsWithImagesBlock: Block = {
             layout: "horizontal",
           },
         },
-        makeNewHeadingField({ optional: true }),
-        makeNewRichTextField({ optional: true }),
-        makeNewCallToActionField({ optional: true, showByDefault: false }),
+        makeHeadingField({ optional: true }),
+        makeRichTextField({ optional: true }),
+        makeCallToActionField({ optional: true, showByDefault: false }),
       ],
     },
     makeMoreOptionsField(elementIdField),

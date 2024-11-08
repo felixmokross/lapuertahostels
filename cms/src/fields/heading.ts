@@ -1,13 +1,13 @@
 import { RelationshipField } from "payload/types";
 import { Texts } from "../collections/Texts";
 
-type NewHeadingFieldOptions = {
+type HeadingFieldOptions = {
   optional?: boolean;
 };
 
-export function makeNewHeadingField({
+export function makeHeadingField({
   optional = false,
-}: NewHeadingFieldOptions = {}): RelationshipField {
+}: HeadingFieldOptions = {}): RelationshipField {
   return {
     name: "heading",
     label: {
@@ -23,4 +23,4 @@ export function makeNewHeadingField({
   };
 }
 
-export const newHeadingField = makeNewHeadingField();
+export const headingField = makeHeadingField();

@@ -2,7 +2,7 @@ import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { makeNewOverlayTitleField } from "../fields/new-overlay-title";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 
 export const SlidesBlock: Block = {
   slug: "Slides",
@@ -77,7 +77,7 @@ export const SlidesBlock: Block = {
             },
           },
         },
-        makeNewOverlayTitleField({ optional: true }),
+        makeOverlayTitleField({ optional: true }),
       ],
       admin: {
         initCollapsed: true,

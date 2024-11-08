@@ -2,9 +2,9 @@ import { Block } from "payload/types";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
 import { imageField } from "../fields/image";
-import { newHeadingField } from "../fields/new-heading";
-import { makeNewRichTextField } from "../fields/new-rich-text";
-import { makeNewCallToActionField } from "../fields/new-call-to-action";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/new-rich-text";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -71,9 +71,9 @@ export const FeaturesBlock: Block = {
       required: true,
       fields: [
         imageField,
-        newHeadingField,
-        makeNewRichTextField(),
-        makeNewCallToActionField({ optional: true, showByDefault: false }),
+        headingField,
+        makeRichTextField(),
+        makeCallToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {
         initCollapsed: true,
