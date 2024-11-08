@@ -104,6 +104,10 @@ export const Texts: CollectionConfig = {
     },
     {
       name: "title",
+      label: {
+        en: "Title (internal)",
+        es: "Título (interno)",
+      },
       type: "text",
       access: {
         create: () => false,
@@ -121,6 +125,13 @@ export const Texts: CollectionConfig = {
             }
           },
         ],
+      },
+      admin: {
+        description: {
+          en: "This field is generated automatically and is only used internally in the CMS to identity the text.",
+          es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
+        },
+        position: "sidebar",
       },
     },
   ],

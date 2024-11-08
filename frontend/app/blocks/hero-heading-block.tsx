@@ -14,6 +14,10 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
     throw new Error("Invalid heading");
   }
 
+  if (heading != null && heading.type !== "plainText") {
+    throw new Error("Heading must be plain text");
+  }
+
   if (image != null && typeof image !== "object") {
     throw new Error("Invalid image");
   }
@@ -28,7 +32,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
       />
       <OverlayTitle
         position="center"
-        text={[plain(text(heading.text))]}
+        text={[plain(text(heading.text!))]}
         overlay="intense"
       />
     </div>

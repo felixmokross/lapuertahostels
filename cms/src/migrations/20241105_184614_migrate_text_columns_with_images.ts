@@ -1,6 +1,7 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
 import { Text } from "payload/generated-types";
 import { Node } from "slate";
+import { pageIdToUrl } from "../common/page-urls";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const pages = await payload.db.connection
@@ -15,6 +16,78 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     .collection("links")
     .find()
     .toArray();
+
+  const brands = await payload.db.connection
+    .collection("brands")
+    .find()
+    .toArray();
+
+  const banners = await payload.db.connection
+    .collection("banners")
+    .find()
+    .toArray();
+
+  for (const brand of brands) {
+    const navLinkObjects = [];
+    for (const navLink of brand.navLinks) {
+      const link = links.find((l) => l._id.toString() === navLink);
+      navLinkObjects.push({
+        label: link.label,
+        link: navLink,
+      });
+    }
+
+    for (const footerLinkGroup of brand.footer.linkGroups) {
+      const footerLinkObjects = [];
+      for (const footerLink of footerLinkGroup.links) {
+        const link = links.find((l) => l._id.toString() === footerLink);
+        footerLinkObjects.push({
+          label: link.label,
+          link: footerLink,
+        });
+      }
+
+      footerLinkGroup.links = footerLinkObjects;
+    }
+
+    await payload.db.connection.collection("brands").updateOne(
+      { _id: brand._id },
+      {
+        $set: {
+          navLinks: navLinkObjects,
+          "footer.linkGroups": brand.footer.linkGroups,
+        },
+      },
+    );
+  }
+
+  for (const banner of banners) {
+    if (banner.cta) {
+      const link = links.find((l) => l._id.toString() === banner.cta);
+      await payload.db.connection.collection("banners").updateOne(
+        { _id: banner._id },
+        {
+          $set: {
+            cta: {
+              show: true,
+              label: link.label,
+              link: banner.cta,
+            },
+          },
+        },
+      );
+    }
+  }
+
+  for (const link of links) {
+    await payload.db.connection.collection("links").updateOne(
+      { _id: link._id },
+      {
+        $unset: { label: "", name: "" },
+        $set: { title: getLinkTitle(link) },
+      },
+    );
+  }
 
   for (const text of texts) {
     await payload.db.connection
@@ -76,6 +149,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         }
 
         if (item.cta) {
+          item.cta.label = await createTextIfNeeded(item.cta.link.label);
           item.cta.link = await createLinkIfNeeded(item.cta.link);
         }
       }
@@ -135,11 +209,13 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 
     const link = {
       ...data,
-      label: await createTextIfNeeded(data.label),
-      name: `${data.label.en}${data.type === "external" ? ` (${data.url})` : ` (${data.page.replaceAll(":", "/")})`}`,
+      title: getLinkTitle(data),
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+    delete link.name;
+    delete link.label;
+
     const result = await payload.db.connection
       .collection("links")
       .insertOne(link);
@@ -161,4 +237,13 @@ function isMatchingLink(link1: any, link2: any): boolean {
     link1.page === link2.page &&
     link1.url === link2.url
   );
+}
+
+function getLinkTitle(link: any) {
+  switch (link.type) {
+    case "internal":
+      return `${pageIdToUrl(link.page)}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`;
+    case "external":
+      return `${link.url}`;
+  }
 }

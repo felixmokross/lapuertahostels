@@ -76,13 +76,15 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                     {linkGroup.title.text}
                   </h3>
                   <ul className="mt-6 space-y-4">
-                    {linkGroup.links.map((link) => {
-                      if (typeof link !== "object")
+                    {linkGroup.links?.map((link) => {
+                      if (typeof link !== "object") {
                         throw new Error("Invalid link");
+                      }
                       return (
                         <li key={link.id}>
                           <PageLink
-                            link={link}
+                            label={link.label}
+                            link={link.link}
                             className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
                           />
                         </li>

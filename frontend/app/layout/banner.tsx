@@ -30,12 +30,13 @@ export function Banner({ message, cta }: BannerProps) {
     >
       <div className="leading-6">
         {message?.text}
-        {cta && (
+        {cta?.show && (
           <>
             {" "}
             <span className="mx-1">&middot;</span>{" "}
             <PageLink
-              link={cta}
+              label={cta.label!}
+              link={cta.link!}
               className="text-nowrap font-bold after:content-['_→'] hover:underline"
             />
           </>

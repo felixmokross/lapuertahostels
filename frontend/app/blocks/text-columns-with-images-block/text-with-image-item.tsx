@@ -67,6 +67,7 @@ export function TextWithImageItem({
       {cta?.show && (
         <Button
           as={PageLink}
+          label={cta.label!}
           link={cta.link!}
           size="medium"
           variant={cta.variant ?? "secondary"}

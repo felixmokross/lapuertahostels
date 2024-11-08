@@ -62,7 +62,13 @@ export function Navbar({
                 if (typeof navLink !== "object") {
                   throw new Error("Invalid nav link");
                 }
-                return <NavLink key={navLink.id} link={navLink} />;
+                return (
+                  <NavLink
+                    key={navLink.id}
+                    label={navLink.label}
+                    link={navLink.link}
+                  />
+                );
               })}
             </div>
             <div className="hidden items-center justify-end sm:flex">
@@ -94,7 +100,8 @@ export function Navbar({
                   <Disclosure.Button
                     key={navLink.id}
                     as={PageLink}
-                    link={navLink}
+                    label={navLink.label}
+                    link={navLink.link}
                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                   />
                 );

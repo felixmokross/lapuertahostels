@@ -1,9 +1,10 @@
-import { Brand, Page } from "~/payload-types";
+import { Brand, Page, Text } from "~/payload-types";
 import { Link, LinkProps } from "./link";
 
 export type PageLinkProps = {
+  label?: Text | string;
   link:
-    | NonNullable<Brand["navLinks"]>[number]
+    | NonNullable<Brand["navLinks"]>[number]["link"]
     | NonNullable<
         (NonNullable<Page["layout"]>[number] & {
           blockType: "Lead";
@@ -11,8 +12,12 @@ export type PageLinkProps = {
       >["link"];
 } & Omit<LinkProps, "to">;
 
-export function PageLink({ link, ...props }: PageLinkProps) {
-  if (typeof link !== "object") throw new Error("Invalid link 3");
+export function PageLink({ label, link, ...props }: PageLinkProps) {
+  if (typeof link !== "object") throw new Error("Invalid link");
+
+  if (label != null && typeof label !== "object") {
+    throw new Error("Invalid label");
+  }
   return (
     <Link
       {...props}
@@ -22,7 +27,7 @@ export function PageLink({ link, ...props }: PageLinkProps) {
           : link.url!
       }
     >
-      {typeof link.label === "object" ? link.label.text : link.label}
+      {"label" in link ? link.label : label!.text}
     </Link>
   );
 }

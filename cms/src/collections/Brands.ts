@@ -106,9 +106,32 @@ export const Brands: CollectionConfig = {
         en: "Navigation Links",
         es: "Enlaces de navegación",
       },
-      type: "relationship",
-      relationTo: Links.slug,
-      hasMany: true,
+      type: "array",
+      fields: [
+        {
+          name: "label",
+          label: {
+            en: "Label",
+            es: "Etiqueta",
+          },
+          type: "relationship",
+          relationTo: Texts.slug,
+          filterOptions: {
+            type: { equals: "plainText" },
+          },
+          required: true,
+        },
+        {
+          name: "link",
+          label: {
+            en: "Link",
+            es: "Enlace",
+          },
+          type: "relationship",
+          relationTo: Links.slug,
+          required: true,
+        },
+      ],
     },
     {
       name: "footer",
@@ -166,10 +189,32 @@ export const Brands: CollectionConfig = {
                 en: "Links",
                 es: "Enlaces",
               },
-              type: "relationship",
-              required: true,
-              relationTo: Links.slug,
-              hasMany: true,
+              type: "array",
+              fields: [
+                {
+                  name: "label",
+                  label: {
+                    en: "Label",
+                    es: "Etiqueta",
+                  },
+                  type: "relationship",
+                  relationTo: Texts.slug,
+                  filterOptions: {
+                    type: { equals: "plainText" },
+                  },
+                  required: true,
+                },
+                {
+                  name: "link",
+                  label: {
+                    en: "Link",
+                    es: "Enlace",
+                  },
+                  type: "relationship",
+                  relationTo: Links.slug,
+                  required: true,
+                },
+              ],
             },
           ],
           admin: {
