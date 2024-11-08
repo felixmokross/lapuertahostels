@@ -3,13 +3,7 @@ import { Link, LinkProps } from "./link";
 import { PropsWithChildren } from "react";
 
 export type PageLinkProps = {
-  link:
-    | NonNullable<Brand["navLinks"]>[number]["link"]
-    | NonNullable<
-        (NonNullable<Page["layout"]>[number] & {
-          blockType: "Lead";
-        })["cta"]
-      >["link"];
+  link: NonNullable<Brand["navLinks"]>[number]["link"];
 } & Omit<PropsWithChildren<LinkProps>, "to">;
 
 export function PageLink({ link, ...props }: PageLinkProps) {
