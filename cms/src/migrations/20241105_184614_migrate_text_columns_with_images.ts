@@ -131,39 +131,69 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   );
 
   for (const page of pages) {
-    const blocks = page.layout.filter(
+    let updatePage = false;
+    const textColumnsWithImagesBlocks = page.layout.filter(
       (b) => b.blockType === "TextColumnsWithImages",
     );
-    if (blocks.length === 0) continue;
 
-    for (const block of blocks) {
-      if (block.heading) {
-        block.heading = await createTextIfNeeded(block.heading);
-      }
-
-      if (block.text) {
-        block.text = await createTextIfNeeded(block.text, "richText");
-      }
-
-      for (const item of block.items) {
-        if (item.heading) {
-          item.heading = await createTextIfNeeded(item.heading);
+    if (textColumnsWithImagesBlocks.length > 0) {
+      updatePage = true;
+      for (const block of textColumnsWithImagesBlocks) {
+        if (block.heading) {
+          block.heading = await createTextIfNeeded(block.heading);
         }
 
-        if (item.text) {
-          item.text = await createTextIfNeeded(item.text, "richText");
+        if (block.text) {
+          block.text = await createTextIfNeeded(block.text, "richText");
         }
 
-        if (item.cta) {
-          item.cta.label = await createTextIfNeeded(item.cta.link.label);
-          item.cta.link = await createLinkIfNeeded(item.cta.link);
+        for (const item of block.items) {
+          if (item.heading) {
+            item.heading = await createTextIfNeeded(item.heading);
+          }
+
+          if (item.text) {
+            item.text = await createTextIfNeeded(item.text, "richText");
+          }
+
+          if (item.cta) {
+            item.cta.label = await createTextIfNeeded(item.cta.link.label);
+            item.cta.link = await createLinkIfNeeded(item.cta.link);
+          }
         }
       }
     }
 
-    await payload.db.connection
-      .collection("pages")
-      .updateOne({ _id: page._id }, { $set: { layout: page.layout } });
+    const accommodationSelectorBlocks = page.layout.filter(
+      (b) => b.blockType === "AccommodationSelector",
+    );
+
+    if (accommodationSelectorBlocks.length > 0) {
+      updatePage = true;
+      for (const block of accommodationSelectorBlocks) {
+        block.heading = await createTextIfNeeded(block.heading);
+
+        block.text = await createTextIfNeeded(block.text, "richText");
+
+        for (const card of block.cards) {
+          card.description = await createTextIfNeeded(
+            Object.fromEntries(
+              Object.entries(card.description).map(([locale, value]) => [
+                locale,
+                [{ children: [{ text: value }] }],
+              ]),
+            ),
+            "richText",
+          );
+        }
+      }
+    }
+
+    if (updatePage) {
+      await payload.db.connection
+        .collection("pages")
+        .updateOne({ _id: page._id }, { $set: { layout: page.layout } });
+    }
   }
 
   async function createTextIfNeeded(

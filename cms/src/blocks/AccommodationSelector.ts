@@ -6,6 +6,9 @@ import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { Brands } from "../collections/Brands";
+import { newHeadingField } from "../fields/new-heading";
+import { makeNewRichTextField } from "../fields/new-rich-text";
+import { Texts } from "../collections/Texts";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -23,8 +26,8 @@ export const AccommodationSelectorBlock: Block = {
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
-    headingField,
-    makeRichTextField(),
+    newHeadingField,
+    makeNewRichTextField(),
     {
       name: "cards",
       label: {
@@ -54,9 +57,12 @@ export const AccommodationSelectorBlock: Block = {
             en: "Description",
             es: "Descripción",
           },
-          type: "textarea",
+          type: "relationship",
+          relationTo: Texts.slug,
+          filterOptions: {
+            type: { equals: "richText" },
+          },
           required: true,
-          localized: true,
         },
       ],
       admin: {

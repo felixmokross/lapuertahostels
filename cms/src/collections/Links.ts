@@ -27,6 +27,21 @@ export const Links: CollectionConfig = {
   fields: [
     ...linkField.fields.slice(1),
     {
+      name: "comment",
+      type: "text",
+      label: {
+        en: "Comment",
+        es: "Comentario",
+      },
+      admin: {
+        position: "sidebar",
+        description: {
+          en: "Add a comment to make this link easier to find.",
+          es: "Agrega un comentario para hacer que este enlace sea más fácil de encontrar.",
+        },
+      },
+    },
+    {
       name: "title",
       label: {
         en: "Title (internal)",
@@ -41,12 +56,17 @@ export const Links: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
+            let url: string;
             switch (data.type) {
               case "internal":
-                return `${pageIdToUrl(data.page)}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;
+                url = `${pageIdToUrl(data.page)}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;
+                break;
               case "external":
-                return `${data.url}`;
+                url = `${data.url}`;
+                break;
             }
+
+            return data.comment ? `${data.comment} (${url})` : url;
           },
         ],
       },

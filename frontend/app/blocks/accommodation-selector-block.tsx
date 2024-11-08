@@ -1,7 +1,7 @@
 import { Brand, Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
-import { Paragraph, RichTextParagraph } from "../common/paragraph";
+import { RichTextParagraph } from "../common/paragraph";
 import { Image } from "~/common/image";
 import { BrandId } from "~/brands";
 import { RichTextObject } from "~/common/rich-text";
@@ -20,13 +20,20 @@ export function AccommodationSelectorBlock({
   cards,
   elementId,
 }: AccommodationSelectorBlockProps) {
+  if (typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
   return (
     <div id={elementId || undefined} className="relative">
       <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
       <div className="pb-12 pt-8 md:pb-20 md:pt-16">
         <div className="lg-px-0 mx-auto max-w-4xl px-8">
           <Heading as="h2" size="large" variant="white">
-            {heading}
+            {heading.text}
           </Heading>
           <RichTextParagraph
             className="mt-4 md:mt-6"
@@ -34,7 +41,7 @@ export function AccommodationSelectorBlock({
             size="large"
             variant="white"
           >
-            {text as RichTextObject}
+            {text.richText as RichTextObject}
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
@@ -63,6 +70,10 @@ function AccommodationCard({
 
   if (typeof brand.homeLink !== "object") {
     throw new Error("Invalid homeLink");
+  }
+
+  if (typeof description !== "object") {
+    throw new Error("Invalid description");
   }
 
   return (
@@ -101,9 +112,9 @@ function AccommodationCard({
         <Heading as="h4" variant="inherit" size="extra-small">
           {brand.name}
         </Heading>
-        <Paragraph variant="inherit" justify>
-          {description}
-        </Paragraph>
+        <RichTextParagraph variant="inherit" justify>
+          {description.richText as RichTextObject}
+        </RichTextParagraph>
       </div>
     </PageLink>
   );
