@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { imageField } from "../fields/image";
-import { makeCallToActionField } from "../fields/call-to-action";
+import { newHeadingField } from "../fields/new-heading";
+import { makeNewRichTextField } from "../fields/new-rich-text";
+import { Texts } from "../collections/Texts";
+import { makeNewCallToActionField } from "../fields/new-call-to-action";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -41,8 +41,8 @@ export const RoomListBlock: Block = {
       },
       minRows: 1,
       fields: [
-        headingField,
-        makeRichTextField({ optional: true }),
+        newHeadingField,
+        makeNewRichTextField({ optional: true }),
         {
           name: "images",
           type: "array",
@@ -62,22 +62,20 @@ export const RoomListBlock: Block = {
             imageField,
             {
               name: "caption",
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               label: {
                 en: "Caption",
                 es: "Pie de foto",
               },
-              localized: true,
             },
           ],
         },
-        makeCallToActionField(),
+        makeNewCallToActionField(),
       ],
-      admin: {
-        components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.heading,
-        },
-      },
     },
   ],
 };

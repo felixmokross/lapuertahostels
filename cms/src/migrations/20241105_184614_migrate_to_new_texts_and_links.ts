@@ -210,6 +210,32 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const roomListBlocks = page.layout.filter(
+      (b) => b.blockType === "RoomList",
+    );
+    if (roomListBlocks.length > 0) {
+      updatePage = true;
+      for (const block of roomListBlocks) {
+        for (const room of block.rooms) {
+          room.heading = await createTextIfNeeded(room.heading);
+          room.text = await createTextIfNeeded(room.text, "richText");
+
+          for (const image of room.images) {
+            if (image.caption) {
+              image.caption = await createTextIfNeeded(image.caption);
+            } else {
+              delete image.caption;
+            }
+          }
+
+          room.cta.label = await createTextIfNeeded(room.cta.link.label);
+          room.cta.link = await createLinkIfNeeded(room.cta.link);
+        }
+
+        delete block.ctaTemplate;
+      }
+    }
+
     if (updatePage) {
       await payload.db.connection
         .collection("pages")
