@@ -6,6 +6,7 @@ import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
+import { Text } from "~/payload-types";
 
 export type TextWithImageItemProps =
   TextColumnsWithImagesBlock["items"][number] & {
@@ -31,6 +32,11 @@ export function TextWithImageItem({
   if (text != null && typeof text !== "object") {
     throw new Error("Invalid text");
   }
+
+  if (cta?.show && cta.label && typeof cta.label !== "object") {
+    throw new Error("Invalid CTA label");
+  }
+
   return (
     <div
       className={cn("text-center", {
@@ -67,12 +73,13 @@ export function TextWithImageItem({
       {cta?.show && (
         <Button
           as={PageLink}
-          label={cta.label!}
           link={cta.link!}
           size="medium"
           variant={cta.variant ?? "secondary"}
           className={cn((image || heading || text) && "mt-6")}
-        />
+        >
+          {(cta.label as Text).text}
+        </Button>
       )}
     </div>
   );

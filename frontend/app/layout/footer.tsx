@@ -4,7 +4,6 @@ import { BrandLogo } from "../common/brand-logo";
 import { Brand, Common } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
-import { Link } from "../common/link";
 import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 
@@ -31,9 +30,9 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h6 className="mt-2">
-              <Link to={puertaBrand.homeLinkUrl}>
+              <PageLink link={puertaBrand.homeLink}>
                 <BrandLogo size="small" brand={puertaBrand} />
-              </Link>
+              </PageLink>
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
               {content.address.split("\n").map((line, index, allLines) => (
@@ -70,6 +69,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
               if (typeof linkGroup.title !== "object") {
                 throw new Error("Invalid link group title");
               }
+
               return (
                 <div key={linkGroup.id}>
                   <h3 className="text-sm font-semibold leading-6 text-neutral-900">
@@ -80,13 +80,18 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                       if (typeof link !== "object") {
                         throw new Error("Invalid link");
                       }
+
+                      if (typeof link.label !== "object") {
+                        throw new Error("Invalid link label");
+                      }
                       return (
                         <li key={link.id}>
                           <PageLink
-                            label={link.label}
                             link={link.link}
                             className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
-                          />
+                          >
+                            {link.label.text}
+                          </PageLink>
                         </li>
                       );
                     })}

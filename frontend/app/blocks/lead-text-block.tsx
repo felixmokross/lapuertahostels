@@ -42,7 +42,9 @@ export function LeadTextBlock({
           size="large"
           variant={cta.variant || undefined}
           className="mt-10 text-center sm:self-center md:mt-12"
-        />
+        >
+          {cta.link?.label}
+        </Button>
       )}
     </div>
   );

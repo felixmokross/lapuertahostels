@@ -1,12 +1,12 @@
-import { Brand, Media, Page } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { Paragraph, RichTextParagraph } from "../common/paragraph";
 import { Image } from "~/common/image";
-import { Link } from "~/common/link";
 import { BrandId } from "~/brands";
 import { RichTextObject } from "~/common/rich-text";
 import { getSrcFromMedia } from "~/common/media";
+import { PageLink } from "~/common/page-link";
 
 export type AccommodationSelectorBlockProps = NonNullable<
   Page["layout"]
@@ -56,10 +56,18 @@ function AccommodationCard({
 }: AccommodationCardProps) {
   brand = brand as Brand;
   const brandId = brand.id as BrandId;
-  const imageMedia = image as Media;
+
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (typeof brand.homeLink !== "object") {
+    throw new Error("Invalid homeLink");
+  }
+
   return (
-    <Link
-      to={brand.homeLinkUrl}
+    <PageLink
+      link={brand.homeLink}
       className={cn(
         "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
         {
@@ -70,8 +78,8 @@ function AccommodationCard({
     >
       <div className="relative aspect-[1/1] overflow-hidden bg-white sm:aspect-[4/3] md:aspect-[1/1] lg:aspect-[4/3] xl:aspect-[16/9]">
         <Image
-          src={getSrcFromMedia(imageMedia)}
-          alt={imageMedia.alt ?? undefined}
+          src={getSrcFromMedia(image)}
+          alt={image.alt ?? undefined}
           className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
           transformation={{
             aspectRatio: { width: 1, height: 1 },
@@ -97,6 +105,6 @@ function AccommodationCard({
           {description}
         </Paragraph>
       </div>
-    </Link>
+    </PageLink>
   );
 }

@@ -32,11 +32,9 @@ export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
           {text as RichTextObject}
         </RichTextParagraph>
       )}
-      <Button
-        as={PageLink}
-        link={cta.link}
-        variant={cta.variant || undefined}
-      />
+      <Button as={PageLink} link={cta.link} variant={cta.variant || undefined}>
+        {cta.link?.label}
+      </Button>
     </div>
   );
 }

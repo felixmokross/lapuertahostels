@@ -44,7 +44,9 @@ export function Feature({
             variant={cta.variant || undefined}
             as={PageLink}
             link={cta.link!}
-          />
+          >
+            {cta.link?.label}
+          </Button>
         )}
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">

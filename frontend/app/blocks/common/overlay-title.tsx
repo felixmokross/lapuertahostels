@@ -60,7 +60,9 @@ export function OverlayTitle({
             size="large"
             variant={cta.variant || "primary"}
             blackShadow
-          />
+          >
+            {cta.link?.label}
+          </Button>
         )}
       </div>
     </>

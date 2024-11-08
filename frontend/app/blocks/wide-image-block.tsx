@@ -57,7 +57,9 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
               link={overlayTextBox.cta.link!}
               variant={overlayTextBox.cta.variant || undefined}
               className="mt-4"
-            />
+            >
+              {overlayTextBox.cta.link!.label}
+            </Button>
           )}
         </div>
       )}

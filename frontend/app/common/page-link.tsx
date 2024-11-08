@@ -1,8 +1,8 @@
-import { Brand, Page, Text } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 import { Link, LinkProps } from "./link";
+import { PropsWithChildren } from "react";
 
 export type PageLinkProps = {
-  label?: Text | string;
   link:
     | NonNullable<Brand["navLinks"]>[number]["link"]
     | NonNullable<
@@ -10,14 +10,11 @@ export type PageLinkProps = {
           blockType: "Lead";
         })["cta"]
       >["link"];
-} & Omit<LinkProps, "to">;
+} & Omit<PropsWithChildren<LinkProps>, "to">;
 
-export function PageLink({ label, link, ...props }: PageLinkProps) {
+export function PageLink({ link, ...props }: PageLinkProps) {
   if (typeof link !== "object") throw new Error("Invalid link");
 
-  if (label != null && typeof label !== "object") {
-    throw new Error("Invalid label");
-  }
   return (
     <Link
       {...props}
@@ -26,8 +23,6 @@ export function PageLink({ label, link, ...props }: PageLinkProps) {
           ? `${(link.page as Page).url}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
           : link.url!
       }
-    >
-      {"label" in link ? link.label : label!.text}
-    </Link>
+    />
   );
 }

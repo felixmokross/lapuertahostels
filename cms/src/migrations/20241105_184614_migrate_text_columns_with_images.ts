@@ -1,7 +1,7 @@
 import { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
 import { Text } from "payload/generated-types";
 import { Node } from "slate";
-import { pageIdToUrl } from "../common/page-urls";
+import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const pages = await payload.db.connection
@@ -29,6 +29,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
 
   for (const brand of brands) {
     const navLinkObjects = [];
+
     for (const navLink of brand.navLinks) {
       const link = links.find((l) => l._id.toString() === navLink);
       navLinkObjects.push({
@@ -54,9 +55,14 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       { _id: brand._id },
       {
         $set: {
+          homeLink: await createLinkIfNeeded({
+            type: "internal",
+            page: urlToPageId(brand.homeLinkUrl),
+          }),
           navLinks: navLinkObjects,
           "footer.linkGroups": brand.footer.linkGroups,
         },
+        $unset: { homeLinkUrl: "" },
       },
     );
   }
@@ -232,7 +238,6 @@ export async function down({ payload }: MigrateDownArgs): Promise<void> {
 
 function isMatchingLink(link1: any, link2: any): boolean {
   return (
-    link1.label === link2.label &&
     link1.type === link2.type &&
     link1.page === link2.page &&
     link1.url === link2.url

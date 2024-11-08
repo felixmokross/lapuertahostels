@@ -62,12 +62,15 @@ export function Navbar({
                 if (typeof navLink !== "object") {
                   throw new Error("Invalid nav link");
                 }
+
+                if (typeof navLink.label !== "object") {
+                  throw new Error("Invalid nav link label");
+                }
+
                 return (
-                  <NavLink
-                    key={navLink.id}
-                    label={navLink.label}
-                    link={navLink.link}
-                  />
+                  <NavLink key={navLink.id} link={navLink.link}>
+                    {navLink.label.text}
+                  </NavLink>
                 );
               })}
             </div>
@@ -96,14 +99,19 @@ export function Navbar({
                 if (typeof navLink !== "object") {
                   throw new Error("Invalid nav link");
                 }
+
+                if (typeof navLink.label !== "object") {
+                  throw new Error("Invalid nav link label");
+                }
                 return (
                   <Disclosure.Button
                     key={navLink.id}
                     as={PageLink}
-                    label={navLink.label}
                     link={navLink.link}
                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                  />
+                  >
+                    {navLink.label.text}
+                  </Disclosure.Button>
                 );
               })}
             </div>
