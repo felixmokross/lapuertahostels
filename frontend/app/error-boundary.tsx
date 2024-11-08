@@ -67,11 +67,9 @@ export function GlobalErrorBoundary() {
             <StoryBlock
               blockType="Story"
               text={
-                (
-                  (isPageNotFound
-                    ? common.pageNotFoundScreen.text
-                    : common.errorScreen.text) as SerializeFrom<Text>
-                ).richText!
+                (isPageNotFound
+                  ? common.pageNotFoundScreen.text
+                  : common.errorScreen.text) as SerializeFrom<Text>
               }
             />
           </main>

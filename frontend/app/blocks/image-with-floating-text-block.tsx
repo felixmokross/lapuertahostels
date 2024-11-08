@@ -1,7 +1,7 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Image } from "~/common/image";
 import { cn } from "../common/cn";
-import { Media, Page } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
@@ -22,7 +22,18 @@ export function ImageWithFloatingTextBlock({
   const overlay = overlayTitle.overlay || "moderate";
   const textPosition = overlayTitle.position || "top-left";
   const theme = useTheme();
-  const imageMedia = image as Media;
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (typeof overlayTitle.text !== "object") {
+    throw new Error("Invalid overlay title");
+  }
+
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
   return (
     <div
       className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
@@ -30,8 +41,8 @@ export function ImageWithFloatingTextBlock({
     >
       <div className="relative aspect-[1/1] overflow-hidden shadow-md sm:aspect-[4/3] lg:aspect-[16/9] lg:rounded-lg">
         <Image
-          src={getSrcFromMedia(imageMedia)}
-          alt={imageMedia.alt ?? undefined}
+          src={getSrcFromMedia(image)}
+          alt={image.alt ?? undefined}
           className="h-full w-full object-cover"
           transformation={{
             width: 900,
@@ -64,7 +75,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {overlayTitle.text as RichTextObject}
+            {overlayTitle.text.richText as RichTextObject}
           </RichTextHeading>
         </div>
       </div>
@@ -87,7 +98,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {text as RichTextObject}
+            {text.richText as RichTextObject}
           </RichTextParagraph>
         </div>
       </div>

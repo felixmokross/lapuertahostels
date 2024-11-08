@@ -281,10 +281,82 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const imageWithFloatingTextBlocks = page.layout.filter(
+      (b) => b.blockType === "ImageWithFloatingText",
+    );
+    if (imageWithFloatingTextBlocks.length > 0) {
+      updatePage = true;
+      for (const block of imageWithFloatingTextBlocks) {
+        block.overlayTitle.text = await createTextIfNeeded(
+          block.overlayTitle.text,
+          "richText",
+        );
+
+        block.text = await createTextIfNeeded(block.text, "richText");
+      }
+    }
+
+    const heroVideoBlocks = page.hero.filter(
+      (b) => b.blockType === "HeroVideo",
+    );
+    if (heroVideoBlocks.length > 0) {
+      updatePage = true;
+      for (const block of heroVideoBlocks) {
+        if (block.overlayTitle?.show) {
+          block.overlayTitle.text = await createTextIfNeeded(
+            block.overlayTitle.text,
+            "richText",
+          );
+          if (block.overlayTitle.cta?.show) {
+            block.overlayTitle.cta.label = await createTextIfNeeded(
+              block.overlayTitle.cta.link.label,
+            );
+            block.overlayTitle.cta.link = await createLinkIfNeeded(
+              block.overlayTitle.cta.link,
+            );
+          } else {
+            delete block.overlayTitle.cta;
+          }
+        } else {
+          delete block.overlayTitle;
+        }
+      }
+    }
+
+    const slidesBlocks = page.hero.filter((b) => b.blockType === "Slides");
+    if (slidesBlocks.length > 0) {
+      updatePage = true;
+      for (const block of slidesBlocks) {
+        for (const slide of block.slides) {
+          if (slide.overlayTitle?.show) {
+            slide.overlayTitle.text = await createTextIfNeeded(
+              slide.overlayTitle.text,
+              "richText",
+            );
+            if (slide.overlayTitle.cta?.show) {
+              slide.overlayTitle.cta.label = await createTextIfNeeded(
+                slide.overlayTitle.cta.link.label,
+              );
+              slide.overlayTitle.cta.link = await createLinkIfNeeded(
+                slide.overlayTitle.cta.link,
+              );
+            } else {
+              delete slide.overlayTitle.cta;
+            }
+          } else {
+            delete slide.overlayTitle;
+          }
+        }
+      }
+    }
+
     if (updatePage) {
       await payload.db.connection
         .collection("pages")
-        .updateOne({ _id: page._id }, { $set: { layout: page.layout } });
+        .updateOne(
+          { _id: page._id },
+          { $set: { layout: page.layout, hero: page.hero } },
+        );
     }
   }
 

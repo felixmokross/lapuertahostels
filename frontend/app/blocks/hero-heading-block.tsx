@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
@@ -32,7 +32,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
       />
       <OverlayTitle
         position="center"
-        text={[plain(text(heading.text!))]}
+        text={{ richText: [plain(text(heading.text!))] } as unknown as Text}
         overlay="intense"
       />
     </div>
