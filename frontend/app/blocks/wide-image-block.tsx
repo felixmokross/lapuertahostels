@@ -1,4 +1,4 @@
-import { Media, Page } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
@@ -14,12 +14,31 @@ export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
 
 export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
   const overlayTextBoxPosition = overlayTextBox?.position || "top-left";
-  const imageMedia = image as Media;
+
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (overlayTextBox?.show && typeof overlayTextBox.heading !== "object") {
+    throw new Error("Invalid overlayTextBox.heading");
+  }
+
+  if (overlayTextBox?.show && typeof overlayTextBox.text !== "object") {
+    throw new Error("Invalid overlayTextBox.text");
+  }
+
+  if (
+    overlayTextBox?.cta?.show &&
+    typeof overlayTextBox.cta.label !== "object"
+  ) {
+    throw new Error("Invalid overlayTextBox.cta.label");
+  }
+
   return (
     <div className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]">
       <Image
-        src={getSrcFromMedia(imageMedia)}
-        alt={imageMedia.alt ?? undefined}
+        src={getSrcFromMedia(image)}
+        alt={image.alt ?? undefined}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 800,
@@ -46,10 +65,10 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
           )}
         >
           <Heading as="h4" size="small">
-            {overlayTextBox.heading}
+            {(overlayTextBox.heading as Text).text}
           </Heading>
           <RichTextParagraph className="mt-2">
-            {overlayTextBox.text! as RichTextObject}
+            {(overlayTextBox.text as Text).richText as RichTextObject}
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button
@@ -58,7 +77,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
               variant={overlayTextBox.cta.variant || undefined}
               className="mt-4"
             >
-              {overlayTextBox.cta.link!.label}
+              {(overlayTextBox.cta.label as Text).text}
             </Button>
           )}
         </div>

@@ -248,6 +248,39 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const wideImageBlocks = page.layout.filter(
+      (b) => b.blockType === "WideImage",
+    );
+
+    if (wideImageBlocks.length > 0) {
+      updatePage = true;
+      for (const block of wideImageBlocks) {
+        if (block.overlayTextBox?.show) {
+          block.overlayTextBox.heading = await createTextIfNeeded(
+            block.overlayTextBox.heading,
+          );
+
+          block.overlayTextBox.text = await createTextIfNeeded(
+            block.overlayTextBox.text,
+            "richText",
+          );
+
+          if (block.overlayTextBox.cta?.show) {
+            block.overlayTextBox.cta.label = await createTextIfNeeded(
+              block.overlayTextBox.cta.link.label,
+            );
+            block.overlayTextBox.cta.link = await createLinkIfNeeded(
+              block.overlayTextBox.cta.link,
+            );
+          } else {
+            delete block.overlayTextBox.cta;
+          }
+        } else {
+          delete block.overlayTextBox;
+        }
+      }
+    }
+
     if (updatePage) {
       await payload.db.connection
         .collection("pages")
