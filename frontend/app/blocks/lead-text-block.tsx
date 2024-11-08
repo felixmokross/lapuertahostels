@@ -1,7 +1,7 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
-import { Page } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { cn } from "~/common/cn";
 import { RichTextObject } from "~/common/rich-text";
 import { PageLink } from "~/common/page-link";
@@ -16,6 +16,18 @@ export function LeadTextBlock({
   elementId,
   cta,
 }: LeadBlockProps) {
+  if (heading != null && typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
+  if (cta?.show && typeof cta.label !== "object") {
+    throw new Error("Invalid CTA label");
+  }
+
   return (
     <div
       id={elementId || undefined}
@@ -23,7 +35,7 @@ export function LeadTextBlock({
     >
       {heading && (
         <Heading as="h1" size="medium">
-          {heading}
+          {heading.text}
         </Heading>
       )}
 
@@ -32,7 +44,7 @@ export function LeadTextBlock({
         size="extra-large"
         className={cn(heading && "mt-4 md:mt-6")}
       >
-        {text as RichTextObject}
+        {text.richText as RichTextObject}
       </RichTextParagraph>
 
       {cta?.show && (
@@ -43,7 +55,7 @@ export function LeadTextBlock({
           variant={cta.variant || undefined}
           className="mt-10 text-center sm:self-center md:mt-12"
         >
-          {cta.link?.label}
+          {(cta.label as Text).text}
         </Button>
       )}
     </div>

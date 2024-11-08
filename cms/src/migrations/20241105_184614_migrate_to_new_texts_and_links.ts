@@ -296,6 +296,24 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
     }
 
+    const leadTextBlocks = page.layout.filter((b) => b.blockType === "Lead");
+    if (leadTextBlocks.length > 0) {
+      updatePage = true;
+      for (const block of leadTextBlocks) {
+        if (block.heading) {
+          block.heading = await createTextIfNeeded(block.heading);
+        }
+        block.text = await createTextIfNeeded(block.text, "richText");
+
+        if (block.cta?.show) {
+          block.cta.label = await createTextIfNeeded(block.cta.link.label);
+          block.cta.link = await createLinkIfNeeded(block.cta.link);
+        } else {
+          delete block.cta;
+        }
+      }
+    }
+
     const heroVideoBlocks = page.hero.filter(
       (b) => b.blockType === "HeroVideo",
     );
