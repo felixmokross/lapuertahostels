@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { BrandLogo } from "~/common/brand-logo";
-import { Link } from "~/common/link";
+import { PageLink } from "~/common/page-link";
 import { Brand } from "~/payload-types";
 
 export type NavbarBrandLogoProps = {
@@ -11,7 +11,7 @@ export type NavbarBrandLogoProps = {
 export function NavbarBrandLogo({ allBrands, brand }: NavbarBrandLogoProps) {
   return (
     <h1 className="h-10 lg:h-7 xl:h-10">
-      <Link to={brand.homeLinkUrl}>
+      <PageLink link={brand.homeLink}>
         {allBrands.map((b) => (
           <Transition
             key={b.id}
@@ -43,7 +43,7 @@ export function NavbarBrandLogo({ allBrands, brand }: NavbarBrandLogoProps) {
             />
           </Transition>
         ))}
-      </Link>
+      </PageLink>
     </h1>
   );
 }

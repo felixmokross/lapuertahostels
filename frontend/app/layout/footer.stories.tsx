@@ -1,8 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Footer } from "./footer";
-import { Brand, Page } from "~/payload-types";
 import { allModes } from ".storybook/modes";
+import {
+  brand,
+  externalLink,
+  internalLink,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "layout/Footer",
@@ -25,104 +33,121 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const brand = {
+const puertaBrand = brand({
   id: "puerta",
-  logo: {
-    filename: "logo-puerta-simple.png",
-    alt: "La Puerta Hostels Logo",
-  },
+  logo: media("logo-puerta-simple.png"),
   name: "La Puerta Hostels",
-  homeLinkUrl: "/",
   footer: {
     linkGroups: [
       {
         name: "Hotel",
-        title: { text: "Hotel" },
+        title: plainText("Hotel"),
         links: [
           {
-            label: "About Us",
-            type: "internal",
-            page: { url: "/" } as Page,
-            fragment: "about-us",
+            label: plainText("About Us"),
+            link: internalLink("/about-us"),
           },
           {
-            label: "Puerta Aqua",
-            type: "internal",
-            page: { url: "/aqua" } as Page,
+            label: plainText("Puerta Aqua"),
+            link: internalLink("/aqua"),
           },
           {
-            label: "La Puerta Azul",
-            type: "internal",
-            page: { url: "/azul" } as Page,
+            label: plainText("La Puerta Azul"),
+            link: internalLink("/azul"),
           },
           {
-            label: "Contact",
-            type: "internal",
-            page: { url: "/contact" } as Page,
+            label: plainText("Contact"),
+            link: internalLink("/contact"),
           },
         ],
       },
       {
         name: "Experiences",
-        title: { text: "Experiences" },
+        title: plainText("Experiences"),
         links: [
           {
-            label: "Santa Marta",
-            type: "internal",
-            page: { url: ":" } as Page,
-            fragment: "santa-marta",
+            label: plainText("Santa Marta"),
+            link: internalLink("/santa-marta"),
           },
-          { label: "Lost City", type: "external", url: "#" },
-          { label: "Tayrona Park", type: "external", url: "#" },
-          { label: "Minca", type: "external", url: "#" },
+          {
+            label: plainText("Lost City"),
+            link: internalLink("/lost-city"),
+          },
+          {
+            label: plainText("Tayrona Park"),
+            link: internalLink("/tayrona-park"),
+          },
+          {
+            label: plainText("Minca"),
+            link: internalLink("/minca"),
+          },
         ],
       },
       {
         name: "Legal",
-        title: { text: "Legal" },
+        title: plainText("Legal"),
         links: [
-          { label: "Terms", type: "external", url: "#" },
-          { label: "Cancelation", type: "external", url: "#" },
-          { label: "Privacy", type: "external", url: "#" },
-          { label: "FAQ", type: "external", url: "#" },
+          {
+            label: plainText("Terms"),
+            link: internalLink("/terms"),
+          },
+          {
+            label: plainText("Cancelation"),
+            link: internalLink("/cancelation"),
+          },
+          {
+            label: plainText("Privacy"),
+            link: internalLink("/privacy"),
+          },
+          {
+            label: plainText("FAQ"),
+            link: internalLink("/faq"),
+          },
         ],
       },
     ],
   },
-} as Brand;
+});
 
 export const Default: Story = {
   args: {
     content: {
-      address: `La Puerta Hostels S.A.S.
+      address: richText(
+        plain(
+          text(`La Puerta Hostels S.A.S.
 Calle 18 #5-66
 Santa Marta 470004
-Colombia`,
-      copyright: "La Puerta Hostels S.A.S. All rights reserved.",
+Colombia`),
+        ),
+      ),
+      copyright: richText(
+        plain(text("La Puerta Hostels S.A.S. All rights reserved.")),
+      ),
       socialLinks: [
         {
           platform: "facebook",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
         {
           platform: "instagram",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
         {
           platform: "whatsapp",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
       ],
       newsletter: {
         show: true,
-        title: "Subscribe to our newsletter",
-        description:
+        title: plainText("Subscribe to our newsletter"),
+        description: plainText(
           "Don’t miss out on new experiences, discounts, or any other news from us!",
-        emailPlaceholder: "Enter your email",
-        buttonLabel: "Subscribe",
+        ),
+        emailPlaceholder: plainText("Enter your email"),
+        buttonLabel: plainText("Subscribe"),
       },
     },
-    allBrands: [brand],
-    brand,
+    allBrands: [puertaBrand],
+    brand: puertaBrand,
   },
 };

@@ -6,6 +6,7 @@ import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
+import { Text } from "~/payload-types";
 
 export type TextWithImageItemProps =
   TextColumnsWithImagesBlock["items"][number] & {
@@ -23,6 +24,19 @@ export function TextWithImageItem({
   imageWidth,
 }: TextWithImageItemProps) {
   size = size ?? "full";
+
+  if (heading != null && typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (text != null && typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
+  if (cta?.show && cta.label && typeof cta.label !== "object") {
+    throw new Error("Invalid CTA label");
+  }
+
   return (
     <div
       className={cn("text-center", {
@@ -45,7 +59,7 @@ export function TextWithImageItem({
       )}
       {heading && (
         <Heading as="h4" size="small" className={cn(image && "mt-8")}>
-          {heading}
+          {heading.text}
         </Heading>
       )}
       {text && (
@@ -53,7 +67,7 @@ export function TextWithImageItem({
           size="medium"
           className={cn((image || heading) && "mt-2")}
         >
-          {text as RichTextObject}
+          {text.richText as RichTextObject}
         </RichTextParagraph>
       )}
       {cta?.show && (
@@ -63,7 +77,9 @@ export function TextWithImageItem({
           size="medium"
           variant={cta.variant ?? "secondary"}
           className={cn((image || heading || text) && "mt-6")}
-        />
+        >
+          {(cta.label as Text).text}
+        </Button>
       )}
     </div>
   );

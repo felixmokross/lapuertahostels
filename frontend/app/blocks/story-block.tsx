@@ -2,7 +2,7 @@ import { Heading } from "../common/heading";
 import { Image } from "../common/image";
 import { cn } from "../common/cn";
 import { RichTextObject } from "~/common/rich-text";
-import { Media, Page } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { getSrcFromMedia } from "~/common/media";
 
@@ -18,13 +18,24 @@ export function StoryBlock({
   text,
   elementId,
 }: StoryBlockProps) {
-  const imageMedia = image as Media | null | undefined;
-  imagePosition = imageMedia ? (imagePosition ?? "left") : undefined;
+  if (image != null && typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (heading != null && typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
+  imagePosition = image ? (imagePosition ?? "left") : undefined;
   return (
     <div
       id={elementId || undefined}
       className={cn(
-        imageMedia &&
+        image &&
           "lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16",
         "mx-auto mb-24 mt-20 max-w-4xl",
       )}
@@ -37,14 +48,14 @@ export function StoryBlock({
       >
         {heading && (
           <Heading as="h3" size="medium">
-            {heading}
+            {heading.text}
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
-          <LongFormRichText content={text as RichTextObject} />
+          <LongFormRichText content={text.richText as RichTextObject} />
         </div>
       </div>
-      {imageMedia && (
+      {image && (
         <div
           className={cn(
             "mt-32 aspect-[3/4] overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
@@ -55,8 +66,8 @@ export function StoryBlock({
           )}
         >
           <Image
-            src={getSrcFromMedia(imageMedia)}
-            alt={imageMedia.alt ?? undefined}
+            src={getSrcFromMedia(image)}
+            alt={image.alt ?? undefined}
             className="h-full w-full object-cover"
             transformation={{
               aspectRatio: { width: 3, height: 4 },

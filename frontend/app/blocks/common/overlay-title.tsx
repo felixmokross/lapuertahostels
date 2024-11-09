@@ -3,20 +3,19 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
-import { Page } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 
-export type OverlayTitleProps = {
-  text?: { [key: string]: unknown }[] | null;
-  cta?: NonNullable<
-    (NonNullable<Page["hero"]>[number] & {
-      blockType: "HeroVideo";
-    })["overlayTitle"]
-  >["cta"];
-  position?:
-    | ("center" | "top-left" | "top-right" | "bottom-right" | "bottom-left")
-    | null;
-  overlay?: ("subtle" | "moderate" | "intense") | null;
+type OverlayTitleType = NonNullable<
+  (NonNullable<Page["hero"]>[number] & {
+    blockType: "HeroVideo";
+  })["overlayTitle"]
+>;
+
+export type OverlayTitleProps = Pick<
+  OverlayTitleType,
+  "text" | "cta" | "position" | "overlay"
+> & {
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 };
@@ -29,6 +28,14 @@ export function OverlayTitle({
   onMouseEnter,
   onMouseLeave,
 }: OverlayTitleProps) {
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
+  if (cta?.show && typeof cta.label !== "object") {
+    throw new Error("Invalid cta.label");
+  }
+
   return (
     <>
       <div
@@ -51,7 +58,7 @@ export function OverlayTitle({
         onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
-          {text! as RichTextObject}
+          {text!.richText as RichTextObject}
         </RichTextHeading>
         {cta?.show && (
           <Button
@@ -60,7 +67,9 @@ export function OverlayTitle({
             size="large"
             variant={cta.variant || "primary"}
             blackShadow
-          />
+          >
+            {(cta.label as Text).text}
+          </Button>
         )}
       </div>
     </>

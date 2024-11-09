@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { HeroVideoBlock } from "./hero-video-block";
+import { callToAction, media, richText } from "~/common/cms-data.builders";
+import { bold, plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Hero Video Block",
@@ -17,34 +19,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "HeroVideo",
-    video: {
-      id: "1",
-      filename: "video-compressed.mp4",
-      alt: "Video of Tayrona",
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
-    previewImage: {
-      id: "1",
-      filename: "video-compressed-preview.png",
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
+    video: media("video-compressed.mp4"),
+    previewImage: media("video-compressed-preview.png"),
     overlayTitle: {
       show: true,
-      text: [
-        { children: [{ text: "Explore " }, { text: "Tayrona", bold: true }] },
-      ],
+      text: richText(plain(text("Explore "), bold("Tayrona"))),
       overlay: "subtle",
       position: "center",
-      cta: {
-        show: true,
-        link: {
-          label: "Book Now",
-          type: "external",
-          url: "http://example.com",
-        },
-      },
+      cta: callToAction("Book Now", "primary"),
     },
   },
 };

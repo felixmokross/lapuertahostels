@@ -1,8 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { TextWithImageItem } from "./text-with-image-item";
-import { media } from "~/common/media.builders";
 import { plain, text } from "~/common/rich-text.builders";
-import { Page } from "~/payload-types";
+import {
+  callToAction,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
   title: "blocks/Text Columns with Images Block/Text with Image Item",
@@ -25,21 +30,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    id: "1",
+    id: createId(),
     image: media("_DSC0299.jpg"),
-    heading: "Example Heading",
-    text: [
+    heading: plainText("Example Heading"),
+    text: richText(
       plain(text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")),
-    ],
-    cta: {
-      show: true,
-      link: {
-        label: "Learn More",
-        type: "internal",
-        page: { url: "/services/example" } as Page,
-      },
-      variant: "secondary",
-    },
+    ),
+    cta: callToAction("Learn More"),
     size: "full",
     imageWidth: 430,
     imageSizes: "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw",

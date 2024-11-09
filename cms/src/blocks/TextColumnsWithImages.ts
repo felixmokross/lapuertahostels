@@ -1,10 +1,10 @@
 import { Block } from "payload/types";
-import { makeHeadingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeImageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
+import { makeHeadingField } from "../fields/heading";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { makeRichTextField } from "../fields/rich-text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -82,11 +82,6 @@ export const TextColumnsWithImagesBlock: Block = {
         makeRichTextField({ optional: true }),
         makeCallToActionField({ optional: true, showByDefault: false }),
       ],
-      admin: {
-        components: {
-          RowLabel: ({ data }) => data.heading,
-        },
-      },
     },
     makeMoreOptionsField(elementIdField),
   ],

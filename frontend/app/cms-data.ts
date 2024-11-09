@@ -99,7 +99,7 @@ async function loadData(url: string, locale: string, depth: number) {
 }
 
 export async function tryGetPage(pageId: string, locale: string) {
-  return (await getData(`pages/${pageId}`, locale)) as Page | null;
+  return (await getData(`pages/${pageId}`, locale, 3)) as Page | null;
 }
 
 export async function getCommon(locale: string) {

@@ -1,8 +1,8 @@
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { GroupField, RadioField } from "payload/types";
 import { showField } from "./show";
 import { Page } from "payload/generated-types";
 import { makeCallToActionField } from "./call-to-action";
+import { Texts } from "../collections/Texts";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
@@ -40,20 +40,13 @@ export function makeOverlayTitleField({
           en: "Text",
           es: "Texto",
         },
-        localized: true,
         required: true,
-        type: "richText",
-        editor: slateEditor({
-          admin: {
-            elements: [],
-            leaves: ["bold"],
-          },
-        }),
+        type: "relationship",
+        relationTo: Texts.slug,
+        filterOptions: {
+          type: { equals: "richText" },
+        },
         admin: {
-          description: {
-            en: "Mark parts of the text as bold to make it stand out. You can use line breaks to ensure that the text is displayed as you want.",
-            es: "Marca partes del texto como negrita para que destaque. Puedes usar saltos de línea para asegurarte de que el texto se muestre como deseas.",
-          },
           condition,
         },
       },

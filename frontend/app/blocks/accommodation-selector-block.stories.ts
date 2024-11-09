@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
-import { Page } from "~/payload-types";
+import {
+  brand,
+  internalLink,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { bold, plain, text } from "~/common/rich-text.builders";
+import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
   title: "blocks/Accommodation Selector Block",
@@ -13,90 +21,46 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "AccommodationSelector",
-    heading: "Your Home Base for a Perfect Trip",
-    text: [
-      {
-        children: [
-          { text: "Choose between our " },
-          { text: "two accommodations", bold: true },
-          { text: " in Santa Marta. " },
-        ],
-      },
-    ],
+    heading: plainText("Your Home Base for a Perfect Trip"),
+    text: richText(
+      plain(
+        text("Choose between our "),
+        bold("two accommodations"),
+        text(" in Santa Marta."),
+      ),
+    ),
     cards: [
       {
-        id: "6647dbf8f50fb271d132f9c6",
-        brand: {
+        id: createId(),
+        brand: brand({
           id: "aqua",
           name: "Puerta Aqua",
-          homeLinkUrl: "/aqua",
-          navLinks: [
-            {
-              name: "La Puerta Hostels",
-              id: "6649ce958dccc108dcab66ba",
-              type: "internal",
-              page: { url: "/" } as Page,
-              label: "La Puerta Hostels",
-              createdAt: "2024-05-19T10:04:05.148Z",
-              updatedAt: "2024-05-19T10:04:05.148Z",
-            },
-          ],
-          logo: {
-            id: "6647dbf8f50fb271d132f9c5",
-            filename: "logo-aqua-simple.png",
-            alt: "Puerta Aqua Logo",
-            createdAt: "2024-05-19T10:04:05.148Z",
-            updatedAt: "2024-05-19T10:04:05.148Z",
-          },
-          createdAt: "2024-05-19T10:04:05.148Z",
-          updatedAt: "2024-05-19T10:04:05.148Z",
-        },
-        image: {
-          id: "1",
-          filename: "Frente.jpg",
-          alt: "Puerta Aqua",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
-        description:
-          "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
+          homeLink: internalLink("/aqua"),
+        }),
+        image: media("Frente.jpg"),
+        description: richText(
+          plain(
+            text(
+              "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
+            ),
+          ),
+        ),
       },
       {
-        id: "6647dc15f50fb271d132f9c7",
-        brand: {
+        id: createId(),
+        brand: brand({
           id: "azul",
           name: "La Puerta Azul",
-          homeLinkUrl: "/azul",
-          navLinks: [
-            {
-              id: "6649ce958dccc108dcab66b9",
-              name: "La Puerta Hostels",
-              type: "internal",
-              page: { url: "/" } as Page,
-              label: "La Puerta Hostels",
-              createdAt: "2024-05-19T10:04:05.148Z",
-              updatedAt: "2024-05-19T10:04:05.148Z",
-            },
-          ],
-          logo: {
-            id: "6647dbf8f50fb271d132f9c5",
-            filename: "logo-azul-simple.png",
-            alt: "Puerta Azul Logo",
-            createdAt: "2024-05-19T10:04:05.148Z",
-            updatedAt: "2024-05-19T10:04:05.148Z",
-          },
-          createdAt: "2024-05-19T10:04:05.148Z",
-          updatedAt: "2024-05-19T10:04:05.148Z",
-        },
-        image: {
-          id: "2",
-          filename: "10.jpg",
-          alt: "La Puerta Azul",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
-        description:
-          "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
+          homeLink: internalLink("/azul"),
+        }),
+        image: media("10.jpg"),
+        description: richText(
+          plain(
+            text(
+              "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
+            ),
+          ),
+        ),
       },
     ],
   },

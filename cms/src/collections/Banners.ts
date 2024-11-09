@@ -2,7 +2,7 @@ import { CollectionConfig } from "payload/types";
 import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { Texts } from "./Texts";
-import { Links } from "./Links";
+import { makeCallToActionField } from "../fields/call-to-action";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -66,15 +66,10 @@ export const Banners: CollectionConfig = {
       required: true,
       type: "relationship",
       relationTo: Texts.slug,
-    },
-    {
-      name: "cta",
-      label: {
-        en: "Call to Action (CTA)",
-        es: "Call to Action (CTA)",
+      filterOptions: {
+        type: { equals: "plainText" },
       },
-      type: "relationship",
-      relationTo: Links.slug,
     },
+    makeCallToActionField({ optional: true, variant: false }),
   ],
 };

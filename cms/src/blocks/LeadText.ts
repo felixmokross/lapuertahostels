@@ -1,12 +1,12 @@
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
+import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { headingField } from "../fields/heading";
 
 export const LeadTextBlock: Block = {
-  slug: "Lead",
+  slug: "LeadText",
   labels: {
     singular: {
       en: "Lead Text",

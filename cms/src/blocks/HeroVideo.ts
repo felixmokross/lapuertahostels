@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
-import { makeOverlayTitleField } from "../fields/overlay-title";
 import { makeImageField } from "../fields/image";
 import { Media } from "../collections/Media";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 
 const optionalImageField = makeImageField({ optional: true });
 

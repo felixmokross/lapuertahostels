@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
+import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { imageField } from "../fields/image";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const FeaturesBlock: Block = {
@@ -77,9 +77,6 @@ export const FeaturesBlock: Block = {
       ],
       admin: {
         initCollapsed: true,
-        components: {
-          RowLabel: ({ data }) => data?.heading,
-        },
       },
     },
     makeMoreOptionsField(elementIdField),

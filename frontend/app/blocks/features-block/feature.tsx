@@ -7,7 +7,7 @@ import { Button } from "~/common/button";
 import { Image } from "~/common/image";
 import { RichTextObject } from "~/common/rich-text";
 import { getSrcFromMedia } from "~/common/media";
-import { Media } from "~/payload-types";
+import { Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 
 export type FeatureProps = PropsWithChildren<{
@@ -22,7 +22,22 @@ export function Feature({
   text,
   cta,
 }: FeatureProps) {
-  const imageMedia = image as Media;
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
+  if (cta?.show && typeof cta.label !== "object") {
+    throw new Error("Invalid cta label");
+  }
+
   return (
     <div
       className={cn(
@@ -32,10 +47,10 @@ export function Feature({
     >
       <div className="px-8 text-center sm:px-16 md:px-0">
         <Heading size="medium" variant="brand" as="h4" className="-mt-4">
-          {heading}
+          {heading.text}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">
-          {text as RichTextObject}
+          {text.richText as RichTextObject}
         </RichTextParagraph>
         {cta?.show && (
           <Button
@@ -44,13 +59,15 @@ export function Feature({
             variant={cta.variant || undefined}
             as={PageLink}
             link={cta.link!}
-          />
+          >
+            {(cta.label as Text).text}
+          </Button>
         )}
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
         <Image
-          src={getSrcFromMedia(imageMedia)}
-          alt={imageMedia.alt ?? undefined}
+          src={getSrcFromMedia(image)}
+          alt={image.alt ?? undefined}
           transformation={{
             width: 448,
             aspectRatio: { width: 4, height: 3 },

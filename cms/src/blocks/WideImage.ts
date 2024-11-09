@@ -1,10 +1,10 @@
-import { Block } from "payload/types";
+import { Block, RelationshipField } from "payload/types";
+import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { imageField } from "../fields/image";
 import { makeCallToActionField } from "../fields/call-to-action";
 
-const textField = makeRichTextField();
+const richTextField = makeRichTextField();
 const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
@@ -49,14 +49,14 @@ export const WideImageBlock: Block = {
             ...headingField.admin,
             condition: (_, siblingData) => siblingData.show,
           },
-        },
+        } as RelationshipField,
         {
-          ...textField,
+          ...richTextField,
           admin: {
-            ...textField.admin,
+            ...richTextField.admin,
             condition: (_, siblingData) => siblingData.show,
           },
-        },
+        } as RelationshipField,
         {
           ...callToActionField,
           admin: {

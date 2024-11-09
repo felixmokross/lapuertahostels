@@ -75,17 +75,23 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => [
-  {
-    name: "msapplication-TileColor",
-    content: "#00aba9",
-  },
-  {
-    name: "theme-color",
-    content: "#e2d0b6",
-  },
-  { name: "description", content: data?.common.meta?.description },
-];
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const description = data?.common.meta?.description;
+  if (description != null && typeof description !== "object") {
+    throw new Error("Invalid description");
+  }
+  return [
+    {
+      name: "msapplication-TileColor",
+      content: "#00aba9",
+    },
+    {
+      name: "theme-color",
+      content: "#e2d0b6",
+    },
+    { name: "description", content: description?.text ?? "" },
+  ];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {

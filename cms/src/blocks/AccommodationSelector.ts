@@ -1,11 +1,12 @@
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { Brands } from "../collections/Brands";
+import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/rich-text";
+import { Texts } from "../collections/Texts";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -54,9 +55,12 @@ export const AccommodationSelectorBlock: Block = {
             en: "Description",
             es: "Descripción",
           },
-          type: "textarea",
+          type: "relationship",
+          relationTo: Texts.slug,
+          filterOptions: {
+            type: { equals: "richText" },
+          },
           required: true,
-          localized: true,
         },
       ],
       admin: {

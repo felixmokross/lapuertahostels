@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Feature } from "./feature";
+import {
+  callToAction,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Features Block/Feature",
@@ -24,32 +31,16 @@ type Story = StoryObj<typeof meta>;
 export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
-    image: {
-      id: "1",
-      filename: "_DSC0299.jpg",
-      alt: "Example image",
-      createdAt: "2022-01-01T00:00:00Z",
-      updatedAt: "2022-01-01T00:00:00Z",
-    },
-    heading: "Beautiful Rooms",
-    text: [
-      {
-        children: [
-          {
-            type: "text",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut odio in quam interdum vulputate. Morbi id sapien in libero vehicula dignissim. Curabitur eget urna eu mauris consectetur imperdiet. Proinconsequat libero et justo cursus ultricies.",
-          },
-        ],
-      },
-    ],
-    cta: {
-      show: true,
-      link: {
-        label: "Book Now",
-        type: "external",
-        url: "http://example.com/booking-engine",
-      },
-    },
+    image: media("_DSC0299.jpg"),
+    heading: plainText("Beautiful Rooms"),
+    text: richText(
+      plain(
+        text(
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut odio in quam interdum vulputate. Morbi id sapien in libero vehicula dignissim. Curabitur eget urna eu mauris consectetur imperdiet. Proinconsequat libero et justo cursus ultricies.",
+        ),
+      ),
+    ),
+    cta: callToAction("Book Now"),
   },
 };
 

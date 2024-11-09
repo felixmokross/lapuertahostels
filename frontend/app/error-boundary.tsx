@@ -15,6 +15,8 @@ import { HeroHeadingBlock } from "./blocks/hero-heading-block";
 import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
+import { SerializeFrom } from "@remix-run/node";
+import { Text } from "~/payload-types";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof loader>("root");
@@ -31,9 +33,11 @@ export function GlobalErrorBoundary() {
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
 
   const errorPageTitle = getTitle(
-    isPageNotFound
-      ? rootLoaderData.common.pageNotFoundScreen.heading
-      : rootLoaderData.common.errorScreen.heading,
+    (
+      (isPageNotFound
+        ? rootLoaderData.common.pageNotFoundScreen.heading
+        : rootLoaderData.common.errorScreen.heading) as SerializeFrom<Text>
+    ).text!,
     rootLoaderData.brand,
   );
 
@@ -63,9 +67,9 @@ export function GlobalErrorBoundary() {
             <StoryBlock
               blockType="Story"
               text={
-                isPageNotFound
+                (isPageNotFound
                   ? common.pageNotFoundScreen.text
-                  : common.errorScreen.text
+                  : common.errorScreen.text) as SerializeFrom<Text>
               }
             />
           </main>

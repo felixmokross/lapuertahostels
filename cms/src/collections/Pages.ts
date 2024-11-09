@@ -6,6 +6,7 @@ import { text } from "payload/dist/fields/validations";
 import { canManageContent } from "../common/access-control";
 import { Brands } from "./Brands";
 import { Texts } from "./Texts";
+import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -65,14 +66,14 @@ export const Pages: CollectionConfig = {
       type: "text",
       required: true,
       validate: (_, args) =>
-        text(args.data._id ? idToUrl(args.data._id) : "", args),
+        text(args.data._id ? pageIdToUrl(args.data._id) : "", args),
       access: {
         update: () => false,
       },
       hooks: {
         beforeChange: [
           ({ data }) => {
-            data._id = data.url ? urlToId(data.url as string) : "";
+            data._id = data.url ? urlToPageId(data.url as string) : "";
 
             // ensures data is not stored in DB
             delete data["url"];
@@ -80,7 +81,7 @@ export const Pages: CollectionConfig = {
         ],
         afterRead: [
           ({ data }) => {
-            return idToUrl(data.id as string);
+            return pageIdToUrl(data.id as string);
           },
         ],
       },
@@ -133,6 +134,9 @@ export const Pages: CollectionConfig = {
       },
       type: "relationship",
       relationTo: Texts.slug,
+      filterOptions: {
+        type: { equals: "plainText" },
+      },
       admin: {
         position: "sidebar",
         description: {
@@ -145,14 +149,6 @@ export const Pages: CollectionConfig = {
     layoutField,
   ],
 };
-
-function idToUrl(id: string) {
-  return id.replaceAll(":", "/");
-}
-
-function urlToId(url: string) {
-  return url.replaceAll("/", ":");
-}
 
 function brandForId(id: string) {
   if (id === ":azul" || id.startsWith(":azul:")) {

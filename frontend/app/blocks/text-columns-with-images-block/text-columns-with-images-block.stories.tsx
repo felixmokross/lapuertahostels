@@ -2,8 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block";
 import { bold, plain, text } from "~/common/rich-text.builders";
-import { media } from "~/common/media.builders";
-import { Page } from "~/payload-types";
+import {
+  callToAction,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
   title: "blocks/Text Columns with Images Block",
@@ -20,99 +25,67 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "TextColumnsWithImages",
-    heading: "Our Services",
-    text: [
+    heading: plainText("Our Services"),
+    text: richText(
       plain(
         text("Our services are designed to "),
         bold("make your life easier."),
       ),
-    ],
+    ),
     numberOfColumns: 3,
     items: [
       {
-        id: "1",
+        id: createId(),
         image: media("_DSC0299.jpg"),
-        heading: "Example Heading",
-        text: [
+        heading: plainText("Example Heading"),
+        text: richText(
           plain(
             text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
           ),
-        ],
-        cta: {
-          show: true,
-          link: {
-            label: "Learn More",
-            type: "internal",
-            page: { url: "/services/example" } as Page,
-          },
-          variant: "secondary",
-        },
+        ),
+        cta: callToAction("Learn More"),
         size: "full",
       },
       {
-        id: "2",
+        id: createId(),
         image: media("Tayrona 4.jpg"),
-        heading: "Another Service",
-        text: [
+        heading: plainText("Another Service"),
+        text: richText(
           plain(
             text(
               "Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.",
             ),
           ),
-        ],
-        cta: {
-          show: true,
-          link: {
-            label: "Learn More",
-            type: "internal",
-            page: { url: "/services/another-service" } as Page,
-          },
-          variant: "secondary",
-        },
+        ),
+        cta: callToAction("Learn More"),
         size: "full",
       },
       {
-        id: "3",
+        id: createId(),
         image: media("CP4.jpg"),
-        heading: "This is Interesting",
-        text: [
+        heading: plainText("This is Interesting"),
+        text: richText(
           plain(
             text(
               "In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. ",
             ),
           ),
-        ],
-        cta: {
-          show: true,
-          link: {
-            label: "Learn More",
-            type: "internal",
-            page: { url: "/services/interesting" } as Page,
-          },
-          variant: "secondary",
-        },
+        ),
+        cta: callToAction("Learn More"),
         size: "full",
       },
       {
-        id: "4",
+        id: createId(),
         image: media("Minca 5.png"),
-        heading: "This service",
-        text: [
+        heading: plainText("This service"),
+        text: richText(
           plain(
             text(
               " Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.",
             ),
           ),
-        ],
-        cta: {
-          show: true,
-          link: {
-            label: "Learn More",
-            type: "internal",
-            page: { url: "/services/this" } as Page,
-          },
-          variant: "secondary",
-        },
+        ),
+        cta: callToAction("Learn More"),
         size: "full",
       },
     ],

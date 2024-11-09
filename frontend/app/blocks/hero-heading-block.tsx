@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
@@ -12,6 +12,10 @@ type HeroHeadingBlockProps = NonNullable<Page["hero"]>[number] & {
 export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
   if (heading != null && typeof heading !== "object") {
     throw new Error("Invalid heading");
+  }
+
+  if (heading != null && heading.type !== "plainText") {
+    throw new Error("Heading must be plain text");
   }
 
   if (image != null && typeof image !== "object") {
@@ -28,7 +32,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
       />
       <OverlayTitle
         position="center"
-        text={[plain(text(heading.text))]}
+        text={{ richText: [plain(text(heading.text!))] } as unknown as Text}
         overlay="intense"
       />
     </div>

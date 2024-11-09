@@ -1,5 +1,12 @@
+import { plain, text } from "~/common/rich-text.builders";
 import { RoomCard } from "./room-card";
 import { Meta, StoryObj } from "@storybook/react";
+import {
+  media,
+  plainText,
+  requiredCallToAction,
+  richText,
+} from "~/common/cms-data.builders";
 
 const meta = {
   title: "blocks/Room List Block/Room Card",
@@ -21,82 +28,38 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    heading: "Standard Room with Terrace",
-    text: [
-      {
-        children: [
-          {
-            text: "Our standard room with terrace is perfect for those who want to enjoy the outdoors from the comfort of their own room. The room features a private terrace with a hammock and a view of the garden.",
-          },
-        ],
-      },
-    ],
+    heading: plainText("Standard Room with Terrace"),
+    text: richText(
+      plain(
+        text(
+          "Our standard room with terrace is perfect for those who want to enjoy the outdoors from the comfort of their own room. The room features a private terrace with a hammock and a view of the garden.",
+        ),
+      ),
+    ),
     images: [
       {
-        image: {
-          id: "1",
-          filename: "_DSC0358.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
-        caption: "This is a caption",
+        image: media("_DSC0358.jpg"),
+        caption: plainText("This is a caption"),
       },
       {
-        image: {
-          id: "2",
-          filename: "_DSC0337.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("_DSC0337.jpg"),
       },
       {
-        image: {
-          id: "3",
-          filename: "_DSC0360.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("_DSC0360.jpg"),
       },
       {
-        image: {
-          id: "4",
-          filename: "_DSC0334.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("_DSC0334.jpg"),
       },
       {
-        image: {
-          id: "5",
-          filename: "_DSC0325.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("_DSC0325.jpg"),
       },
       {
-        image: {
-          id: "6",
-          filename: "16.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("16.jpg"),
       },
       {
-        image: {
-          id: "7",
-          filename: "_dsc0989.jpg",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("_dsc0989.jpg"),
       },
     ],
-    cta: {
-      link: {
-        label: "Reserve Now",
-        type: "external",
-        url: "http://example.com",
-      },
-      variant: "secondary",
-    },
+    cta: requiredCallToAction("Reserve Now"),
   },
 };

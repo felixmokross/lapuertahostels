@@ -1,24 +1,24 @@
 import { Block } from "payload/types";
 import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
-import { makeOverlayTitleField } from "../fields/overlay-title";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
+import { makeOverlayTitleField } from "../fields/overlay-title";
 
-export const SlidesBlock: Block = {
-  slug: "Slides",
+export const HeroSlidesBlock: Block = {
+  slug: "HeroSlides",
   labels: {
     singular: {
-      en: "Slides",
-      es: "Diapositivas",
+      en: "Hero Slides",
+      es: "Diapositivas de héroe",
     },
     plural: {
-      en: "Slides",
-      es: "Diapositivas",
+      en: "Hero Slides",
+      es: "Diapositivas de héroe",
     },
   },
-  imageURL: "/assets/blocks/Slides.png",
+  imageURL: "/assets/blocks/HeroSlides.png",
   imageAltText:
-    "Preview of the Slides block, showing an image with an overlay title, CTA, and controls to switch slides.",
+    "Preview of the Hero Slides block, showing an image with an overlay title, CTA, and controls to switch slides.",
   fields: [
     {
       name: "slides",

@@ -2,6 +2,7 @@ import { GlobalConfig } from "payload/types";
 import { canManageContent } from "../common/access-control";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
+import { Texts } from "../collections/Texts";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",
@@ -44,8 +45,11 @@ export const Maintenance: GlobalConfig = {
             es: "Mensaje",
           },
           required: true,
-          localized: true,
-          type: "text",
+          type: "relationship",
+          relationTo: Texts.slug,
+          filterOptions: {
+            type: { equals: "plainText" },
+          },
           admin: {
             condition: (_, siblingData) => siblingData.show,
           },

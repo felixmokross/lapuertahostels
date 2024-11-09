@@ -1,8 +1,8 @@
 import { Block } from "payload/types";
+import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
-import { imageField } from "../fields/image";
+import { Texts } from "../collections/Texts";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const RoomListBlock: Block = {
@@ -62,22 +62,20 @@ export const RoomListBlock: Block = {
             imageField,
             {
               name: "caption",
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               label: {
                 en: "Caption",
                 es: "Pie de foto",
               },
-              localized: true,
             },
           ],
         },
         makeCallToActionField(),
       ],
-      admin: {
-        components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.heading,
-        },
-      },
     },
   ],
 };

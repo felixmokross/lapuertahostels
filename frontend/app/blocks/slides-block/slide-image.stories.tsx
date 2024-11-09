@@ -4,7 +4,7 @@ import { SlideImage } from "./slide-image";
 
 const meta = {
   component: SlideImage,
-  title: "blocks/Slides Block/Slide Image",
+  title: "blocks/Hero Slides Block/Slide Image",
   argTypes: {},
   parameters: {
     layout: "fullscreen",

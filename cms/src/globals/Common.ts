@@ -1,11 +1,12 @@
 import { GlobalConfig } from "payload/types";
 import { Common as CommonType } from "../payload-types";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
-import { linkField } from "../fields/link";
-import { makeRichTextField } from "../fields/rich-text";
 import { headingField } from "../fields/heading";
+import { makeRichTextField } from "../fields/rich-text";
+import { Texts } from "../collections/Texts";
+import { Links } from "../collections/Links";
+import { showField } from "../fields/show";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
@@ -46,9 +47,11 @@ export const Common: GlobalConfig = {
             en: "Description",
             es: "Descripción",
           },
-          localized: true,
-          type: "textarea",
-          maxLength: 500,
+          type: "relationship",
+          relationTo: Texts.slug,
+          filterOptions: {
+            type: { equals: "plainText" },
+          },
           admin: {
             description: {
               en: "A short description of the website that will be shown on search results, social media, and messenger apps.",
@@ -67,23 +70,20 @@ export const Common: GlobalConfig = {
       type: "group",
       fields: [
         {
+          ...makeRichTextField(),
           name: "address",
           label: {
             en: "Address",
             es: "Dirección",
           },
-          type: "textarea",
-          required: true,
         },
         {
+          ...makeRichTextField(),
           name: "copyright",
           label: {
             en: "Copyright",
             es: "Derechos de autor",
           },
-          type: "text",
-          required: true,
-          localized: true,
         },
         {
           type: "array",
@@ -114,14 +114,14 @@ export const Common: GlobalConfig = {
               required: true,
             },
             {
-              name: "url",
-              type: "text",
+              name: "link",
               label: {
-                en: "URL",
-                es: "URL",
+                en: "Link",
+                es: "Enlace",
               },
+              type: "relationship",
+              relationTo: Links.slug,
               required: true,
-              validate: validateUrl,
             },
           ],
           admin: {
@@ -145,23 +145,19 @@ export const Common: GlobalConfig = {
           },
           type: "group",
           fields: [
-            {
-              name: "show",
-              label: {
-                en: "Show",
-                es: "Mostrar",
-              },
-              type: "checkbox",
-            },
+            showField,
             {
               name: "title",
               label: {
                 en: "Title",
                 es: "Título",
               },
-              localized: true,
               required: true,
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 condition: (data: CommonType) => data.footer.newsletter.show,
               },
@@ -172,9 +168,12 @@ export const Common: GlobalConfig = {
                 en: "Description",
                 es: "Descripción",
               },
-              localized: true,
               required: true,
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 condition: (data: CommonType) => data.footer.newsletter.show,
               },
@@ -185,9 +184,12 @@ export const Common: GlobalConfig = {
                 en: "Email Placeholder",
                 es: "Marcador de correo electrónico",
               },
-              localized: true,
               required: true,
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 condition: (data: CommonType) => data.footer.newsletter.show,
               },
@@ -198,9 +200,12 @@ export const Common: GlobalConfig = {
                 en: "Button Label",
                 es: "Etiqueta del botón",
               },
-              localized: true,
               required: true,
-              type: "text",
+              type: "relationship",
+              relationTo: Texts.slug,
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 condition: (data: CommonType) => data.footer.newsletter.show,
               },
@@ -222,7 +227,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [headingField, makeRichTextField({ mode: "long-form" })],
+      fields: [headingField, makeRichTextField()],
     },
     {
       name: "errorScreen",
@@ -237,7 +242,7 @@ export const Common: GlobalConfig = {
         },
       },
       type: "group",
-      fields: [headingField, makeRichTextField({ mode: "long-form" })],
+      fields: [headingField, makeRichTextField()],
     },
   ],
 };

@@ -11,7 +11,7 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 import { Pages } from "./collections/Pages";
-import { Brand, Page, User } from "./payload-types";
+import { Brand, Link, Page, User } from "./payload-types";
 import { ContextType } from "payload/dist/admin/components/utilities/DocumentInfo/types";
 import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
@@ -21,6 +21,7 @@ import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
 import { Texts } from "./collections/Texts";
 import { Links } from "./collections/Links";
+import { pageIdToUrl } from "./common/page-urls";
 
 export default buildConfig({
   admin: {
@@ -123,6 +124,9 @@ export default buildConfig({
     },
   },
   endpoints: [primeFrontendCacheEndpoint],
+  rateLimit: {
+    max: 1500,
+  },
 });
 
 function getPreviewUrl({
@@ -142,7 +146,7 @@ function getPreviewPath(slug: string, data: Record<string, any>) {
     case Pages.slug:
       return (data as Page).url;
     case Brands.slug:
-      return (data as Brand).homeLinkUrl;
+      return pageIdToUrl((data as Brand).homeLink as string);
     default:
       return "";
   }

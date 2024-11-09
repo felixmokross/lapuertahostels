@@ -1,9 +1,9 @@
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
-import { makeOverlayTitleField } from "../fields/overlay-title";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
+import { makeOverlayTitleField } from "../fields/overlay-title";
+import { makeRichTextField } from "../fields/rich-text";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",

@@ -14,12 +14,20 @@ export function TextColumnsWithImagesBlock({
   numberOfColumns,
   elementId,
 }: TextColumnsWithImagesBlockProps) {
+  if (heading != null && typeof heading !== "object") {
+    throw new Error("Invalid heading");
+  }
+
+  if (text != null && typeof text !== "object") {
+    throw new Error("Invalid text");
+  }
+
   return (
     <div className="my-36 px-8" id={elementId ?? undefined}>
       <div className="mx-auto max-w-4xl">
         {heading && (
           <Heading as="h3" size="medium" className="text-center">
-            {heading}
+            {heading.text}
           </Heading>
         )}
         {text && (
@@ -27,7 +35,7 @@ export function TextColumnsWithImagesBlock({
             size="large"
             className={cn(heading && "mt-2", "text-center")}
           >
-            {text as RichTextObject}
+            {text.richText as RichTextObject}
           </RichTextParagraph>
         )}
       </div>

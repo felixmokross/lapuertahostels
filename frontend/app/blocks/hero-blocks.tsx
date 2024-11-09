@@ -1,4 +1,4 @@
-import { SlidesBlock } from "~/blocks/slides-block/slides-block";
+import { HeroSlidesBlock } from "~/blocks/slides-block/hero-slides-block";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
 import { Page } from "~/payload-types";
 import { HeroHeadingBlock } from "./hero-heading-block";
@@ -14,8 +14,8 @@ export function HeroBlocks({ data }: HeroBlocksProps) {
         return <HeroHeadingBlock key={block.id} {...block} />;
       case "HeroVideo":
         return <HeroVideoBlock key={block.id} {...block} />;
-      case "Slides":
-        return <SlidesBlock key={block.id} {...block} />;
+      case "HeroSlides":
+        return <HeroSlidesBlock key={block.id} {...block} />;
     }
   });
 }
