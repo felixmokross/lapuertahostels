@@ -7,7 +7,7 @@ import {
   useRouteLoaderData,
 } from "@remix-run/react";
 import { Trans, useTranslation } from "react-i18next";
-import { type loader } from "./root";
+import { loader as rootLoader } from "./root";
 import { getTitle } from "./common/meta";
 import { ThemeProvider } from "./themes";
 import { Header } from "./layout/header";
@@ -16,10 +16,12 @@ import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
 import { SerializeFrom } from "@remix-run/node";
-import { Text } from "~/payload-types";
+import { Maintenance, Text } from "~/payload-types";
+import { MaintenanceScreen } from "./layout/maintenance-screen";
+import { OptInLivePreview } from "./common/live-preview";
 
 export function GlobalErrorBoundary() {
-  const rootLoaderData = useRouteLoaderData<typeof loader>("root");
+  const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   const error = useRouteError();
   console.error(error);
 
@@ -28,7 +30,12 @@ export function GlobalErrorBoundary() {
   // Without rootLoaderData, we just render a fatal error screen
   if (!rootLoaderData) return <FatalErrorScreen />;
 
-  const { common, brand, allBrands, analyticsDomain } = rootLoaderData;
+  const { common, brand, allBrands, analyticsDomain, maintenance } =
+    rootLoaderData;
+
+  if (isRouteErrorResponse(error) && error.status === 503) {
+    return <MaintenanceErrorScreen maintenance={maintenance} />;
+  }
 
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
 
@@ -102,6 +109,29 @@ function FatalErrorScreen() {
             components={{ p: <p className="my-6 text-lg" /> }}
           />
         </main>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
+  const { i18n } = useTranslation();
+  return (
+    <html lang={i18n.language} dir={i18n.dir()}>
+      <head>
+        <title>{(maintenance.maintenanceScreen!.message as Text).text}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="bg-white text-neutral-900 antialiased">
+        <OptInLivePreview path="globals/maintenance" data={maintenance}>
+          {(maintenance) => (
+            <MaintenanceScreen {...maintenance.maintenanceScreen!} />
+          )}
+        </OptInLivePreview>
         <Scripts />
       </body>
     </html>

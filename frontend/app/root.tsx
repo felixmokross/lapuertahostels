@@ -19,7 +19,6 @@ import { BrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
-import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
 import {
@@ -30,7 +29,7 @@ import {
   urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
-import { GlobalErrorBoundary } from "./error-boundary";
+import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
 
 export const links: LinksFunction = () => [
@@ -145,7 +144,7 @@ export const handle = {
 };
 
 export default function App() {
-  const { brand, common, maintenance, analyticsDomain, allBrands } =
+  const { brand, common, analyticsDomain, allBrands } =
     useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
@@ -165,39 +164,31 @@ export default function App() {
         <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <OptInLivePreview path="globals/maintenance" data={maintenance}>
-          {(maintenance) =>
-            maintenance.maintenanceScreen?.show ? (
-              <MaintenanceScreen {...maintenance.maintenanceScreen} />
-            ) : (
-              <ThemeProvider brandId={brand.id as BrandId}>
-                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
-                  {(brand) => (
-                    <OptInLivePreview path="globals/common" data={common}>
-                      {(common) => (
-                        <>
-                          <Header
-                            brand={brand}
-                            allBrands={allBrands}
-                            onHeightChanged={setHeaderHeight}
-                          />
-                          <main>
-                            <Outlet />
-                          </main>
-                          <Footer
-                            brand={brand}
-                            allBrands={allBrands}
-                            content={common.footer}
-                          />
-                        </>
-                      )}
-                    </OptInLivePreview>
-                  )}
-                </OptInLivePreview>
-              </ThemeProvider>
-            )
-          }
-        </OptInLivePreview>
+        <ThemeProvider brandId={brand.id as BrandId}>
+          <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+            {(brand) => (
+              <OptInLivePreview path="globals/common" data={common}>
+                {(common) => (
+                  <>
+                    <Header
+                      brand={brand}
+                      allBrands={allBrands}
+                      onHeightChanged={setHeaderHeight}
+                    />
+                    <main>
+                      <Outlet />
+                    </main>
+                    <Footer
+                      brand={brand}
+                      allBrands={allBrands}
+                      content={common.footer}
+                    />
+                  </>
+                )}
+              </OptInLivePreview>
+            )}
+          </OptInLivePreview>
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

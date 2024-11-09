@@ -6,6 +6,7 @@ import {
   getRequestUrl,
   buildLocalizedRelativeUrl,
 } from "./routing";
+import { getMaintenance } from "~/cms-data";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -20,6 +21,14 @@ export async function handleIncomingRequest(request: Request) {
   if (!locale) {
     const locale = await i18next.getLocale(request);
     redirectToLocalizedRoute(url, locale);
+  }
+
+  const maintenance = await getMaintenance(locale);
+  if (maintenance.maintenanceScreen?.show) {
+    throw new Response(null, {
+      status: 503,
+      statusText: "Service Unavailable",
+    });
   }
 
   return { locale, pageUrl };
