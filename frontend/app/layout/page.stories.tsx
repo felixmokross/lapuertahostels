@@ -49,7 +49,7 @@ export const Puerta: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Hike Through\n"), bold("the Tayrona Park")),
+                  plain(text("Hike Through\nthe "), bold("Tayrona Park")),
                 ),
                 position: "top-left",
                 overlay: "moderate",
@@ -349,6 +349,8 @@ export const Aqua: Story = {
               text(
                 "Discover the charm of Santa Marta at our boutique hostel, ideally located in the historic city center. Steps from pristine beaches and local attractions, our welcoming community area is perfect for connecting with fellow travelers over a board game.",
               ),
+            ),
+            plain(
               text(
                 "For a touch of luxury, our deluxe room with a private terrace offers a tranquil retreat. Relax with a cool drink and enjoy the beautiful surroundings after a day of adventure. Experience our warm hospitality and make unforgettable memories in the heart of Santa Marta.",
               ),
