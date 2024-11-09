@@ -117,11 +117,19 @@ export const Texts: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
-            switch (data.type) {
-              case "plainText":
-                return data.text;
-              case "richText":
-                return data.richText.map((n) => Node.string(n)).join(" ");
+            const fullText = getFullText();
+
+            return fullText.length > 80
+              ? `${fullText.slice(0, 79).trim()}…`
+              : fullText;
+
+            function getFullText() {
+              switch (data.type) {
+                case "plainText":
+                  return data.text;
+                case "richText":
+                  return data.richText.map((n) => Node.string(n)).join(" ");
+              }
             }
           },
         ],

@@ -85,7 +85,7 @@ export const Puerta: Story = {
             },
           ],
           id: createId(),
-          blockType: "Slides",
+          blockType: "HeroSlides",
         },
       ],
 
@@ -253,7 +253,7 @@ export const Aqua: Story = {
       url: "/aqua",
       hero: [
         {
-          blockType: "Slides",
+          blockType: "HeroSlides",
           id: "hero",
           slides: [
             {
@@ -412,7 +412,7 @@ export const Azul: Story = {
               },
             },
           ],
-          blockType: "Slides",
+          blockType: "HeroSlides",
         },
       ],
       layout: [

@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { SlidesBlock } from "./slides-block";
+import { HeroSlidesBlock } from "./hero-slides-block";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
 import { plain, text } from "~/common/rich-text.builders";
 
 const meta = {
-  title: "blocks/Slides Block",
-  component: SlidesBlock,
+  title: "blocks/Hero Slides Block",
+  component: HeroSlidesBlock,
   argTypes: {},
   parameters: {
     layout: "fullscreen",
   },
-} satisfies Meta<typeof SlidesBlock>;
+} satisfies Meta<typeof HeroSlidesBlock>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    blockType: "Slides",
+    blockType: "HeroSlides",
     slides: [
       {
         name: "Lost City",

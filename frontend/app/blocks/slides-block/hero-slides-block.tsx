@@ -9,14 +9,14 @@ import { Media, Page } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 import { getSrcFromMedia } from "~/common/media";
 
-export type SlidesBlockProps = NonNullable<Page["hero"]>[number] & {
-  blockType: "Slides";
+export type HeroSlidesBlockProps = NonNullable<Page["hero"]>[number] & {
+  blockType: "HeroSlides";
 };
 
-export function SlidesBlock({
+export function HeroSlidesBlock({
   slides,
   autoplayIntervalInSeconds,
-}: SlidesBlockProps) {
+}: HeroSlidesBlockProps) {
   autoplayIntervalInSeconds = autoplayIntervalInSeconds || 7;
 
   const { t } = useTranslation();
@@ -144,7 +144,7 @@ export function SlidesBlock({
 }
 
 function useSlidesState(
-  slides: SlidesBlockProps["slides"],
+  slides: HeroSlidesBlockProps["slides"],
   autoplayIntervalInSeconds: number,
   isReady: boolean,
 ) {

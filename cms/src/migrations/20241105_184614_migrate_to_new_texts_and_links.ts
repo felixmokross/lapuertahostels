@@ -96,12 +96,20 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   }
 
   for (const text of texts) {
-    await payload.db.connection
-      .collection("texts")
-      .updateOne(
-        { _id: text._id },
-        { $set: { title: text.text, type: "plainText" } },
-      );
+    await payload.db.connection.collection("texts").updateOne(
+      { _id: text._id },
+      {
+        $set: {
+          title: Object.fromEntries(
+            Object.entries(text.text).map(([locale, value]) => [
+              locale,
+              getTextTitle({ text: value, type: "plainText" }),
+            ]),
+          ),
+          type: "plainText",
+        },
+      },
+    );
   }
 
   const common = await payload.db.connection
@@ -347,6 +355,8 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     if (slidesBlocks.length > 0) {
       updatePage = true;
       for (const block of slidesBlocks) {
+        block.blockType = "HeroSlides";
+
         for (const slide of block.slides) {
           if (slide.overlayTitle?.show) {
             slide.overlayTitle.text = await createTextIfNeeded(
@@ -404,12 +414,17 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       text["title"] = Object.fromEntries(
         Object.entries(data).map(([locale, value]) => [
           locale,
-          (value as Node[]).map((n) => Node.string(n)).join(" "),
+          getTextTitle({ richText: value, type: "richText" }),
         ]),
       );
     } else if (type === "plainText") {
       text["text"] = data;
-      text["title"] = data;
+      text["title"] = Object.fromEntries(
+        Object.entries(data).map(([locale, value]) => [
+          locale,
+          getTextTitle({ text: value, type: "plainText" }),
+        ]),
+      );
     }
 
     const result = await payload.db.connection
@@ -464,5 +479,22 @@ function getLinkTitle(link: any) {
       return `${pageIdToUrl(link.page)}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`;
     case "external":
       return `${link.url}`;
+  }
+}
+
+function getTextTitle(data: any): string {
+  const fullText = getFullText();
+
+  return fullText && fullText.length > 80
+    ? `${fullText.slice(0, 79).trim()}…`
+    : fullText;
+
+  function getFullText() {
+    switch (data.type) {
+      case "plainText":
+        return data.text;
+      case "richText":
+        return data.richText.map((n) => Node.string(n)).join(" ");
+    }
   }
 }
