@@ -6,7 +6,7 @@ import { makeCallToActionField } from "../fields/call-to-action";
 import { headingField } from "../fields/heading";
 
 export const LeadTextBlock: Block = {
-  slug: "Lead",
+  slug: "LeadText",
   labels: {
     singular: {
       en: "Lead Text",

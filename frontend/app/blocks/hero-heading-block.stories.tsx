@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { HeroHeadingBlock } from "./hero-heading-block";
+import { media, plainText } from "~/common/cms-data.builders";
 
 const meta = {
   title: "blocks/Hero Heading Block",
@@ -17,24 +18,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "HeroHeading",
-    heading: {
-      id: "1",
-      text: "Hello, World!",
-      updatedAt: "2021-08-31T00:00:00.000Z",
-      createdAt: "2021-08-31T00:00:00.000Z",
-    },
+    heading: plainText("Hello, World!"),
   },
 };
 
 export const WithImage: Story = {
   args: {
     ...Default.args,
-    image: {
-      id: "1",
-      filename: "IMG_6591.jpg",
-      alt: "Terrace with two chairs and a coffee table",
-      createdAt: "2021-08-31T00:00:00.000Z",
-      updatedAt: "2021-08-31T00:00:00.000Z",
-    },
+    image: media("IMG_6591.jpg"),
   },
 };

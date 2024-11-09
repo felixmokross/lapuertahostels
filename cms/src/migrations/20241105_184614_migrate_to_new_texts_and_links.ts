@@ -300,6 +300,8 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     if (leadTextBlocks.length > 0) {
       updatePage = true;
       for (const block of leadTextBlocks) {
+        block.blockType = "LeadText";
+
         if (block.heading) {
           block.heading = await createTextIfNeeded(block.heading);
         }

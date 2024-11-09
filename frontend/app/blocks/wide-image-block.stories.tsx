@@ -1,5 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { WideImageBlock } from "./wide-image-block";
+import {
+  callToAction,
+  media,
+  plainText,
+  richText,
+} from "~/common/cms-data.builders";
+import { bold, plain, text } from "~/common/rich-text.builders";
+import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
   title: "blocks/Wide Image Block",
@@ -14,65 +22,27 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    image: {
-      id: "1",
-      filename: "IMG_6303.jpg",
-      alt: "Test",
-      createdAt: "2022-01-01T00:00:00.000Z",
-      updatedAt: "2022-01-01T00:00:00.000Z",
-    },
+    image: media("IMG_6303.jpg"),
     overlayTextBox: {
       show: true,
-      heading: "Feel at Home",
-      text: [
-        {
-          children: [
-            {
-              text: "Experience ",
-            },
-            {
-              text: "Colombian hospitality",
-              bold: true,
-            },
-            {
-              text: " in our boutique hostel's ",
-            },
-            {
-              text: "inviting community areas",
-              bold: true,
-            },
-            {
-              text: ", perfect for ",
-            },
-            {
-              text: "connecting ",
-              bold: true,
-            },
-            {
-              text: "and creating ",
-            },
-            {
-              text: "unforgettable",
-              bold: true,
-            },
-            {
-              text: " memories.",
-            },
-          ],
-        },
-      ],
-      cta: {
-        show: true,
-        link: {
-          label: "Discover More",
-          type: "external",
-          url: "https://example.com/discover",
-        },
-        variant: "secondary",
-      },
+      heading: plainText("Feel at Home"),
+      text: richText(
+        plain(
+          text("Experience "),
+          bold("Colombian hospitality"),
+          text(" in our boutique hostel's "),
+          bold("inviting community areas"),
+          text(", perfect for "),
+          bold("connecting"),
+          text(" and creating "),
+          bold("unforgettable"),
+          text(" memories."),
+        ),
+      ),
+      cta: callToAction("Discover More"),
       position: "top-right",
     },
-    id: "665cbd27ebb1f68ede783782",
+    id: createId(),
     blockType: "WideImage",
   },
 };

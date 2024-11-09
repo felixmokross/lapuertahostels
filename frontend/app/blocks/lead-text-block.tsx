@@ -7,7 +7,7 @@ import { RichTextObject } from "~/common/rich-text";
 import { PageLink } from "~/common/page-link";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
-  blockType: "Lead";
+  blockType: "LeadText";
 };
 
 export function LeadTextBlock({

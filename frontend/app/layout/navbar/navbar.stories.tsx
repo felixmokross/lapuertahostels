@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Navbar } from "./navbar";
-import { Brand } from "~/payload-types";
+import {
+  brand,
+  internalLink,
+  media,
+  plainText,
+} from "~/common/cms-data.builders";
 
 const meta = {
   title: "layout/Navbar",
@@ -15,68 +20,38 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const puertaBrand = {
+const puertaBrand = brand({
   id: "puerta",
   name: "La Puerta Hostels",
-  homeLinkUrl: "/",
+  homeLink: internalLink("/"),
   navLinks: [
     {
-      page: { url: "/aqua" },
-      type: "internal",
-      label: "Puerta Aqua",
+      label: plainText("Puerta Aqua"),
+      link: internalLink("/aqua"),
     },
     {
-      page: { url: "/azul" },
-      type: "internal",
-      label: "La Puerta Azul",
+      label: plainText("La Puerta Azul"),
+      link: internalLink("/azul"),
     },
     {
-      page: { url: "/" },
-      fragment: "santa-marta",
-      type: "internal",
-      label: "Santa Marta",
+      label: plainText("Santa Marta"),
+      link: internalLink("/santa-marta"),
     },
     {
-      page: { url: "/" },
-      fragment: "about-us",
-      type: "internal",
-      label: "About Us",
+      label: plainText("About Us"),
+      link: internalLink("/about-us"),
     },
     {
-      page: { url: "/contact" },
-      type: "internal",
-      label: "Contact",
+      label: plainText("Contact"),
+      link: internalLink("/contact"),
     },
   ],
-  logo: {
-    filename: "logo-puerta-simple.png",
-    alt: "La Puerta Hostels Logo",
-  },
-} as Brand;
+  logo: media("logo-puerta-simple.png"),
+});
 
 export const Default: Story = {
   args: {
-    allBrands: [
-      puertaBrand,
-      {
-        id: "aqua",
-        homeLinkUrl: "/aqua",
-        logo: {
-          filename: "logo-puerta-aqua.png",
-          alt: "Puerta Aqua Logo",
-        },
-        name: "Puerta Aqua",
-      } as Brand,
-      {
-        id: "azul",
-        homeLinkUrl: "/azul",
-        logo: {
-          filename: "logo-puerta-azul.png",
-          alt: "La Puerta Azul Logo",
-        },
-        name: "La Puerta Azul",
-      } as Brand,
-    ],
+    allBrands: [puertaBrand],
     brand: puertaBrand,
     onHeightChanged: () => {},
   },

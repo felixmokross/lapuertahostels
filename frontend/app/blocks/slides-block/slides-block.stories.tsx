@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { SlidesBlock } from "./slides-block";
+import { callToAction, media, richText } from "~/common/cms-data.builders";
+import { plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Slides Block",
@@ -20,94 +22,42 @@ export const Default: Story = {
     slides: [
       {
         name: "Lost City",
-        image: {
-          id: "1",
-          filename: "datingjungle-Vv4JB0SMfZ4-unsplash.jpg",
-          alt: "Lost City",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: [{ children: [{ text: "Lost City" }] }],
+          text: richText(plain(text("Lost City"))),
           position: "top-right",
-          cta: {
-            show: true,
-            link: {
-              label: "Read More",
-              type: "external",
-              url: "http://example.com",
-            },
-          },
+          cta: callToAction("Read More"),
         },
       },
       {
         name: "Parque Tayrona",
-        image: {
-          id: "2",
-          filename: "azzedine-rouichi-gc5OYAll-rc-unsplash.jpg",
-          alt: "Parque Tayrona",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("azzedine-rouichi-gc5OYAll-rc-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: [{ children: [{ text: "Parque Tayrona" }] }],
+          text: richText(plain(text("Parque Tayrona"))),
           position: "bottom-left",
-          cta: {
-            show: true,
-            link: {
-              label: "Read More",
-              type: "external",
-              url: "http://example.com",
-            },
-          },
+          cta: callToAction("Read More"),
         },
       },
       {
         name: "Santa Marta",
-        image: {
-          id: "3",
-          filename: "david-hertle-3YCkAhD--Ic-unsplash.jpg",
-          alt: "Santa Marta",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("david-hertle-3YCkAhD--Ic-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: [{ children: [{ text: "Santa Marta" }] }],
+          text: richText(plain(text("Santa Marta"))),
           position: "bottom-right",
-          cta: {
-            show: true,
-            link: {
-              label: "Read More",
-              type: "external",
-              url: "http://example.com",
-            },
-          },
+          cta: callToAction("Read More"),
         },
       },
       {
         name: "Minca",
-        image: {
-          id: "4",
-          filename: "denise-leisner-8eVV287ST0E-unsplash.jpg",
-          alt: "Minca",
-          createdAt: "2022-01-01T00:00:00Z",
-          updatedAt: "2022-01-01T00:00:00Z",
-        },
+        image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: [{ children: [{ text: "Minca" }] }],
+          text: richText(plain(text("Minca"))),
           position: "top-left",
-          cta: {
-            show: true,
-            link: {
-              label: "Read More",
-              type: "external",
-              url: "http://example.com",
-            },
-          },
+          cta: callToAction("Read More"),
         },
       },
     ],

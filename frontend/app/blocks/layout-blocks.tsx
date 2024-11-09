@@ -16,7 +16,7 @@ type LayoutBlocksProps = {
 export function LayoutBlocks({ data }: LayoutBlocksProps) {
   return data.map((block) => {
     switch (block.blockType) {
-      case "Lead":
+      case "LeadText":
         return <LeadTextBlock key={block.id} {...block} />;
       case "AccommodationSelector":
         return <AccommodationSelectorBlock key={block.id} {...block} />;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Banner } from "./banner";
 import { allModes } from ".storybook/modes";
-import { Page } from "~/payload-types";
+import { callToAction, plainText } from "~/common/cms-data.builders";
 
 const meta = {
   title: "layout/Banner",
@@ -31,26 +31,8 @@ export const Default: Story = {
     createdAt: "2021-09-01T00:00:00Z",
     updatedAt: "2021-09-01T00:00:00Z",
     name: "Discount before 20 September",
-    message: {
-      id: "1",
-      text: "Travel before 20 September and get 20% off!",
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
-    cta: {
-      id: "1",
-      name: "Book now",
-      label: {
-        id: "1",
-        text: "Book now",
-        createdAt: "2021-09-01T00:00:00Z",
-        updatedAt: "2021-09-01T00:00:00Z",
-      },
-      type: "internal",
-      page: { url: "/experiences/tayrona" } as Page,
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
+    message: plainText("Travel before 20 September and get 20% off!"),
+    cta: callToAction("Book Now"),
   },
 };
 

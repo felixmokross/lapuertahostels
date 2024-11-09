@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { allModes } from ".storybook/modes";
+import { richText } from "~/common/cms-data.builders";
+import { bold, plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Image with Floating Text Block",
@@ -30,71 +32,27 @@ export const Default: Story = {
       updatedAt: "2022-01-01T00:00:00Z",
     },
     overlayTitle: {
-      text: [
-        {
-          children: [
-            {
-              text: "Do You Know ",
-            },
-            {
-              text: "Santa Marta?",
-              bold: true,
-            },
-          ],
-        },
-      ],
+      text: richText(plain(text("Do You Know "), bold("Santa Marta?"))),
     },
-    text: [
-      {
-        children: [
-          {
-            text: "Santa Marta, nestled ",
-          },
-          {
-            text: "between the Caribbean Sea and the Sierra Nevada mountains, ",
-            bold: true,
-          },
-          {
-            text: "beckons tourists with its captivating blend of ",
-          },
-          {
-            text: "natural beauty",
-            bold: true,
-          },
-          {
-            text: " and ",
-          },
-          {
-            text: "rich cultural heritage",
-            bold: true,
-          },
-          {
-            text: ". Boasting pristine beaches, lush national parks, and a historic city center, Santa Marta offers an ",
-          },
-          {
-            text: "enchanting escape",
-            bold: true,
-          },
-          {
-            text: " for travelers seeking a perfect balance of ",
-          },
-          {
-            text: "sun-soaked relaxation",
-            bold: true,
-          },
-          {
-            text: " and ",
-          },
-          {
-            text: "exploration",
-            bold: true,
-          },
-          {
-            text: " of Colombia’s diverse landscapes.",
-          },
-        ],
-      },
-    ],
+    text: richText(
+      plain(
+        text("Santa Marta, nestled "),
+        bold("between the Caribbean Sea and the Sierra Nevada mountains, "),
+        text("beckons tourists with its captivating blend of "),
+        bold("natural beauty"),
+        text(" and "),
+        bold("rich cultural heritage"),
+        text(
+          ". Boasting pristine beaches, lush national parks, and a historic city center, Santa Marta offers an ",
+        ),
+        bold("enchanting escape"),
+        text(" for travelers seeking a perfect balance of "),
+        bold("sun-soaked relaxation"),
+        text(" and "),
+        bold("exploration"),
+        text(" of Colombia’s diverse landscapes."),
+      ),
+    ),
   },
 };
 

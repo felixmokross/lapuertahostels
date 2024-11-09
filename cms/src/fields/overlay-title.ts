@@ -46,6 +46,9 @@ export function makeOverlayTitleField({
         filterOptions: {
           type: { equals: "richText" },
         },
+        admin: {
+          condition,
+        },
       },
       ...(supportsCallToAction
         ? [

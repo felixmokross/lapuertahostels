@@ -1,6 +1,12 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Header } from "./header";
-import { Brand, Page } from "~/payload-types";
+import {
+  banner,
+  brand,
+  internalLink,
+  media,
+  plainText,
+} from "~/common/cms-data.builders";
 
 const meta = {
   title: "layout/Header",
@@ -14,91 +20,40 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const puertaBrand = {
+const puertaBrand = brand({
   id: "puerta",
   name: "La Puerta Hostels",
-  homeLinkUrl: "/",
+  logo: media("logo-puerta-simple.png"),
+  homeLink: internalLink("/"),
   navLinks: [
     {
-      url: "/aqua",
-      label: "Puerta Aqua",
+      label: plainText("Puerta Aqua"),
+      link: internalLink("/aqua"),
     },
     {
-      url: "/azul",
-      label: "La Puerta Azul",
+      label: plainText("La Puerta Azul"),
+      link: internalLink("/azul"),
     },
     {
-      url: ".#santa-marta",
-      label: "Santa Marta",
+      label: plainText("Santa Marta"),
+      link: internalLink("/santa-marta"),
     },
     {
-      url: ".#about-us",
-      label: "About Us",
+      label: plainText("About Us"),
+      link: internalLink("/about-us"),
     },
     {
-      url: "#",
-      label: "Contact",
+      label: plainText("Contact"),
+      link: internalLink("/contact"),
     },
   ],
-  banner: {
-    id: "1",
-    createdAt: "2021-09-01T00:00:00Z",
-    updatedAt: "2021-09-01T00:00:00Z",
-    name: "Discount before 20 September",
-    message: {
-      id: "1",
-      text: "Travel before 20 September and get 20% off!",
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
-    cta: {
-      id: "1",
-      name: "Book now",
-      label: {
-        id: "1",
-        text: "Book now",
-        createdAt: "2021-09-01T00:00:00Z",
-        updatedAt: "2021-09-01T00:00:00Z",
-      },
-      type: "internal",
-      page: { url: "/experiences/tayrona" } as Page,
-      createdAt: "2021-09-01T00:00:00Z",
-      updatedAt: "2021-09-01T00:00:00Z",
-    },
-  },
-  logo: {
-    id: "1",
-    filename: "logo-puerta-simple.png",
-    alt: "La Puerta Hostels Logo",
-    createdAt: "2021-09-01T00:00:00Z",
-    updatedAt: "2021-09-01T00:00:00Z",
-  },
-  createdAt: "2021-09-01T00:00:00Z",
-  updatedAt: "2021-09-01T00:00:00Z",
-} as Brand;
+  banner: banner("Travel before 20 September and get 20% off!", "Book now"),
+});
 
 export const Default: Story = {
   args: {
     brand: puertaBrand,
-    allBrands: [
-      puertaBrand,
-      {
-        id: "aqua",
-        homeLinkUrl: "/aqua",
-        logo: {
-          url: "https://ik.imagekit.io/lapuertahostels/staging/logos/logo-aqua-simple.png?updatedAt=1703906701749",
-        },
-        name: "Puerta Aqua",
-      } as Brand,
-      {
-        id: "azul",
-        homeLinkUrl: "/azul",
-        logo: {
-          url: "https://ik.imagekit.io/lapuertahostels/staging/logos/logo-azul-simple.png?updatedAt=1703906701749",
-        },
-        name: "La Puerta Azul",
-      } as Brand,
-    ],
+    allBrands: [puertaBrand],
     onHeightChanged: () => {},
   },
 };

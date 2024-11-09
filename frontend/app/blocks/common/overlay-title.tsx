@@ -58,7 +58,7 @@ export function OverlayTitle({
         onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
-          {text.richText as RichTextObject}
+          {text!.richText as RichTextObject}
         </RichTextHeading>
         {cta?.show && (
           <Button
