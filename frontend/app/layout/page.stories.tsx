@@ -49,11 +49,11 @@ export const Puerta: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Hike Through "), bold("the Tayrona Park")),
+                  plain(text("Hike Through\n"), bold("the Tayrona Park")),
                 ),
                 position: "top-left",
                 overlay: "moderate",
-                cta: callToAction("Read More"),
+                cta: callToAction("Read More", "primary"),
               },
               id: createId(),
             },
@@ -62,10 +62,10 @@ export const Puerta: Story = {
               image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(plain(text("Find the "), bold("Lost City"))),
+                text: richText(plain(text("Find the\n"), bold("Lost City"))),
                 position: "top-right",
                 overlay: "moderate",
-                cta: callToAction("Read More"),
+                cta: callToAction("Read More", "primary"),
               },
               id: createId(),
             },
@@ -74,10 +74,12 @@ export const Puerta: Story = {
               image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(plain(text("Follow the "), bold("Minca River"))),
+                text: richText(
+                  plain(text("Follow the\n"), bold("Minca River")),
+                ),
                 position: "bottom-left",
                 overlay: "moderate",
-                cta: callToAction("Read More"),
+                cta: callToAction("Read More", "primary"),
               },
               id: createId(),
             },
@@ -261,10 +263,10 @@ export const Aqua: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Welcome to Your "), bold("Vacation Home")),
+                  plain(text("Welcome to Your\n"), bold("Vacation Home")),
                 ),
                 overlay: "intense",
-                cta: callToAction("Reserve Now"),
+                cta: callToAction("Reserve Now", "primary"),
               },
             },
           ],
@@ -387,11 +389,11 @@ export const Azul: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Welcome to Your "), bold("Vacation Home")),
+                  plain(text("Welcome to Your\n"), bold("Vacation Home")),
                 ),
                 overlay: "intense",
                 position: "center",
-                cta: callToAction("Reserve Now"),
+                cta: callToAction("Reserve Now", "primary"),
               },
             },
             {
@@ -399,10 +401,12 @@ export const Azul: Story = {
               image: media("10.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(plain(text("Cool Down"), bold(" by the Pool"))),
+                text: richText(
+                  plain(text("Cool Down\n"), bold(" by the Pool")),
+                ),
                 overlay: "subtle",
                 position: "bottom-left",
-                cta: callToAction("Book Now"),
+                cta: callToAction("Book Now", "primary"),
               },
             },
           ],

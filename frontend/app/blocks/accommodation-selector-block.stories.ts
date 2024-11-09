@@ -32,7 +32,11 @@ export const Default: Story = {
     cards: [
       {
         id: createId(),
-        brand: brand({ id: "aqua", homeLink: internalLink("/aqua") }),
+        brand: brand({
+          id: "aqua",
+          name: "Puerta Aqua",
+          homeLink: internalLink("/aqua"),
+        }),
         image: media("Frente.jpg"),
         description: richText(
           plain(
@@ -44,7 +48,11 @@ export const Default: Story = {
       },
       {
         id: createId(),
-        brand: brand({ id: "azul", homeLink: internalLink("/azul") }),
+        brand: brand({
+          id: "azul",
+          name: "La Puerta Azul",
+          homeLink: internalLink("/azul"),
+        }),
         image: media("10.jpg"),
         description: richText(
           plain(

@@ -1,5 +1,4 @@
-import { slateEditor } from "@payloadcms/richtext-slate";
-import { RelationshipField, RichTextField } from "payload/types";
+import { RelationshipField } from "payload/types";
 import { Texts } from "../collections/Texts";
 
 export type RichTextFieldOptions = {

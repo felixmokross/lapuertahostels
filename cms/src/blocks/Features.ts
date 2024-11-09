@@ -3,7 +3,7 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
 import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const FeaturesBlock: Block = {

@@ -24,11 +24,11 @@ export function richText(...richText: RichTextObject): Text {
 
 export function brand(values: Partial<Brand> = {}): Brand {
   return {
+    ...values,
     id: values.id ?? createId(),
     name: values.name ?? "La Puerta Hostels",
     homeLink: values.homeLink ?? internalLink("/"),
     navLinks: values.navLinks ?? [],
-    footer: values.footer,
     logo: values.logo ?? media("logo-puerta-simple.png"),
     createdAt: date,
     updatedAt: date,

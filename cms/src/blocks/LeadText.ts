@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { headingField } from "../fields/heading";
 

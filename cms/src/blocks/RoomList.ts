@@ -1,7 +1,7 @@
 import { Block } from "payload/types";
 import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 import { Texts } from "../collections/Texts";
 import { makeCallToActionField } from "../fields/call-to-action";
 

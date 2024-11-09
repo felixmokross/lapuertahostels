@@ -3,7 +3,7 @@ import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { makeImageField } from "../fields/image";
 import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 
 const optionalImageField = makeImageField({ optional: true });
 

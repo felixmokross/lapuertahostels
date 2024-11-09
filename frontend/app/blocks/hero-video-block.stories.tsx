@@ -26,7 +26,7 @@ export const Default: Story = {
       text: richText(plain(text("Explore "), bold("Tayrona"))),
       overlay: "subtle",
       position: "center",
-      cta: callToAction("Book Now"),
+      cta: callToAction("Book Now", "primary"),
     },
   },
 };

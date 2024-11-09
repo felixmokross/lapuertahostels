@@ -41,8 +41,8 @@ const puertaBrand = brand({
         title: plainText("Hotel"),
         links: [
           {
-            label: plainText("La Puerta Hostels"),
-            link: internalLink("/"),
+            label: plainText("About Us"),
+            link: internalLink("/about-us"),
           },
           {
             label: plainText("Puerta Aqua"),
@@ -51,10 +51,6 @@ const puertaBrand = brand({
           {
             label: plainText("La Puerta Azul"),
             link: internalLink("/azul"),
-          },
-          {
-            label: plainText("About Us"),
-            link: internalLink("/about-us"),
           },
           {
             label: plainText("Contact"),

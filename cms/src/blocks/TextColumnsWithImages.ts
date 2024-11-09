@@ -4,7 +4,7 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
 import { makeHeadingField } from "../fields/heading";
 import { makeCallToActionField } from "../fields/call-to-action";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",

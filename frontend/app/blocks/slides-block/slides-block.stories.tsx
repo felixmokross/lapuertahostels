@@ -27,7 +27,7 @@ export const Default: Story = {
           show: true,
           text: richText(plain(text("Lost City"))),
           position: "top-right",
-          cta: callToAction("Read More"),
+          cta: callToAction("Read More", "primary"),
         },
       },
       {
@@ -37,7 +37,7 @@ export const Default: Story = {
           show: true,
           text: richText(plain(text("Parque Tayrona"))),
           position: "bottom-left",
-          cta: callToAction("Read More"),
+          cta: callToAction("Read More", "primary"),
         },
       },
       {
@@ -47,7 +47,7 @@ export const Default: Story = {
           show: true,
           text: richText(plain(text("Santa Marta"))),
           position: "bottom-right",
-          cta: callToAction("Read More"),
+          cta: callToAction("Read More", "primary"),
         },
       },
       {
@@ -57,7 +57,7 @@ export const Default: Story = {
           show: true,
           text: richText(plain(text("Minca"))),
           position: "top-left",
-          cta: callToAction("Read More"),
+          cta: callToAction("Read More", "primary"),
         },
       },
     ],

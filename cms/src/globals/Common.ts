@@ -4,7 +4,7 @@ import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { validateUrl } from "../common/validation";
 import { canManageContent } from "../common/access-control";
 import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/new-rich-text";
+import { makeRichTextField } from "../fields/rich-text";
 
 const socialPlatformOptions = [
   { label: "Facebook", value: "facebook" },
