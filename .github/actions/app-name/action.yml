@@ -13,14 +13,15 @@ runs:
     - id: app-name
       run: |
         GITHUB_SHA_SHORT=${GITHUB_SHA::4}
+        GITHUB_HEAD_REF_SHORT=${GITHUB_HEAD_REF::25}
 
         case ${{ inputs.component }} in
           frontend)
-            APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
+            APP_NAME=lapuertahostels-preview-$GITHUB_HEAD_REF_SHORT-$GITHUB_SHA_SHORT
             echo "app-name=$APP_NAME" >> $GITHUB_OUTPUT
             ;;
           cms)
-            APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF-$GITHUB_SHA_SHORT
+            APP_NAME=lapuertahostels-cms-preview-$GITHUB_HEAD_REF_SHORT-$GITHUB_SHA_SHORT
             echo "app-name=$APP_NAME" >> $GITHUB_OUTPUT
             ;;
         esac
