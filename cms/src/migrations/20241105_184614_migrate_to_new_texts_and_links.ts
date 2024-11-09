@@ -116,10 +116,58 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     .collection("globals")
     .findOne({ globalType: "common" });
 
+  for (const socialLink of common.footer.socialLinks) {
+    socialLink.link = await createLinkIfNeeded({
+      type: "external",
+      url: socialLink.url,
+    });
+    delete socialLink.url;
+  }
+
+  if (common.footer.newsletter) {
+    common.footer.newsletter.title = await createTextIfNeeded(
+      common.footer.newsletter.title,
+    );
+    common.footer.newsletter.description = await createTextIfNeeded(
+      common.footer.newsletter.description,
+    );
+
+    common.footer.newsletter.emailPlaceholder = await createTextIfNeeded(
+      common.footer.newsletter.emailPlaceholder,
+    );
+
+    common.footer.newsletter.buttonLabel = await createTextIfNeeded(
+      common.footer.newsletter.buttonLabel,
+    );
+  }
+
   await payload.db.connection.collection("globals").updateOne(
     { globalType: "common" },
     {
       $set: {
+        "meta.description": common.meta.description
+          ? await createTextIfNeeded(common.meta.description)
+          : null,
+
+        "footer.address": await createTextIfNeeded(
+          { en: [{ children: [{ text: common.footer.address }] }] },
+          "richText",
+        ),
+
+        "footer.copyright": await createTextIfNeeded(
+          Object.fromEntries(
+            Object.entries(common.footer.copyright).map(([locale, value]) => [
+              locale,
+              [{ children: [{ text: value }] }],
+            ]),
+          ),
+          "richText",
+        ),
+
+        "footer.socialLinks": common.footer.socialLinks,
+
+        "footer.newsletter": common.footer.newsletter,
+
         "errorScreen.heading": await createTextIfNeeded(
           common.errorScreen.heading,
         ),
@@ -134,6 +182,25 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
           common.pageNotFoundScreen.text,
           "richText",
         ),
+      },
+    },
+  );
+
+  const maintenance = await payload.db.connection
+    .collection("globals")
+    .findOne({ globalType: "maintenance" });
+
+  if (maintenance.maintenanceScreen) {
+    maintenance.maintenanceScreen.message = await createTextIfNeeded(
+      maintenance.maintenanceScreen.message,
+    );
+  }
+
+  await payload.db.connection.collection("globals").updateOne(
+    { globalType: "maintenance" },
+    {
+      $set: {
+        maintenanceScreen: maintenance.maintenanceScreen,
       },
     },
   );

@@ -4,10 +4,13 @@ import { Footer } from "./footer";
 import { allModes } from ".storybook/modes";
 import {
   brand,
+  externalLink,
   internalLink,
   media,
   plainText,
+  richText,
 } from "~/common/cms-data.builders";
+import { plain, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "layout/Footer",
@@ -109,32 +112,39 @@ const puertaBrand = brand({
 export const Default: Story = {
   args: {
     content: {
-      address: `La Puerta Hostels S.A.S.
+      address: richText(
+        plain(
+          text(`La Puerta Hostels S.A.S.
 Calle 18 #5-66
 Santa Marta 470004
-Colombia`,
-      copyright: "La Puerta Hostels S.A.S. All rights reserved.",
+Colombia`),
+        ),
+      ),
+      copyright: richText(
+        plain(text("La Puerta Hostels S.A.S. All rights reserved.")),
+      ),
       socialLinks: [
         {
           platform: "facebook",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
         {
           platform: "instagram",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
         {
           platform: "whatsapp",
-          url: "#",
+          link: externalLink("http://example.com"),
         },
       ],
       newsletter: {
         show: true,
-        title: "Subscribe to our newsletter",
-        description:
+        title: plainText("Subscribe to our newsletter"),
+        description: plainText(
           "Don’t miss out on new experiences, discounts, or any other news from us!",
-        emailPlaceholder: "Enter your email",
-        buttonLabel: "Subscribe",
+        ),
+        emailPlaceholder: plainText("Enter your email"),
+        buttonLabel: plainText("Subscribe"),
       },
     },
     allBrands: [puertaBrand],

@@ -57,7 +57,7 @@ export const Texts: CollectionConfig = {
     },
     {
       name: "text",
-      type: "text",
+      type: "textarea",
       label: {
         en: "Text",
         es: "Texto",
