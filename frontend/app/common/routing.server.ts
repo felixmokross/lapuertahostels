@@ -7,6 +7,7 @@ import {
   buildLocalizedRelativeUrl,
 } from "./routing";
 import { getMaintenance } from "~/cms-data";
+import { getSession } from "~/sessions.server";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -23,8 +24,10 @@ export async function handleIncomingRequest(request: Request) {
     redirectToLocalizedRoute(url, locale);
   }
 
+  const session = await getSession(request.headers.get("Cookie"));
+
   const maintenance = await getMaintenance(locale);
-  if (maintenance.maintenanceScreen?.show) {
+  if (maintenance.maintenanceScreen?.show && !session.get("userId")) {
     throw new Response(null, {
       status: 503,
       statusText: "Service Unavailable",

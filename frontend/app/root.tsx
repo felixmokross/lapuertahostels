@@ -31,6 +31,7 @@ import {
 import { Brand } from "./payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
+import { getSession } from "./sessions.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -99,6 +100,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.IMAGEKIT_BASE_URL) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
+  const session = await getSession(request.headers.get("Cookie"));
 
   const url = getRequestUrl(request);
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
@@ -121,6 +123,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!brand) throw new Error("Brand not found");
 
   return {
+    hasSesssion: session.has("userId"),
     locale,
     brand,
     allBrands,
@@ -144,8 +147,14 @@ export const handle = {
 };
 
 export default function App() {
-  const { brand, common, analyticsDomain, allBrands } =
-    useLoaderData<typeof loader>();
+  const {
+    brand,
+    common,
+    maintenance,
+    analyticsDomain,
+    allBrands,
+    hasSesssion,
+  } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -170,19 +179,24 @@ export default function App() {
               <OptInLivePreview path="globals/common" data={common}>
                 {(common) => (
                   <>
-                    <Header
-                      brand={brand}
-                      allBrands={allBrands}
-                      onHeightChanged={setHeaderHeight}
-                    />
+                    {(!maintenance.maintenanceScreen?.show || hasSesssion) && (
+                      <Header
+                        brand={brand}
+                        allBrands={allBrands}
+                        onHeightChanged={setHeaderHeight}
+                        hasSession={hasSesssion}
+                      />
+                    )}
                     <main>
                       <Outlet />
                     </main>
-                    <Footer
-                      brand={brand}
-                      allBrands={allBrands}
-                      content={common.footer}
-                    />
+                    {(!maintenance.maintenanceScreen?.show || hasSesssion) && (
+                      <Footer
+                        brand={brand}
+                        allBrands={allBrands}
+                        content={common.footer}
+                      />
+                    )}
                   </>
                 )}
               </OptInLivePreview>

@@ -42,10 +42,10 @@ export function GlobalErrorBoundary() {
   const errorPageTitle = getTitle(
     (
       (isPageNotFound
-        ? rootLoaderData.common.pageNotFoundScreen.heading
-        : rootLoaderData.common.errorScreen.heading) as SerializeFrom<Text>
+        ? common.pageNotFoundScreen.heading
+        : common.errorScreen.heading) as SerializeFrom<Text>
     ).text!,
-    rootLoaderData.brand,
+    brand,
   );
 
   return (
