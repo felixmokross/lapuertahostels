@@ -127,12 +127,14 @@ function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
         <Links />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <OptInLivePreview path="globals/maintenance" data={maintenance}>
-          {(maintenance) => (
-            <MaintenanceScreen {...maintenance.maintenanceScreen!} />
-          )}
-        </OptInLivePreview>
-        <Scripts />
+        <ThemeProvider brandId="puerta">
+          <OptInLivePreview path="globals/maintenance" data={maintenance}>
+            {(maintenance) => (
+              <MaintenanceScreen {...maintenance.maintenanceScreen!} />
+            )}
+          </OptInLivePreview>
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 
 export type ParagraphProps = PropsWithChildren<{
   className?: string;
-  size?: "medium" | "large" | "extra-large";
+  size?: "small" | "medium" | "large" | "extra-large";
   variant?: ParagraphVariant;
   justify?: boolean;
 }>;
@@ -27,6 +27,7 @@ export function Paragraph({
         className={cn(
           justify && "hyphens-auto text-justify",
           {
+            "text-sm leading-normal": size === "small",
             "text-base leading-relaxed": size === "medium",
             "text-md leading-relaxed md:text-lg md:leading-relaxed":
               size === "large",

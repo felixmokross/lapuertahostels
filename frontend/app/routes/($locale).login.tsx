@@ -1,5 +1,13 @@
-import { ActionFunctionArgs, data, redirect } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  data,
+  LoaderFunctionArgs,
+  redirect,
+} from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
+import { Button } from "~/common/button";
+import { Input } from "~/common/input";
+import { handleIncomingRequest } from "~/common/routing.server";
 import { commitSession, getSession } from "~/sessions.server";
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -53,25 +61,44 @@ export async function action({ request }: ActionFunctionArgs) {
   });
 }
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  await handleIncomingRequest(request);
+
+  const session = await getSession(request.headers.get("Cookie"));
+  if (session.has("userId")) {
+    throw redirect("/");
+  }
+
+  return null;
+}
+
 export default function Route() {
   // This seems to return incorrect types
   // const actionData = useActionData<typeof action}>();
-
   const actionData = useActionData<{
     errorMessage: string;
     values: { email: string };
   }>();
   return (
-    <Form method="POST" className="flex flex-col gap-4">
-      {actionData && <p>{actionData.errorMessage}</p>}
-      <input
+    <Form
+      method="POST"
+      className="flex min-h-screen flex-col items-center justify-center gap-4 px-8"
+    >
+      <Input
         placeholder="Email"
         type="email"
         name="email"
         defaultValue={actionData?.values.email}
       />
-      <input placeholder="Password" type="password" name="password" />
-      <button type="submit">Submit</button>
+      <Input placeholder="Password" type="password" name="password" />
+      {actionData && (
+        <p className="text-sm text-accent-negative-800">
+          {actionData.errorMessage}
+        </p>
+      )}
+      <Button type="submit" size="small" variant="primary">
+        Log In
+      </Button>
     </Form>
   );
 }

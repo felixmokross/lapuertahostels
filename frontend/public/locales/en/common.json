@@ -21,5 +21,8 @@
   "errorBoundary": {
     "title": "500 – Something went wrong",
     "text": "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>"
+  },
+  "maintenanceScreen": {
+    "login": "Login"
   }
 }

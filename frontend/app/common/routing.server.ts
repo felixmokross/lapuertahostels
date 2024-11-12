@@ -27,7 +27,11 @@ export async function handleIncomingRequest(request: Request) {
   const session = await getSession(request.headers.get("Cookie"));
 
   const maintenance = await getMaintenance(locale);
-  if (maintenance.maintenanceScreen?.show && !session.get("userId")) {
+  if (
+    maintenance.maintenanceScreen?.show &&
+    !session.get("userId") &&
+    pageUrl !== "/login"
+  ) {
     throw new Response(null, {
       status: 503,
       statusText: "Service Unavailable",

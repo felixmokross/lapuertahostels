@@ -7,6 +7,9 @@ const meta = {
   title: "layout/Maintenance Screen",
   component: MaintenanceScreen,
   argTypes: {},
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof MaintenanceScreen>;
 
 export default meta;

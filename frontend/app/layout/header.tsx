@@ -2,7 +2,6 @@ import { Brand } from "~/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
 import { useEffect, useState } from "react";
-import { Form } from "@remix-run/react";
 
 type HeaderProps = {
   hasSession?: boolean;
@@ -10,12 +9,7 @@ type HeaderProps = {
   allBrands: Brand[];
 } & Pick<NavbarProps, "onHeightChanged">;
 
-export function Header({
-  brand,
-  allBrands,
-  onHeightChanged,
-  hasSession = false,
-}: HeaderProps) {
+export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
   const isScrolled = useIsScrolled();
 
   if (brand.banner != null && typeof brand.banner !== "object") {
@@ -23,14 +17,6 @@ export function Header({
   }
   return (
     <header className="contents">
-      {!!hasSession && (
-        <p>
-          You are previewing the site.
-          <Form action="/logout" className="contents" method="POST">
-            <button type="submit">Exit preview</button>
-          </Form>
-        </p>
-      )}
       {brand.banner && <Banner key={brand.banner.id} {...brand.banner} />}
       <Navbar
         brand={brand}

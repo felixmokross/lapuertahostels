@@ -21,5 +21,8 @@
   "errorBoundary": {
     "title": "500 – Quelque chose s’est mal passé",
     "text": "<p>Oups! Quelque chose s’est mal passé.</p><p>Cette page ne fonctionne pas correctement en ce moment. Veuillez essayer de rafraîchir ou revenir un peu plus tard.</p><p>Merci de votre compréhension!</p>"
+  },
+  "maintenanceScreen": {
+    "login": "Connexion"
   }
 }
