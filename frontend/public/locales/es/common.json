@@ -24,5 +24,10 @@
   },
   "maintenanceScreen": {
     "login": "Iniciar sesión"
+  },
+  "previewBar": {
+    "message": "El sitio web está actualmente en modo de mantenimiento y no es accesible públicamente. Estás viendo una vista previa del sitio web.",
+    "manageContent": "Administrar contenido…",
+    "logOut": "Cerrar sesión"
   }
 }

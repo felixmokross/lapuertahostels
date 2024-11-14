@@ -33,6 +33,8 @@ import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
 import { getSession } from "./sessions.server";
 import { PreviewBar } from "./layout/preview-bar";
+import { LanguageDetector } from "remix-i18next/server";
+import i18next from "./i18next.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -126,6 +128,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     hasSession: session.has("userId"),
     locale,
+    adminLocale: session.has("userId") ? await loadAdminLocale() : undefined,
     brand,
     allBrands,
     maintenance,
@@ -137,6 +140,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   };
+
+  async function loadAdminLocale() {
+    // The admin should be able to test the page in any locale, but see the admin controls in their preferred locale.
+    // Therefore only using header for the admin locale (unfortunately we cannot get the user's locale from Payload CMS)
+    return await new LanguageDetector({
+      ...i18next["options"].detection,
+      order: ["header"],
+    }).detect(request);
+  }
 }
 
 export const handle = {
@@ -148,8 +160,15 @@ export const handle = {
 };
 
 export default function App() {
-  const { brand, common, maintenance, analyticsDomain, allBrands, hasSession } =
-    useLoaderData<typeof loader>();
+  const {
+    brand,
+    common,
+    maintenance,
+    analyticsDomain,
+    allBrands,
+    hasSession,
+    adminLocale,
+  } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -197,7 +216,10 @@ export default function App() {
             )}
           </OptInLivePreview>
           {!!hasSession && (
-            <PreviewBar className="sticky inset-x-0 bottom-0 z-50" />
+            <PreviewBar
+              className="sticky inset-x-0 bottom-0 z-50"
+              adminLocale={adminLocale!}
+            />
           )}
         </ThemeProvider>
 

@@ -3,6 +3,7 @@ import {
   WrenchIcon,
 } from "@heroicons/react/16/solid";
 import { Form } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Link } from "~/common/link";
@@ -12,9 +13,11 @@ import { useTheme } from "~/themes";
 
 export type PreviewBarProps = {
   className?: string;
+  adminLocale: string;
 };
 
-export function PreviewBar({ className }: PreviewBarProps) {
+export function PreviewBar({ className, adminLocale }: PreviewBarProps) {
+  const { t } = useTranslation(undefined, { lng: adminLocale });
   const theme = useTheme();
   const { payloadCmsBaseUrl } = useEnvironment();
   return (
@@ -26,8 +29,7 @@ export function PreviewBar({ className }: PreviewBarProps) {
       )}
     >
       <Paragraph size="small" variant="white">
-        The website is currently in maintenance mode and not accessible
-        publicly. You are viewing a preview of the website.
+        {t("previewBar.message")}
       </Paragraph>
       <div className="flex gap-4">
         <Button
@@ -37,7 +39,7 @@ export function PreviewBar({ className }: PreviewBarProps) {
           variant="primary"
           icon={WrenchIcon}
         >
-          Manage Content…
+          {t("previewBar.manageContent")}
         </Button>
         <Form action="/logout" className="contents" method="POST">
           <Button
@@ -45,7 +47,7 @@ export function PreviewBar({ className }: PreviewBarProps) {
             size="small"
             icon={ArrowRightStartOnRectangleIcon}
           >
-            Log Out
+            {t("previewBar.logOut")}
           </Button>
         </Form>
       </div>

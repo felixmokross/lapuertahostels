@@ -29,7 +29,7 @@ export async function handleIncomingRequest(request: Request) {
   const maintenance = await getMaintenance(locale);
   if (
     maintenance.maintenanceScreen?.show &&
-    !session.get("userId") &&
+    !session.has("userId") &&
     pageUrl !== "/login"
   ) {
     throw new Response(null, {

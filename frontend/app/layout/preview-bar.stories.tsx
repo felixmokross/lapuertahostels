@@ -24,5 +24,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     className: "absolute bottom-0 inset-x-0",
+    adminLocale: "en",
+  },
+};
+
+export const Spanish: Story = {
+  args: {
+    ...Default.args,
+    adminLocale: "es",
   },
 };
