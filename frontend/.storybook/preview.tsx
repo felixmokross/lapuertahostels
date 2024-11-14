@@ -24,6 +24,7 @@ const withRemix: Decorator = (Story) => {
             environment: {
               // @ts-ignore
               imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
+              payloadCmsBaseUrl: "http://wwww.example.com",
             },
           },
         },
