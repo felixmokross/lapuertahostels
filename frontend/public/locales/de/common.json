@@ -24,5 +24,10 @@
   },
   "maintenanceScreen": {
     "login": "Anmelden"
+  },
+  "login": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Anmelden"
   }
 }

@@ -29,5 +29,10 @@
     "message": "The website is currently in maintenance mode and not accessible publicly. You are viewing a preview of the website.",
     "manageContent": "Manage Content…",
     "logOut": "Log Out"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log In"
   }
 }
