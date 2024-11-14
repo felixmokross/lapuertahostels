@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "./button";
 import { allModes } from ".storybook/modes";
+import { Cog6ToothIcon } from "@heroicons/react/20/solid";
 
 const meta = {
   title: "common/Button",
@@ -23,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Click Here",
+    icon: Cog6ToothIcon,
   },
 };
 
@@ -44,5 +46,12 @@ export const Small: Story = {
   args: {
     ...Default.args,
     size: "small",
+  },
+};
+
+export const WithoutIcon: Story = {
+  args: {
+    ...Default.args,
+    icon: undefined,
   },
 };

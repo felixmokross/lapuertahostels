@@ -1,4 +1,4 @@
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
+import { GlobeAmericasIcon } from "@heroicons/react/16/solid";
 import { Dropdown } from "~/common/dropdown";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
 

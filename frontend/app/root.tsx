@@ -38,6 +38,10 @@ import { Button } from "./common/button";
 import { Link } from "./common/link";
 import { cn } from "./common/cn";
 import { useEnvironment } from "./environment";
+import {
+  ArrowRightStartOnRectangleIcon,
+  WrenchIcon,
+} from "@heroicons/react/16/solid";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -241,11 +245,21 @@ function PreviewControlBar({ className }: PreviewControlBarProps) {
         publicly. You are viewing a preview of the website.
       </Paragraph>
       <div className="flex gap-4">
-        <Button size="small" as={Link} to={payloadCmsBaseUrl} variant="primary">
+        <Button
+          size="small"
+          as={Link}
+          to={payloadCmsBaseUrl}
+          variant="primary"
+          icon={WrenchIcon}
+        >
           Manage Content…
         </Button>
         <Form action="/logout" className="contents" method="POST">
-          <Button type="submit" size="small">
+          <Button
+            type="submit"
+            size="small"
+            icon={ArrowRightStartOnRectangleIcon}
+          >
             Log Out
           </Button>
         </Form>
