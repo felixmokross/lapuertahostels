@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Dropdown } from "./dropdown";
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
+import { GlobeAmericasIcon } from "@heroicons/react/16/solid";
 
 const meta = {
   title: "common/Dropdown",

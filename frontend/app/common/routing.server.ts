@@ -6,6 +6,8 @@ import {
   getRequestUrl,
   buildLocalizedRelativeUrl,
 } from "./routing";
+import { getMaintenance } from "~/cms-data";
+import { getSession } from "~/sessions.server";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -22,6 +24,20 @@ export async function handleIncomingRequest(request: Request) {
     redirectToLocalizedRoute(url, locale);
   }
 
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const maintenance = await getMaintenance(locale);
+  if (
+    maintenance.maintenanceScreen?.show &&
+    !session.has("userId") &&
+    pageUrl !== "/login"
+  ) {
+    throw new Response(null, {
+      status: 503,
+      statusText: "Service Unavailable",
+    });
+  }
+
   return { locale, pageUrl };
 }
 
@@ -36,7 +52,8 @@ function redirectIfBrandSubdomain(url: URL, brandName: string) {
 
 function redirectIfNonCanonicalHostname(url: URL) {
   const canonicalHostname = process.env.CANONICAL_HOSTNAME;
-  if (canonicalHostname && url.hostname !== canonicalHostname) {
+  if (!canonicalHostname) throw new Error("Missing CANONICAL_HOSTNAME");
+  if (url.hostname !== canonicalHostname) {
     url.hostname = canonicalHostname;
     throw redirect(url.toString(), { status: 301 });
   }

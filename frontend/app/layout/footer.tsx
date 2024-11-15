@@ -6,6 +6,7 @@ import { socials } from "~/common/socials";
 import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 import { RichText, RichTextObject } from "~/common/rich-text";
+import { Input } from "~/common/input";
 
 type FooterProps = {
   content: Common["footer"];
@@ -116,13 +117,12 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
               <label htmlFor="email-address" className="sr-only">
                 {t("footer.newsletter.emailLabel")}
               </label>
-              <input
+              <Input
                 type="email"
                 name="email-address"
                 id="email-address"
                 autoComplete="email"
                 required
-                className="w-full min-w-0 appearance-none rounded-md border-0 bg-white px-3 py-1.5 text-base text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-puerta-600 sm:w-56 sm:text-sm sm:leading-6"
                 placeholder={
                   (
                     content.newsletter.emailPlaceholder as

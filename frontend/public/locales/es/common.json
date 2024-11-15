@@ -21,5 +21,18 @@
   "errorBoundary": {
     "title": "500 – Algo salió mal",
     "text": "<p>¡Vaya! Algo salió mal.</p><p>Esta página no está funcionando correctamente en este momento. Por favor, intente refrescar o vuelva un poco más tarde.</p><p>¡Gracias por su comprensión!</p>"
+  },
+  "maintenanceScreen": {
+    "login": "Iniciar sesión"
+  },
+  "previewBar": {
+    "message": "El sitio web está actualmente en modo de mantenimiento y no es accesible públicamente. Estás viendo una vista previa del sitio web.",
+    "manageContent": "Administrar contenido…",
+    "logOut": "Cerrar sesión"
+  },
+  "login": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "submit": "Iniciar sesión"
   }
 }

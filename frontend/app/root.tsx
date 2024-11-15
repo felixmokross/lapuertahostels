@@ -19,7 +19,6 @@ import { BrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
-import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { useState } from "react";
 import { Header } from "./layout/header";
 import {
@@ -30,8 +29,12 @@ import {
   urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
-import { GlobalErrorBoundary } from "./error-boundary";
+import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
+import { getSession } from "./sessions.server";
+import { PreviewBar } from "./layout/preview-bar";
+import { LanguageDetector } from "remix-i18next/server";
+import i18next from "./i18next.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -100,6 +103,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.IMAGEKIT_BASE_URL) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
+  const session = await getSession(request.headers.get("Cookie"));
 
   const url = getRequestUrl(request);
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
@@ -122,7 +126,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!brand) throw new Error("Brand not found");
 
   return {
+    hasSession: session.has("userId"),
     locale,
+    adminLocale: session.has("userId") ? await loadAdminLocale() : undefined,
     brand,
     allBrands,
     maintenance,
@@ -134,6 +140,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   };
+
+  async function loadAdminLocale() {
+    // The admin should be able to test the page in any locale, but see the admin controls in their preferred locale.
+    // Therefore only using header for the admin locale (unfortunately we cannot get the user's locale from Payload CMS)
+    return await new LanguageDetector({
+      ...i18next["options"].detection,
+      order: ["header"],
+    }).detect(request);
+  }
 }
 
 export const handle = {
@@ -145,8 +160,15 @@ export const handle = {
 };
 
 export default function App() {
-  const { brand, common, maintenance, analyticsDomain, allBrands } =
-    useLoaderData<typeof loader>();
+  const {
+    brand,
+    common,
+    maintenance,
+    analyticsDomain,
+    allBrands,
+    hasSession,
+    adminLocale,
+  } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -165,39 +187,42 @@ export default function App() {
         <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <OptInLivePreview path="globals/maintenance" data={maintenance}>
-          {(maintenance) =>
-            maintenance.maintenanceScreen?.show ? (
-              <MaintenanceScreen {...maintenance.maintenanceScreen} />
-            ) : (
-              <ThemeProvider brandId={brand.id as BrandId}>
-                <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
-                  {(brand) => (
-                    <OptInLivePreview path="globals/common" data={common}>
-                      {(common) => (
-                        <>
-                          <Header
-                            brand={brand}
-                            allBrands={allBrands}
-                            onHeightChanged={setHeaderHeight}
-                          />
-                          <main>
-                            <Outlet />
-                          </main>
-                          <Footer
-                            brand={brand}
-                            allBrands={allBrands}
-                            content={common.footer}
-                          />
-                        </>
-                      )}
-                    </OptInLivePreview>
-                  )}
-                </OptInLivePreview>
-              </ThemeProvider>
-            )
-          }
-        </OptInLivePreview>
+        <ThemeProvider brandId={brand.id as BrandId}>
+          <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+            {(brand) => (
+              <OptInLivePreview path="globals/common" data={common}>
+                {(common) => (
+                  <>
+                    {(!maintenance.maintenanceScreen?.show || hasSession) && (
+                      <Header
+                        brand={brand}
+                        allBrands={allBrands}
+                        onHeightChanged={setHeaderHeight}
+                      />
+                    )}
+                    <main>
+                      <Outlet />
+                    </main>
+                    {(!maintenance.maintenanceScreen?.show || hasSession) && (
+                      <Footer
+                        brand={brand}
+                        allBrands={allBrands}
+                        content={common.footer}
+                      />
+                    )}
+                  </>
+                )}
+              </OptInLivePreview>
+            )}
+          </OptInLivePreview>
+          {!!hasSession && (
+            <PreviewBar
+              className="sticky inset-x-0 bottom-0 z-50"
+              adminLocale={adminLocale!}
+            />
+          )}
+        </ThemeProvider>
+
         <ScrollRestoration />
         <Scripts />
       </body>

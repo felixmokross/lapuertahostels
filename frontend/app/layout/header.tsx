@@ -4,6 +4,7 @@ import { Navbar, NavbarProps } from "./navbar/navbar";
 import { useEffect, useState } from "react";
 
 type HeaderProps = {
+  hasSession?: boolean;
   brand: Brand;
   allBrands: Brand[];
 } & Pick<NavbarProps, "onHeightChanged">;

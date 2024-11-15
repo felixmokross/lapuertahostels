@@ -6,3 +6,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   throw new Error("Redirection to localized route failed");
 }
+
+// This will never be rendered, but having a default export enables the ErrorBoundary to be used in case of an error
+export default function Route() {
+  return null;
+}
