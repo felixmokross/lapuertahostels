@@ -9,7 +9,6 @@ import { cn } from "~/common/cn";
 import { Link } from "~/common/link";
 import { Paragraph } from "~/common/paragraph";
 import { useEnvironment } from "~/environment";
-import { useTheme } from "~/themes";
 
 export type PreviewBarProps = {
   className?: string;
@@ -18,13 +17,11 @@ export type PreviewBarProps = {
 
 export function PreviewBar({ className, adminLocale }: PreviewBarProps) {
   const { t } = useTranslation(undefined, { lng: adminLocale });
-  const theme = useTheme();
   const { payloadCmsBaseUrl } = useEnvironment();
   return (
     <div
       className={cn(
         "flex items-center justify-between gap-8 border-t border-neutral-300 bg-neutral-800 bg-opacity-90 px-4 py-4 backdrop-blur-sm",
-        theme.lightBackgroundColor,
         className,
       )}
     >
