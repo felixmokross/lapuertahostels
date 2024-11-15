@@ -5,6 +5,8 @@ inputs:
 outputs:
   app-name:
     value: ${{ steps.app-name.outputs.app-name }}
+  app-domain:
+    value: ${{ steps.app-name.outputs.app-domain }}
   app-url:
     value: ${{ steps.app-name.outputs.app-url }}
 runs:
@@ -26,6 +28,9 @@ runs:
             ;;
         esac
 
-        APP_URL=https://$APP_NAME.fly.dev
+        APP_DOMAIN=$APP_NAME.fly.dev
+        echo "app-domain=$APP_DOMAIN" >> $GITHUB_OUTPUT
+
+        APP_URL=https://$APP_DOMAIN
         echo "app-url=$APP_URL" >> $GITHUB_OUTPUT
       shell: bash

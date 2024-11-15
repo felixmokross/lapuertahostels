@@ -44,6 +44,7 @@ jobs:
 
           echo Setting secrets:
           flyctl secrets set PAYLOAD_CMS_API_KEY=$PREVIEW_PAYLOAD_CMS_API_KEY \
+            SESSION_SECRET=$(openssl rand -hex 32) \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
@@ -59,6 +60,7 @@ jobs:
             --image-label v${{ steps.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
+            --env CANONICAL_HOSTNAME=${{ steps.app-name.outputs.app-domain }} \
         working-directory: frontend
 
   cms-preview:

@@ -52,7 +52,8 @@ function redirectIfBrandSubdomain(url: URL, brandName: string) {
 
 function redirectIfNonCanonicalHostname(url: URL) {
   const canonicalHostname = process.env.CANONICAL_HOSTNAME;
-  if (canonicalHostname && url.hostname !== canonicalHostname) {
+  if (!canonicalHostname) throw new Error("Missing CANONICAL_HOSTNAME");
+  if (url.hostname !== canonicalHostname) {
     url.hostname = canonicalHostname;
     throw redirect(url.toString(), { status: 301 });
   }
