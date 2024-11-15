@@ -38,7 +38,7 @@ export function Button<T extends ElementType>({
         theme.buttonColors[variant].hoverTextColor,
         theme.buttonColors.focusOutlineColor,
         {
-          "gap-2 px-4 py-2 text-sm tracking-wider shadow-md hover:shadow-lg md:gap-2.5 md:px-4 md:py-3 md:text-base":
+          "gap-2 px-4 py-2 text-sm tracking-wider shadow-md hover:shadow-lg md:gap-2.5 md:px-6 md:py-3 md:text-base":
             size === "large",
           "gap-1.5 px-4 py-2 text-xs tracking-wide shadow-md hover:shadow-lg md:gap-2 md:px-4 md:py-3 md:text-sm":
             size === "medium",
