@@ -31,7 +31,7 @@ export function Button<T extends ElementType>({
   return (
     <Component
       className={cn(
-        "inline-flex items-center rounded-md text-center font-bold uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "inline-flex items-center justify-center rounded-md text-center font-bold uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
         theme.buttonColors[variant].textColor,
         theme.buttonColors[variant].backgroundColor,
         theme.buttonColors[variant].hoverBackgroundColor,
