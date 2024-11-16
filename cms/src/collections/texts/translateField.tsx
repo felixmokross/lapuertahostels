@@ -32,15 +32,24 @@ function Field() {
           setIsTranslating(true);
 
           try {
-            await fetch(`/api/texts/${id}/translate?locale=${locale}`, {
-              method: "POST",
-              credentials: "include",
-            });
-
-            toast.success(
-              t("custom:texts.translatedToAllLocalesSuccessfully"),
-              { autoClose: 3000 },
+            const response = await fetch(
+              `/api/texts/${id}/translate?locale=${locale}`,
+              {
+                method: "POST",
+                credentials: "include",
+              },
             );
+
+            if (response.ok) {
+              toast.success(
+                t("custom:texts.translatedToAllLocalesSuccessfully"),
+                { autoClose: 3000 },
+              );
+            } else {
+              toast.error(t("custom:texts.failedToTranslateToAllLocales"), {
+                autoClose: 3000,
+              });
+            }
           } finally {
             setIsTranslating(false);
           }

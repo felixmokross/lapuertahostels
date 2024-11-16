@@ -151,6 +151,7 @@ export default buildConfig({
               "This will overwrite all translations of this text. Do you want to proceed?",
             translatedToAllLocalesSuccessfully:
               "Translated to all locales successfully",
+            failedToTranslateToAllLocales: "Failed to translate to all locales",
           },
         },
       },
@@ -168,6 +169,8 @@ export default buildConfig({
               "Esto sobrescribirá todas las traducciones de este texto. ¿Desea continuar?",
             translatedToAllLocalesSuccessfully:
               "Traducido a todos los idiomas con éxito",
+            failedToTranslateToAllLocales:
+              "Error al traducir a todos los idiomas",
           },
         },
       },

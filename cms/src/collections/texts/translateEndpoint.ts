@@ -41,15 +41,27 @@ export const translateEndpoint: Endpoint = {
     );
 
     console.log(`Translation locales: ${translationLocales}`);
-    for (const translationLocale of translationLocales) {
-      textInAllLocales[translationLocale] = (
-        await translate(
-          originalText,
-          req.locale,
-          translationLocale,
-          originalDoc.type === "richText",
-        )
-      ).text;
+
+    const promises = await Promise.allSettled(
+      translationLocales.map(async (tl) => {
+        try {
+          textInAllLocales[tl] = (
+            await translate(
+              originalText,
+              req.locale,
+              tl,
+              originalDoc.type === "richText",
+            )
+          ).text;
+        } catch (e) {
+          console.error(`Failed to translate to ${tl}: ${e}`);
+          throw e;
+        }
+      }),
+    );
+
+    if (promises.some((p) => p.status === "rejected")) {
+      return res.status(500).send("Some texts failed to translate");
     }
 
     await req.payload.db.connection.collection("texts").updateOne(
