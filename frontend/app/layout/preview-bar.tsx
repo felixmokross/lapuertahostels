@@ -21,7 +21,7 @@ export function PreviewBar({ className, adminLocale }: PreviewBarProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between gap-8 border-t border-neutral-300 bg-neutral-800 bg-opacity-90 px-4 py-4 backdrop-blur-sm",
+        "flex flex-col items-center justify-between gap-4 border-t border-neutral-300 bg-neutral-800 px-4 py-4 sm:flex-row",
         className,
       )}
     >

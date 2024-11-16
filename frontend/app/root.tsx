@@ -188,6 +188,7 @@ export default function App() {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>
+          {!!hasSession && <PreviewBar adminLocale={adminLocale!} />}
           <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
             {(brand) => (
               <OptInLivePreview path="globals/common" data={common}>
@@ -215,12 +216,6 @@ export default function App() {
               </OptInLivePreview>
             )}
           </OptInLivePreview>
-          {!!hasSession && (
-            <PreviewBar
-              className="sticky inset-x-0 bottom-0 z-50"
-              adminLocale={adminLocale!}
-            />
-          )}
         </ThemeProvider>
 
         <ScrollRestoration />
