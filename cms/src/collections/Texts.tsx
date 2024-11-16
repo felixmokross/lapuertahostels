@@ -10,6 +10,13 @@ import { useDocumentInfo, useLocale } from "payload/components/utilities";
 import { useTranslation } from "react-i18next";
 import { useFormModified } from "payload/components/forms";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import {
+  htmlToSlate,
+  slateToHtml,
+  payloadSlateToHtmlConfig,
+  payloadHtmlToSlateConfig,
+} from "@slate-serializers/html";
+import { transformRecord } from "../common/records";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -45,9 +52,13 @@ export const Texts: CollectionConfig = {
           .collection("texts")
           .findOne({ _id: new ObjectId(id) });
 
-        if (originalDoc.type !== "plainText") return;
-
-        const textInAllLocales = originalDoc.text as Record<string, string>;
+        const textInAllLocales = (
+          originalDoc.type === "plainText"
+            ? originalDoc.text
+            : transformRecord(originalDoc.richText, (x: any) =>
+                slateToHtml(x, payloadSlateToHtmlConfig),
+              )
+        ) as Record<string, string>;
         const originalText = textInAllLocales[req.locale];
 
         if (!originalText) {
@@ -62,32 +73,37 @@ export const Texts: CollectionConfig = {
         console.log(`Translation locales: ${translationLocales}`);
         for (const translationLocale of translationLocales) {
           textInAllLocales[translationLocale] = (
-            await translate(originalText, req.locale, translationLocale)
+            await translate(
+              originalText,
+              req.locale,
+              translationLocale,
+              originalDoc.type === "richText",
+            )
           ).text;
         }
 
-        console.log(
-          `Text in all locales: ${JSON.stringify(textInAllLocales, null, 2)}`,
+        await req.payload.db.connection.collection("texts").updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $set:
+              originalDoc.type === "plainText"
+                ? {
+                    text: textInAllLocales,
+                    title: transformRecord(textInAllLocales, fullTextToTitle),
+                  }
+                : {
+                    richText: transformRecord(textInAllLocales, htmlToSlate),
+                    title: transformRecord(
+                      transformRecord(textInAllLocales, (x) =>
+                        htmlToSlate(x, payloadHtmlToSlateConfig),
+                      ),
+                      (t) => fullTextToTitle(richTextToFullText(t)),
+                    ),
+                  },
+          },
         );
-        const result = await req.payload.db.connection
-          .collection("texts")
-          .updateOne(
-            { _id: new ObjectId(id) },
-            {
-              $set: {
-                text: textInAllLocales,
-                title: Object.fromEntries(
-                  Object.entries(textInAllLocales).map(
-                    ([locale, text]: [string, string]) => [
-                      locale,
-                      fullTextToTitle(text),
-                    ],
-                  ),
-                ),
-              },
-            },
-          );
-        console.log(result.modifiedCount);
+
+        console.log("Text translated successfully");
 
         return res.status(204).send();
       },
@@ -191,9 +207,7 @@ export const Texts: CollectionConfig = {
                 case "plainText":
                   return data.text ?? "";
                 case "richText":
-                  return (data.richText ?? [])
-                    .map((n) => Node.string(n))
-                    .join(" ");
+                  return richTextToFullText(data.richText ?? []);
               }
             }
           },
@@ -211,7 +225,6 @@ export const Texts: CollectionConfig = {
       type: "ui",
       name: "translations",
       admin: {
-        condition: (_, siblingData) => siblingData.type === "plainText",
         components: {
           Field: () => {
             const [isTranslating, setIsTranslating] = useState(false);
@@ -275,6 +288,10 @@ export const Texts: CollectionConfig = {
     },
   ],
 };
+
+function richTextToFullText(richText: Node[]) {
+  return richText.map((n) => Node.string(n)).join(" ");
+}
 
 function fullTextToTitle(fullText: string) {
   return fullText.length > 80 ? `${fullText.slice(0, 79).trim()}…` : fullText;
