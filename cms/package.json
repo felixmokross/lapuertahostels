@@ -24,8 +24,10 @@
     "@payloadcms/db-mongodb": "^1.0.0",
     "@payloadcms/plugin-cloud-storage": "^1.2.0",
     "@payloadcms/richtext-slate": "^1.0.0",
+    "@slate-serializers/html": "^2.2.2",
     "aws-crt": "^1.23.0",
     "cross-env": "^7.0.3",
+    "deepl-node": "^1.15.0",
     "dotenv": "^8.2.0",
     "express": "^4.19.2",
     "payload": "<2.30.1"

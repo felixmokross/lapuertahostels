@@ -1,5 +1,5 @@
 import { RelationshipField } from "payload/types";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 
 export type RichTextFieldOptions = {
   optional?: boolean;

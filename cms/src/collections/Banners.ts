@@ -1,7 +1,7 @@
 import { CollectionConfig } from "payload/types";
 import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { Texts } from "./Texts";
+import { Texts } from "./texts/Texts";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const Banners: CollectionConfig = {

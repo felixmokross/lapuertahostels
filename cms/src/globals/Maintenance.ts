@@ -2,7 +2,7 @@ import { GlobalConfig } from "payload/types";
 import { canManageContent } from "../common/access-control";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",

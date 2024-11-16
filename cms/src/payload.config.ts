@@ -11,7 +11,7 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
 import { Logo, LogoSmall } from "./components/logo";
 import { Pages } from "./collections/Pages";
-import { Brand, Link, Page, User } from "./payload-types";
+import { Brand, Page } from "./payload-types";
 import { ContextType } from "payload/dist/admin/components/utilities/DocumentInfo/types";
 import { Media } from "./collections/Media";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
@@ -19,7 +19,7 @@ import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
-import { Texts } from "./collections/Texts";
+import { Texts } from "./collections/texts/Texts";
 import { Links } from "./collections/Links";
 import { pageIdToUrl } from "./common/page-urls";
 
@@ -30,6 +30,7 @@ export default buildConfig({
     webpack: (config) => {
       config.resolve.fallback = {
         ...config.resolve.fallback,
+        os: false,
         dns: false,
         stream: false,
         assert: false,
@@ -70,7 +71,36 @@ export default buildConfig({
   ],
   globals: [Common, Maintenance],
   localization: {
-    locales: ["en", "es", "de", "fr"],
+    locales: [
+      {
+        code: "en",
+        label: {
+          en: "English",
+          es: "Inglés",
+        },
+      },
+      {
+        code: "es",
+        label: {
+          en: "Spanish",
+          es: "Español",
+        },
+      },
+      {
+        code: "de",
+        label: {
+          en: "German",
+          es: "Alemán",
+        },
+      },
+      {
+        code: "fr",
+        label: {
+          en: "French",
+          es: "Francés",
+        },
+      },
+    ],
     defaultLocale: "en",
     fallback: true,
   },
@@ -112,12 +142,35 @@ export default buildConfig({
           validation: {
             mustBeValidUrl: "Must be a valid URL",
           },
+          texts: {
+            translateToAllLocales: "Translate to all locales",
+            translatingToAllLocales: "Translating to all locales…",
+            pleaseSaveYourChangesToEnableTranslation:
+              "Please save your changes to enable translation.",
+            confirmTranslateToAllLocales:
+              "This will overwrite all translations of this text. Do you want to proceed?",
+            translatedToAllLocalesSuccessfully:
+              "Translated to all locales successfully",
+            failedToTranslateToAllLocales: "Failed to translate to all locales",
+          },
         },
       },
       es: {
         custom: {
           validation: {
             mustBeValidUrl: "Debe ser una URL válida",
+          },
+          texts: {
+            translateToAllLocales: "Traducir a todos los idiomas",
+            translatingToAllLocales: "Traduciendo a todos los idiomas…",
+            pleaseSaveYourChangesToEnableTranslation:
+              "Por favor, guarde sus cambios para habilitar la traducción.",
+            confirmTranslateToAllLocales:
+              "Esto sobrescribirá todas las traducciones de este texto. ¿Desea continuar?",
+            translatedToAllLocalesSuccessfully:
+              "Traducido a todos los idiomas con éxito",
+            failedToTranslateToAllLocales:
+              "Error al traducir a todos los idiomas",
           },
         },
       },

@@ -1,7 +1,9 @@
 import { CollectionConfig } from "payload/types";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { Node } from "slate";
+import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import { translateEndpoint } from "./translateEndpoint";
+import { fullTextToTitle, richTextToFullText } from "./utils";
+import { translateField } from "./translateField";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -24,6 +26,7 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
+  endpoints: [translateEndpoint],
   fields: [
     {
       name: "type",
@@ -63,7 +66,6 @@ export const Texts: CollectionConfig = {
         es: "Texto",
       },
       localized: true,
-      required: true,
       admin: {
         condition: (_, siblingData) => siblingData.type === "plainText",
       },
@@ -76,7 +78,6 @@ export const Texts: CollectionConfig = {
         es: "Texto enriquecido",
       },
       localized: true,
-      required: true,
       editor: slateEditor({
         admin: {
           elements: ["h4", "h5", "link", "ul", "ol", "indent"],
@@ -117,18 +118,14 @@ export const Texts: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
-            const fullText = getFullText();
-
-            return fullText.length > 80
-              ? `${fullText.slice(0, 79).trim()}…`
-              : fullText;
+            return fullTextToTitle(getFullText());
 
             function getFullText() {
               switch (data.type) {
                 case "plainText":
-                  return data.text;
+                  return data.text ?? "";
                 case "richText":
-                  return data.richText.map((n) => Node.string(n)).join(" ");
+                  return richTextToFullText(data.richText ?? []);
               }
             }
           },
@@ -142,5 +139,6 @@ export const Texts: CollectionConfig = {
         position: "sidebar",
       },
     },
+    translateField,
   ],
 };

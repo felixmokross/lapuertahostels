@@ -4,7 +4,7 @@ import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
 import { Banners } from "./Banners";
 import { Brand } from "payload/generated-types";
-import { Texts } from "./Texts";
+import { Texts } from "./texts/Texts";
 import { Links } from "./Links";
 
 export const Brands: CollectionConfig = {
