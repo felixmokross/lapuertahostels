@@ -11,6 +11,21 @@ export async function translate(
   return await translator.translateText(
     text,
     sourceLocale as SourceLanguageCode,
-    targetLocale as TargetLanguageCode,
+    toDeeplTargetLanguageCode(targetLocale),
   );
+}
+
+function toDeeplTargetLanguageCode(locale: string): TargetLanguageCode {
+  switch (locale) {
+    case "en":
+      return "en-US";
+    case "es":
+      return "es";
+    case "de":
+      return "de";
+    case "fr":
+      return "fr";
+    default:
+      throw new Error(`Unsupported locale: ${locale}`);
+  }
 }

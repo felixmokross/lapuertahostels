@@ -71,7 +71,36 @@ export default buildConfig({
   ],
   globals: [Common, Maintenance],
   localization: {
-    locales: ["en", "es", "de", "fr"],
+    locales: [
+      {
+        code: "en",
+        label: {
+          en: "English",
+          es: "Inglés",
+        },
+      },
+      {
+        code: "es",
+        label: {
+          en: "Spanish",
+          es: "Español",
+        },
+      },
+      {
+        code: "de",
+        label: {
+          en: "German",
+          es: "Alemán",
+        },
+      },
+      {
+        code: "fr",
+        label: {
+          en: "French",
+          es: "Francés",
+        },
+      },
+    ],
     defaultLocale: "en",
     fallback: true,
   },
@@ -118,6 +147,8 @@ export default buildConfig({
             translatingToAllLocales: "Translating to all locales…",
             pleaseSaveYourChangesToEnableTranslation:
               "Please save your changes to enable translation.",
+            confirmTranslateToAllLocales:
+              "This will overwrite all translations of this text. Do you want to proceed?",
             translatedToAllLocalesSuccessfully:
               "Translated to all locales successfully",
           },
@@ -133,6 +164,8 @@ export default buildConfig({
             translatingToAllLocales: "Traduciendo a todos los idiomas…",
             pleaseSaveYourChangesToEnableTranslation:
               "Por favor, guarde sus cambios para habilitar la traducción.",
+            confirmTranslateToAllLocales:
+              "Esto sobrescribirá todas las traducciones de este texto. ¿Desea continuar?",
             translatedToAllLocalesSuccessfully:
               "Traducido a todos los idiomas con éxito",
           },

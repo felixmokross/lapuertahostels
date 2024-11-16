@@ -6,7 +6,7 @@ import { translate } from "../common/translation";
 import { getSupportedLocales } from "../common/locales";
 import React, { useState } from "react";
 import { Button } from "payload/components/elements";
-import { useDocumentInfo } from "payload/components/utilities";
+import { useDocumentInfo, useLocale } from "payload/components/utilities";
 import { useTranslation } from "react-i18next";
 import { useFormModified } from "payload/components/forms";
 import { Slide, toast, ToastContainer } from "react-toastify";
@@ -36,7 +36,7 @@ export const Texts: CollectionConfig = {
     {
       path: "/:id/translate",
       method: "post",
-      handler: async (req, res, next) => {
+      handler: async (req, res) => {
         if (!req.user) return res.status(401).send("Unauthorized");
 
         const { ObjectId } = await import("bson");
@@ -217,19 +217,31 @@ export const Texts: CollectionConfig = {
             const [isTranslating, setIsTranslating] = useState(false);
             const { id } = useDocumentInfo();
             const { t } = useTranslation();
+            const locale = useLocale();
             const isModified = useFormModified();
             return (
               <>
                 <Button
                   disabled={isTranslating || isModified}
                   onClick={async () => {
+                    if (
+                      !window.confirm(
+                        t("custom:texts.confirmTranslateToAllLocales"),
+                      )
+                    ) {
+                      return;
+                    }
+
                     setIsTranslating(true);
 
                     try {
-                      await fetch(`/api/texts/${id}/translate`, {
-                        method: "POST",
-                        credentials: "include",
-                      });
+                      await fetch(
+                        `/api/texts/${id}/translate?locale=${locale}`,
+                        {
+                          method: "POST",
+                          credentials: "include",
+                        },
+                      );
 
                       toast.success(
                         t("custom:texts.translatedToAllLocalesSuccessfully"),
