@@ -97,12 +97,14 @@ jobs:
             PAYLOAD_SECRET=$PREVIEW_PAYLOAD_SECRET \
             MEDIA_S3_ACCESS_KEY_ID=$PREVIEW_MEDIA_S3_ACCESS_KEY_ID \
             MEDIA_S3_SECRET_ACCESS_KEY=$PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY \
+            DEEPL_API_AUTH_KEY=$PREVIEW_DEEPL_API_AUTH_KEY \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
           PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
           PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
           PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
         working-directory: cms
       - uses: ./.github/actions/version
         id: version
