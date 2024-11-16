@@ -1,4 +1,13 @@
-import { type SourceLanguageCode, type TargetLanguageCode } from "deepl-node";
+import {
+  TranslateTextOptions,
+  type SourceLanguageCode,
+  type TargetLanguageCode,
+} from "deepl-node";
+
+const deeplTranslateTextOptions: TranslateTextOptions = {
+  modelType: "prefer_quality_optimized",
+  formality: "prefer_less",
+};
 
 export async function translate(
   text: string,
@@ -13,7 +22,10 @@ export async function translate(
     text,
     sourceLocale as SourceLanguageCode,
     toDeeplTargetLanguageCode(targetLocale),
-    handleHtml ? { tagHandling: "html" } : undefined,
+    {
+      ...deeplTranslateTextOptions,
+      ...(handleHtml ? { tagHandling: "html" } : undefined),
+    },
   );
 }
 
