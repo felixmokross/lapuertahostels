@@ -97,7 +97,7 @@ function RenderedElementNode({
     />
   ));
 
-  if (!("type" in node)) {
+  if (!("type" in node) || node.type === "p") {
     return <Line isLast={isLast}>{renderedChildren}</Line>;
   }
 
@@ -201,7 +201,7 @@ type BaseElementNode = { children: Node[] };
 
 export type PlainElementNode = BaseElementNode & { type?: never };
 export type SimpleElementNode = BaseElementNode & {
-  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent";
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent" | "p";
 };
 export type LinkElementNode = BaseElementNode & {
   type: "link";

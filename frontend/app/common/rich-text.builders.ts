@@ -50,7 +50,7 @@ export function code(text: string): TextNode {
 }
 
 export function simpleElement(
-  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent",
+  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent" | "p",
   ...children: Node[]
 ): ElementNode {
   return { type, children };

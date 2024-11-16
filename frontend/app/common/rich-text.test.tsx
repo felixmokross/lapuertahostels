@@ -118,6 +118,25 @@ test("Root element nodes are rendered as paragraphs.", () => {
   expect(paragraphs[2]).toHaveTextContent("This is the last line");
 });
 
+test("Root element nodes with type 'p' are rendered as paragraphs.", () => {
+  render(
+    <RichText
+      content={[
+        simpleElement("p", text("Hello, "), underline("world"), text("!")),
+        simpleElement("p", text("This is the next line")),
+        simpleElement("p", text("This is the last line")),
+      ]}
+    />,
+  );
+
+  const paragraphs = screen.getAllByRole("paragraph");
+
+  expect(paragraphs).toHaveLength(3);
+  expect(paragraphs[0]).toHaveTextContent("Hello, world!");
+  expect(paragraphs[1]).toHaveTextContent("This is the next line");
+  expect(paragraphs[2]).toHaveTextContent("This is the last line");
+});
+
 test("h4 element nodes are rendered as <h4> elements.", () => {
   render(<RichText content={[simpleElement("h4", text("Hello, world!"))]} />);
 
@@ -465,6 +484,31 @@ describe("lineBreakHandling", () => {
           plain(text("This is the next line")),
           plain(text("")),
           plain(text("This is the last line")),
+        ]}
+        lineBreakHandling="line-break"
+      />,
+    );
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        Hello, world!
+        <br />
+        This is the next line
+        <br />
+        <br />
+        This is the last line
+      </div>
+    `);
+  });
+
+  test("if lineBreakHandling is 'line-break', 'p' element nodes at root level are separated by <br />", () => {
+    const { container } = render(
+      <RichText
+        content={[
+          simpleElement("p", text("Hello, world!")),
+          simpleElement("p", text("This is the next line")),
+          simpleElement("p", text("")),
+          simpleElement("p", text("This is the last line")),
         ]}
         lineBreakHandling="line-break"
       />,
