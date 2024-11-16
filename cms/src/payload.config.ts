@@ -30,6 +30,7 @@ export default buildConfig({
     webpack: (config) => {
       config.resolve.fallback = {
         ...config.resolve.fallback,
+        os: false,
         dns: false,
         stream: false,
         assert: false,
@@ -112,12 +113,28 @@ export default buildConfig({
           validation: {
             mustBeValidUrl: "Must be a valid URL",
           },
+          texts: {
+            translateToAllLocales: "Translate to all locales",
+            translatingToAllLocales: "Translating to all locales…",
+            pleaseSaveYourChangesToEnableTranslation:
+              "Please save your changes to enable translation.",
+            translatedToAllLocalesSuccessfully:
+              "Translated to all locales successfully",
+          },
         },
       },
       es: {
         custom: {
           validation: {
             mustBeValidUrl: "Debe ser una URL válida",
+          },
+          texts: {
+            translateToAllLocales: "Traducir a todos los idiomas",
+            translatingToAllLocales: "Traduciendo a todos los idiomas…",
+            pleaseSaveYourChangesToEnableTranslation:
+              "Por favor, guarde sus cambios para habilitar la traducción.",
+            translatedToAllLocalesSuccessfully:
+              "Traducido a todos los idiomas con éxito",
           },
         },
       },
