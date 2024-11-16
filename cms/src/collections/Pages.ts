@@ -5,7 +5,7 @@ import { layoutField } from "../fields/layout";
 import { text } from "payload/dist/fields/validations";
 import { canManageContent } from "../common/access-control";
 import { Brands } from "./Brands";
-import { Texts } from "./Texts";
+import { Texts } from "./texts/Texts";
 import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
 export const Pages: CollectionConfig = {

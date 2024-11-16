@@ -1,7 +1,7 @@
 import { GroupField, RadioField } from "payload/types";
 import { showField } from "./show";
 import { Links } from "../collections/Links";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 
 export type CallToActionFieldOptions = {
   optional?: boolean;

@@ -2,7 +2,7 @@ import { GroupField, RadioField } from "payload/types";
 import { showField } from "./show";
 import { Page } from "payload/generated-types";
 import { makeCallToActionField } from "./call-to-action";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;

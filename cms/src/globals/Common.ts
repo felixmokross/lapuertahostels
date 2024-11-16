@@ -4,7 +4,7 @@ import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 import { Links } from "../collections/Links";
 import { showField } from "../fields/show";
 

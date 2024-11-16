@@ -6,7 +6,7 @@ import { imageField } from "../fields/image";
 import { Brands } from "../collections/Brands";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { Texts } from "../collections/Texts";
+import { Texts } from "../collections/texts/Texts";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",

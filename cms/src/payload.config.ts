@@ -19,7 +19,7 @@ import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
-import { Texts } from "./collections/Texts";
+import { Texts } from "./collections/texts/Texts";
 import { Links } from "./collections/Links";
 import { pageIdToUrl } from "./common/page-urls";
 
