@@ -3,6 +3,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -38,9 +39,10 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
   },
   ref,
 ) {
-  const { imagekitBaseUrl } = useEnvironment();
+  const { imagekitBaseUrl, useImageCacheBuster } = useEnvironment();
   const [isLoading, setIsLoading] = useState(true);
   const localRef = useRef<HTMLImageElement>(null);
+  const cacheBusterId = useId();
 
   const onLoad = useCallback(
     function onLoad() {
@@ -82,7 +84,17 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
             : undefined,
         }
       : undefined;
-    return `${imagekitBaseUrl}${ratioAdjustedTransformation ? `/${toImagekitTransformationString(ratioAdjustedTransformation)}` : ""}${src}`;
+
+    const fullSrcUrl = new URL(
+      `${imagekitBaseUrl}${ratioAdjustedTransformation ? `/${toImagekitTransformationString(ratioAdjustedTransformation)}` : ""}${src}`,
+    );
+    if (useImageCacheBuster) {
+      // Add cache buster to avoid flaky Chromatic regression tests
+      // See https://www.chromatic.com/docs/troubleshooting-snapshots/#why-am-i-seeing-inconsistent-snapshots-for-a-component-using-srcset
+      fullSrcUrl.searchParams.set("cacheBuster", cacheBusterId);
+    }
+
+    return fullSrcUrl.toString();
   }
 
   return (

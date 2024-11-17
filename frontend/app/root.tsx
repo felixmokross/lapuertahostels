@@ -137,6 +137,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
       preview: getRequestUrl(request).searchParams.get("preview") || undefined,
+      useImageCacheBuster: false, // Cache busting is only used in Storybook for Chromatic
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
   };

@@ -25,6 +25,9 @@ const withRemix: Decorator = (Story) => {
               // @ts-ignore
               imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
               payloadCmsBaseUrl: "http://wwww.example.com",
+              useImageCacheBuster:
+                // @ts-ignore
+                import.meta.env.STORYBOOK_USE_IMAGE_CACHE_BUSTER === "true",
             },
           },
         },
