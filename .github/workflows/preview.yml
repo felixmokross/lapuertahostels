@@ -118,7 +118,7 @@ jobs:
             --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
             --env MEDIA_S3_BUCKET=${{ env.MEDIA_S3_BUCKET }} \
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
-            --build-arg PAYLOAD_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
+            --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
         working-directory: cms
 
   clean-preview:

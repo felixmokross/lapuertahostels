@@ -1,4 +1,4 @@
-import { RelationshipField } from "payload/types";
+import { RelationshipField } from "payload";
 import { Texts } from "../collections/texts/Texts";
 
 export type RichTextFieldOptions = {
@@ -15,7 +15,7 @@ export function makeRichTextField({
       es: "Texto",
     },
     type: "relationship",
-    relationTo: Texts.slug,
+    relationTo: "texts",
     filterOptions: {
       type: { equals: "richText" },
     },

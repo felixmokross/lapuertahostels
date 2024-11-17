@@ -1,4 +1,4 @@
-import { GroupField, RadioField } from "payload/types";
+import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
 import { Links } from "../collections/Links";
 import { Texts } from "../collections/texts/Texts";
@@ -14,7 +14,9 @@ export function makeCallToActionField({
   showByDefault = true,
   variant = { default: "secondary" },
 }: CallToActionFieldOptions = {}): GroupField {
-  const condition = optional ? (_, siblingData) => siblingData.show : undefined;
+  const condition = optional
+    ? (_: any, siblingData: any) => siblingData.show
+    : undefined;
   return {
     name: "cta",
     label: {
@@ -34,7 +36,7 @@ export function makeCallToActionField({
         filterOptions: {
           type: { equals: "plainText" },
         },
-        relationTo: Texts.slug,
+        relationTo: "texts",
         required: true,
         admin: { condition },
       },
@@ -45,7 +47,7 @@ export function makeCallToActionField({
           es: "Enlace",
         },
         type: "relationship",
-        relationTo: Links.slug,
+        relationTo: "links",
         required: true,
         admin: { condition },
       },

@@ -1,4 +1,4 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { pageIdToUrl } from "../common/page-urls";
 import { validateUrl } from "../common/validation";
@@ -150,7 +150,9 @@ export const Links: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
-            let url: string;
+            if (!data) throw new Error("Data is missing.");
+
+            let url: string = "";
             switch (data.type) {
               case "internal":
                 url = `${pageIdToUrl(data.page)}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;

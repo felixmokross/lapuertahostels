@@ -1,6 +1,6 @@
-import { text } from "payload/dist/fields/validations";
+import { text } from "payload/shared";
 
-export function validateUrl(val: string, args: any) {
+export function validateUrl(val: string | undefined | null, args: any) {
   if (val && !isValidHttpUrl(val)) {
     return args.t("custom:validation.mustBeValidUrl");
   }

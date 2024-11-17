@@ -1,5 +1,4 @@
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
-import { Block } from "payload/types";
+import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
@@ -44,7 +43,7 @@ export const AccommodationSelectorBlock: Block = {
             es: "Marca",
           },
           type: "relationship",
-          relationTo: Brands.slug,
+          relationTo: "brands",
           filterOptions: { id: { not_equals: "puerta" } },
           required: true,
         },
@@ -56,7 +55,7 @@ export const AccommodationSelectorBlock: Block = {
             es: "Descripción",
           },
           type: "relationship",
-          relationTo: Texts.slug,
+          relationTo: "texts",
           filterOptions: {
             type: { equals: "richText" },
           },
@@ -66,7 +65,7 @@ export const AccommodationSelectorBlock: Block = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.brand,
+          RowLabel: "/src/components/RowLabel#RowLabel",
         },
         description: {
           en: "Each card represents an accommodation brand. You can change their order and update their image and description here.",

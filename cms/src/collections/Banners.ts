@@ -1,7 +1,6 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { Texts } from "./texts/Texts";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const Banners: CollectionConfig = {
@@ -65,7 +64,7 @@ export const Banners: CollectionConfig = {
       },
       required: true,
       type: "relationship",
-      relationTo: Texts.slug,
+      relationTo: "texts",
       filterOptions: {
         type: { equals: "plainText" },
       },

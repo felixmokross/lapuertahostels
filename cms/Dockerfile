@@ -21,7 +21,7 @@ RUN \
 # Rebuild the source code only when needed
 FROM base AS builder
 
-ARG PAYLOAD_PUBLIC_LIVE_PREVIEW_URL
+ARG NEXT_PUBLIC_LIVE_PREVIEW_URL
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules

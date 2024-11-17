@@ -1,7 +1,5 @@
-import { Block } from "payload/types";
+import { Block } from "payload";
 import { makeImageField } from "../fields/image";
-import { FieldDescription } from "payload/components/forms";
-import React from "react";
 import { headingField } from "../fields/heading";
 
 const optionalImageField = makeImageField({ optional: true });
@@ -28,9 +26,7 @@ export const HeroHeadingBlock: Block = {
       label: { en: "Description", es: "Descripción" },
       admin: {
         components: {
-          Field: ({ custom }) => (
-            <FieldDescription description={custom.description} />
-          ),
+          Field: "/src/components/CustomDescription#CustomDescription",
         },
       },
       custom: {

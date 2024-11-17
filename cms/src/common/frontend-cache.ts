@@ -1,5 +1,5 @@
 import { resolve6 } from "dns/promises";
-import { PayloadRequest } from "payload/types";
+import { PayloadRequest } from "payload";
 import { Pages } from "../collections/Pages";
 import { getSupportedLocales } from "./locales";
 

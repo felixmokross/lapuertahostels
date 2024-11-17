@@ -1,4 +1,4 @@
-import { BlockField } from "payload/types";
+import { BlocksField } from "payload";
 import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
 import { FeaturesBlock } from "../blocks/Features";
 import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
@@ -9,7 +9,7 @@ import { WideImageBlock } from "../blocks/WideImage";
 import { RoomListBlock } from "../blocks/RoomList";
 import { TextColumnsWithImagesBlock } from "../blocks/TextColumnsWithImages";
 
-export const layoutField: BlockField = {
+export const layoutField: BlocksField = {
   name: "layout",
   label: {
     en: "Layout",

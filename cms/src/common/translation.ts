@@ -16,7 +16,7 @@ export async function translate(
   handleHtml: boolean,
 ) {
   const { Translator } = await import("deepl-node");
-  const translator = new Translator(process.env.DEEPL_API_AUTH_KEY);
+  const translator = new Translator(process.env.DEEPL_API_AUTH_KEY!);
 
   return await translator.translateText(
     text,

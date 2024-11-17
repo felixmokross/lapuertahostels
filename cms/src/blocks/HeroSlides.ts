@@ -1,8 +1,7 @@
-import { Block } from "payload/types";
-import { RowLabelArgs } from "payload/dist/admin/components/forms/RowLabel/types";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { makeOverlayTitleField } from "../fields/overlay-title";
+import { Block } from "payload";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",
@@ -82,7 +81,13 @@ export const HeroSlidesBlock: Block = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: ({ data }: RowLabelArgs) => data?.name,
+          RowLabel: {
+            path: "/src/components/RowLabel",
+            exportName: "RowLabel",
+            serverProps: {
+              propName: "name",
+            },
+          },
         },
         description: {
           en: "You can use this either for a single hero image or a slideshow with multiple images. Each slide can have an overlay title and a call-to-action button. You can add up to six slides.",

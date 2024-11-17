@@ -1,8 +1,8 @@
-import { GroupField, RadioField } from "payload/types";
+import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
-import { Page } from "payload/generated-types";
 import { makeCallToActionField } from "./call-to-action";
 import { Texts } from "../collections/texts/Texts";
+import { Page } from "@/payload-types";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
@@ -23,7 +23,9 @@ export function makeOverlayTitleField({
   supportsCallToAction = true,
   supportsPositions,
 }: OverlayTitleFieldOptions = {}): GroupField {
-  const condition = optional ? (_, siblingData) => siblingData.show : undefined;
+  const condition = optional
+    ? (_: any, siblingData: any) => siblingData.show
+    : undefined;
 
   return {
     name: "overlayTitle",
@@ -42,7 +44,7 @@ export function makeOverlayTitleField({
         },
         required: true,
         type: "relationship",
-        relationTo: Texts.slug,
+        relationTo: "texts",
         filterOptions: {
           type: { equals: "richText" },
         },
@@ -57,7 +59,7 @@ export function makeOverlayTitleField({
           es: "Texto de apoyo",
         },
         type: "relationship",
-        relationTo: Texts.slug,
+        relationTo: "texts",
         filterOptions: {
           type: { equals: "richText" },
         },

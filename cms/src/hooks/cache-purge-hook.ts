@@ -1,5 +1,4 @@
-import { AfterChangeHook as CollectionAfterChangeHook } from "payload/dist/collections/config/types";
-import { AfterChangeHook as GlobalAfterChangeHook } from "payload/dist/globals/config/types";
+import { CollectionAfterChangeHook, GlobalAfterChangeHook } from "payload";
 import {
   refreshCacheForAllPages,
   refreshCacheForTarget,
@@ -24,6 +23,8 @@ export async function cachePurgeHook(
   // See https://github.com/payloadcms/payload/issues/5886
   console.log("Committing transaction before refreshing cache.");
   const { payload, transactionID } = req;
+  if (!transactionID) throw new Error("No transaction ID found in request.");
+
   await payload.db.commitTransaction(transactionID);
 
   refreshCache(target, req).catch((e) =>

@@ -1,11 +1,7 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
-import { Banners } from "./Banners";
-import { Brand } from "payload/generated-types";
-import { Texts } from "./texts/Texts";
-import { Links } from "./Links";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -68,7 +64,7 @@ export const Brands: CollectionConfig = {
         es: "Enlace de inicio",
       },
       type: "relationship",
-      relationTo: Links.slug,
+      relationTo: "links",
       filterOptions: {
         type: { equals: "internal" },
       },
@@ -96,7 +92,7 @@ export const Brands: CollectionConfig = {
         es: "Banner",
       },
       type: "relationship",
-      relationTo: Banners.slug,
+      relationTo: "banners",
       admin: {
         description: {
           en: "A banner is useful to announce promotions or important news and can have a call to action. It will be shown on all pages of the brand.",
@@ -119,7 +115,7 @@ export const Brands: CollectionConfig = {
             es: "Etiqueta",
           },
           type: "relationship",
-          relationTo: Texts.slug,
+          relationTo: "texts",
           filterOptions: {
             type: { equals: "plainText" },
           },
@@ -132,7 +128,7 @@ export const Brands: CollectionConfig = {
             es: "Enlace",
           },
           type: "relationship",
-          relationTo: Links.slug,
+          relationTo: "links",
           required: true,
         },
       ],
@@ -182,7 +178,7 @@ export const Brands: CollectionConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
@@ -202,7 +198,7 @@ export const Brands: CollectionConfig = {
                     es: "Etiqueta",
                   },
                   type: "relationship",
-                  relationTo: Texts.slug,
+                  relationTo: "texts",
                   filterOptions: {
                     type: { equals: "plainText" },
                   },
@@ -215,7 +211,7 @@ export const Brands: CollectionConfig = {
                     es: "Enlace",
                   },
                   type: "relationship",
-                  relationTo: Links.slug,
+                  relationTo: "links",
                   required: true,
                 },
               ],
@@ -224,8 +220,13 @@ export const Brands: CollectionConfig = {
           admin: {
             initCollapsed: true,
             components: {
-              RowLabel: ({ data }) =>
-                (data as Brand["footer"]["linkGroups"][number]).name,
+              RowLabel: {
+                path: "/src/components/RowLabel",
+                exportName: "RowLabel",
+                serverProps: {
+                  propName: "name",
+                },
+              },
             },
           },
         },

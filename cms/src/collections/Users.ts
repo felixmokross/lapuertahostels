@@ -1,4 +1,4 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { canManageContent, isAdmin, isSelf } from "../common/access-control";
 
 export const Users: CollectionConfig = {
@@ -23,9 +23,9 @@ export const Users: CollectionConfig = {
     listSearchableFields: ["email", "role"],
   },
   access: {
-    read: ({ req, id }) => isSelf(req, id) || isAdmin(req),
+    read: ({ req, id }) => isSelf(req, id!) || isAdmin(req),
     create: ({ req }) => isAdmin(req),
-    update: ({ req, id }) => isSelf(req, id) || isAdmin(req),
+    update: ({ req, id }) => isSelf(req, id!) || isAdmin(req),
     delete: ({ req }) => isAdmin(req),
     admin: canManageContent,
   },

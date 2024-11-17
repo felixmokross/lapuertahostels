@@ -1,4 +1,4 @@
-import { Block } from "payload/types";
+import { Block } from "payload";
 import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
@@ -63,7 +63,7 @@ export const RoomListBlock: Block = {
             {
               name: "caption",
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },

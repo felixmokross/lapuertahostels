@@ -1,6 +1,5 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { MediaCategory } from "./MediaCategory";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -23,7 +22,8 @@ export const Media: CollectionConfig = {
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   upload: {
-    staticURL: "/media",
+    // TODO use generateFileURL instead according to migration guide
+    // staticURL: "/media",
     disableLocalStorage: true,
     mimeTypes: ["image/*", "video/*"],
     imageSizes: [
@@ -36,7 +36,7 @@ export const Media: CollectionConfig = {
     adminThumbnail: ({ doc }) =>
       (doc.mimeType as string).startsWith("video/")
         ? undefined
-        : doc.sizes["thumbnail"].filename,
+        : (doc.sizes as any)["thumbnail"].filename,
     displayPreview: true,
   },
   fields: [
@@ -62,7 +62,7 @@ export const Media: CollectionConfig = {
         es: "Categoría",
       },
       type: "relationship",
-      relationTo: MediaCategory.slug,
+      relationTo: "mediaCategory",
       admin: {
         description: {
           en: "Add a media category to easily find this media. When you select the media, you can filter by this category.",

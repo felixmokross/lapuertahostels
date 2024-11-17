@@ -1,8 +1,8 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
-import { text } from "payload/dist/fields/validations";
+import { text } from "payload/shared";
 import { canManageContent } from "../common/access-control";
 import { Brands } from "./Brands";
 import { Texts } from "./texts/Texts";
@@ -24,7 +24,8 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "url",
     defaultColumns: ["url", "title", "brand", "updatedAt"],
-    disableDuplicate: true,
+    // TODO is there a replacement in Payload 3?
+    // disableDuplicate: true,
     listSearchableFields: ["url"],
   },
   access: {
@@ -65,7 +66,7 @@ export const Pages: CollectionConfig = {
       },
       type: "text",
       required: true,
-      validate: (_, args) =>
+      validate: (_: any, args: any) =>
         text(args.data._id ? pageIdToUrl(args.data._id) : "", args),
       access: {
         update: () => false,
@@ -73,6 +74,8 @@ export const Pages: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
+
             data._id = data.url ? urlToPageId(data.url as string) : "";
 
             // ensures data is not stored in DB
@@ -81,6 +84,7 @@ export const Pages: CollectionConfig = {
         ],
         afterRead: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
             return pageIdToUrl(data.id as string);
           },
         ],
@@ -100,7 +104,7 @@ export const Pages: CollectionConfig = {
         es: "Marca",
       },
       type: "relationship",
-      relationTo: Brands.slug,
+      relationTo: "brands",
       access: {
         create: () => false,
         update: () => false,
@@ -108,12 +112,14 @@ export const Pages: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
             // ensures data is not stored in DB
             delete data.brand;
           },
         ],
         afterRead: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
             return brandForId(data.id as string);
           },
         ],
@@ -133,7 +139,7 @@ export const Pages: CollectionConfig = {
         es: "Título",
       },
       type: "relationship",
-      relationTo: Texts.slug,
+      relationTo: "texts",
       filterOptions: {
         type: { equals: "plainText" },
       },

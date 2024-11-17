@@ -1,9 +1,7 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../../hooks/cache-purge-hook";
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
-import { translateField } from "./translateField";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -70,24 +68,25 @@ export const Texts: CollectionConfig = {
         condition: (_, siblingData) => siblingData.type === "plainText",
       },
     },
-    {
-      name: "richText",
-      type: "richText",
-      label: {
-        en: "Rich Text",
-        es: "Texto enriquecido",
-      },
-      localized: true,
-      editor: slateEditor({
-        admin: {
-          elements: ["h4", "h5", "link", "ul", "ol", "indent"],
-          leaves: ["bold", "italic", "underline", "strikethrough", "code"],
-        },
-      }),
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "richText",
-      },
-    },
+    // TODO migrate slate to lexical
+    // {
+    //   name: "richText",
+    //   type: "richText",
+    //   label: {
+    //     en: "Rich Text",
+    //     es: "Texto enriquecido",
+    //   },
+    //   localized: true,
+    //   editor: slateEditor({
+    //     admin: {
+    //       elements: ["h4", "h5", "link", "ul", "ol", "indent"],
+    //       leaves: ["bold", "italic", "underline", "strikethrough", "code"],
+    //     },
+    //   }),
+    //   admin: {
+    //     condition: (_, siblingData) => siblingData.type === "richText",
+    //   },
+    // },
     {
       name: "comment",
       type: "text",
@@ -121,6 +120,7 @@ export const Texts: CollectionConfig = {
             return fullTextToTitle(getFullText());
 
             function getFullText() {
+              if (!data) throw new Error("Data is missing.");
               switch (data.type) {
                 case "plainText":
                   return data.text ?? "";
@@ -139,6 +139,14 @@ export const Texts: CollectionConfig = {
         position: "sidebar",
       },
     },
-    translateField,
+    {
+      type: "ui",
+      name: "translations",
+      admin: {
+        components: {
+          Field: "src/collections/texts/TranslateField#TranslateField",
+        },
+      },
+    },
   ],
 };
