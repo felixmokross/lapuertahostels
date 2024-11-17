@@ -50,6 +50,21 @@ export function makeOverlayTitleField({
           condition,
         },
       },
+      {
+        name: "supportingText",
+        label: {
+          en: "Supporting Text",
+          es: "Texto de apoyo",
+        },
+        type: "relationship",
+        relationTo: Texts.slug,
+        filterOptions: {
+          type: { equals: "richText" },
+        },
+        admin: {
+          condition,
+        },
+      },
       ...(supportsCallToAction
         ? [
             {

@@ -93,3 +93,14 @@ export const VariantWhite: Story = {
     },
   },
 };
+
+export const WithTextShadow: Story = {
+  args: {
+    ...VariantNeutral.args,
+    variant: "white",
+    textShadow: true,
+  },
+  parameters: {
+    background: "brand",
+  },
+};

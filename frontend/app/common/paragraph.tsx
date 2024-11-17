@@ -9,6 +9,7 @@ type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 export type ParagraphProps = PropsWithChildren<{
   className?: string;
   size?: "small" | "medium" | "large" | "extra-large";
+  textShadow?: boolean;
   variant?: ParagraphVariant;
   justify?: boolean;
 }>;
@@ -18,6 +19,7 @@ export function Paragraph({
   size = "medium",
   variant = "neutral",
   justify = false,
+  textShadow = false,
   className,
 }: ParagraphProps) {
   const theme = useTheme();
@@ -41,6 +43,7 @@ export function Paragraph({
           },
           className,
         )}
+        {...(textShadow ? { style: { textShadow: "1px 1px 5px black" } } : {})}
       >
         {children}
       </p>
