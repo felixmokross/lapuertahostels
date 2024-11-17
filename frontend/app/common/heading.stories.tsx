@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Heading, HeadingHighlight } from "./heading";
 import { cn } from "./cn";
 import { allModes } from ".storybook/modes";
+import { themesByBrand } from "~/themes";
+import { BrandId } from "~/brands";
 
 const meta = {
   title: "common/Heading",
@@ -26,12 +28,8 @@ const meta = {
     (Story, { parameters, globals }) => (
       <div
         className={cn("h-screen px-8 py-2 text-neutral-900", {
-          "bg-puerta-950":
-            parameters.background === "brand" && globals.brand === "puerta",
-          "bg-aqua-950":
-            parameters.background === "brand" && globals.brand === "aqua",
-          "bg-azul-950":
-            parameters.background === "brand" && globals.brand === "azul",
+          [themesByBrand[globals.brand as BrandId].bannerBackgroundColor]:
+            parameters.background === "brand",
         })}
       >
         <Story />
@@ -67,6 +65,22 @@ export const VariantWhiteWithHighlight: Story = {
       </>
     ),
     variant: "white",
+  },
+  parameters: {
+    background: "brand",
+  },
+};
+
+export const WithTextShadow: Story = {
+  args: {
+    ...Default.args,
+    children: (
+      <>
+        Discover the <HeadingHighlight>Colombian Costa Caribe</HeadingHighlight>
+      </>
+    ),
+    variant: "white",
+    textShadow: true,
   },
   parameters: {
     background: "brand",

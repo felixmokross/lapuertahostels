@@ -47,7 +47,7 @@ export function Heading({
           },
           className,
         )}
-        {...(textShadow ? { style: { textShadow: "0 0 50px black" } } : {})}
+        {...(textShadow ? { style: { textShadow: "2px 2px 20px black" } } : {})}
       >
         {children}
       </Component>

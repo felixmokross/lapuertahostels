@@ -5,6 +5,7 @@ import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
 import { Page, Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
+import { RichTextParagraph } from "~/common/paragraph";
 
 type OverlayTitleType = NonNullable<
   (NonNullable<Page["hero"]>[number] & {
@@ -14,7 +15,7 @@ type OverlayTitleType = NonNullable<
 
 export type OverlayTitleProps = Pick<
   OverlayTitleType,
-  "text" | "cta" | "position" | "overlay"
+  "text" | "supportingText" | "cta" | "position" | "overlay"
 > & {
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: MouseEventHandler<HTMLDivElement>;
@@ -22,6 +23,7 @@ export type OverlayTitleProps = Pick<
 
 export function OverlayTitle({
   text,
+  supportingText,
   position = "center",
   cta,
   overlay = "moderate",
@@ -30,6 +32,10 @@ export function OverlayTitle({
 }: OverlayTitleProps) {
   if (typeof text !== "object") {
     throw new Error("Invalid text");
+  }
+
+  if (supportingText && typeof supportingText !== "object") {
+    throw new Error("Invalid supportingText");
   }
 
   if (cta?.show && typeof cta.label !== "object") {
@@ -46,7 +52,7 @@ export function OverlayTitle({
         })}
       />
       <div
-        className={cn("absolute max-w-xl space-y-6", {
+        className={cn("absolute max-w-xl", {
           "left-8 top-8": position === "top-left",
           "right-8 top-8 text-right": position === "top-right",
           "bottom-8 left-8": position === "bottom-left",
@@ -60,6 +66,16 @@ export function OverlayTitle({
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
           {text!.richText as RichTextObject}
         </RichTextHeading>
+        {supportingText && (
+          <RichTextParagraph
+            size="extra-large"
+            variant="white"
+            textShadow
+            className="mt-6"
+          >
+            {(supportingText as Text).richText as RichTextObject}
+          </RichTextParagraph>
+        )}
         {cta?.show && (
           <Button
             as={PageLink}
@@ -67,6 +83,7 @@ export function OverlayTitle({
             size="large"
             variant={cta.variant || "primary"}
             blackShadow
+            className={cn(supportingText ? "mt-10" : "mt-6")}
           >
             {(cta.label as Text).text}
           </Button>
