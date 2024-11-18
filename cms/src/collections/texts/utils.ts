@@ -1,9 +1,30 @@
-// import { Node } from "slate";
+import { createEditor } from "./editor";
+import { $getRoot, SerializedEditorState } from "lexical";
 
-// TODO migrate slate to lexical
-export function richTextToFullText(richText: Node[]) {
-  // return richText.map((n) => Node.string(n)).join(" ");
+export async function richTextToFullText(richText: SerializedEditorState) {
+  const editor = await createEditor();
+
+  try {
+    editor.update(
+      () => {
+        editor.setEditorState(editor.parseEditorState(richText));
+      },
+      { discrete: true }, // This should commit the editor state immediately
+    );
+  } catch (e) {
+    console.error("Failed to update headless editor", e);
+  }
+
+  return editor.getEditorState().read(() => $getRoot().getTextContent());
+}
+
+export async function richTextToHtml(richText: SerializedEditorState) {
   return "";
+}
+
+export async function htmlToRichText(html: string) {
+  // return "";
+  return null;
 }
 
 export function fullTextToTitle(fullText: string) {

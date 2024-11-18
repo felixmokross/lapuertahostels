@@ -23,6 +23,7 @@ import { pageIdToUrl } from "./common/page-urls";
 import { Brand, Config, Page } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -58,8 +59,7 @@ export default buildConfig({
       },
     },
   },
-  // TODO migrate from slate to lexical
-  // editor: slateEditor({}),
+  editor: lexicalEditor({}),
   collections: [
     Users,
     Brands,

@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
+import { editor } from "./editor";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -68,25 +69,19 @@ export const Texts: CollectionConfig = {
         condition: (_, siblingData) => siblingData.type === "plainText",
       },
     },
-    // TODO migrate slate to lexical
-    // {
-    //   name: "richText",
-    //   type: "richText",
-    //   label: {
-    //     en: "Rich Text",
-    //     es: "Texto enriquecido",
-    //   },
-    //   localized: true,
-    //   editor: slateEditor({
-    //     admin: {
-    //       elements: ["h4", "h5", "link", "ul", "ol", "indent"],
-    //       leaves: ["bold", "italic", "underline", "strikethrough", "code"],
-    //     },
-    //   }),
-    //   admin: {
-    //     condition: (_, siblingData) => siblingData.type === "richText",
-    //   },
-    // },
+    {
+      name: "richText",
+      type: "richText",
+      label: {
+        en: "Rich Text",
+        es: "Texto enriquecido",
+      },
+      localized: true,
+      editor: editor(),
+      admin: {
+        condition: (_, siblingData) => siblingData.type === "richText",
+      },
+    },
     {
       name: "comment",
       type: "text",
@@ -109,10 +104,6 @@ export const Texts: CollectionConfig = {
         es: "Título (interno)",
       },
       type: "text",
-      access: {
-        create: () => false,
-        update: () => false,
-      },
       localized: true,
       hooks: {
         beforeChange: [
@@ -125,7 +116,7 @@ export const Texts: CollectionConfig = {
                 case "plainText":
                   return data.text ?? "";
                 case "richText":
-                  return richTextToFullText(data.richText ?? []);
+                  return data.richText ? richTextToFullText(data.richText) : "";
               }
             }
           },

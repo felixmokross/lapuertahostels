@@ -16,16 +16,17 @@ export async function cachePurgeHook(
   target: CachePurgeTarget,
   req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
 ) {
+  // TODO the below doesn't seem to be the case anymore – we don't get a transactionID when this hook runs
   // afterChangeHook runs before the transaction is committed
   // – so we need to commit it before refreshing the cache to avoid
   // that the app pulls old data when priming the cache
   // As suggested by the Payload team
   // See https://github.com/payloadcms/payload/issues/5886
-  console.log("Committing transaction before refreshing cache.");
-  const { payload, transactionID } = req;
-  if (!transactionID) throw new Error("No transaction ID found in request.");
+  // console.log("Committing transaction before refreshing cache.");
+  // const { payload, transactionID } = req;
+  // if (!transactionID) throw new Error("No transaction ID found in request.");
 
-  await payload.db.commitTransaction(transactionID);
+  // await payload.db.commitTransaction(transactionID);
 
   refreshCache(target, req).catch((e) =>
     console.error("Failed to refresh cache:", e),

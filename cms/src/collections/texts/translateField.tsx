@@ -36,17 +36,20 @@ export function TranslateField() {
               },
             );
 
-            // TODO how can we send toasts in Payload 3?
-            // if (response.ok) {
-            //   toast.success(
-            //     t("custom:texts.translatedToAllLocalesSuccessfully"),
-            //     { autoClose: 3000 },
-            //   );
-            // } else {
-            //   toast.error(t("custom:texts.failedToTranslateToAllLocales"), {
-            //     autoClose: 3000,
-            //   });
-            // }
+            if (response.ok) {
+              console.log(t("custom:texts:translatedToAllLocalesSuccessfully"));
+              // TODO how can we send toasts in Payload 3?
+              // toast.success(
+              //   t("custom:texts.translatedToAllLocalesSuccessfully"),
+              //   { autoClose: 3000 },
+              // );
+            } else {
+              console.error(t("custom:texts:failedToTranslateToAllLocales"));
+              // TODO how can we send toasts in Payload 3?
+              // toast.error(t("custom:texts.failedToTranslateToAllLocales"), {
+              //   autoClose: 3000,
+              // });
+            }
           } finally {
             setIsTranslating(false);
           }

@@ -18,6 +18,7 @@
   "dependencies": {
     "@payloadcms/db-mongodb": "beta",
     "@payloadcms/next": "beta",
+    "@payloadcms/richtext-lexical": "beta",
     "cross-env": "^7.0.3",
     "deepl-node": "^1.15.0",
     "next": "15.0.0",
