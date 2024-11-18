@@ -22,6 +22,10 @@ import { Links } from "./collections/Links";
 import { pageIdToUrl } from "./common/page-urls";
 import { Brand, Config, Page } from "./payload-types";
 import { translations } from "./translations";
+import { fileURLToPath } from "url";
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 declare module "payload" {
   export interface GeneratedTypes extends Config {}
@@ -102,6 +106,7 @@ export default buildConfig({
     fallback: true,
   },
   typescript: {
+    outputFile: path.resolve(dirname, "./payload-types.ts"),
     declare: false,
   },
   graphQL: {
