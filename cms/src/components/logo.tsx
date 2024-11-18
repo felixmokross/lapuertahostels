@@ -18,8 +18,8 @@ export function LogoSmall() {
     <img
       src={puertaAdminLogo.src}
       alt="La Puerta Hostels Admin Logo"
-      width={20}
-      height={24}
+      width={15}
+      height={18}
     />
   );
 }
