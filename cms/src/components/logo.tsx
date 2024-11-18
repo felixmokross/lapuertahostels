@@ -1,9 +1,11 @@
 import React from "react";
+import puertaAdminLogo from "../assets/puerta-admin-logo.png";
+import Image from "next/image";
 
 export function Logo() {
   return (
-    <img
-      src="/assets/puerta-admin-logo-100.png"
+    <Image
+      src={puertaAdminLogo.src}
       alt="La Puerta Hostels Admin Logo"
       width={50}
       height={61}
@@ -14,7 +16,7 @@ export function Logo() {
 export function LogoSmall() {
   return (
     <img
-      src="/assets/puerta-admin-logo-40.png"
+      src={puertaAdminLogo.src}
       alt="La Puerta Hostels Admin Logo"
       width={20}
       height={24}
