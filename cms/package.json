@@ -16,13 +16,13 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "beta",
-    "@payloadcms/next": "beta",
-    "@payloadcms/richtext-lexical": "beta",
+    "@payloadcms/db-mongodb": "^3.0.0",
+    "@payloadcms/next": "^3.0.0",
+    "@payloadcms/richtext-lexical": "^3.0.0",
     "cross-env": "^7.0.3",
     "deepl-node": "^1.15.0",
     "next": "15.0.0",
-    "payload": "beta",
+    "payload": "^3.0.0",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
     "sharp": "0.32.6"
