@@ -22,8 +22,6 @@ export const Media: CollectionConfig = {
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   upload: {
-    // TODO use generateFileURL instead according to migration guide
-    // staticURL: "/media",
     disableLocalStorage: true,
     mimeTypes: ["image/*", "video/*"],
     imageSizes: [
@@ -32,11 +30,6 @@ export const Media: CollectionConfig = {
         width: 400,
       },
     ],
-    // TODO support for video thumbnails coming soon (see https://github.com/payloadcms/payload/pull/7374)
-    adminThumbnail: ({ doc }) =>
-      (doc.mimeType as string).startsWith("video/")
-        ? undefined
-        : (doc.sizes as any)["thumbnail"].filename,
     displayPreview: true,
   },
   fields: [

@@ -24,6 +24,7 @@ import { Brand, Config, Page } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { s3Storage } from "@payloadcms/storage-s3";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -113,23 +114,19 @@ export default buildConfig({
     disable: true,
   },
   plugins: [
-    // TODO migrate cloud storage
-    // cloudStorage({
-    //   collections: {
-    //     [Media.slug]: {
-    //       adapter: s3Adapter({
-    //         config: {
-    //           credentials: {
-    //             accessKeyId: process.env.MEDIA_S3_ACCESS_KEY_ID,
-    //             secretAccessKey: process.env.MEDIA_S3_SECRET_ACCESS_KEY,
-    //           },
-    //           region: process.env.MEDIA_S3_REGION,
-    //         },
-    //         bucket: process.env.MEDIA_S3_BUCKET,
-    //       }),
-    //     },
-    //   },
-    // }),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.MEDIA_S3_BUCKET!,
+      config: {
+        credentials: {
+          accessKeyId: process.env.MEDIA_S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.MEDIA_S3_SECRET_ACCESS_KEY!,
+        },
+        region: process.env.MEDIA_S3_REGION!,
+      },
+    }),
   ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
