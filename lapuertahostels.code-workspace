@@ -2,8 +2,7 @@
   "folders": [
     { "name": "<root>", "path": "." },
     { "path": "./frontend" },
-    { "path": "./cms" },
-    { "path": "./cms-2" }
+    { "path": "./cms" }
   ],
   "settings": {
     "github.copilot.enable": {
