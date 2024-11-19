@@ -31,6 +31,8 @@ export const Media: CollectionConfig = {
       },
     ],
     displayPreview: true,
+    crop: false,
+    focalPoint: false,
   },
   fields: [
     {
