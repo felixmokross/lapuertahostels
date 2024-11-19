@@ -7,6 +7,7 @@ import {
   useDocumentInfo,
   useLocale,
   useTranslation,
+  toast,
 } from "@payloadcms/ui";
 import { TranslationsKeys, TranslationsObject } from "@/translations";
 
@@ -37,18 +38,18 @@ export function TranslateField() {
             );
 
             if (response.ok) {
-              console.log(t("custom:texts:translatedToAllLocalesSuccessfully"));
-              // TODO how can we send toasts in Payload 3?
-              // toast.success(
-              //   t("custom:texts.translatedToAllLocalesSuccessfully"),
-              //   { autoClose: 3000 },
-              // );
+              console.info(
+                t("custom:texts:translatedToAllLocalesSuccessfully"),
+              );
+              toast.success(
+                t("custom:texts:translatedToAllLocalesSuccessfully"),
+                { duration: 3000 },
+              );
             } else {
               console.error(t("custom:texts:failedToTranslateToAllLocales"));
-              // TODO how can we send toasts in Payload 3?
-              // toast.error(t("custom:texts.failedToTranslateToAllLocales"), {
-              //   autoClose: 3000,
-              // });
+              toast.error(t("custom:texts:failedToTranslateToAllLocales"), {
+                duration: 3000,
+              });
             }
           } finally {
             setIsTranslating(false);
@@ -59,13 +60,6 @@ export function TranslateField() {
           ? t("custom:texts:translatingToAllLocales")
           : t("custom:texts:translateToAllLocales")}
       </Button>
-      {/* TODO how can we send toasts in Payload 3? */}
-      {/* For some reason, the Root toast container doesn't work – just working around as we soon upgrade to Payload 3 anyway */}
-      {/* <ToastContainer
-        icon={false}
-        position="bottom-center"
-        transition={Slide}
-      /> */}
       {isModified && (
         <p className="field-description">
           {t("custom:texts:pleaseSaveYourChangesToEnableTranslation")}
