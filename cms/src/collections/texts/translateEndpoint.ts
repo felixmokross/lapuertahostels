@@ -1,14 +1,14 @@
 import { Endpoint } from "payload";
-// import {
-//   htmlToSlate,
-//   slateToHtml,
-//   payloadSlateToHtmlConfig,
-//   payloadHtmlToSlateConfig,
-// } from "@slate-serializers/html";
-import { transformRecord } from "../../common/records";
+import { SerializedEditorState } from "lexical";
+import { transformRecord, transformRecordAsync } from "../../common/records";
 import { translate } from "../../common/translation";
 import { getSupportedLocales } from "../../common/locales";
-import { fullTextToTitle, richTextToFullText } from "./utils";
+import {
+  fullTextToTitle,
+  htmlToRichText,
+  richTextToFullText,
+  richTextToHtml,
+} from "./utils";
 import { addLocalesToRequestFromData } from "@payloadcms/next/utilities";
 
 export const translateEndpoint: Endpoint = {
@@ -30,13 +30,17 @@ export const translateEndpoint: Endpoint = {
       .findOne({ _id: new ObjectId(id) });
     if (!originalDoc) throw new Error("Document not found");
 
-    const textInAllLocales = originalDoc.text as Record<string, string>;
-    // TODO migrate slate to lexical
-    // originalDoc.type === "plainText" ? : transformRecord(originalDoc.richText, (x: any) =>
-    //     // slateToHtml(x, payloadSlateToHtmlConfig),
-    //   )
+    const textInAllLocales =
+      originalDoc.type === "plainText"
+        ? (originalDoc.text as Record<string, string>)
+        : await transformRecordAsync(
+            originalDoc.richText,
+            (rt: SerializedEditorState | null) =>
+              rt ? richTextToHtml(rt) : Promise.resolve(""),
+          );
 
     addLocalesToRequestFromData(req);
+
     if (!req.locale) {
       return new Response("Locale required", {
         status: 400,
@@ -89,14 +93,14 @@ export const translateEndpoint: Endpoint = {
                 title: transformRecord(textInAllLocales, fullTextToTitle),
               }
             : {
-                // TODO migrate slate to lexical
-                // richText: transformRecord(textInAllLocales, htmlToSlate),
-                // title: transformRecord(
-                //   transformRecord(textInAllLocales, (x) =>
-                //     htmlToSlate(x, payloadHtmlToSlateConfig),
-                //   ),
-                //   (t) => fullTextToTitle(richTextToFullText(t)),
-                // ),
+                richText: await transformRecordAsync(
+                  textInAllLocales,
+                  htmlToRichText,
+                ),
+                title: await transformRecordAsync(
+                  await transformRecordAsync(textInAllLocales, htmlToRichText),
+                  async (x) => fullTextToTitle(await richTextToFullText(x)),
+                ),
               },
       },
     );

@@ -12,6 +12,16 @@ import payloadConfig from "@/payload.config";
 // TODO remove this once we have migrated to Lexical on all environments
 const customFeatures = [SlateToLexicalFeature({ disableHooks: true })];
 
+export async function getEditorConfig() {
+  return await sanitizeServerEditorConfig(
+    {
+      ...defaultEditorConfig,
+      features: [...defaultEditorFeatures, ...customFeatures],
+    },
+    await payloadConfig,
+  );
+}
+
 export function editor() {
   return lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, ...customFeatures],
@@ -21,13 +31,7 @@ export function editor() {
 export async function createEditor() {
   return createHeadlessEditor({
     nodes: getEnabledNodes({
-      editorConfig: await sanitizeServerEditorConfig(
-        {
-          ...defaultEditorConfig,
-          features: [...defaultEditorFeatures, ...customFeatures],
-        },
-        await payloadConfig,
-      ),
+      editorConfig: await getEditorConfig(),
     }),
   });
 }

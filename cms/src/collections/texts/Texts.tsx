@@ -104,6 +104,10 @@ export const Texts: CollectionConfig = {
         es: "Título (interno)",
       },
       type: "text",
+      access: {
+        create: () => false,
+        update: () => false,
+      },
       localized: true,
       hooks: {
         beforeChange: [

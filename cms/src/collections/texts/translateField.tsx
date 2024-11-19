@@ -29,7 +29,7 @@ export function TranslateField() {
 
           try {
             const response = await fetch(
-              `/api/texts/${id}/translate?locale=${locale}`,
+              `/api/texts/${id}/translate?locale=${locale.code}`,
               {
                 method: "POST",
                 credentials: "include",
