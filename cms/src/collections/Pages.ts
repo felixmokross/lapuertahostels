@@ -4,28 +4,15 @@ import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { text } from "payload/shared";
 import { canManageContent } from "../common/access-control";
-import { Brands } from "./Brands";
-import { Texts } from "./texts/Texts";
 import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
-  labels: {
-    singular: {
-      en: "Page",
-      es: "Página",
-    },
-    plural: {
-      en: "Pages",
-      es: "Páginas",
-    },
-  },
   defaultSort: "id",
   admin: {
+    hidden: true,
     useAsTitle: "url",
     defaultColumns: ["url", "title", "brand", "updatedAt"],
-    // TODO is there a replacement in Payload 3?
-    // disableDuplicate: true,
     listSearchableFields: ["url"],
   },
   access: {

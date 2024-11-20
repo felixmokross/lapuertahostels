@@ -7,6 +7,14 @@ export const translations = {
       validation: {
         mustBeValidUrl: "Must be a valid URL",
       },
+      pages: {
+        pathname: {
+          pleaseSelectABrandFirst: "Please select a brand first.",
+          pleaseEnterAPathname: "Please enter a pathname.",
+          pathnameMustStartWithPrefix:
+            "The pathname must start with '{{ prefix }}'.",
+        },
+      },
       texts: {
         translateToAllLocales: "Translate to all locales",
         translatingToAllLocales: "Translating to all locales…",
@@ -24,6 +32,14 @@ export const translations = {
     custom: {
       validation: {
         mustBeValidUrl: "Debe ser una URL válida",
+      },
+      pages: {
+        pathname: {
+          pleaseSelectABrandFirst: "Por favor, seleccione una marca primero.",
+          pleaseEnterAPathname: "Por favor, introduzca una ruta.",
+          pathnameMustStartWithPrefix:
+            "La ruta debe comenzar con '{{ prefix }}'.",
+        },
       },
       texts: {
         translateToAllLocales: "Traducir a todos los idiomas",

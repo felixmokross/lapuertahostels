@@ -20,11 +20,12 @@ import { Banners } from "./collections/Banners";
 import { Texts } from "./collections/texts/Texts";
 import { Links } from "./collections/Links";
 import { pageIdToUrl } from "./common/page-urls";
-import { Brand, Config, Page } from "./payload-types";
+import { Brand, Config, NewPage, Page } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
+import { NewPages } from "./collections/NewPages";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,7 +40,7 @@ export default buildConfig({
     user: Users.slug,
     livePreview: {
       url: getPreviewUrl,
-      collections: [Pages.slug, Brands.slug],
+      collections: [NewPages.slug, Brands.slug],
       globals: [Common.slug, Maintenance.slug],
     },
     meta: {
@@ -65,6 +66,7 @@ export default buildConfig({
     Users,
     Brands,
     Pages,
+    NewPages,
     Media,
     MediaCategory,
     Banners,
@@ -158,8 +160,8 @@ function getPreviewUrl({
 
 function getPreviewPath(slug: string, data: Record<string, any>) {
   switch (slug) {
-    case Pages.slug:
-      return (data as Page).url;
+    case NewPages.slug:
+      return (data as NewPage).pathname;
     case Brands.slug:
       return pageIdToUrl((data as Brand).homeLink as string);
     default:

@@ -1,7 +1,7 @@
 import { resolve6 } from "dns/promises";
 import { PayloadRequest } from "payload";
-import { Pages } from "../collections/Pages";
 import { getSupportedLocales } from "./locales";
+import { NewPages } from "@/collections/NewPages";
 
 export async function refreshCacheForAllPages(
   req: PayloadRequest,
@@ -16,7 +16,7 @@ export async function refreshCacheForAllPages(
     await refreshCacheForTarget({
       type: actionType,
       pageUrl: page.url,
-      dataUrl: `${Pages.slug}/${page.id}`,
+      dataUrl: `${NewPages.slug}/${page.id}`,
     });
   }
 
