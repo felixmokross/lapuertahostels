@@ -27,6 +27,9 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { NewPages } from "./collections/NewPages";
 
+import { en } from "@payloadcms/translations/languages/en";
+import { es } from "@payloadcms/translations/languages/es";
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -136,7 +139,7 @@ export default buildConfig({
   cors: process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL
     ? [process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL]
     : undefined,
-  i18n: { translations },
+  i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
 });
 
