@@ -26,13 +26,16 @@ export const HeroHeadingBlock: Block = {
       label: { en: "Description", es: "Descripción" },
       admin: {
         components: {
-          Field: "/src/components/CustomDescription#CustomDescription",
-        },
-      },
-      custom: {
-        description: {
-          en: "The Hero Heading block can have an optional image for a more engaging page heading. If no image is uploaded, a simple page heading will be displayed.",
-          es: "El bloque de encabezado de héroe puede tener una imagen opcional para un encabezado de página más atractivo. Si no se sube ninguna imagen, se mostrará un encabezado de página simple.",
+          Field: {
+            path: "/src/components/DescriptionField",
+            exportName: "DescriptionField",
+            serverProps: {
+              description: {
+                en: "The Hero Heading block can have an optional image for a more engaging page heading. If no image is uploaded, a simple page heading will be displayed.",
+                es: "El bloque de encabezado de héroe puede tener una imagen opcional para un encabezado de página más atractivo. Si no se sube ninguna imagen, se mostrará un encabezado de página simple.",
+              },
+            },
+          },
         },
       },
     },

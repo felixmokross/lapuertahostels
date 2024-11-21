@@ -21,13 +21,16 @@ export const SeparatorBlock: Block = {
       label: { en: "Description", es: "Descripción" },
       admin: {
         components: {
-          Field: "/src/components/CustomDescription#CustomDescription",
-        },
-      },
-      custom: {
-        description: {
-          en: "Use this separator to create a visual break between two subsequent blocks.",
-          es: "Utiliza este separador para crear una división visual entre dos bloques consecutivos.",
+          Field: {
+            path: "/src/components/DescriptionField",
+            exportName: "DescriptionField",
+            serverProps: {
+              description: {
+                en: "Use this separator to create a visual break between two subsequent blocks.",
+                es: "Utiliza este separador para crear una división visual entre dos bloques consecutivos.",
+              },
+            },
+          },
         },
       },
     },

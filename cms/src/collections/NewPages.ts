@@ -1,9 +1,4 @@
-import {
-  CollectionConfig,
-  TextField,
-  TextFieldSingleValidation,
-  ValidateOptions,
-} from "payload";
+import { CollectionConfig, TextField, ValidateOptions } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
