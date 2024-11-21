@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { Brand, Common, Maintenance, Page } from "~/payload-types";
+import { Brand, Common, Maintenance, NewPage } from "~/payload-types";
 import path from "path";
 
 const CACHE_DIR = "./.cms-cache";
@@ -99,7 +99,7 @@ async function loadData(url: string, locale: string, depth: number) {
 }
 
 export async function tryGetPage(pageId: string, locale: string) {
-  return (await getData(`pages/${pageId}`, locale, 3)) as Page | null;
+  return (await getData(`new-pages/${pageId}`, locale, 3)) as NewPage | null;
 }
 
 export async function getCommon(locale: string) {

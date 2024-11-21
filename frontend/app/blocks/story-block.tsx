@@ -2,11 +2,11 @@ import { Heading } from "../common/heading";
 import { Image } from "../common/image";
 import { cn } from "../common/cn";
 import { RichTextObject } from "~/common/rich-text";
-import { Page } from "~/payload-types";
+import { NewPage } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { getSrcFromMedia } from "~/common/media";
 
-export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
+export type StoryBlockProps = NonNullable<NewPage["layout"]>[number] & {
   blockType: "Story";
 };
 

@@ -1,4 +1,4 @@
-import { Brand, Page } from "~/payload-types";
+import { Brand, NewPage } from "~/payload-types";
 import { Link, LinkProps } from "./link";
 import { PropsWithChildren } from "react";
 
@@ -14,7 +14,7 @@ export function PageLink({ link, ...props }: PageLinkProps) {
       {...props}
       to={
         link.type === "internal"
-          ? `${(link.page as Page).url}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
+          ? `${(link.newPage as NewPage).pathname}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
           : link.url!
       }
     />

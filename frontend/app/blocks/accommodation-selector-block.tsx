@@ -1,4 +1,4 @@
-import { Brand, Page } from "~/payload-types";
+import { Brand, NewPage } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { RichTextParagraph } from "../common/paragraph";
@@ -9,7 +9,7 @@ import { getSrcFromMedia } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
 export type AccommodationSelectorBlockProps = NonNullable<
-  Page["layout"]
+  NewPage["layout"]
 >[number] & {
   blockType: "AccommodationSelector";
 };

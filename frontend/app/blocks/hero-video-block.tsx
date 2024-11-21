@@ -1,8 +1,8 @@
-import { Page } from "~/payload-types";
+import { NewPage } from "~/payload-types";
 import { OverlayTitle } from "./common/overlay-title";
 import { useEnvironment } from "~/environment";
 
-export type HeroVideoBlockProps = NonNullable<Page["hero"]>[number] & {
+export type HeroVideoBlockProps = NonNullable<NewPage["hero"]>[number] & {
   blockType: "HeroVideo";
 };
 

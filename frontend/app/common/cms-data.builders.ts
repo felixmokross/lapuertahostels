@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { Banner, Brand, Link, Media, Page, Text } from "~/payload-types";
+import { Banner, Brand, Link, Media, NewPage, Text } from "~/payload-types";
 import { RichTextObject } from "./rich-text";
 
 export function plainText(text: string): Text {
@@ -47,7 +47,7 @@ export function media(filename: string): Media {
 }
 
 type CallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
+  (NonNullable<NewPage["layout"]>[number] & {
     blockType: "LeadText";
   })["cta"]
 >;
@@ -65,7 +65,7 @@ export function callToAction(
 }
 
 type RequiredCallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
+  (NonNullable<NewPage["layout"]>[number] & {
     blockType: "RoomList";
   })["rooms"][number]["cta"]
 >;
@@ -85,7 +85,7 @@ export function internalLink(pageUrl?: string): Link {
   return {
     id: createId(),
     type: "internal",
-    page: page(pageUrl ?? "/"),
+    newPage: page(pageUrl ?? "/"),
     createdAt: date,
     updatedAt: date,
   };
@@ -101,10 +101,11 @@ export function externalLink(url: string): Link {
   };
 }
 
-export function page(url: string): Page {
+export function page(pathname: string): NewPage {
   return {
     id: createId(),
-    url,
+    pathname,
+    brand: brand(),
     createdAt: date,
     updatedAt: date,
   };

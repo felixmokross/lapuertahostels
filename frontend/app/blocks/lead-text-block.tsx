@@ -1,12 +1,12 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
-import { Page, Text } from "~/payload-types";
+import { NewPage, Text } from "~/payload-types";
 import { cn } from "~/common/cn";
 import { RichTextObject } from "~/common/rich-text";
 import { PageLink } from "~/common/page-link";
 
-export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
+export type LeadBlockProps = NonNullable<NewPage["layout"]>[number] & {
   blockType: "LeadText";
 };
 
