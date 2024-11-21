@@ -31,5 +31,15 @@ export const MediaCategory: CollectionConfig = {
       type: "text",
       required: true,
     },
+    {
+      name: "media",
+      label: {
+        en: "Media",
+        es: "Medios",
+      },
+      type: "join",
+      collection: "media",
+      on: "category",
+    },
   ],
 };
