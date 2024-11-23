@@ -305,5 +305,15 @@ export const Brands: CollectionConfig = {
         },
       ],
     },
+    {
+      name: "pages",
+      label: {
+        en: "Pages",
+        es: "Páginas",
+      },
+      type: "join",
+      collection: "new-pages",
+      on: "brand",
+    },
   ],
 };

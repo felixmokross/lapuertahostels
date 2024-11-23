@@ -71,5 +71,15 @@ export const Banners: CollectionConfig = {
       },
     },
     makeCallToActionField({ optional: true, variant: false }),
+    {
+      name: "brands",
+      label: {
+        en: "Brands",
+        es: "Marcas",
+      },
+      type: "join",
+      collection: "brands",
+      on: "banner",
+    },
   ],
 };
