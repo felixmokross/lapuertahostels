@@ -1,6 +1,7 @@
 import {
   defaultEditorConfig,
   defaultEditorFeatures,
+  FixedToolbarFeature,
   getEnabledNodes,
   lexicalEditor,
   sanitizeServerEditorConfig,
@@ -10,7 +11,10 @@ import { createHeadlessEditor } from "@lexical/headless";
 import payloadConfig from "@/payload.config";
 
 // TODO remove this once we have migrated to Lexical on all environments
-const customFeatures = [SlateToLexicalFeature({ disableHooks: true })];
+const customFeatures = [
+  SlateToLexicalFeature({ disableHooks: true }),
+  FixedToolbarFeature(),
+];
 
 export async function getEditorConfig() {
   return await sanitizeServerEditorConfig(
