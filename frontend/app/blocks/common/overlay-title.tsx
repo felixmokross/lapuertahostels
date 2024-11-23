@@ -64,7 +64,7 @@ export function OverlayTitle({
         onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
-          {text!.richText as RichTextObject}
+          {text!.richText as unknown as RichTextObject}
         </RichTextHeading>
         {supportingText && (
           <RichTextParagraph
@@ -73,7 +73,7 @@ export function OverlayTitle({
             textShadow
             className="mt-6"
           >
-            {(supportingText as Text).richText as RichTextObject}
+            {(supportingText as Text).richText as unknown as RichTextObject}
           </RichTextParagraph>
         )}
         {cta?.show && (

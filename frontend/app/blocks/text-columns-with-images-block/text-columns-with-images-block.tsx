@@ -35,7 +35,7 @@ export function TextColumnsWithImagesBlock({
             size="large"
             className={cn(heading && "mt-2", "text-center")}
           >
-            {text.richText as RichTextObject}
+            {text.richText as unknown as RichTextObject}
           </RichTextParagraph>
         )}
       </div>

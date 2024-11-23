@@ -41,7 +41,7 @@ export function AccommodationSelectorBlock({
             size="large"
             variant="white"
           >
-            {text.richText as RichTextObject}
+            {text.richText as unknown as RichTextObject}
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
@@ -113,7 +113,7 @@ function AccommodationCard({
           {brand.name}
         </Heading>
         <RichTextParagraph variant="inherit" justify>
-          {description.richText as RichTextObject}
+          {description.richText as unknown as RichTextObject}
         </RichTextParagraph>
       </div>
     </PageLink>

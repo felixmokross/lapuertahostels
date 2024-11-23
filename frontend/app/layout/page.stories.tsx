@@ -11,6 +11,7 @@ import {
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
 import { bold, plain, text } from "~/common/rich-text.builders";
+import { NewPage } from "~/payload-types";
 
 const meta = {
   title: "layout/Page",
@@ -37,7 +38,7 @@ export const Puerta: Story = {
       id: createId(),
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
-      url: "/",
+      pathname: "/",
       hero: [
         {
           slides: [
@@ -232,7 +233,7 @@ export const Puerta: Story = {
           blockType: "Story",
         },
       ],
-    },
+    } as NewPage,
   },
 };
 
@@ -250,7 +251,7 @@ export const Aqua: Story = {
       id: "aqua",
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
-      url: "/aqua",
+      pathname: "/aqua",
       hero: [
         {
           blockType: "HeroSlides",
@@ -362,7 +363,7 @@ export const Aqua: Story = {
           blockType: "Story",
         },
       ],
-    },
+    } as NewPage,
   },
 };
 
@@ -380,7 +381,7 @@ export const Azul: Story = {
       id: "azul",
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
-      url: "/azul",
+      pathname: "/azul",
       hero: [
         {
           slides: [
@@ -502,6 +503,6 @@ export const Azul: Story = {
           blockType: "Features",
         },
       ],
-    },
+    } as NewPage,
   },
 };

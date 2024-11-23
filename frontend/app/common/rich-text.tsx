@@ -43,7 +43,11 @@ function useRichTextContext() {
   return context;
 }
 
-export function RichText() {
+export function RichText(_: {
+  content: RichTextObject;
+  elements?: Partial<CustomElementConfig>;
+  lineBreakHandling?: LineBreakHandling;
+}) {
   return <>Rich Text not implemented</>;
   // return (
   //   <RichTextContext.Provider

@@ -41,7 +41,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
             </h6>
             <p className="text-sm leading-6 text-neutral-600">
               <RichText
-                content={content.address.richText as RichTextObject}
+                content={content.address.richText as unknown as RichTextObject}
                 lineBreakHandling="line-break"
               />
             </p>
@@ -148,7 +148,10 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           <p className="text-xs leading-5 text-neutral-500">
             &copy; {new Date().getFullYear()}{" "}
             <RichText
-              content={(content.copyright as Text).richText as RichTextObject}
+              content={
+                (content.copyright as Text)
+                  .richText as unknown as RichTextObject
+              }
               lineBreakHandling="line-break"
             />
           </p>

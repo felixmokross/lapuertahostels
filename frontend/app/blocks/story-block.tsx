@@ -52,7 +52,9 @@ export function StoryBlock({
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
-          <LongFormRichText content={text.richText as RichTextObject} />
+          <LongFormRichText
+            content={text.richText as unknown as RichTextObject}
+          />
         </div>
       </div>
       {image && (

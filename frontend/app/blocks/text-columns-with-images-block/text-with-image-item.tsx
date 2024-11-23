@@ -67,7 +67,7 @@ export function TextWithImageItem({
           size="medium"
           className={cn((image || heading) && "mt-2")}
         >
-          {text.richText as RichTextObject}
+          {text.richText as unknown as RichTextObject}
         </RichTextParagraph>
       )}
       {cta?.show && (

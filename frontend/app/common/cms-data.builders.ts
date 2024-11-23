@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { Banner, Brand, Link, Media, NewPage, Text } from "~/payload-types";
 import { RichTextObject } from "./rich-text";
+import { t } from "i18next";
 
 export function plainText(text: string): Text {
   return {
@@ -16,6 +17,7 @@ export function richText(...richText: RichTextObject): Text {
   return {
     id: createId(),
     type: "richText",
+    // @ts-expect-error temporary fix
     richText,
     createdAt: date,
     updatedAt: date,

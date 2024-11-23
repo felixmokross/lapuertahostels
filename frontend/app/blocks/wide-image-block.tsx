@@ -68,7 +68,10 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
             {(overlayTextBox.heading as Text).text}
           </Heading>
           <RichTextParagraph className="mt-2">
-            {(overlayTextBox.text as Text).richText as RichTextObject}
+            {
+              (overlayTextBox.text as Text)
+                .richText as unknown as RichTextObject
+            }
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button

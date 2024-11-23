@@ -48,7 +48,7 @@ export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
       />
       {text && (
         <RichTextParagraph justify={true} className="px-6 sm:px-0">
-          {text.richText as RichTextObject}
+          {text.richText as unknown as RichTextObject}
         </RichTextParagraph>
       )}
       <Button as={PageLink} link={cta.link} variant={cta.variant || undefined}>

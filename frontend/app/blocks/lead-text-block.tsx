@@ -44,7 +44,7 @@ export function LeadTextBlock({
         size="extra-large"
         className={cn(heading && "mt-4 md:mt-6")}
       >
-        {text.richText as RichTextObject}
+        {text.richText as unknown as RichTextObject}
       </RichTextParagraph>
 
       {cta?.show && (

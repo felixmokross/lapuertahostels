@@ -75,7 +75,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {overlayTitle.text.richText as RichTextObject}
+            {overlayTitle.text.richText as unknown as RichTextObject}
           </RichTextHeading>
         </div>
       </div>
@@ -98,7 +98,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {text.richText as RichTextObject}
+            {text.richText as unknown as RichTextObject}
           </RichTextParagraph>
         </div>
       </div>
