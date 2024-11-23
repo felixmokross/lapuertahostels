@@ -4,6 +4,10 @@ import type { NestedKeysStripped } from "@payloadcms/translations";
 export const translations = {
   en: {
     custom: {
+      common: {
+        linkRowLabel: "Link {{ n }}",
+        linkGroupRowLabel: "Link Group {{ n }}",
+      },
       validation: {
         mustBeValidUrl: "Must be a valid URL",
       },
@@ -26,10 +30,20 @@ export const translations = {
           "Translated to all locales successfully",
         failedToTranslateToAllLocales: "Failed to translate to all locales",
       },
+      brands: {
+        navLinkRowLabel: "Navigation Link {{ n }}",
+      },
+      rowLabel: {
+        item: "Item {{ n }}",
+      },
     },
   },
   es: {
     custom: {
+      common: {
+        linkRowLabel: "Enlace {{ n }}",
+        linkGroupRowLabel: "Grupo de enlaces {{ n }}",
+      },
       validation: {
         mustBeValidUrl: "Debe ser una URL válida",
       },
@@ -52,9 +66,15 @@ export const translations = {
           "Traducido a todos los idiomas con éxito",
         failedToTranslateToAllLocales: "Error al traducir a todos los idiomas",
       },
+      brands: {
+        navLinkRowLabel: "Enlace de navegación {{ n }}",
+      },
+      rowLabel: {
+        item: "Elemento {{ n }}",
+      },
     },
   },
 } satisfies NonNullable<Config["i18n"]>["translations"];
 
 export type TranslationsObject = typeof translations.en;
-export type TranslationsKeys = NestedKeysStripped<TranslationsObject>;
+export type TranslationsKey = NestedKeysStripped<TranslationsObject>;

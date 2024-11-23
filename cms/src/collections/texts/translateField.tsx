@@ -9,12 +9,12 @@ import {
   useTranslation,
   toast,
 } from "@payloadcms/ui";
-import { TranslationsKeys, TranslationsObject } from "@/translations";
+import { TranslationsKey, TranslationsObject } from "@/translations";
 
 export function TranslateField() {
   const [isTranslating, setIsTranslating] = useState(false);
   const { id } = useDocumentInfo();
-  const { t } = useTranslation<TranslationsObject, TranslationsKeys>();
+  const { t } = useTranslation<TranslationsObject, TranslationsKey>();
   const locale = useLocale();
   const isModified = useFormModified();
   return (

@@ -9,6 +9,7 @@ import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
+import { RowLabelProps } from "@/components/RowLabel";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -149,6 +150,16 @@ export const Brands: CollectionConfig = {
         en: "Navigation Links",
         es: "Enlaces de navegación",
       },
+      labels: {
+        singular: {
+          en: "Navigation Link",
+          es: "Enlace de navegación",
+        },
+        plural: {
+          en: "Navigation Links",
+          es: "Enlaces de navegación",
+        },
+      },
       type: "array",
       fields: [
         {
@@ -175,6 +186,18 @@ export const Brands: CollectionConfig = {
           required: true,
         },
       ],
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/src/components/RowLabel",
+            exportName: "RowLabel",
+            clientProps: {
+              textProp: "label",
+              fallbackLabelKey: "custom:brands:navLinkRowLabel",
+            } as RowLabelProps,
+          },
+        },
+      },
     },
     {
       name: "footer",
@@ -199,21 +222,6 @@ export const Brands: CollectionConfig = {
           type: "array",
           fields: [
             {
-              name: "name",
-              type: "text",
-              label: {
-                en: "Name",
-                es: "Nombre",
-              },
-              required: true,
-              admin: {
-                description: {
-                  en: "The name is only used within the CMS to easily identify the link group.",
-                  es: "El nombre solo se usa dentro del CMS para identificar fácilmente el grupo de enlaces.",
-                },
-              },
-            },
-            {
               name: "title",
               label: {
                 en: "Title",
@@ -231,6 +239,16 @@ export const Brands: CollectionConfig = {
               label: {
                 en: "Links",
                 es: "Enlaces",
+              },
+              labels: {
+                singular: {
+                  en: "Link",
+                  es: "Enlace",
+                },
+                plural: {
+                  en: "Links",
+                  es: "Enlaces",
+                },
               },
               type: "array",
               fields: [
@@ -258,17 +276,29 @@ export const Brands: CollectionConfig = {
                   required: true,
                 },
               ],
+              admin: {
+                components: {
+                  RowLabel: {
+                    path: "/src/components/RowLabel",
+                    exportName: "RowLabel",
+                    clientProps: {
+                      textProp: "label",
+                      fallbackLabelKey: "custom:common:linkRowLabel",
+                    } as RowLabelProps,
+                  },
+                },
+              },
             },
           ],
           admin: {
-            initCollapsed: true,
             components: {
               RowLabel: {
                 path: "/src/components/RowLabel",
                 exportName: "RowLabel",
-                serverProps: {
-                  propName: "name",
-                },
+                clientProps: {
+                  textProp: "title",
+                  fallbackLabelKey: "custom:common:linkGroupRowLabel",
+                } as RowLabelProps,
               },
             },
           },

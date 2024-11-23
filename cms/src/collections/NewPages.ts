@@ -5,7 +5,7 @@ import { layoutField } from "../fields/layout";
 import { canManageContent } from "../common/access-control";
 import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
-import { TranslationsKeys } from "@/translations";
+import { TranslationsKey } from "@/translations";
 
 export const NewPages: CollectionConfig = {
   slug: "new-pages",
@@ -79,7 +79,7 @@ export const NewPages: CollectionConfig = {
           siblingData,
         }: ValidateOptions<NewPage, NewPage, TextField, string>,
       ) => {
-        const t = req.t as unknown as TFunction<TranslationsKeys>;
+        const t = req.t as unknown as TFunction<TranslationsKey>;
 
         if (!siblingData.brand) {
           return t("custom:pages:pathname:pleaseSelectABrandFirst");
