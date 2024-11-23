@@ -111,16 +111,18 @@ export const Texts: CollectionConfig = {
       localized: true,
       hooks: {
         beforeChange: [
-          ({ data }) => {
-            return fullTextToTitle(getFullText());
+          async ({ data }) => {
+            return fullTextToTitle(await getFullText());
 
-            function getFullText() {
+            async function getFullText() {
               if (!data) throw new Error("Data is missing.");
               switch (data.type) {
                 case "plainText":
                   return data.text ?? "";
                 case "richText":
-                  return data.richText ? richTextToFullText(data.richText) : "";
+                  return data.richText
+                    ? await richTextToFullText(data.richText)
+                    : "";
               }
             }
           },

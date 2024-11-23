@@ -18,7 +18,7 @@ export const Banners: CollectionConfig = {
   defaultSort: "message.text",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["name"],
+    defaultColumns: ["name", "message"],
     listSearchableFields: ["message.text"],
     description: {
       en: "A banner is useful to announce promotions or important news and can have a call to action. Here you can create and manage banners. Go to Brands to enable a banner on all pages of the brand.",
@@ -40,7 +40,7 @@ export const Banners: CollectionConfig = {
     ],
   },
   fields: [
-    // TODO auto-generate title field like we have for other collections
+    // TODO auto-generate title field like we have for other collections – but not sure how to handle the locales
     {
       name: "name",
       label: {
