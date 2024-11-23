@@ -2,9 +2,7 @@ import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
-import { text } from "payload/shared";
 import { canManageContent } from "../common/access-control";
-import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -53,28 +51,8 @@ export const Pages: CollectionConfig = {
       },
       type: "text",
       required: true,
-      validate: (_: any, args: any) =>
-        text(args.data._id ? pageIdToUrl(args.data._id) : "", args),
       access: {
         update: () => false,
-      },
-      hooks: {
-        beforeChange: [
-          ({ data }) => {
-            if (!data) throw new Error("No data provided");
-
-            data._id = data.url ? urlToPageId(data.url as string) : "";
-
-            // ensures data is not stored in DB
-            delete data["url"];
-          },
-        ],
-        afterRead: [
-          ({ data }) => {
-            if (!data) throw new Error("No data provided");
-            return pageIdToUrl(data.id as string);
-          },
-        ],
       },
       admin: {
         position: "sidebar",
