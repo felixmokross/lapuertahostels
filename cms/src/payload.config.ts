@@ -19,8 +19,7 @@ import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
 import { Texts } from "./collections/texts/Texts";
 import { Links } from "./collections/Links";
-import { pageIdToUrl } from "./common/page-urls";
-import { Brand, Config, NewPage, Page } from "./payload-types";
+import { Config } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -41,11 +40,6 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
   admin: {
     user: Users.slug,
-    livePreview: {
-      url: getPreviewUrl,
-      collections: [NewPages.slug, Brands.slug],
-      globals: [Common.slug, Maintenance.slug],
-    },
     meta: {
       titleSuffix: " · La Puerta Hostels Admin",
       icons: [
@@ -142,32 +136,3 @@ export default buildConfig({
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
 });
-
-function getPreviewUrl({
-  locale,
-  collectionConfig,
-  globalConfig,
-  data,
-}: {
-  collectionConfig?: SanitizedCollectionConfig;
-  data: Record<string, any>;
-  globalConfig?: SanitizedGlobalConfig;
-  locale: Locale;
-}) {
-  const slug = collectionConfig?.slug || globalConfig!.slug;
-  const previewId = collectionConfig
-    ? `${collectionConfig.slug}/${data.id}`
-    : `globals/${globalConfig!.slug}`;
-  return `${process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL}${getPreviewPath(slug, data)}?lng=${locale}&preview=${previewId}`;
-}
-
-function getPreviewPath(slug: string, data: Record<string, any>) {
-  switch (slug) {
-    case NewPages.slug:
-      return (data as NewPage).pathname;
-    case Brands.slug:
-      return pageIdToUrl((data as Brand).homeLink as string);
-    default:
-      return "";
-  }
-}

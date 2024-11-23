@@ -63,22 +63,23 @@ export function RichText({
   elements,
   lineBreakHandling = "paragraph",
 }: RichTextProps) {
-  return (
-    <RichTextContext.Provider
-      value={{
-        elements: { ...defaultElements, ...elements },
-        lineBreakHandling,
-      }}
-    >
-      {content.map((elementNode, i) => (
-        <RenderedElementNode
-          key={i}
-          node={elementNode}
-          isLast={i === content.length - 1}
-        />
-      ))}
-    </RichTextContext.Provider>
-  );
+  return <>Rich Text not implemented</>;
+  // return (
+  //   <RichTextContext.Provider
+  //     value={{
+  //       elements: { ...defaultElements, ...elements },
+  //       lineBreakHandling,
+  //     }}
+  //   >
+  //     {content.map((elementNode, i) => (
+  //       <RenderedElementNode
+  //         key={i}
+  //         node={elementNode}
+  //         isLast={i === content.length - 1}
+  //       />
+  //     ))}
+  //   </RichTextContext.Provider>
+  // );
 }
 
 function RenderedElementNode({

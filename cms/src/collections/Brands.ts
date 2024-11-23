@@ -1,7 +1,14 @@
-import { CollectionConfig } from "payload";
+import {
+  CollectionConfig,
+  Locale,
+  Payload,
+  SanitizedCollectionConfig,
+} from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
+import { getLivePreviewUrl } from "@/common/live-preview";
+import { NewPage } from "@/payload-types";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -20,6 +27,36 @@ export const Brands: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["name", "logo", "homeLink", "updatedAt"],
     listSearchableFields: ["name"],
+    livePreview: {
+      url: async ({
+        data,
+        locale,
+        payload,
+      }: {
+        collectionConfig?: SanitizedCollectionConfig;
+        data: Record<string, any>;
+        locale: Locale;
+        payload: Payload;
+      }) => {
+        const homeLink = await payload.findByID({
+          collection: "links",
+          id: data.homeLink,
+          populate: {
+            links: {
+              newPage: true,
+            },
+          },
+        });
+
+        if (!(homeLink.newPage as NewPage | null)?.pathname)
+          throw new Error("Brand home page not found");
+        return getLivePreviewUrl(
+          (homeLink.newPage as NewPage).pathname,
+          `brands/${data.id}`,
+          locale.code,
+        );
+      },
+    },
   },
   access: {
     create: () => false,
@@ -44,6 +81,12 @@ export const Brands: CollectionConfig = {
       },
       type: "text",
       required: true,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        position: "sidebar",
+      },
     },
     {
       name: "name",

@@ -67,6 +67,7 @@ export const NewPages: CollectionConfig = {
         es: "Ruta",
       },
       type: "text",
+      index: true,
       required: true,
       access: {
         update: () => false,

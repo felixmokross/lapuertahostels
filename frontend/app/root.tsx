@@ -26,7 +26,6 @@ import {
   getRequestUrl,
   toRelativeUrl,
   toUrl,
-  urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
@@ -109,10 +108,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
-  const pageId = urlToId(toUrl(pageUrl).pathname);
-
   const [page, allBrands, common, maintenance] = await Promise.all([
-    tryGetPage(pageId, locale),
+    tryGetPage(toUrl(pageUrl).pathname, locale),
     getBrands(locale),
     getCommon(locale),
     getMaintenance(locale),

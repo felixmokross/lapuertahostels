@@ -10,7 +10,6 @@ import {
   buildLocalizedRelativeUrl,
   getRequestUrl,
   toUrl,
-  urlToId,
 } from "~/common/routing";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
@@ -49,13 +48,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
 export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = await handleIncomingRequest(request);
 
-  const pageId = urlToId(toUrl(pageUrl).pathname);
-  const dataPath = `pages/${pageId}`;
   const requestUrl = getRequestUrl(request);
-  const content = await tryGetPage(pageId, locale);
+  const content = await tryGetPage(toUrl(pageUrl).pathname, locale);
   if (!content) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }
+  const dataPath = `new-pages/${content.id}`;
 
   return {
     origin: requestUrl.origin,
