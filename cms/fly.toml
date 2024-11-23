@@ -20,6 +20,4 @@ primary_region = 'cdg'
   memory = '2gb'
   cpu_kind = 'shared'
   cpus = 1
-
-[deploy]
-  release_command = "npx payload migrate"
+  

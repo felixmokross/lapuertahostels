@@ -1,12 +1,7 @@
 import path from "path";
 
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import {
-  Locale,
-  SanitizedCollectionConfig,
-  SanitizedGlobalConfig,
-  buildConfig,
-} from "payload";
+import { buildConfig } from "payload";
 
 import { Users } from "./collections/Users";
 import { Maintenance } from "./globals/Maintenance";
@@ -28,6 +23,7 @@ import { NewPages } from "./collections/NewPages";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
+import { migrations } from "./migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -129,6 +125,7 @@ export default buildConfig({
   ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
+    prodMigrations: migrations,
   }),
   cors: process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL
     ? [process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL]
