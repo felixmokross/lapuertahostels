@@ -79,7 +79,7 @@ async function getData<TData, TResult>(
     });
 
     console.log(`Cache hit for ${pathname} in ${locale}`);
-    return JSON.parse(cache) as object;
+    return JSON.parse(cache) as TResult;
   } catch (e) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
 
