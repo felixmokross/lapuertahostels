@@ -37,32 +37,13 @@ type LineBreakHandling = "line-break" | "paragraph";
 
 const RichTextContext = createContext<RichTextContextValue | null>(null);
 
-const defaultElements: CustomElementConfig = {
-  bold: "strong",
-  italic: "em",
-  underline: "u",
-  strikethrough: "s",
-  code: "code",
-  ul: "ul",
-  ol: "ol",
-  li: "li",
-  h4: "h4",
-  h5: "h5",
-  link: "a",
-  paragraph: "p",
-};
-
 function useRichTextContext() {
   const context = useContext(RichTextContext);
   if (!context) throw new Error("RichTextContext is not provided.");
   return context;
 }
 
-export function RichText({
-  content,
-  elements,
-  lineBreakHandling = "paragraph",
-}: RichTextProps) {
+export function RichText() {
   return <>Rich Text not implemented</>;
   // return (
   //   <RichTextContext.Provider

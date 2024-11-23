@@ -15,11 +15,11 @@ export const Banners: CollectionConfig = {
       es: "Banners",
     },
   },
-  defaultSort: "name",
+  defaultSort: "message.text",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["name", "message"],
-    listSearchableFields: ["name"],
+    defaultColumns: ["name"],
+    listSearchableFields: ["message.text"],
     description: {
       en: "A banner is useful to announce promotions or important news and can have a call to action. Here you can create and manage banners. Go to Brands to enable a banner on all pages of the brand.",
       es: "Un banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Aquí puedes crear y gestionar banners. Ve a Marcas para habilitar un banner en todas las páginas de la marca.",
@@ -40,6 +40,7 @@ export const Banners: CollectionConfig = {
     ],
   },
   fields: [
+    // TODO auto-generate title field like we have for other collections
     {
       name: "name",
       label: {
