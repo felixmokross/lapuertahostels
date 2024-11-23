@@ -40,7 +40,6 @@ const puertaBrand = brand({
   footer: {
     linkGroups: [
       {
-        name: "Hotel",
         title: plainText("Hotel"),
         links: [
           {
@@ -62,7 +61,6 @@ const puertaBrand = brand({
         ],
       },
       {
-        name: "Experiences",
         title: plainText("Experiences"),
         links: [
           {
@@ -84,7 +82,6 @@ const puertaBrand = brand({
         ],
       },
       {
-        name: "Legal",
         title: plainText("Legal"),
         links: [
           {
