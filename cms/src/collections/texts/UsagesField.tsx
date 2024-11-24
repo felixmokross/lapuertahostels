@@ -8,12 +8,7 @@ export async function UsagesField({
   payload: Payload;
   data: Text;
 }) {
-  const collections: CollectionSlug[] = [
-    "new-pages",
-    "banners",
-    "brands",
-    "links",
-  ];
+  const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
 
   const usages: Usage[] = [];
 
