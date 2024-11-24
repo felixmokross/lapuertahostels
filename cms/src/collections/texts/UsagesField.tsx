@@ -9,59 +9,55 @@ export async function UsagesField({
   data: Text;
 }) {
   const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
-
-  const usages: Usage[] = [];
-
-  for (const collectionSlug of collections) {
-    const items = await payload.find({
-      collection: collectionSlug,
-      pagination: false,
-      depth: 0,
-    });
-
-    const collectionConfig = payload.collections[collectionSlug].config;
-
-    for (const item of items.docs) {
-      usages.push(
-        ...findTextUsagesOnCollection(
-          data.id,
-          item,
-          collectionConfig.fields,
-        ).map<Usage>((path) => ({
-          type: "collection",
-          collection: collectionSlug,
-          id: item.id,
-          fieldPath: path,
-        })),
-      );
-    }
-  }
-
   const globals: GlobalSlug[] = ["common", "maintenance"];
 
-  for (const globalSlug of globals) {
-    const global = await payload.findGlobal({
-      slug: globalSlug,
-      depth: 0,
-    });
+  const usages = (
+    await Promise.all([
+      ...collections.map(async (collectionSlug) => {
+        const items = await payload.find({
+          collection: collectionSlug,
+          pagination: false,
+          depth: 0,
+        });
 
-    const globalConfig = payload.globals.config.find(
-      (c) => c.slug === globalSlug,
-    );
-    if (!globalConfig) throw new Error("Global config not found");
+        const collectionConfig = payload.collections[collectionSlug].config;
 
-    usages.push(
-      ...findTextUsagesOnCollection(
-        data.id,
-        global,
-        globalConfig.fields,
-      ).map<Usage>((path) => ({
-        type: "global",
-        global: globalSlug,
-        fieldPath: path,
-      })),
-    );
-  }
+        return items.docs.flatMap((item) =>
+          findTextUsagesOnCollection(
+            data.id,
+            item,
+            collectionConfig.fields,
+          ).map<Usage>((path) => ({
+            type: "collection",
+            collection: collectionSlug,
+            id: item.id,
+            fieldPath: path,
+          })),
+        );
+      }),
+      ...globals.map(async (globalSlug) => {
+        const global = await payload.findGlobal({
+          slug: globalSlug,
+          depth: 0,
+        });
+
+        const globalConfig = payload.globals.config.find(
+          (c) => c.slug === globalSlug,
+        );
+        if (!globalConfig) throw new Error("Global config not found");
+
+        return findTextUsagesOnCollection(
+          data.id,
+          global,
+          globalConfig.fields,
+        ).map<Usage>((path) => ({
+          type: "global",
+          global: globalSlug,
+          fieldPath: path,
+        }));
+      }),
+    ])
+  ).flat();
 
   return <pre>{JSON.stringify(usages, null, 2)}</pre>;
 }
