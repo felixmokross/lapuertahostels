@@ -4,6 +4,7 @@ import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { canManageContent } from "../common/access-control";
 
+// TODO remove this once all envs have migrated to NewPages
 export const Pages: CollectionConfig = {
   slug: "pages",
   defaultSort: "id",

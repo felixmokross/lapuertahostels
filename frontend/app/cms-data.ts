@@ -176,7 +176,7 @@ export async function getBrands(locale: string) {
 }
 
 export async function purgeCacheFor(url: string) {
-  const cacheFolderPath = getCacheFolder(url);
+  const cacheFolderPath = getCacheFolder(url.replace("/", "_"));
   await deleteFolderIfExists(cacheFolderPath);
 }
 
