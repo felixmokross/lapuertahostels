@@ -8,10 +8,15 @@ export async function UsagesField({
   payload: Payload;
   data: Text;
 }) {
+  const usages = await findUsages(data, payload);
+
+  return <pre>{JSON.stringify(usages, null, 2)}</pre>;
+}
+
+export async function findUsages(data: Text, payload: Payload) {
   const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
   const globals: GlobalSlug[] = ["common", "maintenance"];
-
-  const usages = (
+  return (
     await Promise.all([
       ...collections.map(async (collectionSlug) => {
         const items = await payload.find({
@@ -58,8 +63,6 @@ export async function UsagesField({
       }),
     ])
   ).flat();
-
-  return <pre>{JSON.stringify(usages, null, 2)}</pre>;
 }
 
 type Usage = (

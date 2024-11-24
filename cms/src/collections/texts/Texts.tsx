@@ -3,6 +3,8 @@ import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
+import { findUsages } from "./UsagesField";
+import { Text } from "@/payload-types";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -152,6 +154,22 @@ export const Texts: CollectionConfig = {
         components: {
           Field: "src/collections/texts/UsagesField#UsagesField",
         },
+      },
+    },
+    {
+      type: "number",
+      name: "usageCount",
+      virtual: true,
+      admin: {
+        readOnly: true,
+      },
+      hooks: {
+        afterRead: [
+          async ({ data, req }) => {
+            if (!data) throw new Error("Data is missing.");
+            return (await findUsages(data as Text, req.payload)).length;
+          },
+        ],
       },
     },
   ],
