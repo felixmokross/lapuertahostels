@@ -130,7 +130,7 @@ export const Texts: CollectionConfig = {
       },
       admin: {
         description: {
-          en: "This field is generated automatically and is only used internally in the CMS to identity the text.",
+          en: "This field is generated automatically and is only used internally in the CMS to identify the text.",
           es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
         },
         position: "sidebar",
@@ -142,6 +142,15 @@ export const Texts: CollectionConfig = {
       admin: {
         components: {
           Field: "src/collections/texts/TranslateField#TranslateField",
+        },
+      },
+    },
+    {
+      type: "ui",
+      name: "usages",
+      admin: {
+        components: {
+          Field: "src/collections/texts/UsagesField#UsagesField",
         },
       },
     },
