@@ -4,12 +4,8 @@ import { canManageContent } from "../common/access-control";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { showField } from "../fields/show";
-
-const socialPlatformOptions = [
-  { label: "Facebook", value: "facebook" },
-  { label: "Instagram", value: "instagram" },
-  { label: "WhatsApp", value: "whatsapp" },
-];
+import { socialPlatformOptions } from "@/common/social-platforms";
+import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -124,14 +120,13 @@ export const Common: GlobalConfig = {
           admin: {
             initCollapsed: true,
             components: {
-              // TODO migrate this row label
-              // RowLabel: ({ data }) =>
-              //   socialPlatformOptions.find(
-              //     (p) =>
-              //       p.value ===
-              //       (data as CommonType["footer"]["socialLinks"][number])
-              //         .platform,
-              //   )?.label,
+              RowLabel: {
+                path: "@/components/SocialPlatformRowLabel",
+                exportName: "SocialPlatformRowLabel",
+                clientProps: {
+                  fallbackLabelKey: "custom:common:socialLinkRowLabel",
+                } as SocialPlatformRowLabelProps,
+              },
             },
           },
         },

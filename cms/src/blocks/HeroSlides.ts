@@ -84,7 +84,7 @@ export const HeroSlidesBlock: Block = {
           RowLabel: {
             path: "/src/components/RowLabel",
             exportName: "RowLabel",
-            serverProps: {
+            clientProps: {
               propName: "name",
             },
           },

@@ -5,8 +5,7 @@ export const translations = {
   en: {
     custom: {
       common: {
-        linkRowLabel: "Link {{ n }}",
-        linkGroupRowLabel: "Link Group {{ n }}",
+        socialLinkRowLabel: "Social Link {{ n }}",
       },
       validation: {
         mustBeValidUrl: "Must be a valid URL",
@@ -34,6 +33,8 @@ export const translations = {
         navLinkRowLabel: "Navigation Link {{ n }}",
       },
       rowLabel: {
+        link: "Link {{ n }}",
+        linkGroup: "Link Group {{ n }}",
         item: "Item {{ n }}",
       },
     },
@@ -41,8 +42,7 @@ export const translations = {
   es: {
     custom: {
       common: {
-        linkRowLabel: "Enlace {{ n }}",
-        linkGroupRowLabel: "Grupo de enlaces {{ n }}",
+        socialLinkRowLabel: "Enlace social {{ n }}",
       },
       validation: {
         mustBeValidUrl: "Debe ser una URL válida",
@@ -70,6 +70,8 @@ export const translations = {
         navLinkRowLabel: "Enlace de navegación {{ n }}",
       },
       rowLabel: {
+        link: "Enlace {{ n }}",
+        linkGroup: "Grupo de enlaces {{ n }}",
         item: "Elemento {{ n }}",
       },
     },

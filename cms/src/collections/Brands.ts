@@ -283,7 +283,7 @@ export const Brands: CollectionConfig = {
                     exportName: "RowLabel",
                     clientProps: {
                       textProp: "label",
-                      fallbackLabelKey: "custom:common:linkRowLabel",
+                      fallbackLabelKey: "custom:rowLabel:link",
                     } as RowLabelProps,
                   },
                 },
@@ -297,7 +297,7 @@ export const Brands: CollectionConfig = {
                 exportName: "RowLabel",
                 clientProps: {
                   textProp: "title",
-                  fallbackLabelKey: "custom:common:linkGroupRowLabel",
+                  fallbackLabelKey: "custom:rowLabel:linkGroup",
                 } as RowLabelProps,
               },
             },
