@@ -154,7 +154,6 @@ export const Links: CollectionConfig = {
         create: () => false,
         update: () => false,
       },
-      localized: true,
       hooks: {
         beforeChange: [
           async ({ data, req }) => {
