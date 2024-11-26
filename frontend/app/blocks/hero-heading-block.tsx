@@ -3,7 +3,7 @@ import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
 import { getSrcFromMedia } from "~/common/media";
-import { simpleElement, text } from "~/common/rich-text.builders";
+import { richTextRoot, simpleElement, text } from "~/common/rich-text.builders";
 
 type HeroHeadingBlockProps = NonNullable<NewPage["hero"]>[number] & {
   blockType: "HeroHeading";
@@ -34,7 +34,9 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         position="center"
         text={
           {
-            richText: [simpleElement("paragraph", text(heading.text!))],
+            richText: richTextRoot(
+              simpleElement("paragraph", text(heading.text!)),
+            ),
           } as unknown as Text
         }
         overlay="intense"
