@@ -106,7 +106,7 @@ export function page(pathname: string): NewPage {
   return {
     id: createId(),
     pathname,
-    brand: brand(),
+    brand: null as unknown as Brand,
     createdAt: date,
     updatedAt: date,
   };
