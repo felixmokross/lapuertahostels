@@ -37,34 +37,48 @@ type LineBreakHandling = "line-break" | "paragraph";
 
 const RichTextContext = createContext<RichTextContextValue | null>(null);
 
+const defaultElements: CustomElementConfig = {
+  bold: "strong",
+  italic: "em",
+  underline: "u",
+  strikethrough: "s",
+  code: "code",
+  ul: "ul",
+  ol: "ol",
+  li: "li",
+  h4: "h4",
+  h5: "h5",
+  link: "a",
+  paragraph: "p",
+};
+
 function useRichTextContext() {
   const context = useContext(RichTextContext);
   if (!context) throw new Error("RichTextContext is not provided.");
   return context;
 }
 
-export function RichText(_: {
-  content: RichTextObject;
-  elements?: Partial<CustomElementConfig>;
-  lineBreakHandling?: LineBreakHandling;
-}) {
-  return <>Rich Text not implemented</>;
-  // return (
-  //   <RichTextContext.Provider
-  //     value={{
-  //       elements: { ...defaultElements, ...elements },
-  //       lineBreakHandling,
-  //     }}
-  //   >
-  //     {content.map((elementNode, i) => (
-  //       <RenderedElementNode
-  //         key={i}
-  //         node={elementNode}
-  //         isLast={i === content.length - 1}
-  //       />
-  //     ))}
-  //   </RichTextContext.Provider>
-  // );
+export function RichText({
+  content,
+  elements,
+  lineBreakHandling = "paragraph",
+}: RichTextProps) {
+  return (
+    <RichTextContext.Provider
+      value={{
+        elements: { ...defaultElements, ...elements },
+        lineBreakHandling,
+      }}
+    >
+      {content.map((elementNode, i) => (
+        <RenderedElementNode
+          key={i}
+          node={elementNode}
+          isLast={i === content.length - 1}
+        />
+      ))}
+    </RichTextContext.Provider>
+  );
 }
 
 function RenderedElementNode({
