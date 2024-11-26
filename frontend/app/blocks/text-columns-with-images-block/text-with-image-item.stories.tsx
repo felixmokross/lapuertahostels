@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { TextWithImageItem } from "./text-with-image-item";
-import { plain, text } from "~/common/rich-text.builders";
+import { simpleElement, text } from "~/common/rich-text.builders";
 import {
   callToAction,
   media,
@@ -34,7 +34,10 @@ export const Default: Story = {
     image: media("_DSC0299.jpg"),
     heading: plainText("Example Heading"),
     text: richText(
-      plain(text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")),
+      simpleElement(
+        "paragraph",
+        text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+      ),
     ),
     cta: callToAction("Learn More"),
     size: "full",

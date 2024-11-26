@@ -8,14 +8,18 @@ export async function refreshCacheForAllPages(
   actionType: RefreshCacheActionType,
 ) {
   const pages = (
-    await req.payload.find({ collection: "pages", pagination: false, depth: 0 })
+    await req.payload.find({
+      collection: "new-pages",
+      pagination: false,
+      depth: 0,
+    })
   ).docs;
 
   console.log(`Refreshing cache for all pages (${actionType}).`);
   for (const page of pages) {
     await refreshCacheForTarget({
       type: actionType,
-      pageUrl: page.url,
+      pageUrl: page.pathname,
       dataUrl: `${NewPages.slug}/${page.id}`,
     });
   }

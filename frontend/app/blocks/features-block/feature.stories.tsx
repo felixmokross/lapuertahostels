@@ -7,7 +7,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { plain, text } from "~/common/rich-text.builders";
+import { simpleElement, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Features Block/Feature",
@@ -34,7 +34,8 @@ export const ImageLeft: Story = {
     image: media("_DSC0299.jpg"),
     heading: plainText("Beautiful Rooms"),
     text: richText(
-      plain(
+      simpleElement(
+        "paragraph",
         text(
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut odio in quam interdum vulputate. Morbi id sapien in libero vehicula dignissim. Curabitur eget urna eu mauris consectetur imperdiet. Proinconsequat libero et justo cursus ultricies.",
         ),

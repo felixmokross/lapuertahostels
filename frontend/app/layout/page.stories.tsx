@@ -10,7 +10,7 @@ import {
   richText,
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, plain, text } from "~/common/rich-text.builders";
+import { bold, simpleElement, text } from "~/common/rich-text.builders";
 import { NewPage } from "~/payload-types";
 
 const meta = {
@@ -50,7 +50,11 @@ export const Puerta: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Hike Through\nthe "), bold("Tayrona Park")),
+                  simpleElement(
+                    "paragraph",
+                    text("Hike Through\nthe "),
+                    bold("Tayrona Park"),
+                  ),
                 ),
                 position: "top-left",
                 overlay: "moderate",
@@ -63,7 +67,13 @@ export const Puerta: Story = {
               image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(plain(text("Find the\n"), bold("Lost City"))),
+                text: richText(
+                  simpleElement(
+                    "paragraph",
+                    text("Find the\n"),
+                    bold("Lost City"),
+                  ),
+                ),
                 position: "top-right",
                 overlay: "moderate",
                 cta: callToAction("Read More", "primary"),
@@ -76,7 +86,11 @@ export const Puerta: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Follow the\n"), bold("Minca River")),
+                  simpleElement(
+                    "paragraph",
+                    text("Follow the\n"),
+                    bold("Minca River"),
+                  ),
                 ),
                 position: "bottom-left",
                 overlay: "moderate",
@@ -94,7 +108,8 @@ export const Puerta: Story = {
         {
           heading: plainText("Discover the Colombian Costa Caribe"),
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text("Hike through the breath-taking beauty of "),
               bold("Tayrona National Park"),
               text(", discover the mysterious "),
@@ -115,7 +130,8 @@ export const Puerta: Story = {
           blockType: "AccommodationSelector",
           heading: plainText("Your Home Base for a Perfect Trip"),
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text("Choose between our "),
               bold("two accommodations"),
               text(" in Santa Marta. "),
@@ -131,7 +147,8 @@ export const Puerta: Story = {
               }),
               image: media("Frente.jpg"),
               description: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text(
                     "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
                   ),
@@ -147,7 +164,8 @@ export const Puerta: Story = {
               }),
               image: media("10.jpg"),
               description: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text(
                     "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
                   ),
@@ -161,12 +179,19 @@ export const Puerta: Story = {
           elementId: "santa-marta",
           image: media("oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg"),
           overlayTitle: {
-            text: richText(plain(text("Do You Know "), bold("Santa Marta?"))),
+            text: richText(
+              simpleElement(
+                "paragraph",
+                text("Do You Know "),
+                bold("Santa Marta?"),
+              ),
+            ),
             position: "top-right",
             overlay: "moderate",
           },
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text("Santa Marta, nestled "),
               bold(
                 "between the Caribbean Sea and the Sierra Nevada mountains, ",
@@ -192,7 +217,8 @@ export const Puerta: Story = {
         {
           heading: plainText("About Us"),
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text("Step into our "),
               bold("Santa Marta haven,"),
               text(" where the "),
@@ -201,7 +227,8 @@ export const Puerta: Story = {
                 " and the Sierra Nevada mountains cradle our dreams. Three years ago, a passionate soul embarked on a journey to craft more than just a hostel—a place where every traveler feels the warmth of connection and the embrace of a second home.",
               ),
             ),
-            plain(
+            simpleElement(
+              "paragraph",
               text(
                 "We didn’t just paint walls; we painted stories. Our founder, driven by a ",
               ),
@@ -210,7 +237,8 @@ export const Puerta: Story = {
                 " worked tirelessly to create a space that resonates with the city’s soul. From vibrant murals that speak of local tales to cozy corners designed for shared laughter, every inch is a canvas of our commitment to authentic experiences.",
               ),
             ),
-            plain(
+            simpleElement(
+              "paragraph",
               text(
                 "Collaborating with skilled local artisans, we’ve woven the spirit of Santa Marta into the very fabric of our hostel. The past three years have seen our space evolve into a ",
               ),
@@ -219,7 +247,8 @@ export const Puerta: Story = {
               ),
               text(" for those exploring Santa Marta’s wonders."),
             ),
-            plain(
+            simpleElement(
+              "paragraph",
               text(
                 "Join us in this heartfelt journey—where stories come to life, friendships find a common thread, and the enchantment of Santa Marta unfolds at our intimately personal hostel.",
               ),
@@ -264,7 +293,11 @@ export const Aqua: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Welcome to Your\n"), bold("Vacation Home")),
+                  simpleElement(
+                    "paragraph",
+                    text("Welcome to Your\n"),
+                    bold("Vacation Home"),
+                  ),
                 ),
                 overlay: "intense",
                 cta: callToAction("Reserve Now", "primary"),
@@ -277,7 +310,8 @@ export const Aqua: Story = {
         {
           heading: plainText("Welcome to Our Boutique Hostel"),
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text("Nestled in the vibrant heart of Santa Marta, our "),
               bold("boutique hostel"),
               text(" offers an intimate escape with a touch of "),
@@ -299,7 +333,8 @@ export const Aqua: Story = {
               image: media("IMG_6244.jpg"),
               heading: plainText("Time to Play"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Join fellow travelers in our "),
                   bold("cozy community area"),
                   text(
@@ -314,7 +349,8 @@ export const Aqua: Story = {
               image: media("IMG_6591.jpg"),
               heading: plainText("Relax on the Terrace"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Indulge in our "),
                   bold("Deluxe room"),
                   text(", featuring a "),
@@ -329,7 +365,8 @@ export const Aqua: Story = {
               image: media("IMG_6591.jpg"),
               heading: plainText("Right in the City Center"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Located in the "),
                   bold("historic city center,"),
                   text(" our hostel is just a short stroll from the "),
@@ -346,12 +383,14 @@ export const Aqua: Story = {
         {
           heading: plainText("Come By"),
           text: richText(
-            plain(
+            simpleElement(
+              "paragraph",
               text(
                 "Discover the charm of Santa Marta at our boutique hostel, ideally located in the historic city center. Steps from pristine beaches and local attractions, our welcoming community area is perfect for connecting with fellow travelers over a board game.",
               ),
             ),
-            plain(
+            simpleElement(
+              "paragraph",
               text(
                 "For a touch of luxury, our deluxe room with a private terrace offers a tranquil retreat. Relax with a cool drink and enjoy the beautiful surroundings after a day of adventure. Experience our warm hospitality and make unforgettable memories in the heart of Santa Marta.",
               ),
@@ -392,7 +431,11 @@ export const Azul: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Welcome to Your\n"), bold("Vacation Home")),
+                  simpleElement(
+                    "paragraph",
+                    text("Welcome to Your\n"),
+                    bold("Vacation Home"),
+                  ),
                 ),
                 overlay: "intense",
                 position: "center",
@@ -405,7 +448,11 @@ export const Azul: Story = {
               overlayTitle: {
                 show: true,
                 text: richText(
-                  plain(text("Cool Down\n"), bold(" by the Pool")),
+                  simpleElement(
+                    "paragraph",
+                    text("Cool Down\n"),
+                    bold(" by the Pool"),
+                  ),
                 ),
                 overlay: "subtle",
                 position: "bottom-left",
@@ -423,7 +470,8 @@ export const Azul: Story = {
               image: media("_DSC0358.jpg"),
               heading: plainText("Feel Newborn"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("A day full of exploring the city can be tiring. Our "),
                   bold("air-conditioned"),
                   text(" rooms with "),
@@ -438,7 +486,8 @@ export const Azul: Story = {
               image: media("_DSC0325.jpg"),
               heading: plainText("Bring Your Family"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Traveling with your loved ones? We offer "),
                   bold("Twin Rooms"),
                   text(
@@ -451,7 +500,8 @@ export const Azul: Story = {
               image: media("_DSC0299.jpg"),
               heading: plainText("Cool Down by the Pool"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Our "),
                   bold("courtyard pool"),
                   text(
@@ -464,7 +514,8 @@ export const Azul: Story = {
               image: media("_DSC0299.jpg"),
               heading: plainText("A Beautiful Courtyard"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text(
                     "Our courtyard is the perfect place to enjoy a cocktail or two. With the nice little ",
                   ),
@@ -479,7 +530,8 @@ export const Azul: Story = {
               image: media("_DSC0820.jpg"),
               heading: plainText("Freshen Up"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Experience our impeccably appointed bathrooms, "),
                   bold("thoughtfully equipped"),
                   text(
@@ -492,7 +544,8 @@ export const Azul: Story = {
               image: media("_dsc0989.jpg"),
               heading: plainText("Enjoy the Morning"),
               text: richText(
-                plain(
+                simpleElement(
+                  "paragraph",
                   text("Start your day right with a tinto on your "),
                   bold("private terrace"),
                   text(" and listen to Santa Marta coming to life."),

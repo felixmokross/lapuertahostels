@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { StoryBlock } from "./story-block";
 import { media, plainText, richText } from "~/common/cms-data.builders";
-import { bold, plain, text } from "~/common/rich-text.builders";
+import { bold, simpleElement, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Story Block",
@@ -19,7 +19,8 @@ export const Default: Story = {
     blockType: "Story",
     heading: plainText("About Us"),
     text: richText(
-      plain(
+      simpleElement(
+        "paragraph",
         text("Step into our "),
         bold("Santa Marta haven,"),
         text(" where the "),
@@ -28,7 +29,8 @@ export const Default: Story = {
           " and the Sierra Nevada mountains cradle our dreams. Three years ago, a passionate soul embarked on a journey to craft more than just a hostel—a place where every traveler feels the warmth of connection and the embrace of a second home.",
         ),
       ),
-      plain(
+      simpleElement(
+        "paragraph",
         text(
           "We didn’t just paint walls; we painted stories. Our founder, driven by a ",
         ),
@@ -37,7 +39,8 @@ export const Default: Story = {
           " worked tirelessly to create a space that resonates with the city’s soul. From vibrant murals that speak of local tales to cozy corners designed for shared laughter, every inch is a canvas of our commitment to authentic experiences.",
         ),
       ),
-      plain(
+      simpleElement(
+        "paragraph",
         text(
           "Collaborating with skilled local artisans, we’ve woven the spirit of Santa Marta into the very fabric of our hostel. The past three years have seen our space evolve into a ",
         ),
@@ -46,7 +49,8 @@ export const Default: Story = {
         ),
         text(" for those exploring Santa Marta’s wonders."),
       ),
-      plain(
+      simpleElement(
+        "paragraph",
         text(
           "Join us in this heartfelt journey—where stories come to life, friendships find a common thread, and the enchantment of Santa Marta unfolds at our intimately personal hostel.",
         ),

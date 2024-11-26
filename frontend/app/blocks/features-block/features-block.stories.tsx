@@ -7,7 +7,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { bold, plain, text } from "~/common/rich-text.builders";
+import { bold, simpleElement, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Features Block",
@@ -29,7 +29,8 @@ export const Default: Story = {
         image: media("_DSC0358.jpg"),
         heading: plainText("Feel Refreshed"),
         text: richText(
-          plain(
+          simpleElement(
+            "paragraph",
             text("A day full of exploring the city can be tiring. Our "),
             bold("air-conditioned"),
             text(" rooms with "),
@@ -42,7 +43,8 @@ export const Default: Story = {
         image: media("_DSC0299.jpg"),
         heading: plainText("Cool Down in the Pool"),
         text: richText(
-          plain(
+          simpleElement(
+            "paragraph",
             text("Our "),
             bold("courtyard pool"),
             text(
@@ -55,7 +57,8 @@ export const Default: Story = {
         image: media("_DSC0325.jpg"),
         heading: plainText("Bring Your Family"),
         text: richText(
-          plain(
+          simpleElement(
+            "paragraph",
             text("Traveling with your loved ones? We offer "),
             bold("Twin Rooms"),
             text(" allowing an occupancy of up to four people."),

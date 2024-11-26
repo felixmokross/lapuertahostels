@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { Banner, Brand, Link, Media, NewPage, Text } from "~/payload-types";
-import { RichTextObject } from "./rich-text";
+import { ElementNode } from "./rich-text";
+import { richTextRoot } from "./rich-text.builders";
 
 export function plainText(text: string): Text {
   return {
@@ -12,12 +13,11 @@ export function plainText(text: string): Text {
   };
 }
 
-export function richText(...richText: RichTextObject): Text {
+export function richText(...nodes: ElementNode[]): Text {
   return {
     id: createId(),
     type: "richText",
-    // @ts-expect-error temporary fix
-    richText,
+    richText: richTextRoot(...nodes) as unknown as Text["richText"],
     createdAt: date,
     updatedAt: date,
   };

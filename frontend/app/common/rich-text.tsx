@@ -7,6 +7,15 @@ import {
   useContext,
 } from "react";
 
+export const IS_BOLD = 1;
+export const IS_ITALIC = 1 << 1;
+export const IS_STRIKETHROUGH = 1 << 2;
+export const IS_UNDERLINE = 1 << 3;
+export const IS_CODE = 1 << 4;
+export const IS_SUBSCRIPT = 1 << 5;
+export const IS_SUPERSCRIPT = 1 << 6;
+export const IS_HIGHLIGHT = 1 << 7;
+
 export type RichTextProps = {
   content: RichTextObject;
   lineBreakHandling?: LineBreakHandling;
@@ -70,11 +79,11 @@ export function RichText({
         lineBreakHandling,
       }}
     >
-      {content.map((elementNode, i) => (
+      {content.root.children.map((elementNode, i) => (
         <RenderedElementNode
           key={i}
           node={elementNode}
-          isLast={i === content.length - 1}
+          isLast={i === content.root.children.length - 1}
         />
       ))}
     </RichTextContext.Provider>
@@ -97,24 +106,38 @@ function RenderedElementNode({
     />
   ));
 
-  if (!("type" in node) || node.type === "p") {
-    return <Line isLast={isLast}>{renderedChildren}</Line>;
-  }
-
   switch (node.type) {
-    case "h4":
-      return <elements.h4>{renderedChildren}</elements.h4>;
-    case "h5":
-      return <elements.h5>{renderedChildren}</elements.h5>;
-    case "ul":
-      return <elements.ul>{renderedChildren}</elements.ul>;
-    case "ol":
-      return <elements.ol>{renderedChildren}</elements.ol>;
-    case "li":
+    case "paragraph":
+      return <Line isLast={isLast}>{renderedChildren}</Line>;
+    case "heading":
+      return <Heading node={node}>{renderedChildren}</Heading>;
+    case "list":
+      return <List node={node}>{renderedChildren}</List>;
+    case "listitem":
       return <elements.li>{renderedChildren}</elements.li>;
     case "link":
-      return <elements.link href={node.url}>{renderedChildren}</elements.link>;
+      return (
+        <elements.link href={node.fields.url}>{renderedChildren}</elements.link>
+      );
   }
+}
+
+function Heading({
+  children,
+  node,
+}: PropsWithChildren<{ node: HeadingElementNode }>) {
+  const { elements } = useRichTextContext();
+  const HeadingElement = elements[node.tag];
+  return <HeadingElement>{children}</HeadingElement>;
+}
+
+function List({
+  children,
+  node,
+}: PropsWithChildren<{ node: ListElementNode }>) {
+  const { elements } = useRichTextContext();
+  const ListElement = elements[node.tag];
+  return <ListElement>{children}</ListElement>;
 }
 
 function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
@@ -146,23 +169,23 @@ function RenderedTextNode({ node }: { node: TextNode }) {
 
   let result = <RenderedTextLines text={node.text} />;
 
-  if (node.bold) {
+  if (node.format & IS_BOLD) {
     result = <elements.bold>{result}</elements.bold>;
   }
 
-  if (node.italic) {
+  if (node.format & IS_ITALIC) {
     result = <elements.italic>{result}</elements.italic>;
   }
 
-  if (node.underline) {
+  if (node.format & IS_UNDERLINE) {
     result = <elements.underline>{result}</elements.underline>;
   }
 
-  if (node.strikethrough) {
+  if (node.format & IS_STRIKETHROUGH) {
     result = <elements.strikethrough>{result}</elements.strikethrough>;
   }
 
-  if (node.code) {
+  if (node.format & IS_CODE) {
     result = <elements.code>{result}</elements.code>;
   }
 
@@ -179,32 +202,40 @@ function RenderedTextLines({ text }: { text: string }) {
   ));
 }
 
-export type RichTextObject = ElementNode[];
+export type RichTextObject = {
+  root: { type: "root"; children: ElementNode[] };
+};
 
-export type TextNode = { text: string } & { [key in LeafType]?: boolean };
-
-export type LeafType =
-  | "bold"
-  | "italic"
-  | "underline"
-  | "strikethrough"
-  | "code";
+export type TextNode = { text: string; format: number };
 
 export type ElementNode =
-  | PlainElementNode
   | SimpleElementNode
-  | LinkElementNode;
+  | LinkElementNode
+  | ListElementNode
+  | HeadingElementNode;
 
 export type Node = ElementNode | TextNode;
 
 type BaseElementNode = { children: Node[] };
 
-export type PlainElementNode = BaseElementNode & { type?: never };
 export type SimpleElementNode = BaseElementNode & {
-  type: "h4" | "h5" | "ul" | "ol" | "li" | "indent" | "p";
+  type: "listitem" | "paragraph";
 };
+
+export type HeadingElementNode = BaseElementNode & {
+  type: "heading";
+  tag: "h4" | "h5";
+};
+
 export type LinkElementNode = BaseElementNode & {
   type: "link";
-  linkType: "custom";
-  url: string;
+  fields: {
+    linkType: "custom";
+    url: string;
+  };
+};
+
+export type ListElementNode = BaseElementNode & {
+  type: "list";
+  tag: "ul" | "ol";
 };
