@@ -1,5 +1,4 @@
 import { CollectionConfig } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { canManageContent } from "../common/access-control";

@@ -4,7 +4,8 @@ import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
 import { Text } from "@/payload-types";
-import { findUsages } from "./usages";
+import { findUsages, Usage } from "./usages";
+import { NewPages } from "../NewPages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -31,8 +32,35 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["title"],
   },
   hooks: {
-    // TODO make this smarter, we now are able to find out the usages of the texts
-    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
+    afterChange: [
+      async ({ req, doc }) => {
+        const pageIds = [
+          ...new Set(
+            (doc.usages as Usage[])
+              .filter(
+                (u) => u.type === "collection" && u.collection === "new-pages",
+              )
+              .map((u) => (u as Usage & { type: "collection" }).id),
+          ),
+        ];
+
+        // TODO support further usage types
+        for (const pageId of pageIds) {
+          const page = await req.payload.findByID({
+            collection: "new-pages",
+            id: pageId,
+          });
+          await cachePurgeHook(
+            {
+              type: "target",
+              cacheKey: `${NewPages.slug}_${page.pathname.replace("/", ":")}`,
+              pageUrl: page.pathname,
+            },
+            req,
+          );
+        }
+      },
+    ],
   },
   endpoints: [translateEndpoint],
   fields: [
