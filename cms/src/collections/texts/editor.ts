@@ -1,35 +1,53 @@
 import {
+  BoldFeature,
   defaultEditorConfig,
-  defaultEditorFeatures,
   FixedToolbarFeature,
   getEnabledNodes,
+  HeadingFeature,
+  InlineCodeFeature,
+  ItalicFeature,
   lexicalEditor,
+  LinkFeature,
+  OrderedListFeature,
+  ParagraphFeature,
   sanitizeServerEditorConfig,
+  StrikethroughFeature,
+  UnderlineFeature,
+  UnorderedListFeature,
 } from "@payloadcms/richtext-lexical";
 import { SlateToLexicalFeature } from "@payloadcms/richtext-lexical/migrate";
 import { createHeadlessEditor } from "@lexical/headless";
 import payloadConfig from "@/payload.config";
 
-// TODO remove this once we have migrated to Lexical on all environments
-const customFeatures = [
-  SlateToLexicalFeature({ disableHooks: true }),
+const features = [
+  BoldFeature(),
+  ItalicFeature(),
+  UnderlineFeature(),
+  StrikethroughFeature(),
+  InlineCodeFeature(),
+  ParagraphFeature(),
+  HeadingFeature({ enabledHeadingSizes: ["h4", "h5"] }),
+  UnorderedListFeature(),
+  OrderedListFeature(),
+  LinkFeature({ enabledCollections: ["links"] }),
   FixedToolbarFeature(),
+
+  // TODO remove this once we have migrated to Lexical on all environments
+  SlateToLexicalFeature({ disableHooks: true }),
 ];
 
 export async function getEditorConfig() {
   return await sanitizeServerEditorConfig(
     {
       ...defaultEditorConfig,
-      features: [...defaultEditorFeatures, ...customFeatures],
+      features,
     },
     await payloadConfig,
   );
 }
 
 export function editor() {
-  return lexicalEditor({
-    features: ({ defaultFeatures }) => [...defaultFeatures, ...customFeatures],
-  });
+  return lexicalEditor({ features });
 }
 
 export async function createEditor() {
