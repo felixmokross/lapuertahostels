@@ -8,12 +8,13 @@ import {
   italic,
   underline,
   simpleElement,
-  link,
+  customUrlLink,
   strikethrough,
   code,
   richTextRoot,
   heading,
   list,
+  internalLink,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
@@ -216,16 +217,30 @@ test("ol element nodes with li as children are rendered as <ol> and <li> element
   expect(within(listElement).getByText("Third item")).toBeInTheDocument();
 });
 
-test("link element nodes are rendered as <a> elements with the correct href attribute.", () => {
+test("link element nodes are rendered as <a> elements with the correct href attribute for a custom URL link.", () => {
   render(
     <RichText
-      content={richTextRoot(link("https://example.com", text("Click here!")))}
+      content={richTextRoot(
+        customUrlLink("https://example.com", text("Click here!")),
+      )}
     />,
   );
 
   const linkElement = screen.getByRole("link");
   expect(linkElement).toHaveTextContent("Click here!");
   expect(linkElement).toHaveAttribute("href", "https://example.com");
+});
+
+test("link element nodes are rendered as <a> elements with the correct href attribute for an internal link.", () => {
+  render(
+    <RichText
+      content={richTextRoot(internalLink("/cancellation", text("Click here!")))}
+    />,
+  );
+
+  const linkElement = screen.getByRole("link");
+  expect(linkElement).toHaveTextContent("Click here!");
+  expect(linkElement).toHaveAttribute("href", "/cancellation");
 });
 
 describe("custom elements", () => {
@@ -335,12 +350,9 @@ describe("custom elements", () => {
   });
 
   test("if a custom link element is specified, it is used for link element nodes", () => {
-    function CustomLink({
-      children,
-      href,
-    }: PropsWithChildren<{ href: string }>) {
+    function CustomLink({ children, to }: PropsWithChildren<{ to: string }>) {
       return (
-        <span data-testid="custom-link" data-href={href}>
+        <span data-testid="custom-link" data-href={to}>
           {children}
         </span>
       );
@@ -348,7 +360,9 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(link("https://example.com", text("Click here!")))}
+        content={richTextRoot(
+          customUrlLink("https://example.com", text("Click here!")),
+        )}
         elements={{
           link: CustomLink,
         }}

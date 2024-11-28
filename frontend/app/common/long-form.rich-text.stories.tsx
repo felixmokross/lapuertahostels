@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import {
   bold,
   heading,
-  link,
+  internalLink,
   list,
   richTextRoot,
   simpleElement,
@@ -67,7 +67,7 @@ export const Default: Story = {
         text(
           "For all cancellation policies, including fees and deadlines, please refer to our ",
         ),
-        link("/cancellation", text("Cancellation Policy")),
+        internalLink("/cancellation", text("Cancellation Policy")),
         text(
           " page. Failure to cancel your booking within the allowed time or not showing up will result in charges as outlined in the Cancellation Policy.",
         ),
@@ -135,7 +135,7 @@ export const Default: Story = {
         text(
           "We take your privacy seriously. For more information on how we handle your personal data, please see our ",
         ),
-        link("/privacy", text("Privacy Policy")),
+        internalLink("/privacy", text("Privacy Policy")),
         text("."),
       ),
       heading("h4", text("10. Governing Law")),

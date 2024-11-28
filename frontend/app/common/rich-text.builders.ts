@@ -1,3 +1,4 @@
+import { NewPage } from "~/payload-types";
 import {
   TextNode,
   ElementNode,
@@ -84,6 +85,30 @@ export function list(
   return { type: "list", tag, children };
 }
 
-export function link(url: string, ...children: Node[]): LinkElementNode {
-  return { type: "link", fields: { linkType: "custom", url }, children };
+export function customUrlLink(
+  url: string,
+  ...children: Node[]
+): LinkElementNode {
+  return {
+    type: "link",
+    fields: { linkType: "custom", url },
+    children,
+  };
+}
+
+export function internalLink(
+  pathname: string,
+  ...children: Node[]
+): LinkElementNode {
+  return {
+    type: "link",
+    fields: {
+      linkType: "internal",
+      doc: {
+        relationTo: "new-pages",
+        value: { pathname } as NewPage,
+      },
+    },
+    children,
+  };
 }

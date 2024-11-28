@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import { PropsWithChildren } from "react";
 import { Heading } from "./heading";
 import { Paragraph } from "./paragraph";
@@ -6,6 +5,7 @@ import { RichTextObject, RichText } from "./rich-text";
 import { TextHighlight } from "./text-highlight";
 import { useTheme } from "~/themes";
 import { cn } from "./cn";
+import { Link } from "./link";
 
 export function LongFormRichText({ content }: { content: RichTextObject }) {
   const theme = useTheme();
@@ -47,7 +47,7 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
         li: (props: PropsWithChildren) => (
           <li {...props} className="ms-6 mt-1.5 md:mt-2" />
         ),
-        link: ({ href, ...props }: PropsWithChildren<{ href: string }>) => (
+        link: ({ to, ...props }: PropsWithChildren<{ to: string }>) => (
           <Link
             {...props}
             className={cn(
@@ -55,7 +55,7 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
               theme.linkColors.hoverTextColor,
               "font-bold hover:underline",
             )}
-            to={href}
+            to={to}
           />
         ),
       }}

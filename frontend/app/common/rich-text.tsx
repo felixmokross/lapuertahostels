@@ -6,6 +6,7 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
+import { NewPage } from "~/payload-types";
 
 export const IS_BOLD = 1;
 export const IS_ITALIC = 1 << 1;
@@ -33,7 +34,7 @@ type CustomElementConfig = {
   li: ElementType;
   h4: ElementType;
   h5: ElementType;
-  link: ComponentType<{ href: string }> | "a";
+  link: ComponentType<PropsWithChildren<{ to: string }>> | "a";
   paragraph: ElementType;
 };
 
@@ -115,10 +116,18 @@ function RenderedElementNode({
       return <List node={node}>{renderedChildren}</List>;
     case "listitem":
       return <elements.li>{renderedChildren}</elements.li>;
-    case "link":
-      return (
-        <elements.link href={node.fields.url}>{renderedChildren}</elements.link>
-      );
+    case "link": {
+      const href =
+        node.fields.linkType === "custom"
+          ? node.fields.url
+          : node.fields.doc.value.pathname;
+
+      if (elements.link === "a") {
+        return <a href={href}>{renderedChildren}</a>;
+      } else {
+        return <elements.link to={href}>{renderedChildren}</elements.link>;
+      }
+    }
   }
 }
 
@@ -229,10 +238,18 @@ export type HeadingElementNode = BaseElementNode & {
 
 export type LinkElementNode = BaseElementNode & {
   type: "link";
-  fields: {
-    linkType: "custom";
-    url: string;
-  };
+  fields:
+    | {
+        linkType: "custom";
+        url: string;
+      }
+    | {
+        linkType: "internal";
+        doc: {
+          relationTo: "new-pages";
+          value: NewPage;
+        };
+      };
 };
 
 export type ListElementNode = BaseElementNode & {
