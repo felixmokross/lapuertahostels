@@ -20,7 +20,7 @@ export const Common: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "globals/common", pageUrl: "/" },
+          { type: "target", cacheKey: "globals_common", pageUrl: "/" },
           req,
         ),
     ],

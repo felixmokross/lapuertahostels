@@ -2,10 +2,11 @@ import { resolve6 } from "dns/promises";
 import { PayloadRequest } from "payload";
 import { getSupportedLocales } from "./locales";
 import { NewPages } from "@/collections/NewPages";
+import * as cookie from "cookie";
 
 export async function refreshCacheForAllPages(
   req: PayloadRequest,
-  actionType: RefreshCacheActionType,
+  actionType: "purge-and-prime" | "prime-only",
 ) {
   const pages = (
     await req.payload.find({
@@ -15,25 +16,42 @@ export async function refreshCacheForAllPages(
     })
   ).docs;
 
-  console.log(`Refreshing cache for all pages (${actionType}).`);
+  if (actionType === "purge-and-prime") {
+    console.log(`Purging cache for all pages.`);
+
+    for (const page of pages) {
+      await refreshCacheForTarget(req, {
+        type: "purge",
+        pageUrl: page.pathname,
+        cacheKey: `${NewPages.slug}_${page.pathname.replaceAll("/", ":")}`,
+      });
+    }
+
+    console.log(`Purged cache for all pages.`);
+  }
+
+  console.log(`Priming cache for all pages.`);
+
   for (const page of pages) {
-    await refreshCacheForTarget({
-      type: actionType,
+    await refreshCacheForTarget(req, {
+      type: "prime",
       pageUrl: page.pathname,
-      dataUrl: `${NewPages.slug}/${page.id}`,
     });
   }
 
-  console.log(`Refreshed cache for all pages (${actionType}).`);
+  console.log(`Primed cache for all pages.`);
 }
 
 export type RefreshCacheActionType = RefreshCacheAction["type"];
 
 type RefreshCacheAction =
-  | { type: "purge-and-prime"; dataUrl: string; pageUrl: string }
-  | { type: "prime-only"; pageUrl: string };
+  | { type: "purge"; cacheKey: string; pageUrl: string }
+  | { type: "prime"; pageUrl: string };
 
-export async function refreshCacheForTarget(action: RefreshCacheAction) {
+export async function refreshCacheForTarget(
+  req: PayloadRequest,
+  action: RefreshCacheAction,
+) {
   if (!process.env.CACHE_REFRESH_TARGET_TYPE) {
     throw new Error("CACHE_REFRESH_TARGET is not set");
   }
@@ -43,13 +61,13 @@ export async function refreshCacheForTarget(action: RefreshCacheAction) {
 
   switch (process.env.CACHE_REFRESH_TARGET_TYPE) {
     case "single":
-      await refreshCache(process.env.CACHE_REFRESH_TARGET_ARG, action);
+      await refreshCache(req, process.env.CACHE_REFRESH_TARGET_ARG, action);
       return;
 
     case "fly":
       const [appName, internalPort] =
         process.env.CACHE_REFRESH_TARGET_ARG.split(",");
-      await refreshCacheForFlyTarget(appName, internalPort, action);
+      await refreshCacheForFlyTarget(req, appName, internalPort, action);
       return;
 
     default:
@@ -60,6 +78,7 @@ export async function refreshCacheForTarget(action: RefreshCacheAction) {
 }
 
 async function refreshCacheForFlyTarget(
+  req: PayloadRequest,
   appName: string,
   internalPort: string,
   action: RefreshCacheAction,
@@ -73,7 +92,7 @@ async function refreshCacheForFlyTarget(
   console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
 
   const results = await Promise.allSettled(
-    targetUrls.map((targetUrls) => refreshCache(targetUrls, action)),
+    targetUrls.map((targetUrls) => refreshCache(req, targetUrls, action)),
   );
   const failed = results.filter(isPromiseRejectedResult);
 
@@ -96,48 +115,88 @@ async function queryFlyVmUrls(appName: string, port: number) {
   return urls;
 }
 
-async function refreshCache(targetUrl: string, action: RefreshCacheAction) {
-  if (action.type === "purge-and-prime") {
-    await purgeCache(targetUrl, action.dataUrl);
+async function refreshCache(
+  req: PayloadRequest,
+  targetUrl: string,
+  action: RefreshCacheAction,
+) {
+  switch (action.type) {
+    case "purge":
+      await purgeCache(req, targetUrl, action.cacheKey);
+      return;
+    case "prime":
+      await primeCache(req, targetUrl, action.pageUrl);
+      return;
   }
-
-  await primeCache(targetUrl, action.pageUrl);
 }
 
-async function purgeCache(targetUrl: string, dataUrl: string) {
-  console.log(`Purging cache at ${targetUrl} for ${dataUrl}...`);
+async function purgeCache(
+  req: PayloadRequest,
+  targetUrl: string,
+  cacheKey: string,
+) {
+  console.log(`Purging cache at ${targetUrl} for ${cacheKey}...`);
   const response = await fetch(`${targetUrl}/purge-cache`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: getAuthorizationHeaderValue(req),
     },
-    body: JSON.stringify({ url: dataUrl }),
+    body: JSON.stringify({ cacheKey }),
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to purge cache at ${targetUrl} for ${dataUrl}`);
+    throw new Error(
+      `Failed to purge cache at ${targetUrl} for ${cacheKey}, status code was ${response.status}`,
+    );
   }
+
+  console.log(`Purged cache at ${targetUrl} for ${cacheKey}.`);
 }
 
-async function primeCache(targetUrl: string, pageUrl: string) {
+async function primeCache(
+  req: PayloadRequest,
+  targetUrl: string,
+  pageUrl: string,
+) {
   const absolutePageUrl = new URL(pageUrl, targetUrl);
 
-  await Promise.allSettled(
+  const promises = await Promise.allSettled(
     (await getSupportedLocales()).map((locale) =>
-      primeCacheForLocale(absolutePageUrl.toString(), locale),
+      primeCacheForLocale(req, absolutePageUrl.toString(), locale),
     ),
   );
+
+  const failedPromises = promises.filter(isPromiseRejectedResult);
+  if (failedPromises.length > 0) {
+    console.error(
+      `Priming cache failed for ${failedPromises.length} requests:
+${failedPromises.map((r, i) => `  [${i}] ${r.reason}`).join("\n")}`,
+    );
+  }
+
+  console.log(`Primed cache at ${targetUrl} for ${pageUrl}.`);
 }
 
-async function primeCacheForLocale(absolutePageUrl: string, locale: string) {
+async function primeCacheForLocale(
+  req: PayloadRequest,
+  absolutePageUrl: string,
+  locale: string,
+) {
   const localizedPageUrl = new URL(absolutePageUrl);
   localizedPageUrl.searchParams.set("lng", locale);
 
   console.log(`Priming cache at ${localizedPageUrl}...`);
 
-  const response = await fetch(localizedPageUrl);
+  const response = await fetch(localizedPageUrl, {
+    headers: {
+      Authorization: getAuthorizationHeaderValue(req),
+    },
+  });
   if (!response.ok) {
-    throw new Error(`Failed to prime cache at ${response.url}`);
+    throw new Error(
+      `Failed to prime cache at ${response.url}, received status code ${response.status}`,
+    );
   }
 }
 
@@ -145,4 +204,20 @@ function isPromiseRejectedResult(
   result: PromiseSettledResult<unknown>,
 ): result is PromiseRejectedResult {
   return result.status === "rejected";
+}
+
+function getAuthorizationHeaderValue(req: PayloadRequest) {
+  return `JWT ${getUserToken(req)}`;
+}
+
+function getUserToken(req: PayloadRequest) {
+  const cookieHeader = req.headers.get("Cookie");
+  if (!cookieHeader) throw new Error("No 'Cookie' header found");
+
+  const cookies = cookie.parse(cookieHeader);
+
+  if (!cookies["payload-token"]) {
+    throw new Error("No 'payload-token' cookie found");
+  }
+  return cookies["payload-token"];
 }

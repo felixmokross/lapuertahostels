@@ -32,9 +32,13 @@ export const NewPages: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ doc, req }) =>
+      ({ doc, req, collection }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: `pages/${doc.id}`, pageUrl: doc.pathname },
+          {
+            type: "target",
+            cacheKey: `${collection.slug}_${doc.pathname.replace("/", ":")}`,
+            pageUrl: doc.pathname,
+          },
           req,
         ),
     ],
@@ -96,8 +100,12 @@ export const NewPages: CollectionConfig = {
           },
         });
 
-        const prefix =
-          ((brand.homeLink as Link).newPage as NewPage).pathname + "/";
+        const brandHomeLinkPathname = (
+          (brand.homeLink as Link).newPage as NewPage
+        ).pathname;
+        const prefix = brandHomeLinkPathname.endsWith("/")
+          ? brandHomeLinkPathname
+          : brandHomeLinkPathname + "/";
         if (!value.startsWith(prefix)) {
           return t("custom:pages:pathname:pathnameMustStartWithPrefix", {
             prefix,

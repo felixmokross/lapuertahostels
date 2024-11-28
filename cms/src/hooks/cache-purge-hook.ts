@@ -8,7 +8,7 @@ type CachePurgeTarget =
   | { type: "all-pages" }
   | {
       type: "target";
-      dataUrl: string;
+      cacheKey: string;
       pageUrl: string;
     };
 
@@ -26,9 +26,14 @@ async function refreshCache(
   req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
 ) {
   if (target.type === "target") {
-    await refreshCacheForTarget({
-      type: "purge-and-prime",
-      dataUrl: target.dataUrl,
+    await refreshCacheForTarget(req, {
+      type: "purge",
+      cacheKey: target.cacheKey,
+      pageUrl: target.pageUrl,
+    });
+
+    await refreshCacheForTarget(req, {
+      type: "prime",
       pageUrl: target.pageUrl,
     });
   } else {

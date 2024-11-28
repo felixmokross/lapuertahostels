@@ -19,15 +19,6 @@ export const Pages: CollectionConfig = {
     update: canManageContent,
     delete: ({ req: { user } }) => user?.role === "admin",
   },
-  hooks: {
-    afterChange: [
-      ({ doc, req }) =>
-        cachePurgeHook(
-          { type: "target", dataUrl: `pages/${doc.id}`, pageUrl: doc.url },
-          req,
-        ),
-    ],
-  },
   fields: [
     {
       name: "id",

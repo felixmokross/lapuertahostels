@@ -66,9 +66,9 @@ export const Brands: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req }) =>
+      ({ req, collection }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "brands", pageUrl: "/" },
+          { type: "target", cacheKey: collection.slug, pageUrl: "/" },
           req,
         ),
     ],

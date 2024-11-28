@@ -25,6 +25,7 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["title"],
   },
   hooks: {
+    // TODO make this smarter, we know are able to find out the usages of the texts
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   endpoints: [translateEndpoint],

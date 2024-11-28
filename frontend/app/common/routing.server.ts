@@ -7,7 +7,7 @@ import {
   buildLocalizedRelativeUrl,
 } from "./routing";
 import { getMaintenance } from "~/cms-data";
-import { getSession } from "~/sessions.server";
+import { isAuthenticated } from "./auth";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -24,12 +24,10 @@ export async function handleIncomingRequest(request: Request) {
     redirectToLocalizedRoute(url, locale);
   }
 
-  const session = await getSession(request.headers.get("Cookie"));
-
   const maintenance = await getMaintenance(locale);
   if (
     maintenance.maintenanceScreen?.show &&
-    !session.has("userId") &&
+    !(await isAuthenticated(request)) &&
     pageUrl !== "/login"
   ) {
     throw new Response(null, {

@@ -17,7 +17,7 @@ export const Maintenance: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "globals/maintenance", pageUrl: "/" },
+          { type: "target", cacheKey: "globals_maintenance", pageUrl: "/" },
           req,
         ),
     ],
