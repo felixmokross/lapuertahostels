@@ -1,4 +1,4 @@
-import { Block, RelationshipField } from "payload/types";
+import { Block, RelationshipField } from "payload";
 import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";

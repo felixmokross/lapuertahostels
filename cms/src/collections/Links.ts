@@ -1,6 +1,5 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { pageIdToUrl } from "../common/page-urls";
 import { validateUrl } from "../common/validation";
 
 export const Links: CollectionConfig = {
@@ -16,6 +15,14 @@ export const Links: CollectionConfig = {
     },
   },
   defaultSort: "title",
+  defaultPopulate: {
+    type: true,
+    url: true,
+    newPage: true,
+    queryString: true,
+    fragment: true,
+    title: true,
+  },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],
@@ -59,12 +66,21 @@ export const Links: CollectionConfig = {
     },
     {
       name: "page",
+      type: "relationship",
+      relationTo: "pages",
+      admin: {
+        hidden: true,
+        condition: (_, siblingData) => siblingData.type === "internal",
+      },
+    },
+    {
+      name: "newPage",
       label: {
         en: "Page",
         es: "Página",
       },
       type: "relationship",
-      relationTo: "pages",
+      relationTo: "new-pages",
       required: true,
       admin: {
         condition: (_, siblingData) => siblingData.type === "internal",
@@ -146,14 +162,19 @@ export const Links: CollectionConfig = {
         create: () => false,
         update: () => false,
       },
-      localized: true,
       hooks: {
         beforeChange: [
-          ({ data }) => {
-            let url: string;
+          async ({ data, req }) => {
+            if (!data) throw new Error("Data is missing.");
+
+            let url: string = "";
             switch (data.type) {
               case "internal":
-                url = `${pageIdToUrl(data.page)}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;
+                const page = await req.payload.findByID({
+                  collection: "new-pages",
+                  id: data.newPage,
+                });
+                url = `${page.pathname}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;
                 break;
               case "external":
                 url = `${data.url}`;
@@ -166,7 +187,7 @@ export const Links: CollectionConfig = {
       },
       admin: {
         description: {
-          en: "This field is generated automatically and is only used internally in the CMS to identity the link.",
+          en: "This field is generated automatically and is only used internally in the CMS to identify the link.",
           es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el enlace.",
         },
         position: "sidebar",

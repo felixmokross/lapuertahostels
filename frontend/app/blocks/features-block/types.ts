@@ -1,6 +1,6 @@
-import { Page } from "~/payload-types";
+import { NewPage } from "~/payload-types";
 
-export type FeaturesBlock = NonNullable<Page["layout"]>[number] & {
+export type FeaturesBlock = NonNullable<NewPage["layout"]>[number] & {
   blockType: "Features";
 };
 

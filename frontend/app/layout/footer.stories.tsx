@@ -10,7 +10,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { plain, text } from "~/common/rich-text.builders";
+import { simpleElement, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "layout/Footer",
@@ -40,7 +40,6 @@ const puertaBrand = brand({
   footer: {
     linkGroups: [
       {
-        name: "Hotel",
         title: plainText("Hotel"),
         links: [
           {
@@ -62,7 +61,6 @@ const puertaBrand = brand({
         ],
       },
       {
-        name: "Experiences",
         title: plainText("Experiences"),
         links: [
           {
@@ -84,7 +82,6 @@ const puertaBrand = brand({
         ],
       },
       {
-        name: "Legal",
         title: plainText("Legal"),
         links: [
           {
@@ -113,7 +110,8 @@ export const Default: Story = {
   args: {
     content: {
       address: richText(
-        plain(
+        simpleElement(
+          "paragraph",
           text(`La Puerta Hostels S.A.S.
 Calle 18 #5-66
 Santa Marta 470004
@@ -121,7 +119,10 @@ Colombia`),
         ),
       ),
       copyright: richText(
-        plain(text("La Puerta Hostels S.A.S. All rights reserved.")),
+        simpleElement(
+          "paragraph",
+          text("La Puerta Hostels S.A.S. All rights reserved."),
+        ),
       ),
       socialLinks: [
         {

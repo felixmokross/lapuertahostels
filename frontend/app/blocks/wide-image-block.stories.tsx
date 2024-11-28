@@ -6,7 +6,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { bold, plain, text } from "~/common/rich-text.builders";
+import { bold, simpleElement, text } from "~/common/rich-text.builders";
 import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
@@ -27,7 +27,8 @@ export const Default: Story = {
       show: true,
       heading: plainText("Feel at Home"),
       text: richText(
-        plain(
+        simpleElement(
+          "paragraph",
           text("Experience "),
           bold("Colombian hospitality"),
           text(" in our boutique hostel's "),

@@ -1,39 +1,58 @@
-import { Endpoint } from "payload/config";
-import {
-  htmlToSlate,
-  slateToHtml,
-  payloadSlateToHtmlConfig,
-  payloadHtmlToSlateConfig,
-} from "@slate-serializers/html";
-import { transformRecord } from "../../common/records";
+import { Endpoint } from "payload";
+import { SerializedEditorState } from "lexical";
+import { transformRecord, transformRecordAsync } from "../../common/records";
 import { translate } from "../../common/translation";
 import { getSupportedLocales } from "../../common/locales";
-import { fullTextToTitle, richTextToFullText } from "./utils";
+import {
+  fullTextToTitle,
+  htmlToRichText,
+  richTextToFullText,
+  richTextToHtml,
+} from "./utils";
+import { addLocalesToRequestFromData } from "@payloadcms/next/utilities";
 
 export const translateEndpoint: Endpoint = {
   path: "/:id/translate",
   method: "post",
-  handler: async (req, res) => {
-    if (!req.user) return res.status(401).send("Unauthorized");
+  handler: async (req) => {
+    if (!req.user) {
+      return new Response(null, { status: 401, statusText: "Unauthorized" });
+    }
+
+    if (!req.routeParams) throw new Error("No route params");
 
     const { ObjectId } = await import("bson");
-    const { id } = req.params;
+    const { id } = req.routeParams;
+    if (typeof id !== "string") throw new Error("Invalid ID");
+
     const originalDoc = await req.payload.db.connection
       .collection("texts")
       .findOne({ _id: new ObjectId(id) });
+    if (!originalDoc) throw new Error("Document not found");
 
-    const textInAllLocales = (
+    const textInAllLocales =
       originalDoc.type === "plainText"
-        ? originalDoc.text
-        : transformRecord(originalDoc.richText, (x: any) =>
-            slateToHtml(x, payloadSlateToHtmlConfig),
-          )
-    ) as Record<string, string>;
+        ? (originalDoc.text as Record<string, string>)
+        : await transformRecordAsync(
+            originalDoc.richText,
+            (rt: SerializedEditorState | null) =>
+              rt ? richTextToHtml(rt) : Promise.resolve(""),
+          );
+
+    addLocalesToRequestFromData(req);
+
+    if (!req.locale) {
+      return new Response("Locale required", {
+        status: 400,
+        statusText: "Bad Request",
+      });
+    }
+
     const originalText = textInAllLocales[req.locale];
 
     if (!originalText) {
       console.log("Text not available in current locale");
-      return res.status(204).send();
+      return new Response(null, { status: 204 });
     }
 
     const translationLocales = (await getSupportedLocales()).filter(
@@ -48,7 +67,7 @@ export const translateEndpoint: Endpoint = {
           textInAllLocales[tl] = (
             await translate(
               originalText,
-              req.locale,
+              req.locale!,
               tl,
               originalDoc.type === "richText",
             )
@@ -61,7 +80,7 @@ export const translateEndpoint: Endpoint = {
     );
 
     if (promises.some((p) => p.status === "rejected")) {
-      return res.status(500).send("Some texts failed to translate");
+      throw new Error("Some texts failed to translate");
     }
 
     await req.payload.db.connection.collection("texts").updateOne(
@@ -74,12 +93,13 @@ export const translateEndpoint: Endpoint = {
                 title: transformRecord(textInAllLocales, fullTextToTitle),
               }
             : {
-                richText: transformRecord(textInAllLocales, htmlToSlate),
-                title: transformRecord(
-                  transformRecord(textInAllLocales, (x) =>
-                    htmlToSlate(x, payloadHtmlToSlateConfig),
-                  ),
-                  (t) => fullTextToTitle(richTextToFullText(t)),
+                richText: await transformRecordAsync(
+                  textInAllLocales,
+                  htmlToRichText,
+                ),
+                title: await transformRecordAsync(
+                  await transformRecordAsync(textInAllLocales, htmlToRichText),
+                  async (x) => fullTextToTitle(await richTextToFullText(x)),
                 ),
               },
       },
@@ -87,6 +107,6 @@ export const translateEndpoint: Endpoint = {
 
     console.log("Text translated successfully");
 
-    return res.status(204).send();
+    return new Response(null, { status: 204 });
   },
 };

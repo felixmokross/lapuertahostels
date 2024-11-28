@@ -1,9 +1,11 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../../hooks/cache-purge-hook";
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
-import { translateField } from "./translateField";
+import { editor } from "./editor";
+import { Text } from "@/payload-types";
+import { findUsages, Usage } from "./usages";
+import { NewPages } from "../NewPages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -18,13 +20,47 @@ export const Texts: CollectionConfig = {
     },
   },
   defaultSort: "title",
+  defaultPopulate: {
+    type: true,
+    text: true,
+    richText: true,
+    title: true,
+  },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type", "comment"],
     listSearchableFields: ["title"],
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
+    afterChange: [
+      async ({ req, doc }) => {
+        const pageIds = [
+          ...new Set(
+            (doc.usages as Usage[])
+              .filter(
+                (u) => u.type === "collection" && u.collection === "new-pages",
+              )
+              .map((u) => (u as Usage & { type: "collection" }).id),
+          ),
+        ];
+
+        // TODO support further usage types
+        for (const pageId of pageIds) {
+          const page = await req.payload.findByID({
+            collection: "new-pages",
+            id: pageId,
+          });
+          await cachePurgeHook(
+            {
+              type: "target",
+              cacheKey: `${NewPages.slug}_${page.pathname.replace("/", ":")}`,
+              pageUrl: page.pathname,
+            },
+            req,
+          );
+        }
+      },
+    ],
   },
   endpoints: [translateEndpoint],
   fields: [
@@ -78,12 +114,7 @@ export const Texts: CollectionConfig = {
         es: "Texto enriquecido",
       },
       localized: true,
-      editor: slateEditor({
-        admin: {
-          elements: ["h4", "h5", "link", "ul", "ol", "indent"],
-          leaves: ["bold", "italic", "underline", "strikethrough", "code"],
-        },
-      }),
+      editor: editor(),
       admin: {
         condition: (_, siblingData) => siblingData.type === "richText",
       },
@@ -117,15 +148,18 @@ export const Texts: CollectionConfig = {
       localized: true,
       hooks: {
         beforeChange: [
-          ({ data }) => {
-            return fullTextToTitle(getFullText());
+          async ({ data }) => {
+            return fullTextToTitle(await getFullText());
 
-            function getFullText() {
+            async function getFullText() {
+              if (!data) throw new Error("Data is missing.");
               switch (data.type) {
                 case "plainText":
                   return data.text ?? "";
                 case "richText":
-                  return richTextToFullText(data.richText ?? []);
+                  return data.richText
+                    ? await richTextToFullText(data.richText)
+                    : "";
               }
             }
           },
@@ -133,12 +167,49 @@ export const Texts: CollectionConfig = {
       },
       admin: {
         description: {
-          en: "This field is generated automatically and is only used internally in the CMS to identity the text.",
+          en: "This field is generated automatically and is only used internally in the CMS to identify the text.",
           es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
         },
         position: "sidebar",
       },
     },
-    translateField,
+    {
+      type: "ui",
+      name: "translations",
+      admin: {
+        components: {
+          Field: "src/collections/texts/TranslateField#TranslateField",
+        },
+      },
+    },
+    {
+      type: "json",
+      name: "usages",
+      label: {
+        en: "Usages",
+        es: "Usos",
+      },
+      virtual: true,
+      admin: {
+        readOnly: true,
+      },
+      hooks: {
+        afterRead: [
+          async ({ data, req }) => {
+            if (!data) throw new Error("Data is missing.");
+            return await findUsages(data as Text, req.payload);
+          },
+        ],
+      },
+    },
+    {
+      type: "ui",
+      name: "usageCount",
+      admin: {
+        components: {
+          Field: "src/collections/texts/UsageCountField#UsageCountField",
+        },
+      },
+    },
   ],
 };

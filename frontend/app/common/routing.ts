@@ -45,7 +45,3 @@ export function toRelativeUrl(urlOrLocation: URL | Location) {
 export function toUrl(relativeUrl: string, baseUrl?: string) {
   return new URL(relativeUrl, baseUrl || "http://dummy");
 }
-
-export function urlToId(url: string) {
-  return url.replaceAll("/", ":");
-}

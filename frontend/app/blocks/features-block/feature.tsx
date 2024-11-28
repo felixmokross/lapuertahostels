@@ -50,7 +50,7 @@ export function Feature({
           {heading.text}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">
-          {text.richText as RichTextObject}
+          {text.richText as unknown as RichTextObject}
         </RichTextParagraph>
         {cta?.show && (
           <Button

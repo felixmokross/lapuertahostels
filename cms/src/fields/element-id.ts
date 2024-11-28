@@ -1,4 +1,4 @@
-import { TextField } from "payload/types";
+import { TextField } from "payload";
 
 export const elementIdField: TextField = {
   name: "elementId",

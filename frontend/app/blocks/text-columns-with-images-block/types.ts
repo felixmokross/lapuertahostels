@@ -1,5 +1,7 @@
-import { Page } from "~/payload-types";
+import { NewPage } from "~/payload-types";
 
-export type TextColumnsWithImagesBlock = NonNullable<Page["layout"]>[number] & {
+export type TextColumnsWithImagesBlock = NonNullable<
+  NewPage["layout"]
+>[number] & {
   blockType: "TextColumnsWithImages";
 };

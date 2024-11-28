@@ -1,45 +1,22 @@
-import { CollectionConfig } from "payload/types";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { CollectionConfig } from "payload";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
-import { text } from "payload/dist/fields/validations";
 import { canManageContent } from "../common/access-control";
-import { Brands } from "./Brands";
-import { Texts } from "./texts/Texts";
-import { pageIdToUrl, urlToPageId } from "../common/page-urls";
 
+// TODO remove this once all envs have migrated to NewPages
 export const Pages: CollectionConfig = {
   slug: "pages",
-  labels: {
-    singular: {
-      en: "Page",
-      es: "Página",
-    },
-    plural: {
-      en: "Pages",
-      es: "Páginas",
-    },
-  },
   defaultSort: "id",
   admin: {
+    hidden: true,
     useAsTitle: "url",
     defaultColumns: ["url", "title", "brand", "updatedAt"],
-    disableDuplicate: true,
     listSearchableFields: ["url"],
   },
   access: {
     create: ({ req: { user } }) => user?.role === "admin",
     update: canManageContent,
     delete: ({ req: { user } }) => user?.role === "admin",
-  },
-  hooks: {
-    afterChange: [
-      ({ doc, req }) =>
-        cachePurgeHook(
-          { type: "target", dataUrl: `pages/${doc.id}`, pageUrl: doc.url },
-          req,
-        ),
-    ],
   },
   fields: [
     {
@@ -65,25 +42,8 @@ export const Pages: CollectionConfig = {
       },
       type: "text",
       required: true,
-      validate: (_, args) =>
-        text(args.data._id ? pageIdToUrl(args.data._id) : "", args),
       access: {
         update: () => false,
-      },
-      hooks: {
-        beforeChange: [
-          ({ data }) => {
-            data._id = data.url ? urlToPageId(data.url as string) : "";
-
-            // ensures data is not stored in DB
-            delete data["url"];
-          },
-        ],
-        afterRead: [
-          ({ data }) => {
-            return pageIdToUrl(data.id as string);
-          },
-        ],
       },
       admin: {
         position: "sidebar",
@@ -100,7 +60,7 @@ export const Pages: CollectionConfig = {
         es: "Marca",
       },
       type: "relationship",
-      relationTo: Brands.slug,
+      relationTo: "brands",
       access: {
         create: () => false,
         update: () => false,
@@ -108,12 +68,14 @@ export const Pages: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
             // ensures data is not stored in DB
             delete data.brand;
           },
         ],
         afterRead: [
           ({ data }) => {
+            if (!data) throw new Error("No data provided");
             return brandForId(data.id as string);
           },
         ],
@@ -133,7 +95,7 @@ export const Pages: CollectionConfig = {
         es: "Título",
       },
       type: "relationship",
-      relationTo: Texts.slug,
+      relationTo: "texts",
       filterOptions: {
         type: { equals: "plainText" },
       },

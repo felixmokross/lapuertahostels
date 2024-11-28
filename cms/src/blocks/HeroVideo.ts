@@ -1,4 +1,4 @@
-import { Block } from "payload/types";
+import { Block } from "payload";
 import { makeImageField } from "../fields/image";
 import { Media } from "../collections/Media";
 import { makeOverlayTitleField } from "../fields/overlay-title";
@@ -28,7 +28,7 @@ export const HeroVideoBlock: Block = {
         es: "Video",
       },
       type: "upload",
-      relationTo: Media.slug,
+      relationTo: "media",
       filterOptions: {
         mimeType: { contains: "video/" },
       },

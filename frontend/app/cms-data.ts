@@ -1,17 +1,19 @@
 import fs from "fs/promises";
-import { Brand, Common, Maintenance, Page } from "~/payload-types";
+import { Brand, Common, Maintenance, NewPage } from "~/payload-types";
 import path from "path";
 
 const CACHE_DIR = "./.cms-cache";
 const CACHE_EXPIRY_IN_MS = 1000 * 60; // 1 min
 
-async function loadAndCacheData(
+async function loadAndCacheData<TData, TResult>(
   url: string,
   locale: string,
   cacheFilePath: string,
   depth: number,
+  queryParams: Record<string, string>,
+  getResultFn: (data: TData | null) => TResult | null,
 ) {
-  const result = await loadData(url, locale, depth);
+  const result = getResultFn(await loadData(url, locale, depth, queryParams));
 
   if (result) {
     await cacheData(cacheFilePath, result);
@@ -26,68 +28,98 @@ async function cacheData(cacheFilePath: string, data: object) {
   await fs.writeFile(cacheFilePath, JSON.stringify(data));
 }
 
-function getCacheFolder(url: string) {
-  return `${CACHE_DIR}/${url.replaceAll("/", "_")}`;
+function getCacheFolder(cacheKey: string) {
+  return `${CACHE_DIR}/${cacheKey}`;
 }
 
-function getCacheFilePath(url: string, locale: string) {
-  return `${getCacheFolder(url)}/${locale}.json`;
+function getCacheFilePath(cacheKey: string, locale: string) {
+  return `${getCacheFolder(cacheKey)}/${locale}.json`;
 }
 
-async function getData(url: string, locale: string, depth = 1) {
-  const filePath = getCacheFilePath(url, locale);
+async function getData<TData, TResult>(
+  pathname: string,
+  cacheKey: string,
+  locale: string,
+  depth = 1,
+  queryParams = {},
+  getResultFn: (data: TData | null) => TResult | null = (data: TData | null) =>
+    data as TResult,
+) {
+  const cacheFilePath = getCacheFilePath(cacheKey, locale);
   try {
-    const cache = await fs.readFile(filePath, "utf8");
+    const cache = await fs.readFile(cacheFilePath, "utf8");
 
     // refresh cache in the background _after_ returning the cached data (stale-while-revalidate)
     queueMicrotask(async () => {
       try {
-        const cacheLastModified = (await fs.stat(filePath)).mtime;
+        const cacheLastModified = (await fs.stat(cacheFilePath)).mtime;
 
         const cacheExpired =
           cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
         if (!cacheExpired) {
-          console.log(`Cache not expired for ${url} in ${locale}`);
+          console.log(`Cache not expired for ${cacheKey} in ${locale}`);
           return;
         }
 
-        console.log(`Cache expired for ${url} in ${locale}`);
-        await loadAndCacheData(url, locale, filePath, depth);
+        console.log(`Cache expired for ${cacheKey} in ${locale}`);
+        await loadAndCacheData(
+          pathname,
+          locale,
+          cacheFilePath,
+          depth,
+          queryParams,
+          getResultFn,
+        );
       } catch (e) {
         // As this runs in the background, just log the error
         console.error(
-          `Failed to refresh cache in microtask for ${url} in ${locale}: ${e}`,
+          `Failed to refresh cache in microtask for ${cacheKey} in ${locale}: ${e}`,
         );
       }
     });
 
-    console.log(`Cache hit for ${url} in ${locale}`);
-    return JSON.parse(cache) as object;
+    console.log(`Cache hit for ${pathname} in ${locale}`);
+    return JSON.parse(cache) as TResult;
   } catch (e) {
     if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
 
-    console.log(`Cache miss for ${url} in ${locale}`);
-    return await loadAndCacheData(url, locale, filePath, depth);
+    console.log(`Cache miss for ${pathname} in ${locale}`);
+    return await loadAndCacheData(
+      pathname,
+      locale,
+      cacheFilePath,
+      depth,
+      queryParams,
+      getResultFn,
+    );
   }
 }
 
-async function loadData(url: string, locale: string, depth: number) {
+async function loadData(
+  pathname: string,
+  locale: string,
+  depth: number,
+  queryParams: Record<string, string>,
+) {
   if (!process.env.PAYLOAD_CMS_BASE_URL) {
     throw new Error("PAYLOAD_CMS_BASE_URL is not set");
   }
   if (!process.env.PAYLOAD_CMS_API_KEY) {
     throw new Error("PAYLOAD_CMS_API_KEY is not set");
   }
+  const url = new URL(`/api/${pathname}`, process.env.PAYLOAD_CMS_BASE_URL);
+  url.searchParams.set("locale", locale);
+  url.searchParams.set("depth", depth.toString());
+  Object.entries(queryParams).forEach(([key, value]) => {
+    url.searchParams.set(key, value);
+  });
 
-  console.log(`Loading data from CMS for ${url} in ${locale}`);
-  const response = await fetch(
-    `${process.env.PAYLOAD_CMS_BASE_URL}/api/${url}?locale=${locale}&depth=${depth}`,
-    {
-      headers: {
-        Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
-      },
+  console.log(`Loading data from CMS for ${url.toString()} in ${locale}`);
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
     },
-  );
+  });
 
   if (!response.ok) {
     if (response.status === 404) return null;
@@ -95,15 +127,29 @@ async function loadData(url: string, locale: string, depth: number) {
     throw new Error(`Failed to load data from CMS: ${response.status}`);
   }
 
-  return (await response.json()) as object;
+  return await response.json();
 }
 
-export async function tryGetPage(pageId: string, locale: string) {
-  return (await getData(`pages/${pageId}`, locale, 3)) as Page | null;
+export async function tryGetPage(pathname: string, locale: string) {
+  return await getData<{ docs: NewPage[] }, NewPage>(
+    `new-pages`,
+    `new-pages_${pathname.replaceAll("/", ":")}`,
+    locale,
+    3,
+    {
+      "where[pathname][equals]": pathname,
+      limit: 1,
+    },
+    (data) => (data && data.docs.length > 0 ? data.docs[0] : null),
+  );
 }
 
 export async function getCommon(locale: string) {
-  const common = (await getData("globals/common", locale)) as Common | null;
+  const common = (await getData(
+    "globals/common",
+    "globals_common",
+    locale,
+  )) as Common | null;
   if (!common) throw new Error("Could not load Common global");
 
   return common;
@@ -112,6 +158,7 @@ export async function getCommon(locale: string) {
 export async function getMaintenance(locale: string) {
   const maintanance = (await getData(
     "globals/maintenance",
+    "globals_maintenance",
     locale,
   )) as Maintenance | null;
   if (!maintanance) throw new Error("Could not load Maintenance global");
@@ -120,7 +167,7 @@ export async function getMaintenance(locale: string) {
 }
 
 export async function getBrands(locale: string) {
-  const brands = (await getData("brands", locale, 3)) as {
+  const brands = (await getData("brands", "brands", locale, 3)) as {
     docs: Brand[];
   } | null;
   if (!brands) throw new Error("Could not load Brands collection");
@@ -128,8 +175,8 @@ export async function getBrands(locale: string) {
   return brands.docs;
 }
 
-export async function purgeCacheFor(url: string) {
-  const cacheFolderPath = getCacheFolder(url);
+export async function purgeCacheFor(cacheKey: string) {
+  const cacheFolderPath = getCacheFolder(cacheKey);
   await deleteFolderIfExists(cacheFolderPath);
 }
 

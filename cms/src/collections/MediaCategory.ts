@@ -1,4 +1,4 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 
 export const MediaCategory: CollectionConfig = {
   slug: "mediaCategory",
@@ -13,6 +13,9 @@ export const MediaCategory: CollectionConfig = {
     },
   },
   defaultSort: "name",
+  defaultPopulate: {
+    name: true,
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "updatedAt"],
@@ -30,6 +33,16 @@ export const MediaCategory: CollectionConfig = {
       },
       type: "text",
       required: true,
+    },
+    {
+      name: "media",
+      label: {
+        en: "Media",
+        es: "Medios",
+      },
+      type: "join",
+      collection: "media",
+      on: "category",
     },
   ],
 };

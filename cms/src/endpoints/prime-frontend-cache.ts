@@ -1,21 +1,23 @@
-import { Endpoint } from "payload/config";
+import { Endpoint } from "payload";
 import { refreshCacheForAllPages } from "../common/frontend-cache";
-import { User } from "payload/generated-types";
+import { User } from "@/payload-types";
 
 const allowedRoles = ["cicd", "admin"];
 
 export const primeFrontendCacheEndpoint: Endpoint = {
   path: "/prime-frontend-cache",
   method: "post",
-  handler: async (req, res) => {
-    if (!req.user) return res.status(401).send("Unauthorized");
+  handler: async (req) => {
+    if (!req.user) {
+      return new Response(null, { status: 401, statusText: "Unauthorized" });
+    }
 
-    if (!allowedRoles.includes((req.user as User).role)) {
-      return res.status(403).send("Forbidden");
+    if (!allowedRoles.includes((req.user as unknown as User).role)) {
+      return new Response(null, { status: 403, statusText: "Forbidden" });
     }
 
     await refreshCacheForAllPages(req, "prime-only");
 
-    res.status(204).send();
+    return new Response(null, { status: 204, statusText: "No Content" });
   },
 };

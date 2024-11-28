@@ -3,12 +3,12 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
-import { Page, Text } from "~/payload-types";
+import { NewPage, Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
 
 type OverlayTitleType = NonNullable<
-  (NonNullable<Page["hero"]>[number] & {
+  (NonNullable<NewPage["hero"]>[number] & {
     blockType: "HeroVideo";
   })["overlayTitle"]
 >;
@@ -64,7 +64,7 @@ export function OverlayTitle({
         onMouseLeave={onMouseLeave}
       >
         <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
-          {text!.richText as RichTextObject}
+          {text!.richText as unknown as RichTextObject}
         </RichTextHeading>
         {supportingText && (
           <RichTextParagraph
@@ -73,7 +73,7 @@ export function OverlayTitle({
             textShadow
             className="mt-6"
           >
-            {(supportingText as Text).richText as RichTextObject}
+            {(supportingText as Text).richText as unknown as RichTextObject}
           </RichTextParagraph>
         )}
         {cta?.show && (

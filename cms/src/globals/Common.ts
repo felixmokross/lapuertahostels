@@ -1,18 +1,11 @@
-import { GlobalConfig } from "payload/types";
-import { Common as CommonType } from "../payload-types";
+import { GlobalConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { Texts } from "../collections/texts/Texts";
-import { Links } from "../collections/Links";
 import { showField } from "../fields/show";
-
-const socialPlatformOptions = [
-  { label: "Facebook", value: "facebook" },
-  { label: "Instagram", value: "instagram" },
-  { label: "WhatsApp", value: "whatsapp" },
-];
+import { socialPlatformOptions } from "@/common/social-platforms";
+import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -27,7 +20,7 @@ export const Common: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "globals/common", pageUrl: "/" },
+          { type: "target", cacheKey: "globals_common", pageUrl: "/" },
           req,
         ),
     ],
@@ -48,7 +41,7 @@ export const Common: GlobalConfig = {
             es: "Descripción",
           },
           type: "relationship",
-          relationTo: Texts.slug,
+          relationTo: "texts",
           filterOptions: {
             type: { equals: "plainText" },
           },
@@ -120,20 +113,20 @@ export const Common: GlobalConfig = {
                 es: "Enlace",
               },
               type: "relationship",
-              relationTo: Links.slug,
+              relationTo: "links",
               required: true,
             },
           ],
           admin: {
             initCollapsed: true,
             components: {
-              RowLabel: ({ data }) =>
-                socialPlatformOptions.find(
-                  (p) =>
-                    p.value ===
-                    (data as CommonType["footer"]["socialLinks"][number])
-                      .platform,
-                )?.label,
+              RowLabel: {
+                path: "@/components/SocialPlatformRowLabel",
+                exportName: "SocialPlatformRowLabel",
+                clientProps: {
+                  fallbackLabelKey: "custom:common:socialLinkRowLabel",
+                } as SocialPlatformRowLabelProps,
+              },
             },
           },
         },
@@ -154,12 +147,12 @@ export const Common: GlobalConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
               admin: {
-                condition: (data: CommonType) => data.footer.newsletter.show,
+                condition: (data: any) => !!data.footer?.newsletter?.show,
               },
             },
             {
@@ -170,12 +163,12 @@ export const Common: GlobalConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
               admin: {
-                condition: (data: CommonType) => data.footer.newsletter.show,
+                condition: (data: any) => !!data?.footer?.newsletter?.show,
               },
             },
             {
@@ -186,12 +179,12 @@ export const Common: GlobalConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
               admin: {
-                condition: (data: CommonType) => data.footer.newsletter.show,
+                condition: (data) => data.footer.newsletter.show,
               },
             },
             {
@@ -202,12 +195,12 @@ export const Common: GlobalConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
               admin: {
-                condition: (data: CommonType) => data.footer.newsletter.show,
+                condition: (data) => data.footer.newsletter.show,
               },
             },
           ],

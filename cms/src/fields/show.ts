@@ -1,4 +1,4 @@
-import { CheckboxField } from "payload/types";
+import { CheckboxField } from "payload";
 
 export const showField: CheckboxField = {
   name: "show",

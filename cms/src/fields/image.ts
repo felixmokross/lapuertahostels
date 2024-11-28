@@ -1,4 +1,4 @@
-import { UploadField } from "payload/types";
+import { UploadField } from "payload";
 import { Media } from "../collections/Media";
 
 export type ImageFieldOptions = {
@@ -15,7 +15,7 @@ export function makeImageField({
       es: "Imagen",
     },
     type: "upload",
-    relationTo: Media.slug,
+    relationTo: "media",
     required: !optional,
     filterOptions: {
       mimeType: { contains: "image/" },

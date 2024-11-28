@@ -1,4 +1,4 @@
-import { CollapsibleField, Field } from "payload/types";
+import { CollapsibleField, Field } from "payload";
 
 export function makeMoreOptionsField(...fields: Field[]): CollapsibleField {
   return {

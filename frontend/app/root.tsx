@@ -26,15 +26,14 @@ import {
   getRequestUrl,
   toRelativeUrl,
   toUrl,
-  urlToId,
 } from "./common/routing";
 import { Brand } from "./payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
-import { getSession } from "./sessions.server";
 import { PreviewBar } from "./layout/preview-bar";
 import { LanguageDetector } from "remix-i18next/server";
 import i18next from "./i18next.server";
+import { isAuthenticated } from "./common/auth";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -103,20 +102,22 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!process.env.IMAGEKIT_BASE_URL) {
     throw new Error("IMAGEKIT_BASE_URL is not set");
   }
-  const session = await getSession(request.headers.get("Cookie"));
 
   const url = getRequestUrl(request);
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
-  const pageId = urlToId(toUrl(pageUrl).pathname);
-
   const [page, allBrands, common, maintenance] = await Promise.all([
-    tryGetPage(pageId, locale),
+    tryGetPage(toUrl(pageUrl).pathname, locale),
     getBrands(locale),
     getCommon(locale),
     getMaintenance(locale),
   ]);
+
+  // If maintenance screen is not enabled, public access is authorized
+  // Otherwise, check if the user is authenticated
+  const isAuthorized =
+    !maintenance.maintenanceScreen?.show || (await isAuthenticated(request));
 
   // retrieving the brand from `allBrands`, `page.brand` does not have the right depth
   const brandId = page
@@ -126,9 +127,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!brand) throw new Error("Brand not found");
 
   return {
-    hasSession: session.has("userId"),
+    isAuthorized,
     locale,
-    adminLocale: session.has("userId") ? await loadAdminLocale() : undefined,
+    adminLocale: maintenance.maintenanceScreen?.show
+      ? await loadAdminLocale()
+      : undefined,
     brand,
     allBrands,
     maintenance,
@@ -167,7 +170,7 @@ export default function App() {
     maintenance,
     analyticsDomain,
     allBrands,
-    hasSession,
+    isAuthorized,
     adminLocale,
   } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
@@ -189,13 +192,15 @@ export default function App() {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>
-          {!!hasSession && <PreviewBar adminLocale={adminLocale!} />}
+          {maintenance.maintenanceScreen?.show && (
+            <PreviewBar adminLocale={adminLocale!} />
+          )}
           <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
             {(brand) => (
               <OptInLivePreview path="globals/common" data={common}>
                 {(common) => (
                   <>
-                    {(!maintenance.maintenanceScreen?.show || hasSession) && (
+                    {isAuthorized && (
                       <Header
                         brand={brand}
                         allBrands={allBrands}
@@ -205,7 +210,7 @@ export default function App() {
                     <main>
                       <Outlet />
                     </main>
-                    {(!maintenance.maintenanceScreen?.show || hasSession) && (
+                    {isAuthorized && (
                       <Footer
                         brand={brand}
                         allBrands={allBrands}

@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { NewPage } from "~/payload-types";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadTextBlock } from "./lead-text-block";
@@ -10,7 +10,7 @@ import { RoomListBlock } from "./room-list-block/room-list-block";
 import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block/text-columns-with-images-block";
 
 type LayoutBlocksProps = {
-  data: NonNullable<Page["layout"]>;
+  data: NonNullable<NewPage["layout"]>;
 };
 
 export function LayoutBlocks({ data }: LayoutBlocksProps) {

@@ -1,4 +1,4 @@
-import { GlobalConfig } from "payload/types";
+import { GlobalConfig } from "payload";
 import { canManageContent } from "../common/access-control";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
@@ -17,7 +17,7 @@ export const Maintenance: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "globals/maintenance", pageUrl: "/" },
+          { type: "target", cacheKey: "globals_maintenance", pageUrl: "/" },
           req,
         ),
     ],
@@ -46,7 +46,7 @@ export const Maintenance: GlobalConfig = {
           },
           required: true,
           type: "relationship",
-          relationTo: Texts.slug,
+          relationTo: "texts",
           filterOptions: {
             type: { equals: "plainText" },
           },

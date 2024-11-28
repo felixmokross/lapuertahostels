@@ -1,4 +1,4 @@
-import { Page, Text } from "~/payload-types";
+import { NewPage, Text } from "~/payload-types";
 import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
@@ -8,7 +8,7 @@ import { RichTextObject } from "~/common/rich-text";
 import { getSrcFromMedia } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
-export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
+export type WideImageBlockProps = NonNullable<NewPage["layout"]>[number] & {
   blockType: "WideImage";
 };
 
@@ -68,7 +68,10 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
             {(overlayTextBox.heading as Text).text}
           </Heading>
           <RichTextParagraph className="mt-2">
-            {(overlayTextBox.text as Text).richText as RichTextObject}
+            {
+              (overlayTextBox.text as Text)
+                .richText as unknown as RichTextObject
+            }
           </RichTextParagraph>
           {overlayTextBox.cta?.show && (
             <Button

@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
-import { Banner, Brand, Link, Media, Page, Text } from "~/payload-types";
-import { RichTextObject } from "./rich-text";
+import { Banner, Brand, Link, Media, NewPage, Text } from "~/payload-types";
+import { ElementNode } from "./rich-text";
+import { richTextRoot } from "./rich-text.builders";
 
 export function plainText(text: string): Text {
   return {
@@ -12,11 +13,11 @@ export function plainText(text: string): Text {
   };
 }
 
-export function richText(...richText: RichTextObject): Text {
+export function richText(...nodes: ElementNode[]): Text {
   return {
     id: createId(),
     type: "richText",
-    richText,
+    richText: richTextRoot(...nodes) as unknown as Text["richText"],
     createdAt: date,
     updatedAt: date,
   };
@@ -47,7 +48,7 @@ export function media(filename: string): Media {
 }
 
 type CallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
+  (NonNullable<NewPage["layout"]>[number] & {
     blockType: "LeadText";
   })["cta"]
 >;
@@ -65,7 +66,7 @@ export function callToAction(
 }
 
 type RequiredCallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
+  (NonNullable<NewPage["layout"]>[number] & {
     blockType: "RoomList";
   })["rooms"][number]["cta"]
 >;
@@ -85,7 +86,7 @@ export function internalLink(pageUrl?: string): Link {
   return {
     id: createId(),
     type: "internal",
-    page: page(pageUrl ?? "/"),
+    newPage: page(pageUrl ?? "/"),
     createdAt: date,
     updatedAt: date,
   };
@@ -101,10 +102,11 @@ export function externalLink(url: string): Link {
   };
 }
 
-export function page(url: string): Page {
+export function page(pathname: string): NewPage {
   return {
     id: createId(),
-    url,
+    pathname,
+    brand: null as unknown as Brand,
     createdAt: date,
     updatedAt: date,
   };

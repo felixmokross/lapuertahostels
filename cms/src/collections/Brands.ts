@@ -1,11 +1,15 @@
-import { CollectionConfig } from "payload/types";
+import {
+  CollectionConfig,
+  Locale,
+  Payload,
+  SanitizedCollectionConfig,
+} from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
-import { Banners } from "./Banners";
-import { Brand } from "payload/generated-types";
-import { Texts } from "./texts/Texts";
-import { Links } from "./Links";
+import { getLivePreviewUrl } from "@/common/live-preview";
+import { NewPage } from "@/payload-types";
+import { RowLabelProps } from "@/components/RowLabel";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -20,10 +24,45 @@ export const Brands: CollectionConfig = {
     },
   },
   defaultSort: "name",
+  defaultPopulate: {
+    id: true,
+    name: true,
+    homeLink: true,
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "logo", "homeLink", "updatedAt"],
     listSearchableFields: ["name"],
+    livePreview: {
+      url: async ({
+        data,
+        locale,
+        payload,
+      }: {
+        collectionConfig?: SanitizedCollectionConfig;
+        data: Record<string, any>;
+        locale: Locale;
+        payload: Payload;
+      }) => {
+        const homeLink = await payload.findByID({
+          collection: "links",
+          id: data.homeLink,
+          populate: {
+            links: {
+              newPage: true,
+            },
+          },
+        });
+
+        if (!(homeLink.newPage as NewPage | null)?.pathname)
+          throw new Error("Brand home page not found");
+        return getLivePreviewUrl(
+          (homeLink.newPage as NewPage).pathname,
+          `brands/${data.id}`,
+          locale.code,
+        );
+      },
+    },
   },
   access: {
     create: () => false,
@@ -32,9 +71,9 @@ export const Brands: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req }) =>
+      ({ req, collection }) =>
         cachePurgeHook(
-          { type: "target", dataUrl: "brands", pageUrl: "/" },
+          { type: "target", cacheKey: collection.slug, pageUrl: "/" },
           req,
         ),
     ],
@@ -48,6 +87,12 @@ export const Brands: CollectionConfig = {
       },
       type: "text",
       required: true,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        position: "sidebar",
+      },
     },
     {
       name: "name",
@@ -68,7 +113,7 @@ export const Brands: CollectionConfig = {
         es: "Enlace de inicio",
       },
       type: "relationship",
-      relationTo: Links.slug,
+      relationTo: "links",
       filterOptions: {
         type: { equals: "internal" },
       },
@@ -96,7 +141,7 @@ export const Brands: CollectionConfig = {
         es: "Banner",
       },
       type: "relationship",
-      relationTo: Banners.slug,
+      relationTo: "banners",
       admin: {
         description: {
           en: "A banner is useful to announce promotions or important news and can have a call to action. It will be shown on all pages of the brand.",
@@ -110,6 +155,16 @@ export const Brands: CollectionConfig = {
         en: "Navigation Links",
         es: "Enlaces de navegación",
       },
+      labels: {
+        singular: {
+          en: "Navigation Link",
+          es: "Enlace de navegación",
+        },
+        plural: {
+          en: "Navigation Links",
+          es: "Enlaces de navegación",
+        },
+      },
       type: "array",
       fields: [
         {
@@ -119,7 +174,7 @@ export const Brands: CollectionConfig = {
             es: "Etiqueta",
           },
           type: "relationship",
-          relationTo: Texts.slug,
+          relationTo: "texts",
           filterOptions: {
             type: { equals: "plainText" },
           },
@@ -132,10 +187,22 @@ export const Brands: CollectionConfig = {
             es: "Enlace",
           },
           type: "relationship",
-          relationTo: Links.slug,
+          relationTo: "links",
           required: true,
         },
       ],
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/src/components/RowLabel",
+            exportName: "RowLabel",
+            clientProps: {
+              textProp: "label",
+              fallbackLabelKey: "custom:brands:navLinkRowLabel",
+            } as RowLabelProps,
+          },
+        },
+      },
     },
     {
       name: "footer",
@@ -160,21 +227,6 @@ export const Brands: CollectionConfig = {
           type: "array",
           fields: [
             {
-              name: "name",
-              type: "text",
-              label: {
-                en: "Name",
-                es: "Nombre",
-              },
-              required: true,
-              admin: {
-                description: {
-                  en: "The name is only used within the CMS to easily identify the link group.",
-                  es: "El nombre solo se usa dentro del CMS para identificar fácilmente el grupo de enlaces.",
-                },
-              },
-            },
-            {
               name: "title",
               label: {
                 en: "Title",
@@ -182,7 +234,7 @@ export const Brands: CollectionConfig = {
               },
               required: true,
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },
@@ -193,6 +245,16 @@ export const Brands: CollectionConfig = {
                 en: "Links",
                 es: "Enlaces",
               },
+              labels: {
+                singular: {
+                  en: "Link",
+                  es: "Enlace",
+                },
+                plural: {
+                  en: "Links",
+                  es: "Enlaces",
+                },
+              },
               type: "array",
               fields: [
                 {
@@ -202,7 +264,7 @@ export const Brands: CollectionConfig = {
                     es: "Etiqueta",
                   },
                   type: "relationship",
-                  relationTo: Texts.slug,
+                  relationTo: "texts",
                   filterOptions: {
                     type: { equals: "plainText" },
                   },
@@ -215,21 +277,48 @@ export const Brands: CollectionConfig = {
                     es: "Enlace",
                   },
                   type: "relationship",
-                  relationTo: Links.slug,
+                  relationTo: "links",
                   required: true,
                 },
               ],
+              admin: {
+                components: {
+                  RowLabel: {
+                    path: "/src/components/RowLabel",
+                    exportName: "RowLabel",
+                    clientProps: {
+                      textProp: "label",
+                      fallbackLabelKey: "custom:rowLabel:link",
+                    } as RowLabelProps,
+                  },
+                },
+              },
             },
           ],
           admin: {
-            initCollapsed: true,
             components: {
-              RowLabel: ({ data }) =>
-                (data as Brand["footer"]["linkGroups"][number]).name,
+              RowLabel: {
+                path: "/src/components/RowLabel",
+                exportName: "RowLabel",
+                clientProps: {
+                  textProp: "title",
+                  fallbackLabelKey: "custom:rowLabel:linkGroup",
+                } as RowLabelProps,
+              },
             },
           },
         },
       ],
+    },
+    {
+      name: "pages",
+      label: {
+        en: "Pages",
+        es: "Páginas",
+      },
+      type: "join",
+      collection: "new-pages",
+      on: "brand",
     },
   ],
 };

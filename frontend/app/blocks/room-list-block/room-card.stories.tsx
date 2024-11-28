@@ -1,4 +1,4 @@
-import { plain, text } from "~/common/rich-text.builders";
+import { simpleElement, text } from "~/common/rich-text.builders";
 import { RoomCard } from "./room-card";
 import { Meta, StoryObj } from "@storybook/react";
 import {
@@ -30,7 +30,8 @@ export const Default: Story = {
   args: {
     heading: plainText("Standard Room with Terrace"),
     text: richText(
-      plain(
+      simpleElement(
+        "paragraph",
         text(
           "Our standard room with terrace is perfect for those who want to enjoy the outdoors from the comfort of their own room. The room features a private terrace with a hammock and a view of the garden.",
         ),

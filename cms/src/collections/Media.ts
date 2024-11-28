@@ -1,6 +1,5 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
-import { MediaCategory } from "./MediaCategory";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -15,6 +14,13 @@ export const Media: CollectionConfig = {
     },
   },
   defaultSort: "filename",
+  defaultPopulate: {
+    filename: true,
+    mimeType: true,
+    width: true,
+    height: true,
+    alt: true,
+  },
   admin: {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],
@@ -23,7 +29,6 @@ export const Media: CollectionConfig = {
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   upload: {
-    staticURL: "/media",
     disableLocalStorage: true,
     mimeTypes: ["image/*", "video/*"],
     imageSizes: [
@@ -32,12 +37,9 @@ export const Media: CollectionConfig = {
         width: 400,
       },
     ],
-    // TODO support for video thumbnails coming soon (see https://github.com/payloadcms/payload/pull/7374)
-    adminThumbnail: ({ doc }) =>
-      (doc.mimeType as string).startsWith("video/")
-        ? undefined
-        : doc.sizes["thumbnail"].filename,
     displayPreview: true,
+    crop: false,
+    focalPoint: false,
   },
   fields: [
     {
@@ -62,7 +64,7 @@ export const Media: CollectionConfig = {
         es: "Categoría",
       },
       type: "relationship",
-      relationTo: MediaCategory.slug,
+      relationTo: "mediaCategory",
       admin: {
         description: {
           en: "Add a media category to easily find this media. When you select the media, you can filter by this category.",

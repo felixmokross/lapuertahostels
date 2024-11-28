@@ -1,8 +1,7 @@
-import { Block } from "payload/types";
+import { Block } from "payload";
 import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { Texts } from "../collections/texts/Texts";
 import { makeCallToActionField } from "../fields/call-to-action";
 
 export const RoomListBlock: Block = {
@@ -63,7 +62,7 @@ export const RoomListBlock: Block = {
             {
               name: "caption",
               type: "relationship",
-              relationTo: Texts.slug,
+              relationTo: "texts",
               filterOptions: {
                 type: { equals: "plainText" },
               },

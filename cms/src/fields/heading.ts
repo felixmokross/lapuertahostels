@@ -1,5 +1,4 @@
-import { RelationshipField } from "payload/types";
-import { Texts } from "../collections/texts/Texts";
+import { RelationshipField } from "payload";
 
 type HeadingFieldOptions = {
   optional?: boolean;
@@ -15,7 +14,7 @@ export function makeHeadingField({
       es: "Título",
     },
     type: "relationship",
-    relationTo: Texts.slug,
+    relationTo: "texts",
     filterOptions: {
       type: { equals: "plainText" },
     },

@@ -1,6 +1,4 @@
-import { Block } from "payload/types";
-import React from "react";
-import { FieldDescription, useFieldType } from "payload/components/forms";
+import { Block } from "payload";
 
 export const SeparatorBlock: Block = {
   slug: "Separator",
@@ -23,15 +21,16 @@ export const SeparatorBlock: Block = {
       label: { en: "Description", es: "Descripción" },
       admin: {
         components: {
-          Field: ({ custom }) => (
-            <FieldDescription description={custom.description} />
-          ),
-        },
-      },
-      custom: {
-        description: {
-          en: "Use this separator to create a visual break between two subsequent blocks.",
-          es: "Utiliza este separador para crear una división visual entre dos bloques consecutivos.",
+          Field: {
+            path: "/src/components/DescriptionField",
+            exportName: "DescriptionField",
+            serverProps: {
+              description: {
+                en: "Use this separator to create a visual break between two subsequent blocks.",
+                es: "Utiliza este separador para crear una división visual entre dos bloques consecutivos.",
+              },
+            },
+          },
         },
       },
     },

@@ -1,9 +1,9 @@
-import { BlockField } from "payload/types";
+import { BlocksField } from "payload";
 import { HeroSlidesBlock } from "../blocks/HeroSlides";
 import { HeroVideoBlock } from "../blocks/HeroVideo";
 import { HeroHeadingBlock } from "../blocks/HeroHeading";
 
-export const heroField: BlockField = {
+export const heroField: BlocksField = {
   name: "hero",
   label: {
     en: "Hero",
