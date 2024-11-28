@@ -3,8 +3,8 @@ import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
-import { findUsages } from "./UsagesField";
 import { Text } from "@/payload-types";
+import { findUsages } from "./usages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -31,7 +31,7 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["title"],
   },
   hooks: {
-    // TODO make this smarter, we know are able to find out the usages of the texts
+    // TODO make this smarter, we now are able to find out the usages of the texts
     afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
   },
   endpoints: [translateEndpoint],
@@ -155,17 +155,12 @@ export const Texts: CollectionConfig = {
       },
     },
     {
-      type: "ui",
+      type: "json",
       name: "usages",
-      admin: {
-        components: {
-          Field: "src/collections/texts/UsagesField#UsagesField",
-        },
+      label: {
+        en: "Usages",
+        es: "Usos",
       },
-    },
-    {
-      type: "number",
-      name: "usageCount",
       virtual: true,
       admin: {
         readOnly: true,
@@ -174,9 +169,18 @@ export const Texts: CollectionConfig = {
         afterRead: [
           async ({ data, req }) => {
             if (!data) throw new Error("Data is missing.");
-            return (await findUsages(data as Text, req.payload)).length;
+            return await findUsages(data as Text, req.payload);
           },
         ],
+      },
+    },
+    {
+      type: "ui",
+      name: "usageCount",
+      admin: {
+        components: {
+          Field: "src/collections/texts/UsageCountField#UsageCountField",
+        },
       },
     },
   ],

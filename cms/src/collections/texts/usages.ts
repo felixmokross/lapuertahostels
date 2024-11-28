@@ -1,17 +1,5 @@
-import { Text } from "@/payload-types";
 import { CollectionSlug, Field, GlobalSlug, Payload } from "payload";
-
-export async function UsagesField({
-  data,
-  payload,
-}: {
-  payload: Payload;
-  data: Text;
-}) {
-  const usages = await findUsages(data, payload);
-
-  return <pre>{JSON.stringify(usages, null, 2)}</pre>;
-}
+import { Text } from "@/payload-types";
 
 export async function findUsages(data: Text, payload: Payload) {
   const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
@@ -65,7 +53,7 @@ export async function findUsages(data: Text, payload: Payload) {
   ).flat();
 }
 
-type Usage = (
+export type Usage = (
   | {
       type: "collection";
       collection: CollectionSlug;
