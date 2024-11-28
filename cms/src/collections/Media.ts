@@ -14,6 +14,13 @@ export const Media: CollectionConfig = {
     },
   },
   defaultSort: "filename",
+  defaultPopulate: {
+    filename: true,
+    mimeType: true,
+    width: true,
+    height: true,
+    alt: true,
+  },
   admin: {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],

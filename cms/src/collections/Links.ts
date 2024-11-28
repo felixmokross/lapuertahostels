@@ -15,6 +15,14 @@ export const Links: CollectionConfig = {
     },
   },
   defaultSort: "title",
+  defaultPopulate: {
+    type: true,
+    url: true,
+    newPage: true,
+    queryString: true,
+    fragment: true,
+    title: true,
+  },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],

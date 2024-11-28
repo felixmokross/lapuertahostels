@@ -24,6 +24,11 @@ export const Brands: CollectionConfig = {
     },
   },
   defaultSort: "name",
+  defaultPopulate: {
+    id: true,
+    name: true,
+    homeLink: true,
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "logo", "homeLink", "updatedAt"],

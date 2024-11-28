@@ -16,6 +16,10 @@ export const Banners: CollectionConfig = {
     },
   },
   defaultSort: "message.text",
+  defaultPopulate: {
+    message: true,
+    cta: true,
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "message"],

@@ -20,6 +20,10 @@ export const NewPages: CollectionConfig = {
     },
   },
   defaultSort: "pathname",
+  defaultPopulate: {
+    pathname: true,
+    brand: true,
+  },
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],

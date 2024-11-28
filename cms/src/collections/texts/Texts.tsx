@@ -19,6 +19,12 @@ export const Texts: CollectionConfig = {
     },
   },
   defaultSort: "title",
+  defaultPopulate: {
+    type: true,
+    text: true,
+    richText: true,
+    title: true,
+  },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type", "comment"],

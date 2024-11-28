@@ -13,6 +13,9 @@ export const MediaCategory: CollectionConfig = {
     },
   },
   defaultSort: "name",
+  defaultPopulate: {
+    name: true,
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "updatedAt"],

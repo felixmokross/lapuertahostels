@@ -17,6 +17,10 @@ export const Users: CollectionConfig = {
     useAPIKey: true,
   },
   defaultSort: "email",
+  defaultPopulate: {
+    email: true,
+    role: true,
+  },
   admin: {
     useAsTitle: "email",
     defaultColumns: ["email", "role", "updatedAt"],
