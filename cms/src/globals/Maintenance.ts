@@ -18,11 +18,7 @@ export const Maintenance: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          {
-            type: "target",
-            cacheKey: getGlobalCacheKey("maintenance"),
-            pageUrl: "/",
-          },
+          { cacheKey: getGlobalCacheKey("maintenance"), pageUrl: "/" },
           req,
         ),
     ],

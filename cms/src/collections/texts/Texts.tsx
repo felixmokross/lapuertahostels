@@ -1,15 +1,12 @@
-import { CollectionConfig, GlobalSlug, PayloadRequest } from "payload";
-import { cachePurgeHook } from "../../hooks/cache-purge-hook";
+import { CollectionConfig } from "payload";
+import {
+  refreshCacheForAllBrands,
+  refreshCacheForGlobals,
+  refreshCacheForPages,
+} from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
-import { Link, NewPage } from "@/payload-types";
-import {
-  getFullCollectionCacheKey,
-  getGlobalCacheKey,
-  getPageCacheKey,
-  refreshCacheForTarget,
-} from "@/common/frontend-cache";
 import {
   getUniqueGlobals,
   getUniqueCollectionItemIds,
@@ -192,69 +189,3 @@ export const Texts: CollectionConfig = {
     }),
   ],
 };
-
-async function refreshCacheForGlobals(
-  globals: GlobalSlug[],
-  req: PayloadRequest,
-) {
-  await Promise.all(
-    globals.map((global) =>
-      refreshCacheForTarget(req, {
-        type: "purge",
-        cacheKey: getGlobalCacheKey(global),
-      }),
-    ),
-  );
-
-  await refreshCacheForTarget(req, {
-    type: "prime",
-    pageUrl: "/",
-  });
-}
-
-async function refreshCacheForAllBrands(req: PayloadRequest) {
-  const [brandsResult] = await Promise.all([
-    req.payload.find({
-      collection: "brands",
-      pagination: false,
-      depth: 2,
-    }),
-    refreshCacheForTarget(req, {
-      type: "purge",
-      cacheKey: getFullCollectionCacheKey("brands"),
-    }),
-  ]);
-
-  await Promise.all(
-    brandsResult.docs.map((brand) =>
-      refreshCacheForTarget(req, {
-        type: "prime",
-        pageUrl: ((brand.homeLink as Link).newPage as NewPage).pathname,
-      }),
-    ),
-  );
-}
-
-async function refreshCacheForPages(pageIds: string[], req: PayloadRequest) {
-  const pages = await Promise.all(
-    pageIds.map((id) =>
-      req.payload.findByID({
-        collection: "new-pages",
-        id,
-      }),
-    ),
-  );
-
-  await Promise.all(
-    pages.map((page) =>
-      cachePurgeHook(
-        {
-          type: "target",
-          cacheKey: getPageCacheKey(page),
-          pageUrl: page.pathname,
-        },
-        req,
-      ),
-    ),
-  );
-}

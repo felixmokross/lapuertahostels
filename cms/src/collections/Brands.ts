@@ -74,11 +74,7 @@ export const Brands: CollectionConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          {
-            type: "target",
-            cacheKey: getFullCollectionCacheKey("brands"),
-            pageUrl: "/",
-          },
+          { cacheKey: getFullCollectionCacheKey("brands"), pageUrl: "/" },
           req,
         ),
     ],

@@ -36,11 +36,7 @@ export const Banners: CollectionConfig = {
         console.log(`Refreshing cache for brands`);
 
         await cachePurgeHook(
-          {
-            type: "target",
-            cacheKey: getFullCollectionCacheKey("brands"),
-            pageUrl: "/",
-          },
+          { cacheKey: getFullCollectionCacheKey("brands"), pageUrl: "/" },
           req,
         );
 

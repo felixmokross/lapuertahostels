@@ -3,7 +3,7 @@ import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocales } from "./locales";
 import { NewPages } from "@/collections/NewPages";
 import * as cookie from "cookie";
-import { NewPage } from "@/payload-types";
+import { Link, NewPage } from "@/payload-types";
 
 export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
   return collectionSlug;

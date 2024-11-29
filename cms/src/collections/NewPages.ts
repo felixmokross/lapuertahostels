@@ -39,11 +39,7 @@ export const NewPages: CollectionConfig = {
     afterChange: [
       ({ doc, req }) =>
         cachePurgeHook(
-          {
-            type: "target",
-            cacheKey: getPageCacheKey(doc),
-            pageUrl: doc.pathname,
-          },
+          { cacheKey: getPageCacheKey(doc), pageUrl: doc.pathname },
           req,
         ),
     ],
