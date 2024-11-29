@@ -15,7 +15,6 @@ import { HeroHeadingBlock } from "./blocks/hero-heading-block";
 import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
-import { SerializeFrom } from "@remix-run/node";
 import { Maintenance, Text } from "~/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { OptInLivePreview } from "./common/live-preview";
@@ -43,7 +42,7 @@ export function GlobalErrorBoundary() {
     (
       (isPageNotFound
         ? common.pageNotFoundScreen.heading
-        : common.errorScreen.heading) as SerializeFrom<Text>
+        : common.errorScreen.heading) as Text
     ).text!,
     brand,
   );
@@ -76,7 +75,7 @@ export function GlobalErrorBoundary() {
               text={
                 (isPageNotFound
                   ? common.pageNotFoundScreen.text
-                  : common.errorScreen.text) as SerializeFrom<Text>
+                  : common.errorScreen.text) as Text
               }
             />
           </main>
