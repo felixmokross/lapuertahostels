@@ -149,5 +149,15 @@ export const NewPages: CollectionConfig = {
     },
     heroField,
     layoutField,
+    {
+      name: "links",
+      label: {
+        en: "Links",
+        es: "Enlaces",
+      },
+      type: "join",
+      collection: "links",
+      on: "newPage",
+    },
   ],
 };
