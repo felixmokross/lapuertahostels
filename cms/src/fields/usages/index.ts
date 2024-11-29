@@ -3,6 +3,7 @@ import {
   DataFromCollectionSlug,
   Field,
   GlobalSlug,
+  LabelFunction,
   Payload,
 } from "payload";
 import { JSONField } from "payload";
@@ -30,8 +31,7 @@ export function usagesField(
     admin: {
       readOnly: true,
       components: {
-        Description:
-          "src/fields/usages/usages-field-description#UsagesFieldDescription",
+        Field: "src/fields/usages/usages-field#UsagesField",
       },
     },
     hooks: {
@@ -81,6 +81,7 @@ async function findUsages(
           ).map<Usage>((path) => ({
             type: "collection",
             collection: collectionSlug,
+            label: collectionConfig.labels.singular,
             id: item.id,
             fieldPath: path,
             title: (
@@ -109,6 +110,7 @@ async function findUsages(
           globalConfig.fields,
         ).map<Usage>((path) => ({
           type: "global",
+          label: globalConfig.label,
           global: globalSlug,
           fieldPath: path,
         }));
@@ -129,6 +131,7 @@ export type Usage = (
       global: GlobalSlug;
     }
 ) & {
+  label: string | Record<string, string> | LabelFunction;
   fieldPath: string;
 };
 

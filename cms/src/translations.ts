@@ -28,8 +28,6 @@ export const translations = {
         translatedToAllLocalesSuccessfully:
           "Translated to all locales successfully",
         failedToTranslateToAllLocales: "Failed to translate to all locales",
-        numberOfUsages_one: "{{ count }} usage",
-        numberOfUsages_other: "{{ count }} usages",
       },
       brands: {
         navLinkRowLabel: "Navigation Link {{ n }}",
@@ -38,6 +36,14 @@ export const translations = {
         link: "Link {{ n }}",
         linkGroup: "Link Group {{ n }}",
         item: "Item {{ n }}",
+      },
+      usages: {
+        type: "Type",
+        name: "Name",
+        fieldPath: "Field Path",
+        numberOfUsages_one: "{{ count }} usage",
+        numberOfUsages_other: "{{ count }} usages",
+        global: "Global",
       },
     },
   },
@@ -67,8 +73,6 @@ export const translations = {
         translatedToAllLocalesSuccessfully:
           "Traducido a todos los idiomas con éxito",
         failedToTranslateToAllLocales: "Error al traducir a todos los idiomas",
-        numberOfUsages_one: "{{ count }} uso",
-        numberOfUsages_other: "{{ count }} usos",
       },
       brands: {
         navLinkRowLabel: "Enlace de navegación {{ n }}",
@@ -77,6 +81,14 @@ export const translations = {
         link: "Enlace {{ n }}",
         linkGroup: "Grupo de enlaces {{ n }}",
         item: "Elemento {{ n }}",
+      },
+      usages: {
+        type: "Tipo",
+        name: "Nombre",
+        fieldPath: "Ruta del campo",
+        numberOfUsages_one: "{{ count }} uso",
+        numberOfUsages_other: "{{ count }} usos",
+        global: "Global",
       },
     },
   },
