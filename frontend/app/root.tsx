@@ -12,7 +12,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
-import styles from "./tailwind.css?url";
+import styles from "./global.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";
@@ -192,7 +192,7 @@ export default function App() {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>
-          {maintenance.maintenanceScreen?.show && (
+          {maintenance.maintenanceScreen?.show && isAuthorized && (
             <PreviewBar adminLocale={adminLocale!} />
           )}
           <OptInLivePreview path={`brands/${brand.id}`} data={brand}>

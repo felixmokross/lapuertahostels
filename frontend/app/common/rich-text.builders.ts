@@ -20,7 +20,7 @@ export function richTextRoot(...children: ElementNode[]): RichTextObject {
 }
 
 export function text(
-  text: string,
+  text: string | undefined,
   {
     bold,
     italic,
@@ -35,7 +35,7 @@ export function text(
     code?: true;
   } = {},
 ): TextNode {
-  const node = { text, format: 0 } as TextNode;
+  const node: TextNode = { type: "text", text, format: 0 };
   if (bold) node.format += IS_BOLD;
   if (italic) node.format += IS_ITALIC;
   if (underline) node.format += IS_UNDERLINE;

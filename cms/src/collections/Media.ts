@@ -1,5 +1,9 @@
 import { CollectionConfig } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import {
+  refreshCacheForAllBrands,
+  refreshCacheForPages,
+} from "../hooks/cache-purge-hook";
+import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -26,7 +30,22 @@ export const Media: CollectionConfig = {
     listSearchableFields: ["filename", "alt"],
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
+    afterChange: [
+      async ({ req, doc }) => {
+        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+
+        if (brandIds.length > 0) {
+          console.log(`Refreshing cache for all brands`);
+          await refreshCacheForAllBrands(req);
+        }
+
+        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        if (pageIds.length > 0) {
+          console.log(`Refreshing cache for ${pageIds.length} pages`);
+          await refreshCacheForPages(pageIds, req);
+        }
+      },
+    ],
   },
   upload: {
     disableLocalStorage: true,
@@ -73,5 +92,8 @@ export const Media: CollectionConfig = {
         position: "sidebar",
       },
     },
+    usagesField("upload", "media", {
+      collections: ["brands", "new-pages"],
+    }),
   ],
 };

@@ -6,6 +6,7 @@ import { canManageContent } from "../common/access-control";
 import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
+import { getPageCacheKey } from "@/common/frontend-cache";
 
 export const NewPages: CollectionConfig = {
   slug: "new-pages",
@@ -36,13 +37,9 @@ export const NewPages: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ doc, req, collection }) =>
+      ({ doc, req }) =>
         cachePurgeHook(
-          {
-            type: "target",
-            cacheKey: `${collection.slug}_${doc.pathname.replace("/", ":")}`,
-            pageUrl: doc.pathname,
-          },
+          { cacheKey: getPageCacheKey(doc), pageUrl: doc.pathname },
           req,
         ),
     ],
@@ -148,5 +145,15 @@ export const NewPages: CollectionConfig = {
     },
     heroField,
     layoutField,
+    {
+      name: "links",
+      label: {
+        en: "Links",
+        es: "Enlaces",
+      },
+      type: "join",
+      collection: "links",
+      on: "newPage",
+    },
   ],
 };

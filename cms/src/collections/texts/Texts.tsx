@@ -1,11 +1,17 @@
 import { CollectionConfig } from "payload";
-import { cachePurgeHook } from "../../hooks/cache-purge-hook";
+import {
+  refreshCacheForAllBrands,
+  refreshCacheForGlobals,
+  refreshCacheForPages,
+} from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
-import { Text } from "@/payload-types";
-import { findUsages, Usage } from "./usages";
-import { NewPages } from "../NewPages";
+import {
+  getUniqueGlobals,
+  getUniqueCollectionItemIds,
+  usagesField,
+} from "@/fields/usages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -34,30 +40,25 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
-        const pageIds = [
-          ...new Set(
-            (doc.usages as Usage[])
-              .filter(
-                (u) => u.type === "collection" && u.collection === "new-pages",
-              )
-              .map((u) => (u as Usage & { type: "collection" }).id),
-          ),
-        ];
+        const globals = getUniqueGlobals(doc.usages);
+        if (globals.length > 0) {
+          console.log(`Refreshing cache for globals: ${globals.join(", ")}`);
+          await refreshCacheForGlobals(globals, req);
+        }
 
-        // TODO support further usage types
-        for (const pageId of pageIds) {
-          const page = await req.payload.findByID({
-            collection: "new-pages",
-            id: pageId,
-          });
-          await cachePurgeHook(
-            {
-              type: "target",
-              cacheKey: `${NewPages.slug}_${page.pathname.replace("/", ":")}`,
-              pageUrl: page.pathname,
-            },
-            req,
-          );
+        const bannerIds = getUniqueCollectionItemIds(doc.usages, "banners");
+        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+
+        if (brandIds.length > 0 || bannerIds.length > 0) {
+          // banners are inlined into brands, therefore banners and brands both use the 'all brands' cache key
+          console.log(`Refreshing cache for all brands`);
+          await refreshCacheForAllBrands(req);
+        }
+
+        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        if (pageIds.length > 0) {
+          console.log(`Refreshing cache for ${pageIds.length} pages`);
+          await refreshCacheForPages(pageIds, req);
         }
       },
     ],
@@ -182,34 +183,9 @@ export const Texts: CollectionConfig = {
         },
       },
     },
-    {
-      type: "json",
-      name: "usages",
-      label: {
-        en: "Usages",
-        es: "Usos",
-      },
-      virtual: true,
-      admin: {
-        readOnly: true,
-      },
-      hooks: {
-        afterRead: [
-          async ({ data, req }) => {
-            if (!data) throw new Error("Data is missing.");
-            return await findUsages(data as Text, req.payload);
-          },
-        ],
-      },
-    },
-    {
-      type: "ui",
-      name: "usageCount",
-      admin: {
-        components: {
-          Field: "src/collections/texts/UsageCountField#UsageCountField",
-        },
-      },
-    },
+    usagesField("relationship", "texts", {
+      collections: ["new-pages", "banners", "brands"],
+      globals: ["common", "maintenance"],
+    }),
   ],
 };

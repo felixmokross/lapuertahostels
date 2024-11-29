@@ -1,6 +1,6 @@
 import type { Decorator, Preview } from "@storybook/react";
 import { createRemixStub } from "@remix-run/testing";
-import "../app/tailwind.css";
+import "../app/global.css";
 import React from "react";
 import i18n from "./i18next";
 import { ThemeProvider } from "../app/themes";

@@ -1,6 +1,15 @@
 import { CollectionConfig } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import {
+  refreshCacheForAllBrands,
+  refreshCacheForGlobals,
+  refreshCacheForPages,
+} from "../hooks/cache-purge-hook";
 import { validateUrl } from "../common/validation";
+import {
+  getUniqueCollectionItemIds,
+  getUniqueGlobals,
+  usagesField,
+} from "@/fields/usages";
 
 export const Links: CollectionConfig = {
   slug: "links",
@@ -29,7 +38,30 @@ export const Links: CollectionConfig = {
     listSearchableFields: ["title", "type"],
   },
   hooks: {
-    afterChange: [({ req }) => cachePurgeHook({ type: "all-pages" }, req)],
+    afterChange: [
+      async ({ req, doc }) => {
+        const globals = getUniqueGlobals(doc.usages);
+        if (globals.length > 0) {
+          console.log(`Refreshing cache for globals: ${globals.join(", ")}`);
+          await refreshCacheForGlobals(globals, req);
+        }
+
+        const bannerIds = getUniqueCollectionItemIds(doc.usages, "banners");
+        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+
+        if (brandIds.length > 0 || bannerIds.length > 0) {
+          // banners are inlined into brands, therefore banners and brands both use the 'all brands' cache key
+          console.log(`Refreshing cache for all brands`);
+          await refreshCacheForAllBrands(req);
+        }
+
+        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        if (pageIds.length > 0) {
+          console.log(`Refreshing cache for ${pageIds.length} pages`);
+          await refreshCacheForPages(pageIds, req);
+        }
+      },
+    ],
   },
   fields: [
     {
@@ -193,5 +225,9 @@ export const Links: CollectionConfig = {
         position: "sidebar",
       },
     },
+    usagesField("relationship", "links", {
+      collections: ["new-pages", "banners", "brands"],
+      globals: ["common"],
+    }),
   ],
 };

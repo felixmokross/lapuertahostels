@@ -3,6 +3,7 @@ import { canManageContent } from "../common/access-control";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
 import { Texts } from "../collections/texts/Texts";
+import { getGlobalCacheKey } from "@/common/frontend-cache";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",
@@ -17,7 +18,7 @@ export const Maintenance: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", cacheKey: "globals_maintenance", pageUrl: "/" },
+          { cacheKey: getGlobalCacheKey("maintenance"), pageUrl: "/" },
           req,
         ),
     ],

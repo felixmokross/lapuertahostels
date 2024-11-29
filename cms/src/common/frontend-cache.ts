@@ -1,8 +1,31 @@
 import { resolve6 } from "dns/promises";
-import { PayloadRequest } from "payload";
+import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocales } from "./locales";
 import { NewPages } from "@/collections/NewPages";
 import * as cookie from "cookie";
+import { Link, NewPage } from "@/payload-types";
+
+export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
+  return collectionSlug;
+}
+
+export function getGlobalCacheKey(globalSlug: GlobalSlug) {
+  return `globals_${globalSlug}`;
+}
+
+export function getCollectionItemCacheKey(
+  collectionSlug: CollectionSlug,
+  itemKey: string,
+) {
+  return `${collectionSlug}_${itemKey}`;
+}
+
+export function getPageCacheKey(page: NewPage) {
+  return getCollectionItemCacheKey(
+    "new-pages",
+    page.pathname.replaceAll("/", ":"),
+  );
+}
 
 export async function refreshCacheForAllPages(
   req: PayloadRequest,
@@ -22,8 +45,7 @@ export async function refreshCacheForAllPages(
     for (const page of pages) {
       await refreshCacheForTarget(req, {
         type: "purge",
-        pageUrl: page.pathname,
-        cacheKey: `${NewPages.slug}_${page.pathname.replaceAll("/", ":")}`,
+        cacheKey: getPageCacheKey(page),
       });
     }
 
@@ -45,7 +67,7 @@ export async function refreshCacheForAllPages(
 export type RefreshCacheActionType = RefreshCacheAction["type"];
 
 type RefreshCacheAction =
-  | { type: "purge"; cacheKey: string; pageUrl: string }
+  | { type: "purge"; cacheKey: string }
   | { type: "prime"; pageUrl: string };
 
 export async function refreshCacheForTarget(

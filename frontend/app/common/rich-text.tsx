@@ -99,6 +99,7 @@ function RenderedElementNode({
   isLast: boolean;
 }) {
   const { elements } = useRichTextContext();
+
   const renderedChildren = node.children.map((child, i) => (
     <RenderedNode
       key={i}
@@ -128,6 +129,10 @@ function RenderedElementNode({
         return <elements.link to={href}>{renderedChildren}</elements.link>;
       }
     }
+    default:
+      throw new Error(
+        `Unsupported node type ${node["type"]}: ${JSON.stringify(node, null, 2)}`,
+      );
   }
 }
 
@@ -166,7 +171,7 @@ function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
 }
 
 function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
-  if ("text" in node) {
+  if (node.type === "text") {
     return <RenderedTextNode node={node} />;
   }
 
@@ -176,7 +181,7 @@ function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
 function RenderedTextNode({ node }: { node: TextNode }) {
   const { elements } = useRichTextContext();
 
-  let result = <RenderedTextLines text={node.text} />;
+  let result = <RenderedTextLines text={node.text ?? ""} />;
 
   if (node.format & IS_BOLD) {
     result = <elements.bold>{result}</elements.bold>;
@@ -215,7 +220,7 @@ export type RichTextObject = {
   root: { type: "root"; children: ElementNode[] };
 };
 
-export type TextNode = { text: string; format: number };
+export type TextNode = { type: "text"; text?: string; format: number };
 
 export type ElementNode =
   | SimpleElementNode

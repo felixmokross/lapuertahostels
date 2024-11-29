@@ -149,6 +149,7 @@ export async function getCommon(locale: string) {
     "globals/common",
     "globals_common",
     locale,
+    2,
   )) as Common | null;
   if (!common) throw new Error("Could not load Common global");
 
@@ -160,6 +161,7 @@ export async function getMaintenance(locale: string) {
     "globals/maintenance",
     "globals_maintenance",
     locale,
+    2,
   )) as Maintenance | null;
   if (!maintanance) throw new Error("Could not load Maintenance global");
 
