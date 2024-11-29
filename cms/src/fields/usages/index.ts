@@ -12,7 +12,10 @@ type UsagesFieldOptions = {
   globals?: GlobalSlug[];
 };
 
+type RelationshipFieldType = "relationship" | "upload";
+
 export function usagesField(
+  fieldType: RelationshipFieldType,
   collectionToFind: CollectionSlug,
   options: UsagesFieldOptions = {},
 ): JSONField {
@@ -36,6 +39,7 @@ export function usagesField(
         async ({ data, req }) => {
           if (!data) throw new Error("Data is missing.");
           return await findUsages(
+            fieldType,
             collectionToFind,
             data,
             req.payload,
@@ -49,6 +53,7 @@ export function usagesField(
 }
 
 async function findUsages(
+  fieldType: RelationshipFieldType,
   collectionToFind: CollectionSlug,
   data: Record<string, any>,
   payload: Payload,
@@ -68,6 +73,7 @@ async function findUsages(
 
         return items.docs.flatMap((item) =>
           findItemUsagesOnCollection(
+            fieldType,
             collectionToFind,
             data.id,
             item,
@@ -96,6 +102,7 @@ async function findUsages(
         if (!globalConfig) throw new Error("Global config not found");
 
         return findItemUsagesOnCollection(
+          fieldType,
           collectionToFind,
           data.id,
           global,
@@ -126,6 +133,7 @@ export type Usage = (
 };
 
 function findItemUsagesOnCollection(
+  fieldType: RelationshipFieldType,
   collectionToFind: CollectionSlug,
   id: string,
   data: any,
@@ -134,10 +142,7 @@ function findItemUsagesOnCollection(
   const usagePaths: string[] = [];
 
   for (const field of fields) {
-    if (
-      field.type === "relationship" &&
-      field.relationTo === collectionToFind
-    ) {
+    if (field.type === fieldType && field.relationTo === collectionToFind) {
       if (data[field.name] === id) {
         addUsage(field.name);
       }
@@ -154,6 +159,7 @@ function findItemUsagesOnCollection(
 
         usagePaths.push(
           ...findItemUsagesOnCollection(
+            fieldType,
             collectionToFind,
             id,
             blockItem,
@@ -166,6 +172,7 @@ function findItemUsagesOnCollection(
         const arrayItem = data[field.name][i];
         usagePaths.push(
           ...findItemUsagesOnCollection(
+            fieldType,
             collectionToFind,
             id,
             arrayItem,
@@ -176,6 +183,7 @@ function findItemUsagesOnCollection(
     } else if (field.type === "group") {
       usagePaths.push(
         ...findItemUsagesOnCollection(
+          fieldType,
           collectionToFind,
           id,
           data[field.name],
@@ -184,7 +192,13 @@ function findItemUsagesOnCollection(
       );
     } else if (field.type === "collapsible" || field.type === "row") {
       usagePaths.push(
-        ...findItemUsagesOnCollection(collectionToFind, id, data, field.fields),
+        ...findItemUsagesOnCollection(
+          fieldType,
+          collectionToFind,
+          id,
+          data,
+          field.fields,
+        ),
       );
     } else if (field.type === "tabs") {
       throw new Error("Field type is not yet supported");

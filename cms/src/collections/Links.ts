@@ -194,7 +194,7 @@ export const Links: CollectionConfig = {
         position: "sidebar",
       },
     },
-    usagesField("links", {
+    usagesField("relationship", "links", {
       collections: ["new-pages", "banners", "brands"],
       globals: ["common"],
     }),

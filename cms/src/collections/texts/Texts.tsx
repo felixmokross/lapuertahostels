@@ -186,7 +186,7 @@ export const Texts: CollectionConfig = {
         },
       },
     },
-    usagesField("texts", {
+    usagesField("relationship", "texts", {
       collections: ["new-pages", "banners", "brands"],
       globals: ["common", "maintenance"],
     }),

@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { usagesField } from "@/fields/usages";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -73,5 +74,8 @@ export const Media: CollectionConfig = {
         position: "sidebar",
       },
     },
+    usagesField("upload", "media", {
+      collections: ["brands", "new-pages"],
+    }),
   ],
 };
