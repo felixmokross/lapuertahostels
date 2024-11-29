@@ -6,6 +6,7 @@ import { canManageContent } from "../common/access-control";
 import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
+import { getPageCacheKey } from "@/common/frontend-cache";
 
 export const NewPages: CollectionConfig = {
   slug: "new-pages",
@@ -36,11 +37,11 @@ export const NewPages: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ doc, req, collection }) =>
+      ({ doc, req }) =>
         cachePurgeHook(
           {
             type: "target",
-            cacheKey: `${collection.slug}_${doc.pathname.replace("/", ":")}`,
+            cacheKey: getPageCacheKey(doc),
             pageUrl: doc.pathname,
           },
           req,

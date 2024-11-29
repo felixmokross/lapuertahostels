@@ -1,8 +1,31 @@
 import { resolve6 } from "dns/promises";
-import { PayloadRequest } from "payload";
+import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocales } from "./locales";
 import { NewPages } from "@/collections/NewPages";
 import * as cookie from "cookie";
+import { NewPage } from "@/payload-types";
+
+export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
+  return collectionSlug;
+}
+
+export function getGlobalCacheKey(globalSlug: GlobalSlug) {
+  return `global_${globalSlug}`;
+}
+
+export function getCollectionItemCacheKey(
+  collectionSlug: CollectionSlug,
+  itemKey: string,
+) {
+  return `${collectionSlug}_${itemKey}`;
+}
+
+export function getPageCacheKey(page: NewPage) {
+  return getCollectionItemCacheKey(
+    "new-pages",
+    page.pathname.replaceAll("/", ":"),
+  );
+}
 
 export async function refreshCacheForAllPages(
   req: PayloadRequest,
@@ -23,7 +46,7 @@ export async function refreshCacheForAllPages(
       await refreshCacheForTarget(req, {
         type: "purge",
         pageUrl: page.pathname,
-        cacheKey: `${NewPages.slug}_${page.pathname.replaceAll("/", ":")}`,
+        cacheKey: getPageCacheKey(page),
       });
     }
 

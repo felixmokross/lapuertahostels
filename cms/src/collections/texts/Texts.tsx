@@ -6,6 +6,7 @@ import { editor } from "./editor";
 import { Text } from "@/payload-types";
 import { findUsages, Usage } from "./usages";
 import { NewPages } from "../NewPages";
+import { getPageCacheKey } from "@/common/frontend-cache";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -53,7 +54,7 @@ export const Texts: CollectionConfig = {
           await cachePurgeHook(
             {
               type: "target",
-              cacheKey: `${NewPages.slug}_${page.pathname.replace("/", ":")}`,
+              cacheKey: getPageCacheKey(page),
               pageUrl: page.pathname,
             },
             req,

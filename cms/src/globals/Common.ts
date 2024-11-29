@@ -6,6 +6,7 @@ import { makeRichTextField } from "../fields/rich-text";
 import { showField } from "../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
+import { getGlobalCacheKey } from "@/common/frontend-cache";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -20,7 +21,11 @@ export const Common: GlobalConfig = {
     afterChange: [
       ({ req }) =>
         cachePurgeHook(
-          { type: "target", cacheKey: "globals_common", pageUrl: "/" },
+          {
+            type: "target",
+            cacheKey: getGlobalCacheKey("common"),
+            pageUrl: "/",
+          },
           req,
         ),
     ],

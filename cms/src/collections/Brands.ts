@@ -10,6 +10,7 @@ import { imageField } from "../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
+import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -71,9 +72,13 @@ export const Brands: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req, collection }) =>
+      ({ req }) =>
         cachePurgeHook(
-          { type: "target", cacheKey: collection.slug, pageUrl: "/" },
+          {
+            type: "target",
+            cacheKey: getFullCollectionCacheKey("brands"),
+            pageUrl: "/",
+          },
           req,
         ),
     ],

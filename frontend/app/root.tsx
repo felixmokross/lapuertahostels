@@ -192,7 +192,7 @@ export default function App() {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>
-          {maintenance.maintenanceScreen?.show && (
+          {maintenance.maintenanceScreen?.show && isAuthorized && (
             <PreviewBar adminLocale={adminLocale!} />
           )}
           <OptInLivePreview path={`brands/${brand.id}`} data={brand}>

@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -35,7 +36,11 @@ export const Banners: CollectionConfig = {
         console.log(`Refreshing cache for brands`);
 
         await cachePurgeHook(
-          { type: "target", cacheKey: Brands.slug, pageUrl: "/" },
+          {
+            type: "target",
+            cacheKey: getFullCollectionCacheKey("brands"),
+            pageUrl: "/",
+          },
           req,
         );
 
