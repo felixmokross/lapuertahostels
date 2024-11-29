@@ -3,18 +3,18 @@ import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
-import { Link, NewPage, Text } from "@/payload-types";
-import {
-  findUsages,
-  getUniqueCollectionItemIds,
-  getUniqueGlobals,
-} from "./usages";
+import { Link, NewPage } from "@/payload-types";
 import {
   getFullCollectionCacheKey,
   getGlobalCacheKey,
   getPageCacheKey,
   refreshCacheForTarget,
 } from "@/common/frontend-cache";
+import {
+  getUniqueGlobals,
+  getUniqueCollectionItemIds,
+  usagesField,
+} from "@/fields/usages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -186,35 +186,10 @@ export const Texts: CollectionConfig = {
         },
       },
     },
-    {
-      type: "json",
-      name: "usages",
-      label: {
-        en: "Usages",
-        es: "Usos",
-      },
-      virtual: true,
-      admin: {
-        readOnly: true,
-      },
-      hooks: {
-        afterRead: [
-          async ({ data, req }) => {
-            if (!data) throw new Error("Data is missing.");
-            return await findUsages(data as Text, req.payload);
-          },
-        ],
-      },
-    },
-    {
-      type: "ui",
-      name: "usageCount",
-      admin: {
-        components: {
-          Field: "src/collections/texts/UsageCountField#UsageCountField",
-        },
-      },
-    },
+    usagesField("texts", {
+      collections: ["new-pages", "banners", "brands"],
+      globals: ["common", "maintenance"],
+    }),
   ],
 };
 

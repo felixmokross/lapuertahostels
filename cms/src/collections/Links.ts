@@ -1,6 +1,7 @@
 import { CollectionConfig } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { validateUrl } from "../common/validation";
+import { usagesField } from "@/fields/usages";
 
 export const Links: CollectionConfig = {
   slug: "links",
@@ -193,5 +194,9 @@ export const Links: CollectionConfig = {
         position: "sidebar",
       },
     },
+    usagesField("links", {
+      collections: ["new-pages", "banners", "brands"],
+      globals: ["common"],
+    }),
   ],
 };

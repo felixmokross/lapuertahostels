@@ -5,36 +5,56 @@ import {
   GlobalSlug,
   Payload,
 } from "payload";
-import { Text } from "@/payload-types";
+import { JSONField } from "payload";
 
-export function getUniqueGlobals(usages: Usage[]) {
-  return [
-    ...new Set(
-      usages
-        .filter((u) => u.type === "global")
-        .map((u) => (u as Usage & { type: "global" }).global),
-    ),
-  ];
+type UsagesFieldOptions = {
+  collections?: CollectionSlug[];
+  globals?: GlobalSlug[];
+};
+
+export function usagesField(
+  collectionToFind: CollectionSlug,
+  options: UsagesFieldOptions = {},
+): JSONField {
+  return {
+    type: "json",
+    name: "usages",
+    label: {
+      en: "Usages",
+      es: "Usos",
+    },
+    virtual: true,
+    admin: {
+      readOnly: true,
+      components: {
+        Description:
+          "src/fields/usages/usages-field-description#UsagesFieldDescription",
+      },
+    },
+    hooks: {
+      afterRead: [
+        async ({ data, req }) => {
+          if (!data) throw new Error("Data is missing.");
+          return await findUsages(
+            collectionToFind,
+            data,
+            req.payload,
+            options.collections ?? [],
+            options.globals ?? [],
+          );
+        },
+      ],
+    },
+  };
 }
 
-export function getUniqueCollectionItemIds(
-  usages: Usage[],
-  collectionSlug: CollectionSlug,
+async function findUsages(
+  collectionToFind: CollectionSlug,
+  data: Record<string, any>,
+  payload: Payload,
+  collections: CollectionSlug[],
+  globals: GlobalSlug[],
 ) {
-  return [
-    ...new Set(
-      usages
-        .filter(
-          (u) => u.type === "collection" && u.collection === collectionSlug,
-        )
-        .map((u) => (u as Usage & { type: "collection" }).id),
-    ),
-  ];
-}
-
-export async function findUsages(data: Text, payload: Payload) {
-  const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
-  const globals: GlobalSlug[] = ["common", "maintenance"];
   return (
     await Promise.all([
       ...collections.map(async (collectionSlug) => {
@@ -47,7 +67,8 @@ export async function findUsages(data: Text, payload: Payload) {
         const collectionConfig = payload.collections[collectionSlug].config;
 
         return items.docs.flatMap((item) =>
-          findTextUsagesOnCollection(
+          findItemUsagesOnCollection(
+            collectionToFind,
             data.id,
             item,
             collectionConfig.fields,
@@ -74,7 +95,8 @@ export async function findUsages(data: Text, payload: Payload) {
         );
         if (!globalConfig) throw new Error("Global config not found");
 
-        return findTextUsagesOnCollection(
+        return findItemUsagesOnCollection(
+          collectionToFind,
           data.id,
           global,
           globalConfig.fields,
@@ -103,16 +125,20 @@ export type Usage = (
   fieldPath: string;
 };
 
-function findTextUsagesOnCollection(
-  textId: string,
+function findItemUsagesOnCollection(
+  collectionToFind: CollectionSlug,
+  id: string,
   data: any,
   fields: Field[],
 ) {
   const usagePaths: string[] = [];
 
   for (const field of fields) {
-    if (field.type === "relationship" && field.relationTo === "texts") {
-      if (data[field.name] === textId) {
+    if (
+      field.type === "relationship" &&
+      field.relationTo === collectionToFind
+    ) {
+      if (data[field.name] === id) {
         addUsage(field.name);
       }
     } else if (field.type === "blocks") {
@@ -127,31 +153,38 @@ function findTextUsagesOnCollection(
         }
 
         usagePaths.push(
-          ...findTextUsagesOnCollection(textId, blockItem, block.fields).map(
-            (path) => `${field.name}.${i}.${path}`,
-          ),
+          ...findItemUsagesOnCollection(
+            collectionToFind,
+            id,
+            blockItem,
+            block.fields,
+          ).map((path) => `${field.name}.${i}.${path}`),
         );
       }
     } else if (field.type === "array") {
       for (let i = 0; i < data[field.name].length; i++) {
         const arrayItem = data[field.name][i];
         usagePaths.push(
-          ...findTextUsagesOnCollection(textId, arrayItem, field.fields).map(
-            (path) => `${field.name}.${i}.${path}`,
-          ),
+          ...findItemUsagesOnCollection(
+            collectionToFind,
+            id,
+            arrayItem,
+            field.fields,
+          ).map((path) => `${field.name}.${i}.${path}`),
         );
       }
     } else if (field.type === "group") {
       usagePaths.push(
-        ...findTextUsagesOnCollection(
-          textId,
+        ...findItemUsagesOnCollection(
+          collectionToFind,
+          id,
           data[field.name],
           field.fields,
         ).map((path) => `${field.name}.${path}`),
       );
     } else if (field.type === "collapsible" || field.type === "row") {
       usagePaths.push(
-        ...findTextUsagesOnCollection(textId, data, field.fields),
+        ...findItemUsagesOnCollection(collectionToFind, id, data, field.fields),
       );
     } else if (field.type === "tabs") {
       throw new Error("Field type is not yet supported");
@@ -163,4 +196,29 @@ function findTextUsagesOnCollection(
   function addUsage(fieldPath: string) {
     usagePaths.push(fieldPath);
   }
+}
+
+export function getUniqueGlobals(usages: Usage[]) {
+  return [
+    ...new Set(
+      usages
+        .filter((u) => u.type === "global")
+        .map((u) => (u as Usage & { type: "global" }).global),
+    ),
+  ];
+}
+
+export function getUniqueCollectionItemIds(
+  usages: Usage[],
+  collectionSlug: CollectionSlug,
+) {
+  return [
+    ...new Set(
+      usages
+        .filter(
+          (u) => u.type === "collection" && u.collection === collectionSlug,
+        )
+        .map((u) => (u as Usage & { type: "collection" }).id),
+    ),
+  ];
 }
