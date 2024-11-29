@@ -1,5 +1,36 @@
-import { CollectionSlug, Field, GlobalSlug, Payload } from "payload";
+import {
+  CollectionSlug,
+  DataFromCollectionSlug,
+  Field,
+  GlobalSlug,
+  Payload,
+} from "payload";
 import { Text } from "@/payload-types";
+
+export function getUniqueGlobals(usages: Usage[]) {
+  return [
+    ...new Set(
+      usages
+        .filter((u) => u.type === "global")
+        .map((u) => (u as Usage & { type: "global" }).global),
+    ),
+  ];
+}
+
+export function getUniqueCollectionItemIds(
+  usages: Usage[],
+  collectionSlug: CollectionSlug,
+) {
+  return [
+    ...new Set(
+      usages
+        .filter(
+          (u) => u.type === "collection" && u.collection === collectionSlug,
+        )
+        .map((u) => (u as Usage & { type: "collection" }).id),
+    ),
+  ];
+}
 
 export async function findUsages(data: Text, payload: Payload) {
   const collections: CollectionSlug[] = ["new-pages", "banners", "brands"];
@@ -25,6 +56,10 @@ export async function findUsages(data: Text, payload: Payload) {
             collection: collectionSlug,
             id: item.id,
             fieldPath: path,
+            title: (
+              item as DataFromCollectionSlug<CollectionSlug> &
+                Record<string, any>
+            )[collectionConfig.admin.useAsTitle],
           })),
         );
       }),
@@ -58,6 +93,7 @@ export type Usage = (
       type: "collection";
       collection: CollectionSlug;
       id: string;
+      title: string;
     }
   | {
       type: "global";

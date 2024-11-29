@@ -10,7 +10,7 @@ export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
 }
 
 export function getGlobalCacheKey(globalSlug: GlobalSlug) {
-  return `global_${globalSlug}`;
+  return `globals_${globalSlug}`;
 }
 
 export function getCollectionItemCacheKey(
@@ -45,7 +45,6 @@ export async function refreshCacheForAllPages(
     for (const page of pages) {
       await refreshCacheForTarget(req, {
         type: "purge",
-        pageUrl: page.pathname,
         cacheKey: getPageCacheKey(page),
       });
     }
@@ -68,7 +67,7 @@ export async function refreshCacheForAllPages(
 export type RefreshCacheActionType = RefreshCacheAction["type"];
 
 type RefreshCacheAction =
-  | { type: "purge"; cacheKey: string; pageUrl: string }
+  | { type: "purge"; cacheKey: string }
   | { type: "prime"; pageUrl: string };
 
 export async function refreshCacheForTarget(

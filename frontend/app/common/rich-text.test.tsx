@@ -582,16 +582,13 @@ describe("lineBreakHandling", () => {
           simpleElement("paragraph", text("Hello, world!")),
           simpleElement("paragraph", text("This is the next line")),
           simpleElement("paragraph", text("")),
-          simpleElement(
-            "paragraph",
-            list(
-              "ul",
-              simpleElement(
-                "listitem",
-                simpleElement("paragraph", text("First line")),
-                simpleElement("paragraph", text("")),
-                simpleElement("paragraph", text("Third line")),
-              ),
+          list(
+            "ul",
+            simpleElement(
+              "listitem",
+              simpleElement("paragraph", text("First line")),
+              simpleElement("paragraph", text("")),
+              simpleElement("paragraph", text("Third line")),
             ),
           ),
         )}
@@ -640,4 +637,21 @@ test("newline characters are replaced with <br /> elements", () => {
       </p>
     </div>
   `);
+});
+
+test("Nodes of type 'text' without text render without an error", () => {
+  render(
+    <RichText
+      content={richTextRoot(
+        simpleElement(
+          "paragraph",
+          text("Hello, "),
+          text(undefined),
+          text("world!"),
+        ),
+      )}
+    />,
+  );
+
+  expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
 });

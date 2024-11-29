@@ -12,7 +12,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
-import styles from "./tailwind.css?url";
+import styles from "./global.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";

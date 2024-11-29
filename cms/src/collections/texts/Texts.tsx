@@ -1,12 +1,20 @@
-import { CollectionConfig } from "payload";
+import { CollectionConfig, GlobalSlug, PayloadRequest } from "payload";
 import { cachePurgeHook } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
 import { fullTextToTitle, richTextToFullText } from "./utils";
 import { editor } from "./editor";
-import { Text } from "@/payload-types";
-import { findUsages, Usage } from "./usages";
-import { NewPages } from "../NewPages";
-import { getPageCacheKey } from "@/common/frontend-cache";
+import { Link, NewPage, Text } from "@/payload-types";
+import {
+  findUsages,
+  getUniqueCollectionItemIds,
+  getUniqueGlobals,
+} from "./usages";
+import {
+  getFullCollectionCacheKey,
+  getGlobalCacheKey,
+  getPageCacheKey,
+  refreshCacheForTarget,
+} from "@/common/frontend-cache";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -35,30 +43,25 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
-        const pageIds = [
-          ...new Set(
-            (doc.usages as Usage[])
-              .filter(
-                (u) => u.type === "collection" && u.collection === "new-pages",
-              )
-              .map((u) => (u as Usage & { type: "collection" }).id),
-          ),
-        ];
+        const globals = getUniqueGlobals(doc.usages);
+        if (globals.length > 0) {
+          console.log(`Refreshing cache for globals: ${globals.join(", ")}`);
+          await refreshCacheForGlobals(globals, req);
+        }
 
-        // TODO support further usage types
-        for (const pageId of pageIds) {
-          const page = await req.payload.findByID({
-            collection: "new-pages",
-            id: pageId,
-          });
-          await cachePurgeHook(
-            {
-              type: "target",
-              cacheKey: getPageCacheKey(page),
-              pageUrl: page.pathname,
-            },
-            req,
-          );
+        const bannerIds = getUniqueCollectionItemIds(doc.usages, "banners");
+        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+
+        if (brandIds.length > 0 || bannerIds.length > 0) {
+          // banners are inlined into brands, therefore banners and brands both use the 'all brands' cache key
+          console.log(`Refreshing cache for all brands`);
+          await refreshCacheForAllBrands(req);
+        }
+
+        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        if (pageIds.length > 0) {
+          console.log(`Refreshing cache for ${pageIds.length} pages`);
+          await refreshCacheForPages(pageIds, req);
         }
       },
     ],
@@ -214,3 +217,69 @@ export const Texts: CollectionConfig = {
     },
   ],
 };
+
+async function refreshCacheForGlobals(
+  globals: GlobalSlug[],
+  req: PayloadRequest,
+) {
+  await Promise.all(
+    globals.map((global) =>
+      refreshCacheForTarget(req, {
+        type: "purge",
+        cacheKey: getGlobalCacheKey(global),
+      }),
+    ),
+  );
+
+  await refreshCacheForTarget(req, {
+    type: "prime",
+    pageUrl: "/",
+  });
+}
+
+async function refreshCacheForAllBrands(req: PayloadRequest) {
+  const [brandsResult] = await Promise.all([
+    req.payload.find({
+      collection: "brands",
+      pagination: false,
+      depth: 2,
+    }),
+    refreshCacheForTarget(req, {
+      type: "purge",
+      cacheKey: getFullCollectionCacheKey("brands"),
+    }),
+  ]);
+
+  await Promise.all(
+    brandsResult.docs.map((brand) =>
+      refreshCacheForTarget(req, {
+        type: "prime",
+        pageUrl: ((brand.homeLink as Link).newPage as NewPage).pathname,
+      }),
+    ),
+  );
+}
+
+async function refreshCacheForPages(pageIds: string[], req: PayloadRequest) {
+  const pages = await Promise.all(
+    pageIds.map((id) =>
+      req.payload.findByID({
+        collection: "new-pages",
+        id,
+      }),
+    ),
+  );
+
+  await Promise.all(
+    pages.map((page) =>
+      cachePurgeHook(
+        {
+          type: "target",
+          cacheKey: getPageCacheKey(page),
+          pageUrl: page.pathname,
+        },
+        req,
+      ),
+    ),
+  );
+}
