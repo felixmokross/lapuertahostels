@@ -20,8 +20,16 @@ export const translations = {
         },
       },
       texts: {
-        translations: "Translations…",
+        translationsButtonLabel: "Translations…",
+        translationsTitle: "Translations",
+        currentLocale: "Current Locale",
+        selectLocales: "Select Locales",
+        selectLocalesDescription:
+          "Please confirm the target locales below. The text will be translated from the current locale {{ sourceLocale }} into the selected locales. The translation is powered by the machine translation service <a>DeepL</a>.",
+        selectLocalesNote:
+          "<strong>Note:</strong> The existing translations will be overwritten.",
         autoTranslate: "Auto-Translate",
+        translateToSelectedLocales: "Translate to Selected Locales",
         goToTranslation: "Go to Translation",
         translating: "Translating…",
         pleaseSaveYourChangesToEnableAutoTranslate:
@@ -68,12 +76,18 @@ export const translations = {
         },
       },
       texts: {
-        translations: "Traducciones…",
+        translationsButtonLabel: "Traducciones…",
+        translationsTitle: "Traducciones",
+        currentLocale: "Idioma actual",
+        selectLocales: "Seleccionar idiomas",
+        selectLocalesDescription:
+          "Confirme los idiomas de destino a continuación. El texto se traducirá del idioma actual {{ sourceLocale }} a los idiomas seleccionados. La traducción es proporcionada por el servicio de traducción automática <a>DeepL</a>.",
+        selectLocalesNote:
+          "<s>Nota:</s> Las traducciones existentes se sobrescribirán.",
         autoTranslate: "Auto-traducir",
+        translateToSelectedLocales: "Traducir a los idiomas seleccionados",
         goToTranslation: "Ir a la traducción",
         translating: "Traduciendo…",
-        translateToAllLocales: "Traducir a todos los idiomas",
-        translatingToAllLocales: "Traduciendo a todos los idiomas…",
         pleaseSaveYourChangesToEnableAutoTranslate:
           "Por favor, guarde sus cambios para habilitar la traducción.",
         confirmAutoTranslate:
