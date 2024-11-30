@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LeadTextBlock } from "./lead-text-block";
 import { callToAction, plainText, richText } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Lead Text Block",
@@ -21,8 +21,7 @@ export const Default: Story = {
     id: createId(),
     heading: plainText("Discover the Colombian Costa Caribe"),
     text: richText(
-      simpleElement(
-        "paragraph",
+      paragraph(
         text("Hike through the breath-taking beauty of "),
         bold("Tayrona National Park"),
         text(", discover the mysterious "),

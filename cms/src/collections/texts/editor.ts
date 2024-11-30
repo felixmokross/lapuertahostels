@@ -4,6 +4,8 @@ import {
   FixedToolbarFeature,
   getEnabledNodes,
   HeadingFeature,
+  HTMLConverterFeature,
+  IndentFeature,
   InlineCodeFeature,
   ItalicFeature,
   lexicalEditor,
@@ -29,6 +31,7 @@ const features = [
   HeadingFeature({ enabledHeadingSizes: ["h4", "h5"] }),
   UnorderedListFeature(),
   OrderedListFeature(),
+  IndentFeature(),
 
   // TODO this feature doesn't fit in our 'Links' concept, as it already distinguishes between internal and external links
   // by itself. We should either create a custom feature or remove the 'Links' concept to ensure a consistent UX.
@@ -41,6 +44,7 @@ const features = [
 
   // TODO remove this once we have migrated to Lexical on all environments
   SlateToLexicalFeature({ disableHooks: true }),
+  HTMLConverterFeature({}),
 ];
 
 export async function getEditorConfig() {

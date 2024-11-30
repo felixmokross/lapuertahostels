@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 import {
   callToAction,
   media,
@@ -27,8 +27,7 @@ export const Default: Story = {
     blockType: "TextColumnsWithImages",
     heading: plainText("Our Services"),
     text: richText(
-      simpleElement(
-        "paragraph",
+      paragraph(
         text("Our services are designed to "),
         bold("make your life easier."),
       ),
@@ -40,8 +39,7 @@ export const Default: Story = {
         image: media("_DSC0299.jpg"),
         heading: plainText("Example Heading"),
         text: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
           ),
         ),
@@ -53,8 +51,7 @@ export const Default: Story = {
         image: media("Tayrona 4.jpg"),
         heading: plainText("Another Service"),
         text: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text(
               "Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.",
             ),
@@ -68,8 +65,7 @@ export const Default: Story = {
         image: media("CP4.jpg"),
         heading: plainText("This is Interesting"),
         text: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text(
               "In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. ",
             ),
@@ -83,8 +79,7 @@ export const Default: Story = {
         image: media("Minca 5.png"),
         heading: plainText("This service"),
         text: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text(
               " Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.",
             ),

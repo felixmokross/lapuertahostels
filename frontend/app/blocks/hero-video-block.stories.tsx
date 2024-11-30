@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { HeroVideoBlock } from "./hero-video-block";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Hero Video Block",
@@ -23,9 +23,7 @@ export const Default: Story = {
     previewImage: media("video-compressed-preview.png"),
     overlayTitle: {
       show: true,
-      text: richText(
-        simpleElement("paragraph", text("Explore "), bold("Tayrona")),
-      ),
+      text: richText(paragraph(text("Explore "), bold("Tayrona"))),
       overlay: "subtle",
       position: "center",
       cta: callToAction("Book Now", "primary"),

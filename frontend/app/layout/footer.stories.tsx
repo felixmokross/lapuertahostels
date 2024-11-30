@@ -10,7 +10,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { simpleElement, text } from "~/common/rich-text.builders";
+import { paragraph, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "layout/Footer",
@@ -110,8 +110,7 @@ export const Default: Story = {
   args: {
     content: {
       address: richText(
-        simpleElement(
-          "paragraph",
+        paragraph(
           text(`La Puerta Hostels S.A.S.
 Calle 18 #5-66
 Santa Marta 470004
@@ -119,10 +118,7 @@ Colombia`),
         ),
       ),
       copyright: richText(
-        simpleElement(
-          "paragraph",
-          text("La Puerta Hostels S.A.S. All rights reserved."),
-        ),
+        paragraph(text("La Puerta Hostels S.A.S. All rights reserved.")),
       ),
       socialLinks: [
         {
