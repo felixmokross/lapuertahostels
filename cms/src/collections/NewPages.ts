@@ -104,12 +104,12 @@ export const NewPages: CollectionConfig = {
         const brandHomeLinkPathname = (
           (brand.homeLink as Link).newPage as NewPage
         ).pathname;
-        const prefix = brandHomeLinkPathname.endsWith("/")
+        const safePrefix = brandHomeLinkPathname.endsWith("/")
           ? brandHomeLinkPathname
           : brandHomeLinkPathname + "/";
-        if (!value.startsWith(prefix)) {
+        if (value !== brandHomeLinkPathname && !value.startsWith(safePrefix)) {
           return t("custom:pages:pathname:pathnameMustStartWithPrefix", {
-            prefix,
+            prefix: brandHomeLinkPathname,
           });
         }
 
