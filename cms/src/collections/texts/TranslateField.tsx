@@ -345,5 +345,5 @@ function isLongContent(data: AllLocalesText, localeCode: string) {
       : data.richText_html
         ? data.richText_html[localeCode]
         : "";
-  return fullText && fullText.length > 200;
+  return !!fullText && fullText.length > 200;
 }
