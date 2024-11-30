@@ -20,7 +20,7 @@ import {
 } from "@payloadcms/ui";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { Locale } from "payload";
-import { Label } from "@/common/labels";
+import { getLabelText, Label } from "@/common/labels";
 import Link from "next/link";
 import { LanguagesIcon, SparklesIcon } from "@/common/icons";
 import { cn } from "@/common/cn";
@@ -60,7 +60,7 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
         </Button>
         {isModified && (
           <p className="field-description -tw-mt-4 tw-mb-8">
-            {t("custom:texts:pleaseSaveYourChangesToEnableTranslation")}
+            {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
           </p>
         )}
       </>
@@ -99,7 +99,7 @@ function DrawerContent({
     })();
   }, [updateData]);
 
-  const { t } = useTranslation<TranslationsObject, TranslationsKey>();
+  const { t, i18n } = useTranslation<TranslationsObject, TranslationsKey>();
   const [isTranslating, setIsTranslating] = useState(false);
   const otherLocales = locales.filter(
     (locale) => locale.code !== currentLocale.code,
@@ -161,7 +161,9 @@ function DrawerContent({
                   onClick={async () => {
                     if (
                       !window.confirm(
-                        t("custom:texts:confirmTranslateToAllLocales"),
+                        t("custom:texts:confirmAutoTranslate", {
+                          sourceLocale: getLabelText(currentLocale.label, i18n),
+                        }),
                       )
                     ) {
                       return;
@@ -213,7 +215,7 @@ function DrawerContent({
                     icon="edit"
                     disabled={isTranslating}
                   >
-                    {t("custom:texts:editTranslation")}
+                    {t("custom:texts:goToTranslation")}
                   </Button>
                 </TableHeaderFooterCell>
               ))}

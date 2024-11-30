@@ -1,23 +1,25 @@
 import { LabelFunction } from "payload";
 import { useTranslation } from "@payloadcms/ui";
+import { I18nClient } from "@payloadcms/translations";
 
-export function Label({
-  children,
-}: {
-  children: LabelFunction | string | Record<string, string>;
-}) {
-  const { t, i18n } = useTranslation();
+type LabelData = LabelFunction | string | Record<string, string>;
 
-  if (typeof children === "string") {
-    return children;
+export function Label({ children }: { children: LabelData }) {
+  const { i18n } = useTranslation();
+  return getLabelText(children, i18n);
+}
+
+export function getLabelText(data: LabelData, i18n: I18nClient) {
+  if (typeof data === "string") {
+    return data;
   }
 
-  if (typeof children === "object") {
-    return children[i18n.language];
+  if (typeof data === "object") {
+    return data[i18n.language];
   }
 
-  if (typeof children === "function") {
-    return children({ t: t as Parameters<LabelFunction>[0]["t"] });
+  if (typeof data === "function") {
+    return data({ t: i18n.t as Parameters<LabelFunction>[0]["t"] });
   }
 
   throw new Error("Invalid label type");
