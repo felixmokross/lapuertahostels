@@ -7,7 +7,7 @@ import {
   bold,
   italic,
   underline,
-  simpleElement,
+  paragraph,
   customUrlLink,
   strikethrough,
   code,
@@ -17,13 +17,14 @@ import {
   internalLink,
   unsupportedElementWithoutChildren,
   lineBreak,
+  listitem,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement("paragraph", text("Hello, "), bold("world"), text("!")),
+        paragraph(text("Hello, "), bold("world"), text("!")),
       )}
     />,
   );
@@ -36,7 +37,7 @@ test("Italic text node is rendered as <em> element.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement("paragraph", text("Hello, "), italic("world"), text("!")),
+        paragraph(text("Hello, "), italic("world"), text("!")),
       )}
     />,
   );
@@ -49,12 +50,7 @@ test("Underline text node is rendered as <u> element.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
-          text("Hello, "),
-          underline("world"),
-          text("!"),
-        ),
+        paragraph(text("Hello, "), underline("world"), text("!")),
       )}
     />,
   );
@@ -67,12 +63,7 @@ test("Strikethrough text node is rendered as <s> element.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
-          text("Hello, "),
-          strikethrough("world"),
-          text("!"),
-        ),
+        paragraph(text("Hello, "), strikethrough("world"), text("!")),
       )}
     />,
   );
@@ -87,7 +78,7 @@ test("Code text node is rendered as <code> element.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement("paragraph", text("Hello, "), code("world"), text("!")),
+        paragraph(text("Hello, "), code("world"), text("!")),
       )}
     />,
   );
@@ -100,8 +91,7 @@ test("Text nodes with multiple styles on the same node are rendered correctly", 
   const { container } = render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
+        paragraph(
           text("Hello, "),
           text("world", {
             bold: true,
@@ -131,18 +121,13 @@ test("Text nodes with multiple styles on the same node are rendered correctly", 
   `);
 });
 
-test("Root element nodes are rendered as paragraphs.", () => {
+test("Paragraph element nodes are rendered as paragraphs.", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
-          text("Hello, "),
-          underline("world"),
-          text("!"),
-        ),
-        simpleElement("paragraph", text("This is the next line")),
-        simpleElement("paragraph", text("This is the last line")),
+        paragraph(text("Hello, "), underline("world"), text("!")),
+        paragraph(text("This is the next line")),
+        paragraph(text("This is the last line")),
       )}
     />,
   );
@@ -181,9 +166,9 @@ test("ul element nodes with li as children are rendered as <ul> and <li> element
       content={richTextRoot(
         list(
           "ul",
-          simpleElement("listitem", text("First item")),
-          simpleElement("listitem", text("Second item")),
-          simpleElement("listitem", text("Third item")),
+          listitem(text("First item")),
+          listitem(text("Second item")),
+          listitem(text("Third item")),
         ),
       )}
     />,
@@ -203,9 +188,9 @@ test("ol element nodes with li as children are rendered as <ol> and <li> element
       content={richTextRoot(
         list(
           "ol",
-          simpleElement("listitem", text("First item")),
-          simpleElement("listitem", text("Second item")),
-          simpleElement("listitem", text("Third item")),
+          listitem(text("First item")),
+          listitem(text("Second item")),
+          listitem(text("Third item")),
         ),
       )}
     />,
@@ -249,7 +234,7 @@ test("line breaks are rendered as <br /> elements.", () => {
   const { container } = render(
     <RichText
       content={richTextRoot(
-        simpleElement("paragraph", text("hello"), lineBreak(), text("world")),
+        paragraph(text("hello"), lineBreak(), text("world")),
       )}
     />,
   );
@@ -273,9 +258,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", bold("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(bold("Hello, world!")))}
         elements={{
           bold: CustomHighlight,
         }}
@@ -294,9 +277,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", italic("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(italic("Hello, world!")))}
         elements={{
           italic: CustomItalic,
         }}
@@ -315,9 +296,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", underline("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(underline("Hello, world!")))}
         elements={{
           underline: CustomUnderline,
         }}
@@ -336,9 +315,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", strikethrough("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(strikethrough("Hello, world!")))}
         elements={{
           strikethrough: CustomStrikethrough,
         }}
@@ -357,9 +334,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", code("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(code("Hello, world!")))}
         elements={{
           code: CustomCode,
         }}
@@ -441,9 +416,9 @@ describe("custom elements", () => {
         content={richTextRoot(
           list(
             "ul",
-            simpleElement("listitem", text("First item")),
-            simpleElement("listitem", text("Second item")),
-            simpleElement("listitem", text("Third item")),
+            listitem(text("First item")),
+            listitem(text("Second item")),
+            listitem(text("Third item")),
           ),
         )}
         elements={{
@@ -467,9 +442,9 @@ describe("custom elements", () => {
         content={richTextRoot(
           list(
             "ol",
-            simpleElement("listitem", text("First item")),
-            simpleElement("listitem", text("Second item")),
-            simpleElement("listitem", text("Third item")),
+            listitem(text("First item")),
+            listitem(text("Second item")),
+            listitem(text("Third item")),
           ),
         )}
         elements={{
@@ -490,9 +465,7 @@ describe("custom elements", () => {
 
     render(
       <RichText
-        content={richTextRoot(
-          list("ul", simpleElement("listitem", text("First item"))),
-        )}
+        content={richTextRoot(list("ul", listitem(text("First item"))))}
         elements={{
           li: CustomLi,
         }}
@@ -502,16 +475,14 @@ describe("custom elements", () => {
     expect(screen.getByTestId("custom-li")).toHaveTextContent("First item");
   });
 
-  test("if a custom paragraph element is specified, it is used for plain element nodes", () => {
+  test("if a custom paragraph element is specified, it is used for paragraph element nodes", () => {
     function CustomParagraph({ children }: PropsWithChildren) {
       return <span data-testid="custom-paragraph">{children}</span>;
     }
 
     render(
       <RichText
-        content={richTextRoot(
-          simpleElement("paragraph", text("Hello, world!")),
-        )}
+        content={richTextRoot(paragraph(text("Hello, world!")))}
         elements={{
           paragraph: CustomParagraph,
         }}
@@ -523,6 +494,33 @@ describe("custom elements", () => {
     );
   });
 
+  test("custom paragraph elements receive the paragraph's indent", () => {
+    function CustomParagraph({
+      children,
+      indent,
+    }: PropsWithChildren<{ indent?: number }>) {
+      return (
+        <span data-testid="custom-paragraph" data-indent={indent}>
+          {children}
+        </span>
+      );
+    }
+
+    render(
+      <RichText
+        content={richTextRoot(paragraph(3, text("Hello, world!")))}
+        elements={{
+          paragraph: CustomParagraph,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-paragraph")).toHaveAttribute(
+      "data-indent",
+      "3",
+    );
+  });
+
   test("if a custom line-break element is specified, it is used for line break nodes", () => {
     function CustomLineBreak() {
       return <span data-testid="custom-linebreak" />;
@@ -531,7 +529,7 @@ describe("custom elements", () => {
     render(
       <RichText
         content={richTextRoot(
-          simpleElement("paragraph", text("Hello"), lineBreak(), text("world")),
+          paragraph(text("Hello"), lineBreak(), text("world")),
         )}
         elements={{
           linebreak: CustomLineBreak,
@@ -548,10 +546,10 @@ describe("lineBreakHandling", () => {
     render(
       <RichText
         content={richTextRoot(
-          simpleElement("paragraph", text("Hello, world!")),
-          simpleElement("paragraph", text("This is the next line")),
-          simpleElement("paragraph", text("")),
-          simpleElement("paragraph", text("This is the last line")),
+          paragraph(text("Hello, world!")),
+          paragraph(text("This is the next line")),
+          paragraph(text("")),
+          paragraph(text("This is the last line")),
         )}
         lineBreakHandling="paragraph"
       />,
@@ -570,10 +568,10 @@ describe("lineBreakHandling", () => {
     const { container } = render(
       <RichText
         content={richTextRoot(
-          simpleElement("paragraph", text("Hello, world!")),
-          simpleElement("paragraph", text("This is the next line")),
-          simpleElement("paragraph", text("")),
-          simpleElement("paragraph", text("This is the last line")),
+          paragraph(text("Hello, world!")),
+          paragraph(text("This is the next line")),
+          paragraph(text("")),
+          paragraph(text("This is the last line")),
         )}
         lineBreakHandling="line-break"
       />,
@@ -595,10 +593,10 @@ describe("lineBreakHandling", () => {
     const { container } = render(
       <RichText
         content={richTextRoot(
-          simpleElement("paragraph", text("Hello, world!")),
-          simpleElement("paragraph", text("This is the next line")),
-          simpleElement("paragraph", text("")),
-          simpleElement("paragraph", text("This is the last line")),
+          paragraph(text("Hello, world!")),
+          paragraph(text("This is the next line")),
+          paragraph(text("")),
+          paragraph(text("This is the last line")),
         )}
         lineBreakHandling="line-break"
       />,
@@ -620,16 +618,15 @@ describe("lineBreakHandling", () => {
     const { container } = render(
       <RichText
         content={richTextRoot(
-          simpleElement("paragraph", text("Hello, world!")),
-          simpleElement("paragraph", text("This is the next line")),
-          simpleElement("paragraph", text("")),
+          paragraph(text("Hello, world!")),
+          paragraph(text("This is the next line")),
+          paragraph(text("")),
           list(
             "ul",
-            simpleElement(
-              "listitem",
-              simpleElement("paragraph", text("First line")),
-              simpleElement("paragraph", text("")),
-              simpleElement("paragraph", text("Third line")),
+            listitem(
+              paragraph(text("First line")),
+              paragraph(text("")),
+              paragraph(text("Third line")),
             ),
           ),
         )}
@@ -661,10 +658,7 @@ test("newline characters are replaced with <br /> elements", () => {
   const { container } = render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
-          text("Hello, world!\nThis is the next line"),
-        ),
+        paragraph(text("Hello, world!\nThis is the next line")),
       )}
     />,
   );
@@ -684,12 +678,7 @@ test("Nodes of type 'text' without text render without an error", () => {
   render(
     <RichText
       content={richTextRoot(
-        simpleElement(
-          "paragraph",
-          text("Hello, "),
-          text(undefined),
-          text("world!"),
-        ),
+        paragraph(text("Hello, "), text(undefined), text("world!")),
       )}
     />,
   );

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { OverlayTitle } from "./overlay-title";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
 import { SlideImage } from "../slides-block/slide-image";
 import { getSrcFromMedia } from "~/common/media";
@@ -30,8 +30,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     text: richText(
-      simpleElement("paragraph", text("This is")),
-      simpleElement("paragraph", text("an "), bold("Overlay Title")),
+      paragraph(text("This is")),
+      paragraph(text("an "), bold("Overlay Title")),
     ),
     cta: callToAction("Click me", "primary"),
   },
@@ -83,10 +83,7 @@ export const WithSupportingText: Story = {
   args: {
     ...Default.args,
     supportingText: richText(
-      simpleElement(
-        "paragraph",
-        text("Book through us and get one night for free."),
-      ),
+      paragraph(text("Book through us and get one night for free.")),
     ),
     position: "bottom-right",
     overlay: "intense",

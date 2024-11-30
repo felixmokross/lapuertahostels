@@ -32,8 +32,15 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
             className="mt-8 first:mt-0 md:mt-10"
           />
         ),
-        paragraph: (props: PropsWithChildren) => (
-          <Paragraph {...props} justify className="mt-3 first:mt-0 md:mt-4" />
+        paragraph: ({ indent, ...props }) => (
+          <Paragraph
+            {...props}
+            justify
+            className={cn("mt-3 first:mt-0 md:mt-4")}
+            style={{
+              marginInlineStart: indent ? `${indent * 1.5}rem` : undefined,
+            }}
+          />
         ),
         ul: (props: PropsWithChildren) => (
           <ul

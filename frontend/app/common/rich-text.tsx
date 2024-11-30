@@ -35,7 +35,7 @@ type CustomElementConfig = {
   h4: ElementType;
   h5: ElementType;
   link: ComponentType<PropsWithChildren<{ to: string }>> | "a";
-  paragraph: ElementType;
+  paragraph: ComponentType<PropsWithChildren<{ indent?: number }>> | "p";
   linebreak: ElementType;
 };
 
@@ -114,7 +114,11 @@ function RenderedElementNode({
 
   switch (node.type) {
     case "paragraph":
-      return <Line isLast={isLast}>{renderedChildren}</Line>;
+      return (
+        <Line isLast={isLast} indent={node.indent}>
+          {renderedChildren}
+        </Line>
+      );
     case "heading":
       return <Heading node={node}>{renderedChildren}</Heading>;
     case "list":
@@ -127,11 +131,11 @@ function RenderedElementNode({
           ? node.fields.url
           : node.fields.doc.value.pathname;
 
-      if (elements.link === "a") {
-        return <a href={href}>{renderedChildren}</a>;
-      } else {
-        return <elements.link to={href}>{renderedChildren}</elements.link>;
-      }
+      return elements.link === "a" ? (
+        <a href={href}>{renderedChildren}</a>
+      ) : (
+        <elements.link to={href}>{renderedChildren}</elements.link>
+      );
     }
     default:
       throw new Error(
@@ -160,7 +164,11 @@ function List({
   return <ListElement>{children}</ListElement>;
 }
 
-function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
+function Line({
+  children,
+  isLast,
+  indent,
+}: PropsWithChildren<{ isLast: boolean; indent?: number }>) {
   const { elements, lineBreakHandling } = useRichTextContext();
 
   switch (lineBreakHandling) {
@@ -172,7 +180,11 @@ function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
         </>
       );
     case "paragraph":
-      return <elements.paragraph>{children}</elements.paragraph>;
+      return elements.paragraph === "p" ? (
+        <p>{children}</p>
+      ) : (
+        <elements.paragraph indent={indent}>{children}</elements.paragraph>
+      );
   }
 }
 
@@ -235,7 +247,8 @@ export type RichTextObject = {
 export type TextNode = { type: "text"; text?: string; format: number };
 
 export type ElementNode =
-  | SimpleElementNode
+  | ListItemElementNode
+  | ParagraphElementNode
   | LinkElementNode
   | ListElementNode
   | HeadingElementNode;
@@ -246,8 +259,13 @@ export type LineBreakNode = { type: "linebreak" };
 
 type BaseElementNode = { children: Node[] };
 
-export type SimpleElementNode = BaseElementNode & {
-  type: "listitem" | "paragraph";
+export type ListItemElementNode = BaseElementNode & {
+  type: "listitem";
+};
+
+export type ParagraphElementNode = BaseElementNode & {
+  type: "paragraph";
+  indent?: number;
 };
 
 export type HeadingElementNode = BaseElementNode & {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { allModes } from ".storybook/modes";
 import { richText } from "~/common/cms-data.builders";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 
 const meta = {
   title: "blocks/Image with Floating Text Block",
@@ -32,13 +32,10 @@ export const Default: Story = {
       updatedAt: "2022-01-01T00:00:00Z",
     },
     overlayTitle: {
-      text: richText(
-        simpleElement("paragraph", text("Do You Know "), bold("Santa Marta?")),
-      ),
+      text: richText(paragraph(text("Do You Know "), bold("Santa Marta?"))),
     },
     text: richText(
-      simpleElement(
-        "paragraph",
+      paragraph(
         text("Santa Marta, nestled "),
         bold("between the Caribbean Sea and the Sierra Nevada mountains, "),
         text("beckons tourists with its captivating blend of "),

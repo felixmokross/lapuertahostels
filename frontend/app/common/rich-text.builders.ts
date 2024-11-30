@@ -12,6 +12,7 @@ import {
   HeadingElementNode,
   LinkElementNode,
   LineBreakNode,
+  ParagraphElementNode,
 } from "./rich-text";
 
 export function richTextRoot(...children: ElementNode[]): RichTextObject {
@@ -69,16 +70,28 @@ export function code(t: string): TextNode {
   return text(t, { code: true });
 }
 
-export function simpleElement(
-  type: "listitem" | "paragraph",
-  ...children: Node[]
-): ElementNode {
-  return { type, children };
-}
-
 export function unsupportedElementWithoutChildren(): ElementNode {
   // @ts-expect-error Intentionally creating an unsupported element
   return { type: "NOT_SUPPORTED" } as ElementNode;
+}
+
+export function listitem(...children: Node[]): ElementNode {
+  return { type: "listitem", children };
+}
+
+export function paragraph(
+  ...args: Node[] | [number, ...Node[]]
+): ParagraphElementNode {
+  return typeof args[0] === "number"
+    ? {
+        type: "paragraph",
+        indent: args[0],
+        children: args.slice(1) as Node[],
+      }
+    : {
+        type: "paragraph",
+        children: args as Node[],
+      };
 }
 
 export function heading(

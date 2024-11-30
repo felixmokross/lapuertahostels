@@ -7,7 +7,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { bold, simpleElement, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "~/common/rich-text.builders";
 import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
@@ -23,8 +23,7 @@ export const Default: Story = {
     blockType: "AccommodationSelector",
     heading: plainText("Your Home Base for a Perfect Trip"),
     text: richText(
-      simpleElement(
-        "paragraph",
+      paragraph(
         text("Choose between our "),
         bold("two accommodations"),
         text(" in Santa Marta."),
@@ -40,8 +39,7 @@ export const Default: Story = {
         }),
         image: media("Frente.jpg"),
         description: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text(
               "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
             ),
@@ -57,8 +55,7 @@ export const Default: Story = {
         }),
         image: media("10.jpg"),
         description: richText(
-          simpleElement(
-            "paragraph",
+          paragraph(
             text(
               "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
             ),
