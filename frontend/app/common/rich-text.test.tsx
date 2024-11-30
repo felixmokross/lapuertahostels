@@ -15,6 +15,8 @@ import {
   heading,
   list,
   internalLink,
+  unsupportedElementWithoutChildren,
+  lineBreak,
 } from "./rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
@@ -241,6 +243,26 @@ test("link element nodes are rendered as <a> elements with the correct href attr
   const linkElement = screen.getByRole("link");
   expect(linkElement).toHaveTextContent("Click here!");
   expect(linkElement).toHaveAttribute("href", "/cancellation");
+});
+
+test("line breaks are rendered as <br /> elements.", () => {
+  const { container } = render(
+    <RichText
+      content={richTextRoot(
+        simpleElement("paragraph", text("hello"), lineBreak(), text("world")),
+      )}
+    />,
+  );
+
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <p>
+        hello
+        <br />
+        world
+      </p>
+    </div>
+  `);
 });
 
 describe("custom elements", () => {
@@ -500,6 +522,25 @@ describe("custom elements", () => {
       "Hello, world!",
     );
   });
+
+  test("if a custom line-break element is specified, it is used for line break nodes", () => {
+    function CustomLineBreak() {
+      return <span data-testid="custom-linebreak" />;
+    }
+
+    render(
+      <RichText
+        content={richTextRoot(
+          simpleElement("paragraph", text("Hello"), lineBreak(), text("world")),
+        )}
+        elements={{
+          linebreak: CustomLineBreak,
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId("custom-linebreak")).toBeInTheDocument();
+  });
 });
 
 describe("lineBreakHandling", () => {
@@ -654,4 +695,12 @@ test("Nodes of type 'text' without text render without an error", () => {
   );
 
   expect(screen.getByRole("paragraph")).toHaveTextContent("Hello, world!");
+});
+
+test("If an element with unsupported node type is used, it should throw a clear error message", () => {
+  expect(() =>
+    render(
+      <RichText content={richTextRoot(unsupportedElementWithoutChildren())} />,
+    ),
+  ).toThrowError(/unsupported node type NOT_SUPPORTED/i);
 });

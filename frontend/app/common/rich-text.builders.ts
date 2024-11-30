@@ -11,6 +11,7 @@ import {
   RichTextObject,
   HeadingElementNode,
   LinkElementNode,
+  LineBreakNode,
 } from "./rich-text";
 
 export function richTextRoot(...children: ElementNode[]): RichTextObject {
@@ -44,6 +45,10 @@ export function text(
   return node;
 }
 
+export function lineBreak(): LineBreakNode {
+  return { type: "linebreak" };
+}
+
 export function bold(t: string): TextNode {
   return text(t, { bold: true });
 }
@@ -69,6 +74,11 @@ export function simpleElement(
   ...children: Node[]
 ): ElementNode {
   return { type, children };
+}
+
+export function unsupportedElementWithoutChildren(): ElementNode {
+  // @ts-expect-error Intentionally creating an unsupported element
+  return { type: "NOT_SUPPORTED" } as ElementNode;
 }
 
 export function heading(

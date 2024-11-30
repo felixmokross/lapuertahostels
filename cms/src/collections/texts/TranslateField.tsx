@@ -25,6 +25,7 @@ import Link from "next/link";
 import { LanguagesIcon, SparklesIcon } from "@/common/icons";
 import { cn } from "@/common/cn";
 import { Text } from "@/payload-types";
+import { useDrawerDepth } from "@payloadcms/ui/elements/Drawer";
 
 export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
   function TranslateField({ locales }) {
@@ -34,9 +35,10 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
     const isModified = useFormModified();
     const { openModal, isModalOpen } = useModal();
 
+    const depth = useDrawerDepth();
     const modalSlug = formatDrawerSlug({
       slug: `translations-${locale.code}`,
-      depth: 0,
+      depth,
     });
     return (
       <>

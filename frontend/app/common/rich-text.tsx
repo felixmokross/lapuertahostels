@@ -36,9 +36,11 @@ type CustomElementConfig = {
   h5: ElementType;
   link: ComponentType<PropsWithChildren<{ to: string }>> | "a";
   paragraph: ElementType;
+  linebreak: ElementType;
 };
 
 type RichTextContextValue = {
+  content: RichTextObject;
   elements: CustomElementConfig;
   lineBreakHandling: LineBreakHandling;
 };
@@ -60,6 +62,7 @@ const defaultElements: CustomElementConfig = {
   h5: "h5",
   link: "a",
   paragraph: "p",
+  linebreak: "br",
 };
 
 function useRichTextContext() {
@@ -76,6 +79,7 @@ export function RichText({
   return (
     <RichTextContext.Provider
       value={{
+        content,
         elements: { ...defaultElements, ...elements },
         lineBreakHandling,
       }}
@@ -98,9 +102,9 @@ function RenderedElementNode({
   node: ElementNode;
   isLast: boolean;
 }) {
-  const { elements } = useRichTextContext();
+  const { elements, content } = useRichTextContext();
 
-  const renderedChildren = node.children.map((child, i) => (
+  const renderedChildren = node.children?.map((child, i) => (
     <RenderedNode
       key={i}
       node={child}
@@ -131,7 +135,9 @@ function RenderedElementNode({
     }
     default:
       throw new Error(
-        `Unsupported node type ${node["type"]}: ${JSON.stringify(node, null, 2)}`,
+        `Unsupported node type ${node["type"]}: ${JSON.stringify(node, null, 2)}
+
+Rich text object: ${JSON.stringify(content, null, 2)}`,
       );
   }
 }
@@ -171,8 +177,14 @@ function Line({ children, isLast }: PropsWithChildren<{ isLast: boolean }>) {
 }
 
 function RenderedNode({ node, isLast }: { node: Node; isLast: boolean }) {
+  const { elements } = useRichTextContext();
+
   if (node.type === "text") {
     return <RenderedTextNode node={node} />;
+  }
+
+  if (node.type === "linebreak") {
+    return <elements.linebreak />;
   }
 
   return <RenderedElementNode node={node} isLast={isLast} />;
@@ -228,7 +240,9 @@ export type ElementNode =
   | ListElementNode
   | HeadingElementNode;
 
-export type Node = ElementNode | TextNode;
+export type Node = ElementNode | TextNode | LineBreakNode;
+
+export type LineBreakNode = { type: "linebreak" };
 
 type BaseElementNode = { children: Node[] };
 
