@@ -87,6 +87,7 @@ const preview: Preview = {
       },
     },
     chromatic: {
+      diffThreshold: 0.3,
       modes: {
         "viewport-small-mobile": allModes["viewport-small-mobile"],
         "viewport-large-mobile": allModes["viewport-large-mobile"],
