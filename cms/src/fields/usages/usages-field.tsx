@@ -11,25 +11,18 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
   path,
   field,
 }) {
-  const { t, i18n } = useTranslation<TranslationsObject, TranslationsKey>();
+  const { t } = useTranslation<TranslationsObject, TranslationsKey>();
   const { value } = useField<Usage[] | undefined>({ path });
   return (
     <>
-      <div
-        style={{
-          marginBottom: "var(--base)",
-          display: "flex",
-          alignItems: "baseline",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="tw-mb-base tw-flex tw-items-center tw-justify-between">
         <FieldLabel
           label={field.label}
           localized={field.localized}
           path={path}
         />
 
-        <span style={{ color: "var(--theme-elevation-400)" }}>
+        <span className="tw-text-theme-elevation-400">
           {t("custom:usages:numberOfUsages", {
             count: value?.length ?? 0,
           })}
@@ -79,15 +72,8 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
               ))
             ) : (
               <tr>
-                <td
-                  colSpan={3}
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "var(--base)",
-                    paddingBottom: "var(--base)",
-                  }}
-                >
-                  <span style={{ color: "var(--theme-elevation-400)" }}>
+                <td colSpan={3} className="tw-text-center tw-py-base">
+                  <span className="tw-text-theme-elevation-400">
                     {t("custom:usages:noUsages")}
                   </span>
                 </td>

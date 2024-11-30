@@ -5,6 +5,9 @@ module.exports = {
   prefix: "tw-",
   theme: {
     extend: {
+      spacing: {
+        base: "var(--base)",
+      },
       colors: {
         "theme-bg": "var(--theme-bg)",
         "theme-elevation": {
