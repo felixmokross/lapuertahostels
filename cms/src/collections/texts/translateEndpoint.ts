@@ -2,7 +2,7 @@ import { Endpoint } from "payload";
 import { SerializedEditorState } from "lexical";
 import { transformRecord, transformRecordAsync } from "../../common/records";
 import { translate } from "../../common/translation";
-import { getSupportedLocales } from "../../common/locales";
+import { getSupportedLocaleCodes } from "../../common/locales";
 import {
   fullTextToTitle,
   htmlToRichText,
@@ -55,7 +55,7 @@ export const translateEndpoint: Endpoint = {
       return new Response(null, { status: 204 });
     }
 
-    const translationLocales = (await getSupportedLocales()).filter(
+    const translationLocales = (await getSupportedLocaleCodes()).filter(
       (l) => l !== req.locale,
     );
 

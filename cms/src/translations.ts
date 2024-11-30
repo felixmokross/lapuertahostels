@@ -5,6 +5,7 @@ export const translations = {
   en: {
     custom: {
       common: {
+        loading: "Loading…",
         socialLinkRowLabel: "Social Link {{ n }}",
       },
       validation: {
@@ -19,15 +20,16 @@ export const translations = {
         },
       },
       texts: {
-        translateToAllLocales: "Translate to all locales",
-        translatingToAllLocales: "Translating to all locales…",
-        pleaseSaveYourChangesToEnableTranslation:
+        translations: "Translations…",
+        autoTranslate: "Auto-Translate",
+        goToTranslation: "Go to Translation",
+        translating: "Translating…",
+        pleaseSaveYourChangesToEnableAutoTranslate:
           "Please save your changes to enable translation.",
-        confirmTranslateToAllLocales:
-          "This will overwrite all translations of this text. Do you want to proceed?",
-        translatedToAllLocalesSuccessfully:
-          "Translated to all locales successfully",
-        failedToTranslateToAllLocales: "Failed to translate to all locales",
+        confirmAutoTranslate:
+          "This will translate the {{ sourceLocale }} text to the other locales and overwrite the other translations.\n\nDo you want to proceed?",
+        autoTranslatedSuccessfully: "Auto-translated successfully",
+        failedToAutoTranslate: "Failed to auto-translate",
       },
       brands: {
         navLinkRowLabel: "Navigation Link {{ n }}",
@@ -51,6 +53,7 @@ export const translations = {
   es: {
     custom: {
       common: {
+        loading: "Cargando…",
         socialLinkRowLabel: "Enlace social {{ n }}",
       },
       validation: {
@@ -65,15 +68,18 @@ export const translations = {
         },
       },
       texts: {
+        translations: "Traducciones…",
+        autoTranslate: "Auto-traducir",
+        goToTranslation: "Ir a la traducción",
+        translating: "Traduciendo…",
         translateToAllLocales: "Traducir a todos los idiomas",
         translatingToAllLocales: "Traduciendo a todos los idiomas…",
-        pleaseSaveYourChangesToEnableTranslation:
+        pleaseSaveYourChangesToEnableAutoTranslate:
           "Por favor, guarde sus cambios para habilitar la traducción.",
-        confirmTranslateToAllLocales:
-          "Esto sobrescribirá todas las traducciones de este texto. ¿Desea continuar?",
-        translatedToAllLocalesSuccessfully:
-          "Traducido a todos los idiomas con éxito",
-        failedToTranslateToAllLocales: "Error al traducir a todos los idiomas",
+        confirmAutoTranslate:
+          "Esto traducirá el texto de {{ sourceLocale }} a los otros idiomas y sobrescribirá las otras traducciones.\n\n¿Desea continuar?",
+        autoTranslatedSuccessfully: "Auto-traducido con éxito",
+        failedToAutoTranslate: "Error al auto-traducir",
       },
       brands: {
         navLinkRowLabel: "Enlace de navegación {{ n }}",

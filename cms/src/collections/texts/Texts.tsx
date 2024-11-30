@@ -5,13 +5,14 @@ import {
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
-import { fullTextToTitle, richTextToFullText } from "./utils";
+import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
 import {
   getUniqueGlobals,
   getUniqueCollectionItemIds,
   usagesField,
 } from "@/fields/usages";
+import { transformRecordAsync } from "@/common/records";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -93,6 +94,18 @@ export const Texts: CollectionConfig = {
           es: "Esto no se puede cambiar después de la creación.",
         },
         layout: "horizontal",
+        position: "sidebar",
+      },
+    },
+    {
+      type: "ui",
+      name: "translations",
+      admin: {
+        components: {
+          Field:
+            "src/collections/texts/translate-field-server#TranslateFieldServer",
+        },
+        position: "sidebar",
       },
     },
     {
@@ -118,6 +131,29 @@ export const Texts: CollectionConfig = {
       editor: editor(),
       admin: {
         condition: (_, siblingData) => siblingData.type === "richText",
+      },
+    },
+    {
+      name: "richText_html",
+      type: "textarea",
+      virtual: true,
+      localized: true,
+      admin: {
+        hidden: true,
+        condition: (_, siblingData) => siblingData.type === "richText",
+      },
+      hooks: {
+        afterRead: [
+          async ({ data, req }) => {
+            if (!data) return data;
+            if (data.type !== "richText") return null;
+
+            // @ts-expect-error 'all' locale value is not included in Payload types
+            return req.locale === "all"
+              ? await transformRecordAsync(data.richText, richTextToHtml)
+              : await richTextToHtml(data.richText);
+          },
+        ],
       },
     },
     {
@@ -172,15 +208,6 @@ export const Texts: CollectionConfig = {
           es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
         },
         position: "sidebar",
-      },
-    },
-    {
-      type: "ui",
-      name: "translations",
-      admin: {
-        components: {
-          Field: "src/collections/texts/TranslateField#TranslateField",
-        },
       },
     },
     usagesField("relationship", "texts", {

@@ -5,30 +5,24 @@ import { Usage } from "@/fields/usages";
 import { JSONFieldClientComponent, LabelFunction } from "payload";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import Link from "next/link";
+import { Label } from "@/common/labels";
 
 export const UsagesField: JSONFieldClientComponent = function UsagesField({
   path,
   field,
 }) {
-  const { t, i18n } = useTranslation<TranslationsObject, TranslationsKey>();
+  const { t } = useTranslation<TranslationsObject, TranslationsKey>();
   const { value } = useField<Usage[] | undefined>({ path });
   return (
     <>
-      <div
-        style={{
-          marginBottom: "var(--base)",
-          display: "flex",
-          alignItems: "baseline",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="tw-mb-base tw-flex tw-items-center tw-justify-between">
         <FieldLabel
           label={field.label}
           localized={field.localized}
           path={path}
         />
 
-        <span style={{ color: "var(--theme-elevation-400)" }}>
+        <span className="tw-text-theme-elevation-400">
           {t("custom:usages:numberOfUsages", {
             count: value?.length ?? 0,
           })}
@@ -53,9 +47,11 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
                 <tr key={index}>
                   <td>
                     <Pill>
-                      {usage.type === "collection"
-                        ? renderLabel(usage.label)
-                        : t("custom:usages:global")}
+                      {usage.type === "collection" ? (
+                        <Label>{usage.collection}</Label>
+                      ) : (
+                        t("custom:usages:global")
+                      )}
                     </Pill>
                   </td>
                   <td>
@@ -67,7 +63,7 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
                       </Link>
                     ) : (
                       <Link href={`/admin/globals/${usage.global}`}>
-                        {renderLabel(usage.label)}
+                        <Label>{usage.label}</Label>
                       </Link>
                     )}
                   </td>
@@ -76,15 +72,8 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
               ))
             ) : (
               <tr>
-                <td
-                  colSpan={3}
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "var(--base)",
-                    paddingBottom: "var(--base)",
-                  }}
-                >
-                  <span style={{ color: "var(--theme-elevation-400)" }}>
+                <td colSpan={3} className="tw-py-base tw-text-center">
+                  <span className="tw-text-theme-elevation-400">
                     {t("custom:usages:noUsages")}
                   </span>
                 </td>
@@ -95,20 +84,4 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
       </div>
     </>
   );
-
-  function renderLabel(label: LabelFunction | string | Record<string, string>) {
-    if (typeof label === "string") {
-      return label;
-    }
-
-    if (typeof label === "object") {
-      return label[i18n.language];
-    }
-
-    if (typeof label === "function") {
-      return label({ t: t as Parameters<LabelFunction>[0]["t"] });
-    }
-
-    throw new Error("Invalid label type");
-  }
 };
