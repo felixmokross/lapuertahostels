@@ -20,6 +20,11 @@ export const translateEndpoint: Endpoint = {
     }
 
     if (!req.routeParams) throw new Error("No route params");
+    if (!req.json) throw new Error("No JSON body");
+
+    const { targetLocaleCodes } = (await req.json()) as {
+      targetLocaleCodes: string[];
+    };
 
     const { ObjectId } = await import("bson");
     const { id } = req.routeParams;
@@ -55,14 +60,24 @@ export const translateEndpoint: Endpoint = {
       return new Response(null, { status: 204 });
     }
 
-    const translationLocales = (await getSupportedLocaleCodes()).filter(
-      (l) => l !== req.locale,
-    );
+    const availableTranslationLocales = (
+      await getSupportedLocaleCodes()
+    ).filter((l) => l !== req.locale);
 
-    console.log(`Translation locales: ${translationLocales}`);
+    if (
+      targetLocaleCodes.some((tl) => !availableTranslationLocales.includes(tl))
+    ) {
+      return new Response("Invalid target locales", {
+        status: 400,
+        statusText: "Bad Request",
+      });
+    }
+
+    console.log(`Translation locales: ${availableTranslationLocales}`);
+    console.log(`Target locales: ${targetLocaleCodes}`);
 
     const promises = await Promise.allSettled(
-      translationLocales.map(async (tl) => {
+      targetLocaleCodes.map(async (tl) => {
         try {
           textInAllLocales[tl] = (
             await translate(

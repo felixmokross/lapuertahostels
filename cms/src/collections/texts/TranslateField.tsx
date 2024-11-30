@@ -3,8 +3,11 @@
 import React, {
   FunctionComponent,
   PropsWithChildren,
+  ReactNode,
   useCallback,
   useEffect,
+  useId,
+  useRef,
   useState,
 } from "react";
 import {
@@ -17,6 +20,8 @@ import {
   formatDrawerSlug,
   Drawer,
   useModal,
+  Pill,
+  CheckIcon,
 } from "@payloadcms/ui";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { Locale } from "payload";
@@ -26,6 +31,7 @@ import { LanguagesIcon, SparklesIcon } from "@/common/icons";
 import { cn } from "@/common/cn";
 import { Text } from "@/payload-types";
 import { useDrawerDepth } from "@payloadcms/ui/elements/Drawer";
+import { Translation } from "@payloadcms/ui";
 
 export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
   function TranslateField({ locales }) {
@@ -42,7 +48,7 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
     });
     return (
       <>
-        <Drawer slug={modalSlug}>
+        <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
           {isModalOpen(modalSlug) && (
             <DrawerContent
               id={id as string}
@@ -58,7 +64,7 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
           buttonStyle="secondary"
           icon={<LanguagesIcon />}
         >
-          {t("custom:texts:translations")}
+          {t("custom:texts:translationsButtonLabel")}
         </Button>
         {isModified && (
           <p className="field-description -tw-mt-4 tw-mb-8">
@@ -95,6 +101,9 @@ function DrawerContent({
     [id],
   );
 
+  const { openModal, closeModal } = useModal();
+  const drawerDepth = useDrawerDepth();
+
   useEffect(() => {
     (async function () {
       await updateData();
@@ -106,6 +115,9 @@ function DrawerContent({
   const otherLocales = locales.filter(
     (locale) => locale.code !== currentLocale.code,
   );
+  const [selectedLocaleCodes, setSelectedLocaleCodes] = useState(
+    otherLocales.map((locale) => locale.code),
+  );
 
   if (!data) {
     return (
@@ -116,128 +128,198 @@ function DrawerContent({
   }
   const showWideColumns = isLongContent(data, currentLocale.code);
 
+  const selectLocalesModalSlug = formatDrawerSlug({
+    slug: `auto-translate-confirmation`,
+    depth: drawerDepth,
+  });
+
   return (
-    <div className="table">
-      <div className="tw-max-h-[calc(100vh-10rem)] tw-overflow-y-auto">
-        <table
-          className="tw-min-w-[unset] tw-table-fixed"
-          cellPadding="0"
-          cellSpacing="0"
-        >
-          <thead className="tw-bg-theme-bg">
-            <tr>
-              <TableHeaderFooterCell
-                isHighlighted={true}
-                isStickyLeft={true}
-                isStickyTop={true}
-              >
-                <Label>{currentLocale.label}</Label>
-              </TableHeaderFooterCell>
-              {otherLocales.map((locale) => (
-                <TableHeaderFooterCell key={locale.code} isStickyTop={true}>
-                  <Label>{locale.label}</Label>
+    <>
+      <Drawer
+        slug={selectLocalesModalSlug}
+        title={t("custom:texts:selectLocales")}
+      >
+        <div className="tw-mt-8 tw-space-y-4">
+          <p>
+            <Translation
+              // @ts-expect-error
+              t={t}
+              // @ts-expect-error
+              i18nKey="custom:texts:selectLocalesDescription"
+              variables={{
+                sourceLocale: getLabelText(currentLocale.label, i18n),
+              }}
+              elements={{
+                a: ({ children }) => (
+                  <a
+                    href="https://www.deepl.com"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {children}
+                  </a>
+                ),
+              }}
+            />
+          </p>
+        </div>
+        <div className="tw-mt-8 tw-space-y-4">
+          {otherLocales.map((locale) => (
+            <div key={locale.code}>
+              <CheckboxInput
+                label={<Label>{locale.label}</Label>}
+                name={`locale-${locale.code}`}
+                checked={selectedLocaleCodes.includes(locale.code)}
+                setChecked={(checked) =>
+                  setSelectedLocaleCodes((slc) =>
+                    checked
+                      ? [...slc, locale.code]
+                      : slc.filter((lc) => lc !== locale.code),
+                  )
+                }
+              />
+            </div>
+          ))}
+        </div>
+
+        <p className="tw-mt-8">
+          <Translation
+            // @ts-expect-error
+            t={t}
+            // @ts-expect-error
+            i18nKey="custom:texts:selectLocalesNote"
+            elements={{ s: ({ children }) => <strong>{children}</strong> }}
+          />
+        </p>
+        <div className="tw-mt-1">
+          <Button
+            type="submit"
+            size="large"
+            onClick={async () => {
+              setIsTranslating(true);
+              try {
+                const response = await fetch(
+                  `/api/texts/${id}/translate?locale=${currentLocale.code}`,
+                  {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify({
+                      targetLocaleCodes: selectedLocaleCodes,
+                    }),
+                  },
+                );
+                if (response.ok) {
+                  await updateData();
+                  closeModal(selectLocalesModalSlug);
+                  console.info(t("custom:texts:autoTranslatedSuccessfully"));
+                  toast.success(t("custom:texts:autoTranslatedSuccessfully"), {
+                    duration: 3000,
+                  });
+                } else {
+                  console.error(t("custom:texts:failedToAutoTranslate"));
+                  toast.error(t("custom:texts:failedToAutoTranslate"), {
+                    duration: 3000,
+                  });
+                }
+              } finally {
+                setIsTranslating(false);
+              }
+            }}
+            disabled={isTranslating}
+          >
+            {isTranslating
+              ? t("custom:texts:translating")
+              : t("custom:texts:translateToSelectedLocales")}
+          </Button>
+        </div>
+      </Drawer>
+      <div className="table">
+        <div className="tw-max-h-[calc(100vh-10rem)] tw-overflow-y-auto">
+          <table
+            className="tw-min-w-[unset] tw-table-fixed"
+            cellPadding="0"
+            cellSpacing="0"
+          >
+            <thead className="tw-bg-theme-bg">
+              <tr>
+                <TableHeaderFooterCell
+                  isHighlighted={true}
+                  isStickyLeft={true}
+                  isStickyTop={true}
+                >
+                  <Label>{currentLocale.label}</Label>
+                  <Pill rounded={true}>{t("custom:texts:currentLocale")}</Pill>
                 </TableHeaderFooterCell>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <TableContentCell
-                isWide={showWideColumns}
-                isHighlighted={true}
-                isStickyLeft={true}
-              >
-                <AllLocalesTextRenderer
-                  data={data}
-                  localeCode={currentLocale.code}
-                />
-              </TableContentCell>
-              {otherLocales.map((locale) => (
-                <TableContentCell key={locale.code} isWide={showWideColumns}>
+                {otherLocales.map((locale) => (
+                  <TableHeaderFooterCell key={locale.code} isStickyTop={true}>
+                    <Label>{locale.label}</Label>
+                  </TableHeaderFooterCell>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <TableContentCell
+                  isWide={showWideColumns}
+                  isHighlighted={true}
+                  isStickyLeft={true}
+                >
                   <AllLocalesTextRenderer
                     data={data}
-                    localeCode={locale.code}
+                    localeCode={currentLocale.code}
                   />
                 </TableContentCell>
-              ))}
-            </tr>
-          </tbody>
-          <tfoot className="tw-bg-theme-bg">
-            <tr>
-              <TableHeaderFooterCell
-                isHighlighted={true}
-                isStickyLeft={true}
-                isStickyBottom={true}
-              >
-                <Button
-                  size="medium"
-                  buttonStyle="primary"
-                  onClick={async () => {
-                    if (
-                      !window.confirm(
-                        t("custom:texts:confirmAutoTranslate", {
-                          sourceLocale: getLabelText(currentLocale.label, i18n),
-                        }),
-                      )
-                    ) {
-                      return;
-                    }
-                    setIsTranslating(true);
-                    try {
-                      const response = await fetch(
-                        `/api/texts/${id}/translate?locale=${currentLocale.code}`,
-                        {
-                          method: "POST",
-                          credentials: "include",
-                        },
-                      );
-                      if (response.ok) {
-                        await updateData();
-                        console.info(
-                          t("custom:texts:autoTranslatedSuccessfully"),
-                        );
-                        toast.success(
-                          t("custom:texts:autoTranslatedSuccessfully"),
-                          { duration: 3000 },
-                        );
-                      } else {
-                        console.error(t("custom:texts:failedToAutoTranslate"));
-                        toast.error(t("custom:texts:failedToAutoTranslate"), {
-                          duration: 3000,
-                        });
-                      }
-                    } finally {
-                      setIsTranslating(false);
-                    }
-                  }}
-                  disabled={isTranslating}
-                  icon={<SparklesIcon />}
+                {otherLocales.map((locale) => (
+                  <TableContentCell key={locale.code} isWide={showWideColumns}>
+                    <AllLocalesTextRenderer
+                      data={data}
+                      localeCode={locale.code}
+                    />
+                  </TableContentCell>
+                ))}
+              </tr>
+            </tbody>
+            <tfoot className="tw-bg-theme-bg">
+              <tr>
+                <TableHeaderFooterCell
+                  isHighlighted={true}
+                  isStickyLeft={true}
+                  isStickyBottom={true}
                 >
-                  {isTranslating
-                    ? t("custom:texts:translating")
-                    : t("custom:texts:autoTranslate")}
-                </Button>
-              </TableHeaderFooterCell>
-              {otherLocales.map((locale) => (
-                <TableHeaderFooterCell key={locale.code} isStickyBottom={true}>
                   <Button
-                    el="link"
-                    Link={Link}
-                    to={`/admin/collections/texts/${id}?locale=${locale.code}`}
                     size="medium"
-                    buttonStyle="secondary"
-                    icon="edit"
+                    buttonStyle="primary"
+                    onClick={() => openModal(selectLocalesModalSlug)}
                     disabled={isTranslating}
+                    icon={<SparklesIcon />}
                   >
-                    {t("custom:texts:goToTranslation")}
+                    {t("custom:texts:autoTranslate")}
                   </Button>
                 </TableHeaderFooterCell>
-              ))}
-            </tr>
-          </tfoot>
-        </table>
+                {otherLocales.map((locale) => (
+                  <TableHeaderFooterCell
+                    key={locale.code}
+                    isStickyBottom={true}
+                  >
+                    <Button
+                      el="link"
+                      Link={Link}
+                      to={`/admin/collections/texts/${id}?locale=${locale.code}`}
+                      size="medium"
+                      buttonStyle="secondary"
+                      icon="edit"
+                      disabled={isTranslating}
+                    >
+                      {t("custom:texts:goToTranslation")}
+                    </Button>
+                  </TableHeaderFooterCell>
+                ))}
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -273,7 +355,7 @@ function TableHeaderFooterCell({
         isStickyBottom && isStickyLeft && "tw-z-10",
       )}
     >
-      {children}
+      <div className="tw-flex tw-gap-4">{children}</div>
     </th>
   );
 }
@@ -348,4 +430,60 @@ function isLongContent(data: AllLocalesText, localeCode: string) {
         ? data.richText_html[localeCode]
         : "";
   return !!fullText && fullText.length > 200;
+}
+
+type CheckboxInputProps = {
+  name: string;
+  defaultChecked?: boolean;
+  readOnly?: boolean;
+  label: ReactNode;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
+};
+
+export function CheckboxInput({
+  name,
+  label,
+  readOnly = false,
+  checked,
+  setChecked,
+}: CheckboxInputProps) {
+  const inputBaseClass = "checkbox-input";
+  const ref = useRef<HTMLInputElement>(null);
+  const id = `checkbox-input-${useId()}`;
+
+  return (
+    <div
+      className={[
+        inputBaseClass,
+        checked && `${inputBaseClass}--checked`,
+        readOnly && `${inputBaseClass}--read-only`,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <div className={`${inputBaseClass}__input`}>
+        <input
+          aria-label=""
+          checked={checked}
+          disabled={readOnly}
+          type="checkbox"
+          ref={ref}
+          id={id}
+          onChange={(e) => setChecked(e.target.checked)}
+          name={name}
+        />
+        <span
+          className={[`${inputBaseClass}__icon`, !checked ? "partial" : "check"]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {checked && <CheckIcon />}
+        </span>
+      </div>
+      <label htmlFor={id} className={`${inputBaseClass}__label`}>
+        {label}
+      </label>
+    </div>
+  );
 }
