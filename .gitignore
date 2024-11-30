@@ -1,3 +1,4 @@
 /.backup
+/.previous-backup.tar.gz
 /.s3-backup
 .env
