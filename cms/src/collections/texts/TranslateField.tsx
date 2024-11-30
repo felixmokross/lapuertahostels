@@ -2,6 +2,7 @@
 
 import React, {
   FunctionComponent,
+  PropsWithChildren,
   useCallback,
   useEffect,
   useState,
@@ -21,6 +22,9 @@ import { TranslationsKey, TranslationsObject } from "@/translations";
 import { Locale } from "payload";
 import { Label } from "@/common/labels";
 import Link from "next/link";
+import { LanguagesIcon, SparklesIcon } from "@/common/icons";
+import { cn } from "@/common/cn";
+import { Text } from "@/payload-types";
 
 export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
   function TranslateField({ locales }) {
@@ -28,7 +32,7 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
     const { t } = useTranslation<TranslationsObject, TranslationsKey>();
     const locale = useLocale();
     const isModified = useFormModified();
-    const { openModal, isModalOpen, closeModal } = useModal();
+    const { openModal, isModalOpen } = useModal();
 
     const modalSlug = formatDrawerSlug({
       slug: `translations-${locale.code}`,
@@ -45,14 +49,17 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
             />
           )}
         </Drawer>
-        <Button disabled={isModified} onClick={() => openModal(modalSlug)}>
+        <Button
+          disabled={isModified}
+          onClick={() => openModal(modalSlug)}
+          size="large"
+          buttonStyle="secondary"
+          icon={<LanguagesIcon />}
+        >
           {t("custom:texts:translations")}
         </Button>
         {isModified && (
-          <p
-            className="field-description"
-            style={{ marginTop: "-1rem", marginBottom: "2rem" }}
-          >
+          <p className="field-description -tw-mt-4 tw-mb-8">
             {t("custom:texts:pleaseSaveYourChangesToEnableTranslation")}
           </p>
         )}
@@ -69,7 +76,7 @@ function DrawerContent({
   currentLocale: Locale;
   locales: Locale[];
 }) {
-  const [data, setData] = useState<Partial<any> | null>(null);
+  const [data, setData] = useState<AllLocalesText | null>(null);
 
   const updateData = useCallback(
     async function updateData() {
@@ -100,135 +107,54 @@ function DrawerContent({
 
   if (!data) {
     return (
-      <div
-        style={{
-          height: "calc(100vh - 10rem)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "24px",
-          color: "var(--theme-elevation-500)",
-        }}
-      >
+      <div className="tw-h-[calc(100vh-10rem)] tw-flex tw-justify-center tw-items-center tw-text-2xl tw-text-theme-elevation-600">
         {t("custom:common:loading")}
       </div>
     );
   }
+  const showWideColumns = isLongContent(data, currentLocale.code);
 
   return (
-    <div
-      className={["table", false && "table--appearance-condensed"]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      <div
-        style={{
-          overflowY: "auto",
-          maxHeight: "calc(100vh - 10rem)",
-        }}
-      >
-        <table cellPadding="0" cellSpacing="0" style={{ tableLayout: "fixed" }}>
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              backgroundColor: "var(--theme-bg)",
-            }}
-          >
+    <div className="table">
+      <div className="tw-max-h-[calc(100vh-10rem)] tw-overflow-y-auto">
+        <table
+          className="tw-min-w-[unset] tw-table-fixed"
+          cellPadding="0"
+          cellSpacing="0"
+        >
+          <thead className="tw-sticky tw-top-0 tw-bg-theme-bg">
             <tr>
-              <th
-                style={{
-                  backgroundColor: "var(--theme-elevation-50)",
-                  color: "var(--theme-elevation-700",
-                  padding: "12px 3rem",
-                }}
-              >
+              <TableHeaderFooterCell isHighlighted={true}>
                 <Label>{currentLocale.label}</Label>
-              </th>
+              </TableHeaderFooterCell>
               {otherLocales.map((locale) => (
-                <th
-                  key={locale.code}
-                  style={{
-                    padding: "12px 3rem",
-                  }}
-                >
+                <TableHeaderFooterCell key={locale.code}>
                   <Label>{locale.label}</Label>
-                </th>
+                </TableHeaderFooterCell>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td
-                style={{
-                  minWidth: "40rem",
-                  padding: "3rem",
-                  backgroundColor: "var(--theme-elevation-100)",
-                }}
-              >
-                <div style={{}}>
-                  {data.type === "plainText" &&
-                    data.text &&
-                    data.text[currentLocale.code]}
-                  {data.type === "richText" && data.richText_html && (
-                    <div
-                      lang={currentLocale.code}
-                      dangerouslySetInnerHTML={{
-                        __html: data.richText_html[currentLocale.code],
-                      }}
-                      style={{
-                        pointerEvents: "none",
-                        textAlign: "justify",
-                        hyphens: "auto",
-                      }}
-                    />
-                  )}
-                </div>
-              </td>
+              <TableContentCell isWide={showWideColumns} isHighlighted={true}>
+                <AllLocalesTextRenderer
+                  data={data}
+                  localeCode={currentLocale.code}
+                />
+              </TableContentCell>
               {otherLocales.map((locale) => (
-                <td
-                  key={locale.code}
-                  style={{
-                    minWidth: "40rem",
-                    padding: "3rem",
-                  }}
-                >
-                  <div style={{}}>
-                    {data.type === "plainText" &&
-                      data.text &&
-                      data.text[locale.code]}
-                    {data.type === "richText" && data.richText_html && (
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: data.richText_html[locale.code],
-                        }}
-                        lang={locale.code}
-                        style={{
-                          pointerEvents: "none",
-                          textAlign: "justify",
-                          hyphens: "auto",
-                        }}
-                      />
-                    )}
-                  </div>
-                </td>
+                <TableContentCell key={locale.code} isWide={showWideColumns}>
+                  <AllLocalesTextRenderer
+                    data={data}
+                    localeCode={locale.code}
+                  />
+                </TableContentCell>
               ))}
             </tr>
           </tbody>
-          <tfoot
-            style={{
-              position: "sticky",
-              bottom: 0,
-              backgroundColor: "var(--theme-bg)",
-            }}
-          >
+          <tfoot className="tw-sticky tw-bottom-0 tw-bg-theme-bg">
             <tr>
-              <td
-                style={{
-                  backgroundColor: "var(--theme-elevation-50)",
-                  padding: "12px 3rem",
-                }}
-              >
+              <TableHeaderFooterCell isHighlighted>
                 <Button
                   size="medium"
                   buttonStyle="primary"
@@ -275,14 +201,9 @@ function DrawerContent({
                     ? t("custom:texts:translating")
                     : t("custom:texts:autoTranslate")}
                 </Button>
-              </td>
+              </TableHeaderFooterCell>
               {otherLocales.map((locale) => (
-                <td
-                  key={locale.code}
-                  style={{
-                    padding: "12px 3rem",
-                  }}
-                >
+                <TableHeaderFooterCell key={locale.code}>
                   <Button
                     el="link"
                     Link={Link}
@@ -294,7 +215,7 @@ function DrawerContent({
                   >
                     {t("custom:texts:editTranslation")}
                   </Button>
-                </td>
+                </TableHeaderFooterCell>
               ))}
             </tr>
           </tfoot>
@@ -304,20 +225,91 @@ function DrawerContent({
   );
 }
 
-function SparklesIcon() {
+type TableHeaderCellProps = PropsWithChildren<{
+  isHighlighted?: boolean;
+}>;
+
+function TableHeaderFooterCell({
+  children,
+  isHighlighted = false,
+}: TableHeaderCellProps) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
+    <th
+      className={cn(
+        "tw-px-12 tw-py-3",
+        isHighlighted && "tw-bg-theme-elevation-50 tw-text-theme-elevation-700",
+      )}
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
-      />
-    </svg>
+      {children}
+    </th>
   );
+}
+
+type TableContentCellProps = PropsWithChildren<{
+  isWide?: boolean;
+  isHighlighted?: boolean;
+}>;
+
+function TableContentCell({
+  isWide,
+  isHighlighted = false,
+  children,
+}: TableContentCellProps) {
+  return (
+    <td
+      className={cn(
+        isWide
+          ? "tw-w-[40rem] tw-min-w-[40rem]"
+          : "tw-w-[24rem] tw-min-w-[24rem]",
+        "tw-p-12",
+        isHighlighted
+          ? "tw-bg-theme-elevation-100"
+          : "tw-bg-theme-elevation-50",
+      )}
+    >
+      {children}
+    </td>
+  );
+}
+
+type AllLocalesText = Pick<Text, "type"> & {
+  text?: Record<string, string>;
+  richText_html?: Record<string, string>;
+};
+
+type AllLocalesTextRendererProps = {
+  data: AllLocalesText;
+  localeCode: string;
+};
+
+function AllLocalesTextRenderer({
+  data,
+  localeCode,
+}: AllLocalesTextRendererProps) {
+  return (
+    <>
+      {data.type === "plainText" && data.text && data.text[localeCode]}
+      {data.type === "richText" && data.richText_html && (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: data.richText_html[localeCode],
+          }}
+          lang={localeCode}
+          className="tw-pointer-events-none tw-text-justify tw-hyphens-auto"
+        />
+      )}
+    </>
+  );
+}
+
+function isLongContent(data: AllLocalesText, localeCode: string) {
+  const fullText =
+    data.type === "plainText"
+      ? data.text
+        ? data.text[localeCode]
+        : ""
+      : data.richText_html
+        ? data.richText_html[localeCode]
+        : "";
+  return fullText.length > 200;
 }
