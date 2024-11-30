@@ -46,10 +46,13 @@ export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
           )}
         </Drawer>
         <Button disabled={isModified} onClick={() => openModal(modalSlug)}>
-          {t("custom:texts:translateToAllLocales")}
+          {t("custom:texts:translations")}
         </Button>
         {isModified && (
-          <p className="field-description">
+          <p
+            className="field-description"
+            style={{ marginTop: "-1rem", marginBottom: "2rem" }}
+          >
             {t("custom:texts:pleaseSaveYourChangesToEnableTranslation")}
           </p>
         )}
@@ -95,7 +98,22 @@ function DrawerContent({
     (locale) => locale.code !== currentLocale.code,
   );
 
-  if (!data) return <p>Loading…</p>;
+  if (!data) {
+    return (
+      <div
+        style={{
+          height: "calc(100vh - 10rem)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "24px",
+          color: "var(--theme-elevation-500)",
+        }}
+      >
+        {t("custom:common:loading")}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -234,22 +252,17 @@ function DrawerContent({
                       if (response.ok) {
                         await updateData();
                         console.info(
-                          t("custom:texts:translatedToAllLocalesSuccessfully"),
+                          t("custom:texts:autoTranslatedSuccessfully"),
                         );
                         toast.success(
-                          t("custom:texts:translatedToAllLocalesSuccessfully"),
+                          t("custom:texts:autoTranslatedSuccessfully"),
                           { duration: 3000 },
                         );
                       } else {
-                        console.error(
-                          t("custom:texts:failedToTranslateToAllLocales"),
-                        );
-                        toast.error(
-                          t("custom:texts:failedToTranslateToAllLocales"),
-                          {
-                            duration: 3000,
-                          },
-                        );
+                        console.error(t("custom:texts:failedToAutoTranslate"));
+                        toast.error(t("custom:texts:failedToAutoTranslate"), {
+                          duration: 3000,
+                        });
                       }
                     } finally {
                       setIsTranslating(false);
@@ -258,7 +271,9 @@ function DrawerContent({
                   disabled={isTranslating}
                   icon={<SparklesIcon />}
                 >
-                  {isTranslating ? "Auto-translating…" : "Auto-translate"}
+                  {isTranslating
+                    ? t("custom:texts:translating")
+                    : t("custom:texts:autoTranslate")}
                 </Button>
               </td>
               {otherLocales.map((locale) => (
@@ -277,7 +292,7 @@ function DrawerContent({
                     icon="edit"
                     disabled={isTranslating}
                   >
-                    Edit
+                    {t("custom:texts:editTranslation")}
                   </Button>
                 </td>
               ))}

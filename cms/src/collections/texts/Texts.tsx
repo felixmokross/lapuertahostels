@@ -94,6 +94,18 @@ export const Texts: CollectionConfig = {
           es: "Esto no se puede cambiar después de la creación.",
         },
         layout: "horizontal",
+        position: "sidebar",
+      },
+    },
+    {
+      type: "ui",
+      name: "translations",
+      admin: {
+        components: {
+          Field:
+            "src/collections/texts/translate-field-server#TranslateFieldServer",
+        },
+        position: "sidebar",
       },
     },
     {
@@ -196,16 +208,6 @@ export const Texts: CollectionConfig = {
           es: "Este campo se genera automáticamente y solo se usa internamente en el CMS para identificar el texto.",
         },
         position: "sidebar",
-      },
-    },
-    {
-      type: "ui",
-      name: "translations",
-      admin: {
-        components: {
-          Field:
-            "src/collections/texts/translate-field-server#TranslateFieldServer",
-        },
       },
     },
     usagesField("relationship", "texts", {
