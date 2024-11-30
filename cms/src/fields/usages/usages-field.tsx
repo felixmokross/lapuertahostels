@@ -11,7 +11,7 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
   field,
 }) {
   const { t, i18n } = useTranslation<TranslationsObject, TranslationsKey>();
-  const { value } = useField<Usage[]>({ path });
+  const { value } = useField<Usage[] | undefined>({ path });
   return (
     <>
       <div
@@ -27,9 +27,10 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
           localized={field.localized}
           path={path}
         />
+
         <span style={{ color: "var(--theme-elevation-400)" }}>
           {t("custom:usages:numberOfUsages", {
-            count: value.length,
+            count: value?.length ?? 0,
           })}
         </span>
       </div>
@@ -47,31 +48,48 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
             </tr>
           </thead>
           <tbody>
-            {value.map((usage, index) => (
-              <tr key={index}>
-                <td>
-                  <Pill>
-                    {usage.type === "collection"
-                      ? renderLabel(usage.label)
-                      : t("custom:usages:global")}
-                  </Pill>
+            {value && value.length > 0 ? (
+              value.map((usage, index) => (
+                <tr key={index}>
+                  <td>
+                    <Pill>
+                      {usage.type === "collection"
+                        ? renderLabel(usage.label)
+                        : t("custom:usages:global")}
+                    </Pill>
+                  </td>
+                  <td>
+                    {usage.type === "collection" ? (
+                      <Link
+                        href={`/admin/collections/${usage.collection}/${usage.id}`}
+                      >
+                        {usage.title ?? usage.id}
+                      </Link>
+                    ) : (
+                      <Link href={`/admin/globals/${usage.global}`}>
+                        {renderLabel(usage.label)}
+                      </Link>
+                    )}
+                  </td>
+                  <td>{usage.fieldPath}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={3}
+                  style={{
+                    textAlign: "center",
+                    paddingTop: "var(--base)",
+                    paddingBottom: "var(--base)",
+                  }}
+                >
+                  <span style={{ color: "var(--theme-elevation-400)" }}>
+                    {t("custom:usages:noUsages")}
+                  </span>
                 </td>
-                <td>
-                  {usage.type === "collection" ? (
-                    <Link
-                      href={`/admin/collections/${usage.collection}/${usage.id}`}
-                    >
-                      {usage.title ?? usage.id}
-                    </Link>
-                  ) : (
-                    <Link href={`/admin/globals/${usage.global}`}>
-                      {renderLabel(usage.label)}
-                    </Link>
-                  )}
-                </td>
-                <td>{usage.fieldPath}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
