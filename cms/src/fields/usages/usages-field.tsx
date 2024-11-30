@@ -72,7 +72,7 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="tw-text-center tw-py-base">
+                <td colSpan={3} className="tw-py-base tw-text-center">
                   <span className="tw-text-theme-elevation-400">
                     {t("custom:usages:noUsages")}
                   </span>

@@ -5,6 +5,9 @@ module.exports = {
   prefix: "tw-",
   theme: {
     extend: {
+      fontFamily: {
+        serif: "var(--font-serif)",
+      },
       spacing: {
         base: "var(--base)",
       },
@@ -27,4 +30,5 @@ module.exports = {
       },
     },
   },
+  plugins: [require("@tailwindcss/typography")],
 };

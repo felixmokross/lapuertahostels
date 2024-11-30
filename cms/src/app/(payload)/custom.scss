@@ -1,2 +1,27 @@
 @tailwind components;
 @tailwind utilities;
+
+.rich-text-html {
+  li:has(> ul:first-child),
+  li:has(> ol:first-child) {
+    list-style-type: none;
+    counter-increment: list-counter 0;
+  }
+
+  ol {
+    counter-reset: list-counter;
+  }
+
+  ol > li {
+    counter-increment: list-counter;
+  }
+
+  ol > li:has(> ul:first-child)::marker,
+  ol > li:has(> ol:first-child)::marker {
+    content: "";
+  }
+
+  ol > li::marker {
+    content: counter(list-counter) ". ";
+  }
+}

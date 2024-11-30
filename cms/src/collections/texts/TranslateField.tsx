@@ -107,7 +107,7 @@ function DrawerContent({
 
   if (!data) {
     return (
-      <div className="tw-h-[calc(100vh-10rem)] tw-flex tw-justify-center tw-items-center tw-text-2xl tw-text-theme-elevation-600">
+      <div className="tw-flex tw-h-[calc(100vh-10rem)] tw-items-center tw-justify-center tw-text-2xl tw-text-theme-elevation-600">
         {t("custom:common:loading")}
       </div>
     );
@@ -329,7 +329,7 @@ function AllLocalesTextRenderer({
             __html: data.richText_html[localeCode],
           }}
           lang={localeCode}
-          className="tw-pointer-events-none tw-text-justify tw-hyphens-auto"
+          className="rich-text-html tw-prose-xl tw-pointer-events-none tw-hyphens-auto tw-font-serif"
         />
       )}
     </>
