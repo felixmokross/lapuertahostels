@@ -48,7 +48,7 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
                   <td>
                     <Pill>
                       {usage.type === "collection" ? (
-                        <Label>{usage.collection}</Label>
+                        <Label>{usage.label}</Label>
                       ) : (
                         t("custom:usages:global")
                       )}
