@@ -1,4 +1,5 @@
 export function SparklesIcon() {
+  // from https://heroicons.com
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +18,7 @@ export function SparklesIcon() {
 }
 
 export function LanguagesIcon() {
+  // from https://heroicons.com
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

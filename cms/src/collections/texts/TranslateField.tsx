@@ -122,13 +122,17 @@ function DrawerContent({
           cellPadding="0"
           cellSpacing="0"
         >
-          <thead className="tw-sticky tw-top-0 tw-bg-theme-bg">
+          <thead className="tw-bg-theme-bg">
             <tr>
-              <TableHeaderFooterCell isHighlighted={true}>
+              <TableHeaderFooterCell
+                isHighlighted={true}
+                isStickyLeft={true}
+                isStickyTop={true}
+              >
                 <Label>{currentLocale.label}</Label>
               </TableHeaderFooterCell>
               {otherLocales.map((locale) => (
-                <TableHeaderFooterCell key={locale.code}>
+                <TableHeaderFooterCell key={locale.code} isStickyTop={true}>
                   <Label>{locale.label}</Label>
                 </TableHeaderFooterCell>
               ))}
@@ -136,7 +140,11 @@ function DrawerContent({
           </thead>
           <tbody>
             <tr>
-              <TableContentCell isWide={showWideColumns} isHighlighted={true}>
+              <TableContentCell
+                isWide={showWideColumns}
+                isHighlighted={true}
+                isStickyLeft={true}
+              >
                 <AllLocalesTextRenderer
                   data={data}
                   localeCode={currentLocale.code}
@@ -152,9 +160,13 @@ function DrawerContent({
               ))}
             </tr>
           </tbody>
-          <tfoot className="tw-sticky tw-bottom-0 tw-bg-theme-bg">
+          <tfoot className="tw-bg-theme-bg">
             <tr>
-              <TableHeaderFooterCell isHighlighted>
+              <TableHeaderFooterCell
+                isHighlighted={true}
+                isStickyLeft={true}
+                isStickyBottom={true}
+              >
                 <Button
                   size="medium"
                   buttonStyle="primary"
@@ -205,7 +217,7 @@ function DrawerContent({
                 </Button>
               </TableHeaderFooterCell>
               {otherLocales.map((locale) => (
-                <TableHeaderFooterCell key={locale.code}>
+                <TableHeaderFooterCell key={locale.code} isStickyBottom={true}>
                   <Button
                     el="link"
                     Link={Link}
@@ -229,17 +241,34 @@ function DrawerContent({
 
 type TableHeaderCellProps = PropsWithChildren<{
   isHighlighted?: boolean;
+  isStickyTop?: boolean;
+  isStickyLeft?: boolean;
+  isStickyBottom?: boolean;
 }>;
 
 function TableHeaderFooterCell({
   children,
   isHighlighted = false,
+  isStickyTop = false,
+  isStickyLeft = false,
+  isStickyBottom = false,
 }: TableHeaderCellProps) {
   return (
     <th
       className={cn(
         "tw-px-12 tw-py-3",
-        isHighlighted && "tw-bg-theme-elevation-50 tw-text-theme-elevation-700",
+        isHighlighted
+          ? "tw-bg-theme-elevation-50 tw-text-theme-elevation-700"
+          : "tw-bg-theme-bg",
+        (isStickyTop || isStickyLeft || isStickyBottom) &&
+          cn(
+            "tw-sticky",
+            isStickyLeft && "tw-left-0",
+            isStickyTop && "tw-top-0 tw-shadow-sm",
+            isStickyBottom && "tw-bottom-0",
+          ),
+        isStickyTop && isStickyLeft && "tw-z-10",
+        isStickyBottom && isStickyLeft && "tw-z-10",
       )}
     >
       {children}
@@ -250,11 +279,13 @@ function TableHeaderFooterCell({
 type TableContentCellProps = PropsWithChildren<{
   isWide?: boolean;
   isHighlighted?: boolean;
+  isStickyLeft?: boolean;
 }>;
 
 function TableContentCell({
   isWide,
   isHighlighted = false,
+  isStickyLeft = false,
   children,
 }: TableContentCellProps) {
   return (
@@ -267,6 +298,7 @@ function TableContentCell({
         isHighlighted
           ? "tw-bg-theme-elevation-100"
           : "tw-bg-theme-elevation-50",
+        isStickyLeft && "tw-sticky tw-left-0",
       )}
     >
       {children}
