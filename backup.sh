@@ -3,6 +3,8 @@
 . .env
 
 echo "Backing up database…"
+tar -c -z -f .previous-backup.tar.gz .backup
+rm -r .backup
 mongodump --uri $BACKUP_DATABASE_URI --out .backup
 
 echo "Backing up S3 bucket…"
