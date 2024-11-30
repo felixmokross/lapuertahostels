@@ -326,7 +326,7 @@ function AllLocalesTextRenderer({
       {data.type === "richText" && data.richText_html && (
         <div
           dangerouslySetInnerHTML={{
-            __html: data.richText_html[localeCode],
+            __html: data.richText_html[localeCode] ?? "",
           }}
           lang={localeCode}
           className="rich-text-html tw-prose-xl tw-pointer-events-none tw-hyphens-auto tw-font-serif"
