@@ -4,7 +4,7 @@
 
 echo "Dropping database…"
 mongosh $RESTORE_DATABASE_URI <<EOF
-db.getCollectionNames().forEach((c) => { db.getCollection(c).drop(); });
+db.getCollectionNames().filter(c => ['payload.users', 'payload.payload-preferences'].includes(c)).forEach((c) => { db.getCollection(c).drop(); });
 EOF
 
 echo ""
