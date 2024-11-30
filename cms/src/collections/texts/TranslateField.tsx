@@ -309,8 +309,8 @@ function TableContentCell({
 }
 
 type AllLocalesText = Pick<Text, "type"> & {
-  text?: Record<string, string>;
-  richText_html?: Record<string, string>;
+  text?: Record<string, string | undefined>;
+  richText_html?: Record<string, string | undefined>;
 };
 
 type AllLocalesTextRendererProps = {
@@ -328,7 +328,7 @@ function AllLocalesTextRenderer({
       {data.type === "richText" && data.richText_html && (
         <div
           dangerouslySetInnerHTML={{
-            __html: data.richText_html[localeCode],
+            __html: data.richText_html[localeCode] ?? "",
           }}
           lang={localeCode}
           className="rich-text-html tw-prose-xl tw-pointer-events-none tw-hyphens-auto tw-font-serif"
@@ -347,5 +347,5 @@ function isLongContent(data: AllLocalesText, localeCode: string) {
       : data.richText_html
         ? data.richText_html[localeCode]
         : "";
-  return fullText.length > 200;
+  return !!fullText && fullText.length > 200;
 }
