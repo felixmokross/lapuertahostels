@@ -5,6 +5,7 @@ import { Usage } from "@/fields/usages";
 import { JSONFieldClientComponent, LabelFunction } from "payload";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import Link from "next/link";
+import { Label } from "@/common/labels";
 
 export const UsagesField: JSONFieldClientComponent = function UsagesField({
   path,
@@ -53,9 +54,11 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
                 <tr key={index}>
                   <td>
                     <Pill>
-                      {usage.type === "collection"
-                        ? renderLabel(usage.label)
-                        : t("custom:usages:global")}
+                      {usage.type === "collection" ? (
+                        <Label>{usage.collection}</Label>
+                      ) : (
+                        t("custom:usages:global")
+                      )}
                     </Pill>
                   </td>
                   <td>
@@ -67,7 +70,7 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
                       </Link>
                     ) : (
                       <Link href={`/admin/globals/${usage.global}`}>
-                        {renderLabel(usage.label)}
+                        <Label>{usage.label}</Label>
                       </Link>
                     )}
                   </td>
@@ -95,20 +98,4 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
       </div>
     </>
   );
-
-  function renderLabel(label: LabelFunction | string | Record<string, string>) {
-    if (typeof label === "string") {
-      return label;
-    }
-
-    if (typeof label === "object") {
-      return label[i18n.language];
-    }
-
-    if (typeof label === "function") {
-      return label({ t: t as Parameters<LabelFunction>[0]["t"] });
-    }
-
-    throw new Error("Invalid label type");
-  }
 };

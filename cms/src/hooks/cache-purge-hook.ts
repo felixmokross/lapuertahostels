@@ -22,7 +22,7 @@ export async function cachePurgeHook(
   target: CachePurgeTarget,
   req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
 ) {
-  refreshCache(target, req).catch((e) =>
+  return refreshCache(target, req).catch((e) =>
     console.error("Failed to refresh cache:", e),
   );
 }

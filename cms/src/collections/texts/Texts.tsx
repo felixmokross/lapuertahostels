@@ -5,13 +5,14 @@ import {
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translateEndpoint";
-import { fullTextToTitle, richTextToFullText } from "./utils";
+import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
 import {
   getUniqueGlobals,
   getUniqueCollectionItemIds,
   usagesField,
 } from "@/fields/usages";
+import { transformRecordAsync } from "@/common/records";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -121,6 +122,29 @@ export const Texts: CollectionConfig = {
       },
     },
     {
+      name: "richText_html",
+      type: "textarea",
+      virtual: true,
+      localized: true,
+      admin: {
+        hidden: true,
+        condition: (_, siblingData) => siblingData.type === "richText",
+      },
+      hooks: {
+        afterRead: [
+          async ({ data, req }) => {
+            if (!data) return data;
+            if (data.type !== "richText") return null;
+
+            // @ts-expect-error 'all' locale value is not included in Payload types
+            return req.locale === "all"
+              ? await transformRecordAsync(data.richText, richTextToHtml)
+              : await richTextToHtml(data.richText);
+          },
+        ],
+      },
+    },
+    {
       name: "comment",
       type: "text",
       label: {
@@ -179,7 +203,8 @@ export const Texts: CollectionConfig = {
       name: "translations",
       admin: {
         components: {
-          Field: "src/collections/texts/TranslateField#TranslateField",
+          Field:
+            "src/collections/texts/translate-field-server#TranslateFieldServer",
         },
       },
     },

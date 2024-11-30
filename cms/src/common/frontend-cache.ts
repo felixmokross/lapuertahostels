@@ -1,9 +1,8 @@
 import { resolve6 } from "dns/promises";
 import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
-import { getSupportedLocales } from "./locales";
-import { NewPages } from "@/collections/NewPages";
+import { getSupportedLocaleCodes } from "./locales";
 import * as cookie from "cookie";
-import { Link, NewPage } from "@/payload-types";
+import { NewPage } from "@/payload-types";
 
 export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
   return collectionSlug;
@@ -184,7 +183,7 @@ async function primeCache(
   const absolutePageUrl = new URL(pageUrl, targetUrl);
 
   const promises = await Promise.allSettled(
-    (await getSupportedLocales()).map((locale) =>
+    (await getSupportedLocaleCodes()).map((locale) =>
       primeCacheForLocale(req, absolutePageUrl.toString(), locale),
     ),
   );
