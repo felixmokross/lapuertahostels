@@ -97,15 +97,6 @@ export const Links: CollectionConfig = {
       },
     },
     {
-      name: "page",
-      type: "relationship",
-      relationTo: "pages",
-      admin: {
-        hidden: true,
-        condition: (_, siblingData) => siblingData.type === "internal",
-      },
-    },
-    {
       name: "newPage",
       label: {
         en: "Page",
