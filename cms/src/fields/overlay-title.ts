@@ -1,13 +1,12 @@
 import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
 import { makeCallToActionField } from "./call-to-action";
-import { Texts } from "../collections/texts/Texts";
-import { Page } from "@/payload-types";
+import { NewPage } from "@/payload-types";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsCallToAction?: boolean;
-  supportsPositions?: (NonNullable<Page["layout"]>[number] & {
+  supportsPositions?: (NonNullable<NewPage["layout"]>[number] & {
     blockType: "ImageWithFloatingText";
   })["overlayTitle"]["position"][];
 };

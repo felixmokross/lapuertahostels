@@ -7,7 +7,6 @@ import { Users } from "./collections/Users";
 import { Maintenance } from "./globals/Maintenance";
 import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
-import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
@@ -58,7 +57,6 @@ export default buildConfig({
   collections: [
     Users,
     Brands,
-    Pages,
     NewPages,
     Media,
     MediaCategory,
