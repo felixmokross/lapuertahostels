@@ -81,6 +81,54 @@ export const Brands: CollectionConfig = {
   },
   fields: [
     {
+      name: "id",
+      label: {
+        en: "ID",
+        es: "ID",
+      },
+      type: "text",
+      required: true,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "name",
+      label: {
+        en: "Name",
+        es: "Nombre",
+      },
+      type: "text",
+      required: true,
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "homeLink",
+      label: {
+        en: "Home Link",
+        es: "Enlace de inicio",
+      },
+      type: "relationship",
+      relationTo: "links",
+      filterOptions: {
+        type: { equals: "internal" },
+      },
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+      required: true,
+      admin: {
+        position: "sidebar",
+      },
+    },
+
+    {
       type: "tabs",
       tabs: [
         {
@@ -99,11 +147,10 @@ export const Brands: CollectionConfig = {
             },
           ],
         },
-
         {
           label: {
             en: "Header",
-            es: "Cabecera",
+            es: "Encabezado",
           },
           fields: [
             {
@@ -178,7 +225,6 @@ export const Brands: CollectionConfig = {
             },
           ],
         },
-
         {
           label: {
             en: "Footer",
@@ -288,7 +334,6 @@ export const Brands: CollectionConfig = {
             },
           ],
         },
-
         {
           label: {
             en: "Usages",
@@ -308,54 +353,6 @@ export const Brands: CollectionConfig = {
           ],
         },
       ],
-    },
-
-    {
-      name: "id",
-      label: {
-        en: "ID",
-        es: "ID",
-      },
-      type: "text",
-      required: true,
-      access: {
-        update: () => false,
-      },
-      admin: {
-        position: "sidebar",
-      },
-    },
-    {
-      name: "name",
-      label: {
-        en: "Name",
-        es: "Nombre",
-      },
-      type: "text",
-      required: true,
-      admin: {
-        position: "sidebar",
-      },
-    },
-    {
-      name: "homeLink",
-      label: {
-        en: "Home Link",
-        es: "Enlace de inicio",
-      },
-      type: "relationship",
-      relationTo: "links",
-      filterOptions: {
-        type: { equals: "internal" },
-      },
-      access: {
-        create: () => false,
-        update: () => false,
-      },
-      required: true,
-      admin: {
-        position: "sidebar",
-      },
     },
   ],
 };
