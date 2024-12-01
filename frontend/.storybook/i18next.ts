@@ -3,7 +3,7 @@ import i18n, { Resource } from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-const ns = ["common"];
+const ns = ["common", "admin"];
 const supportedLngs = ["en", "es", "de", "fr"];
 
 async function loadResources() {
@@ -11,6 +11,8 @@ async function loadResources() {
   for (const lng of supportedLngs) {
     resources[lng] = {};
     for (const n of ns) {
+      // TODO this seems weird, it produces a warning by Storybook (importing from 'public')
+      // Also we can't check if the file exists – we should rethink the approach how we can load these files
       const data = await import(`../public/locales/${lng}/${n}.json`);
       resources[lng][n] = data;
     }

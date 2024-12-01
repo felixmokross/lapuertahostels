@@ -1,0 +1,8 @@
+{
+  "previewBar": {
+    "message": "<strong>Vista previa</strong> ‧ Este sitio web se encuentra actualmente en modo de mantenimiento y no es accesible públicamente.",
+    "manageContent": "Administrar contenido…",
+    "logOut": "Cerrar sesión",
+    "versionInfo": "Versión: {{ version }}"
+  }
+}

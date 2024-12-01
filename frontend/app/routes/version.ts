@@ -1,5 +1,5 @@
-import packageJson from "../../package.json";
+import { getVersion } from "~/common/version.server";
 
 export async function loader() {
-  return { version: packageJson.version };
+  return { version: getVersion() };
 }

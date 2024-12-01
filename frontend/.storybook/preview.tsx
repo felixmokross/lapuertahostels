@@ -22,6 +22,7 @@ const withRemix: Decorator = (Story) => {
         loaderData: {
           root: {
             environment: {
+              version: "0.0.0-storybook",
               // @ts-ignore
               imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
               payloadCmsBaseUrl: "http://wwww.example.com",
@@ -37,7 +38,7 @@ const withRemix: Decorator = (Story) => {
 };
 
 const preview: Preview = {
-  globals: {
+  initialGlobals: {
     locale: "en",
     locales: {
       en: "English",

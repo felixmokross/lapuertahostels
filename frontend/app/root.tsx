@@ -34,6 +34,7 @@ import { PreviewBar } from "./layout/preview-bar";
 import { LanguageDetector } from "remix-i18next/server";
 import i18next from "./i18next.server";
 import { isAuthenticated } from "./common/auth";
+import { getVersion } from "./common/version.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -132,6 +133,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     maintenance,
     common,
     environment: {
+      version: getVersion(),
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
       preview: getRequestUrl(request).searchParams.get("preview") || undefined,
