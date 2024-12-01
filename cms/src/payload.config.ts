@@ -51,6 +51,7 @@ export default buildConfig({
         Logo: "/src/components/logo#Logo",
         Icon: "/src/components/logo#LogoSmall",
       },
+      beforeNavLinks: ["/src/components/version-info#VersionInfo"],
     },
   },
   editor: lexicalEditor({}),

@@ -3,7 +3,7 @@ import {
   WrenchIcon,
 } from "@heroicons/react/16/solid";
 import { Form } from "@remix-run/react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Link } from "~/common/link";
@@ -16,8 +16,8 @@ export type PreviewBarProps = {
 };
 
 export function PreviewBar({ className, adminLocale }: PreviewBarProps) {
-  const { t } = useTranslation(undefined, { lng: adminLocale });
-  const { payloadCmsBaseUrl } = useEnvironment();
+  const { t } = useTranslation("admin", { lng: adminLocale });
+  const { payloadCmsBaseUrl, version } = useEnvironment();
   return (
     <div
       className={cn(
@@ -26,9 +26,12 @@ export function PreviewBar({ className, adminLocale }: PreviewBarProps) {
       )}
     >
       <Paragraph size="small" variant="white">
-        {t("previewBar.message")}
+        <Trans i18nKey="previewBar.message" t={t} />
       </Paragraph>
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
+        <Paragraph size="small" variant="white">
+          {t("previewBar.versionInfo", { version })}
+        </Paragraph>
         <Button
           size="small"
           as={Link}
