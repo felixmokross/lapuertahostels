@@ -2,7 +2,7 @@ import { CollectionConfig, TextField, ValidateOptions } from "payload";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
-import { canManageContent } from "../common/access-control";
+import { canManageContent, isAdmin } from "../common/access-control";
 import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
@@ -31,9 +31,9 @@ export const NewPages: CollectionConfig = {
     listSearchableFields: ["pathname", "title.text", "brand.name"],
   },
   access: {
-    create: ({ req: { user } }) => user?.role === "admin",
+    create: canManageContent,
     update: canManageContent,
-    delete: ({ req: { user } }) => user?.role === "admin",
+    delete: ({ req }) => isAdmin(req),
   },
   hooks: {
     afterChange: [

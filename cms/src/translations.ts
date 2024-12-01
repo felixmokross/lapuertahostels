@@ -27,7 +27,7 @@ export const translations = {
         selectLocalesDescription:
           "Please confirm the target locales below. The text will be translated from the current locale {{ sourceLocale }} into the selected locales. The translation is powered by the machine translation service <a>DeepL</a>.",
         selectLocalesNote:
-          "<strong>Note:</strong> The existing translations will be overwritten.",
+          "<s>Note:</s> The existing translations will be overwritten.",
         autoTranslate: "Auto-Translate",
         translateToSelectedLocales: "Translate to Selected Locales",
         goToTranslation: "Go to Translation",

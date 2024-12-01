@@ -225,7 +225,7 @@ function DrawerContent({
                 setIsTranslating(false);
               }
             }}
-            disabled={isTranslating}
+            disabled={isTranslating || selectedLocaleCodes.length === 0}
           >
             {isTranslating
               ? t("custom:texts:translating")
