@@ -3,7 +3,7 @@ import { UIField } from "payload";
 export function descriptionField(description: Record<string, string>): UIField {
   return {
     type: "ui",
-    name: "description",
+    name: "adminDescription",
     label: { en: "Description", es: "Descripción" },
     admin: {
       components: {

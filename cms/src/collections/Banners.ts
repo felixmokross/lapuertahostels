@@ -1,5 +1,4 @@
 import { CollectionConfig } from "payload";
-import { Brands } from "./Brands";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
@@ -62,29 +61,52 @@ export const Banners: CollectionConfig = {
         },
       },
     },
+
     {
-      name: "message",
-      label: {
-        en: "Message",
-        es: "Mensaje",
-      },
-      required: true,
-      type: "relationship",
-      relationTo: "texts",
-      filterOptions: {
-        type: { equals: "plainText" },
-      },
-    },
-    makeCallToActionField({ optional: true, variant: false }),
-    {
-      name: "brands",
-      label: {
-        en: "Brands",
-        es: "Marcas",
-      },
-      type: "join",
-      collection: "brands",
-      on: "banner",
+      type: "tabs",
+      tabs: [
+        {
+          label: {
+            en: "Edit",
+            es: "Editar",
+          },
+          fields: [
+            {
+              name: "message",
+              label: {
+                en: "Message",
+                es: "Mensaje",
+              },
+              required: true,
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
+            },
+            makeCallToActionField({ optional: true, variant: false }),
+          ],
+        },
+
+        {
+          label: {
+            en: "Usages",
+            es: "Usos",
+          },
+          fields: [
+            {
+              name: "brands",
+              label: {
+                en: "Brands",
+                es: "Marcas",
+              },
+              type: "join",
+              collection: "brands",
+              on: "banner",
+            },
+          ],
+        },
+      ],
     },
   ],
 };

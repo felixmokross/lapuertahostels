@@ -7,6 +7,7 @@ import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
 import { getPageCacheKey } from "@/common/frontend-cache";
+import { descriptionField } from "@/fields/description";
 
 export const NewPages: CollectionConfig = {
   slug: "new-pages",
@@ -69,6 +70,10 @@ export const NewPages: CollectionConfig = {
           },
           name: "seo",
           fields: [
+            descriptionField({
+              en: "The SEO fields are used to improve the page's visibility in search engine results and social media. The data should be unique and relevant to the page.",
+              es: "Los campos SEO se utilizan para mejorar la visibilidad de la página en los resultados de los motores de búsqueda y en las redes sociales. Los datos deben ser únicos y relevantes para la página.",
+            }),
             {
               name: "description",
               label: {
@@ -97,6 +102,12 @@ export const NewPages: CollectionConfig = {
               relationTo: "media",
               filterOptions: {
                 mimeType: { contains: "image/" },
+              },
+              admin: {
+                description: {
+                  en: "The image is shown in search engine results and when the page is shared on social media. It will be automatically sized to 1200x630 pixels.",
+                  es: "La imagen se muestra en los resultados de los motores de búsqueda y cuando se comparte la página en las redes sociales. Se redimensionará automáticamente a 1200x630 píxeles.",
+                },
               },
             },
           ],
