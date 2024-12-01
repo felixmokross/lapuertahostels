@@ -4,6 +4,7 @@ import {
   refreshCacheForPages,
 } from "../hooks/cache-purge-hook";
 import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
+import { en } from "payload/i18n/en";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -62,21 +63,6 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
-      name: "alt",
-      label: {
-        en: "Alternative Text",
-        es: "Texto alternativo",
-      },
-      type: "text",
-      localized: true,
-      admin: {
-        description: {
-          en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",
-          es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad.",
-        },
-      },
-    },
-    {
       name: "category",
       label: {
         en: "Category",
@@ -92,8 +78,45 @@ export const Media: CollectionConfig = {
         position: "sidebar",
       },
     },
-    usagesField("upload", "media", {
-      collections: ["brands", "new-pages"],
-    }),
+
+    {
+      type: "tabs",
+      tabs: [
+        {
+          label: {
+            en: "Alternative Text",
+            es: "Texto alternativo",
+          },
+          fields: [
+            {
+              name: "alt",
+              label: {
+                en: "Alternative Text",
+                es: "Texto alternativo",
+              },
+              type: "text",
+              localized: true,
+              admin: {
+                description: {
+                  en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",
+                  es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad.",
+                },
+              },
+            },
+          ],
+        },
+        {
+          label: {
+            en: "Usages",
+            es: "Usos",
+          },
+          fields: [
+            usagesField("upload", "media", {
+              collections: ["brands", "new-pages"],
+            }),
+          ],
+        },
+      ],
+    },
   ],
 };

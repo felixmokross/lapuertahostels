@@ -204,7 +204,20 @@ function findItemUsagesOnCollection(
         ),
       );
     } else if (field.type === "tabs") {
-      throw new Error("Field type is not yet supported");
+      for (let i = 0; i < field.tabs.length; i++) {
+        const tab = field.tabs[i];
+        const isNamedTab = "name" in tab && !!tab.name;
+
+        usagePaths.push(
+          ...findItemUsagesOnCollection(
+            fieldType,
+            collectionToFind,
+            id,
+            isNamedTab ? data[tab.name] : data,
+            tab.fields,
+          ).map((path) => (isNamedTab ? `${tab.name}.${path}` : path)),
+        );
+      }
     }
   }
 

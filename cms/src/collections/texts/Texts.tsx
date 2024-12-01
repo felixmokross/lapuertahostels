@@ -67,6 +67,83 @@ export const Texts: CollectionConfig = {
   endpoints: [translateEndpoint],
   fields: [
     {
+      type: "tabs",
+      tabs: [
+        {
+          label: {
+            en: "Edit",
+            es: "Editar",
+          },
+          fields: [
+            {
+              name: "text",
+              type: "textarea",
+              label: {
+                en: "Text",
+                es: "Texto",
+              },
+              localized: true,
+              admin: {
+                condition: (_, siblingData) => siblingData.type === "plainText",
+              },
+            },
+            {
+              name: "richText",
+              type: "richText",
+              label: {
+                en: "Rich Text",
+                es: "Texto enriquecido",
+              },
+              localized: true,
+              editor: editor(),
+              admin: {
+                condition: (_, siblingData) => siblingData.type === "richText",
+              },
+            },
+            {
+              name: "richText_html",
+              type: "textarea",
+              virtual: true,
+              localized: true,
+              admin: {
+                hidden: true,
+                condition: (_, siblingData) => siblingData.type === "richText",
+              },
+              hooks: {
+                afterRead: [
+                  async ({ data, req }) => {
+                    if (!data) return data;
+                    if (data.type !== "richText") return null;
+
+                    // @ts-expect-error 'all' locale value is not included in Payload types
+                    return req.locale === "all"
+                      ? await transformRecordAsync(
+                          data.richText,
+                          richTextToHtml,
+                        )
+                      : await richTextToHtml(data.richText);
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        {
+          label: {
+            en: "Usages",
+            es: "Usos",
+          },
+          fields: [
+            usagesField("relationship", "texts", {
+              collections: ["new-pages", "banners", "brands"],
+              globals: ["common", "maintenance"],
+            }),
+          ],
+        },
+      ],
+    },
+
+    {
       name: "type",
       type: "radio",
       label: {
@@ -106,54 +183,6 @@ export const Texts: CollectionConfig = {
             "src/collections/texts/translate-field-server#TranslateFieldServer",
         },
         position: "sidebar",
-      },
-    },
-    {
-      name: "text",
-      type: "textarea",
-      label: {
-        en: "Text",
-        es: "Texto",
-      },
-      localized: true,
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "plainText",
-      },
-    },
-    {
-      name: "richText",
-      type: "richText",
-      label: {
-        en: "Rich Text",
-        es: "Texto enriquecido",
-      },
-      localized: true,
-      editor: editor(),
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "richText",
-      },
-    },
-    {
-      name: "richText_html",
-      type: "textarea",
-      virtual: true,
-      localized: true,
-      admin: {
-        hidden: true,
-        condition: (_, siblingData) => siblingData.type === "richText",
-      },
-      hooks: {
-        afterRead: [
-          async ({ data, req }) => {
-            if (!data) return data;
-            if (data.type !== "richText") return null;
-
-            // @ts-expect-error 'all' locale value is not included in Payload types
-            return req.locale === "all"
-              ? await transformRecordAsync(data.richText, richTextToHtml)
-              : await richTextToHtml(data.richText);
-          },
-        ],
       },
     },
     {
@@ -210,9 +239,5 @@ export const Texts: CollectionConfig = {
         position: "sidebar",
       },
     },
-    usagesField("relationship", "texts", {
-      collections: ["new-pages", "banners", "brands"],
-      globals: ["common", "maintenance"],
-    }),
   ],
 };

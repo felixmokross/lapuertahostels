@@ -119,7 +119,9 @@ export type ImageTransformation = {
   blur?: number;
 };
 
-function toImagekitTransformationString(transformation: ImageTransformation) {
+export function toImagekitTransformationString(
+  transformation: ImageTransformation,
+) {
   const transformationItems = Object.entries(transformation)
     .filter(([, value]) => value != null)
     .map(([key]) =>

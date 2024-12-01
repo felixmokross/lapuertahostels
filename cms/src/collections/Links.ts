@@ -65,6 +65,98 @@ export const Links: CollectionConfig = {
   },
   fields: [
     {
+      type: "tabs",
+      tabs: [
+        {
+          label: {
+            en: "Edit",
+            es: "Editar",
+          },
+          fields: [
+            {
+              name: "newPage",
+              label: {
+                en: "Page",
+                es: "Página",
+              },
+              type: "relationship",
+              relationTo: "new-pages",
+              required: true,
+              admin: {
+                condition: (_, siblingData) => siblingData.type === "internal",
+              },
+            },
+            {
+              type: "row",
+              fields: [
+                {
+                  name: "queryString",
+                  label: {
+                    en: "Query String",
+                    es: "Cadena de consulta",
+                  },
+                  type: "text",
+                  admin: {
+                    width: "50%",
+                    description: {
+                      en: "If a query string is provided, it will be appended to the URL with a '?' character.",
+                      es: "Si se proporciona una cadena de consulta, se añadirá a la URL con un carácter '?'.",
+                    },
+                    condition: (_, siblingData) =>
+                      siblingData.type === "internal",
+                  },
+                },
+                {
+                  name: "fragment",
+                  label: {
+                    en: "Fragment",
+                    es: "Fragmento",
+                  },
+                  type: "text",
+                  admin: {
+                    width: "50%",
+                    description: {
+                      en: "If a fragment is provided, it will be appended to the URL with a '#' character. Use this to link to a section of a page, defined by an 'Element ID'.",
+                      es: "Si se proporciona un fragmento, se añadirá a la URL con un carácter '#'. Úsalo para enlazar a una sección de una página, definida por un 'ID de elemento'.",
+                    },
+                    condition: (_, siblingData) =>
+                      siblingData.type === "internal",
+                  },
+                },
+              ],
+            },
+            {
+              name: "url",
+              label: {
+                en: "URL",
+                es: "URL",
+              },
+              type: "text",
+              required: true,
+              validate: validateUrl,
+              admin: {
+                condition: (_, siblingData) => siblingData.type === "external",
+              },
+            },
+          ],
+        },
+
+        {
+          label: {
+            en: "Usages",
+            es: "Usos",
+          },
+          fields: [
+            usagesField("relationship", "links", {
+              collections: ["new-pages", "banners", "brands"],
+              globals: ["common"],
+            }),
+          ],
+        },
+      ],
+    },
+
+    {
       name: "type",
       label: {
         en: "Type",
@@ -90,75 +182,14 @@ export const Links: CollectionConfig = {
         },
       ],
       admin: {
+        position: "sidebar",
         description: {
           en: "Use 'internal' to link to a page within the site. 'External' allows you to enter a URL.",
           es: "Usa 'interno' para enlazar a una página dentro del sitio. 'Externo' te permite introducir una URL.",
         },
       },
     },
-    {
-      name: "newPage",
-      label: {
-        en: "Page",
-        es: "Página",
-      },
-      type: "relationship",
-      relationTo: "new-pages",
-      required: true,
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "internal",
-      },
-    },
-    {
-      type: "row",
-      fields: [
-        {
-          name: "queryString",
-          label: {
-            en: "Query String",
-            es: "Cadena de consulta",
-          },
-          type: "text",
-          admin: {
-            width: "50%",
-            description: {
-              en: "If a query string is provided, it will be appended to the URL with a '?' character.",
-              es: "Si se proporciona una cadena de consulta, se añadirá a la URL con un carácter '?'.",
-            },
-            condition: (_, siblingData) => siblingData.type === "internal",
-          },
-        },
-        {
-          name: "fragment",
-          label: {
-            en: "Fragment",
-            es: "Fragmento",
-          },
-          type: "text",
-          admin: {
-            width: "50%",
-            description: {
-              en: "If a fragment is provided, it will be appended to the URL with a '#' character. Use this to link to a section of a page, defined by an 'Element ID'.",
-              es: "Si se proporciona un fragmento, se añadirá a la URL con un carácter '#'. Úsalo para enlazar a una sección de una página, definida por un 'ID de elemento'.",
-            },
-            condition: (_, siblingData) => siblingData.type === "internal",
-          },
-        },
-      ],
-    },
-    {
-      name: "url",
-      label: {
-        en: "URL",
-        es: "URL",
-      },
-      type: "text",
-      required: true,
-      validate: validateUrl,
-      admin: {
-        condition: (_, siblingData) => siblingData.type === "external",
-      },
-    },
+
     {
       name: "comment",
       type: "text",
@@ -216,9 +247,5 @@ export const Links: CollectionConfig = {
         position: "sidebar",
       },
     },
-    usagesField("relationship", "links", {
-      collections: ["new-pages", "banners", "brands"],
-      globals: ["common"],
-    }),
   ],
 };
