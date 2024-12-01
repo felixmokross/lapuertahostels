@@ -46,6 +46,83 @@ export const NewPages: CollectionConfig = {
   },
   fields: [
     {
+      type: "tabs",
+      tabs: [
+        {
+          label: {
+            en: "Hero",
+            es: "Héroe",
+          },
+          fields: [heroField],
+        },
+        {
+          label: {
+            en: "Layout",
+            es: "Diseño",
+          },
+          fields: [layoutField],
+        },
+        {
+          label: {
+            en: "SEO",
+            es: "SEO",
+          },
+          name: "seo",
+          fields: [
+            {
+              name: "description",
+              label: {
+                en: "Description",
+                es: "Descripción",
+              },
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
+              admin: {
+                description: {
+                  en: "The description is shown in search engine results. It should be between 100 and 150 characters.",
+                  es: "La descripción se muestra en los resultados de los motores de búsqueda. Debe tener entre 100 y 150 caracteres.",
+                },
+              },
+            },
+            {
+              name: "image",
+              label: {
+                en: "Image",
+                es: "Imagen",
+              },
+              type: "upload",
+              relationTo: "media",
+              filterOptions: {
+                mimeType: { contains: "image/" },
+              },
+            },
+          ],
+        },
+        {
+          label: {
+            en: "Usages",
+            es: "Usos",
+          },
+          fields: [
+            {
+              name: "links",
+              label: {
+                en: "Links",
+                es: "Enlaces",
+              },
+              type: "join",
+              collection: "links",
+              on: "newPage",
+            },
+          ],
+        },
+      ],
+    },
+
+    {
       name: "brand",
       label: {
         en: "Brand",
@@ -142,18 +219,6 @@ export const NewPages: CollectionConfig = {
           es: "El título se muestra en la barra de título del navegador y en los resultados de los motores de búsqueda.",
         },
       },
-    },
-    heroField,
-    layoutField,
-    {
-      name: "links",
-      label: {
-        en: "Links",
-        es: "Enlaces",
-      },
-      type: "join",
-      collection: "links",
-      on: "newPage",
     },
   ],
 };

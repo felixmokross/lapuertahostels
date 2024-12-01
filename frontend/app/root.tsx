@@ -77,11 +77,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const description = data?.common.meta?.description;
-  if (description != null && typeof description !== "object") {
-    throw new Error("Invalid description");
-  }
+export const meta: MetaFunction<typeof loader> = () => {
   return [
     {
       name: "msapplication-TileColor",
@@ -91,7 +87,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       name: "theme-color",
       content: "#e2d0b6",
     },
-    { name: "description", content: description?.text ?? "" },
   ];
 };
 
