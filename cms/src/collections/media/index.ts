@@ -4,7 +4,7 @@ import {
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
 import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
-import { updateAltTextEndpoint } from "./update-alt-text-endpoint";
+import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -30,7 +30,7 @@ export const Media: CollectionConfig = {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],
   },
-  endpoints: [updateAltTextEndpoint],
+  endpoints: [generateAltTextEndpoint],
   hooks: {
     afterChange: [
       async ({ req, doc }) => {

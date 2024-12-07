@@ -7,7 +7,7 @@ import { translate } from "@/common/translation";
 import { transformRecord } from "@/common/records";
 import { fullTextToTitle } from "../texts/utils";
 
-export const updateAltTextEndpoint: Endpoint = {
+export const generateAltTextEndpoint: Endpoint = {
   path: "/:id/update-alt-text",
   method: "post",
   handler: async (req) => {
