@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { BrandLogo } from "./brand-logo";
 import { Brand } from "~/payload-types";
+import { media } from "./cms-data.builders";
 
 const meta = {
   title: "common/Brand Logo",
@@ -17,10 +18,7 @@ export const Large: Story = {
     size: "large",
     brand: {
       id: "puerta",
-      logo: {
-        filename: "logo-puerta-simple.png",
-        alt: "La Puerta Hostels Logo",
-      },
+      logo: media("logo-puerta-simple.png", "La Puerta Hostels Logo"),
       name: "La Puerta Hostels",
     } as Brand,
     type: "with-wordmark",
@@ -46,10 +44,7 @@ export const Aqua: Story = {
     ...Large.args,
     brand: {
       id: "aqua",
-      logo: {
-        filename: "logo-aqua-simple.png",
-        alt: "Puerta Aqua Logo",
-      },
+      logo: media("logo-aqua-simple.png", "Puerta Aqua Logo"),
       name: "Puerta Aqua",
     } as Brand,
   },
@@ -60,10 +55,7 @@ export const Azul: Story = {
     ...Large.args,
     brand: {
       id: "azul",
-      logo: {
-        filename: "logo-azul-simple.png",
-        alt: "La Puerta Azul Logo",
-      },
+      logo: media("logo-azul-simple.png", "La Puerta Azul Logo"),
       name: "La Puerta Azul",
     } as Brand,
   },
