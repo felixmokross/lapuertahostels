@@ -3,7 +3,7 @@ import { TextColumnsWithImagesBlock } from "./types";
 import { Button } from "~/common/button";
 import { PageLink } from "~/common/page-link";
 import { cn } from "~/common/cn";
-import { Heading } from "~/common/heading";
+import { Heading, HeadingProps } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
 import { Text } from "~/payload-types";
@@ -12,11 +12,13 @@ export type TextWithImageItemProps =
   TextColumnsWithImagesBlock["items"][number] & {
     imageSizes?: string;
     imageWidth?: number;
+    headingLevel: number;
   };
 
 export function TextWithImageItem({
   image,
   heading,
+  headingLevel,
   text,
   cta,
   size,
@@ -58,7 +60,11 @@ export function TextWithImageItem({
         />
       )}
       {heading && (
-        <Heading as="h4" size="small" className={cn(image && "mt-8")}>
+        <Heading
+          as={`h${headingLevel}` as HeadingProps["as"]}
+          size="small"
+          className={cn(image && "mt-8")}
+        >
           {heading.text}
         </Heading>
       )}

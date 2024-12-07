@@ -54,6 +54,7 @@ export function StoryBlock({
         <div className={cn(heading && "mt-4 md:mt-6")}>
           <LongFormRichText
             content={text.richText as unknown as RichTextObject}
+            baseHeadingLevel={heading ? 4 : 3}
           />
         </div>
       </div>

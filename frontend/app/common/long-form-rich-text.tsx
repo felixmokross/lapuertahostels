@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { Heading } from "./heading";
+import { Heading, HeadingProps } from "./heading";
 import { Paragraph } from "./paragraph";
 import { RichTextObject, RichText } from "./rich-text";
 import { TextHighlight } from "./text-highlight";
@@ -7,7 +7,15 @@ import { useTheme } from "~/themes";
 import { cn } from "./cn";
 import { Link } from "./link";
 
-export function LongFormRichText({ content }: { content: RichTextObject }) {
+export type LongFormRichTextProps = {
+  content: RichTextObject;
+  baseHeadingLevel: number;
+};
+
+export function LongFormRichText({
+  content,
+  baseHeadingLevel,
+}: LongFormRichTextProps) {
   const theme = useTheme();
   return (
     <RichText
@@ -19,7 +27,7 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
         h4: (props: PropsWithChildren) => (
           <Heading
             {...props}
-            as="h4"
+            as={`h${baseHeadingLevel}` as HeadingProps["as"]}
             size="small"
             className="mt-10 first:mt-0 md:mt-12"
           />
@@ -27,7 +35,7 @@ export function LongFormRichText({ content }: { content: RichTextObject }) {
         h5: (props: PropsWithChildren) => (
           <Heading
             {...props}
-            as="h5"
+            as={`h${baseHeadingLevel + 1}` as HeadingProps["as"]}
             size="extra-small"
             className="mt-8 first:mt-0 md:mt-10"
           />

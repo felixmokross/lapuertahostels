@@ -64,7 +64,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
             },
           )}
         >
-          <Heading as="h4" size="small">
+          <Heading as="h3" size="small">
             {(overlayTextBox.heading as Text).text}
           </Heading>
           <RichTextParagraph className="mt-2">

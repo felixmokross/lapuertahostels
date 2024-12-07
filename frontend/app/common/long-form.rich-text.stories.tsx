@@ -21,6 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    baseHeadingLevel: 3,
     content: richTextRoot(
       paragraph(
         text(

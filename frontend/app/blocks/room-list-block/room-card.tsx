@@ -25,7 +25,7 @@ export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
 
   return (
     <div className="flex max-w-[35rem] flex-col items-center gap-8">
-      <Heading as="h4" size="medium" className="px-6 text-center sm:px-0">
+      <Heading as="h3" size="medium" className="px-6 text-center sm:px-0">
         {heading.text}
       </Heading>
       <ImageViewer

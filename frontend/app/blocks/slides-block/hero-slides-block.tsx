@@ -14,6 +14,7 @@ export type HeroSlidesBlockProps = NonNullable<NewPage["hero"]>[number] & {
 };
 
 export function HeroSlidesBlock({
+  seoPageHeading,
   slides,
   autoplayIntervalInSeconds,
 }: HeroSlidesBlockProps) {
@@ -56,6 +57,9 @@ export function HeroSlidesBlock({
       tabIndex={0}
       role="tablist"
     >
+      {seoPageHeading && typeof seoPageHeading === "object" && (
+        <h2 className="sr-only">{seoPageHeading.text}</h2>
+      )}
       {slides.length > 1 && (
         <>
           <div
@@ -132,6 +136,7 @@ export function HeroSlidesBlock({
             />
             {slide.overlayTitle?.show && (
               <OverlayTitle
+                headingLevel={3}
                 {...slide.overlayTitle}
                 {...pauseIntervalHandlers}
               />
