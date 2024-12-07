@@ -41,7 +41,7 @@ export function media(filename: string, altText?: string): Media {
     id: createId(),
     mimeType: "image/jpeg",
     filename,
-    alt: altText ?? "Puerta Aqua",
+    alt: plainText(altText ?? "Puerta Aqua"),
     createdAt: date,
     updatedAt: date,
   };
