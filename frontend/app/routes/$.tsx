@@ -89,8 +89,46 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       content: data.canonicalUrl,
     },
     ...getOpenGraphImageMeta(data, rootLoaderData),
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:title",
+      content: getPageTitle(data.content),
+    },
+    {
+      name: "twitter:description",
+      content: description,
+    },
+    ...getTwitterCardImageMeta(data, rootLoaderData),
   ];
 };
+
+function getTwitterCardImageMeta(
+  data: SerializeFromLoader<typeof loader>,
+  rootLoaderData: SerializeFromLoader<typeof rootLoader>,
+): { name: string; content: string }[] {
+  const image = data.content.seo?.image;
+  if (!image) {
+    return [];
+  }
+
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  return [
+    {
+      name: "twitter:image",
+      content: getSocialImageUrl(data, rootLoaderData, 2400, 1200),
+    },
+    {
+      name: "twitter:image:alt",
+      content: image.alt ?? "",
+    },
+  ];
+}
 
 function getOpenGraphImageMeta(
   data: SerializeFromLoader<typeof loader>,
@@ -111,7 +149,7 @@ function getOpenGraphImageMeta(
   return [
     {
       name: "og:image",
-      content: `${rootLoaderData.environment.imagekitBaseUrl.toString()}/${toImagekitTransformationString({ width, height })}/${image.filename}`,
+      content: getSocialImageUrl(data, rootLoaderData, width, height),
     },
     {
       name: "og:image:alt",
@@ -121,6 +159,22 @@ function getOpenGraphImageMeta(
     { name: "og:image:width", content: width.toString() },
     { name: "og:image:height", content: height.toString() },
   ];
+}
+
+function getSocialImageUrl(
+  data: SerializeFromLoader<typeof loader>,
+  rootLoaderData: SerializeFromLoader<typeof rootLoader>,
+  width: number,
+  height: number,
+) {
+  const image = data.content.seo?.image;
+  if (typeof image !== "object") {
+    throw new Error("Invalid image");
+  }
+
+  if (!image) return "";
+
+  return `${rootLoaderData.environment.imagekitBaseUrl.toString()}/${toImagekitTransformationString({ width, height })}/${image.filename}`;
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
