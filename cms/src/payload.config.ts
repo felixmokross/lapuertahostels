@@ -22,7 +22,6 @@ import { NewPages } from "./collections/NewPages";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
-import { migrations } from "./migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -124,7 +123,6 @@ export default buildConfig({
   ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
-    prodMigrations: migrations,
   }),
   cors: process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL
     ? [process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL]
