@@ -56,6 +56,7 @@ export function TextColumnsWithImagesBlock({
           <TextWithImageItem
             key={item.id}
             {...item}
+            headingLevel={heading ? 4 : 3}
             imageSizes={
               numberOfColumns === 2
                 ? "(min-width: 1280px) 50vw, 100vw"

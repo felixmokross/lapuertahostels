@@ -34,11 +34,11 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
       <div className="mx-auto max-w-5xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <h6 className="mt-2">
+            <h3 className="mt-2">
               <PageLink link={puertaBrand.homeLink}>
                 <BrandLogo size="small" brand={puertaBrand} />
               </PageLink>
-            </h6>
+            </h3>
             <p className="text-sm leading-6 text-neutral-600">
               <RichText
                 content={content.address.richText as unknown as RichTextObject}

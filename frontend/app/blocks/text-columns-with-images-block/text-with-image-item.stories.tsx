@@ -33,6 +33,7 @@ export const Default: Story = {
     id: createId(),
     image: media("_DSC0299.jpg"),
     heading: plainText("Example Heading"),
+    headingLevel: 3,
     text: richText(
       paragraph(
         text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),

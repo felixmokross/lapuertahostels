@@ -19,6 +19,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "HeroSlides",
+    seoPageHeading: "Welcome to La Puerta Hostels",
     slides: [
       {
         name: "Lost City",
