@@ -1,13 +1,13 @@
 import OpenAI from "openai";
 import { TypedLocale } from "payload";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export const DEFAULT_LOCALE: TypedLocale = "en";
 
 export async function generateAltText(imageUrl: string) {
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+
   const response = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
