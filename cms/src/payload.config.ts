@@ -129,7 +129,4 @@ export default buildConfig({
     : undefined,
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
-  custom: {
-    cmsBaseUrl: "http://localhost:3001",
-  },
 });
