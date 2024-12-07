@@ -1,4 +1,4 @@
-import { NewPage } from "~/payload-types";
+import { NewPage, Text } from "~/payload-types";
 import { OverlayTitle } from "./common/overlay-title";
 import { useEnvironment } from "~/environment";
 
@@ -21,6 +21,10 @@ export function HeroVideoBlock({
     throw new Error("Invalid video");
   }
 
+  if (video != null && video.alt != null && typeof video.alt !== "object") {
+    throw new Error("Invalid video alt text");
+  }
+
   const previewUrl = previewImage?.filename;
   return (
     <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
@@ -38,7 +42,7 @@ export function HeroVideoBlock({
         disableRemotePlayback
         className="pointer-events-none absolute top-0 h-full w-full object-cover"
       >
-        {video.alt && <p>{video.alt}</p>}
+        {video.alt && <p>{(video.alt as Text).text}</p>}
       </video>
       {overlayTitle?.show && (
         <OverlayTitle headingLevel={2} {...overlayTitle} />

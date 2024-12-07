@@ -50,8 +50,9 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Enable to copy public files
-COPY --from=builder /app/public ./public
+# Copy source files so that we can run scripts like 'payload migrate'
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 # Set the correct permission for prerender cache
 RUN mkdir .next

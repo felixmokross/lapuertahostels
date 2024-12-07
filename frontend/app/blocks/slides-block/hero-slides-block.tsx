@@ -7,7 +7,6 @@ import { useEnvironment } from "~/environment";
 import { useSwipeable } from "react-swipeable";
 import { Media, NewPage } from "~/payload-types";
 import { useTranslation } from "react-i18next";
-import { getSrcFromMedia } from "~/common/media";
 
 export type HeroSlidesBlockProps = NonNullable<NewPage["hero"]>[number] & {
   blockType: "HeroSlides";
@@ -128,8 +127,7 @@ export function HeroSlidesBlock({
             leaveTo="opacity-0"
           >
             <SlideImage
-              src={getSrcFromMedia(imageMedia)}
-              alt={imageMedia.alt ?? undefined}
+              media={imageMedia}
               withPreview={i === 0}
               alignment={slide.imageAlignment ?? "center"}
               onLoadingFinished={i === 0 ? () => setIsReady(true) : undefined}

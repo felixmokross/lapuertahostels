@@ -1,10 +1,9 @@
 import { Heading } from "../common/heading";
-import { Image } from "../common/image";
 import { cn } from "../common/cn";
 import { RichTextObject } from "~/common/rich-text";
 import { NewPage } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
-import { getSrcFromMedia } from "~/common/media";
+import { MediaImage } from "~/common/media";
 
 export type StoryBlockProps = NonNullable<NewPage["layout"]>[number] & {
   blockType: "Story";
@@ -68,9 +67,8 @@ export function StoryBlock({
             },
           )}
         >
-          <Image
-            src={getSrcFromMedia(image)}
-            alt={image.alt ?? undefined}
+          <MediaImage
+            media={image}
             className="h-full w-full object-cover"
             transformation={{
               aspectRatio: { width: 3, height: 4 },

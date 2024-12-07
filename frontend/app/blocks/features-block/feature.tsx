@@ -4,9 +4,8 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { type Feature } from "./types";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
-import { Image } from "~/common/image";
 import { RichTextObject } from "~/common/rich-text";
-import { getSrcFromMedia } from "~/common/media";
+import { MediaImage } from "~/common/media";
 import { Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 
@@ -65,9 +64,8 @@ export function Feature({
         )}
       </div>
       <div className="shrink-0 overflow-hidden sm:max-w-md sm:rounded-md sm:shadow-lg">
-        <Image
-          src={getSrcFromMedia(image)}
-          alt={image.alt ?? undefined}
+        <MediaImage
+          media={image}
           transformation={{
             width: 448,
             aspectRatio: { width: 4, height: 3 },

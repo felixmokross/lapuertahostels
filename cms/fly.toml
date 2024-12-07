@@ -21,3 +21,5 @@ primary_region = 'cdg'
   cpu_kind = 'shared'
   cpus = 1
   
+[deploy]
+  release_command = "npm run payload migrate"

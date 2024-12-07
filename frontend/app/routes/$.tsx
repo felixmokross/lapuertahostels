@@ -15,6 +15,7 @@ import { Text } from "~/payload-types";
 import { SerializeFromLoader } from "~/common/types";
 import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
+import { getAltFromMedia } from "~/common/media";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -125,7 +126,7 @@ function getTwitterCardImageMeta(
     },
     {
       name: "twitter:image:alt",
-      content: image.alt ?? "",
+      content: getAltFromMedia(image) ?? "",
     },
   ];
 }
@@ -153,7 +154,7 @@ function getOpenGraphImageMeta(
     },
     {
       name: "og:image:alt",
-      content: image.alt ?? "",
+      content: getAltFromMedia(image) ?? "",
     },
     { name: "og:image:type", content: image.mimeType ?? "" },
     { name: "og:image:width", content: width.toString() },

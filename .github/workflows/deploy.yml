@@ -124,6 +124,7 @@ jobs:
             --env CACHE_REFRESH_TARGET_ARG=${{ needs.define-env.outputs.fly_app_frontend }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
             --env MEDIA_S3_BUCKET=${{ needs.define-env.outputs.s3_bucket }} \
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
+            --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
         working-directory: cms
         env:

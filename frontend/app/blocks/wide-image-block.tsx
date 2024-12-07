@@ -1,11 +1,10 @@
 import { NewPage, Text } from "~/payload-types";
-import { Image } from "~/common/image";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { RichTextParagraph } from "~/common/paragraph";
 import { cn } from "~/common/cn";
 import { RichTextObject } from "~/common/rich-text";
-import { getSrcFromMedia } from "~/common/media";
+import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
 export type WideImageBlockProps = NonNullable<NewPage["layout"]>[number] & {
@@ -36,9 +35,8 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
 
   return (
     <div className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]">
-      <Image
-        src={getSrcFromMedia(image)}
-        alt={image.alt ?? undefined}
+      <MediaImage
+        media={image}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 800,

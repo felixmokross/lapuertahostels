@@ -98,6 +98,7 @@ jobs:
             MEDIA_S3_ACCESS_KEY_ID=$PREVIEW_MEDIA_S3_ACCESS_KEY_ID \
             MEDIA_S3_SECRET_ACCESS_KEY=$PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY \
             DEEPL_API_AUTH_KEY=$PREVIEW_DEEPL_API_AUTH_KEY \
+            OPENAI_API_KEY="$PREVIEW_OPENAI_API_KEY" \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
@@ -105,6 +106,7 @@ jobs:
           PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
           PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
           PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
+          PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
         working-directory: cms
       - uses: ./.github/actions/version
         id: version
@@ -118,6 +120,7 @@ jobs:
             --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_APP_INTERNAL_PORT }} \
             --env MEDIA_S3_BUCKET=${{ env.MEDIA_S3_BUCKET }} \
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
+            --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
         working-directory: cms
 

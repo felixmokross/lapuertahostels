@@ -2,9 +2,9 @@ import { CollectionConfig } from "payload";
 import {
   refreshCacheForAllBrands,
   refreshCacheForPages,
-} from "../hooks/cache-purge-hook";
+} from "../../hooks/cache-purge-hook";
 import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
-import { en } from "payload/i18n/en";
+import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -30,6 +30,7 @@ export const Media: CollectionConfig = {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],
   },
+  endpoints: [generateAltTextEndpoint],
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
@@ -94,12 +95,20 @@ export const Media: CollectionConfig = {
                 en: "Alternative Text",
                 es: "Texto alternativo",
               },
-              type: "text",
-              localized: true,
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 description: {
                   en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",
                   es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad.",
+                },
+                components: {
+                  afterInput: [
+                    "/src/collections/media/generate-alt-text-button#GenerateAltTextButton",
+                  ],
                 },
               },
             },

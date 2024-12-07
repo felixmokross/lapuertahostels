@@ -1,8 +1,8 @@
-import { Brand, Media } from "~/payload-types";
+import { Brand } from "~/payload-types";
 import { type BrandId } from "../brands";
 import { cn } from "./cn";
-import { Image } from "./image";
 import { themesByBrand } from "~/themes";
+import { MediaImage } from "./media";
 
 export type BrandLogoProps = {
   size: "small" | "large";
@@ -30,13 +30,12 @@ export function BrandLogo({
         className,
       )}
     >
-      <Image
+      <MediaImage
         className={cn({
           "h-7": size === "small",
           "h-10": size === "large",
         })}
-        src={`/${(brand.logo as Media).filename}`}
-        alt={(brand.logo as Media).alt ?? undefined}
+        media={brand.logo}
         transformation={{
           height: size === "small" ? 28 : size === "large" ? 40 : undefined,
         }}

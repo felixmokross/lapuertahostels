@@ -3,7 +3,6 @@ import { OverlayTitle } from "./overlay-title";
 import { bold, paragraph, text } from "~/common/rich-text.builders";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
 import { SlideImage } from "../slides-block/slide-image";
-import { getSrcFromMedia } from "~/common/media";
 
 const meta = {
   component: OverlayTitle,
@@ -15,9 +14,7 @@ const meta = {
   decorators: [
     (Story) => (
       <div className="h-screen">
-        <SlideImage
-          src={getSrcFromMedia(media("david-hertle-3YCkAhD--Ic-unsplash.jpg"))}
-        />
+        <SlideImage media={media("david-hertle-3YCkAhD--Ic-unsplash.jpg")} />
         <Story />
       </div>
     ),

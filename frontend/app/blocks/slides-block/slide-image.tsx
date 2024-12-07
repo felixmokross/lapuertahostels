@@ -1,16 +1,15 @@
 import { cn } from "../../common/cn";
 import { useState } from "react";
-import { Image, ImageProps } from "../../common/image";
+import { MediaImage, MediaImageProps } from "~/common/media";
 
-export type SlideImageProps = Pick<ImageProps, "src" | "alt"> & {
+export type SlideImageProps = Pick<MediaImageProps, "media"> & {
   withPreview?: boolean;
   alignment?: "center" | "bottom";
   onLoadingFinished?: () => void;
 };
 
 export function SlideImage({
-  src,
-  alt,
+  media,
   withPreview = false,
   alignment,
   onLoadingFinished,
@@ -18,8 +17,7 @@ export function SlideImage({
   const [state, setState] = useState<"loading" | "loaded">("loading");
 
   const imageProps = {
-    src,
-    alt,
+    media,
     layout: "responsive",
     srcMultiplier: 6,
     sizes: "100vw",
@@ -30,17 +28,17 @@ export function SlideImage({
       aspectRatio: { width: 4, height: 3 },
       width: 800,
     },
-  } as ImageProps;
+  } as MediaImageProps;
 
   return (
     <div className={"h-full w-full"}>
       {withPreview && state === "loading" && (
-        <Image
+        <MediaImage
           {...imageProps}
           transformation={{ ...imageProps.transformation, blur: 20 }}
         />
       )}
-      <Image
+      <MediaImage
         {...imageProps}
         onLoadingFinished={() => {
           setState("loaded");

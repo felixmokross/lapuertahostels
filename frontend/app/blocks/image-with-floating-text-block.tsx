@@ -1,11 +1,10 @@
 import { RichTextParagraph } from "~/common/paragraph";
-import { Image } from "~/common/image";
 import { cn } from "../common/cn";
 import { NewPage } from "~/payload-types";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
-import { getSrcFromMedia } from "~/common/media";
+import { MediaImage } from "~/common/media";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   NewPage["layout"]
@@ -40,9 +39,8 @@ export function ImageWithFloatingTextBlock({
       id={elementId || undefined}
     >
       <div className="relative aspect-[1/1] overflow-hidden shadow-md sm:aspect-[4/3] lg:aspect-[16/9] lg:rounded-lg">
-        <Image
-          src={getSrcFromMedia(image)}
-          alt={image.alt ?? undefined}
+        <MediaImage
+          media={image}
           className="h-full w-full object-cover"
           transformation={{
             width: 900,

@@ -2,7 +2,6 @@ import { NewPage, Text } from "~/payload-types";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
-import { getSrcFromMedia } from "~/common/media";
 import { richTextRoot, paragraph, text } from "~/common/rich-text.builders";
 
 type HeroHeadingBlockProps = NonNullable<NewPage["hero"]>[number] & {
@@ -24,12 +23,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
 
   return image ? (
     <div className="relative min-h-72 shadow-md md:min-h-96">
-      <SlideImage
-        src={getSrcFromMedia(image)}
-        alt={image.alt ?? undefined}
-        withPreview={true}
-        alignment="center"
-      />
+      <SlideImage media={image} withPreview={true} alignment="center" />
       <OverlayTitle
         headingLevel={2}
         position="center"
