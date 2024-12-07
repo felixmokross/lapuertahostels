@@ -50,7 +50,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
     },
     {
       tagName: "link",
-      name: "canonical",
+      rel: "canonical",
       href: data?.canonicalUrl,
     },
     { title: getPageTitle(data.content) },
