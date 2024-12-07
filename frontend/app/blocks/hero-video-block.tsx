@@ -40,7 +40,9 @@ export function HeroVideoBlock({
       >
         {video.alt && <p>{video.alt}</p>}
       </video>
-      {overlayTitle?.show && <OverlayTitle {...overlayTitle} />}
+      {overlayTitle?.show && (
+        <OverlayTitle headingLevel={2} {...overlayTitle} />
+      )}
     </div>
   );
 }

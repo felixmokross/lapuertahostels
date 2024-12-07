@@ -1,4 +1,4 @@
-import { RichTextHeading } from "~/common/heading";
+import { RichTextHeading, RichTextHeadingProps } from "~/common/heading";
 import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
@@ -19,9 +19,11 @@ export type OverlayTitleProps = Pick<
 > & {
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: MouseEventHandler<HTMLDivElement>;
+  headingLevel: number;
 };
 
 export function OverlayTitle({
+  headingLevel,
   text,
   supportingText,
   position = "center",
@@ -63,7 +65,12 @@ export function OverlayTitle({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <RichTextHeading as="h3" size="extra-large" variant="white" textShadow>
+        <RichTextHeading
+          as={`h${headingLevel}` as RichTextHeadingProps["as"]}
+          size="extra-large"
+          variant="white"
+          textShadow
+        >
           {text!.richText as unknown as RichTextObject}
         </RichTextHeading>
         {supportingText && (

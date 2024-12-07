@@ -34,6 +34,7 @@ export const Default: Story = {
       paragraph(text("an "), bold("Overlay Title")),
     ),
     cta: callToAction("Click me", "primary"),
+    headingLevel: 2,
   },
 };
 

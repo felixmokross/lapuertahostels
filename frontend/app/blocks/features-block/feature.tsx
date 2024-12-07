@@ -46,7 +46,7 @@ export function Feature({
       )}
     >
       <div className="px-8 text-center sm:px-16 md:px-0">
-        <Heading size="medium" variant="brand" as="h4" className="-mt-4">
+        <Heading size="medium" variant="brand" as="h3" className="-mt-4">
           {heading.text}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">

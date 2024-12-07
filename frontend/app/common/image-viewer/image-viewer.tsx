@@ -57,7 +57,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
             />
             {images.length > 5 && index === 3 && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-6">
-                <Heading as="h6" size="extra-small" variant="white">
+                <Heading as="h4" size="extra-small" variant="white">
                   {t("imageViewer.seeMoreImages", {
                     count: images.length - 4,
                   })}

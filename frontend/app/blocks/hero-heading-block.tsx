@@ -31,6 +31,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         alignment="center"
       />
       <OverlayTitle
+        headingLevel={2}
         position="center"
         text={
           {
@@ -44,7 +45,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
     <div className="flex min-h-28 items-end justify-center px-8 py-4 text-neutral-700 md:min-h-40 md:py-8">
       <Heading
         size="medium"
-        as="h1"
+        as="h2"
         variant="inherit"
         className="border-b-2 border-neutral-300 pb-2 text-center"
       >
