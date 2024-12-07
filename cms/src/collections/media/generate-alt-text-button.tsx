@@ -5,9 +5,11 @@ import {
   Button,
   toast,
   useDocumentInfo,
+  useForm,
   useFormModified,
   useLocale,
   useTranslation,
+  useUploadEdits,
 } from "@payloadcms/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,9 +18,15 @@ export function GenerateAltTextButton() {
   const [isGenerating, setIsGenerating] = useState(false);
   const locale = useLocale();
   const { id } = useDocumentInfo();
+  const { getData } = useForm();
   const router = useRouter();
   const isModified = useFormModified();
   const { t } = useTranslation<TranslationsObject, TranslationsKey>();
+
+  const { mimeType } = getData();
+  if (!mimeType || !mimeType.includes("image/")) {
+    return null;
+  }
 
   if (typeof id !== "string") throw new Error("Expected id to be a string");
   return (
