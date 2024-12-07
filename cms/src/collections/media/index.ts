@@ -4,6 +4,7 @@ import {
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
 import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
+import { updateAltTextEndpoint } from "./update-alt-text-endpoint";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -29,6 +30,7 @@ export const Media: CollectionConfig = {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
     listSearchableFields: ["filename", "alt"],
   },
+  endpoints: [updateAltTextEndpoint],
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
@@ -93,8 +95,11 @@ export const Media: CollectionConfig = {
                 en: "Alternative Text",
                 es: "Texto alternativo",
               },
-              type: "text",
-              localized: true,
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
               admin: {
                 description: {
                   en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",

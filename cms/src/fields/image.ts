@@ -1,5 +1,4 @@
 import { UploadField } from "payload";
-import { Media } from "../collections/Media";
 
 export type ImageFieldOptions = {
   optional?: boolean;

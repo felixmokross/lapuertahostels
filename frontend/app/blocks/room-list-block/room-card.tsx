@@ -4,7 +4,7 @@ import { ImageViewer } from "~/common/image-viewer/image-viewer";
 import { Room } from "./types";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
-import { getSrcFromMedia } from "~/common/media";
+import { getAltFromMedia, getSrcFromMedia } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { Text } from "~/payload-types";
 
@@ -39,7 +39,7 @@ export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
           }
           return {
             src: getSrcFromMedia(image.image),
-            alt: image.image.alt ?? undefined,
+            alt: getAltFromMedia(image.image),
             caption:
               (image.caption as Text | null | undefined)?.text ?? undefined,
             aspectRatio: image.image.width! / image.image.height!,

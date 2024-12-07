@@ -36,12 +36,12 @@ export function brand(values: Partial<Brand> = {}): Brand {
   };
 }
 
-export function media(filename: string): Media {
+export function media(filename: string, altText?: string): Media {
   return {
     id: createId(),
     mimeType: "image/jpeg",
     filename,
-    alt: "Puerta Aqua",
+    alt: altText ?? "Puerta Aqua",
     createdAt: date,
     updatedAt: date,
   };

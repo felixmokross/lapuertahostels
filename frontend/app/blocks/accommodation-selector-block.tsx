@@ -2,10 +2,9 @@ import { Brand, NewPage } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { RichTextParagraph } from "../common/paragraph";
-import { Image } from "~/common/image";
 import { BrandId } from "~/brands";
 import { RichTextObject } from "~/common/rich-text";
-import { getSrcFromMedia } from "~/common/media";
+import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
 export type AccommodationSelectorBlockProps = NonNullable<
@@ -88,9 +87,8 @@ function AccommodationCard({
       )}
     >
       <div className="relative aspect-[1/1] overflow-hidden bg-white sm:aspect-[4/3] md:aspect-[1/1] lg:aspect-[4/3] xl:aspect-[16/9]">
-        <Image
-          src={getSrcFromMedia(image)}
-          alt={image.alt ?? undefined}
+        <MediaImage
+          media={image}
           className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
           transformation={{
             aspectRatio: { width: 1, height: 1 },

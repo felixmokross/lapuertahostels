@@ -39,6 +39,16 @@ export const translations = {
         autoTranslatedSuccessfully: "Auto-translated successfully",
         failedToAutoTranslate: "Failed to auto-translate",
       },
+      media: {
+        generate: {
+          generate: "Generate",
+          generating: "Generating…",
+          success: "Alt text generated successfully",
+          failure: "Failed to generate alt text",
+          pleaseSaveYourChangesToGenerateAltText:
+            "Please save your changes to generate the alt text.",
+        },
+      },
       brands: {
         navLinkRowLabel: "Navigation Link {{ n }}",
       },
