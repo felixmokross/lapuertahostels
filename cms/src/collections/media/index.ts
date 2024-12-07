@@ -2,9 +2,8 @@ import { CollectionConfig } from "payload";
 import {
   refreshCacheForAllBrands,
   refreshCacheForPages,
-} from "../hooks/cache-purge-hook";
+} from "../../hooks/cache-purge-hook";
 import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
-import { en } from "payload/i18n/en";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -100,6 +99,11 @@ export const Media: CollectionConfig = {
                 description: {
                   en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",
                   es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad.",
+                },
+                components: {
+                  afterInput: [
+                    "/src/collections/media/generate-alt-text-button#GenerateAltTextButton",
+                  ],
                 },
               },
             },

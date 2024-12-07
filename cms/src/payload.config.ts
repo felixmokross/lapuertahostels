@@ -7,7 +7,7 @@ import { Users } from "./collections/Users";
 import { Maintenance } from "./globals/Maintenance";
 import { Common } from "./globals/Common";
 import { Brands } from "./collections/Brands";
-import { Media } from "./collections/Media";
+import { Media } from "./collections/media";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
@@ -131,4 +131,7 @@ export default buildConfig({
     : undefined,
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
+  custom: {
+    cmsBaseUrl: "http://localhost:3001",
+  },
 });
