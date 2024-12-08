@@ -1,5 +1,6 @@
 "use client";
 
+import { SparklesIcon } from "@/common/icons";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import {
   Button,
@@ -9,7 +10,6 @@ import {
   useFormModified,
   useLocale,
   useTranslation,
-  useUploadEdits,
 } from "@payloadcms/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,7 +33,17 @@ export function GenerateAltTextButton() {
     <>
       <Button
         size="medium"
+        icon={<SparklesIcon />}
+        buttonStyle="secondary"
         onClick={async () => {
+          if (
+            !window.confirm(
+              "This will send the image to OpenAI to generate an alternative text. The text will be translated into all locales using DeepL.\n\nThe existing alternative text will be overwritten. Do you want to continue?",
+            )
+          ) {
+            return;
+          }
+
           setIsGenerating(true);
 
           try {
