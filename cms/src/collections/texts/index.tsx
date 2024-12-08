@@ -4,15 +4,12 @@ import {
   refreshCacheForGlobals,
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
-import { translateEndpoint } from "./translateEndpoint";
+import { translateEndpoint } from "./translate-endpoint";
 import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
-import {
-  getUniqueGlobals,
-  getUniqueCollectionItemIds,
-  usagesField,
-} from "@/fields/usages";
+import { getUniqueGlobals, getUniqueCollectionItemIds } from "@/fields/usages";
 import { transformRecordAsync } from "@/common/records";
+import { findTextUsages, textUsagesField } from "./usages";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -41,14 +38,16 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
-        const globals = getUniqueGlobals(doc.usages);
+        const usages = await findTextUsages(doc.id, req.payload);
+
+        const globals = getUniqueGlobals(usages);
         if (globals.length > 0) {
           console.log(`Refreshing cache for globals: ${globals.join(", ")}`);
           await refreshCacheForGlobals(globals, req);
         }
 
-        const bannerIds = getUniqueCollectionItemIds(doc.usages, "banners");
-        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+        const bannerIds = getUniqueCollectionItemIds(usages, "banners");
+        const brandIds = getUniqueCollectionItemIds(usages, "brands");
 
         if (brandIds.length > 0 || bannerIds.length > 0) {
           // banners are inlined into brands, therefore banners and brands both use the 'all brands' cache key
@@ -56,7 +55,7 @@ export const Texts: CollectionConfig = {
           await refreshCacheForAllBrands(req);
         }
 
-        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        const pageIds = getUniqueCollectionItemIds(usages, "new-pages");
         if (pageIds.length > 0) {
           console.log(`Refreshing cache for ${pageIds.length} pages`);
           await refreshCacheForPages(pageIds, req);
@@ -133,12 +132,7 @@ export const Texts: CollectionConfig = {
             en: "Usages",
             es: "Usos",
           },
-          fields: [
-            usagesField("relationship", "texts", {
-              collections: ["new-pages", "banners", "brands", "media"],
-              globals: ["common", "maintenance"],
-            }),
-          ],
+          fields: [textUsagesField()],
         },
       ],
     },
@@ -180,7 +174,7 @@ export const Texts: CollectionConfig = {
       admin: {
         components: {
           Field:
-            "src/collections/texts/translate-field-server#TranslateFieldServer",
+            "src/collections/texts/translations-field.server#TranslationsFieldServer",
         },
         position: "sidebar",
       },

@@ -33,7 +33,7 @@ import { Text } from "@/payload-types";
 import { useDrawerDepth } from "@payloadcms/ui/elements/Drawer";
 import { Translation } from "@payloadcms/ui";
 
-export const TranslateField: FunctionComponent<{ locales: Locale[] }> =
+export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
   function TranslateField({ locales }) {
     const { id } = useDocumentInfo();
     const { t } = useTranslation<TranslationsObject, TranslationsKey>();

@@ -11,8 +11,8 @@ import { Media } from "./collections/media";
 import { MediaCategory } from "./collections/MediaCategory";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Banners } from "./collections/Banners";
-import { Texts } from "./collections/texts/Texts";
-import { Links } from "./collections/Links";
+import { Texts } from "./collections/texts";
+import { Links } from "./collections/links";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
@@ -129,7 +129,4 @@ export default buildConfig({
     : undefined,
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
-  custom: {
-    cmsBaseUrl: "http://localhost:3001",
-  },
 });

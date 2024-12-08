@@ -2,7 +2,7 @@ import { GlobalConfig } from "payload";
 import { canManageContent } from "../common/access-control";
 import { cachePurgeHook } from "../hooks/cache-purge-hook";
 import { showField } from "../fields/show";
-import { Texts } from "../collections/texts/Texts";
+import { Texts } from "../collections/texts";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 
 export const Maintenance: GlobalConfig = {
