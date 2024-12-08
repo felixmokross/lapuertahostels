@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 
@@ -31,16 +31,10 @@ export const Banners: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ req }) => {
-        console.log(`Refreshing cache for brands`);
-
-        await cachePurgeHook(
-          { cacheKey: getFullCollectionCacheKey("brands"), pageUrl: "/" },
-          req,
-        );
-
-        console.log(`Refreshed cache for brands`);
-      },
+      refreshCacheHook({
+        cacheKey: getFullCollectionCacheKey("brands"),
+        pageUrl: "/",
+      }),
     ],
   },
   fields: [

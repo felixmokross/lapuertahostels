@@ -1,5 +1,5 @@
 import { GlobalConfig } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { canManageContent } from "../common/access-control";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
@@ -20,11 +20,7 @@ export const Common: GlobalConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req }) =>
-        cachePurgeHook(
-          { cacheKey: getGlobalCacheKey("common"), pageUrl: "/" },
-          req,
-        ),
+      refreshCacheHook({ cacheKey: getGlobalCacheKey("common"), pageUrl: "/" }),
     ],
   },
   fields: [

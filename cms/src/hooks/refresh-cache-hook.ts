@@ -8,7 +8,6 @@ import {
   getFullCollectionCacheKey,
   getGlobalCacheKey,
   getPageCacheKey,
-  refreshCacheForAllPages,
   refreshCacheForTarget,
 } from "../common/frontend-cache";
 import { Link, NewPage } from "@/payload-types";
@@ -18,13 +17,19 @@ type CachePurgeTarget = {
   pageUrl: string;
 };
 
-export async function cachePurgeHook(
-  target: CachePurgeTarget,
-  req: Parameters<GlobalAfterChangeHook | CollectionAfterChangeHook>[0]["req"],
-) {
-  return refreshCache(target, req).catch((e) =>
-    console.error("Failed to refresh cache:", e),
-  );
+export function refreshCacheHook(target: CachePurgeTarget) {
+  return function ({
+    req,
+  }: {
+    req: Parameters<
+      GlobalAfterChangeHook | CollectionAfterChangeHook
+    >[0]["req"];
+  }) {
+    console.log(`Refreshing cache asynchronously for ${target.cacheKey}`);
+    refreshCache(target, req).catch((e) =>
+      console.error("Failed to refresh cache:", e),
+    );
+  };
 }
 
 async function refreshCache(
@@ -99,7 +104,7 @@ export async function refreshCacheForPages(
 
   await Promise.all(
     pages.map((page) =>
-      cachePurgeHook(
+      refreshCache(
         {
           cacheKey: getPageCacheKey(page),
           pageUrl: page.pathname,

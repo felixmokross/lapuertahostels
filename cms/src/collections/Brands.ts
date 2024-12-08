@@ -4,7 +4,7 @@ import {
   Payload,
   SanitizedCollectionConfig,
 } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { canManageContent } from "../common/access-control";
 import { imageField } from "../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
@@ -72,11 +72,10 @@ export const Brands: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req }) =>
-        cachePurgeHook(
-          { cacheKey: getFullCollectionCacheKey("brands"), pageUrl: "/" },
-          req,
-        ),
+      refreshCacheHook({
+        cacheKey: getFullCollectionCacheKey("brands"),
+        pageUrl: "/",
+      }),
     ],
   },
   fields: [

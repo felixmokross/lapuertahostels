@@ -1,15 +1,10 @@
 import { CollectionConfig } from "payload";
-import {
-  refreshCacheForAllBrands,
-  refreshCacheForGlobals,
-  refreshCacheForPages,
-} from "../../hooks/cache-purge-hook";
 import { translateEndpoint } from "./translate-endpoint";
 import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
-import { getUniqueGlobals, getUniqueCollectionItemIds } from "@/fields/usages";
 import { transformRecordAsync } from "@/common/records";
-import { findTextUsages, textUsagesField } from "./usages";
+import { textUsagesField } from "./usages";
+import { refreshCacheHook } from "./refresh-cache-hook";
 
 export const Texts: CollectionConfig = {
   slug: "texts",
@@ -36,32 +31,7 @@ export const Texts: CollectionConfig = {
     listSearchableFields: ["title"],
   },
   hooks: {
-    afterChange: [
-      async ({ req, doc }) => {
-        const usages = await findTextUsages(doc.id, req.payload);
-
-        const globals = getUniqueGlobals(usages);
-        if (globals.length > 0) {
-          console.log(`Refreshing cache for globals: ${globals.join(", ")}`);
-          await refreshCacheForGlobals(globals, req);
-        }
-
-        const bannerIds = getUniqueCollectionItemIds(usages, "banners");
-        const brandIds = getUniqueCollectionItemIds(usages, "brands");
-
-        if (brandIds.length > 0 || bannerIds.length > 0) {
-          // banners are inlined into brands, therefore banners and brands both use the 'all brands' cache key
-          console.log(`Refreshing cache for all brands`);
-          await refreshCacheForAllBrands(req);
-        }
-
-        const pageIds = getUniqueCollectionItemIds(usages, "new-pages");
-        if (pageIds.length > 0) {
-          console.log(`Refreshing cache for ${pageIds.length} pages`);
-          await refreshCacheForPages(pageIds, req);
-        }
-      },
-    ],
+    afterChange: [refreshCacheHook()],
   },
   endpoints: [translateEndpoint],
   fields: [
