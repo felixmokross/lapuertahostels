@@ -36,10 +36,7 @@ export const generateAltTextEndpoint: Endpoint = {
       throw new Error("Only images are supported");
     }
 
-    const publicImageUrl = new URL(
-      media.filename!,
-      process.env.IMAGEKIT_BASE_URL,
-    ).href;
+    const publicImageUrl = `${process.env.IMAGEKIT_BASE_URL}/${media.filename!}`;
 
     if (
       media.alt &&
