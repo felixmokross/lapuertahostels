@@ -3,8 +3,9 @@ import {
   refreshCacheForAllBrands,
   refreshCacheForPages,
 } from "../../hooks/cache-purge-hook";
-import { getUniqueCollectionItemIds, usagesField } from "@/fields/usages";
+import { getUniqueCollectionItemIds } from "@/fields/usages";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
+import { findMediaUsages, mediaUsagesField } from "./usages";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -34,14 +35,15 @@ export const Media: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ req, doc }) => {
-        const brandIds = getUniqueCollectionItemIds(doc.usages, "brands");
+        const usages = await findMediaUsages(doc.id, req.payload);
+        const brandIds = getUniqueCollectionItemIds(usages, "brands");
 
         if (brandIds.length > 0) {
           console.log(`Refreshing cache for all brands`);
           await refreshCacheForAllBrands(req);
         }
 
-        const pageIds = getUniqueCollectionItemIds(doc.usages, "new-pages");
+        const pageIds = getUniqueCollectionItemIds(usages, "new-pages");
         if (pageIds.length > 0) {
           console.log(`Refreshing cache for ${pageIds.length} pages`);
           await refreshCacheForPages(pageIds, req);
@@ -119,11 +121,7 @@ export const Media: CollectionConfig = {
             en: "Usages",
             es: "Usos",
           },
-          fields: [
-            usagesField("upload", "media", {
-              collections: ["brands", "new-pages"],
-            }),
-          ],
+          fields: [mediaUsagesField()],
         },
       ],
     },

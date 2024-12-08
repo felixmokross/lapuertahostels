@@ -1,3 +1,5 @@
+"use client";
+
 import { LabelFunction } from "payload";
 import { useTranslation } from "@payloadcms/ui";
 import { I18nClient } from "@payloadcms/translations";

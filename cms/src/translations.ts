@@ -105,6 +105,16 @@ export const translations = {
         autoTranslatedSuccessfully: "Auto-traducido con éxito",
         failedToAutoTranslate: "Error al auto-traducir",
       },
+      media: {
+        generate: {
+          generate: "Generar",
+          generating: "Generando…",
+          success: "Texto alternativo generado con éxito",
+          failure: "Error al generar el texto alternativo",
+          pleaseSaveYourChangesToGenerateAltText:
+            "Por favor, guarde sus cambios para generar el texto alternativo.",
+        },
+      },
       brands: {
         navLinkRowLabel: "Enlace de navegación {{ n }}",
       },

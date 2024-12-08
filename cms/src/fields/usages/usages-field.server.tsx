@@ -1,24 +1,35 @@
-"use client";
-
-import { useField, Pill, FieldLabel, useTranslation } from "@payloadcms/ui";
-import { Usage } from "@/fields/usages";
-import { JSONFieldClientComponent, LabelFunction } from "payload";
+import { Payload, UIFieldClient } from "payload";
+import { findUsages } from ".";
+import { UsagesConfig } from "./types";
+import { I18nClient } from "@payloadcms/translations";
 import { TranslationsKey, TranslationsObject } from "@/translations";
-import Link from "next/link";
+import { Pill, FieldLabel } from "@payloadcms/ui";
 import { Label } from "@/common/labels";
+import Link from "next/link";
 
-export const UsagesField: JSONFieldClientComponent = function UsagesField({
+export async function UsagesField({
+  config,
+  data,
+  payload,
+  i18n,
+  clientField,
   path,
-  field,
+}: {
+  config: UsagesConfig;
+  data: any;
+  payload: Payload;
+  i18n: I18nClient<TranslationsObject, TranslationsKey>;
+  clientField: UIFieldClient;
+  path: string;
 }) {
-  const { t } = useTranslation<TranslationsObject, TranslationsKey>();
-  const { value } = useField<Usage[] | undefined>({ path });
+  const value = await findUsages(config, data.id, payload);
+  const { t } = i18n;
   return (
     <>
       <div className="tw-mb-base tw-flex tw-items-center tw-justify-between">
         <FieldLabel
-          label={field.label}
-          localized={field.localized}
+          label={clientField.label}
+          localized={clientField.localized}
           path={path}
         />
 
@@ -84,4 +95,4 @@ export const UsagesField: JSONFieldClientComponent = function UsagesField({
       </div>
     </>
   );
-};
+}

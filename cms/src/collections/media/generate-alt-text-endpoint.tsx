@@ -1,11 +1,11 @@
-import { Endpoint, TypedLocale } from "payload";
+import { Endpoint } from "payload";
 import { DEFAULT_LOCALE, generateAltText } from "@/common/openai";
-import { Usage } from "@/fields/usages";
 import { addLocalesToRequestFromData } from "@payloadcms/next/utilities";
 import { getSupportedLocaleCodes } from "@/common/locales";
 import { translate } from "@/common/translation";
 import { transformRecord } from "@/common/records";
 import { fullTextToTitle } from "../texts/utils";
+import { findTextUsages } from "../texts/usages";
 
 export const generateAltTextEndpoint: Endpoint = {
   path: "/:id/update-alt-text",
@@ -29,12 +29,6 @@ export const generateAltTextEndpoint: Endpoint = {
     const media = await req.payload.findByID({
       collection: "media",
       id: id as string,
-      depth: 1,
-      populate: {
-        texts: {
-          usages: true,
-        },
-      },
       req,
     });
 
@@ -49,13 +43,12 @@ export const generateAltTextEndpoint: Endpoint = {
 
     if (
       media.alt &&
-      typeof media.alt === "object" &&
-      (media.alt.usages as Usage[]).length === 1
+      (await findTextUsages(media.alt as string, req.payload)).length === 1
     ) {
-      console.log(`Deleting alt text ${media.alt.id}`);
+      console.log(`Deleting alt text ${media.alt}`);
       await req.payload.delete({
         collection: "texts",
-        id: media.alt.id,
+        id: media.alt as string,
         req,
       });
     }

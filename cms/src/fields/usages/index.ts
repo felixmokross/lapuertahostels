@@ -5,61 +5,41 @@ import {
   GlobalSlug,
   LabelFunction,
   Payload,
+  UIField,
 } from "payload";
-import { JSONField } from "payload";
+import { RelationshipFieldType, UsagesConfig } from "./types";
 
-type UsagesFieldOptions = {
-  collections?: CollectionSlug[];
-  globals?: GlobalSlug[];
-};
-
-type RelationshipFieldType = "relationship" | "upload";
-
-export function usagesField(
-  fieldType: RelationshipFieldType,
-  collectionToFind: CollectionSlug,
-  options: UsagesFieldOptions = {},
-): JSONField {
+export function usagesField(config: UsagesConfig): UIField {
   return {
-    type: "json",
+    type: "ui",
     name: "usages",
     label: {
       en: "Usages",
       es: "Usos",
     },
-    virtual: true,
     admin: {
-      readOnly: true,
       components: {
-        Field: "src/fields/usages/usages-field#UsagesField",
-      },
-    },
-    hooks: {
-      afterRead: [
-        async ({ data, req }) => {
-          if (!data) throw new Error("Data is missing.");
-          return await findUsages(
-            fieldType,
-            collectionToFind,
-            data,
-            req.payload,
-            options.collections ?? [],
-            options.globals ?? [],
-          );
+        Field: {
+          path: "src/fields/usages/usages-field.server",
+          exportName: "UsagesField",
+          serverProps: { config },
         },
-      ],
+      },
     },
   };
 }
 
-async function findUsages(
-  fieldType: RelationshipFieldType,
-  collectionToFind: CollectionSlug,
-  data: Record<string, any>,
+export async function findUsages(
+  config: UsagesConfig,
+  id: string,
   payload: Payload,
-  collections: CollectionSlug[],
-  globals: GlobalSlug[],
 ) {
+  const {
+    fieldType,
+    collectionToFind,
+    collections = [],
+    globals = [],
+  } = config;
   return (
     await Promise.all([
       ...collections.map(async (collectionSlug) => {
@@ -75,7 +55,7 @@ async function findUsages(
           findItemUsagesOnCollection(
             fieldType,
             collectionToFind,
-            data.id,
+            id,
             item,
             collectionConfig.fields,
           ).map<Usage>((path) => ({
@@ -105,7 +85,7 @@ async function findUsages(
         return findItemUsagesOnCollection(
           fieldType,
           collectionToFind,
-          data.id,
+          id,
           global,
           globalConfig.fields,
         ).map<Usage>((path) => ({
