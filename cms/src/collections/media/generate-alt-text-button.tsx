@@ -36,11 +36,7 @@ export function GenerateAltTextButton() {
         icon={<SparklesIcon />}
         buttonStyle="secondary"
         onClick={async () => {
-          if (
-            !window.confirm(
-              "This will send the image to OpenAI to generate an alternative text. The text will be translated into all locales using DeepL.\n\nThe existing alternative text will be overwritten. Do you want to continue?",
-            )
-          ) {
+          if (!window.confirm(t("custom:media:generate:confirm"))) {
             return;
           }
 
