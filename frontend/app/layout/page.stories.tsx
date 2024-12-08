@@ -43,7 +43,6 @@ export const Puerta: Story = {
         {
           slides: [
             {
-              name: "Tayrona",
               image: media(
                 "mesmerizing-scenery-seascape-with-lush-nature-daytime.jpg",
               ),
@@ -59,7 +58,6 @@ export const Puerta: Story = {
               id: createId(),
             },
             {
-              name: "Lost City",
               image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
               overlayTitle: {
                 show: true,
@@ -73,7 +71,6 @@ export const Puerta: Story = {
               id: createId(),
             },
             {
-              name: "Minca",
               image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
               overlayTitle: {
                 show: true,
@@ -263,7 +260,6 @@ export const Aqua: Story = {
           slides: [
             {
               id: "slide-1",
-              name: "Front View",
               image: media("Frente.jpg"),
               overlayTitle: {
                 show: true,
@@ -392,7 +388,6 @@ export const Azul: Story = {
             {
               image: media("10.jpg"),
               imageAlignment: "bottom",
-              name: "Atrium",
               overlayTitle: {
                 show: true,
                 text: richText(
@@ -404,7 +399,6 @@ export const Azul: Story = {
               },
             },
             {
-              name: "Room View",
               image: media("10.jpg"),
               overlayTitle: {
                 show: true,
