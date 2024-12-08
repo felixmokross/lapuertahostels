@@ -30,6 +30,7 @@ export const generateAltTextEndpoint: Endpoint = {
       collection: "media",
       id: id as string,
       req,
+      depth: 0,
     });
 
     if (!media.mimeType?.includes("image/")) {
@@ -37,18 +38,6 @@ export const generateAltTextEndpoint: Endpoint = {
     }
 
     const publicImageUrl = `${process.env.IMAGEKIT_BASE_URL}/${media.filename!}`;
-
-    if (
-      media.alt &&
-      (await findTextUsages(media.alt as string, req.payload)).length === 1
-    ) {
-      console.log(`Deleting alt text ${media.alt}`);
-      await req.payload.delete({
-        collection: "texts",
-        id: media.alt as string,
-        req,
-      });
-    }
 
     console.log(`Generating alt text for ${publicImageUrl}`);
     const altText = await generateAltText(publicImageUrl);
@@ -78,6 +67,19 @@ export const generateAltTextEndpoint: Endpoint = {
         text: localizedAltTexts,
         title: transformRecord(localizedAltTexts, fullTextToTitle),
       });
+
+    const altTextUsages = media.alt
+      ? await findTextUsages(media.alt as string, req.payload)
+      : null;
+
+    if (altTextUsages && altTextUsages.length === 1) {
+      console.log(`Deleting alt text ${media.alt}`);
+      await req.payload.delete({
+        collection: "texts",
+        id: media.alt as string,
+        req,
+      });
+    }
 
     console.log(`Updating media ${id} with alt text ${result.insertedId}`);
     await req.payload.update({

@@ -22,7 +22,6 @@ export const Default: Story = {
     seoPageHeading: "Welcome to La Puerta Hostels",
     slides: [
       {
-        name: "Lost City",
         image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
         overlayTitle: {
           show: true,
@@ -32,7 +31,6 @@ export const Default: Story = {
         },
       },
       {
-        name: "Parque Tayrona",
         image: media("azzedine-rouichi-gc5OYAll-rc-unsplash.jpg"),
         overlayTitle: {
           show: true,
@@ -42,7 +40,6 @@ export const Default: Story = {
         },
       },
       {
-        name: "Santa Marta",
         image: media("david-hertle-3YCkAhD--Ic-unsplash.jpg"),
         overlayTitle: {
           show: true,
@@ -52,7 +49,6 @@ export const Default: Story = {
         },
       },
       {
-        name: "Minca",
         image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
         overlayTitle: {
           show: true,

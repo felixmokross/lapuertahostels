@@ -183,9 +183,18 @@ async function primeCache(
   const absolutePageUrl = new URL(pageUrl, targetUrl);
 
   const promises = await Promise.allSettled(
-    (await getSupportedLocaleCodes()).map((locale) =>
-      primeCacheForLocale(req, absolutePageUrl.toString(), locale),
-    ),
+    (await getSupportedLocaleCodes()).map(async (locale) => {
+      try {
+        return await primeCacheForLocale(
+          req,
+          absolutePageUrl.toString(),
+          locale,
+        );
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
+    }),
   );
 
   const failedPromises = promises.filter(isPromiseRejectedResult);

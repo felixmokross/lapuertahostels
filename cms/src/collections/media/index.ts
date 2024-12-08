@@ -1,11 +1,7 @@
 import { CollectionConfig } from "payload";
-import {
-  refreshCacheForAllBrands,
-  refreshCacheForPages,
-} from "../../hooks/cache-purge-hook";
-import { getUniqueCollectionItemIds } from "@/fields/usages";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
-import { findMediaUsages, mediaUsagesField } from "./usages";
+import { mediaUsagesField } from "./usages";
+import { refreshCacheHook } from "./refresh-cache-hook";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -33,23 +29,7 @@ export const Media: CollectionConfig = {
   },
   endpoints: [generateAltTextEndpoint],
   hooks: {
-    afterChange: [
-      async ({ req, doc }) => {
-        const usages = await findMediaUsages(doc.id, req.payload);
-        const brandIds = getUniqueCollectionItemIds(usages, "brands");
-
-        if (brandIds.length > 0) {
-          console.log(`Refreshing cache for all brands`);
-          await refreshCacheForAllBrands(req);
-        }
-
-        const pageIds = getUniqueCollectionItemIds(usages, "new-pages");
-        if (pageIds.length > 0) {
-          console.log(`Refreshing cache for ${pageIds.length} pages`);
-          await refreshCacheForPages(pageIds, req);
-        }
-      },
-    ],
+    afterChange: [refreshCacheHook()],
   },
   upload: {
     disableLocalStorage: true,

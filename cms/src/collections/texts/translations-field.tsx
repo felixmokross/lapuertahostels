@@ -46,6 +46,8 @@ export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
       slug: `translations-${locale.code}`,
       depth,
     });
+
+    const translationsDisabled = !id || isModified;
     return (
       <>
         <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
@@ -58,7 +60,7 @@ export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
           )}
         </Drawer>
         <Button
-          disabled={isModified}
+          disabled={translationsDisabled}
           onClick={() => openModal(modalSlug)}
           size="large"
           buttonStyle="secondary"
@@ -66,7 +68,7 @@ export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
         >
           {t("custom:texts:translationsButtonLabel")}
         </Button>
-        {isModified && (
+        {translationsDisabled && (
           <p className="field-description -tw-mt-4 tw-mb-8">
             {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
           </p>

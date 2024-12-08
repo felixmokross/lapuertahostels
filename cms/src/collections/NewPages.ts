@@ -1,5 +1,5 @@
 import { CollectionConfig, TextField, ValidateOptions } from "payload";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { heroField } from "../fields/hero";
 import { layoutField } from "../fields/layout";
 import { canManageContent, isAdmin } from "../common/access-control";
@@ -39,10 +39,10 @@ export const NewPages: CollectionConfig = {
   hooks: {
     afterChange: [
       ({ doc, req }) =>
-        cachePurgeHook(
-          { cacheKey: getPageCacheKey(doc), pageUrl: doc.pathname },
-          req,
-        ),
+        refreshCacheHook({
+          cacheKey: getPageCacheKey(doc),
+          pageUrl: doc.pathname,
+        })({ req }),
     ],
   },
   fields: [

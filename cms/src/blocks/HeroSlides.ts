@@ -3,6 +3,7 @@ import { imageField } from "../fields/image";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { Block, RelationshipField } from "payload";
 import { headingField, makeHeadingField } from "@/fields/heading";
+import { RowLabelProps } from "@/components/RowLabel";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",
@@ -56,21 +57,6 @@ export const HeroSlidesBlock: Block = {
       minRows: 1,
       maxRows: 6,
       fields: [
-        {
-          name: "name",
-          label: {
-            en: "Name",
-            es: "Nombre",
-          },
-          type: "text",
-          required: true,
-          admin: {
-            description: {
-              en: "Give the slide a name to identify it in the list. This name is not shown to the user.",
-              es: "Dale a la diapositiva un nombre para identificarla en la lista. Este nombre no se muestra al usuario.",
-            },
-          },
-        },
         imageField,
         {
           // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
@@ -101,8 +87,9 @@ export const HeroSlidesBlock: Block = {
             path: "/src/components/RowLabel",
             exportName: "RowLabel",
             clientProps: {
-              propName: "name",
-            },
+              textProp: "overlayTitle.text",
+              fallbackLabelKey: "custom:heroSlides:slideRowLabel",
+            } as RowLabelProps,
           },
         },
         description: {

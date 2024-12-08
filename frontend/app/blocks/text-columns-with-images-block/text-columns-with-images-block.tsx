@@ -33,7 +33,7 @@ export function TextColumnsWithImagesBlock({
         {text && (
           <RichTextParagraph
             size="large"
-            className={cn(heading && "mt-2", "text-center")}
+            className={cn(heading && "mt-4 md:mt-6", "text-center")}
           >
             {text.richText as unknown as RichTextObject}
           </RichTextParagraph>
@@ -41,7 +41,7 @@ export function TextColumnsWithImagesBlock({
       </div>
       <div
         className={cn(
-          (heading || text) && "mt-20",
+          (heading || text) && "mt-12",
           cn("grid gap-x-8 gap-y-16", {
             "grid-cols-1 sm:grid-cols-1 md:grid-cols-1 xl:grid-cols-2":
               numberOfColumns === 2,

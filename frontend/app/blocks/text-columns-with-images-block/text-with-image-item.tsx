@@ -71,7 +71,7 @@ export function TextWithImageItem({
       {text && (
         <RichTextParagraph
           size="medium"
-          className={cn((image || heading) && "mt-2")}
+          className={cn(heading ? "mt-2" : image ? "mt-8" : false)}
         >
           {text.richText as unknown as RichTextObject}
         </RichTextParagraph>

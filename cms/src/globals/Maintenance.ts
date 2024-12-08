@@ -1,8 +1,7 @@
 import { GlobalConfig } from "payload";
 import { canManageContent } from "../common/access-control";
-import { cachePurgeHook } from "../hooks/cache-purge-hook";
+import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
-import { Texts } from "../collections/texts";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 
 export const Maintenance: GlobalConfig = {
@@ -16,11 +15,10 @@ export const Maintenance: GlobalConfig = {
   },
   hooks: {
     afterChange: [
-      ({ req }) =>
-        cachePurgeHook(
-          { cacheKey: getGlobalCacheKey("maintenance"), pageUrl: "/" },
-          req,
-        ),
+      refreshCacheHook({
+        cacheKey: getGlobalCacheKey("maintenance"),
+        pageUrl: "/",
+      }),
     ],
   },
   fields: [

@@ -1,5 +1,6 @@
 "use client";
 
+import { SparklesIcon } from "@/common/icons";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import {
   Button,
@@ -9,7 +10,6 @@ import {
   useFormModified,
   useLocale,
   useTranslation,
-  useUploadEdits,
 } from "@payloadcms/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,7 +33,13 @@ export function GenerateAltTextButton() {
     <>
       <Button
         size="medium"
+        icon={<SparklesIcon />}
+        buttonStyle="secondary"
         onClick={async () => {
+          if (!window.confirm(t("custom:media:generate:confirm"))) {
+            return;
+          }
+
           setIsGenerating(true);
 
           try {

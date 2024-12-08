@@ -29,6 +29,16 @@ export const AccommodationSelectorBlock: Block = {
         en: "Cards",
         es: "Tarjetas",
       },
+      labels: {
+        singular: {
+          en: "Card",
+          es: "Tarjeta",
+        },
+        plural: {
+          en: "Cards",
+          es: "Tarjetas",
+        },
+      },
       type: "array",
       minRows: 2,
       maxRows: 2,
@@ -62,9 +72,6 @@ export const AccommodationSelectorBlock: Block = {
       ],
       admin: {
         initCollapsed: true,
-        components: {
-          RowLabel: "/src/components/RowLabel#RowLabel",
-        },
         description: {
           en: "Each card represents an accommodation brand. You can change their order and update their image and description here.",
           es: "Cada tarjeta representa una marca de alojamiento. Puedes cambiar su orden y actualizar su imagen y descripción aquí.",
