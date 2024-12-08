@@ -54,6 +54,12 @@ export const translations = {
       brands: {
         navLinkRowLabel: "Navigation Link {{ n }}",
       },
+      roomList: {
+        roomRowLabel: "Room {{ n }}",
+      },
+      heroSlides: {
+        slideRowLabel: "Slide {{ n }}",
+      },
       rowLabel: {
         link: "Link {{ n }}",
         linkGroup: "Link Group {{ n }}",
@@ -126,6 +132,12 @@ export const translations = {
         link: "Enlace {{ n }}",
         linkGroup: "Grupo de enlaces {{ n }}",
         item: "Elemento {{ n }}",
+      },
+      roomList: {
+        roomRowLabel: "Habitación {{ n }}",
+      },
+      heroSlides: {
+        slideRowLabel: "Diapositiva {{ n }}",
       },
       usages: {
         type: "Tipo",

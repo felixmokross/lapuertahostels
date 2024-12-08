@@ -5,6 +5,7 @@ import { elementIdField } from "../fields/element-id";
 import { makeHeadingField } from "../fields/heading";
 import { makeCallToActionField } from "../fields/call-to-action";
 import { makeRichTextField } from "../fields/rich-text";
+import { RowLabelProps } from "@/components/RowLabel";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -82,6 +83,17 @@ export const TextColumnsWithImagesBlock: Block = {
         makeRichTextField({ optional: true }),
         makeCallToActionField({ optional: true, showByDefault: false }),
       ],
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/src/components/RowLabel",
+            exportName: "RowLabel",
+            clientProps: {
+              textProp: "heading",
+            } as RowLabelProps,
+          },
+        },
+      },
     },
     makeMoreOptionsField(elementIdField),
   ],

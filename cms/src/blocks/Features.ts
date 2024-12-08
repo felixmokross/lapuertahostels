@@ -5,6 +5,7 @@ import { imageField } from "../fields/image";
 import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToActionField } from "../fields/call-to-action";
+import { RowLabelProps } from "@/components/RowLabel";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -77,6 +78,15 @@ export const FeaturesBlock: Block = {
       ],
       admin: {
         initCollapsed: true,
+        components: {
+          RowLabel: {
+            path: "/src/components/RowLabel",
+            exportName: "RowLabel",
+            clientProps: {
+              textProp: "heading",
+            } as RowLabelProps,
+          },
+        },
       },
     },
     makeMoreOptionsField(elementIdField),

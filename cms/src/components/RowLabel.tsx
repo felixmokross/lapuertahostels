@@ -1,5 +1,6 @@
 "use client";
 
+import { Text } from "@/payload-types";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { usePayloadAPI, useRowLabel, useTranslation } from "@payloadcms/ui";
 
@@ -19,7 +20,12 @@ export function RowLabel({ textProp, fallbackLabelKey }: RowLabelProps) {
     n: (rowNumber != null ? rowNumber + 1 : 0).toString().padStart(2, "0"),
   });
 
-  const textId = data[textProp] as string;
+  const textId = getValueByPath(data, textProp);
+  if (textId != null && typeof textId !== "string") {
+    throw new Error(
+      `${textId} must be a string, but was ${typeof textId} (path ${textProp})`,
+    );
+  }
 
   if (!textId) {
     return fallbackLabel;
@@ -39,7 +45,12 @@ function RowLabelWithDefinedText({
   textId,
   fallbackLabel,
 }: RowLabelWithDefinedTextProps) {
-  const [{ data: text }] = usePayloadAPI(`/api/texts/${textId}`);
+  const [{ data, isError }] = usePayloadAPI(`/api/texts/${textId}`);
+  const text = data as Text;
 
-  return text?.text ?? fallbackLabel;
+  return text?.title ?? fallbackLabel;
+}
+
+function getValueByPath(data: Record<string, any>, path: string) {
+  return path.split(".").reduce((acc, key) => acc?.[key], data);
 }
