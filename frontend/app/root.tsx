@@ -197,7 +197,7 @@ export default function App() {
           dangerouslySetInnerHTML={{
             __html: `var ldrs = new LobbyDateRangeSelector({
       apiBaseUrl: 'https://api.lobbypms.com/api/ldrs/',
-      token: '${environment.lobbyPmsToken}'
+      token: '${environment.lobbyPmsToken}',
       lang: 'en',
     });`,
           }}
