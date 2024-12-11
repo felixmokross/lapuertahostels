@@ -11,11 +11,13 @@ import {
   getRequestUrl,
   toUrl,
 } from "~/common/routing";
-import { Text } from "~/payload-types";
+import { Brand, Text } from "~/payload-types";
 import { SerializeFromLoader } from "~/common/types";
 import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
+import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -200,9 +202,38 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Route() {
   const { dataPath, content } = useLoaderData<typeof loader>();
 
+  const brand = content.brand as Brand;
   return (
-    <OptInLivePreview path={dataPath} data={content}>
-      {(data) => <Page content={data} />}
-    </OptInLivePreview>
+    <>
+      <OptInLivePreview path={dataPath} data={content}>
+        {(data) => <Page content={data} />}
+      </OptInLivePreview>
+      {brand.lobbyPmsWidget?.show ? (
+        <LobbyPmsWidget token={brand.lobbyPmsWidget!.token!} />
+      ) : null}
+    </>
   );
+}
+
+function LobbyPmsWidget({ token }: { token: string }) {
+  const { i18n } = useTranslation();
+
+  const instanceRef = useRef<LobbyDateRangeSelector>();
+  useEffect(() => {
+    if (instanceRef.current) return;
+
+    instanceRef.current = new LobbyDateRangeSelector({
+      lang: i18n.language,
+      token,
+      apiBaseUrl: "https://api.lobbypms.com/api/ldrs/",
+    });
+
+    return () => {
+      // this is not clean, the widget should provide an unmount function
+      // might even lead to memory leaks because the widget adds event handlers outside of its container
+      document.querySelector(".ldrs-main-container")?.remove();
+      instanceRef.current = undefined;
+    };
+  }, [token, i18n.language]);
+  return null;
 }

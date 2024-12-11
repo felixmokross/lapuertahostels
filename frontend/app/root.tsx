@@ -186,6 +186,12 @@ export default function App() {
         <Meta />
         <Links />
         <AnalyticsScript analyticsDomain={analyticsDomain} />
+
+        <link
+          rel="stylesheet"
+          href="https://app.lobbypms.com/public/css/widget/lobby-date-rage-selector.min.css?v=Z6Ee3dou8BsZPpEpNVS9vb0sK"
+        />
+        <script src="https://app.lobbypms.com/public/js/widget/lobby-date-rage-selector.min.js?v=0bJZUrpSzrf5nhKxph7nDuJXi"></script>
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>

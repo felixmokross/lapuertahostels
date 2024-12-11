@@ -11,6 +11,8 @@ import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
+import { descriptionField } from "@/fields/description";
+import { showField } from "@/fields/show";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -29,6 +31,7 @@ export const Brands: CollectionConfig = {
     id: true,
     name: true,
     homeLink: true,
+    lobbyPmsWidget: true,
   },
   admin: {
     useAsTitle: "name",
@@ -329,6 +332,32 @@ export const Brands: CollectionConfig = {
                     } as RowLabelProps,
                   },
                 },
+              },
+            },
+          ],
+        },
+        {
+          label: {
+            en: "LobbyPMS Widget",
+            es: "Widget de LobbyPMS",
+          },
+          name: "lobbyPmsWidget",
+          fields: [
+            descriptionField({
+              en: "Select whether to show a LobbyPMS widget on the pages of this brand.",
+              es: "Selecciona si mostrar un widget de LobbyPMS en las páginas de esta marca.",
+            }),
+            showField,
+            {
+              name: "token",
+              type: "text",
+              required: true,
+              label: {
+                en: "Token",
+                es: "Token",
+              },
+              admin: {
+                condition: (_, siblingData) => siblingData.show,
               },
             },
           ],
