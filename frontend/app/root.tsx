@@ -136,6 +136,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       version: getVersion(),
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
+      lobbyPmsToken: process.env.LOBBY_PMS_TOKEN,
       preview: getRequestUrl(request).searchParams.get("preview") || undefined,
       useImageCacheBuster: false, // Cache busting is only used in Storybook for Chromatic
     },
@@ -169,6 +170,7 @@ export default function App() {
     allBrands,
     isAuthorized,
     adminLocale,
+    environment,
   } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
@@ -186,6 +188,20 @@ export default function App() {
         <Meta />
         <Links />
         <AnalyticsScript analyticsDomain={analyticsDomain} />
+        <link
+          rel="stylesheet"
+          href="https://app.lobbypms.com/public/css/widget/lobby-date-rage-selector.min.css?v=Z6Ee3dou8BsZPpEpNVS9vb0sK"
+        />
+        <script src="https://app.lobbypms.com/public/js/widget/lobby-date-rage-selector.min.js?v=0bJZUrpSzrf5nhKxph7nDuJXi"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `var ldrs = new LobbyDateRangeSelector({
+      apiBaseUrl: 'https://api.lobbypms.com/api/ldrs/',
+      token: '${environment.lobbyPmsToken}'
+      lang: 'en',
+    });`,
+          }}
+        />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId={brand.id as BrandId}>

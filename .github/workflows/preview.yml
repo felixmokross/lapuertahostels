@@ -45,9 +45,11 @@ jobs:
           echo Setting secrets:
           flyctl secrets set PAYLOAD_CMS_API_KEY=$PREVIEW_PAYLOAD_CMS_API_KEY \
             SESSION_SECRET=$(openssl rand -hex 32) \
+            LOBBY_PMS_TOKEN=$PREVIEW_LOBBY_PMS_TOKEN \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
+          PREVIEW_LOBBY_PMS_TOKEN: ${{ secrets.PREVIEW_LOBBY_PMS_TOKEN }}
         working-directory: frontend
       - uses: ./.github/actions/version
         id: version
