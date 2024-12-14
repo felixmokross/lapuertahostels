@@ -12,6 +12,7 @@ export type HeadingProps = PropsWithChildren<{
   size: "extra-small" | "small" | "medium" | "large" | "extra-large";
   textShadow?: boolean;
   className?: string;
+  id?: string;
 }>;
 
 export function Heading({
@@ -21,11 +22,13 @@ export function Heading({
   textShadow = false,
   children,
   className,
+  id,
 }: HeadingProps) {
   const theme = useTheme();
   return (
     <VariantContext.Provider value={variant}>
       <Component
+        id={id}
         className={cn(
           variant === "brand"
             ? theme.headingTextColor

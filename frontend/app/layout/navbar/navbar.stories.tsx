@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Navbar } from "./navbar";
 import {
   brand,
+  externalLink,
   internalLink,
   media,
   plainText,
@@ -26,12 +27,8 @@ const puertaBrand = brand({
   homeLink: internalLink("/"),
   navLinks: [
     {
-      label: plainText("Puerta Aqua"),
-      link: internalLink("/aqua"),
-    },
-    {
-      label: plainText("La Puerta Azul"),
-      link: internalLink("/azul"),
+      label: plainText("Accommodations"),
+      link: internalLink("/accommodations"),
     },
     {
       label: plainText("Santa Marta"),
@@ -46,6 +43,11 @@ const puertaBrand = brand({
       link: internalLink("/contact"),
     },
   ],
+  bookCta: {
+    show: true,
+    label: plainText("Book Now"),
+    link: externalLink("https://www.example.com"),
+  },
   logo: media("logo-puerta-simple.png"),
 });
 
@@ -54,5 +56,16 @@ export const Default: Story = {
     allBrands: [puertaBrand],
     brand: puertaBrand,
     onHeightChanged: () => {},
+  },
+};
+
+export const WithoutBookCta: Story = {
+  name: "Without Book CTA",
+  args: {
+    ...Default.args,
+    brand: {
+      ...puertaBrand,
+      bookCta: { show: false },
+    },
   },
 };
