@@ -3,7 +3,7 @@ import path from "path";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 
-import { Users } from "./collections/users/users";
+import { Users } from "./collections/users";
 import { Maintenance } from "./globals/Maintenance";
 import { Common } from "./globals/Common";
 import { Brands } from "./collections/brands";
