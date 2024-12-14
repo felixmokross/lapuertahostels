@@ -29,7 +29,7 @@ export const NewPages: CollectionConfig = {
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
-    listSearchableFields: ["pathname", "title.text", "brand.name"],
+    listSearchableFields: ["id", "pathname", "title.text", "brand.name"],
   },
   access: {
     create: canManageContent,

@@ -24,7 +24,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: "email",
     defaultColumns: ["email", "role", "updatedAt"],
-    listSearchableFields: ["email", "role"],
+    listSearchableFields: ["id", "email", "role"],
   },
   access: {
     read: ({ req, id }) => isSelf(req, id!) || isAdmin(req),

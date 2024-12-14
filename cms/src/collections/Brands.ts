@@ -34,7 +34,7 @@ export const Brands: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "logo", "homeLink", "updatedAt"],
-    listSearchableFields: ["name"],
+    listSearchableFields: ["id", "name"],
     livePreview: {
       url: async ({
         data,

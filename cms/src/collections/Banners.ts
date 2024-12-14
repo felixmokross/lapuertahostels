@@ -23,7 +23,7 @@ export const Banners: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "message"],
-    listSearchableFields: ["message.text"],
+    listSearchableFields: ["id", "message.text"],
     description: {
       en: "A banner is useful to announce promotions or important news and can have a call to action. Here you can create and manage banners. Go to Brands to enable a banner on all pages of the brand.",
       es: "Un banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Aquí puedes crear y gestionar banners. Ve a Marcas para habilitar un banner en todas las páginas de la marca.",
