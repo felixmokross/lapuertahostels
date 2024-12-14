@@ -11,6 +11,7 @@ import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
+import { showField } from "@/fields/show";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -221,6 +222,46 @@ export const Brands: CollectionConfig = {
                   },
                 },
               },
+            },
+            {
+              name: "bookCta",
+              label: {
+                en: "Book CTA",
+                es: "CTA de reserva",
+              },
+              type: "group",
+              fields: [
+                showField,
+                {
+                  name: "label",
+                  label: {
+                    en: "Label",
+                    es: "Etiqueta",
+                  },
+                  type: "relationship",
+                  relationTo: "texts",
+                  filterOptions: {
+                    type: { equals: "plainText" },
+                  },
+                  required: true,
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.show,
+                  },
+                },
+                {
+                  name: "link",
+                  label: {
+                    en: "Link",
+                    es: "Enlace",
+                  },
+                  type: "relationship",
+                  relationTo: "links",
+                  required: true,
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.show,
+                  },
+                },
+              ],
             },
           ],
         },

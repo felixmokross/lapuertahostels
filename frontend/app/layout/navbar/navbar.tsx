@@ -4,9 +4,9 @@ import { NavbarBrandLogo } from "./navbar-brand-logo";
 import { LocaleSwitcher } from "./locale-switcher";
 import { Disclosure } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
+import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
 import { RefObject, useEffect, useRef, useState } from "react";
-import { Brand } from "~/payload-types";
+import { Brand, Text } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
@@ -16,6 +16,7 @@ import {
   getLocaleAndPageUrl,
   toRelativeUrl,
 } from "~/common/routing";
+import { Button } from "~/common/button";
 
 export type NavbarProps = {
   className?: string;
@@ -55,7 +56,7 @@ export function Navbar({
     >
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-4">
+          <div className="flex items-center justify-between px-4 py-6 sm:gap-4 sm:py-4 lg:grid lg:grid-cols-3">
             <NavbarBrandLogo brand={brand} allBrands={allBrands} />
             <div className="z-50 hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
               {navLinks?.map((navLink) => {
@@ -74,11 +75,17 @@ export function Navbar({
                 );
               })}
             </div>
-            <div className="hidden items-center justify-end sm:flex">
+            <div className="hidden items-center justify-end gap-8 sm:flex">
               <LocaleSwitcher
                 currentLocale={i18n.language}
                 redirectTo={localeSwitcherRedirectTo}
               />
+              {brand.bookCta?.show ? (
+                <>
+                  <div className="h-8 border-l border-l-neutral-400/60" />
+                  <BookButton cta={brand.bookCta} />
+                </>
+              ) : null}
             </div>
             <div className="-mr-2 flex items-center sm:hidden">
               <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
@@ -123,11 +130,19 @@ export function Navbar({
                   onClick={() => setLocaleSwitcherOpen(true)}
                   className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                 >
-                  <GlobeAmericasIcon className="h-5" />
+                  <LanguageIcon className="h-5" />
                   {getLocaleLabel(i18n.language)}
                 </Disclosure.Button>
               </div>
             </div>
+
+            {brand.bookCta?.show ? (
+              <div className="border-t border-neutral-200 pb-3 pt-4">
+                <div className="px-4">
+                  <BookButton className="w-full" cta={brand.bookCta} />
+                </div>
+              </div>
+            ) : null}
           </Disclosure.Panel>
           <MobileLocaleSwitcher
             currentLocale={i18n.language}
@@ -165,4 +180,25 @@ function useElementHeightObserver(
 
     return () => observer.disconnect();
   }, [onHeightChanged, ref]);
+}
+
+function BookButton({
+  cta,
+  className,
+}: {
+  cta: NonNullable<Brand["bookCta"]>;
+  className?: string;
+}) {
+  return (
+    <Button
+      as={PageLink}
+      icon={CalendarDateRangeIcon}
+      link={cta.link!}
+      size="medium"
+      variant="primary"
+      className={className}
+    >
+      {(cta.label as Text)?.text}
+    </Button>
+  );
 }
