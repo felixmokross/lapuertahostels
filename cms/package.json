@@ -16,17 +16,17 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.5.0",
-    "@payloadcms/next": "^3.5.0",
-    "@payloadcms/richtext-lexical": "^3.5.0",
-    "@payloadcms/storage-s3": "^3.5.0",
+    "@payloadcms/db-mongodb": "^3.7.0",
+    "@payloadcms/next": "^3.7.0",
+    "@payloadcms/richtext-lexical": "^3.7.0",
+    "@payloadcms/storage-s3": "^3.7.0",
     "cookie": "^1.0.2",
     "cross-env": "^7.0.3",
     "deepl-node": "^1.15.0",
     "jsdom": "^25.0.1",
     "next": "15.0.4",
     "openai": "^4.76.0",
-    "payload": "^3.5.0",
+    "payload": "^3.7.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "sharp": "0.32.6"
