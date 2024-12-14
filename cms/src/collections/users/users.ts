@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload";
-import { canManageContent, isAdmin, isSelf } from "../common/access-control";
+import { canManageContent, isAdmin, isSelf } from "../../common/access-control";
 
 export const Users: CollectionConfig = {
   slug: "users",

@@ -1,13 +1,14 @@
 import { CollectionConfig, TextField, ValidateOptions } from "payload";
-import { refreshCacheHook } from "../hooks/refresh-cache-hook";
-import { heroField } from "../fields/hero";
-import { layoutField } from "../fields/layout";
-import { canManageContent, isAdmin } from "../common/access-control";
+import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
+import { heroField } from "../../fields/hero";
+import { layoutField } from "../../fields/layout";
+import { canManageContent, isAdmin } from "../../common/access-control";
 import { Link, NewPage } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
 import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
+import { pageUsagesField } from "./usages";
 
 export const NewPages: CollectionConfig = {
   slug: "new-pages",
@@ -117,18 +118,7 @@ export const NewPages: CollectionConfig = {
             en: "Usages",
             es: "Usos",
           },
-          fields: [
-            {
-              name: "links",
-              label: {
-                en: "Links",
-                es: "Enlaces",
-              },
-              type: "join",
-              collection: "links",
-              on: "newPage",
-            },
-          ],
+          fields: [pageUsagesField()],
         },
       ],
     },

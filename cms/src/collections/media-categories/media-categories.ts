@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
 
-export const MediaCategory: CollectionConfig = {
+export const MediaCategories: CollectionConfig = {
   slug: "mediaCategory",
   labels: {
     singular: {
