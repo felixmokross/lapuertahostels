@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { allModes } from ".storybook/modes";
-import { richText } from "~/common/cms-data.builders";
+import { plainText, richText } from "~/common/cms-data.builders";
 import { bold, paragraph, text } from "~/common/rich-text.builders";
 
 const meta = {
@@ -27,7 +27,7 @@ export const Default: Story = {
     image: {
       id: "1",
       filename: "oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg",
-      alt: "View of Santa Marta",
+      alt: plainText("View of Santa Marta"),
       createdAt: "2022-01-01T00:00:00Z",
       updatedAt: "2022-01-01T00:00:00Z",
     },

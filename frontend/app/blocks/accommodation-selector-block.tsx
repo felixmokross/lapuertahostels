@@ -27,11 +27,16 @@ export function AccommodationSelectorBlock({
     throw new Error("Invalid text");
   }
   return (
-    <div id={elementId || undefined} className="relative">
+    <div className="relative">
       <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
       <div className="pb-12 pt-8 md:pb-20 md:pt-16">
         <div className="lg-px-0 mx-auto max-w-4xl px-8">
-          <Heading as="h3" size="large" variant="white">
+          <Heading
+            as="h3"
+            size="large"
+            variant="white"
+            id={elementId || undefined}
+          >
             {heading.text}
           </Heading>
           <RichTextParagraph
