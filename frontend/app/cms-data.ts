@@ -110,6 +110,7 @@ async function loadData(
   const url = new URL(`/api/${pathname}`, process.env.PAYLOAD_CMS_BASE_URL);
   url.searchParams.set("locale", locale);
   url.searchParams.set("depth", depth.toString());
+  url.searchParams.set("pagination", "false");
   Object.entries(queryParams).forEach(([key, value]) => {
     url.searchParams.set(key, value);
   });
