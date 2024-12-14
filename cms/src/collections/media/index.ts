@@ -25,7 +25,7 @@ export const Media: CollectionConfig = {
   },
   admin: {
     defaultColumns: ["filename", "category", "alt", "updatedAt"],
-    listSearchableFields: ["filename", "alt"],
+    listSearchableFields: ["id", "filename", "alt"],
   },
   endpoints: [generateAltTextEndpoint],
   hooks: {

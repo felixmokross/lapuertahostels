@@ -27,7 +27,7 @@ export const Links: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],
-    listSearchableFields: ["title", "type"],
+    listSearchableFields: ["id", "title", "type"],
   },
   hooks: {
     afterChange: [refreshCacheHook()],
