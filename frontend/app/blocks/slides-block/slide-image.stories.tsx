@@ -17,6 +17,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    media: media("/azzedine-rouichi-gc5OYAll-rc-unsplash.jpg", "Example image"),
+    media: media("azzedine-rouichi-gc5OYAll-rc-unsplash.jpg", "Example image"),
   },
 };
