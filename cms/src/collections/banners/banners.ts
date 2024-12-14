@@ -1,7 +1,8 @@
 import { CollectionConfig } from "payload";
-import { refreshCacheHook } from "../hooks/refresh-cache-hook";
-import { makeCallToActionField } from "../fields/call-to-action";
+import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
+import { makeCallToActionField } from "../../fields/call-to-action";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
+import { bannerUsagesField } from "./usages";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -87,18 +88,7 @@ export const Banners: CollectionConfig = {
             en: "Usages",
             es: "Usos",
           },
-          fields: [
-            {
-              name: "brands",
-              label: {
-                en: "Brands",
-                es: "Marcas",
-              },
-              type: "join",
-              collection: "brands",
-              on: "banner",
-            },
-          ],
+          fields: [bannerUsagesField()],
         },
       ],
     },

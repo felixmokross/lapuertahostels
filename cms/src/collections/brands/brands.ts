@@ -4,14 +4,15 @@ import {
   Payload,
   SanitizedCollectionConfig,
 } from "payload";
-import { refreshCacheHook } from "../hooks/refresh-cache-hook";
-import { canManageContent } from "../common/access-control";
-import { imageField } from "../fields/image";
+import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
+import { canManageContent } from "../../common/access-control";
+import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
+import { brandUsagesField } from "./usages";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -379,18 +380,7 @@ export const Brands: CollectionConfig = {
             en: "Usages",
             es: "Usos",
           },
-          fields: [
-            {
-              name: "pages",
-              label: {
-                en: "Pages",
-                es: "Páginas",
-              },
-              type: "join",
-              collection: "new-pages",
-              on: "brand",
-            },
-          ],
+          fields: [brandUsagesField()],
         },
       ],
     },

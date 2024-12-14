@@ -3,14 +3,13 @@ import path from "path";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 
-import { Users } from "./collections/Users";
+import { Users } from "./collections/users/users";
 import { Maintenance } from "./globals/Maintenance";
 import { Common } from "./globals/Common";
-import { Brands } from "./collections/Brands";
+import { Brands } from "./collections/brands";
 import { Media } from "./collections/media";
-import { MediaCategory } from "./collections/MediaCategory";
+import { MediaCategories } from "./collections/media-categories";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
-import { Banners } from "./collections/Banners";
 import { Texts } from "./collections/texts";
 import { Links } from "./collections/links";
 import { Config } from "./payload-types";
@@ -18,7 +17,8 @@ import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { NewPages } from "./collections/NewPages";
+import { NewPages } from "./collections/new-pages";
+import { Banners } from "./collections/banners";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
@@ -59,7 +59,7 @@ export default buildConfig({
     Brands,
     NewPages,
     Media,
-    MediaCategory,
+    MediaCategories,
     Banners,
     Texts,
     Links,
