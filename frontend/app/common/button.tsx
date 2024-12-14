@@ -7,14 +7,15 @@ import {
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
 
-export type ButtonProps<T extends ElementType> = PropsWithChildren<{
-  as?: T;
-  size?: "small" | "medium" | "large";
-  blackShadow?: boolean;
-  variant?: "primary" | "secondary";
-  icon?: ComponentType<{ className?: string }>;
-}> &
-  Omit<ComponentPropsWithoutRef<T>, "as">;
+export type ButtonProps<T extends ElementType = ElementType> =
+  PropsWithChildren<{
+    as?: T;
+    size?: "small" | "medium" | "large";
+    blackShadow?: boolean;
+    variant?: "primary" | "secondary";
+    icon?: ComponentType<{ className?: string }>;
+  }> &
+    Omit<ComponentPropsWithoutRef<T>, "as">;
 
 export function Button<T extends ElementType>({
   as,

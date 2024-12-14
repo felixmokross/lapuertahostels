@@ -15,11 +15,8 @@ export function LocaleSwitcher({
     <Dropdown
       button={
         <Dropdown.Button className="flex items-center gap-1.5 text-sm font-bold text-neutral-500 hover:text-neutral-900">
-          <LanguageIcon className="hidden h-4 md:inline" />
-          <span className="hidden md:inline">
-            {getLocaleLabel(currentLocale)}
-          </span>
-          <span className="inline uppercase md:hidden">{currentLocale}</span>
+          <LanguageIcon className="h-4" />
+          {getLocaleLabel(currentLocale)}
         </Dropdown.Button>
       }
       menuPosition="right"
