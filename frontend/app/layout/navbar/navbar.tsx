@@ -16,7 +16,7 @@ import {
   getLocaleAndPageUrl,
   toRelativeUrl,
 } from "~/common/routing";
-import { Button } from "~/common/button";
+import { Button, ButtonProps } from "~/common/button";
 
 export type NavbarProps = {
   className?: string;
@@ -56,9 +56,13 @@ export function Navbar({
     >
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-6 sm:gap-4 sm:py-4 lg:grid lg:grid-cols-3">
-            <NavbarBrandLogo brand={brand} allBrands={allBrands} />
-            <div className="z-50 hidden space-x-6 justify-self-center text-nowrap text-sm font-bold text-neutral-500 sm:block md:space-x-8 lg:space-x-12 xl:space-x-16">
+          <div className="flex items-center justify-between px-4 py-6 sm:gap-4 sm:py-4 xl:grid xl:grid-cols-3">
+            <NavbarBrandLogo
+              className="shrink-0"
+              brand={brand}
+              allBrands={allBrands}
+            />
+            <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-nowrap text-sm font-bold text-neutral-500 lg:block">
               {navLinks?.map((navLink) => {
                 if (typeof navLink !== "object") {
                   throw new Error("Invalid nav link");
@@ -75,32 +79,34 @@ export function Navbar({
                 );
               })}
             </div>
-            <div className="hidden items-center justify-end gap-8 sm:flex">
-              <LocaleSwitcher
-                currentLocale={i18n.language}
-                redirectTo={localeSwitcherRedirectTo}
-              />
-              {brand.bookCta?.show ? (
-                <>
-                  <div className="h-8 border-l border-l-neutral-400/60" />
-                  <BookButton cta={brand.bookCta} />
-                </>
-              ) : null}
-            </div>
-            <div className="-mr-2 flex items-center sm:hidden">
-              <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Open main menu</span>
-                {open ? (
-                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                )}
-              </Disclosure.Button>
+            <div className="flex shrink-0 items-center justify-end gap-4">
+              <div className="hidden items-center justify-end gap-4 sm:flex xl:gap-8">
+                <LocaleSwitcher
+                  currentLocale={i18n.language}
+                  redirectTo={localeSwitcherRedirectTo}
+                />
+                {brand.bookCta?.show ? (
+                  <>
+                    <div className="h-8 border-l border-l-neutral-400/60" />
+                    <BookButton cta={brand.bookCta} size="medium" />
+                  </>
+                ) : null}
+              </div>
+              <div className="-mr-2 flex items-center lg:hidden">
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
+          <Disclosure.Panel className="md:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {navLinks?.map((navLink) => {
                 if (typeof navLink !== "object") {
@@ -123,7 +129,7 @@ export function Navbar({
               })}
             </div>
 
-            <div className="border-t border-neutral-200 pb-3 pt-4">
+            <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
               <div className="space-y-1">
                 <Disclosure.Button
                   as="button"
@@ -137,9 +143,13 @@ export function Navbar({
             </div>
 
             {brand.bookCta?.show ? (
-              <div className="border-t border-neutral-200 pb-3 pt-4">
+              <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
                 <div className="px-4">
-                  <BookButton className="w-full" cta={brand.bookCta} />
+                  <BookButton
+                    className="w-full"
+                    cta={brand.bookCta}
+                    size="large"
+                  />
                 </div>
               </div>
             ) : null}
@@ -185,16 +195,18 @@ function useElementHeightObserver(
 function BookButton({
   cta,
   className,
+  size,
 }: {
   cta: NonNullable<Brand["bookCta"]>;
   className?: string;
+  size: ButtonProps["size"];
 }) {
   return (
     <Button
       as={PageLink}
       icon={CalendarDateRangeIcon}
       link={cta.link!}
-      size="medium"
+      size={size}
       variant="primary"
       className={className}
     >
