@@ -106,7 +106,7 @@ export function Navbar({
             </div>
           </div>
 
-          <Disclosure.Panel className="md:hidden">
+          <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {navLinks?.map((navLink) => {
                 if (typeof navLink !== "object") {
