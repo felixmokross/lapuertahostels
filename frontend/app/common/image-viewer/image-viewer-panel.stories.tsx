@@ -8,7 +8,7 @@ const meta = {
   argTypes: {},
   decorators: [
     (Story) => (
-      <Transition show={true} className="h-screen w-screen bg-black">
+      <Transition show={true} as="div" className="h-screen w-screen bg-black">
         <Story />
       </Transition>
     ),

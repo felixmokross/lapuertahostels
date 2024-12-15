@@ -1,5 +1,9 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { ImageViewerImage } from "./types";
 import { ImageViewerPanel } from "./image-viewer-panel";
 
@@ -17,10 +21,9 @@ export function ImageViewerDialog({
   defaultImageIndex,
 }: ImageViewerDialogProps) {
   return (
-    <Transition show={isOpen} as={Fragment}>
+    <Transition show={isOpen}>
       <Dialog onClose={() => onDismiss()} className="relative z-50">
-        <Transition.Child
-          as={Fragment}
+        <TransitionChild
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -29,8 +32,8 @@ export function ImageViewerDialog({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black" aria-hidden="true" />
-        </Transition.Child>
-        <Dialog.Panel
+        </TransitionChild>
+        <DialogPanel
           as={ImageViewerPanel}
           images={images}
           defaultImageIndex={defaultImageIndex}

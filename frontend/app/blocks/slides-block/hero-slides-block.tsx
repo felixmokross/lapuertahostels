@@ -116,6 +116,7 @@ export function HeroSlidesBlock({
         return (
           <Transition
             key={i}
+            as="div"
             className="absolute top-0 h-full w-full transform-gpu"
             show={i === slideIndex}
             unmount={false}

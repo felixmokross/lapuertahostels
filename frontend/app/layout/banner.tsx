@@ -24,6 +24,7 @@ export function Banner({ message, cta }: BannerProps) {
   return (
     <Transition
       show={!isDismissed}
+      as="div"
       className={cn(
         "flex items-center gap-x-6 px-6 py-2.5 text-sm text-white transition-colors duration-500 ease-linear sm:px-3.5 sm:before:flex-1",
         theme.bannerBackgroundColor,
