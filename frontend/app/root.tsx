@@ -231,7 +231,8 @@ export default function App() {
 const ADDITIONAL_SCROLL_PADDING = 32;
 
 function getScrollTopPadding(headerHeight: number) {
-  return headerHeight + ADDITIONAL_SCROLL_PADDING;
+  // return headerHeight + ADDITIONAL_SCROLL_PADDING;
+  return ADDITIONAL_SCROLL_PADDING;
 }
 
 export const ErrorBoundary = GlobalErrorBoundary;

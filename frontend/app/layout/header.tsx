@@ -10,7 +10,7 @@ type HeaderProps = {
 } & Pick<NavbarProps, "onHeightChanged">;
 
 export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
-  const isScrolled = useIsScrolled();
+  // const isScrolled = useIsScrolled();
 
   if (brand.banner != null && typeof brand.banner !== "object") {
     throw new Error("Brand banner is not an object");
@@ -22,23 +22,23 @@ export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
         brand={brand}
         allBrands={allBrands}
         onHeightChanged={onHeightChanged}
-        isScrolled={isScrolled}
+        // isScrolled={isScrolled}
       />
     </header>
   );
 }
 
-function useIsScrolled(): boolean {
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
+// function useIsScrolled(): boolean {
+//   const [scrollY, setScrollY] = useState(0);
+//   useEffect(() => {
+//     const onScroll = () => setScrollY(window.scrollY);
 
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+//     onScroll();
+//     window.addEventListener("scroll", onScroll);
+//     return () => window.removeEventListener("scroll", onScroll);
+//   }, []);
 
-  if (typeof window === "undefined" || scrollY === 0) return false;
+//   if (typeof window === "undefined" || scrollY === 0) return false;
 
-  return true;
-}
+//   return true;
+// }

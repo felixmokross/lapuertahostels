@@ -22,14 +22,14 @@ export type NavbarProps = {
   className?: string;
   brand: Brand;
   allBrands: Brand[];
-  isScrolled?: boolean;
+  // isScrolled?: boolean;
   onHeightChanged?: (height: number) => void;
 };
 
 export function Navbar({
   brand,
   allBrands,
-  isScrolled = false,
+  // isScrolled = false,
   onHeightChanged,
 }: NavbarProps) {
   const { i18n } = useTranslation();
@@ -45,17 +45,53 @@ export function Navbar({
   const { pageUrl } = getLocaleAndPageUrl(toRelativeUrl(location));
   const localeSwitcherRedirectTo = buildLocalizedRelativeUrl(null, pageUrl);
 
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">();
+  const [navbarIsStuck, setNavbarIsStuck] = useState(false);
+  console.log({ scrollDirection, navbarIsStuck });
+
+  useEffect(() => {
+    if (navbarRef.current) {
+      setNavbarIsStuck(isElementStuck(navbarRef.current));
+    }
+
+    let lastScrollY = window.scrollY;
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      if (scrollY > lastScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      lastScrollY = scrollY;
+
+      if (navbarRef.current) {
+        setNavbarIsStuck(isElementStuck(navbarRef.current));
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <Menu
-      as="nav"
-      className={cn(
-        "sticky inset-0 z-40 bg-white transition-shadow duration-1000 ease-in-out",
-        isScrolled && "shadow-md",
-      )}
-      ref={navbarRef}
-    >
+    <Menu as="nav" className="contents">
       {({ open }) => (
-        <>
+        <div
+          className={cn(
+            "bg-white",
+            scrollDirection === "up" &&
+              cn(
+                "sticky inset-0 z-40 bg-opacity-75 backdrop-blur",
+                navbarIsStuck
+                  ? "shadow-md"
+                  : "transition-shadow duration-1000 ease-in-out",
+              ),
+          )}
+          ref={navbarRef}
+        >
           <div className="flex items-center justify-between px-4 py-6 sm:gap-4 sm:py-4 xl:grid xl:grid-cols-3">
             <NavbarBrandLogo
               className="shrink-0"
@@ -161,7 +197,7 @@ export function Navbar({
             open={localeSwitcherOpen}
             redirectTo={localeSwitcherRedirectTo}
           />
-        </>
+        </div>
       )}
     </Menu>
   );
@@ -213,3 +249,10 @@ const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
     );
   },
 );
+
+function isElementStuck(element: HTMLElement) {
+  const rect = element.getBoundingClientRect();
+  const parentRect = element.parentElement!.getBoundingClientRect();
+
+  return rect.top === parentRect.top;
+}
