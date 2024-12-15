@@ -1,44 +1,21 @@
 import { Brand } from "~/payload-types";
 import { Banner } from "./banner";
-import { Navbar, NavbarProps } from "./navbar/navbar";
-import { useEffect, useState } from "react";
+import { Navbar } from "./navbar/navbar";
 
 type HeaderProps = {
   hasSession?: boolean;
   brand: Brand;
   allBrands: Brand[];
-} & Pick<NavbarProps, "onHeightChanged">;
+};
 
-export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
-  // const isScrolled = useIsScrolled();
-
+export function Header({ brand, allBrands }: HeaderProps) {
   if (brand.banner != null && typeof brand.banner !== "object") {
     throw new Error("Brand banner is not an object");
   }
   return (
     <header className="contents">
       {brand.banner && <Banner key={brand.banner.id} {...brand.banner} />}
-      <Navbar
-        brand={brand}
-        allBrands={allBrands}
-        onHeightChanged={onHeightChanged}
-        // isScrolled={isScrolled}
-      />
+      <Navbar brand={brand} allBrands={allBrands} />
     </header>
   );
 }
-
-// function useIsScrolled(): boolean {
-//   const [scrollY, setScrollY] = useState(0);
-//   useEffect(() => {
-//     const onScroll = () => setScrollY(window.scrollY);
-
-//     onScroll();
-//     window.addEventListener("scroll", onScroll);
-//     return () => window.removeEventListener("scroll", onScroll);
-//   }, []);
-
-//   if (typeof window === "undefined" || scrollY === 0) return false;
-
-//   return true;
-// }

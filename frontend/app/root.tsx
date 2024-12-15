@@ -19,7 +19,6 @@ import { BrandId } from "./brands";
 import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
-import { useState } from "react";
 import { Header } from "./layout/header";
 import {
   getLocaleAndPageUrl,
@@ -172,13 +171,11 @@ export default function App() {
   } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
-  const [headerHeight, setHeaderHeight] = useState(0);
-
   return (
     <html
       lang={i18n.language}
       dir={i18n.dir()}
-      style={{ scrollPaddingTop: getScrollTopPadding(headerHeight) }}
+      style={{ scrollPaddingTop: SCROLL_PADDING }}
     >
       <head>
         <meta charSet="utf-8" />
@@ -198,11 +195,7 @@ export default function App() {
                 {(common) => (
                   <>
                     {isAuthorized && (
-                      <Header
-                        brand={brand}
-                        allBrands={allBrands}
-                        onHeightChanged={setHeaderHeight}
-                      />
+                      <Header brand={brand} allBrands={allBrands} />
                     )}
                     <main>
                       <Outlet />
@@ -228,11 +221,6 @@ export default function App() {
   );
 }
 
-const ADDITIONAL_SCROLL_PADDING = 32;
-
-function getScrollTopPadding(headerHeight: number) {
-  // return headerHeight + ADDITIONAL_SCROLL_PADDING;
-  return ADDITIONAL_SCROLL_PADDING;
-}
+const SCROLL_PADDING = 32;
 
 export const ErrorBoundary = GlobalErrorBoundary;

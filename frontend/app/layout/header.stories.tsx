@@ -54,6 +54,5 @@ export const Default: Story = {
   args: {
     brand: puertaBrand,
     allBrands: [puertaBrand],
-    onHeightChanged: () => {},
   },
 };
