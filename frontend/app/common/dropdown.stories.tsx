@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Dropdown, DropdownButton } from "./dropdown";
+import { Dropdown, DropdownButton, DropdownItem } from "./dropdown";
 import { GlobeAmericasIcon } from "@heroicons/react/16/solid";
 
 const meta = {
@@ -22,9 +22,9 @@ export const Default: Story = {
     ),
     children: (
       <>
-        <Dropdown.Item>Español</Dropdown.Item>
-        <Dropdown.Item>Deutsch</Dropdown.Item>
-        <Dropdown.Item>Français</Dropdown.Item>
+        <DropdownItem>Español</DropdownItem>
+        <DropdownItem>Deutsch</DropdownItem>
+        <DropdownItem>Français</DropdownItem>
       </>
     ),
   },

@@ -59,7 +59,7 @@ type DropdownItemProps<T extends ElementType> = {
   className?: string;
 } & ComponentPropsWithoutRef<T>;
 
-function DropdownItem<T extends ElementType>({
+export function DropdownItem<T extends ElementType>({
   as,
   className,
   ...props
@@ -80,5 +80,3 @@ function DropdownItem<T extends ElementType>({
     </MenuItem>
   );
 }
-
-Dropdown.Item = DropdownItem;

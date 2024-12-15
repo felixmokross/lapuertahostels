@@ -1,5 +1,5 @@
 import { LanguageIcon } from "@heroicons/react/16/solid";
-import { Dropdown, DropdownButton } from "~/common/dropdown";
+import { Dropdown, DropdownButton, DropdownItem } from "~/common/dropdown";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
 
 export type LocaleSwitcherProps = {
@@ -33,9 +33,9 @@ export function LocaleSwitcher({
           >
             <input type="hidden" name="locale" value={locale} />
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <Dropdown.Item as="button" type="submit">
+            <DropdownItem as="button" type="submit">
               {getLocaleLabel(locale)}
-            </Dropdown.Item>
+            </DropdownItem>
           </form>
         ))}
     </Dropdown>
