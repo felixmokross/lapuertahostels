@@ -1,4 +1,10 @@
-import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from "@headlessui/react";
 import {
   ComponentPropsWithoutRef,
   ElementType,
@@ -46,14 +52,14 @@ export function Dropdown({
   );
 }
 
-Dropdown.Button = Menu.Button;
+export const DropdownButton = MenuButton;
 
 type DropdownItemProps<T extends ElementType> = {
   as?: T;
   className?: string;
 } & ComponentPropsWithoutRef<T>;
 
-function DropdownItem<T extends ElementType>({
+export function DropdownItem<T extends ElementType>({
   as,
   className,
   ...props
@@ -74,5 +80,3 @@ function DropdownItem<T extends ElementType>({
     </MenuItem>
   );
 }
-
-Dropdown.Item = DropdownItem;
