@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Dropdown } from "./dropdown";
+import { Dropdown, DropdownButton } from "./dropdown";
 import { GlobeAmericasIcon } from "@heroicons/react/16/solid";
 
 const meta = {
@@ -15,10 +15,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     button: (
-      <Dropdown.Button className="inline-flex w-full items-center gap-x-1.5 text-sm font-semibold text-neutral-900">
+      <DropdownButton className="inline-flex w-full items-center gap-x-1.5 text-sm font-semibold text-neutral-900">
         <GlobeAmericasIcon className="h-4" />
         English
-      </Dropdown.Button>
+      </DropdownButton>
     ),
     children: (
       <>
