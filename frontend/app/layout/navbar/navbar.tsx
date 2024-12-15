@@ -5,7 +5,7 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { forwardRef, RefObject, useEffect, useRef, useState } from "react";
 import { Brand, Text } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
@@ -145,7 +145,8 @@ export function Navbar({
             {brand.bookCta?.show ? (
               <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
                 <div className="px-4">
-                  <BookButton
+                  <MenuItem
+                    as={BookButton}
                     className="w-full"
                     cta={brand.bookCta}
                     size="large"
@@ -192,25 +193,23 @@ function useElementHeightObserver(
   }, [onHeightChanged, ref]);
 }
 
-function BookButton({
-  cta,
-  className,
-  size,
-}: {
+type BookButtonProps = {
   cta: NonNullable<Brand["bookCta"]>;
-  className?: string;
-  size: ButtonProps["size"];
-}) {
-  return (
-    <Button
-      as={PageLink}
-      icon={CalendarDateRangeIcon}
-      link={cta.link!}
-      size={size}
-      variant="primary"
-      className={className}
-    >
-      {(cta.label as Text)?.text}
-    </Button>
-  );
-}
+} & Omit<ButtonProps, "children" | "variant" | "icon" | "as">;
+
+const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
+  function BookButton({ cta, ...props }, ref) {
+    return (
+      <Button
+        {...props}
+        as={PageLink}
+        icon={CalendarDateRangeIcon}
+        link={cta.link!}
+        variant="primary"
+        ref={ref}
+      >
+        {(cta.label as Text)?.text}
+      </Button>
+    );
+  },
+);
