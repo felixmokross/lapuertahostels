@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { ImageViewerImage } from "./types";
-import { Transition } from "@headlessui/react";
+import { Transition, TransitionChild } from "@headlessui/react";
 import { Image } from "~/common/image";
 import { ImageViewerControlsOverlay } from "./image-viewer-controls-overlay";
 import { cn } from "../cn";
@@ -173,7 +173,8 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
       className={cn(isTouchDevice() && "fixed inset-0 h-full w-full")}
     >
       <div className="fixed inset-0 m-auto h-fit w-fit">
-        <Transition.Child
+        <TransitionChild
+          as="div"
           enter="ease-out duration-300"
           enterFrom="-translate-x-96 -translate-y-24 scale-50 opacity-0"
           enterTo="translate-x-0 translate-y-0 scale-100 opacity-100"
@@ -208,14 +209,16 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
               <SpinnerIcon className="size-10 text-neutral-300" />
             </div>
           )}
-        </Transition.Child>
-        <Transition.Child
+        </TransitionChild>
+        <TransitionChild
+          as="div"
           enter="delay-200"
           enterFrom="opacity-0" // need to use opacity instead of visibility so that button can be focused by the Dialog's FocusTrap
           enterTo="opacity-100"
         >
           <Transition
             show={isUserActive || isControlsHovered}
+            as="div"
             enter="duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -240,7 +243,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
               onMouseLeave={() => setIsControlsHovered(false)}
             />
           </Transition>
-        </Transition.Child>
+        </TransitionChild>
       </div>
     </div>
   );

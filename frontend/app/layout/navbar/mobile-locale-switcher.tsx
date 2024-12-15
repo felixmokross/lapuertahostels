@@ -1,5 +1,9 @@
-import { Transition, Dialog } from "@headlessui/react";
-import { Fragment } from "react";
+import {
+  Transition,
+  Dialog,
+  TransitionChild,
+  DialogPanel,
+} from "@headlessui/react";
 import { cn } from "~/common/cn";
 import { useTheme } from "~/themes";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
@@ -19,10 +23,9 @@ export function MobileLocaleSwitcher({
 }: MobileLocaleSwitcherProps) {
   const theme = useTheme();
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition show={open}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
-        <Transition.Child
-          as={Fragment}
+        <TransitionChild
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -31,12 +34,11 @@ export function MobileLocaleSwitcher({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-neutral-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
           <div className="flex min-h-full items-start justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
+            <TransitionChild
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               enterTo="opacity-100 translate-y-0 sm:scale-100"
@@ -44,7 +46,7 @@ export function MobileLocaleSwitcher({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pb-4 pt-5 text-left shadow-xl transition-all sm:my-8">
+              <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pb-4 pt-5 text-left shadow-xl transition-all sm:my-8">
                 {i18nConfig.supportedLngs.map((locale) => (
                   <form
                     key={locale}
@@ -67,11 +69,11 @@ export function MobileLocaleSwitcher({
                     </button>
                   </form>
                 ))}
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 }

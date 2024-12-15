@@ -1,8 +1,7 @@
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react";
 import {
   ComponentPropsWithoutRef,
   ElementType,
-  Fragment,
   PropsWithChildren,
   ReactNode,
 } from "react";
@@ -24,7 +23,6 @@ export function Dropdown({
       <div>{button}</div>
 
       <Transition
-        as={Fragment}
         enter="transition ease-out duration-100"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
@@ -32,7 +30,7 @@ export function Dropdown({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items
+        <MenuItems
           className={cn(
             "absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
             {
@@ -42,7 +40,7 @@ export function Dropdown({
           )}
         >
           <div className="py-1">{children}</div>
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   );
@@ -62,18 +60,18 @@ function DropdownItem<T extends ElementType>({
 }: DropdownItemProps<T>) {
   const Component = as || "button";
   return (
-    <Menu.Item>
-      {({ active }) => (
+    <MenuItem>
+      {({ focus }) => (
         <Component
           className={cn(
-            active ? "bg-neutral-100 text-neutral-900" : "text-neutral-700",
+            focus ? "bg-neutral-100 text-neutral-900" : "text-neutral-700",
             " block w-full px-4 py-2 text-left text-sm",
             className,
           )}
           {...props}
         />
       )}
-    </Menu.Item>
+    </MenuItem>
   );
 }
 

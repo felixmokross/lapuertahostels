@@ -87,7 +87,7 @@ export function Navbar({
                 />
                 {brand.bookCta?.show ? (
                   <>
-                    <div className="h-8 border-l border-l-neutral-400/60" />
+                    <div className="h-8 border-l border-l-neutral-300" />
                     <BookButton cta={brand.bookCta} size="medium" />
                   </>
                 ) : null}
