@@ -22,22 +22,16 @@ export type NavbarProps = {
   className?: string;
   brand: Brand;
   allBrands: Brand[];
-  isScrolled?: boolean;
-  onHeightChanged?: (height: number) => void;
 };
 
-export function Navbar({
-  brand,
-  allBrands,
-  isScrolled = false,
-  onHeightChanged,
-}: NavbarProps) {
+export function Navbar({ brand, allBrands }: NavbarProps) {
   const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
   const navbarRef = useRef<HTMLDivElement>(null);
 
-  useElementHeightObserver(navbarRef, onHeightChanged || (() => {}));
+  const { navbarIsStuck, scrollDirection, scrollDistance } =
+    useHideOnScrollDownNavbar(navbarRef);
 
   const navLinks = allBrands.find((b) => b.id === brand.id)?.navLinks;
 
@@ -49,8 +43,13 @@ export function Navbar({
     <Menu
       as="nav"
       className={cn(
-        "sticky inset-0 z-40 bg-white transition-shadow duration-1000 ease-in-out",
-        isScrolled && "shadow-md",
+        "bg-white",
+        scrollDirection === "up" &&
+          scrollDistance > 50 &&
+          "sticky inset-0 z-40",
+        navbarIsStuck
+          ? "shadow-md"
+          : "transition-shadow duration-1000 ease-in-out",
       )}
       ref={navbarRef}
     >
@@ -175,24 +174,6 @@ function NavLink({ className, ...props }: NavLinkProps) {
   );
 }
 
-function useElementHeightObserver(
-  ref: RefObject<HTMLElement>,
-  onHeightChanged: (height: number) => void,
-) {
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        onHeightChanged(entry.borderBoxSize[0].blockSize);
-      }
-    });
-    observer.observe(ref.current, { box: "border-box" });
-
-    return () => observer.disconnect();
-  }, [onHeightChanged, ref]);
-}
-
 type BookButtonProps = {
   cta: NonNullable<Brand["bookCta"]>;
 } & Omit<ButtonProps, "children" | "variant" | "icon" | "as">;
@@ -213,3 +194,66 @@ const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
     );
   },
 );
+
+function useHideOnScrollDownNavbar(ref: RefObject<HTMLElement>) {
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">();
+  const [scrollDistance, setScrollDistance] = useState(0);
+
+  const navbarIsStuck = useNavbarIsStuck(ref);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let maxScrollY = lastScrollY;
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      if (scrollY > lastScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+        if (scrollDirection !== "up") {
+          maxScrollY = scrollY;
+        }
+      }
+
+      lastScrollY = scrollY;
+      setScrollDistance(maxScrollY - scrollY);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollDirection]);
+
+  return { scrollDirection, scrollDistance, navbarIsStuck };
+}
+
+function useNavbarIsStuck(ref: RefObject<HTMLElement>) {
+  const [navbarIsStuck, setNavbarIsStuck] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    setNavbarIsStuck(isElementStuck(ref.current));
+
+    function handleScroll() {
+      if (!ref.current) return;
+      setNavbarIsStuck(isElementStuck(ref.current));
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [ref]);
+  return navbarIsStuck;
+}
+function isElementStuck(element: HTMLElement) {
+  const elementY = element.getBoundingClientRect().top;
+  const parentElementY = element.parentElement!.getBoundingClientRect().top;
+
+  return elementY === parentElementY;
+}
