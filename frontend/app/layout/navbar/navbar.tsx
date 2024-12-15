@@ -46,24 +46,15 @@ export function Navbar({
   const localeSwitcherRedirectTo = buildLocalizedRelativeUrl(null, pageUrl);
 
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">();
+  const [scrollDistance, setScrollDistance] = useState(0);
   const [navbarIsStuck, setNavbarIsStuck] = useState(false);
-  console.log({ scrollDirection, navbarIsStuck });
 
   useEffect(() => {
     if (navbarRef.current) {
       setNavbarIsStuck(isElementStuck(navbarRef.current));
     }
 
-    let lastScrollY = window.scrollY;
     function handleScroll() {
-      const scrollY = window.scrollY;
-      if (scrollY > lastScrollY) {
-        setScrollDirection("down");
-      } else {
-        setScrollDirection("up");
-      }
-      lastScrollY = scrollY;
-
       if (navbarRef.current) {
         setNavbarIsStuck(isElementStuck(navbarRef.current));
       }
@@ -76,6 +67,31 @@ export function Navbar({
     };
   }, []);
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let maxScrollY = lastScrollY;
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      if (scrollY > lastScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+        if (scrollDirection !== "up") {
+          maxScrollY = scrollY;
+        }
+      }
+
+      lastScrollY = scrollY;
+      setScrollDistance(maxScrollY - scrollY);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollDirection]);
+
   return (
     <Menu as="nav" className="contents">
       {({ open }) => (
@@ -83,12 +99,11 @@ export function Navbar({
           className={cn(
             "bg-white",
             scrollDirection === "up" &&
-              cn(
-                "sticky inset-0 z-40 bg-opacity-75 backdrop-blur",
-                navbarIsStuck
-                  ? "shadow-md"
-                  : "transition-shadow duration-1000 ease-in-out",
-              ),
+              scrollDistance > 50 &&
+              "sticky inset-0 z-40",
+            navbarIsStuck
+              ? "shadow-md"
+              : "transition-shadow duration-1000 ease-in-out",
           )}
           ref={navbarRef}
         >
@@ -251,8 +266,8 @@ const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
 );
 
 function isElementStuck(element: HTMLElement) {
-  const rect = element.getBoundingClientRect();
-  const parentRect = element.parentElement!.getBoundingClientRect();
+  const elementY = element.getBoundingClientRect().top;
+  const parentElementY = element.parentElement!.getBoundingClientRect().top;
 
-  return rect.top === parentRect.top;
+  return elementY === parentElementY;
 }
