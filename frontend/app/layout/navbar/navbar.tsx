@@ -48,20 +48,22 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
     <Menu
       as="nav"
       className={cn(
-        "sticky inset-0 z-40 bg-white transition-shadow duration-1000 ease-in-out",
-        isScrolled && "shadow-md",
+        "sticky inset-0 z-40 bg-white",
+        isScrolled
+          ? "shadow-md"
+          : "transition-shadow duration-1000 ease-in-out",
       )}
       ref={mergeRefs(navbarRef, ref)}
     >
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-4 sm:gap-4 xl:grid xl:grid-cols-3">
+          <div className="flex items-center justify-between gap-4 px-4 py-2 sm:py-4 xl:grid xl:grid-cols-3">
             <NavbarBrandLogo
               className="shrink-0"
               brand={brand}
               allBrands={allBrands}
             />
-            <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-nowrap text-sm font-bold text-neutral-500 lg:block">
+            <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-nowrap text-sm font-bold text-neutral-500 xl:block">
               {navLinks?.map((navLink) => {
                 if (typeof navLink !== "object") {
                   throw new Error("Invalid nav link");
@@ -79,30 +81,21 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
               })}
             </div>
             <div className="flex shrink-0 items-center justify-end gap-4">
-              <div className="flex items-center justify-end gap-4 xl:gap-8">
-                <div className="hidden sm:block">
+              <div className="flex items-center justify-center gap-4 xl:gap-8">
+                <div className="hidden leading-none sm:inline-block">
                   <LocaleSwitcher
                     currentLocale={i18n.language}
                     redirectTo={localeSwitcherRedirectTo}
                   />
                 </div>
-                <div className="sm:hidden">
-                  <button
-                    className="flex items-center gap-1.5 text-sm font-bold text-neutral-500 hover:text-neutral-900"
-                    onClick={() => setLocaleSwitcherOpen(true)}
-                  >
-                    <LanguageIcon className="h-4" />
-                    {getLocaleLabel(i18n.language)}
-                  </button>
-                </div>
                 {brand.bookCta?.show ? (
                   <>
-                    <div className="h-8 border-l border-l-neutral-300" />
+                    <div className="hidden h-8 border-l border-l-neutral-300 sm:block" />
                     <BookButton cta={brand.bookCta} size="medium" />
                   </>
                 ) : null}
               </div>
-              <div className="-mr-2 flex items-center lg:hidden">
+              <div className="-mr-2 flex items-center xl:hidden">
                 <MenuButton className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-500">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -116,7 +109,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
             </div>
           </div>
 
-          <MenuItems className="absolute z-10 w-full bg-white shadow-md lg:hidden">
+          <MenuItems className="absolute z-10 w-full bg-white shadow-md xl:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {navLinks?.map((navLink) => {
                 if (typeof navLink !== "object") {
@@ -137,6 +130,18 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
                   </MenuItem>
                 );
               })}
+            </div>
+            <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
+              <div className="space-y-1">
+                <MenuItem
+                  as="button"
+                  onClick={() => setLocaleSwitcherOpen(true)}
+                  className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
+                >
+                  <LanguageIcon className="h-5" />
+                  {getLocaleLabel(i18n.language)}
+                </MenuItem>
+              </div>
             </div>
           </MenuItems>
           <MobileLocaleSwitcher
@@ -183,17 +188,28 @@ type BookButtonProps = {
 
 const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
   function BookButton({ cta, ...props }, ref) {
+    function renderButton({ withIcon }: { withIcon: boolean }) {
+      return (
+        <Button
+          {...props}
+          as={PageLink}
+          icon={withIcon ? CalendarDateRangeIcon : undefined}
+          link={cta.link!}
+          variant="primary"
+          ref={ref}
+        >
+          {(cta.label as Text)?.text}
+        </Button>
+      );
+    }
+
     return (
-      <Button
-        {...props}
-        as={PageLink}
-        icon={CalendarDateRangeIcon}
-        link={cta.link!}
-        variant="primary"
-        ref={ref}
-      >
-        {(cta.label as Text)?.text}
-      </Button>
+      <>
+        <span className="sm:hidden">{renderButton({ withIcon: false })}</span>
+        <span className="hidden sm:inline">
+          {renderButton({ withIcon: true })}
+        </span>
+      </>
     );
   },
 );

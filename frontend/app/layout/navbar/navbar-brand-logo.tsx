@@ -16,7 +16,7 @@ export function NavbarBrandLogo({
   className,
 }: NavbarBrandLogoProps) {
   return (
-    <h1 className={cn("h-10", className)}>
+    <h1 className={cn("h-7 sm:h-10", className)}>
       <PageLink link={brand.homeLink}>
         {allBrands.map((b) => (
           <Transition
@@ -33,13 +33,13 @@ export function NavbarBrandLogo({
               size="large"
               type="with-wordmark"
               brand={brand}
-              className="hidden sm:flex lg:hidden xl:flex"
+              className="hidden sm:flex"
             />
             <BrandLogo
-              size="large"
-              type="simple"
+              size="small"
+              type="with-wordmark"
               brand={brand}
-              className="sm:hidden lg:flex xl:hidden"
+              className="sm:hidden"
             />
           </Transition>
         ))}
