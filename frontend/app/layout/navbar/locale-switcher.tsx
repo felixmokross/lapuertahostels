@@ -1,20 +1,28 @@
 import { LanguageIcon } from "@heroicons/react/16/solid";
+import { cn } from "~/common/cn";
 import { Dropdown, DropdownButton, DropdownItem } from "~/common/dropdown";
 import i18nConfig, { getLocaleLabel } from "~/i18n";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;
   redirectTo: string;
+  className?: string;
 };
 
 export function LocaleSwitcher({
   currentLocale,
   redirectTo,
+  className,
 }: LocaleSwitcherProps) {
   return (
     <Dropdown
       button={
-        <DropdownButton className="flex items-center gap-1.5 text-sm font-bold text-neutral-500 hover:text-neutral-900">
+        <DropdownButton
+          className={cn(
+            "flex items-center gap-1.5 text-sm font-bold text-neutral-500 hover:text-neutral-900",
+            className,
+          )}
+        >
           <LanguageIcon className="h-4" />
           {getLocaleLabel(currentLocale)}
         </DropdownButton>
