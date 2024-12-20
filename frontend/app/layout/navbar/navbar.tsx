@@ -17,6 +17,7 @@ import {
   toRelativeUrl,
 } from "~/common/routing";
 import { Button, ButtonProps } from "~/common/button";
+import { mergeRefs } from "~/common/utils";
 
 export type NavbarProps = {
   className?: string;
@@ -26,12 +27,10 @@ export type NavbarProps = {
   onHeightChanged?: (height: number) => void;
 };
 
-export function Navbar({
-  brand,
-  allBrands,
-  isScrolled = false,
-  onHeightChanged,
-}: NavbarProps) {
+export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
+  { brand, allBrands, isScrolled = false, onHeightChanged },
+  ref,
+) {
   const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
@@ -52,7 +51,7 @@ export function Navbar({
         "sticky inset-0 z-40 bg-white transition-shadow duration-1000 ease-in-out",
         isScrolled && "shadow-md",
       )}
-      ref={navbarRef}
+      ref={mergeRefs(navbarRef, ref)}
     >
       {({ open }) => (
         <>
@@ -150,7 +149,7 @@ export function Navbar({
       )}
     </Menu>
   );
-}
+});
 
 type NavLinkProps = PageLinkProps;
 
