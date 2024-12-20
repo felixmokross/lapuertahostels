@@ -56,7 +56,7 @@ export function Navbar({
     >
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-6 sm:gap-4 sm:py-4 xl:grid xl:grid-cols-3">
+          <div className="flex items-center justify-between px-4 py-4 sm:gap-4 xl:grid xl:grid-cols-3">
             <NavbarBrandLogo
               className="shrink-0"
               brand={brand}
@@ -80,11 +80,22 @@ export function Navbar({
               })}
             </div>
             <div className="flex shrink-0 items-center justify-end gap-4">
-              <div className="hidden items-center justify-end gap-4 sm:flex xl:gap-8">
-                <LocaleSwitcher
-                  currentLocale={i18n.language}
-                  redirectTo={localeSwitcherRedirectTo}
-                />
+              <div className="flex items-center justify-end gap-4 xl:gap-8">
+                <div className="hidden sm:block">
+                  <LocaleSwitcher
+                    currentLocale={i18n.language}
+                    redirectTo={localeSwitcherRedirectTo}
+                  />
+                </div>
+                <div className="sm:hidden">
+                  <button
+                    className="flex items-center gap-1.5 text-sm font-bold text-neutral-500 hover:text-neutral-900"
+                    onClick={() => setLocaleSwitcherOpen(true)}
+                  >
+                    <LanguageIcon className="h-4" />
+                    {getLocaleLabel(i18n.language)}
+                  </button>
+                </div>
                 {brand.bookCta?.show ? (
                   <>
                     <div className="h-8 border-l border-l-neutral-300" />
@@ -128,32 +139,6 @@ export function Navbar({
                 );
               })}
             </div>
-
-            <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
-              <div className="space-y-1">
-                <MenuItem
-                  as="button"
-                  onClick={() => setLocaleSwitcherOpen(true)}
-                  className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                >
-                  <LanguageIcon className="h-5" />
-                  {getLocaleLabel(i18n.language)}
-                </MenuItem>
-              </div>
-            </div>
-
-            {brand.bookCta?.show ? (
-              <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
-                <div className="px-4">
-                  <MenuItem
-                    as={BookButton}
-                    className="w-full"
-                    cta={brand.bookCta}
-                    size="large"
-                  />
-                </div>
-              </div>
-            ) : null}
           </MenuItems>
           <MobileLocaleSwitcher
             currentLocale={i18n.language}

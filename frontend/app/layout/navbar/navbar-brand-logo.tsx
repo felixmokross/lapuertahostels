@@ -33,13 +33,13 @@ export function NavbarBrandLogo({
               size="large"
               type="with-wordmark"
               brand={brand}
-              className="flex lg:hidden xl:flex"
+              className="hidden sm:flex lg:hidden xl:flex"
             />
             <BrandLogo
               size="large"
               type="simple"
               brand={brand}
-              className="hidden lg:flex xl:hidden"
+              className="sm:hidden lg:flex xl:hidden"
             />
           </Transition>
         ))}
