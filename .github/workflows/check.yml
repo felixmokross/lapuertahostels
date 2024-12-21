@@ -175,5 +175,5 @@ jobs:
         if: always()
         with:
           name: payload-log
-          path: e2e/payload.log
+          path: cms/payload.log
           retention-days: 30
