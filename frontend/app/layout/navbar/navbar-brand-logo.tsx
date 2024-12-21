@@ -1,4 +1,5 @@
 import { Transition } from "@headlessui/react";
+import { ReactNode } from "react";
 import { BrandLogo } from "~/common/brand-logo";
 import { cn } from "~/common/cn";
 import { PageLink } from "~/common/page-link";
@@ -15,10 +16,17 @@ export function NavbarBrandLogo({
   brand,
   className,
 }: NavbarBrandLogoProps) {
+  function getComponent(children: ReactNode) {
+    return brand.homeLink ? (
+      <PageLink link={brand.homeLink}>{children}</PageLink>
+    ) : (
+      <div>{children}</div>
+    );
+  }
   return (
     <h1 className={cn("h-7 sm:h-10", className)}>
-      <PageLink link={brand.homeLink}>
-        {allBrands.map((b) => (
+      {getComponent(
+        allBrands.map((b) => (
           <Transition
             key={b.id}
             as="span"
@@ -42,8 +50,8 @@ export function NavbarBrandLogo({
               className="sm:hidden"
             />
           </Transition>
-        ))}
-      </PageLink>
+        )),
+      )}
     </h1>
   );
 }

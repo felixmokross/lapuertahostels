@@ -7,6 +7,7 @@ import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 import { RichText, RichTextObject } from "~/common/rich-text";
 import { Input } from "~/common/input";
+import { ReactNode } from "react";
 
 type FooterProps = {
   content: Common["footer"];
@@ -23,6 +24,15 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
   if (typeof content.address !== "object") {
     throw new Error("Invalid address");
   }
+
+  function getComponent(children: ReactNode) {
+    if (!puertaBrand) throw new Error("Puerta brand not found");
+    return puertaBrand.homeLink ? (
+      <PageLink link={puertaBrand.homeLink}>{children}</PageLink>
+    ) : (
+      <div>{children}</div>
+    );
+  }
   return (
     <footer
       className={`mt-40 ${theme.lightBackgroundColor}`}
@@ -35,9 +45,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h3 className="mt-2">
-              <PageLink link={puertaBrand.homeLink}>
-                <BrandLogo size="small" brand={puertaBrand} />
-              </PageLink>
+              {getComponent(<BrandLogo size="small" brand={puertaBrand} />)}
             </h3>
             <p className="text-sm leading-6 text-neutral-600">
               <RichText
