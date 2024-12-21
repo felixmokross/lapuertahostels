@@ -111,3 +111,52 @@ jobs:
           working-directory: cms
       - run: npm run build
         working-directory: cms
+
+  e2e-tests:
+    name: End-to-End Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          working-directory: e2e
+      - name: Start database
+        run: docker-compose up -d && sleep 3
+        working-directory: e2e
+      - run: |
+          PAYLOAD_SECRET=$(openssl rand -hex 12) \
+            npm run prod-preview &
+        working-directory: cms
+        env:
+          ENABLE_E2E_USER: true
+          DATABASE_URL: mongodb://localhost:27017/payload
+          CACHE_REFRESH_TARGET_TYPE: single
+          CACHE_REFRESH_TARGET: http://localhost:3000
+          NEXT_PUBLIC_LIVE_PREVIEW_URL: http://localhost:3000
+          MEDIA_S3_BUCKET: lapuertahostels-media-preview
+          MEDIA_S3_REGION: eu-west-3
+          MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
+          MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+      - run: |
+          npm run build
+
+          SESSION_SECRET=$(openssl rand -hex 32) \
+            npm start &
+        working-directory: frontend
+        env:
+          IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
+          PAYLOAD_CMS_BASE_URL: http://localhost:3001
+          PAYLOAD_CMS_API_KEY: apikey
+          CANONICAL_HOSTNAME: localhost
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+        env:
+          FRONTEND_BASE_URL: http://localhost:3000
+          CMS_BASE_URL: http://localhost:3001
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
