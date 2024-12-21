@@ -132,7 +132,7 @@ jobs:
         working-directory: cms
       - run: |
           PAYLOAD_SECRET=$(openssl rand -hex 12) \
-            npm run prod-preview &
+            npm run prod-preview
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
