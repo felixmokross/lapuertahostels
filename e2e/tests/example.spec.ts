@@ -1,24 +1,20 @@
 import { test, expect } from "@playwright/test";
 import { createId } from "@paralleldrive/cuid2";
+import fs from "fs/promises";
 
 test("has title", async ({ page }) => {
-  const puertaBrand = await cmsGet("brands/puerta");
+  const puertaBrand = await cmsGetItem("brands/puerta");
   if (!puertaBrand) {
     console.log("Puerta brand not found, creating it");
-    const media = await cmsCreate("media", {
-      filename: "logo-puerta-simple.png",
-      mimeType: "image/png",
-    });
-    const homeLink = await cmsCreate("links", {
-      type: "external",
-      url: "/",
-    });
+    const logo = await fs.readFile("./logo-puerta-simple.png");
+    const media = await cmsFileCreate(
+      new File([logo], "logo-puerta-simple.png", { type: "image/png" }),
+    );
     await cmsCreate("brands", {
       id: "puerta",
       name: "La Puerta Hostels",
       logo: media.id,
       footer: { linkGroups: [] },
-      homeLink: homeLink.id,
     });
   }
 
@@ -50,29 +46,47 @@ test("has title", async ({ page }) => {
 });
 
 async function cmsCreate(collection: string, content: object) {
-  const result = await fetch(
-    new URL(`/api/${collection}`, process.env.CMS_BASE_URL),
-    {
-      method: "POST",
-      headers: {
-        Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(content),
+  const url = new URL(`/api/${collection}`, process.env.CMS_BASE_URL);
+  const result = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(content),
+  });
   if (!result.ok) {
-    throw new Error(`Failed to create test page: ${result.status}`);
+    console.error(`Request to ${url} returned: ${await result.text()}`);
+    throw new Error(`Failed with status code: ${result.status}`);
   }
 
   return (await result.json()).doc;
 }
 
-async function cmsGet(collection: string) {
-  const url = new URL(
-    `/api/${collection}?pagination=false`,
-    process.env.CMS_BASE_URL,
-  );
+async function cmsFileCreate(file: File) {
+  const url = new URL(`/api/media`, process.env.CMS_BASE_URL);
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("mimeType", file.type);
+
+  const result = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
+    },
+    body: formData,
+  });
+  if (!result.ok) {
+    console.error(`Request to ${url} returned: ${await result.text()}`);
+    throw new Error(`Failed with status code: ${result.status}`);
+  }
+
+  return (await result.json()).doc;
+}
+
+async function cmsGetItem(path: string) {
+  const url = new URL(`/api/${path}`, process.env.CMS_BASE_URL);
   const result = await fetch(url, {
     method: "GET",
     headers: {
@@ -85,8 +99,9 @@ async function cmsGet(collection: string) {
     if (result.status === 404) return null;
 
     console.error(`Request to ${url} returned: ${await result.text()}`);
-    throw new Error(`Failed to create test page: ${result.status}`);
+    throw new Error(`Failed with status code: ${result.status}`);
   }
 
-  return (await result.json()).docs;
+  const response = await result.json();
+  return response;
 }

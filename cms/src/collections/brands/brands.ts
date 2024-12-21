@@ -5,7 +5,7 @@ import {
   SanitizedCollectionConfig,
 } from "payload";
 import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
-import { canManageContent } from "../../common/access-control";
+import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { NewPage } from "@/payload-types";
@@ -68,9 +68,9 @@ export const Brands: CollectionConfig = {
     },
   },
   access: {
-    create: () => false,
+    create: ({ req }) => isAdmin(req),
     update: canManageContent,
-    delete: () => false,
+    delete: ({ req }) => isAdmin(req),
   },
   hooks: {
     afterChange: [
@@ -123,7 +123,6 @@ export const Brands: CollectionConfig = {
         create: () => false,
         update: () => false,
       },
-      required: true,
       admin: {
         position: "sidebar",
       },

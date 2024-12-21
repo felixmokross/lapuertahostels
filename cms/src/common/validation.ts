@@ -2,7 +2,9 @@ import { text } from "payload/shared";
 
 export function validateUrl(val: string | undefined | null, args: any) {
   if (val && !isValidHttpUrl(val)) {
-    return args.t("custom:validation.mustBeValidUrl");
+    return args.t
+      ? args.t("custom:validation.mustBeValidUrl")
+      : "Must be a valid URL";
   }
 
   return text(val, args);

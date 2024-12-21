@@ -131,15 +131,23 @@ export default buildConfig({
   endpoints: [primeFrontendCacheEndpoint],
   async onInit(payload) {
     if (process.env.ENABLE_E2E_USER === "true") {
-      await payload.create({
+      const users = await payload.find({
         collection: "users",
-        data: {
-          email: "e2e@lapuertahostels.co",
-          password: "password",
-          apiKey: "apikey",
-          role: "admin",
-        },
+        where: { email: { equals: "e2e@lapuertahostels.co" } },
+        pagination: false,
       });
+
+      if (users.totalDocs === 0) {
+        await payload.create({
+          collection: "users",
+          data: {
+            email: "e2e@lapuertahostels.co",
+            password: "password",
+            apiKey: "apikey",
+            role: "admin",
+          },
+        });
+      }
     }
   },
 });
