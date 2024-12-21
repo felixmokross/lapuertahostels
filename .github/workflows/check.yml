@@ -156,7 +156,9 @@ jobs:
           PAYLOAD_CMS_API_KEY: apikey
           CANONICAL_HOSTNAME: localhost
       - run: npx playwright install --with-deps chromium
+        working-directory: e2e  
       - run: npx playwright test
+        working-directory: e2e
         env:
           FRONTEND_BASE_URL: http://localhost:3000
           CMS_BASE_URL: http://localhost:3001
@@ -164,5 +166,5 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: playwright-report/
+          path: e2e/playwright-report/
           retention-days: 30
