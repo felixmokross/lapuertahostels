@@ -162,6 +162,7 @@ jobs:
         env:
           FRONTEND_BASE_URL: http://localhost:3000
           CMS_BASE_URL: http://localhost:3001
+          CMS_API_KEY: apikey
       - uses: actions/upload-artifact@v4
         if: always()
         with:
