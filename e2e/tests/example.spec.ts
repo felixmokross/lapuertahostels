@@ -4,6 +4,7 @@ import { createId } from "@paralleldrive/cuid2";
 test("has title", async ({ page }) => {
   const puertaBrand = await cmsGet("brands/puerta");
   if (!puertaBrand) {
+    console.log("Puerta brand not found, creating it");
     const media = await cmsCreate("media", {
       filename: "logo-puerta-simple.png",
       mimeType: "image/png",
@@ -68,20 +69,22 @@ async function cmsCreate(collection: string, content: object) {
 }
 
 async function cmsGet(collection: string) {
-  const result = await fetch(
-    new URL(`/api/${collection}?pagination=false`, process.env.CMS_BASE_URL),
-    {
-      method: "GET",
-      headers: {
-        Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-    },
+  const url = new URL(
+    `/api/${collection}?pagination=false`,
+    process.env.CMS_BASE_URL,
   );
+  const result = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!result.ok) {
     if (result.status === 404) return null;
 
+    console.error(`Request to ${url} returned: ${await result.text()}`);
     throw new Error(`Failed to create test page: ${result.status}`);
   }
 

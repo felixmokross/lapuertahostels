@@ -130,12 +130,7 @@ export default buildConfig({
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
   async onInit(payload) {
-    if (process.env.CI !== "true") return;
-    console.log("CI mode");
-
     if (process.env.ENABLE_E2E_USER === "true") {
-      console.warn("Creating e2e user");
-
       await payload.create({
         collection: "users",
         data: {
