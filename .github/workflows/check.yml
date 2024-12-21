@@ -134,7 +134,7 @@ jobs:
           npm run build
           mv .next/static .next/standalone/.next/static
 
-          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
+          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
@@ -170,4 +170,10 @@ jobs:
         with:
           name: playwright-report
           path: e2e/playwright-report/
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: payload-log
+          path: e2e/payload.log
           retention-days: 30
