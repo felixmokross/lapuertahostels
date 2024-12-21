@@ -123,7 +123,7 @@ jobs:
           working-directory: e2e
       - name: Start database
         run: docker compose up -d && sleep 3
-        working-directory: e2e
+        working-directory: cms
       - run: |
           PAYLOAD_SECRET=$(openssl rand -hex 12) \
             npm run prod-preview &
