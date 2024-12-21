@@ -131,8 +131,10 @@ jobs:
         run: docker compose up -d && sleep 3
         working-directory: cms
       - run: |
-          PAYLOAD_SECRET=$(openssl rand -hex 12) \
-            npm run prod-preview
+          npm run build
+          mv .next/static .next/standalone/.next/static
+
+          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
