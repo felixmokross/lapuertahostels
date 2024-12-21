@@ -10,10 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
-    "typescript": "^5.7.2",
+    "dotenv": "^16.4.7",
     "prettier": "^3.2.4",
-    "dotenv": "^16.4.7"
+    "typescript": "^5.7.2"
   }
 }
