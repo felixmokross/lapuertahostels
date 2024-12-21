@@ -121,6 +121,12 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: e2e
+      - uses: ./.github/actions/setup
+        with:
+          working-directory: cms
+      - uses: ./.github/actions/setup
+        with:
+          working-directory: frontend
       - name: Start database
         run: docker compose up -d && sleep 3
         working-directory: cms
