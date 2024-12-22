@@ -188,7 +188,9 @@ jobs:
           CANONICAL_HOSTNAME: localhost
       - name: Get Playwright version
         id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e \"console.log(require('./package-lock.json').dependencies['@playwright/test'].version)\")" >> $GITHUB_ENV
+        run: |
+          PLAYWRIGHT_VERSION=$(npm list @playwright/test --depth=0 | grep '@playwright/test@' | awk -F'@' '{print $3}')
+          echo "PLAYWRIGHT_VERSION=${PLAYWRIGHT_VERSION}" >> $GITHUB_ENV
         working-directory: e2e
       - name: Cache Playwright browsers
         uses: actions/cache@v4
