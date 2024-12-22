@@ -136,7 +136,7 @@ jobs:
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
           sleep 3
-          # curl -H "Author<ization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
+          # curl -H "Authorization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
@@ -148,6 +148,8 @@ jobs:
           MEDIA_S3_REGION: eu-west-3
           MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
           MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
+          OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
       - run: |
           npm run build
 
