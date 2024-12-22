@@ -143,6 +143,7 @@ export default buildConfig({
           data: {
             email: "e2e@lapuertahostels.co",
             password: "password",
+            enableAPIKey: true,
             apiKey: "apikey",
             role: "admin",
           },
