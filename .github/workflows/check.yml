@@ -134,7 +134,7 @@ jobs:
           npm run build
           mv .next/static .next/standalone/.next/static
 
-          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
+          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
