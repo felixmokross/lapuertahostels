@@ -7,6 +7,7 @@ import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 import { RichText, RichTextObject } from "~/common/rich-text";
 import { Input } from "~/common/input";
+import { ReactNode } from "react";
 
 type FooterProps = {
   content: Common["footer"];
@@ -20,8 +21,17 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
   const puertaBrand = allBrands.find((b) => b.id === "puerta");
   if (!puertaBrand) throw new Error("Puerta brand not found");
 
-  if (typeof content.address !== "object") {
+  if (content.address && typeof content.address !== "object") {
     throw new Error("Invalid address");
+  }
+
+  function getComponent(children: ReactNode) {
+    if (!puertaBrand) throw new Error("Puerta brand not found");
+    return puertaBrand.homeLink ? (
+      <PageLink link={puertaBrand.homeLink}>{children}</PageLink>
+    ) : (
+      <div>{children}</div>
+    );
   }
   return (
     <footer
@@ -35,16 +45,19 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h3 className="mt-2">
-              <PageLink link={puertaBrand.homeLink}>
-                <BrandLogo size="small" brand={puertaBrand} />
-              </PageLink>
+              {getComponent(<BrandLogo size="small" brand={puertaBrand} />)}
             </h3>
-            <p className="text-sm leading-6 text-neutral-600">
-              <RichText
-                content={content.address.richText as unknown as RichTextObject}
-                lineBreakHandling="line-break"
-              />
-            </p>
+            {content.address && (
+              <p className="text-sm leading-6 text-neutral-600">
+                <RichText
+                  content={
+                    (content.address as Text)
+                      .richText as unknown as RichTextObject
+                  }
+                  lineBreakHandling="line-break"
+                />
+              </p>
+            )}
             <div className="flex space-x-6">
               {content.socialLinks?.map((socialLink) => {
                 const social = socials[socialLink.platform];
@@ -146,14 +159,19 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         )}
         <div className="mt-8 border-t border-neutral-900/10 pt-8 sm:mt-10 lg:mt-12">
           <p className="text-xs leading-5 text-neutral-500">
-            &copy; {new Date().getFullYear()}{" "}
-            <RichText
-              content={
-                (content.copyright as Text)
-                  .richText as unknown as RichTextObject
-              }
-              lineBreakHandling="line-break"
-            />
+            &copy; {new Date().getFullYear()}
+            {content.copyright && (
+              <>
+                {" "}
+                <RichText
+                  content={
+                    (content.copyright as Text)
+                      .richText as unknown as RichTextObject
+                  }
+                  lineBreakHandling="line-break"
+                />
+              </>
+            )}
           </p>
         </div>
       </div>

@@ -129,4 +129,26 @@ export default buildConfig({
     : undefined,
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
+  async onInit(payload) {
+    if (process.env.ENABLE_E2E_USER === "true") {
+      const users = await payload.find({
+        collection: "users",
+        where: { email: { equals: "e2e@lapuertahostels.co" } },
+        pagination: false,
+      });
+
+      if (users.totalDocs === 0) {
+        await payload.create({
+          collection: "users",
+          data: {
+            email: "e2e@lapuertahostels.co",
+            password: "password",
+            enableAPIKey: true,
+            apiKey: "apikey",
+            role: "admin",
+          },
+        });
+      }
+    }
+  },
 });

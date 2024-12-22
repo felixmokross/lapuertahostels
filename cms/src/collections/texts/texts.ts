@@ -28,7 +28,7 @@ export const Texts: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "type", "comment"],
-    listSearchableFields: ["id", "title"],
+    listSearchableFields: ["id", "title", "comment"],
   },
   hooks: {
     afterChange: [refreshCacheHook()],

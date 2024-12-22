@@ -6,6 +6,7 @@ import { BrandId } from "~/brands";
 import { RichTextObject } from "~/common/rich-text";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
+import { ReactNode } from "react";
 
 export type AccommodationSelectorBlockProps = NonNullable<
   NewPage["layout"]
@@ -50,7 +51,11 @@ export function AccommodationSelectorBlock({
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
           {cards.map((card) => (
-            <AccommodationCard key={card.id} {...card} />
+            <AccommodationCard
+              key={card.id}
+              {...card}
+              brand={card.brand as Brand}
+            />
           ))}
         </div>
       </div>
@@ -58,14 +63,16 @@ export function AccommodationSelectorBlock({
   );
 }
 
-type AccommodationCardProps = AccommodationSelectorBlockProps["cards"][number];
+type AccommodationCardProps = Omit<
+  AccommodationSelectorBlockProps["cards"][number],
+  "brand"
+> & { brand: Brand };
 
 function AccommodationCard({
   brand,
   description,
   image,
 }: AccommodationCardProps) {
-  brand = brand as Brand;
   const brandId = brand.id as BrandId;
 
   if (typeof image !== "object") {
@@ -80,17 +87,26 @@ function AccommodationCard({
     throw new Error("Invalid description");
   }
 
-  return (
-    <PageLink
-      link={brand.homeLink}
-      className={cn(
-        "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
-        {
-          "bg-aqua-600 hover:bg-aqua-200": brandId === "aqua",
-          "bg-azul-600 hover:bg-azul-200": brandId === "azul",
-        },
-      )}
-    >
+  const componentClassName = cn(
+    "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
+    {
+      "bg-aqua-600 hover:bg-aqua-200": brandId === "aqua",
+      "bg-azul-600 hover:bg-azul-200": brandId === "azul",
+    },
+  );
+
+  function getComponent(children: ReactNode) {
+    return brand.homeLink ? (
+      <PageLink link={brand.homeLink} className={componentClassName}>
+        {children}
+      </PageLink>
+    ) : (
+      <div className={componentClassName}>{children}</div>
+    );
+  }
+
+  return getComponent(
+    <>
       <div className="relative aspect-[1/1] overflow-hidden bg-white sm:aspect-[4/3] md:aspect-[1/1] lg:aspect-[4/3] xl:aspect-[16/9]">
         <MediaImage
           media={image}
@@ -119,6 +135,6 @@ function AccommodationCard({
           {description.richText as unknown as RichTextObject}
         </RichTextParagraph>
       </div>
-    </PageLink>
+    </>,
   );
 }
