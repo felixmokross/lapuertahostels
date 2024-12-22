@@ -161,7 +161,6 @@ jobs:
         run: docker compose up -d && sleep 3
         working-directory: cms
       - run: |
-          ls -la
           mv .next/static .next/standalone/.next/static
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
@@ -187,7 +186,17 @@ jobs:
           PAYLOAD_CMS_BASE_URL: http://localhost:3001
           PAYLOAD_CMS_API_KEY: apikey
           CANONICAL_HOSTNAME: localhost
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e \"console.log(require('./package-lock.json').dependencies['@playwright/test'].version)\")" >> $GITHUB_ENV
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - run: npx playwright install --with-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         working-directory: e2e
       - run: npx playwright test
         working-directory: e2e
