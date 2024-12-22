@@ -134,7 +134,7 @@ jobs:
           npm run build
           mv .next/static .next/standalone/.next/static
 
-          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
+          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
           sleep 3
           curl -H "Authorization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
         working-directory: cms
