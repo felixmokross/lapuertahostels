@@ -118,7 +118,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: cms-build
-          path: cms/.next
+          path: cms/.next/
 
   e2e-tests:
     name: End-to-End Tests
