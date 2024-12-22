@@ -68,6 +68,10 @@ jobs:
           working-directory: frontend
       - run: npm run build
         working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/build
 
   frontend-chromatic:
     name: Frontend / Chromatic
@@ -109,29 +113,54 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: cms
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/cms/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - run: npm run build
         working-directory: cms
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cms-build
+          path: cms/.next
+          include-hidden-files: true
 
   e2e-tests:
     name: End-to-End Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    needs: [frontend-build, cms-build]
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: bahmutov/npm-install@v1
         with:
           working-directory: e2e
-      - uses: ./.github/actions/setup
+      - uses: bahmutov/npm-install@v1
         with:
           working-directory: cms
-      - uses: ./.github/actions/setup
+      - uses: bahmutov/npm-install@v1
         with:
           working-directory: frontend
+      - uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/build
+      - uses: actions/download-artifact@v4
+        with:
+          name: cms-build
+          path: cms/.next
       - name: Start database
         run: docker compose up -d && sleep 3
         working-directory: cms
       - run: |
-          npm run build
           mv .next/static .next/standalone/.next/static
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
@@ -149,8 +178,6 @@ jobs:
           IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
           OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
       - run: |
-          npm run build
-
           SESSION_SECRET=$(openssl rand -hex 32) \
             npm start &
         working-directory: frontend
@@ -159,8 +186,21 @@ jobs:
           PAYLOAD_CMS_BASE_URL: http://localhost:3001
           PAYLOAD_CMS_API_KEY: apikey
           CANONICAL_HOSTNAME: localhost
+      - name: Get Playwright version
+        id: playwright-version
+        run: |
+          PLAYWRIGHT_VERSION=$(npm list @playwright/test --depth=0 | grep '@playwright/test@' | awk -F'@' '{print $3}')
+          echo "playwright_version=${PLAYWRIGHT_VERSION}" >> $GITHUB_OUTPUT
+        working-directory: e2e
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.playwright_version }}
       - run: npx playwright install --with-deps chromium
-        working-directory: e2e  
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: e2e
       - run: npx playwright test
         working-directory: e2e
         env:
