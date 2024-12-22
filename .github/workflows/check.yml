@@ -161,6 +161,9 @@ jobs:
         run: docker compose up -d && sleep 3
         working-directory: cms
       - run: |
+          ls -la
+          ls -la cms
+          ls -la ..
           mv .next/static .next/standalone/.next/static
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
