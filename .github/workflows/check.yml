@@ -136,11 +136,11 @@ jobs:
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
           sleep 3
-          # curl -H "Authorization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
+          curl -H "Authorization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
-          DATABASE_URL: mongodb://localhost:27017/payload
+          DATABASE_URI: mongodb://localhost:27017/payload
           CACHE_REFRESH_TARGET_TYPE: single
           CACHE_REFRESH_TARGET: http://localhost:3000
           NEXT_PUBLIC_LIVE_PREVIEW_URL: http://localhost:3000
