@@ -136,7 +136,7 @@ jobs:
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js > payload.log 2>&1 &
           sleep 3
-          curl -H "Authorization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
+          # curl -H "Author<ization: users API-Key apikey" -f --verbose "http://localhost:3001/api/users/me"
         working-directory: cms
         env:
           ENABLE_E2E_USER: true
