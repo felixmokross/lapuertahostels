@@ -68,10 +68,6 @@ jobs:
           working-directory: frontend
       - run: pnpm build
         working-directory: frontend
-      - uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: frontend/build
 
   frontend-chromatic:
     name: Frontend / Chromatic
@@ -124,17 +120,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - run: pnpm build
         working-directory: cms
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cms-build
-          path: cms/.next
-          include-hidden-files: true
 
   e2e-tests:
     name: End-to-End Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    needs: [frontend-build, cms-build]
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -158,18 +148,22 @@ jobs:
       - name: "Install dependencies"
         run: pnpm install
         working-directory: frontend
-      - uses: actions/download-artifact@v4
-        with:
-          name: frontend-build
-          path: frontend/build
-      - uses: actions/download-artifact@v4
-        with:
-          name: cms-build
-          path: cms/.next
       - name: Start database
         run: docker compose up -d && sleep 3
         working-directory: cms
+      - run: pnpm build
+        working-directory: frontend
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/cms/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - run: |
+          pnpm build
           mv .next/static .next/standalone/.next/static
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
