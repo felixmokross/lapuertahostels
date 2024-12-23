@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "update-types": "cd ../cms && npm run generate:types && cd - && npm run copy-types",
+    "update-types": "cd ../cms && pnpm generate:types && cd - && pnpm copy-types",
     "copy-types": "cp ../cms/src/payload-types.ts ./app",
     "build": "remix vite:build",
     "dev": "remix vite:dev",

@@ -20,7 +20,7 @@ jobs:
         with:
           working-directory: frontend
       - uses: ./.github/actions/populate-cms-types
-      - run: npm run lint -- --max-warnings=0
+      - run: pnpm lint -- --max-warnings=0
         working-directory: frontend
 
   frontend-format:
@@ -31,7 +31,7 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-      - run: npm run check-format
+      - run: pnpm check-format
         working-directory: frontend
 
   frontend-typecheck:
@@ -43,7 +43,7 @@ jobs:
         with:
           working-directory: frontend
       - uses: ./.github/actions/populate-cms-types
-      - run: npm run typecheck
+      - run: pnpm typecheck
         working-directory: frontend
 
   frontend-unit-tests:
@@ -55,7 +55,7 @@ jobs:
         with:
           working-directory: frontend
       - uses: ./.github/actions/populate-cms-types
-      - run: npm run test
+      - run: pnpm test
         working-directory: frontend
 
   frontend-build:
@@ -66,7 +66,7 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: frontend
-      - run: npm run build
+      - run: pnpm build
         working-directory: frontend
       - uses: actions/upload-artifact@v4
         with:
@@ -102,7 +102,7 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           working-directory: cms
-      - run: npm run check-format
+      - run: pnpm check-format
         working-directory: cms
 
   cms-build:
@@ -122,7 +122,7 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      - run: npm run build
+      - run: pnpm build
         working-directory: cms
       - uses: actions/upload-artifact@v4
         with:
@@ -137,18 +137,23 @@ jobs:
     needs: [frontend-build, cms-build]
     steps:
       - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: e2e
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: cms
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
+          cache: "pnpm"
+      - name: "Install dependencies"
+        run: pnpm install
+        working-directory: e2e
+      - name: "Install dependencies"
+        run: pnpm install
+        working-directory: cms
+      - name: "Install dependencies"
+        run: pnpm install
+        working-directory: frontend
       - uses: actions/download-artifact@v4
         with:
           name: frontend-build
@@ -179,7 +184,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
       - run: |
           SESSION_SECRET=$(openssl rand -hex 32) \
-            npm start &
+            pnpm start &
         working-directory: frontend
         env:
           IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
@@ -189,7 +194,7 @@ jobs:
       - name: Get Playwright version
         id: playwright-version
         run: |
-          PLAYWRIGHT_VERSION=$(npm list @playwright/test --depth=0 | grep '@playwright/test@' | awk -F'@' '{print $3}')
+          PLAYWRIGHT_VERSION=$(pnpm list @playwright/test --depth=0 | grep '@playwright/test@' | awk -F'@' '{print $3}')
           echo "playwright_version=${PLAYWRIGHT_VERSION}" >> $GITHUB_OUTPUT
         working-directory: e2e
       - name: Cache Playwright browsers
