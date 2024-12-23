@@ -145,7 +145,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          cache-dependency-path: frontend/pnpm-lock.yaml, cms/pnpm-lock.yaml, e2e/pnpm-lock.yaml
+          cache-dependency-path: |
+            frontend/pnpm-lock.yaml
+            cms/pnpm-lock.yaml
+            e2e/pnpm-lock.yaml
       - name: "Install dependencies"
         run: pnpm install
         working-directory: e2e
