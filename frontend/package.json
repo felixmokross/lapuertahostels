@@ -25,6 +25,7 @@
     "@remix-run/react": "^2.8.1",
     "@remix-run/route-config": "^2.15.0",
     "@remix-run/serve": "^2.8.1",
+    "@testing-library/jest-dom": "^6.6.3",
     "@vitejs/plugin-react": "^4.2.1",
     "i18next": "^23.7.11",
     "i18next-browser-languagedetector": "^7.2.0",

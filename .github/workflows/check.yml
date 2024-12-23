@@ -20,7 +20,7 @@ jobs:
         with:
           working-directory: frontend
       - uses: ./.github/actions/populate-cms-types
-      - run: pnpm lint -- --max-warnings=0
+      - run: pnpm lint --max-warnings=0
         working-directory: frontend
 
   frontend-format:
