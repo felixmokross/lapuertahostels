@@ -32,12 +32,6 @@ importers:
       '@remix-run/serve':
         specifier: ^2.8.1
         version: 2.15.0(typescript@5.7.2)
-      '@testing-library/jest-dom':
-        specifier: ^6.6.3
-        version: 6.6.3
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.3.4(vite@5.4.11(@types/node@22.10.1))
       i18next:
         specifier: ^23.7.11
         version: 23.16.8
@@ -90,6 +84,9 @@ importers:
       '@storybook/addon-links':
         specifier: ^8.0.8
         version: 8.4.6(react@18.3.1)(storybook@8.4.6(prettier@3.4.1))
+      '@storybook/addon-viewport':
+        specifier: ^8.4.7
+        version: 8.4.7(storybook@8.4.6(prettier@3.4.1))
       '@storybook/blocks':
         specifier: ^8.0.8
         version: 8.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.6(prettier@3.4.1))
@@ -108,6 +105,9 @@ importers:
       '@testing-library/dom':
         specifier: ^10.4.0
         version: 10.4.0
+      '@testing-library/jest-dom':
+        specifier: ^6.6.3
+        version: 6.6.3
       '@testing-library/react':
         specifier: ^16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -120,6 +120,9 @@ importers:
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.4
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.3.4(vite@5.4.11(@types/node@22.10.1))
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.20(postcss@8.4.49)
@@ -1246,6 +1249,11 @@ packages:
     resolution: {integrity: sha512-BuQll5YzOCpMS7p5Rsw9wcmi8hTnEKyg6+qAbkZNfiZ2JhXCa1GFUqX725fF1whpYVQULtkQxU8r+vahoRn7Yg==}
     peerDependencies:
       storybook: ^8.4.6
+
+  '@storybook/addon-viewport@8.4.7':
+    resolution: {integrity: sha512-hvczh/jjuXXcOogih09a663sRDDSATXwbE866al1DXgbDFraYD/LxX/QDb38W9hdjU9+Qhx8VFIcNWoMQns5HQ==}
+    peerDependencies:
+      storybook: ^8.4.7
 
   '@storybook/blocks@8.4.6':
     resolution: {integrity: sha512-Gzbx8hM7ZQIHlQELcFIMbY1v+r1Po4mlinq0QVPtKS4lBcW4eZIsesbxOaL+uFNrxb583TLFzXo0DbRPzS46sg==}
@@ -5904,6 +5912,11 @@ snapshots:
       storybook: 8.4.6(prettier@3.4.1)
 
   '@storybook/addon-viewport@8.4.6(storybook@8.4.6(prettier@3.4.1))':
+    dependencies:
+      memoizerific: 1.11.3
+      storybook: 8.4.6(prettier@3.4.1)
+
+  '@storybook/addon-viewport@8.4.7(storybook@8.4.6(prettier@3.4.1))':
     dependencies:
       memoizerific: 1.11.3
       storybook: 8.4.6(prettier@3.4.1)
