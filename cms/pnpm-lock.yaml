@@ -32,6 +32,9 @@ importers:
       '@payloadcms/ui':
         specifier: ^3.11.0
         version: 3.11.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.11.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
+      bson:
+        specifier: ^6.10.1
+        version: 6.10.1
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
