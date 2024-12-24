@@ -48,10 +48,6 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: "pnpm"
-        cache-dependency-path: |
-          frontend/pnpm-lock.yaml
-          cms/pnpm-lock.yaml
     - run: pnpm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash
       working-directory: frontend
