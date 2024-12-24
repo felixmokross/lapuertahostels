@@ -12,6 +12,7 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+RUN corepack enable pnpm
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -21,17 +22,17 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
 # Install node modules
-COPY --link package-lock.json package.json ./
-RUN npm ci --include=dev
+COPY --link pnpm-lock.yaml package.json ./
+RUN pnpm install --prod=false --frozen-lockfile
 
 # Copy application code
 COPY --link . .
 
 # Build application
-RUN npm run build
+RUN pnpm build
 
 # Remove development dependencies
-RUN npm prune --omit=dev
+RUN pnpm prune --prod
 
 
 # Final stage for app image
@@ -42,4 +43,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+CMD [ "pnpm", "start" ]

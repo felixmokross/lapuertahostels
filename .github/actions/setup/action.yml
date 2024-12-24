@@ -5,9 +5,16 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ env.PNPM_VERSION }}
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - uses: bahmutov/npm-install@v1
-      with:
-        working-directory: ${{ inputs.working-directory }}
+        cache: "pnpm"
+        cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
+    - name: "Install dependencies"
+      run: pnpm install
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
