@@ -8,6 +8,7 @@ on:
 
 env:
   NODE_VERSION: 20
+  PNPM_VERSION: 9
   STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/staging
 
 jobs:
@@ -130,7 +131,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: ${{ env.PNPM_VERSION }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
