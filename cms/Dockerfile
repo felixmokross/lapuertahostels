@@ -41,6 +41,7 @@ RUN \
 
 # Production image, copy all the files and run next
 FROM base AS runner
+RUN corepack enable pnpm
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -72,5 +73,3 @@ ENV PORT 3001
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
 CMD HOSTNAME="0.0.0.0" node server.js
-
-RUN corepack enable pnpm
