@@ -12,6 +12,7 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+RUN corepack enable pnpm
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
