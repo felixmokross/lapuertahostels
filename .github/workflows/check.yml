@@ -149,8 +149,10 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install frontend and e2e dependencies
+        run: pnpm --filter e2e --filter frontend install
+      - name: Deploy CMS dependency
+        run: pnpm --filter cms deploy cms.deployed
       - name: Start database
         run: docker compose up -d && sleep 3
         working-directory: cms
@@ -161,7 +163,7 @@ jobs:
           mv .next/static .next/standalone/.next/static
 
           PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
-        working-directory: cms
+        working-directory: cms.deployed
         env:
           ENABLE_E2E_USER: true
           DATABASE_URI: mongodb://localhost:27017/payload
