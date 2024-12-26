@@ -3,7 +3,7 @@ runs:
   using: "composite"
   steps:
     - name: "Install dependencies"
-      run: pnpm install --filter cms
+      run: pnpm --filter cms install
       shell: bash
       working-directory: cms
     - run: pnpm generate:types

@@ -151,7 +151,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-
       - name: Install frontend and e2e dependencies
         run: pnpm --filter e2e --filter frontend install
-      - name: Deploy CMS dependency
+      - name: Install CMS dependencies (pnpm deploy)
         run: pnpm --filter cms deploy cms.deployed
       - name: Start database
         run: docker compose up -d && sleep 3
@@ -160,9 +160,9 @@ jobs:
         working-directory: frontend
       - run: |
           pnpm build
-          mv .next/static .next/standalone/.next/static
+          mv .next/static .next/standalone/cms.deployed/.next/static
 
-          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/server.js &
+          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) node .next/standalone/cms.deployed/server.js &
         working-directory: cms.deployed
         env:
           ENABLE_E2E_USER: true
