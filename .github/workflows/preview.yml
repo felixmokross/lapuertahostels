@@ -56,13 +56,13 @@ jobs:
         run: |
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
-            --config ./fly.preview.toml \
+            --dockerfile ./Dockerfile.frontend \
+            --config frontend/fly.preview.toml \
             --ha=false \
             --image-label v${{ steps.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
             --env CANONICAL_HOSTNAME=${{ steps.app-name.outputs.app-domain }} \
-        working-directory: frontend
 
   cms-preview:
     name: CMS / Preview
