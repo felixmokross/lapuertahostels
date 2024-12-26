@@ -14,7 +14,12 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+
+      // Specify path to resolve React types
+      // – otherwise the PNPM workspace might not pick up the correct version
+      // See https://github.com/pnpm/pnpm/issues/7158
+      "react": ["./node_modules/@types/react"]
     },
 
     // Remix takes care of building everything in `remix build`.
