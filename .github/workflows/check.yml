@@ -115,10 +115,10 @@ jobs:
           path: |
             ${{ github.workspace }}/cms/.next/cache
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-${{ hashFiles('cms/**/*.js', 'cms/**/*.jsx', 'cms/**/*.ts', 'cms/**/*.tsx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('cms/**/*.js', 'cms/**/*.jsx', 'cms/**/*.ts', 'cms/**/*.tsx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - run: pnpm build
         working-directory: cms
 
@@ -142,10 +142,10 @@ jobs:
           path: |
             ${{ github.workspace }}/cms.deployed/.next/cache
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-${{ hashFiles('cms/**/*.js', 'cms/**/*.jsx', 'cms/**/*.ts', 'cms/**/*.tsx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('cms/**/*.js', 'cms/**/*.jsx', 'cms/**/*.ts', 'cms/**/*.tsx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('cms/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - name: Install frontend and e2e dependencies
         run: pnpm --filter e2e --filter frontend install
       - name: Install CMS dependencies (pnpm deploy)
