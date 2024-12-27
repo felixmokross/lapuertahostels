@@ -13,7 +13,7 @@ runs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: "pnpm"
-        cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
+        cache-dependency-path: pnpm-lock.yaml
     - name: Install dependencies
       run: pnpm --filter ${{ inputs.working-directory }} install # we assume here that the project name matches the directory
       shell: bash
