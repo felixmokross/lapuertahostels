@@ -31,6 +31,7 @@ export const Brands: CollectionConfig = {
     id: true,
     name: true,
     homeLink: true,
+    baseTitle: true,
   },
   admin: {
     useAsTitle: "name",
@@ -133,10 +134,28 @@ export const Brands: CollectionConfig = {
       tabs: [
         {
           label: {
-            en: "Logo",
-            es: "Logo",
+            en: "General",
+            es: "General",
           },
           fields: [
+            {
+              name: "baseTitle",
+              label: {
+                en: "Base Title",
+                es: "Título Base",
+              },
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "plainText" },
+              },
+              admin: {
+                description: {
+                  en: "The base title is appended to the titles of the brand’s pages. If the page does not have a title, the base title will be used as the title. Include important keywords in the title for SEO.",
+                  es: "El título base se añade a los títulos de las páginas de la marca. Si la página no tiene un título, se usará el título base como título. Incluye palabras clave importantes en el título para SEO.",
+                },
+              },
+            },
             {
               ...imageField,
               name: "logo",
