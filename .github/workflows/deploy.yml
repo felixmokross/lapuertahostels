@@ -128,7 +128,6 @@ jobs:
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
-        working-directory: cms
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
