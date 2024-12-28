@@ -47,7 +47,9 @@ export default async function handleRequest(
       ...i18nConfig, // spread the configuration
       lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
-      backend: { loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json") },
+      backend: {
+        loadPath: resolve("./public/assets/locales/{{lng}}/{{ns}}.json"),
+      },
     });
 
   return isbot(request.headers.get("user-agent"))

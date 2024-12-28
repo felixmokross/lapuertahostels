@@ -13,7 +13,7 @@ async function loadResources() {
     for (const n of ns) {
       // TODO this seems weird, it produces a warning by Storybook (importing from 'public')
       // Also we can't check if the file exists – we should rethink the approach how we can load these files
-      const data = await import(`../public/locales/${lng}/${n}.json`);
+      const data = await import(`../public/assets/locales/${lng}/${n}.json`);
       resources[lng][n] = data;
     }
   }

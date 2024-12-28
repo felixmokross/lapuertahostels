@@ -1,21 +1,21 @@
 {
-  "name": "La Puerta Hostels",
-  "short_name": "La Puerta Hostels",
+  "name": "Puerta Aqua",
+  "short_name": "Puerta Aqua",
   "icons": [
     {
-      "src": "/puerta/web-app-manifest-192x192.png",
+      "src": "/assets/aqua/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/puerta/web-app-manifest-512x512.png",
+      "src": "/assets/aqua/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#B37332",
+  "theme_color": "#2dd4bf",
   "background_color": "#ffffff",
   "display": "standalone"
 }
