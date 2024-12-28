@@ -37,12 +37,12 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Copy source files so that we can run scripts like 'payload migrate'
-COPY --from=builder /app/cms.deployed ./cms.deployed
+COPY --from=builder /app/cms.deployed .
 
-RUN mv cms.deployed/.next/static cms.deployed/.next/standalone/cms.deployed/.next/static
+RUN mv .next/static .next/standalone/cms.deployed/.next/static
 
 # Set the correct permission for prerender cache
-RUN chown nextjs:nodejs cms.deployed/.next
+RUN chown nextjs:nodejs .next
 
 USER nextjs
 
@@ -52,4 +52,4 @@ ENV PORT 3001
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node cms.deployed/.next/standalone/cms.deployed/server.js
+CMD HOSTNAME="0.0.0.0" node .next/standalone/cms.deployed/server.js

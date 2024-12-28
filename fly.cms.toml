@@ -23,4 +23,4 @@ primary_region = 'cdg'
   cpus = 1
   
 [deploy]
-  release_command = "cd cms.deployed && pnpm payload migrate"
+  release_command = "pnpm payload migrate"
