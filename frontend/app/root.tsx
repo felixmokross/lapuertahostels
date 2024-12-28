@@ -50,43 +50,40 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Playfair%20Display:wght@400..500&display=swap",
   },
-  {
-    rel: "apple-touch-icon",
-    sizes: "180x180",
-    href: "/apple-touch-icon.png",
-  },
-  {
-    rel: "icon",
-    type: "image/png",
-    sizes: "32x32",
-    href: "/favicon-32x32.png",
-  },
-  {
-    rel: "icon",
-    type: "image/png",
-    sizes: "16x16",
-    href: "/favicon-16x16.png",
-  },
-  {
-    rel: "manifest",
-    href: "/site.webmanifest",
-  },
-  {
-    rel: "mask-icon",
-    href: "/safari-pinned-tab.svg",
-    color: "#603f1f",
-  },
 ];
 
-export const meta: MetaFunction<typeof loader> = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const brandId = (data?.brand?.id as BrandId) ?? "puerta";
   return [
     {
-      name: "msapplication-TileColor",
-      content: "#00aba9",
+      tagName: "link",
+      rel: "icon",
+      type: "image/png",
+      sizes: "96x96",
+      href: `/${brandId}/favicon-96x96.png`,
     },
     {
-      name: "theme-color",
-      content: "#e2d0b6",
+      tagName: "link",
+      rel: "icon",
+      type: "image/svg+xml",
+      href: `/${brandId}/favicon.svg`,
+    },
+    {
+      tagName: "link",
+      rel: "shortcut icon",
+      href: `/${brandId}/favicon.ico`,
+    },
+    {
+      tagName: "link",
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      href: `/${brandId}/apple-touch-icon.png`,
+    },
+    {
+      tagName: "link",
+      rel: "manifest",
+      sizes: "180x180",
+      href: `/${brandId}/site.manifest`,
     },
   ];
 };
