@@ -60,30 +60,30 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       rel: "icon",
       type: "image/png",
       sizes: "96x96",
-      href: `/${brandId}/favicon-96x96.png`,
+      href: `/assets/${brandId}/favicon-96x96.png`,
     },
     {
       tagName: "link",
       rel: "icon",
       type: "image/svg+xml",
-      href: `/${brandId}/favicon.svg`,
+      href: `/assets/${brandId}/favicon.svg`,
     },
     {
       tagName: "link",
       rel: "shortcut icon",
-      href: `/${brandId}/favicon.ico`,
+      href: `/assets/${brandId}/favicon.ico`,
     },
     {
       tagName: "link",
       rel: "apple-touch-icon",
       sizes: "180x180",
-      href: `/${brandId}/apple-touch-icon.png`,
+      href: `/assets/${brandId}/apple-touch-icon.png`,
     },
     {
       tagName: "link",
       rel: "manifest",
       sizes: "180x180",
-      href: `/${brandId}/site.webmanifest`,
+      href: `/assets/${brandId}/site.webmanifest`,
     },
   ];
 };
