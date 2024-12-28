@@ -1,7 +1,11 @@
 node_modules
 .env
 *.log
+.DS_Store
 
 /frontend/.cache
 /frontend/build
 /frontend/storybook-static
+
+/cms/.next
+/cms/src/payload-types.ts
