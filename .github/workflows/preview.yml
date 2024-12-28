@@ -56,13 +56,12 @@ jobs:
         run: |
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
-            --config ./fly.preview.toml \
+            --config fly.frontend.preview.toml \
             --ha=false \
             --image-label v${{ steps.version.outputs.version }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
             --env CANONICAL_HOSTNAME=${{ steps.app-name.outputs.app-domain }} \
-        working-directory: frontend
 
   cms-preview:
     name: CMS / Preview
@@ -115,6 +114,7 @@ jobs:
         run: |
           flyctl deploy \
             --app ${{ steps.app-name.outputs.app-name }} \
+            --config fly.cms.toml \
             --ha=false \
             --image-label v${{ steps.version.outputs.version }} \
             --env CACHE_REFRESH_TARGET_TYPE=fly \
@@ -123,7 +123,6 @@ jobs:
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
             --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
-        working-directory: cms
 
   clean-preview:
     name: Clean Preview

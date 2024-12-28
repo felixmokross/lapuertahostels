@@ -29,7 +29,7 @@ export function StoryBlock({
     throw new Error("Invalid text");
   }
 
-  imagePosition = image ? (imagePosition ?? "left") : undefined;
+  imagePosition = image ? imagePosition ?? "left" : undefined;
   return (
     <div
       id={elementId || undefined}
