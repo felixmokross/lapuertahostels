@@ -222,8 +222,8 @@ export const NewPages: CollectionConfig = {
       admin: {
         position: "sidebar",
         description: {
-          en: "The title is shown in the title bar of the browser and in search engine results.",
-          es: "El título se muestra en la barra de título del navegador y en los resultados de los motores de búsqueda.",
+          en: "The title is shown in the title bar of the browser and in search engine results. Include important keywords for SEO. The brand’s base title is appended to the title.",
+          es: "El título se muestra en la barra de título del navegador y en los resultados de los motores de búsqueda. Incluye palabras clave importantes para el SEO. El título base de la marca se añade al título.",
         },
       },
     },
