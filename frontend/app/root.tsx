@@ -83,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       tagName: "link",
       rel: "manifest",
       sizes: "180x180",
-      href: `/${brandId}/site.manifest`,
+      href: `/${brandId}/site.webmanifest`,
     },
   ];
 };
