@@ -16,6 +16,7 @@ export async function handleIncomingRequest(request: Request) {
   redirectIfBrandSubdomain(url, "azul");
 
   redirectIfNonCanonicalHostname(url);
+  redirectIfPathnameEndsWithSlash(url);
 
   const { locale, pageUrl } = getLocaleAndPageUrl(toRelativeUrl(url));
 
@@ -54,6 +55,13 @@ function redirectIfNonCanonicalHostname(url: URL) {
   if (url.hostname !== canonicalHostname) {
     url.hostname = canonicalHostname;
     throw redirect(url.toString(), { status: 301 });
+  }
+}
+
+function redirectIfPathnameEndsWithSlash(url: URL) {
+  if (url.pathname !== "/" && url.pathname.endsWith("/")) {
+    url.pathname = url.pathname.slice(0, -1);
+    throw redirect(toRelativeUrl(url), { status: 301 });
   }
 }
 
