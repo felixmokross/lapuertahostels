@@ -59,7 +59,7 @@ jobs:
       - run: pnpm test
         working-directory: frontend
 
-  frontend-build:
+  frontend-build-push:
     name: Frontend / Build and Push
     runs-on: ubuntu-latest
     permissions:
@@ -124,8 +124,8 @@ jobs:
       - run: pnpm check-format
         working-directory: cms
 
-  cms-build:
-    name: CMS / Build
+  cms-build-push:
+    name: CMS / Build and Push
     runs-on: ubuntu-latest
     permissions:
       packages: write
