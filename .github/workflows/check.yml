@@ -107,20 +107,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
         with:
-          working-directory: cms
-      - uses: actions/cache@v4
+          fetch-depth: 0
+      - uses: ./.github/actions/version
+        id: version
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          path: |
-            ${{ github.workspace }}/cms/.next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('cms/**/*.js', 'cms/**/*.jsx', 'cms/**/*.ts', 'cms/**/*.tsx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
-      - run: pnpm build
-        working-directory: cms
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Image name
+        id: image-name
+        run: |
+          echo "image=ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cms:${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
+      - name: Build Docker Image
+        run: |
+          docker build -f Dockerfile.cms -t ghcr.io/${{ steps.image-name.outputs.image }} .
+      - name: Push Docker Image
+        run: |
+          docker push ghcr.io/${{ steps.image-name.outputs.image }}
 
   e2e-tests:
     name: End-to-End Tests
