@@ -184,7 +184,7 @@ jobs:
         working-directory: cms
       - name: Start CMS
         run: |
-          docker run --name cms -d -p 3001:3001 \
+          docker run --name cms -d -p 3001:3001 --network=host \
             --env PAYLOAD_SECRET=$(openssl rand -hex 12) \
             --env ENABLE_E2E_USER=true \
             --env DATABASE_URI=mongodb://host.docker.internal:27017/payload \
@@ -202,7 +202,7 @@ jobs:
           docker logs cms
       - name: Start Frontend
         run: |
-          docker run -d -p 3000:3000 \
+          docker run -d -p 3000:3000 --network=host \
             --env SESSION_SECRET=$(openssl rand -hex 32) \
             --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/preview \
             --env PAYLOAD_CMS_BASE_URL=http://host.docker.internal:3001 \
