@@ -8,7 +8,7 @@ services:
       IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
       PAYLOAD_CMS_BASE_URL: http://cms:3001
       PAYLOAD_CMS_API_KEY: apikey
-      CANONICAL_HOSTNAME: frontend
+      CANONICAL_HOSTNAME: localhost
 
   cms:
     image: ${CMS_IMAGE}
