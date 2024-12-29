@@ -64,11 +64,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
         with:
-          working-directory: frontend
-      - run: pnpm build
-        working-directory: frontend
+          fetch-depth: 0
+      - uses: ./.github/actions/version
+        id: version
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Image name
+        id: image-name
+        run: |
+          echo "image=ghcr.io/${{ github.repository }}-frontend:${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
+      - name: Build Docker Image
+        run: |
+          docker build -f Dockerfile.frontend -t ghcr.io/${{ steps.image-name.outputs.image }} .
+      - name: Push Docker Image
+        run: |
+          docker push ghcr.io/${{ steps.image-name.outputs.image }}
 
   frontend-chromatic:
     name: Frontend / Chromatic
