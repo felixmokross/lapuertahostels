@@ -4,12 +4,17 @@ import {
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, MetaFunction, useActionData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { Input } from "~/common/input";
 import { handleIncomingRequest } from "~/common/routing.server";
 import { commitSession, getSession } from "~/sessions.server";
+
+export const meta: MetaFunction<typeof loader> = ({ matches }) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
+  return [...parentMeta, { name: "robots", content: "noindex, nofollow" }];
+};
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== "POST") {

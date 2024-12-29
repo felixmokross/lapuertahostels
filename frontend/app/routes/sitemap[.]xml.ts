@@ -37,7 +37,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     status: 200,
     headers: {
       "Content-Type": "application/xml",
-      "xml-version": "1.0",
       encoding: "UTF-8",
     },
   });
