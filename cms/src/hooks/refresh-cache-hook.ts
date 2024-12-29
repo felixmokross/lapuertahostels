@@ -10,7 +10,7 @@ import {
   getPageCacheKey,
   refreshCacheForTarget,
 } from "../common/frontend-cache";
-import { Link, NewPage } from "@/payload-types";
+import { Link, Page } from "@/payload-types";
 
 type CachePurgeTarget = {
   cacheKey: string;
@@ -83,7 +83,7 @@ export async function refreshCacheForAllBrands(req: PayloadRequest) {
     brandsResult.docs.map((brand) =>
       refreshCacheForTarget(req, {
         type: "prime",
-        pageUrl: ((brand.homeLink as Link).newPage as NewPage).pathname,
+        pageUrl: ((brand.homeLink as Link).page as Page).pathname,
       }),
     ),
   );
@@ -96,7 +96,7 @@ export async function refreshCacheForPages(
   const pages = await Promise.all(
     pageIds.map((id) =>
       req.payload.findByID({
-        collection: "new-pages",
+        collection: "pages",
         id,
       }),
     ),

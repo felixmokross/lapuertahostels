@@ -8,7 +8,7 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { NewPage } from "@/payload-types";
+import { Page } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
@@ -53,15 +53,15 @@ export const Brands: CollectionConfig = {
           id: data.homeLink,
           populate: {
             links: {
-              newPage: true,
+              page: true,
             },
           },
         });
 
-        if (!(homeLink.newPage as NewPage | null)?.pathname)
+        if (!(homeLink.page as Page | null)?.pathname)
           throw new Error("Brand home page not found");
         return getLivePreviewUrl(
-          (homeLink.newPage as NewPage).pathname,
+          (homeLink.page as Page).pathname,
           `brands/${data.id}`,
           locale.code,
         );

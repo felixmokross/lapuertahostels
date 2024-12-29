@@ -19,7 +19,7 @@ export const Links: CollectionConfig = {
   defaultPopulate: {
     type: true,
     url: true,
-    newPage: true,
+    page: true,
     queryString: true,
     fragment: true,
     title: true,
@@ -43,13 +43,13 @@ export const Links: CollectionConfig = {
           },
           fields: [
             {
-              name: "newPage",
+              name: "page",
               label: {
                 en: "Page",
                 es: "Página",
               },
               type: "relationship",
-              relationTo: "new-pages",
+              relationTo: "pages",
               required: true,
               admin: {
                 condition: (_, siblingData) => siblingData.type === "internal",
@@ -189,8 +189,8 @@ export const Links: CollectionConfig = {
             switch (data.type) {
               case "internal":
                 const page = await req.payload.findByID({
-                  collection: "new-pages",
-                  id: data.newPage,
+                  collection: "pages",
+                  id: data.page,
                 });
                 url = `${page.pathname}${data.queryString ? `?${data.queryString}` : ""}${data.fragment ? `#${data.fragment}` : ""}`;
                 break;

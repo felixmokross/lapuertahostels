@@ -186,7 +186,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!content) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }
-  const dataPath = `new-pages/${content.id}`;
+  const dataPath = `pages/${content.id}`;
 
   return {
     origin: requestUrl.origin,

@@ -1,4 +1,4 @@
-import { Brand, NewPage } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
 import { Link, LinkProps } from "./link";
 import { forwardRef, PropsWithChildren } from "react";
 
@@ -16,7 +16,7 @@ export const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(
         ref={ref}
         to={
           link.type === "internal"
-            ? `${(link.newPage as NewPage).pathname}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
+            ? `${(link.page as Page).pathname}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
             : link.url!
         }
       />

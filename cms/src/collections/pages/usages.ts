@@ -4,7 +4,7 @@ import { Payload } from "payload";
 
 const usagesConfig: UsagesConfig = {
   fieldType: "relationship",
-  collectionToFind: "new-pages",
+  collectionToFind: "pages",
   collections: ["links"],
 };
 

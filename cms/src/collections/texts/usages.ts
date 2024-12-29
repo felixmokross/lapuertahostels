@@ -5,7 +5,7 @@ import { Payload } from "payload";
 const usagesConfig: UsagesConfig = {
   fieldType: "relationship",
   collectionToFind: "texts",
-  collections: ["new-pages", "banners", "brands", "media"],
+  collections: ["pages", "banners", "brands", "media"],
   globals: ["common", "maintenance"],
 };
 

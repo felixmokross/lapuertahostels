@@ -5,10 +5,10 @@ import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";
 import { useEnvironment } from "~/environment";
 import { useSwipeable } from "react-swipeable";
-import { Media, NewPage } from "~/payload-types";
+import { Media, Page } from "~/payload-types";
 import { useTranslation } from "react-i18next";
 
-export type HeroSlidesBlockProps = NonNullable<NewPage["hero"]>[number] & {
+export type HeroSlidesBlockProps = NonNullable<Page["hero"]>[number] & {
   blockType: "HeroSlides";
 };
 

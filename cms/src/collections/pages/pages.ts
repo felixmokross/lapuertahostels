@@ -3,15 +3,15 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
 import { canManageContent, isAdmin } from "../../common/access-control";
-import { Link, NewPage } from "@/payload-types";
+import { Link, Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
 import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 
-export const NewPages: CollectionConfig = {
-  slug: "new-pages",
+export const Pages: CollectionConfig = {
+  slug: "pages",
   labels: {
     singular: {
       en: "Page",
@@ -157,10 +157,7 @@ export const NewPages: CollectionConfig = {
       },
       validate: async (
         value: string | undefined | null,
-        {
-          req,
-          siblingData,
-        }: ValidateOptions<NewPage, NewPage, TextField, string>,
+        { req, siblingData }: ValidateOptions<Page, Page, TextField, string>,
       ) => {
         const t = req.t as unknown as TFunction<TranslationsKey>;
 
@@ -185,9 +182,8 @@ export const NewPages: CollectionConfig = {
           return true;
         }
 
-        const brandHomeLinkPathname = (
-          (brand.homeLink as Link).newPage as NewPage
-        ).pathname;
+        const brandHomeLinkPathname = ((brand.homeLink as Link).page as Page)
+          .pathname;
         const safePrefix = brandHomeLinkPathname.endsWith("/")
           ? brandHomeLinkPathname
           : brandHomeLinkPathname + "/";

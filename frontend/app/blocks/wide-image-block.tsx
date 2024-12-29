@@ -1,4 +1,4 @@
-import { NewPage, Text } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { RichTextParagraph } from "~/common/paragraph";
@@ -7,7 +7,7 @@ import { RichTextObject } from "~/common/rich-text";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
-export type WideImageBlockProps = NonNullable<NewPage["layout"]>[number] & {
+export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
 };
 

@@ -6,7 +6,7 @@ import {
   PropsWithChildren,
   useContext,
 } from "react";
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 
 export const IS_BOLD = 1;
 export const IS_ITALIC = 1 << 1;
@@ -283,8 +283,8 @@ export type LinkElementNode = BaseElementNode & {
     | {
         linkType: "internal";
         doc: {
-          relationTo: "new-pages";
-          value: NewPage;
+          relationTo: "pages";
+          value: Page;
         };
       };
 };
