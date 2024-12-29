@@ -26,7 +26,7 @@ async function refreshCacheForMedia(media: Media, req: PayloadRequest) {
     await refreshCacheForAllBrands(req);
   }
 
-  const pageIds = getUniqueCollectionItemIds(usages, "new-pages");
+  const pageIds = getUniqueCollectionItemIds(usages, "pages");
   if (pageIds.length > 0) {
     console.log(`Refreshing cache for ${pageIds.length} pages`);
     await refreshCacheForPages(pageIds, req);

@@ -11,7 +11,7 @@ import {
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
 import { bold, paragraph, text } from "~/common/rich-text.builders";
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 
 const meta = {
   title: "layout/Page",
@@ -234,7 +234,7 @@ export const Puerta: Story = {
           blockType: "Story",
         },
       ],
-    } as NewPage,
+    } as Page,
   },
 };
 
@@ -363,7 +363,7 @@ export const Aqua: Story = {
           blockType: "Story",
         },
       ],
-    } as NewPage,
+    } as Page,
   },
 };
 
@@ -501,6 +501,6 @@ export const Azul: Story = {
           blockType: "Features",
         },
       ],
-    } as NewPage,
+    } as Page,
   },
 };

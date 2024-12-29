@@ -24,7 +24,7 @@ test("has title", async ({ page }) => {
   });
 
   const testPagePathname = `/e2e/${createId()}`;
-  await cmsCreate("new-pages", {
+  await cmsCreate("pages", {
     pathname: testPagePathname,
     brand: "puerta",
     title: titleText.id,

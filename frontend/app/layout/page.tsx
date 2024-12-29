@@ -1,9 +1,9 @@
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { LayoutBlocks } from "~/blocks/layout-blocks";
 import { HeroBlocks } from "~/blocks/hero-blocks";
 
 export type PageProps = {
-  content: NewPage;
+  content: Page;
 };
 
 export function Page({ content }: PageProps) {

@@ -1,6 +1,6 @@
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 
-export type RoomListBlock = NonNullable<NewPage["layout"]>[number] & {
+export type RoomListBlock = NonNullable<Page["layout"]>[number] & {
   blockType: "RoomList";
 };
 

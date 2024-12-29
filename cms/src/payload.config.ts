@@ -17,7 +17,7 @@ import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { NewPages } from "./collections/new-pages";
+import { Pages } from "./collections/pages";
 import { Banners } from "./collections/banners";
 
 import { en } from "@payloadcms/translations/languages/en";
@@ -57,7 +57,7 @@ export default buildConfig({
   collections: [
     Users,
     Brands,
-    NewPages,
+    Pages,
     Media,
     MediaCategories,
     Banners,

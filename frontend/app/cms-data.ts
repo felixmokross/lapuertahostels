@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { Brand, Common, Maintenance, NewPage } from "~/payload-types";
+import { Brand, Common, Maintenance, Page } from "~/payload-types";
 import path from "path";
 
 const CACHE_DIR = "./.cms-cache";
@@ -133,9 +133,9 @@ export async function loadData(
 }
 
 export async function tryGetPage(pathname: string, locale: string) {
-  return await getData<{ docs: NewPage[] }, NewPage>(
-    `new-pages`,
-    `new-pages_${pathname.replaceAll("/", ":")}`,
+  return await getData<{ docs: Page[] }, Page>(
+    `pages`,
+    `pages_${pathname.replaceAll("/", ":")}`,
     locale,
     3,
     {

@@ -3,12 +3,12 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
-import { NewPage, Text } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
 
 type OverlayTitleType = NonNullable<
-  (NonNullable<NewPage["hero"]>[number] & {
+  (NonNullable<Page["hero"]>[number] & {
     blockType: "HeroVideo";
   })["overlayTitle"]
 >;

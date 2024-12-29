@@ -1,4 +1,4 @@
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 import {
   TextNode,
   ElementNode,
@@ -128,8 +128,8 @@ export function internalLink(
     fields: {
       linkType: "internal",
       doc: {
-        relationTo: "new-pages",
-        value: { pathname } as NewPage,
+        relationTo: "pages",
+        value: { pathname } as Page,
       },
     },
     children,

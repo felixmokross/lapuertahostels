@@ -1,13 +1,13 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { cn } from "../common/cn";
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
-  NewPage["layout"]
+  Page["layout"]
 >[number] & {
   blockType: "ImageWithFloatingText";
 };

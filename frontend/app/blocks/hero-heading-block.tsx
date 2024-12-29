@@ -1,10 +1,10 @@
-import { NewPage, Text } from "~/payload-types";
+import { Page, Text } from "~/payload-types";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
 import { richTextRoot, paragraph, text } from "~/common/rich-text.builders";
 
-type HeroHeadingBlockProps = NonNullable<NewPage["hero"]>[number] & {
+type HeroHeadingBlockProps = NonNullable<Page["hero"]>[number] & {
   blockType: "HeroHeading";
 };
 

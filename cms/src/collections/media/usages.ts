@@ -5,7 +5,7 @@ import { Payload } from "payload";
 const usagesConfig: UsagesConfig = {
   fieldType: "upload",
   collectionToFind: "media",
-  collections: ["brands", "new-pages"],
+  collections: ["brands", "pages"],
 };
 
 export async function findMediaUsages(id: string, payload: Payload) {

@@ -1,6 +1,6 @@
-import { Brand, NewPage, Text } from "~/payload-types";
+import { Brand, Page, Text } from "~/payload-types";
 
-export function getPageTitle(page: NewPage) {
+export function getPageTitle(page: Page) {
   if (page.title != null && typeof page.title !== "object") {
     throw new Error("Title is not an object");
   }

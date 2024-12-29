@@ -1,10 +1,10 @@
 import { HeroSlidesBlock } from "~/blocks/slides-block/hero-slides-block";
 import { HeroVideoBlock } from "~/blocks/hero-video-block";
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { HeroHeadingBlock } from "./hero-heading-block";
 
 export type HeroBlocksProps = {
-  data: NonNullable<NewPage["hero"]>;
+  data: NonNullable<Page["hero"]>;
 };
 
 export function HeroBlocks({ data }: HeroBlocksProps) {

@@ -5,7 +5,7 @@ import { Payload } from "payload";
 const usagesConfig: UsagesConfig = {
   fieldType: "relationship",
   collectionToFind: "brands",
-  collections: ["new-pages"],
+  collections: ["pages"],
 };
 
 export async function findBrandUsages(id: string, payload: Payload) {

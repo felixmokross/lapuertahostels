@@ -38,7 +38,7 @@ const features = [
   // Also this feature in its current config doesn't allow us to add a fragment or query string – if we stick with it,
   // we should add the respective fields.
   // Also currently we don't support the 'open in new tab' checkbox, should we? External links are already always opened in a new tab.
-  LinkFeature({ enabledCollections: ["new-pages"] }),
+  LinkFeature({ enabledCollections: ["pages"] }),
 
   FixedToolbarFeature(),
 

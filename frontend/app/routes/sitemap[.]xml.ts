@@ -1,5 +1,5 @@
 import { getMaintenance, loadData } from "~/cms-data";
-import { NewPage } from "~/payload-types";
+import { Page } from "~/payload-types";
 import i18n from "~/i18n";
 import { buildLocalizedRelativeUrl, getRequestUrl } from "~/common/routing";
 import { LoaderFunctionArgs } from "@remix-run/node";
@@ -17,7 +17,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
   }
 
-  const pages = (await loadData(`new-pages`, "en", 0, {})).docs as NewPage[];
+  const pages = (await loadData(`pages`, "en", 0, {})).docs as Page[];
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

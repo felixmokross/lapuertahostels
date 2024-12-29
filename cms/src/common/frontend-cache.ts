@@ -2,7 +2,7 @@ import { resolve6 } from "dns/promises";
 import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocaleCodes } from "./locales";
 import * as cookie from "cookie";
-import { NewPage } from "@/payload-types";
+import { Page } from "@/payload-types";
 
 export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
   return collectionSlug;
@@ -19,11 +19,8 @@ export function getCollectionItemCacheKey(
   return `${collectionSlug}_${itemKey}`;
 }
 
-export function getPageCacheKey(page: NewPage) {
-  return getCollectionItemCacheKey(
-    "new-pages",
-    page.pathname.replaceAll("/", ":"),
-  );
+export function getPageCacheKey(page: Page) {
+  return getCollectionItemCacheKey("pages", page.pathname.replaceAll("/", ":"));
 }
 
 export async function refreshCacheForAllPages(
@@ -32,7 +29,7 @@ export async function refreshCacheForAllPages(
 ) {
   const pages = (
     await req.payload.find({
-      collection: "new-pages",
+      collection: "pages",
       pagination: false,
       depth: 0,
     })
