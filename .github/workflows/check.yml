@@ -201,7 +201,7 @@ jobs:
           DATABASE_URI: mongodb://localhost:27017/payload
           CACHE_REFRESH_TARGET_TYPE: single
           CACHE_REFRESH_TARGET: http://localhost:3000
-          NEXT_PUBLIC_LIVE_PREVIEW_URL: http://localhost:3000
+          LIVE_PREVIEW_URL: http://localhost:3000
           MEDIA_S3_BUCKET: lapuertahostels-media-preview
           MEDIA_S3_REGION: eu-west-3
           MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}

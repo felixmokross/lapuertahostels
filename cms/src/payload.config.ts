@@ -124,8 +124,8 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
-  cors: process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL
-    ? [process.env.NEXT_PUBLIC_LIVE_PREVIEW_URL]
+  cors: process.env.LIVE_PREVIEW_URL
+    ? [process.env.LIVE_PREVIEW_URL]
     : undefined,
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],

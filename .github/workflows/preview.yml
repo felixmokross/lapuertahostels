@@ -122,7 +122,7 @@ jobs:
             --env MEDIA_S3_BUCKET=${{ env.MEDIA_S3_BUCKET }} \
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ env.IMAGEKIT_BASE_URL }} \
-            --build-arg NEXT_PUBLIC_LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
+            --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
 
   clean-preview:
     name: Clean Preview
