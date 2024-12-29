@@ -195,29 +195,29 @@ jobs:
         working-directory: cms
       - name: Start CMS
         run: |
-          PORT=3001 PAYLOAD_SECRET=$(openssl rand -hex 12) \
-            docker run -d -p 3001:3001 ${{ needs.cms-build-push.outputs.image }}
-        env:
-          ENABLE_E2E_USER: true
-          DATABASE_URI: mongodb://localhost:27017/payload
-          CACHE_REFRESH_TARGET_TYPE: single
-          CACHE_REFRESH_TARGET: http://localhost:3000
-          LIVE_PREVIEW_URL: http://localhost:3000
-          MEDIA_S3_BUCKET: lapuertahostels-media-preview
-          MEDIA_S3_REGION: eu-west-3
-          MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
-          MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
-          IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
-          OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
+          docker run -d -p 3001:3001 \
+            --env PAYLOAD_SECRET=$(openssl rand -hex 12) \
+            --env ENABLE_E2E_USER=true \
+            --env DATABASE_URI=mongodb://host.docker.internal:27017/payload \
+            --env CACHE_REFRESH_TARGET_TYPE=single \
+            --env CACHE_REFRESH_TARGET=http://host.docker.internal:3000 \
+            --env LIVE_PREVIEW_URL=http://host.docker.internal:3000 \
+            --env MEDIA_S3_BUCKET=lapuertahostels-media-preview \
+            --env MEDIA_S3_REGION=eu-west-3 \
+            --env MEDIA_S3_ACCESS_KEY_ID=${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }} \
+            --env MEDIA_S3_SECRET_ACCESS_KEY=${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }} \
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/preview \
+            --env OPENAI_API_KEY=${{ secrets.PREVIEW_OPENAI_API_KEY }} \
+            ${{ needs.cms-build-push.outputs.image }}
       - name: Start Frontend
         run: |
-          SESSION_SECRET=$(openssl rand -hex 32) \
-            docker run -d -p 3000:3000 ${{ needs.frontend-build-push.outputs.image }}
-        env:
-          IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
-          PAYLOAD_CMS_BASE_URL: http://localhost:3001
-          PAYLOAD_CMS_API_KEY: apikey
-          CANONICAL_HOSTNAME: localhost
+          docker run -d -p 3000:3000 \
+            --env SESSION_SECRET=$(openssl rand -hex 32) \
+            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/preview \
+            --env PAYLOAD_CMS_BASE_URL=http://host.docker.internal:3001 \
+            --env PAYLOAD_CMS_API_KEY=apikey \
+            --env CANONICAL_HOSTNAME=localhost \
+            ${{ needs.frontend-build-push.outputs.image }}
       - name: Get Playwright version
         id: playwright-version
         run: |
