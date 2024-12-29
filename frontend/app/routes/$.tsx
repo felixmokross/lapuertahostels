@@ -83,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
     },
     {
       name: "og:site_name",
-      content: rootLoaderData.brand.name,
+      content: rootLoaderData.allBrands.find((b) => b.id === "puerta")!.name,
     },
     {
       name: "og:url",
