@@ -179,36 +179,17 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Install e2e dependencies
         run: pnpm --filter e2e install
-      - name: Start database
+      - name: Start services
         run: docker compose up -d && sleep 3
-        working-directory: cms
-      - name: Start CMS
-        run: |
-          docker run --name cms -d -p 3001:3001 --network=host \
-            --env PAYLOAD_SECRET=$(openssl rand -hex 12) \
-            --env ENABLE_E2E_USER=true \
-            --env DATABASE_URI=mongodb://host.docker.internal:27017/payload \
-            --env CACHE_REFRESH_TARGET_TYPE=single \
-            --env CACHE_REFRESH_TARGET=http://host.docker.internal:3000 \
-            --env LIVE_PREVIEW_URL=http://host.docker.internal:3000 \
-            --env MEDIA_S3_BUCKET=lapuertahostels-media-preview \
-            --env MEDIA_S3_REGION=eu-west-3 \
-            --env MEDIA_S3_ACCESS_KEY_ID=${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }} \
-            --env MEDIA_S3_SECRET_ACCESS_KEY=${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }} \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/preview \
-            --env OPENAI_API_KEY=${{ secrets.PREVIEW_OPENAI_API_KEY }} \
-            ${{ needs.cms-build-push.outputs.image }}
-          sleep 10
-          docker logs cms
-      - name: Start Frontend
-        run: |
-          docker run -d -p 3000:3000 --network=host \
-            --env SESSION_SECRET=$(openssl rand -hex 32) \
-            --env IMAGEKIT_BASE_URL=https://ik.imagekit.io/lapuertahostels/preview \
-            --env PAYLOAD_CMS_BASE_URL=http://host.docker.internal:3001 \
-            --env PAYLOAD_CMS_API_KEY=apikey \
-            --env CANONICAL_HOSTNAME=localhost \
-            ${{ needs.frontend-build-push.outputs.image }}
+        env:
+          FRONTEND_IMAGE: ${{ needs.frontend-build-push.outputs.image }}
+          SESSION_SECRET: $(openssl rand -hex 32)
+          CMS_IMAGE: ${{ needs.cms-build-push.outputs.image }}
+          PAYLOAD_SECRET: $(openssl rand -hex 12)
+          PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
+          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
+        working-directory: e2e
       - name: Get Playwright version
         id: playwright-version
         run: |
