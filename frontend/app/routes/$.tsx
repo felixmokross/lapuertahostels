@@ -44,7 +44,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       tagName: "link",
       rel: "alternate",
       href: toUrl(
-        buildLocalizedRelativeUrl(null, data.pageUrl),
+        buildLocalizedRelativeUrl(i18n.fallbackLng, data.pageUrl),
         data.origin,
       ).toString(),
       hrefLang: "x-default",
@@ -83,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
     },
     {
       name: "og:site_name",
-      content: rootLoaderData.brand.name,
+      content: rootLoaderData.allBrands.find((b) => b.id === "puerta")!.name,
     },
     {
       name: "og:url",
