@@ -185,7 +185,15 @@ jobs:
     name: "Frontend / Deploy"
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    needs: [frontend-build-push, e2e-tests, define-env]
+    needs:
+      - frontend-build-push
+      - frontend-chromatic
+      - frontend-format
+      - frontend-lint
+      - frontend-typecheck
+      - frontend-unit-tests
+      - e2e-tests
+      - define-env
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
@@ -311,7 +319,11 @@ jobs:
     name: "CMS / Deploy"
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    needs: [cms-build-push, e2e-tests, define-env]
+    needs:
+      - cms-build-push
+      - cms-format
+      - e2e-tests
+      - define-env
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
@@ -434,7 +446,16 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: e2e-tests
+    needs:
+      - frontend-build-push
+      - frontend-chromatic
+      - frontend-format
+      - frontend-lint
+      - frontend-typecheck
+      - frontend-unit-tests
+      - cms-build-push
+      - cms-format
+      - e2e-tests
     steps:
       - uses: actions/checkout@v4
         with:
