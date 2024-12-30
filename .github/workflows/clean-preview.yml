@@ -13,11 +13,14 @@ jobs:
     name: Clean Preview
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.3.18
-      - run: |
+      - name: Clean up old preview apps
+        run: |
           flyctl apps list --json --org $FLY_ORG \
             | jq '[map(
               { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
