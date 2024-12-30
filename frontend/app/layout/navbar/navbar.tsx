@@ -225,21 +225,50 @@ type ScrollDirection = "up" | "down";
 
 function useScrollDirection(): ScrollDirection | undefined {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>();
+  const isNavigating = useRef(false);
+
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    const onScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY >= lastScrollY) {
-        setScrollDirection("down");
-      } else {
-        setScrollDirection("up");
+    function onScroll() {
+      try {
+        if (isNavigating.current) return;
+
+        if (window.scrollY > lastScrollY) {
+          setScrollDirection("down");
+        } else {
+          setScrollDirection("up");
+        }
+      } finally {
+        lastScrollY = window.scrollY;
       }
-      lastScrollY = currentScrollY;
-    };
+    }
 
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // When detecting navigation, reset scroll direction and block scroll events for a short time to avoid
+  // confusing scroll direction changes due to scroll events upon navigation (e.g. when navigating to a fragment link)
+  const location = useLocation();
+  const timeoutRef = useRef<number>();
+  useEffect(() => {
+    setScrollDirection(undefined);
+    isNavigating.current = true;
+
+    cleanup();
+    timeoutRef.current = window.setTimeout(
+      () => (isNavigating.current = false),
+      100,
+    );
+
+    return () => cleanup();
+
+    function cleanup() {
+      if (timeoutRef.current != null) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    }
+  }, [location.key]);
 
   return scrollDirection;
 }
