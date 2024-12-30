@@ -24,8 +24,8 @@ export const Media: CollectionConfig = {
     alt: true,
   },
   admin: {
-    defaultColumns: ["filename", "category", "alt", "updatedAt"],
-    listSearchableFields: ["id", "filename", "alt"],
+    defaultColumns: ["filename", "category", "comment", "updatedAt"],
+    listSearchableFields: ["id", "filename", "comment", "alt"],
   },
   endpoints: [generateAltTextEndpoint],
   hooks: {
@@ -63,6 +63,22 @@ export const Media: CollectionConfig = {
     },
 
     {
+      name: "comment",
+      label: {
+        en: "Comment (internal)",
+        es: "Comentario (interno)",
+      },
+      type: "text",
+      admin: {
+        description: {
+          en: "Add an internal comment to note any important information about this media, e.g. the source.",
+          es: "Agrega un comentario interno para anotar cualquier información importante sobre este medio, por ejemplo, la fuente.",
+        },
+        position: "sidebar",
+      },
+    },
+
+    {
       type: "tabs",
       tabs: [
         {
@@ -84,8 +100,8 @@ export const Media: CollectionConfig = {
               },
               admin: {
                 description: {
-                  en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility.",
-                  es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad.",
+                  en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility. For images an alt text can be generated automatically using OpenAI.",
+                  es: "Una breve descripción del medio para lectores de pantalla y motores de búsqueda. No se muestra en la página pero es importante para la accesibilidad. Para las imágenes se puede generar un texto alternativo automáticamente utilizando OpenAI.",
                 },
                 components: {
                   afterInput: [
