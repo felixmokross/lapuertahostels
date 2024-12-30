@@ -35,6 +35,14 @@ export const Primary: Story = {
   },
 };
 
+export const PrimaryFloatingActionButton: Story = {
+  args: {
+    ...Default.args,
+    variant: "primary",
+    size: "floating-action-button",
+  },
+};
+
 export const Large: Story = {
   args: {
     ...Default.args,
