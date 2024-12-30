@@ -9,7 +9,13 @@ on:
 env:
   NODE_VERSION: 20
   PNPM_VERSION: 9
+  FLYCTL_VERSION: 0.3.55
+  FRONTEND_INTERNAL_PORT: 3000
+  CMS_INTERNAL_PORT: 3001
   STORYBOOK_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/staging
+  PREVIEW_IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
+  PREVIEW_MEDIA_S3_BUCKET: lapuertahostels-media-preview
+  PREVIEW_MEDIA_S3_REGION: eu-west-3
 
 jobs:
   frontend-lint:
@@ -83,7 +89,7 @@ jobs:
       - name: Image name
         id: image-name
         run: |
-          echo "image=ghcr.io/${{ github.repository }}-frontend:${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/${{ github.repository }}-frontend:v${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -114,6 +120,57 @@ jobs:
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
           STORYBOOK_USE_IMAGE_CACHE_BUSTER: true
+  
+  frontend-preview:
+    name: Frontend / Preview
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.app-name.outputs.app-url }}
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      FLY_ORG: ${{ vars.FLY_ORG }}
+    needs: frontend-build-push
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: ${{ env.FLYCTL_VERSION }}
+      - uses: ./.github/actions/app-name
+        id: app-name
+        with:
+          component: frontend
+      - uses: ./.github/actions/app-name
+        id: cms-app-name
+        with:
+          component: cms
+      - name: Delete if exists
+        run: |
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
+      - name: Create App
+        run: |
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+
+          echo Setting secrets:
+          flyctl secrets set PAYLOAD_CMS_API_KEY=$PREVIEW_PAYLOAD_CMS_API_KEY \
+            SESSION_SECRET=$(openssl rand -hex 32) \
+            --app ${{ steps.app-name.outputs.app-name }} --stage
+        env:
+          PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
+        working-directory: frontend
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --app ${{ steps.app-name.outputs.app-name }} \
+            --config fly.frontend.preview.toml \
+            --ha=false \
+            --image ${{ needs.frontend-build-push.outputs.image }} \
+            --env IMAGEKIT_BASE_URL=${{ env.PREVIEW_IMAGEKIT_BASE_URL }} \
+            --env PAYLOAD_CMS_BASE_URL=${{ steps.cms-app-name.outputs.app-url }} \
+            --env CANONICAL_HOSTNAME=${{ steps.app-name.outputs.app-domain }} \
 
   cms-format:
     name: CMS / Format
@@ -150,7 +207,7 @@ jobs:
       - name: Image name
         id: image-name
         run: |
-          echo "image=ghcr.io/${{ github.repository }}-cms:${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/${{ github.repository }}-cms:v${{ steps.version.outputs.version }}" >> "$GITHUB_OUTPUT"
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -160,6 +217,66 @@ jobs:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  cms-preview:
+    name: CMS / Preview
+    runs-on: ubuntu-latest
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      FLY_ORG: ${{ vars.FLY_ORG }}
+    needs: cms-build-push
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: ${{ env.FLYCTL_VERSION }}
+      - uses: ./.github/actions/app-name
+        id: app-name
+        with:
+          component: cms
+      - uses: ./.github/actions/app-name
+        id: frontend-app-name
+        with:
+          component: frontend
+      - name: Delete if exists
+        run: |
+          flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
+      - name: Create App
+        run: |
+          echo Creating app ${{ steps.app-name.outputs.app-name }}:
+          flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
+
+          echo Setting secrets:
+          flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
+            PAYLOAD_SECRET=$PREVIEW_PAYLOAD_SECRET \
+            MEDIA_S3_ACCESS_KEY_ID=$PREVIEW_MEDIA_S3_ACCESS_KEY_ID \
+            MEDIA_S3_SECRET_ACCESS_KEY=$PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY \
+            DEEPL_API_AUTH_KEY=$PREVIEW_DEEPL_API_AUTH_KEY \
+            OPENAI_API_KEY="$PREVIEW_OPENAI_API_KEY" \
+            --app ${{ steps.app-name.outputs.app-name }} --stage
+        env:
+          PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
+          PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
+          PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
+          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
+          PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
+        working-directory: cms
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --app ${{ steps.app-name.outputs.app-name }} \
+            --config fly.cms.toml \
+            --ha=false \
+            --image ${{ needs.cms-build-push.outputs.image }} \
+            --env CACHE_REFRESH_TARGET_TYPE=fly \
+            --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_INTERNAL_PORT }} \
+            --env MEDIA_S3_BUCKET=${{ env.PREVIEW_MEDIA_S3_BUCKET }} \
+            --env MEDIA_S3_REGION=${{ env.PREVIEW_MEDIA_S3_REGION }} \
+            --env IMAGEKIT_BASE_URL=${{ env.PREVIEW_IMAGEKIT_BASE_URL }} \
+            --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
 
   e2e-tests:
     name: End-to-End Tests
@@ -208,8 +325,8 @@ jobs:
       - run: pnpm playwright test
         working-directory: e2e
         env:
-          FRONTEND_BASE_URL: http://localhost:3000
-          CMS_BASE_URL: http://localhost:3001
+          FRONTEND_BASE_URL: http://localhost:${{ env.FRONTEND_INTERNAL_PORT }}
+          CMS_BASE_URL: http://localhost:${{ env.CMS_INTERNAL_PORT }}
           CMS_API_KEY: apikey
       - uses: actions/upload-artifact@v4
         if: always()
@@ -217,3 +334,10 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/
           retention-days: 30
+
+  clean-preview:
+    name: Clean Preview
+    uses: ./.github/workflows/clean-preview.yml
+    secrets: inherit
+    needs: [frontend-preview, cms-preview]
+        
