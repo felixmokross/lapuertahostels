@@ -1,4 +1,5 @@
 name: "Populate CMS Types"
+description: "Generates the CMS types and copies them to the frontend"
 runs:
   using: "composite"
   steps:

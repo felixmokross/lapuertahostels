@@ -24,7 +24,7 @@ export function NavbarBrandLogo({
     );
   }
   return (
-    <h1 className={cn("h-7 sm:h-10", className)}>
+    <h1 className={cn("h-10", className)}>
       {getComponent(
         allBrands.map((b) => (
           <Transition
@@ -37,18 +37,7 @@ export function NavbarBrandLogo({
             enterTo="translate-x-0 opacity-100"
             leave="hidden"
           >
-            <BrandLogo
-              size="large"
-              type="with-wordmark"
-              brand={brand}
-              className="hidden sm:flex"
-            />
-            <BrandLogo
-              size="small"
-              type="with-wordmark"
-              brand={brand}
-              className="sm:hidden"
-            />
+            <BrandLogo size="large" type="with-wordmark" brand={brand} />
           </Transition>
         )),
       )}
