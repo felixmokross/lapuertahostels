@@ -87,26 +87,22 @@ async function cmsFileCreate(file: File) {
 
 async function cmsGetItem(path: string) {
   const url = new URL(`/api/${path}`, process.env.CMS_BASE_URL);
-  try {
-    const result = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (!result.ok) {
-      if (result.status === 404) return null;
+  const result = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+  });
 
-      console.error(`Request to ${url} returned: ${await result.text()}`);
-      throw new Error(`Failed with status code: ${result.status}`);
-    }
+  if (!result.ok) {
+    if (result.status === 404) return null;
 
-    const response = await result.json();
-    return response;
-  } catch (e) {
-    console.error(`Error fetching GET ${url}`, e);
-    throw e;
+    console.error(`Request to ${url} returned: ${await result.text()}`);
+    throw new Error(`Failed with status code: ${result.status}`);
   }
+
+  const response = await result.json();
+  return response;
 }
