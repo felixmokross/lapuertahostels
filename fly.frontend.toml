@@ -6,7 +6,6 @@ app = "lapuertahostels-staging"
 primary_region = "cdg"
 
 [build]
-  dockerfile = 'Dockerfile.frontend'
 
 [http_service]
   internal_port = 3000
