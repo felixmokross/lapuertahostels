@@ -123,7 +123,7 @@ jobs:
           context: .
           file: Dockerfile.frontend
           tags: ${{ steps.image-name.outputs.image }}
-          labels: org.opencontainers.image.version v${{ steps.version.outputs.version }}
+          labels: org.opencontainers.image.version=v${{ steps.version.outputs.version }}
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -283,7 +283,7 @@ jobs:
           context: .
           file: Dockerfile.cms
           tags: ${{ steps.image-name.outputs.image }}
-          labels: org.opencontainers.image.version v${{ steps.version.outputs.version }}
+          labels: org.opencontainers.image.version=v${{ steps.version.outputs.version }}
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
