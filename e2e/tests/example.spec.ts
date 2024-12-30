@@ -87,6 +87,7 @@ async function cmsFileCreate(file: File) {
 
 async function cmsGetItem(path: string) {
   const url = new URL(`/api/${path}`, process.env.CMS_BASE_URL);
+
   const result = await fetch(url, {
     method: "GET",
     headers: {

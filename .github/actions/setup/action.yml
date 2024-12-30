@@ -1,15 +1,18 @@
 name: "Setup"
+description: Sets up PNPM, Node.js, and installs dependencies for the specified project / working directory
 inputs:
   working-directory:
     required: true
+    description: The project / working directory to install dependencies
 runs:
   using: "composite"
   steps:
-    - name: Install pnpm
+    - name: Install PNPM
       uses: pnpm/action-setup@v4
       with:
         version: ${{ env.PNPM_VERSION }}
-    - uses: actions/setup-node@v4
+    - name: Set up Node.js with PNPM cache
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: "pnpm"

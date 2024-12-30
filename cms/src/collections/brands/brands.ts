@@ -58,8 +58,9 @@ export const Brands: CollectionConfig = {
           },
         });
 
-        if (!(homeLink.page as Page | null)?.pathname)
+        if (!(homeLink.page as Page | null)?.pathname) {
           throw new Error("Brand home page not found");
+        }
         return getLivePreviewUrl(
           (homeLink.page as Page).pathname,
           `brands/${data.id}`,

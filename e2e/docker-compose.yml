@@ -1,0 +1,43 @@
+services:
+  frontend:
+    image: ${FRONTEND_IMAGE}
+    ports:
+      - "3000:3000"
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET}
+      IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
+      PAYLOAD_CMS_BASE_URL: http://cms:3001
+      PAYLOAD_CMS_API_KEY: apikey
+      CANONICAL_HOSTNAME: localhost
+
+  cms:
+    image: ${CMS_IMAGE}
+    ports:
+      - "3001:3001"
+    environment:
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      ENABLE_E2E_USER: true
+      DATABASE_URI: mongodb://mongo:27017/payload
+      CACHE_REFRESH_TARGET_TYPE: single
+      CACHE_REFRESH_TARGET: http://frontend:3000
+      LIVE_PREVIEW_URL: http://frontend:3000
+      MEDIA_S3_BUCKET: lapuertahostels-media-preview
+      MEDIA_S3_REGION: eu-west-3
+      MEDIA_S3_ACCESS_KEY_ID: ${PREVIEW_MEDIA_S3_ACCESS_KEY_ID}
+      MEDIA_S3_SECRET_ACCESS_KEY: ${PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY}
+      IMAGEKIT_BASE_URL: https://ik.imagekit.io/lapuertahostels/preview
+      OPENAI_API_KEY: ${PREVIEW_OPENAI_API_KEY}
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+    logging:
+      driver: none
+
+volumes:
+  data:
