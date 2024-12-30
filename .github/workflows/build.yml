@@ -143,6 +143,7 @@ jobs:
       FLY_ORG: ${{ vars.FLY_ORG }}
     needs: frontend-build-push
     steps:
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: ${{ env.FLYCTL_VERSION }}
@@ -256,6 +257,7 @@ jobs:
       FLY_ORG: ${{ vars.FLY_ORG }}
     needs: cms-build-push
     steps:
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: ${{ env.FLYCTL_VERSION }}
