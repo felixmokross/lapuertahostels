@@ -150,6 +150,7 @@ jobs:
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
           STORYBOOK_USE_IMAGE_CACHE_BUSTER: true
+          STORYBOOK_GOOGLE_MAPS_API_KEY: ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
   
   frontend-deploy-preview:
     name: "Frontend: Deploy Preview"
@@ -190,9 +191,11 @@ jobs:
           echo Setting secrets:
           flyctl secrets set PAYLOAD_CMS_API_KEY=$PREVIEW_PAYLOAD_CMS_API_KEY \
             SESSION_SECRET=$(openssl rand -hex 32) \
+            GOOGLE_MAPS_API_KEY=$PREVIEW_GOOGLE_MAPS_API_KEY \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
           PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
+          PREVIEW_GOOGLE_MAPS_API_KEY: ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
         working-directory: frontend
       - name: Deploy frontend preview app
         run: |
