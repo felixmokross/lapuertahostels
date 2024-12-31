@@ -8,6 +8,7 @@ import { SeparatorBlock } from "../blocks/Separator";
 import { WideImageBlock } from "../blocks/WideImage";
 import { RoomListBlock } from "../blocks/RoomList";
 import { TextColumnsWithImagesBlock } from "../blocks/TextColumnsWithImages";
+import { MapBlock } from "@/blocks/map";
 
 export const layoutField: BlocksField = {
   name: "layout",
@@ -38,6 +39,7 @@ export const layoutField: BlocksField = {
     WideImageBlock,
     RoomListBlock,
     TextColumnsWithImagesBlock,
+    MapBlock,
   ],
   admin: {
     initCollapsed: true,

@@ -130,6 +130,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     maintenance,
     common,
     environment: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY!,
       version: getVersion(),
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,

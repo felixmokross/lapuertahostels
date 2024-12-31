@@ -29,6 +29,8 @@ const withRemix: Decorator = (Story) => {
               useImageCacheBuster:
                 // @ts-ignore
                 import.meta.env.STORYBOOK_USE_IMAGE_CACHE_BUSTER === "true",
+              // @ts-ignore
+              googleMapsApiKey: import.meta.env.STORYBOOK_GOOGLE_MAPS_API_KEY,
             },
           },
         },
