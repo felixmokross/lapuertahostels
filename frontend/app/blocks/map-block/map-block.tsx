@@ -17,8 +17,13 @@ import { RichTextObject } from "~/common/rich-text";
 import { Button } from "~/common/button";
 import { Link } from "~/common/link";
 import { MapPinIcon } from "@heroicons/react/20/solid";
+import {
+  mapToGoogleMapsLanguage,
+  Place,
+  PlaceResolver,
+} from "~/common/google-maps";
 
-type Poi = { location: google.maps.LatLng };
+type Poi = { location: google.maps.LatLngLiteral };
 
 type MapBlockType = NonNullable<Page["layout"]>[number] & {
   blockType: "Map";
@@ -36,15 +41,7 @@ export function MapBlock({ elementId, region, ...props }: MapBlockProps) {
     >
       <APIProvider
         apiKey={googleMapsApiKey}
-        onLoad={() => console.log("Maps API has loaded.")}
-        language={
-          {
-            en: "en",
-            es: "es-419", // Spanish (Latin America)
-            de: "de",
-            fr: "fr",
-          }[i18n.language]
-        }
+        language={mapToGoogleMapsLanguage(i18n.language)}
         region={region}
       >
         <MapContent {...props} />
@@ -53,11 +50,6 @@ export function MapBlock({ elementId, region, ...props }: MapBlockProps) {
   );
 }
 
-type Place = {
-  url: string;
-  location: google.maps.LatLng;
-};
-
 type MapContentProps = Omit<MapBlockType, "elementId" | "region">;
 
 function MapContent({
@@ -65,47 +57,27 @@ function MapContent({
   zoomLevel,
   mapId,
   overlayTextBox,
-  centerPoint,
 }: MapContentProps) {
-  const places = useMapsLibrary("places");
+  const placesLibrary = useMapsLibrary("places");
   const [place, setPlace] = useState<Place>();
+  const [hasTilesLoaded, setHasTilesLoaded] = useState(false);
 
   useEffect(() => {
-    if (place) return;
-    if (!places) return;
+    if (place || !placesLibrary) return;
 
     (async function () {
-      const placesSvc = new places.PlacesService(document.createElement("div"));
-      placesSvc.findPlaceFromQuery(
-        {
-          fields: ["geometry.location", "place_id"],
-          query: address,
-        },
-        (results) => {
-          if (!results) {
-            throw new Error("No results found");
-          }
-
-          const place = results[0];
-          placesSvc.getDetails(
-            { placeId: place.place_id!, fields: ["url"] },
-            (r) => {
-              setPlace({
-                url: r!.url!,
-                location: place.geometry!.location!,
-              });
-            },
-          );
-        },
-      );
+      setPlace(await new PlaceResolver(placesLibrary).resolvePlace(address));
     })();
-  }, [places, place, address]);
+  }, [placesLibrary, place, address]);
 
-  if (!place) return null;
+  if (!place) {
+    return <div className="h-[35rem] animate-pulse bg-white md:h-full"></div>;
+  }
 
   return (
     <>
       <Map
+        onTilesLoaded={() => setHasTilesLoaded(true)}
         disableDefaultUI={true}
         keyboardShortcuts={false}
         gestureHandling="none"
@@ -113,9 +85,11 @@ function MapContent({
         mapId={mapId}
         colorScheme="LIGHT"
         zoom={zoomLevel}
-        center={{ lng: centerPoint[0], lat: centerPoint[1] }}
-        controlled={true}
-        className="h-[35rem] md:h-full"
+        defaultCenter={place.location}
+        className={cn(
+          hasTilesLoaded ? "opacity-100" : "opacity-0",
+          "h-[35rem] transition-opacity duration-1000 ease-in-out md:h-full",
+        )}
       >
         <PoiMarker poi={{ location: place.location }} />
       </Map>
@@ -123,8 +97,7 @@ function MapContent({
       {overlayTextBox && (
         <div
           className={cn(
-            "w-full bg-white px-6 pb-6 pt-3 text-center md:absolute md:w-auto md:max-w-md md:rounded-md md:px-8 md:pb-8 md:pt-5 md:text-left md:shadow-lg",
-            "md:left-12 md:top-12 xl:left-20 xl:top-20",
+            "w-full bg-white px-6 pb-6 pt-3 text-center md:absolute md:left-12 md:top-12 md:w-auto md:max-w-md md:rounded-md md:px-8 md:pb-8 md:pt-5 md:text-left md:shadow-lg xl:left-20 xl:top-20",
           )}
         >
           <Heading as="h3" size="small">

@@ -43,21 +43,6 @@ export const MapBlock: Block = {
       },
     },
     {
-      name: "centerPoint",
-      type: "point",
-      required: true,
-      label: {
-        en: "Center Point",
-        es: "Punto Central",
-      },
-      admin: {
-        description: {
-          en: "Enter the longitude and latitude of the center point of the map.",
-          es: "Ingresa la longitud y latitud del punto central del mapa.",
-        },
-      },
-    },
-    {
       name: "overlayTextBox",
       label: {
         en: "Overlay Text Box",

@@ -22,7 +22,6 @@ export const Default: Story = {
     mapId: "7686c4d7ba62c06",
     region: "CO",
     zoomLevel: 14.5,
-    centerPoint: [-74.2150783, 11.242383],
     overlayTextBox: {
       heading: plainText("Visit Us"),
       text: richText(
