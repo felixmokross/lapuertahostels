@@ -55,6 +55,7 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
               typeof overlayTextBox.cta.label === "object"
                 ? {
                     as: PageLink,
+                    link: overlayTextBox.cta.link,
                     label: overlayTextBox.cta.label,
                     variant: "secondary",
                   }
