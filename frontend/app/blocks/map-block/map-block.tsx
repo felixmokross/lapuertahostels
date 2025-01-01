@@ -1,4 +1,4 @@
-import { Page, Text } from "~/payload-types";
+import { Page } from "~/payload-types";
 import {
   AdvancedMarker,
   APIProvider,
@@ -11,10 +11,6 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { useTheme } from "~/themes";
 import { cn } from "~/common/cn";
-import { Heading } from "~/common/heading";
-import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "~/common/rich-text";
-import { Button } from "~/common/button";
 import { Link } from "~/common/link";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import {
@@ -22,6 +18,7 @@ import {
   Place,
   PlaceResolver,
 } from "~/common/google-maps";
+import { OverlayTextBox } from "../common/overlay-text-box";
 
 type Poi = { location: google.maps.LatLngLiteral };
 
@@ -94,39 +91,32 @@ function MapContent({
         <PoiMarker poi={{ location: place.location }} />
       </Map>
 
-      {overlayTextBox && (
-        <div
-          className={cn(
-            "w-full bg-white px-6 pb-6 pt-3 text-center md:absolute md:left-12 md:top-12 md:w-auto md:max-w-md md:rounded-md md:px-8 md:pb-8 md:pt-5 md:text-left md:shadow-lg xl:left-20 xl:top-20",
-          )}
-        >
-          <Heading as="h3" size="small">
-            {(overlayTextBox.heading as Text).text}
-          </Heading>
-          <RichTextParagraph className="mt-2">
-            {
-              (overlayTextBox.text as Text)
-                .richText as unknown as RichTextObject
+      {overlayTextBox &&
+        typeof overlayTextBox.heading === "object" &&
+        typeof overlayTextBox.text === "object" && (
+          <OverlayTextBox
+            position="top-left"
+            heading={overlayTextBox.heading}
+            text={overlayTextBox.text}
+            cta={
+              overlayTextBox.callToActionLabel &&
+              typeof overlayTextBox.callToActionLabel === "object"
+                ? {
+                    icon: MapPinIcon,
+                    label: overlayTextBox.callToActionLabel,
+                    as: Link,
+                    variant: "secondary",
+                    to: place.url,
+                  }
+                : undefined
             }
-          </RichTextParagraph>
-          {overlayTextBox.callToActionLabel && (
-            <Button
-              icon={MapPinIcon}
-              as={Link}
-              to={place.url}
-              variant="secondary"
-              className="mt-4"
-            >
-              {(overlayTextBox.callToActionLabel as Text).text}
-            </Button>
-          )}
-        </div>
-      )}
+          />
+        )}
     </>
   );
 }
 
-const PoiMarker = ({ poi }: { poi: Poi }) => {
+function PoiMarker({ poi }: { poi: Poi }) {
   const theme = useTheme();
   return (
     <AdvancedMarker position={poi.location}>
@@ -137,4 +127,4 @@ const PoiMarker = ({ poi }: { poi: Poi }) => {
       />
     </AdvancedMarker>
   );
-};
+}
