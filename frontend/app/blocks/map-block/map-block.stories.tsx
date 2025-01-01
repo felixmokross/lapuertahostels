@@ -25,7 +25,12 @@ export const Default: Story = {
     overlayTextBox: {
       heading: plainText("Visit Us"),
       text: richText(
-        paragraph(text("We're located in Santa Marta, Colombia.")),
+        paragraph(
+          text(
+            "We're located in Santa Marta, Colombia. Come say hi! This is a longer text.",
+          ),
+        ),
+        paragraph(text("We're looking forward to meeting you!")),
       ),
       callToActionLabel: plainText("Get Directions"),
     },

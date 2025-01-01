@@ -28,14 +28,14 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
   }
 
   return (
-    <div className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]">
+    <div className="my-44 flex flex-col-reverse gap-4 lg:relative lg:h-[35rem]">
       <MediaImage
         media={image}
         transformation={{
           aspectRatio: { width: 4, height: 3 },
           width: 800,
         }}
-        className="h-[35rem] w-full object-cover md:h-full"
+        className="h-[35rem] w-full object-cover lg:h-full"
         layout="responsive"
         srcMultiplier={6}
         sizes="100vw"

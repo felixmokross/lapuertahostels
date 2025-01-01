@@ -33,7 +33,7 @@ export function MapBlock({ elementId, region, ...props }: MapBlockProps) {
   const { i18n } = useTranslation();
   return (
     <div
-      className="my-44 flex flex-col-reverse gap-4 md:relative md:h-[35rem]"
+      className="my-44 flex flex-col-reverse gap-4 lg:relative lg:h-[35rem]"
       id={elementId || undefined}
     >
       <APIProvider
@@ -68,7 +68,7 @@ function MapContent({
   }, [placesLibrary, place, address]);
 
   if (!place) {
-    return <div className="h-[35rem] animate-pulse bg-white md:h-full"></div>;
+    return <div className="h-[35rem] animate-pulse bg-white lg:h-full"></div>;
   }
 
   return (
@@ -85,7 +85,7 @@ function MapContent({
         defaultCenter={place.location}
         className={cn(
           hasTilesLoaded ? "opacity-100" : "opacity-0",
-          "h-[35rem] transition-opacity duration-1000 ease-in-out md:h-full",
+          "h-[35rem] transition-opacity duration-1000 ease-in-out lg:h-full",
         )}
       >
         <PoiMarker poi={{ location: place.location }} />

@@ -29,15 +29,15 @@ export function OverlayTextBox({
   return (
     <div
       className={cn(
-        "w-full bg-white px-6 pb-6 pt-3 text-center md:absolute md:w-auto md:max-w-md md:rounded-md md:px-8 md:pb-8 md:pt-5 md:text-left md:shadow-lg",
+        "w-full bg-white px-6 pb-6 pt-3 text-center lg:absolute lg:w-auto lg:max-w-xs lg:rounded-md lg:px-8 lg:pb-8 lg:pt-5 lg:text-left lg:shadow-lg xl:max-w-sm 2xl:max-w-md",
         {
-          "md:left-12 md:top-12 xl:left-20 xl:top-20":
+          "lg:left-12 lg:top-12 xl:left-20 xl:top-20":
             overlayTextBoxPosition === "top-left",
-          "md:right-12 md:top-12 xl:right-20 xl:top-20":
+          "lg:right-12 lg:top-12 xl:right-20 xl:top-20":
             overlayTextBoxPosition === "top-right",
-          "md:bottom-12 md:left-12 xl:bottom-20 xl:left-20":
+          "lg:bottom-12 lg:left-12 xl:bottom-20 xl:left-20":
             overlayTextBoxPosition === "bottom-left",
-          "md:bottom-12 md:right-12 xl:bottom-20 xl:right-20":
+          "lg:bottom-12 lg:right-12 xl:bottom-20 xl:right-20":
             overlayTextBoxPosition === "bottom-right",
         },
       )}
