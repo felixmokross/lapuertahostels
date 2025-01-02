@@ -75,7 +75,7 @@ export function MapBlock({
           typeof overlayTextBox.heading === "object" &&
           typeof overlayTextBox.text === "object" && (
             <OverlayTextBox
-              position="top-left"
+              position={overlayTextBox.position}
               heading={overlayTextBox.heading}
               text={overlayTextBox.text}
               cta={
