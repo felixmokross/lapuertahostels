@@ -64,6 +64,6 @@ export const Default: Story = {
 export const SingleSlide: Story = {
   args: {
     ...Default.args,
-    slides: Default.args.slides.slice(0, 1),
+    slides: Default.args?.slides?.slice(0, 1),
   },
 };

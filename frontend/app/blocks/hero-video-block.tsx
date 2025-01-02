@@ -1,4 +1,4 @@
-import { Page, Text } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { OverlayTitle } from "./common/overlay-title";
 import { useEnvironment } from "~/common/environment";
 import { MediaPlaceholder } from "~/common/media";
