@@ -155,6 +155,8 @@ export default buildConfig({
   cors: process.env.LIVE_PREVIEW_URL
     ? [process.env.LIVE_PREVIEW_URL]
     : undefined,
+  serverURL: process.env.SERVER_URL,
+  csrf: [process.env.SERVER_URL!, process.env.LIVE_PREVIEW_URL!],
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
   async onInit(payload) {

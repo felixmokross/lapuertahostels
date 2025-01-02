@@ -353,6 +353,7 @@ jobs:
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ env.PREVIEW_IMAGEKIT_BASE_URL }} \
             --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
+            --env SERVER_URL=${{ steps.app-name.outputs.app-url }} \
 
   cms-deploy:
     name: "CMS: Deploy"
@@ -380,6 +381,7 @@ jobs:
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --env LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
+            --env SERVER_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
