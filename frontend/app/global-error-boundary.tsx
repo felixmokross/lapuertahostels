@@ -17,7 +17,6 @@ import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
 import { Maintenance, Text } from "~/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
-import { OptInLivePreview } from "./common/live-preview";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -127,11 +126,7 @@ function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId="puerta">
-          <OptInLivePreview path="globals/maintenance" data={maintenance}>
-            {(maintenance) => (
-              <MaintenanceScreen {...maintenance.maintenanceScreen!} />
-            )}
-          </OptInLivePreview>
+          <MaintenanceScreen {...maintenance.maintenanceScreen!} />
           <Scripts />
         </ThemeProvider>
       </body>
