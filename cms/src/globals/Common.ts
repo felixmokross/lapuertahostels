@@ -180,6 +180,31 @@ export const Common: GlobalConfig = {
           ],
         },
         {
+          name: "maps",
+          label: {
+            en: "Maps",
+            es: "Mapas",
+          },
+          fields: [
+            {
+              name: "region",
+              type: "text",
+              label: {
+                en: "Region Code",
+                es: "Código de región",
+              },
+              minLength: 2,
+              maxLength: 2,
+              admin: {
+                description: {
+                  en: "Enter the region code for maps, e.g. CO for Colombia. Must be two letters in uppercase. See https://developers.google.com/maps/documentation/javascript/localization#Region",
+                  es: "Ingresa el código de región para mapas, por ejemplo CO para Colombia. Debe ser de dos letras en mayúsculas. Consulta https://developers.google.com/maps/documentation/javascript/localization#Region",
+                },
+              },
+            },
+          ],
+        },
+        {
           name: "pageNotFoundScreen",
           label: {
             en: "Page Not Found Screen",

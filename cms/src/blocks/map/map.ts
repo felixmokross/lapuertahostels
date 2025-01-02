@@ -69,23 +69,6 @@ export const MapBlock: Block = {
           },
         },
       },
-      {
-        name: "region",
-        type: "text",
-        required: true,
-        label: {
-          en: "Region Code",
-          es: "Código de región",
-        },
-        minLength: 2,
-        maxLength: 2,
-        admin: {
-          description: {
-            en: "Enter the region code for the map, e.g. CO for Colombia. Must be two letters in uppercase. See https://developers.google.com/maps/documentation/javascript/localization#Region",
-            es: "Ingresa el código de región para el mapa, por ejemplo CO para Colombia. Debe ser de dos letras en mayúsculas. Consulta https://developers.google.com/maps/documentation/javascript/localization#Region",
-          },
-        },
-      },
       elementIdField,
     ),
   ],

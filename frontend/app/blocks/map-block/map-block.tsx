@@ -1,23 +1,16 @@
 import { Page } from "~/payload-types";
 import {
   AdvancedMarker,
-  APIProvider,
   Map,
   Pin,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import { useEnvironment } from "~/environment";
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { useTheme } from "~/themes";
 import { cn } from "~/common/cn";
 import { Link } from "~/common/link";
 import { MapPinIcon } from "@heroicons/react/20/solid";
-import {
-  mapToGoogleMapsLanguage,
-  Place,
-  PlaceResolver,
-} from "~/common/google-maps";
+import { Place, PlaceResolver } from "~/common/google-maps";
 import { OverlayTextBox } from "../common/overlay-text-box";
 
 type Poi = { location: google.maps.LatLngLiteral };
@@ -28,21 +21,13 @@ type MapBlockType = NonNullable<Page["layout"]>[number] & {
 
 export type MapBlockProps = MapBlockType;
 
-export function MapBlock({ elementId, region, ...props }: MapBlockProps) {
-  const { googleMapsApiKey } = useEnvironment();
-  const { i18n } = useTranslation();
+export function MapBlock({ elementId, ...props }: MapBlockProps) {
   return (
     <div
       className="my-44 flex flex-col-reverse gap-4 lg:relative lg:h-[35rem]"
       id={elementId || undefined}
     >
-      <APIProvider
-        apiKey={googleMapsApiKey}
-        language={mapToGoogleMapsLanguage(i18n.language)}
-        region={region}
-      >
-        <MapContent {...props} />
-      </APIProvider>
+      <MapContent {...props} />
     </div>
   );
 }
