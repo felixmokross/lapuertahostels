@@ -17,6 +17,7 @@ import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
 import { Maintenance, Text } from "~/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
+import { gracefully } from "./common/utils";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -118,7 +119,9 @@ function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
-        <title>{(maintenance.maintenanceScreen!.message as Text).text}</title>
+        <title>
+          {gracefully(maintenance.maintenanceScreen!.message, "text")}
+        </title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />

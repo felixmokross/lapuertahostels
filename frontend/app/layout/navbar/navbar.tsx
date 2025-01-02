@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
 import { forwardRef, RefObject, useEffect, useRef, useState } from "react";
-import { Brand, Text } from "~/payload-types";
+import { Brand } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
@@ -17,7 +17,7 @@ import {
   toRelativeUrl,
 } from "~/common/routing";
 import { Button, ButtonProps } from "~/common/button";
-import { mergeRefs } from "~/common/utils";
+import { mergeRefs, gracefully } from "~/common/utils";
 
 export type NavbarProps = {
   className?: string;
@@ -75,17 +75,9 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
               />
               <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-nowrap text-sm font-bold text-neutral-500 xl:block">
                 {navLinks?.map((navLink) => {
-                  if (typeof navLink !== "object") {
-                    throw new Error("Invalid nav link");
-                  }
-
-                  if (typeof navLink.label !== "object") {
-                    throw new Error("Invalid nav link label");
-                  }
-
                   return (
                     <NavLink key={navLink.id} link={navLink.link}>
-                      {navLink.label.text}
+                      {gracefully(navLink.label, "text")}
                     </NavLink>
                   );
                 })}
@@ -122,13 +114,6 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
             <MenuItems className="absolute z-10 w-full bg-white shadow-md xl:hidden">
               <div className="space-y-1 pb-3 pt-2">
                 {navLinks?.map((navLink) => {
-                  if (typeof navLink !== "object") {
-                    throw new Error("Invalid nav link");
-                  }
-
-                  if (typeof navLink.label !== "object") {
-                    throw new Error("Invalid nav link label");
-                  }
                   return (
                     <MenuItem
                       key={navLink.id}
@@ -136,7 +121,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
                       link={navLink.link}
                       className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                     >
-                      {navLink.label.text}
+                      {gracefully(navLink.label, "text")}
                     </MenuItem>
                   );
                 })}
@@ -215,7 +200,7 @@ const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
         variant="primary"
         ref={ref}
       >
-        {(cta.label as Text)?.text}
+        {gracefully(cta.label, "text")}
       </Button>
     );
   },

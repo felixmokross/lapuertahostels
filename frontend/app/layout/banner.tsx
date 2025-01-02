@@ -3,24 +3,18 @@ import { useTranslation } from "react-i18next";
 import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
 import { useTheme } from "~/themes";
-import { Text, type Banner } from "~/payload-types";
+import { type Banner } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 import { useState } from "react";
+import { gracefully, isObject } from "~/common/utils";
 
-export type BannerProps = Banner;
+export type BannerProps = Partial<Banner>;
 
 export function Banner({ message, cta }: BannerProps) {
   const [isDismissed, setIsDismissed] = useState(false);
   const { t } = useTranslation();
   const theme = useTheme();
 
-  if (message != null && typeof message !== "object") {
-    throw new Error("Invalid message");
-  }
-
-  if (cta?.show && typeof cta.label !== "object") {
-    throw new Error("Invalid CTA label");
-  }
   return (
     <Transition
       show={!isDismissed}
@@ -34,17 +28,19 @@ export function Banner({ message, cta }: BannerProps) {
       leaveTo="-translate-y-full"
     >
       <div className="leading-6">
-        {message?.text}
+        {gracefully(message, "text")}
         {cta?.show && (
           <>
             {" "}
             <span className="mx-1">&middot;</span>{" "}
-            <PageLink
-              link={cta.link!}
-              className="text-nowrap font-bold after:content-['_→'] hover:underline"
-            >
-              {(cta.label as Text).text}
-            </PageLink>
+            {isObject(cta?.link) && (
+              <PageLink
+                link={cta.link}
+                className="text-nowrap font-bold after:content-['_→'] hover:underline"
+              >
+                {gracefully(cta.label, "text")}
+              </PageLink>
+            )}
           </>
         )}
       </div>

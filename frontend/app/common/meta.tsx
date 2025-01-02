@@ -1,4 +1,5 @@
-import { Brand, Page, Text } from "~/payload-types";
+import { Brand, Page } from "~/payload-types";
+import { gracefully } from "./utils";
 
 export function getPageTitle(page: Page) {
   if (page.title != null && typeof page.title !== "object") {
@@ -12,9 +13,7 @@ export function getTitle(title: string | undefined, brand: Brand | undefined) {
     throw new Error("Base title is not an object");
   }
 
-  const baseTitle = brand?.baseTitle
-    ? (brand.baseTitle as Text).text
-    : undefined;
+  const baseTitle = gracefully(brand?.baseTitle, "text");
 
   if (!baseTitle) {
     return title ?? "";

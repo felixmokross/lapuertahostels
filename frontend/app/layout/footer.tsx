@@ -8,6 +8,7 @@ import { PageLink } from "~/common/page-link";
 import { RichText, RichTextObject } from "~/common/rich-text";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
+import { gracefully } from "~/common/utils";
 
 type FooterProps = {
   content: Common["footer"];
@@ -51,8 +52,9 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
               <p className="text-sm leading-6 text-neutral-600">
                 <RichText
                   content={
-                    (content.address as Text)
-                      .richText as unknown as RichTextObject
+                    gracefully(content.address, "richText") as
+                      | RichTextObject
+                      | undefined
                   }
                   lineBreakHandling="line-break"
                 />
@@ -120,10 +122,10 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
             <div>
               <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                {(content.newsletter.title as Text).text}
+                {gracefully(content.newsletter.title, "text")}
               </h3>
               <p className="mt-2 text-sm leading-6 text-neutral-600">
-                {(content.newsletter.description as Text).text}
+                {gracefully(content.newsletter.description, "text")}
               </p>
             </div>
             <form className="mt-6 sm:flex sm:max-w-md lg:mt-0">
@@ -151,7 +153,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                   type="submit"
                   className="flex h-full w-full items-center justify-center"
                 >
-                  {(content.newsletter.buttonLabel as Text).text}
+                  {gracefully(content.newsletter.buttonLabel, "text")}
                 </Button>
               </div>
             </form>
@@ -165,8 +167,9 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                 {" "}
                 <RichText
                   content={
-                    (content.copyright as Text)
-                      .richText as unknown as RichTextObject
+                    gracefully(content.copyright, "richText") as
+                      | RichTextObject
+                      | undefined
                   }
                   lineBreakHandling="line-break"
                 />
