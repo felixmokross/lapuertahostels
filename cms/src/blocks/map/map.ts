@@ -1,13 +1,23 @@
 import { elementIdField } from "@/fields/element-id";
-import { headingField } from "@/fields/heading";
 import { makeMoreOptionsField } from "@/fields/more-options";
-import { makeRichTextField } from "@/fields/rich-text";
+import { overlayTextBoxField } from "@/fields/overlay-text-box";
 import { Block } from "payload";
-
-const richTextField = makeRichTextField();
 
 export const MapBlock: Block = {
   slug: "Map",
+  labels: {
+    singular: {
+      en: "Map",
+      es: "Mapa",
+    },
+    plural: {
+      en: "Maps",
+      es: "Mapas",
+    },
+  },
+  imageURL: "/assets/blocks/Map.png",
+  imageAltText:
+    "Preview of the Map block, showing a map with a pin and an overlay text box.",
   fields: [
     {
       name: "address",
@@ -42,36 +52,7 @@ export const MapBlock: Block = {
         },
       },
     },
-    {
-      name: "overlayTextBox",
-      label: {
-        en: "Overlay Text Box",
-        es: "Caja de texto superpuesta",
-      },
-      type: "group",
-      fields: [
-        headingField,
-        richTextField,
-        {
-          name: "callToActionLabel",
-          label: {
-            en: "Call to Action Label",
-            es: "Etiqueta del Call to Action",
-          },
-          type: "relationship",
-          filterOptions: {
-            type: { equals: "plainText" },
-          },
-          relationTo: "texts",
-          admin: {
-            description: {
-              en: "Leave blank to hide the call to action.",
-              es: "Deja en blanco para ocultar el call to action.",
-            },
-          },
-        },
-      ],
-    },
+    overlayTextBoxField({ optional: false, callToActionLabelOnly: true }),
     makeMoreOptionsField(
       {
         name: "mapId",
