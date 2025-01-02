@@ -124,7 +124,6 @@ jobs:
             --dockerfile Dockerfile.cms \
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
-            --label org.opencontainers.image.version=${{ steps.version.outputs.image_tag }} \
             --push \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -291,7 +290,6 @@ jobs:
             --dockerfile Dockerfile.cms \
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
-            --label org.opencontainers.image.version=${{ steps.version.outputs.image_tag }} \
             --push \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
