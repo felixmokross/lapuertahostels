@@ -2,31 +2,13 @@ import { Page } from "~/payload-types";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { OverlayTextBox } from "./common/overlay-text-box";
+import { isObject } from "~/common/utils";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
 };
 
 export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
-  if (typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
-  if (overlayTextBox?.show && typeof overlayTextBox.heading !== "object") {
-    throw new Error("Invalid overlayTextBox.heading");
-  }
-
-  if (overlayTextBox?.show && typeof overlayTextBox.text !== "object") {
-    throw new Error("Invalid overlayTextBox.text");
-  }
-
-  if (
-    overlayTextBox?.cta?.show &&
-    typeof overlayTextBox.cta.label !== "object"
-  ) {
-    throw new Error("Invalid overlayTextBox.cta.label");
-  }
-
   return (
     <div className="my-44 flex flex-col-reverse gap-4 lg:relative lg:h-[35rem]">
       <MediaImage
@@ -40,29 +22,23 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
         srcMultiplier={6}
         sizes="100vw"
       />
-      {overlayTextBox?.show &&
-        overlayTextBox.heading &&
-        typeof overlayTextBox.heading === "object" &&
-        overlayTextBox.text &&
-        typeof overlayTextBox.text === "object" && (
-          <OverlayTextBox
-            heading={overlayTextBox.heading}
-            text={overlayTextBox.text}
-            position={overlayTextBox.position}
-            cta={
-              overlayTextBox.cta?.show &&
-              overlayTextBox.cta.label &&
-              typeof overlayTextBox.cta.label === "object"
-                ? {
-                    as: PageLink,
-                    link: overlayTextBox.cta.link,
-                    label: overlayTextBox.cta.label,
-                    variant: "secondary",
-                  }
-                : undefined
-            }
-          />
-        )}
+      {overlayTextBox?.show && (
+        <OverlayTextBox
+          heading={overlayTextBox.heading}
+          text={overlayTextBox.text}
+          position={overlayTextBox.position}
+          cta={
+            overlayTextBox.cta?.show && isObject(overlayTextBox.cta.label)
+              ? {
+                  as: PageLink,
+                  link: overlayTextBox.cta.link,
+                  label: overlayTextBox.cta.label,
+                  variant: "secondary",
+                }
+              : undefined
+          }
+        />
+      )}
     </div>
   );
 }

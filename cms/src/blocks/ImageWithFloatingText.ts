@@ -25,6 +25,7 @@ export const ImageWithFloatingTextBlock: Block = {
     makeOverlayTitleField({
       supportsCallToAction: false,
       supportsPositions: ["top-left", "top-right"],
+      supportsSupportingText: false,
     }),
     makeRichTextField(),
     makeMoreOptionsField(elementIdField),

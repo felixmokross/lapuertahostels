@@ -6,54 +6,43 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
 import { getAltFromMedia, getSrcFromMedia } from "~/common/media";
 import { PageLink } from "~/common/page-link";
-import { Text } from "~/payload-types";
+import { gracefully, isObject } from "~/common/utils";
 
-export type RoomCardProps = Room;
+export type RoomCardProps = Partial<Room>;
 
 export function RoomCard({ heading, text, images, cta }: RoomCardProps) {
-  if (typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
-  if (typeof cta.label !== "object") {
-    throw new Error("Invalid cta label");
-  }
-
   return (
     <div className="flex max-w-[35rem] flex-col items-center gap-8">
       <Heading as="h3" size="medium" className="px-6 text-center sm:px-0">
-        {heading.text}
+        {gracefully(heading, "text")}
       </Heading>
       <ImageViewer
-        images={images.map((image) => {
-          if (typeof image.image !== "object") {
-            throw new Error("Invalid image");
-          }
-
-          if (image.caption && typeof image.caption !== "object") {
-            throw new Error("Invalid caption");
-          }
+        images={images?.map((image) => {
           return {
             src: getSrcFromMedia(image.image),
             alt: getAltFromMedia(image.image),
-            caption:
-              (image.caption as Text | null | undefined)?.text ?? undefined,
-            aspectRatio: image.image.width! / image.image.height!,
+            caption: gracefully(image.caption, "text") ?? "",
+            aspectRatio:
+              isObject(image.image) && image.image.width && image.image.height
+                ? image.image.width / image.image.height
+                : 1,
           };
         })}
       />
       {text && (
         <RichTextParagraph justify={true} className="px-6 sm:px-0">
-          {text.richText as unknown as RichTextObject}
+          {gracefully(text, "richText") as RichTextObject | undefined}
         </RichTextParagraph>
       )}
-      <Button as={PageLink} link={cta.link} variant={cta.variant || undefined}>
-        {cta.label.text}
-      </Button>
+      {cta && (
+        <Button
+          as={PageLink}
+          link={cta.link}
+          variant={cta.variant || undefined}
+        >
+          {gracefully(cta.label, "text")}
+        </Button>
+      )}
     </div>
   );
 }

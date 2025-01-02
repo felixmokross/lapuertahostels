@@ -1,10 +1,11 @@
-import { GroupField, RadioField } from "payload";
+import { GroupField, RadioField, RelationshipField } from "payload";
 import { showField } from "./show";
 import { makeCallToActionField } from "./call-to-action";
 import { Page } from "@/payload-types";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
+  supportsSupportingText?: boolean;
   supportsCallToAction?: boolean;
   supportsPositions?: (NonNullable<Page["layout"]>[number] & {
     blockType: "ImageWithFloatingText";
@@ -19,6 +20,7 @@ const callToActionField = makeCallToActionField({
 
 export function makeOverlayTitleField({
   optional = false,
+  supportsSupportingText = true,
   supportsCallToAction = true,
   supportsPositions,
 }: OverlayTitleFieldOptions = {}): GroupField {
@@ -51,21 +53,25 @@ export function makeOverlayTitleField({
           condition,
         },
       },
-      {
-        name: "supportingText",
-        label: {
-          en: "Supporting Text",
-          es: "Texto de apoyo",
-        },
-        type: "relationship",
-        relationTo: "texts",
-        filterOptions: {
-          type: { equals: "richText" },
-        },
-        admin: {
-          condition,
-        },
-      },
+      ...(supportsSupportingText
+        ? [
+            {
+              name: "supportingText",
+              label: {
+                en: "Supporting Text",
+                es: "Texto de apoyo",
+              },
+              type: "relationship",
+              relationTo: "texts",
+              filterOptions: {
+                type: { equals: "richText" },
+              },
+              admin: {
+                condition,
+              },
+            } as RelationshipField,
+          ]
+        : []),
       ...(supportsCallToAction
         ? [
             {

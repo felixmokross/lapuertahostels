@@ -6,8 +6,8 @@ import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
 import { RichTextObject } from "~/common/rich-text";
 import { MediaImage } from "~/common/media";
-import { Text } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
+import { gracefully } from "~/common/utils";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -21,22 +21,6 @@ export function Feature({
   text,
   cta,
 }: FeatureProps) {
-  if (typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
-  if (typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
-  if (cta?.show && typeof cta.label !== "object") {
-    throw new Error("Invalid cta label");
-  }
-
   return (
     <div
       className={cn(
@@ -46,10 +30,10 @@ export function Feature({
     >
       <div className="px-8 text-center sm:px-16 md:px-0">
         <Heading size="medium" variant="brand" as="h3" className="-mt-4">
-          {heading.text}
+          {gracefully(heading, "text")}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">
-          {text.richText as unknown as RichTextObject}
+          {gracefully(text, "richText") as RichTextObject | undefined}
         </RichTextParagraph>
         {cta?.show && (
           <Button
@@ -57,9 +41,9 @@ export function Feature({
             size="medium"
             variant={cta.variant || undefined}
             as={PageLink}
-            link={cta.link!}
+            link={cta.link}
           >
-            {(cta.label as Text).text}
+            {gracefully(cta.label, "text")}
           </Button>
         )}
       </div>

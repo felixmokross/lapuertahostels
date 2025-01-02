@@ -1,6 +1,7 @@
-import { Brand, Page } from "~/payload-types";
+import { Brand } from "~/payload-types";
 import { Link, LinkProps } from "./link";
 import { forwardRef, PropsWithChildren } from "react";
+import { gracefully, isObject } from "./utils";
 
 export type PageLinkProps = {
   link: NonNullable<Brand["navLinks"]>[number]["link"];
@@ -8,16 +9,16 @@ export type PageLinkProps = {
 
 export const PageLink = forwardRef<HTMLAnchorElement, PageLinkProps>(
   function PageLink({ link, ...props }, ref) {
-    if (typeof link !== "object") throw new Error("Invalid link");
-
     return (
       <Link
         {...props}
         ref={ref}
         to={
-          link.type === "internal"
-            ? `${(link.page as Page).pathname}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
-            : link.url!
+          isObject(link)
+            ? link.type === "internal"
+              ? `${gracefully(link.page, "pathname") ?? ""}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
+              : link.url ?? "about:blank"
+            : "about:blank"
         }
       />
     );

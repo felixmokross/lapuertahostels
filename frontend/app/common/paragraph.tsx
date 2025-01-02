@@ -79,7 +79,7 @@ export function ParagraphHighlight({ children }: PropsWithChildren) {
 }
 
 export type RichTextParagraphProps = Omit<ParagraphProps, "children"> & {
-  children: RichTextObject;
+  children?: RichTextObject;
 };
 
 export function RichTextParagraph({
@@ -88,11 +88,13 @@ export function RichTextParagraph({
 }: RichTextParagraphProps) {
   return (
     <Paragraph {...props}>
-      <RichText
-        content={children}
-        elements={{ bold: ParagraphHighlight }}
-        lineBreakHandling="line-break"
-      />
+      {children && (
+        <RichText
+          content={children}
+          elements={{ bold: ParagraphHighlight }}
+          lineBreakHandling="line-break"
+        />
+      )}
     </Paragraph>
   );
 }

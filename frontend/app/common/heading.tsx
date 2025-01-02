@@ -79,19 +79,21 @@ export function HeadingHighlight({ children }: PropsWithChildren) {
 }
 
 export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {
-  children: RichTextObject;
+  children?: RichTextObject;
 };
 
 export function RichTextHeading({ children, ...props }: RichTextHeadingProps) {
   return (
     <Heading {...props}>
-      <RichText
-        content={children}
-        elements={{
-          bold: HeadingHighlight,
-        }}
-        lineBreakHandling="line-break"
-      />
+      {children && (
+        <RichText
+          content={children}
+          elements={{
+            bold: HeadingHighlight,
+          }}
+          lineBreakHandling="line-break"
+        />
+      )}
     </Heading>
   );
 }

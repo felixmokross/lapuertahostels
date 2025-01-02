@@ -20,7 +20,7 @@
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.1",
     "@paralleldrive/cuid2": "^2.2.2",
-    "@payloadcms/live-preview-react": "^0.2.0",
+    "@payloadcms/live-preview-react": "3.13.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/route-config": "^2.15.0",

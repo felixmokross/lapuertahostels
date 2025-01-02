@@ -3,9 +3,10 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text";
-import { Page, Text } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
+import { gracefully, isObject } from "~/common/utils";
 
 type OverlayTitleType = NonNullable<
   (NonNullable<Page["hero"]>[number] & {
@@ -32,18 +33,6 @@ export function OverlayTitle({
   onMouseEnter,
   onMouseLeave,
 }: OverlayTitleProps) {
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
-  if (supportingText && typeof supportingText !== "object") {
-    throw new Error("Invalid supportingText");
-  }
-
-  if (cta?.show && typeof cta.label !== "object") {
-    throw new Error("Invalid cta.label");
-  }
-
   return (
     <>
       <div
@@ -71,28 +60,28 @@ export function OverlayTitle({
           variant="white"
           textShadow
         >
-          {text!.richText as unknown as RichTextObject}
+          {gracefully(text, "richText") as RichTextObject | undefined}
         </RichTextHeading>
-        {supportingText && (
+        {isObject(supportingText) && (
           <RichTextParagraph
             size="extra-large"
             variant="white"
             textShadow
             className="mt-6"
           >
-            {(supportingText as Text).richText as unknown as RichTextObject}
+            {supportingText.richText as unknown as RichTextObject}
           </RichTextParagraph>
         )}
         {cta?.show && (
           <Button
             as={PageLink}
-            link={cta.link!}
+            link={cta.link}
             size="large"
             variant={cta.variant || "primary"}
             blackShadow
             className={cn(supportingText ? "mt-10" : "mt-6")}
           >
-            {(cta.label as Text).text}
+            {gracefully(cta.label, "text")}
           </Button>
         )}
       </div>

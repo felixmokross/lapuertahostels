@@ -1,4 +1,4 @@
-import { Brand, Page } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { RichTextParagraph } from "../common/paragraph";
@@ -7,12 +7,13 @@ import { RichTextObject } from "~/common/rich-text";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { ReactNode } from "react";
+import { gracefully } from "~/common/utils";
 
-export type AccommodationSelectorBlockProps = NonNullable<
-  Page["layout"]
->[number] & {
-  blockType: "AccommodationSelector";
-};
+export type AccommodationSelectorBlockProps = Partial<
+  NonNullable<Page["layout"]>[number] & {
+    blockType: "AccommodationSelector";
+  }
+>;
 
 export function AccommodationSelectorBlock({
   heading,
@@ -20,13 +21,6 @@ export function AccommodationSelectorBlock({
   cards,
   elementId,
 }: AccommodationSelectorBlockProps) {
-  if (typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
   return (
     <div className="relative">
       <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
@@ -38,7 +32,7 @@ export function AccommodationSelectorBlock({
             variant="white"
             id={elementId || undefined}
           >
-            {heading.text}
+            {gracefully(heading, "text")}
           </Heading>
           <RichTextParagraph
             className="mt-4 md:mt-6"
@@ -46,58 +40,41 @@ export function AccommodationSelectorBlock({
             size="large"
             variant="white"
           >
-            {text.richText as unknown as RichTextObject}
+            {gracefully(text, "richText") as RichTextObject | undefined}
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
-          {cards.map((card) => (
-            <AccommodationCard
-              key={card.id}
-              {...card}
-              brand={card.brand as Brand}
-            />
-          ))}
+          {cards?.map((card) => <AccommodationCard key={card.id} {...card} />)}
         </div>
       </div>
     </div>
   );
 }
 
-type AccommodationCardProps = Omit<
-  AccommodationSelectorBlockProps["cards"][number],
-  "brand"
-> & { brand: Brand };
+type AccommodationCardProps = NonNullable<
+  AccommodationSelectorBlockProps["cards"]
+>[number];
 
 function AccommodationCard({
   brand,
   description,
   image,
 }: AccommodationCardProps) {
-  const brandId = brand.id as BrandId;
-
-  if (typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
-  if (typeof brand.homeLink !== "object") {
-    throw new Error("Invalid homeLink");
-  }
-
-  if (typeof description !== "object") {
-    throw new Error("Invalid description");
-  }
+  const brandId = gracefully(brand, "id") as BrandId | undefined;
 
   const componentClassName = cn(
     "group flex flex-col overflow-hidden shadow-lg hover:shadow-md md:rounded-xl",
     {
       "bg-aqua-600 hover:bg-aqua-200": brandId === "aqua",
       "bg-azul-600 hover:bg-azul-200": brandId === "azul",
+      "bg-neutral-600": !brandId,
     },
   );
 
   function getComponent(children: ReactNode) {
-    return brand.homeLink ? (
-      <PageLink link={brand.homeLink} className={componentClassName}>
+    const homeLink = gracefully(brand, "homeLink");
+    return homeLink ? (
+      <PageLink link={homeLink} className={componentClassName}>
         {children}
       </PageLink>
     ) : (
@@ -129,10 +106,10 @@ function AccommodationCard({
         })}
       >
         <Heading as="h4" variant="inherit" size="extra-small">
-          {brand.name}
+          {gracefully(brand, "name")}
         </Heading>
         <RichTextParagraph variant="inherit" justify>
-          {description.richText as unknown as RichTextObject}
+          {gracefully(description, "richText") as RichTextObject | undefined}
         </RichTextParagraph>
       </div>
     </>,
