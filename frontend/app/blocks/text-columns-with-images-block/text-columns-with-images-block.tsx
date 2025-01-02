@@ -4,8 +4,10 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
 import { type TextColumnsWithImagesBlock } from "./types";
 import { TextWithImageItem } from "./text-with-image-item";
+import { gracefully } from "~/common/utils";
 
-export type TextColumnsWithImagesBlockProps = TextColumnsWithImagesBlock;
+export type TextColumnsWithImagesBlockProps =
+  Partial<TextColumnsWithImagesBlock>;
 
 export function TextColumnsWithImagesBlock({
   heading,
@@ -14,20 +16,12 @@ export function TextColumnsWithImagesBlock({
   numberOfColumns,
   elementId,
 }: TextColumnsWithImagesBlockProps) {
-  if (heading != null && typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (text != null && typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
   return (
     <div className="my-36 px-8" id={elementId ?? undefined}>
       <div className="mx-auto max-w-4xl">
         {heading && (
           <Heading as="h3" size="medium" className="text-center">
-            {heading.text}
+            {gracefully(heading, "text")}
           </Heading>
         )}
         {text && (
@@ -35,7 +29,7 @@ export function TextColumnsWithImagesBlock({
             size="large"
             className={cn(heading && "mt-4 md:mt-6", "text-center")}
           >
-            {text.richText as unknown as RichTextObject}
+            {gracefully(text, "richText") as RichTextObject | undefined}
           </RichTextParagraph>
         )}
       </div>
@@ -52,7 +46,7 @@ export function TextColumnsWithImagesBlock({
           }),
         )}
       >
-        {items.map((item) => (
+        {items?.map((item) => (
           <TextWithImageItem
             key={item.id}
             {...item}

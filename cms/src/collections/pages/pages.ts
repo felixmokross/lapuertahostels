@@ -1,4 +1,11 @@
-import { CollectionConfig, TextField, ValidateOptions } from "payload";
+import {
+  CollectionConfig,
+  Locale,
+  Payload,
+  SanitizedCollectionConfig,
+  TextField,
+  ValidateOptions,
+} from "payload";
 import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
@@ -9,6 +16,7 @@ import { TranslationsKey } from "@/translations";
 import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
+import { getLivePreviewUrl } from "@/common/live-preview";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -31,6 +39,22 @@ export const Pages: CollectionConfig = {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
     listSearchableFields: ["id", "pathname", "title.text", "brand.name"],
+    livePreview: {
+      url: ({
+        data,
+        locale,
+      }: {
+        collectionConfig?: SanitizedCollectionConfig;
+        data: Record<string, any>;
+        locale: Locale;
+        payload: Payload;
+      }) =>
+        getLivePreviewUrl(
+          (data as Page).pathname,
+          `pages/${data.id}`,
+          locale.code,
+        ),
+    },
   },
   access: {
     create: canManageContent,

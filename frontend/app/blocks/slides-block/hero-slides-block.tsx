@@ -5,12 +5,15 @@ import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";
 import { useEnvironment } from "~/common/environment";
 import { useSwipeable } from "react-swipeable";
-import { Media, Page } from "~/payload-types";
+import { Page } from "~/payload-types";
 import { useTranslation } from "react-i18next";
+import { isObject } from "~/common/utils";
 
-export type HeroSlidesBlockProps = NonNullable<Page["hero"]>[number] & {
-  blockType: "HeroSlides";
-};
+export type HeroSlidesBlockProps = Partial<
+  NonNullable<Page["hero"]>[number] & {
+    blockType: "HeroSlides";
+  }
+>;
 
 export function HeroSlidesBlock({
   seoPageHeading,
@@ -21,9 +24,6 @@ export function HeroSlidesBlock({
 
   const { t } = useTranslation();
   const [isReady, setIsReady] = useState(false);
-  if (slides.length === 0) {
-    throw new Error("Slides Block must have at least one slide");
-  }
 
   const {
     slideIndex,
@@ -56,10 +56,10 @@ export function HeroSlidesBlock({
       tabIndex={0}
       role="tablist"
     >
-      {seoPageHeading && typeof seoPageHeading === "object" && (
+      {isObject(seoPageHeading) && (
         <h2 className="sr-only">{seoPageHeading.text}</h2>
       )}
-      {slides.length > 1 && (
+      {slides && slides.length > 1 && (
         <>
           <div
             className="absolute bottom-10 hidden w-full justify-center md:flex"
@@ -111,8 +111,7 @@ export function HeroSlidesBlock({
           </div>
         </>
       )}
-      {slides.map((slide, i) => {
-        const imageMedia = slide.image as Media;
+      {slides?.map((slide, i) => {
         return (
           <Transition
             key={i}
@@ -128,7 +127,7 @@ export function HeroSlidesBlock({
             leaveTo="opacity-0"
           >
             <SlideImage
-              media={imageMedia}
+              media={slide.image}
               withPreview={i === 0}
               alignment={slide.imageAlignment ?? "center"}
               onLoadingFinished={i === 0 ? () => setIsReady(true) : undefined}
@@ -164,13 +163,13 @@ function useSlidesState(
     if (preview) return;
 
     // Do not auto-advance if there is only one slide
-    if (slides.length === 1) return;
+    if (!slides || slides.length === 1) return;
 
     intervalRef.current = window.setInterval(
       () => setSlideIndex((currentIndex) => (currentIndex + 1) % slides.length),
       autoplayIntervalInSeconds * 1000,
     );
-  }, [slides.length, autoplayIntervalInSeconds, preview]);
+  }, [slides, autoplayIntervalInSeconds, preview]);
 
   function stopInterval() {
     if (intervalRef.current) {
@@ -196,9 +195,11 @@ function useSlidesState(
     startInterval,
     goTo,
     goToNext() {
+      if (!slides) return;
       goTo((slideIndex + 1) % slides.length);
     },
     goToPrevious() {
+      if (!slides) return;
       goTo((slideIndex - 1 + slides.length) % slides.length);
     },
   };

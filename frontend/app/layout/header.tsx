@@ -1,6 +1,7 @@
 import { Brand } from "~/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
+import { isObject } from "~/common/utils";
 
 type HeaderProps = {
   hasSession?: boolean;
@@ -9,12 +10,11 @@ type HeaderProps = {
 } & Pick<NavbarProps, "onHeightChanged">;
 
 export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
-  if (brand.banner != null && typeof brand.banner !== "object") {
-    throw new Error("Brand banner is not an object");
-  }
   return (
     <header className="contents">
-      {brand.banner && <Banner key={brand.banner.id} {...brand.banner} />}
+      {isObject(brand.banner) && (
+        <Banner key={brand.banner.id} {...brand.banner} />
+      )}
       <Navbar
         brand={brand}
         allBrands={allBrands}

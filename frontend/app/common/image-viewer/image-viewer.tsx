@@ -4,10 +4,11 @@ import { useState } from "react";
 import { ImageViewerDialog } from "./image-viewer-dialog";
 import { Heading } from "../heading";
 import { useTranslation } from "react-i18next";
+import { MediaPlaceholder } from "../media";
 
 export type ImageViewerProps = {
   className?: string;
-  images: ImageViewerImage[];
+  images?: ImageViewerImage[];
 };
 
 export function ImageViewer({ images, className }: ImageViewerProps) {
@@ -24,19 +25,23 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
             setCurrentImageIndex(0);
           }}
         >
-          <Image
-            src={images[0].src}
-            alt={images[0].alt}
-            className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
-            transformation={{
-              width: 560,
-              aspectRatio: { width: 16, height: 9 },
-            }}
-            loading="lazy"
-            layout="fixed"
-          />
+          {images && images.length >= 1 && images[0].src ? (
+            <Image
+              src={images[0].src}
+              alt={images[0].alt}
+              className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
+              transformation={{
+                width: 560,
+                aspectRatio: { width: 16, height: 9 },
+              }}
+              loading="lazy"
+              layout="fixed"
+            />
+          ) : (
+            <MediaPlaceholder />
+          )}
         </button>
-        {images.slice(1, 5).map((image, index) => (
+        {images?.slice(1, 5).map((image, index) => (
           <button
             className="group relative block w-full overflow-hidden bg-white shadow-md"
             key={image.src}
@@ -67,7 +72,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
           </button>
         ))}
       </div>
-      {images.map((_, i) => (
+      {images?.map((_, i) => (
         <ImageViewerDialog
           key={i}
           images={images}

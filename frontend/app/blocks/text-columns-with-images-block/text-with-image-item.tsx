@@ -6,14 +6,15 @@ import { cn } from "~/common/cn";
 import { Heading, HeadingProps } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
-import { Text } from "~/payload-types";
+import { gracefully } from "~/common/utils";
 
-export type TextWithImageItemProps =
+export type TextWithImageItemProps = Partial<
   TextColumnsWithImagesBlock["items"][number] & {
     imageSizes?: string;
     imageWidth?: number;
     headingLevel: number;
-  };
+  }
+>;
 
 export function TextWithImageItem({
   image,
@@ -26,18 +27,6 @@ export function TextWithImageItem({
   imageWidth,
 }: TextWithImageItemProps) {
   size = size ?? "full";
-
-  if (heading != null && typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (text != null && typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
-  if (cta?.show && cta.label && typeof cta.label !== "object") {
-    throw new Error("Invalid CTA label");
-  }
 
   return (
     <div
@@ -65,7 +54,7 @@ export function TextWithImageItem({
           size="small"
           className={cn(image && "mt-8")}
         >
-          {heading.text}
+          {gracefully(heading, "text")}
         </Heading>
       )}
       {text && (
@@ -73,7 +62,7 @@ export function TextWithImageItem({
           size="medium"
           className={cn(heading ? "mt-2" : image ? "mt-8" : false)}
         >
-          {text.richText as unknown as RichTextObject}
+          {gracefully(text, "richText") as RichTextObject | undefined}
         </RichTextParagraph>
       )}
       {cta?.show && (
@@ -84,7 +73,7 @@ export function TextWithImageItem({
           variant={cta.variant ?? "secondary"}
           className={cn((image || heading || text) && "mt-6")}
         >
-          {(cta.label as Text).text}
+          {gracefully(cta.label, "text")}
         </Button>
       )}
     </div>

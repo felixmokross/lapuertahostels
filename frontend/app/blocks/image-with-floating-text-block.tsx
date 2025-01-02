@@ -5,6 +5,7 @@ import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
+import { gracefully } from "~/common/utils";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   Page["layout"]
@@ -21,18 +22,6 @@ export function ImageWithFloatingTextBlock({
   const overlay = overlayTitle.overlay || "moderate";
   const textPosition = overlayTitle.position || "top-left";
   const theme = useTheme();
-  if (typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
-  if (typeof overlayTitle.text !== "object") {
-    throw new Error("Invalid overlay title");
-  }
-
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
   return (
     <div
       className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
@@ -73,7 +62,11 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {overlayTitle.text.richText as unknown as RichTextObject}
+            {
+              gracefully(gracefully(overlayTitle, "text"), "richText") as
+                | RichTextObject
+                | undefined
+            }
           </RichTextHeading>
         </div>
       </div>
@@ -96,7 +89,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {text.richText as unknown as RichTextObject}
+            {gracefully(text, "richText") as RichTextObject | undefined}
           </RichTextParagraph>
         </div>
       </div>

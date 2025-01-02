@@ -18,7 +18,7 @@ export const IS_SUPERSCRIPT = 1 << 6;
 export const IS_HIGHLIGHT = 1 << 7;
 
 export type RichTextProps = {
-  content: RichTextObject;
+  content?: RichTextObject;
   lineBreakHandling?: LineBreakHandling;
   elements?: Partial<CustomElementConfig>;
 };
@@ -76,6 +76,7 @@ export function RichText({
   elements,
   lineBreakHandling = "paragraph",
 }: RichTextProps) {
+  if (!content) return null;
   return (
     <RichTextContext.Provider
       value={{

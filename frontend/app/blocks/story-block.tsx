@@ -4,6 +4,7 @@ import { RichTextObject } from "~/common/rich-text";
 import { Page } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
+import { gracefully } from "~/common/utils";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Story";
@@ -17,18 +18,6 @@ export function StoryBlock({
   text,
   elementId,
 }: StoryBlockProps) {
-  if (image != null && typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
-  if (heading != null && typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (typeof text !== "object") {
-    throw new Error("Invalid text");
-  }
-
   imagePosition = image ? imagePosition ?? "left" : undefined;
   return (
     <div
@@ -47,12 +36,12 @@ export function StoryBlock({
       >
         {heading && (
           <Heading as="h3" size="medium">
-            {heading.text}
+            {gracefully(heading, "text")}
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
           <LongFormRichText
-            content={text.richText as unknown as RichTextObject}
+            content={gracefully(text, "richText") as RichTextObject | undefined}
             baseHeadingLevel={heading ? 4 : 3}
           />
         </div>

@@ -111,15 +111,15 @@ export const WithDifferentSizes: Story = {
     ...Default.args,
     items: [
       {
-        ...Default.args.items[0],
+        ...(Default.args?.items && Default.args.items[0]),
         size: "small",
       },
       {
-        ...Default.args.items[2],
+        ...(Default.args?.items && Default.args.items[2]),
         size: "full",
       },
       {
-        ...Default.args.items[1],
+        ...(Default.args?.items && Default.args.items[1]),
         size: "medium",
       },
     ],

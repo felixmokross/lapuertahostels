@@ -3,24 +3,16 @@ import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
 import { richTextRoot, paragraph, text } from "~/common/rich-text.builders";
+import { gracefully } from "~/common/utils";
 
-type HeroHeadingBlockProps = NonNullable<Page["hero"]>[number] & {
-  blockType: "HeroHeading";
-};
+type HeroHeadingBlockProps = Partial<
+  NonNullable<Page["hero"]>[number] & {
+    blockType: "HeroHeading";
+  }
+>;
 
 export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
-  if (heading != null && typeof heading !== "object") {
-    throw new Error("Invalid heading");
-  }
-
-  if (heading != null && heading.type !== "plainText") {
-    throw new Error("Heading must be plain text");
-  }
-
-  if (image != null && typeof image !== "object") {
-    throw new Error("Invalid image");
-  }
-
+  const headingText = gracefully(heading, "text");
   return image ? (
     <div className="relative min-h-72 shadow-md md:min-h-96">
       <SlideImage media={image} withPreview={true} alignment="center" />
@@ -28,9 +20,11 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         headingLevel={2}
         position="center"
         text={
-          {
-            richText: richTextRoot(paragraph(text(heading.text!))),
-          } as unknown as Text
+          headingText
+            ? ({
+                richText: richTextRoot(paragraph(text(headingText))),
+              } as unknown as Text)
+            : undefined
         }
         overlay="intense"
       />
@@ -43,7 +37,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         variant="inherit"
         className="border-b-2 border-neutral-300 pb-2 text-center"
       >
-        {heading.text}
+        {headingText}
       </Heading>
     </div>
   );

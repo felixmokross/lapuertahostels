@@ -205,29 +205,25 @@ export default function App() {
             )}
             <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
               {(brand) => (
-                <OptInLivePreview path="globals/common" data={common}>
-                  {(common) => (
-                    <>
-                      {isAuthorized && (
-                        <Header
-                          brand={brand}
-                          allBrands={allBrands}
-                          onHeightChanged={setHeaderHeight}
-                        />
-                      )}
-                      <main>
-                        <Outlet />
-                      </main>
-                      {isAuthorized && (
-                        <Footer
-                          brand={brand}
-                          allBrands={allBrands}
-                          content={common.footer}
-                        />
-                      )}
-                    </>
+                <>
+                  {isAuthorized && (
+                    <Header
+                      brand={brand}
+                      allBrands={allBrands}
+                      onHeightChanged={setHeaderHeight}
+                    />
                   )}
-                </OptInLivePreview>
+                  <main>
+                    <Outlet />
+                  </main>
+                  {isAuthorized && (
+                    <Footer
+                      brand={brand}
+                      allBrands={allBrands}
+                      content={common.footer}
+                    />
+                  )}
+                </>
               )}
             </OptInLivePreview>
           </ThemeProvider>

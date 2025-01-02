@@ -11,11 +11,11 @@ import {
   getRequestUrl,
   toUrl,
 } from "~/common/routing";
-import { Text } from "~/payload-types";
 import { SerializeFromLoader } from "~/common/types";
 import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
+import { gracefully } from "~/common/utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -26,9 +26,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
 
   const parentMeta = matches.flatMap((match) => match.meta ?? []);
 
-  const description = data.content.seo?.description
-    ? (data.content.seo?.description as Text).text
-    : "";
+  const description = gracefully(data.content.seo?.description, "text") ?? "";
   return [
     ...parentMeta,
     ...i18n.supportedLngs.map((lng) => ({

@@ -13,6 +13,7 @@ import { MapPinIcon } from "@heroicons/react/20/solid";
 import { Place, PlaceResolver } from "~/common/google-maps";
 import { OverlayTextBox } from "../common/overlay-text-box";
 import { useCommon } from "~/common/common";
+import { isObject } from "~/common/utils";
 
 type MapBlockType = NonNullable<Page["layout"]>[number] & {
   blockType: "Map";
@@ -28,16 +29,38 @@ export function MapBlock({
 }: MapBlockProps) {
   const placesLibrary = useMapsLibrary("places");
   const [place, setPlace] = useState<Place>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [requestedAddress, setRequestedAddress] = useState<string>();
 
   const { maps } = useCommon();
 
   useEffect(() => {
-    if (place || !placesLibrary) return;
+    if (
+      !placesLibrary ||
+      !address ||
+      address.length < 3 ||
+      isLoading ||
+      requestedAddress === address
+    ) {
+      return;
+    }
 
-    (async function () {
-      setPlace(await new PlaceResolver(placesLibrary).resolvePlace(address));
-    })();
-  }, [placesLibrary, place, address]);
+    const debounceTimeoutId = window.setTimeout(async () => {
+      setIsLoading(true);
+      setRequestedAddress(address);
+      try {
+        setPlace(await new PlaceResolver(placesLibrary).resolvePlace(address));
+      } finally {
+        setIsLoading(false);
+      }
+    }, 1_000);
+
+    return () => {
+      if (debounceTimeoutId != null) {
+        window.clearTimeout(debounceTimeoutId);
+      }
+    };
+  }, [placesLibrary, isLoading, place, address, requestedAddress]);
 
   return (
     <div
@@ -63,35 +86,32 @@ export function MapBlock({
               mapId={maps.mapId}
               colorScheme="LIGHT"
               zoom={zoomLevel}
-              defaultCenter={place.location}
+              center={place.location}
+              controlled={true}
             >
               <LocationMarker location={place.location} />
             </Map>
           )}
         </div>
 
-        {overlayTextBox &&
-          place &&
-          typeof overlayTextBox.heading === "object" &&
-          typeof overlayTextBox.text === "object" && (
-            <OverlayTextBox
-              position={overlayTextBox.position}
-              heading={overlayTextBox.heading}
-              text={overlayTextBox.text}
-              cta={
-                overlayTextBox.callToActionLabel &&
-                typeof overlayTextBox.callToActionLabel === "object"
-                  ? {
-                      icon: MapPinIcon,
-                      label: overlayTextBox.callToActionLabel,
-                      as: Link,
-                      variant: "secondary",
-                      to: place.url,
-                    }
-                  : undefined
-              }
-            />
-          )}
+        {overlayTextBox && place && (
+          <OverlayTextBox
+            position={overlayTextBox.position}
+            heading={overlayTextBox.heading}
+            text={overlayTextBox.text}
+            cta={
+              isObject(overlayTextBox.callToActionLabel)
+                ? {
+                    icon: MapPinIcon,
+                    label: overlayTextBox.callToActionLabel,
+                    as: Link,
+                    variant: "secondary",
+                    to: place.url,
+                  }
+                : undefined
+            }
+          />
+        )}
       </div>
     </div>
   );

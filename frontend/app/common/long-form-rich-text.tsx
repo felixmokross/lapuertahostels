@@ -8,7 +8,7 @@ import { cn } from "./cn";
 import { Link } from "./link";
 
 export type LongFormRichTextProps = {
-  content: RichTextObject;
+  content?: RichTextObject;
   baseHeadingLevel: number;
 };
 

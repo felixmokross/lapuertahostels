@@ -4,12 +4,13 @@ import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "~/common/rich-text";
+import { gracefully } from "~/common/utils";
 import { Text } from "~/payload-types";
 
 type OverlayTextBoxProps<TCta extends ElementType = ElementType> = {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | null;
-  heading: Text;
-  text: Text;
+  heading: Text | string | null | undefined;
+  text: Text | string | null | undefined;
   cta?: {
     as: TCta;
     label: Text;
@@ -43,14 +44,14 @@ export function OverlayTextBox({
       )}
     >
       <Heading as="h3" size="small">
-        {(heading as Text).text}
+        {gracefully(heading, "text")}
       </Heading>
       <RichTextParagraph className="mt-2">
-        {(text as Text).richText as unknown as RichTextObject}
+        {gracefully(text, "richText") as RichTextObject | undefined}
       </RichTextParagraph>
       {cta && (
         <Button {...cta} className="mt-4">
-          {(cta.label as Text).text}
+          {gracefully(cta.label, "text")}
         </Button>
       )}
     </div>

@@ -52,6 +52,34 @@ export default buildConfig({
       },
       beforeNavLinks: ["/src/components/version-info#VersionInfo"],
     },
+    livePreview: {
+      breakpoints: [
+        {
+          label: "Mobile",
+          name: "mobile",
+          width: 390,
+          height: 844,
+        },
+        {
+          label: "Tablet (Portrait)",
+          name: "tablet-portrait",
+          width: 820,
+          height: 1180,
+        },
+        {
+          label: "Tablet (Landscape)",
+          name: "tablet-landscape",
+          width: 1180,
+          height: 820,
+        },
+        {
+          label: "Desktop",
+          name: "desktop",
+          width: 1440,
+          height: 900,
+        },
+      ],
+    },
   },
   editor: lexicalEditor({}),
   collections: [
