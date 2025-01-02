@@ -38,6 +38,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/cms.deployed .
 
 RUN mv .next/static .next/standalone/cms.deployed/.next/static
+RUN cp public .next/standalone/cms.deployed/public -r
 
 # Set the correct permission for prerender cache
 RUN chown nextjs:nodejs .next
