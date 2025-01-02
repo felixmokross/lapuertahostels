@@ -120,7 +120,7 @@ jobs:
       - name: Build and push frontend Docker image
         run: |
           flyctl deploy \
-            --app ${{ steps.image-name.outputs.image_name }}
+            --app ${{ steps.image-name.outputs.image_name }} \
             --dockerfile Dockerfile.cms \
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
@@ -286,7 +286,7 @@ jobs:
       - name: Build and push CMS Docker image
         run: |
           flyctl deploy \
-            --app ${{ steps.image-name.outputs.image_name }}
+            --app ${{ steps.image-name.outputs.image_name }} \
             --dockerfile Dockerfile.cms \
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
