@@ -112,7 +112,7 @@ jobs:
       - name: Get frontend image name
         id: image-name
         run: |
-          IMAGE_NAME=lapuertahostels-2
+          IMAGE_NAME=lapuertahostels-staging
           IMAGE_TAG=v${{ steps.version.outputs.version }}
           echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
           echo "image_tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
@@ -125,6 +125,7 @@ jobs:
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
             --label org.opencontainers.image.version=${{ steps.version.outputs.image_tag }} \
+            --push \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -278,7 +279,7 @@ jobs:
       - name: Get CMS image name
         id: image-name
         run: |
-          IMAGE_NAME=lapuertahostels-cms
+          IMAGE_NAME=lapuertahostels-cms-staging
           IMAGE_TAG=v${{ steps.version.outputs.version }}
           echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
           echo "image_tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
@@ -291,6 +292,7 @@ jobs:
             --build-only
             --image-label ${{ steps.image-name.outputs.image_tag }} \
             --label org.opencontainers.image.version=${{ steps.version.outputs.image_tag }} \
+            --push \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
