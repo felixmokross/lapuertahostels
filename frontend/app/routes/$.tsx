@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
-import { tryGetPage } from "~/cms-data";
+import { tryGetPage } from "~/cms-data.server";
 import { getPageTitle } from "~/common/meta";
 import { handleIncomingRequest } from "~/common/routing.server";
 import i18n from "~/i18n";

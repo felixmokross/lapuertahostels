@@ -8,7 +8,7 @@ import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Link } from "~/common/link";
 import { Paragraph } from "~/common/paragraph";
-import { useEnvironment } from "~/environment";
+import { useEnvironment } from "~/common/environment";
 
 export type PreviewBarProps = {
   className?: string;

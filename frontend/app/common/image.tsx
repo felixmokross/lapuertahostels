@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useEnvironment } from "~/environment";
+import { useEnvironment } from "~/common/environment";
 import { mergeRefs } from "./utils";
 
 export type ImageProps = {

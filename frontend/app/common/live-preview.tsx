@@ -1,6 +1,6 @@
 import { useLivePreview } from "@payloadcms/live-preview-react";
 import { ReactNode } from "react";
-import { useEnvironment } from "~/environment";
+import { useEnvironment } from "~/common/environment";
 
 export type OptInLivePreviewProps<TData> = {
   path: string;

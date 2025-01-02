@@ -68,7 +68,7 @@ export const Media: CollectionConfig = {
         en: "Comment (internal)",
         es: "Comentario (interno)",
       },
-      type: "text",
+      type: "textarea",
       admin: {
         description: {
           en: "Add an internal comment to note any important information about this media, e.g. the source.",

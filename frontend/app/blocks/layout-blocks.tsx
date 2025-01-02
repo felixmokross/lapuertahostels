@@ -8,6 +8,7 @@ import { SeparatorBlock } from "./separator-block";
 import { WideImageBlock } from "./wide-image-block";
 import { RoomListBlock } from "./room-list-block/room-list-block";
 import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block/text-columns-with-images-block";
+import { MapBlock } from "./map-block";
 
 type LayoutBlocksProps = {
   data: NonNullable<Page["layout"]>;
@@ -34,6 +35,8 @@ export function LayoutBlocks({ data }: LayoutBlocksProps) {
         return <RoomListBlock key={block.id} {...block} />;
       case "TextColumnsWithImages":
         return <TextColumnsWithImagesBlock key={block.id} {...block} />;
+      case "Map":
+        return <MapBlock key={block.id} {...block} />;
     }
   });
 }

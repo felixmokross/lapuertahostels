@@ -29,6 +29,11 @@ export type Theme = {
     textColor: string;
     hoverTextColor: string;
   };
+  mapPinCssColors: {
+    background: string;
+    glyph: string;
+    border: string;
+  };
 };
 
 export type ThemeProviderProps = {
@@ -86,6 +91,11 @@ export const themesByBrand: Record<BrandId, Theme> = {
       textColor: "text-puerta-600",
       hoverTextColor: "hover:text-puerta-700",
     },
+    mapPinCssColors: {
+      background: "#b37332",
+      glyph: "#ffffff",
+      border: "#ffffff",
+    },
   },
   aqua: {
     logoTextColor: "text-aqua-600",
@@ -115,6 +125,11 @@ export const themesByBrand: Record<BrandId, Theme> = {
       textColor: "text-aqua-600",
       hoverTextColor: "hover:text-aqua-700",
     },
+    mapPinCssColors: {
+      background: "#2dd4bf",
+      glyph: "#ffffff",
+      border: "#ffffff",
+    },
   },
   azul: {
     logoTextColor: "text-azul-900",
@@ -143,6 +158,11 @@ export const themesByBrand: Record<BrandId, Theme> = {
     linkColors: {
       textColor: "text-azul-800",
       hoverTextColor: "hover:text-azul-900",
+    },
+    mapPinCssColors: {
+      background: "#172554",
+      glyph: "#ffffff",
+      border: "#ffffff",
     },
   },
 };

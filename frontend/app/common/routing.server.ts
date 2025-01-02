@@ -6,7 +6,7 @@ import {
   getRequestUrl,
   buildLocalizedRelativeUrl,
 } from "./routing";
-import { getMaintenance } from "~/cms-data";
+import { getMaintenance } from "~/cms-data.server";
 import { isAuthenticated } from "./auth";
 
 export async function handleIncomingRequest(request: Request) {

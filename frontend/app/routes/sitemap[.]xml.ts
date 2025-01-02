@@ -1,4 +1,4 @@
-import { getMaintenance, loadData } from "~/cms-data";
+import { getMaintenance, loadData } from "~/cms-data.server";
 import { Page } from "~/payload-types";
 import i18n from "~/i18n";
 import { buildLocalizedRelativeUrl, getRequestUrl } from "~/common/routing";

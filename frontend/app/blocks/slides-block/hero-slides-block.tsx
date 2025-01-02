@@ -3,7 +3,7 @@ import { cn } from "../../common/cn";
 import { SlideImage } from "./slide-image";
 import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";
-import { useEnvironment } from "~/environment";
+import { useEnvironment } from "~/common/environment";
 import { useSwipeable } from "react-swipeable";
 import { Media, Page } from "~/payload-types";
 import { useTranslation } from "react-i18next";

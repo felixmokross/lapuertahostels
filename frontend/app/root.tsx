@@ -16,7 +16,12 @@ import styles from "./global.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";
-import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
+import {
+  getBrands,
+  getCommon,
+  getMaintenance,
+  tryGetPage,
+} from "./cms-data.server";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { useState } from "react";
@@ -35,6 +40,8 @@ import { LanguageDetector } from "remix-i18next/server";
 import i18next from "./i18next.server";
 import { isAuthenticated } from "./common/auth";
 import { getVersion } from "./common/version.server";
+import { APIProvider as GoogleMapsAPIProvider } from "@vis.gl/react-google-maps";
+import { mapToGoogleMapsLanguage } from "./common/google-maps";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -130,6 +137,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     maintenance,
     common,
     environment: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY!,
       version: getVersion(),
       payloadCmsBaseUrl: process.env.PAYLOAD_CMS_BASE_URL,
       imagekitBaseUrl: process.env.IMAGEKIT_BASE_URL,
@@ -166,6 +174,7 @@ export default function App() {
     allBrands,
     isAuthorized,
     adminLocale,
+    environment,
   } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
@@ -185,38 +194,44 @@ export default function App() {
         <AnalyticsScript analyticsDomain={analyticsDomain} />
       </head>
       <body className="bg-white text-neutral-900 antialiased">
-        <ThemeProvider brandId={brand.id as BrandId}>
-          {maintenance.maintenanceScreen?.show && isAuthorized && (
-            <PreviewBar adminLocale={adminLocale!} />
-          )}
-          <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
-            {(brand) => (
-              <OptInLivePreview path="globals/common" data={common}>
-                {(common) => (
-                  <>
-                    {isAuthorized && (
-                      <Header
-                        brand={brand}
-                        allBrands={allBrands}
-                        onHeightChanged={setHeaderHeight}
-                      />
-                    )}
-                    <main>
-                      <Outlet />
-                    </main>
-                    {isAuthorized && (
-                      <Footer
-                        brand={brand}
-                        allBrands={allBrands}
-                        content={common.footer}
-                      />
-                    )}
-                  </>
-                )}
-              </OptInLivePreview>
+        <GoogleMapsAPIProvider
+          apiKey={environment.googleMapsApiKey}
+          language={mapToGoogleMapsLanguage(i18n.language)}
+          region={common.maps?.region || undefined}
+        >
+          <ThemeProvider brandId={brand.id as BrandId}>
+            {maintenance.maintenanceScreen?.show && isAuthorized && (
+              <PreviewBar adminLocale={adminLocale!} />
             )}
-          </OptInLivePreview>
-        </ThemeProvider>
+            <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+              {(brand) => (
+                <OptInLivePreview path="globals/common" data={common}>
+                  {(common) => (
+                    <>
+                      {isAuthorized && (
+                        <Header
+                          brand={brand}
+                          allBrands={allBrands}
+                          onHeightChanged={setHeaderHeight}
+                        />
+                      )}
+                      <main>
+                        <Outlet />
+                      </main>
+                      {isAuthorized && (
+                        <Footer
+                          brand={brand}
+                          allBrands={allBrands}
+                          content={common.footer}
+                        />
+                      )}
+                    </>
+                  )}
+                </OptInLivePreview>
+              )}
+            </OptInLivePreview>
+          </ThemeProvider>
+        </GoogleMapsAPIProvider>
 
         <ScrollRestoration />
         <Scripts />
