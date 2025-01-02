@@ -112,7 +112,7 @@ jobs:
       - name: Get frontend image name
         id: image-name
         run: |
-          IMAGE_NAME=lapuertahostels-frontend
+          IMAGE_NAME=lapuertahostels-2
           IMAGE_TAG=v${{ steps.version.outputs.version }}
           echo "image_name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
           echo "image_tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
