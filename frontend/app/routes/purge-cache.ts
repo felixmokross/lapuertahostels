@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { purgeCacheFor } from "~/cms-data";
+import { purgeCacheFor } from "~/cms-data.server";
 import { isAuthenticated } from "~/common/auth";
 
 export async function action({ request }: ActionFunctionArgs) {

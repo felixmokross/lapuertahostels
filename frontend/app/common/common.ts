@@ -1,14 +1,14 @@
 import { useRouteLoaderData } from "@remix-run/react";
 import { type loader as rootLoader } from "~/root";
-import { SerializeFromLoader } from "./common/types";
+import { SerializeFromLoader } from "./types";
 
-export type Environment = SerializeFromLoader<typeof rootLoader>["environment"];
+export type Common = SerializeFromLoader<typeof rootLoader>["common"];
 
-export function useEnvironment() {
+export function useCommon() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
-  const { environment } = rootLoaderData;
+  const { common } = rootLoaderData;
 
-  return environment;
+  return common;
 }

@@ -202,6 +202,21 @@ export const Common: GlobalConfig = {
                 },
               },
             },
+            {
+              name: "mapId",
+              type: "text",
+              required: true,
+              label: {
+                en: "Map ID",
+                es: "ID de mapa",
+              },
+              admin: {
+                description: {
+                  en: "Enter the ID of the map to display. This is the ID of the map in the Google Maps Platform and defines styling and POI settings.",
+                  es: "Ingresa el ID del mapa a mostrar. Este es el ID del mapa en Google Maps Platform y define la configuración de estilo y POI.",
+                },
+              },
+            },
           ],
         },
         {

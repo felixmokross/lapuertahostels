@@ -16,7 +16,12 @@ import styles from "./global.css?url";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./layout/footer";
 import { BrandId } from "./brands";
-import { getBrands, getCommon, getMaintenance, tryGetPage } from "./cms-data";
+import {
+  getBrands,
+  getCommon,
+  getMaintenance,
+  tryGetPage,
+} from "./cms-data.server";
 import { OptInLivePreview } from "./common/live-preview";
 import { ThemeProvider } from "./themes";
 import { useState } from "react";

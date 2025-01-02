@@ -53,23 +53,6 @@ export const MapBlock: Block = {
       },
     },
     overlayTextBoxField({ optional: false, callToActionLabelOnly: true }),
-    makeMoreOptionsField(
-      {
-        name: "mapId",
-        type: "text",
-        required: true,
-        label: {
-          en: "Map ID",
-          es: "ID de mapa",
-        },
-        admin: {
-          description: {
-            en: "Enter the ID of the map to display. This is the ID of the map in the Google Maps API.",
-            es: "Ingresa el ID del mapa a mostrar. Este es el ID del mapa en la API de Google Maps.",
-          },
-        },
-      },
-      elementIdField,
-    ),
+    makeMoreOptionsField(elementIdField),
   ],
 };

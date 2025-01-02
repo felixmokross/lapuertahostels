@@ -3,7 +3,7 @@ import { MapBlock } from "./map-block";
 import { plainText, richText } from "~/common/cms-data.builders";
 import { paragraph, text } from "~/common/rich-text.builders";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import { useEnvironment } from "~/environment";
+import { useEnvironment } from "~/common/environment";
 
 const meta = {
   title: "blocks/Map Block",

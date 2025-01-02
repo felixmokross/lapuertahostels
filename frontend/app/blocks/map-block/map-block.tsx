@@ -12,8 +12,7 @@ import { Link } from "~/common/link";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import { Place, PlaceResolver } from "~/common/google-maps";
 import { OverlayTextBox } from "../common/overlay-text-box";
-
-type Poi = { location: google.maps.LatLngLiteral };
+import { useCommon } from "~/common/common";
 
 type MapBlockType = NonNullable<Page["layout"]>[number] & {
   blockType: "Map";
@@ -25,11 +24,12 @@ export function MapBlock({
   elementId,
   address,
   zoomLevel,
-  mapId,
   overlayTextBox,
 }: MapBlockProps) {
   const placesLibrary = useMapsLibrary("places");
   const [place, setPlace] = useState<Place>();
+
+  const { maps } = useCommon();
 
   useEffect(() => {
     if (place || !placesLibrary) return;
@@ -60,12 +60,12 @@ export function MapBlock({
               keyboardShortcuts={false}
               gestureHandling="none"
               clickableIcons={false}
-              mapId={mapId}
+              mapId={maps.mapId}
               colorScheme="LIGHT"
               zoom={zoomLevel}
               defaultCenter={place.location}
             >
-              <PoiMarker poi={{ location: place.location }} />
+              <LocationMarker location={place.location} />
             </Map>
           )}
         </div>
@@ -97,10 +97,10 @@ export function MapBlock({
   );
 }
 
-function PoiMarker({ poi }: { poi: Poi }) {
+function LocationMarker({ location }: { location: google.maps.LatLngLiteral }) {
   const theme = useTheme();
   return (
-    <AdvancedMarker position={poi.location}>
+    <AdvancedMarker position={location}>
       <Pin
         background={theme.mapPinCssColors.background}
         glyphColor={theme.mapPinCssColors.glyph}
