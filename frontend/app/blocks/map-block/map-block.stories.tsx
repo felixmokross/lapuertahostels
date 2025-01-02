@@ -4,6 +4,7 @@ import { plainText, richText } from "~/common/cms-data.builders";
 import { paragraph, text } from "~/common/rich-text.builders";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useEnvironment } from "~/common/environment";
+import { useCommon } from "~/common/common";
 
 const meta = {
   title: "blocks/Map Block",
@@ -14,8 +15,12 @@ const meta = {
   decorators: [
     (Story) => {
       const { googleMapsApiKey } = useEnvironment();
+      const { maps } = useCommon();
       return (
-        <APIProvider apiKey={googleMapsApiKey} region="CO">
+        <APIProvider
+          apiKey={googleMapsApiKey}
+          region={maps.region ?? undefined}
+        >
           <Story />
         </APIProvider>
       );
@@ -31,7 +36,6 @@ export const Default: Story = {
     blockType: "Map",
     address:
       "Puerta Aqua By La Puerta Hostels, Calle 18, Comuna 2, Santa Marta, Magdalena, Colombia",
-    mapId: "7686c4d7ba62c06",
     zoomLevel: 14.5,
     overlayTextBox: {
       heading: plainText("Visit Us"),

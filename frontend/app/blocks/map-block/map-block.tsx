@@ -43,8 +43,8 @@ export function MapBlock({
     <div
       id={elementId || undefined}
       className={cn(
-        "my-44 overflow-hidden bg-neutral-100",
-        !place && "animate-pulse",
+        "my-44 overflow-hidden",
+        !place && "animate-pulse bg-neutral-100",
       )}
     >
       <div

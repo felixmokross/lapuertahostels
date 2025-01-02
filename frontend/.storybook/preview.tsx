@@ -32,6 +32,9 @@ const withRemix: Decorator = (Story) => {
               // @ts-ignore
               googleMapsApiKey: import.meta.env.STORYBOOK_GOOGLE_MAPS_API_KEY,
             },
+            common: {
+              maps: { mapId: "7686c4d7ba62c06", region: "CO" },
+            },
           },
         },
       }}
