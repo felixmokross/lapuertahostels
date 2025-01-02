@@ -42,6 +42,7 @@ import { isAuthenticated } from "./common/auth";
 import { getVersion } from "./common/version.server";
 import { APIProvider as GoogleMapsAPIProvider } from "@vis.gl/react-google-maps";
 import { mapToGoogleMapsLanguage } from "./common/google-maps";
+import { BRANDS_DEPTH } from "./cms-data";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -203,7 +204,11 @@ export default function App() {
             {maintenance.maintenanceScreen?.show && isAuthorized && (
               <PreviewBar adminLocale={adminLocale!} />
             )}
-            <OptInLivePreview path={`brands/${brand.id}`} data={brand}>
+            <OptInLivePreview
+              path={`brands/${brand.id}`}
+              data={brand}
+              depth={BRANDS_DEPTH}
+            >
               {(brand) => (
                 <>
                   {isAuthorized && (
