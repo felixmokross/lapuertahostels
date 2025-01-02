@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import { Brand, Common, Maintenance, Page } from "~/payload-types";
 import path from "path";
+import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
 
 const CACHE_DIR = "./.cms-cache";
 const CACHE_EXPIRY_IN_MS = 1000 * 60; // 1 min
@@ -137,7 +138,7 @@ export async function tryGetPage(pathname: string, locale: string) {
     `pages`,
     `pages_${pathname.replaceAll("/", ":")}`,
     locale,
-    3,
+    PAGE_DEPTH,
     {
       "where[pathname][equals]": pathname,
       limit: 1,
@@ -171,7 +172,7 @@ export async function getMaintenance(locale: string) {
 }
 
 export async function getBrands(locale: string) {
-  const brands = (await getData("brands", "brands", locale, 3)) as {
+  const brands = (await getData("brands", "brands", locale, BRANDS_DEPTH)) as {
     docs: Brand[];
   } | null;
   if (!brands) throw new Error("Could not load Brands collection");

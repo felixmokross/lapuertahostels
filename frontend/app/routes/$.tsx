@@ -16,6 +16,7 @@ import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
 import { gracefully } from "~/common/utils";
+import { PAGE_DEPTH } from "~/cms-data";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -199,7 +200,7 @@ export default function Route() {
   const { dataPath, content } = useLoaderData<typeof loader>();
 
   return (
-    <OptInLivePreview path={dataPath} data={content}>
+    <OptInLivePreview path={dataPath} data={content} depth={PAGE_DEPTH}>
       {(data) => <Page content={data} />}
     </OptInLivePreview>
   );
