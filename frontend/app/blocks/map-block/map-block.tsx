@@ -21,28 +21,15 @@ type MapBlockType = NonNullable<Page["layout"]>[number] & {
 
 export type MapBlockProps = MapBlockType;
 
-export function MapBlock({ elementId, ...props }: MapBlockProps) {
-  return (
-    <div
-      className="my-44 flex flex-col-reverse gap-4 lg:relative lg:h-[35rem]"
-      id={elementId || undefined}
-    >
-      <MapContent {...props} />
-    </div>
-  );
-}
-
-type MapContentProps = Omit<MapBlockType, "elementId" | "region">;
-
-function MapContent({
+export function MapBlock({
+  elementId,
   address,
   zoomLevel,
   mapId,
   overlayTextBox,
-}: MapContentProps) {
+}: MapBlockProps) {
   const placesLibrary = useMapsLibrary("places");
   const [place, setPlace] = useState<Place>();
-  const [hasTilesLoaded, setHasTilesLoaded] = useState(false);
 
   useEffect(() => {
     if (place || !placesLibrary) return;
@@ -52,52 +39,61 @@ function MapContent({
     })();
   }, [placesLibrary, place, address]);
 
-  if (!place) {
-    return <div className="h-[35rem] animate-pulse bg-white lg:h-full"></div>;
-  }
-
   return (
-    <>
-      <Map
-        onTilesLoaded={() => setHasTilesLoaded(true)}
-        disableDefaultUI={true}
-        keyboardShortcuts={false}
-        gestureHandling="none"
-        clickableIcons={false}
-        mapId={mapId}
-        colorScheme="LIGHT"
-        zoom={zoomLevel}
-        defaultCenter={place.location}
+    <div
+      id={elementId || undefined}
+      className={cn(
+        "my-44 overflow-hidden bg-neutral-100",
+        !place && "animate-pulse",
+      )}
+    >
+      <div
         className={cn(
-          hasTilesLoaded ? "opacity-100" : "opacity-0",
-          "h-[35rem] transition-opacity duration-1000 ease-in-out lg:h-full",
+          "flex flex-col-reverse gap-4 transition duration-1000 ease-in-out lg:relative lg:h-[35rem]",
+          place ? "scale-100 opacity-100" : "scale-105 opacity-0",
         )}
       >
-        <PoiMarker poi={{ location: place.location }} />
-      </Map>
+        <div className={cn("h-[35rem] lg:h-full")}>
+          {place && (
+            <Map
+              disableDefaultUI={true}
+              keyboardShortcuts={false}
+              gestureHandling="none"
+              clickableIcons={false}
+              mapId={mapId}
+              colorScheme="LIGHT"
+              zoom={zoomLevel}
+              defaultCenter={place.location}
+            >
+              <PoiMarker poi={{ location: place.location }} />
+            </Map>
+          )}
+        </div>
 
-      {overlayTextBox &&
-        typeof overlayTextBox.heading === "object" &&
-        typeof overlayTextBox.text === "object" && (
-          <OverlayTextBox
-            position="top-left"
-            heading={overlayTextBox.heading}
-            text={overlayTextBox.text}
-            cta={
-              overlayTextBox.callToActionLabel &&
-              typeof overlayTextBox.callToActionLabel === "object"
-                ? {
-                    icon: MapPinIcon,
-                    label: overlayTextBox.callToActionLabel,
-                    as: Link,
-                    variant: "secondary",
-                    to: place.url,
-                  }
-                : undefined
-            }
-          />
-        )}
-    </>
+        {overlayTextBox &&
+          place &&
+          typeof overlayTextBox.heading === "object" &&
+          typeof overlayTextBox.text === "object" && (
+            <OverlayTextBox
+              position="top-left"
+              heading={overlayTextBox.heading}
+              text={overlayTextBox.text}
+              cta={
+                overlayTextBox.callToActionLabel &&
+                typeof overlayTextBox.callToActionLabel === "object"
+                  ? {
+                      icon: MapPinIcon,
+                      label: overlayTextBox.callToActionLabel,
+                      as: Link,
+                      variant: "secondary",
+                      to: place.url,
+                    }
+                  : undefined
+              }
+            />
+          )}
+      </div>
+    </div>
   );
 }
 
