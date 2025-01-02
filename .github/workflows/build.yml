@@ -232,8 +232,8 @@ jobs:
             --app ${{ needs.define-env.outputs.fly_app_frontend }} \
             --config fly.frontend.toml \
             --image ${{ needs.frontend-build-push.outputs.image }} \
-            --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.domain_frontend }} \
-            --env CANONICAL_HOSTNAME=www.${{ needs.define-env.outputs.domain_frontend }} \
+            --env ANALYTICS_DOMAIN=${{ needs.define-env.outputs.analytics_domain_frontend }} \
+            --env CANONICAL_HOSTNAME=${{ needs.define-env.outputs.canonical_hostname_frontend }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
             --env PAYLOAD_CMS_BASE_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         env:
@@ -380,7 +380,7 @@ jobs:
             --env MEDIA_S3_BUCKET=${{ needs.define-env.outputs.s3_bucket }} \
             --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
             --env IMAGEKIT_BASE_URL=${{ needs.define-env.outputs.imagekit_base_url }} \
-            --env LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.domain_frontend }} \
+            --env LIVE_PREVIEW_URL=https://${{ needs.define-env.outputs.canonical_hostname_frontend }} \
             --env SERVER_URL=https://${{ needs.define-env.outputs.domain_cms }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -453,7 +453,8 @@ jobs:
       environment: ${{ steps.define-env.outputs.environment }}
       fly_app_frontend: ${{ steps.define-env.outputs.fly_app_frontend }}
       fly_app_cms: ${{ steps.define-env.outputs.fly_app_cms }}
-      domain_frontend: ${{ steps.define-env.outputs.domain_frontend }}
+      analytics_domain_frontend: ${{ steps.define-env.outputs.analytics_domain_frontend }}
+      canonical_hostname_frontend: ${{ steps.define-env.outputs.canonical_hostname_frontend }}
       domain_cms: ${{ steps.define-env.outputs.domain_cms }}
       s3_bucket: ${{ steps.define-env.outputs.s3_bucket }}
       imagekit_base_url: ${{ steps.define-env.outputs.imagekit_base_url }}
@@ -467,7 +468,8 @@ jobs:
             production)
               echo "fly_app_frontend=lapuertahostels-2" >> "$GITHUB_OUTPUT"
               echo "fly_app_cms=lapuertahostels-cms" >> "$GITHUB_OUTPUT"
-              echo "domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "analytics_domain_frontend=lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "canonical_hostname_frontend=www.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=admin.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "s3_bucket=lapuertahostels-media" >> "$GITHUB_OUTPUT"
               echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels" >> "$GITHUB_OUTPUT"
@@ -475,7 +477,8 @@ jobs:
             staging)
               echo "fly_app_frontend=lapuertahostels-staging" >> "$GITHUB_OUTPUT"
               echo "fly_app_cms=lapuertahostels-cms-staging" >> "$GITHUB_OUTPUT"
-              echo "domain_frontend=staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "analytics_domain_frontend=staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
+              echo "canonical_hostname_frontend=www.staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "domain_cms=admin.staging.lapuertahostels.co" >> "$GITHUB_OUTPUT"
               echo "s3_bucket=lapuertahostels-media-staging" >> "$GITHUB_OUTPUT"
               echo "imagekit_base_url=https://ik.imagekit.io/lapuertahostels/staging" >> "$GITHUB_OUTPUT"
@@ -515,7 +518,7 @@ jobs:
     needs: [define-env, frontend-deploy, cms-deploy]
     environment:
       name: ${{ needs.define-env.outputs.environment }}
-      url: https://${{ needs.define-env.outputs.domain_frontend }}/
+      url: https://${{ needs.define-env.outputs.canonical_hostname_frontend }}/
     steps:
       - name: Wait 30s for apps to become ready
         run: sleep 30
