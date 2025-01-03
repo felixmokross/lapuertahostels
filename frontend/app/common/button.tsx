@@ -2,9 +2,8 @@ import {
   ComponentPropsWithoutRef,
   ComponentType,
   ElementType,
-  ForwardedRef,
-  forwardRef,
   PropsWithChildren,
+  Ref,
 } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
@@ -16,26 +15,24 @@ export type ButtonProps<T extends ElementType = ElementType> =
     blackShadow?: boolean;
     variant?: "primary" | "secondary";
     icon?: ComponentType<{ className?: string }>;
+    ref?: Ref<HTMLButtonElement>;
   }> &
     Omit<ComponentPropsWithoutRef<T>, "as">;
 
-export const Button = forwardRef(function Button<T extends ElementType>(
-  {
-    as,
-    children,
-    size = "medium",
-    blackShadow = false,
-    className,
-    variant = "secondary",
-    icon: Icon,
-    ...props
-  }: ButtonProps<T>,
-  ref: ForwardedRef<unknown>,
-) {
+export function Button<T extends ElementType>({
+  as,
+  children,
+  size = "medium",
+  blackShadow = false,
+  className,
+  variant = "secondary",
+  icon: Icon,
+  ref,
+  ...props
+}: ButtonProps<T>) {
   const Component = as || "button";
   const theme = useTheme();
   return (
-    // @ts-expect-error We can't know the type of the ref
     <Component
       className={cn(
         "inline-flex items-center justify-center text-center font-bold uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
@@ -73,4 +70,4 @@ export const Button = forwardRef(function Button<T extends ElementType>(
       {children}
     </Component>
   );
-});
+}
