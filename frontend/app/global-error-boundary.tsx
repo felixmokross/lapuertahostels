@@ -5,7 +5,7 @@ import {
   Scripts,
   useRouteError,
   useRouteLoaderData,
-} from "@remix-run/react";
+} from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 import { loader as rootLoader } from "./root";
 import { getTitle } from "./common/meta";

@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, data, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, data, redirect } from "react-router";
 import { localeCookie } from "~/i18next.server";
 import i18nConfig from "~/i18n";
 import { buildLocalizedRelativeUrl } from "~/common/routing";

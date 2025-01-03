@@ -1,10 +1,12 @@
 import {
+  Form,
+  MetaFunction,
+  useActionData,
   ActionFunctionArgs,
   data,
   LoaderFunctionArgs,
   redirect,
-} from "@remix-run/node";
-import { Form, MetaFunction, useActionData } from "@remix-run/react";
+} from "react-router";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { Input } from "~/common/input";

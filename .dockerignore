@@ -6,6 +6,7 @@ node_modules
 /frontend/.cache
 /frontend/build
 /frontend/storybook-static
+/frontend/.react-router
 
 /cms/.next
 /cms/src/payload-types.ts

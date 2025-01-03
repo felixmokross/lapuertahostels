@@ -1,4 +1,4 @@
-import { createCookie } from "@remix-run/node";
+import { createCookie } from "react-router";
 import Backend from "i18next-fs-backend/cjs";
 import { resolve } from "node:path";
 import { RemixI18Next } from "remix-i18next/server";

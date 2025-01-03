@@ -1,5 +1,5 @@
 import type { Decorator, Preview } from "@storybook/react";
-import { createRemixStub } from "@remix-run/testing";
+import { createRoutesStub } from "react-router";
 import "../app/global.css";
 import React from "react";
 import i18n from "./i18next";
@@ -8,8 +8,8 @@ import { ThemeProvider } from "../app/themes";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { allModes } from "./modes";
 
-const withRemix: Decorator = (Story) => {
-  const RemixStub = createRemixStub([
+const withReactRouter: Decorator = (Story) => {
+  const ReactRouterStub = createRoutesStub([
     {
       path: "/*",
       Component: Story,
@@ -17,7 +17,7 @@ const withRemix: Decorator = (Story) => {
   ]);
 
   return (
-    <RemixStub
+    <ReactRouterStub
       hydrationData={{
         loaderData: {
           root: {
@@ -104,7 +104,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withRemix,
+    withReactRouter,
     (Story, { globals }) => (
       <ThemeProvider brandId={globals.brand}>
         <Story />

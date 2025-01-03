@@ -1,5 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { MetaFunction, useLoaderData } from "@remix-run/react";
+import { MetaFunction, useLoaderData, LoaderFunctionArgs } from "react-router";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
 import { tryGetPage } from "~/cms-data.server";
