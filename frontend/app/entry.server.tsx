@@ -39,7 +39,7 @@ export default async function handleRequest(
   const i18nInstance = createI18nInstance() as i18n;
   const { locale } = getLocaleAndPageUrl(toRelativeUrl(getRequestUrl(request)));
 
-  // @ts-ignore TODO deal with this
+  // @ts-expect-error TODO deal with this
   const ns = i18next.getRouteNamespaces(reactRouterContext);
 
   await i18nInstance

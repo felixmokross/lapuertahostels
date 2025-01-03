@@ -1,5 +1,14 @@
-import { LoaderFunctionArgs, MetaFunction, type LinksFunction } from "react-router";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
+import {
+  LoaderFunctionArgs,
+  MetaFunction,
+  type LinksFunction,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router";
 
 import styles from "./global.css?url";
 import { useTranslation } from "react-i18next";

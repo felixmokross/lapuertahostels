@@ -1,5 +1,4 @@
-import { LoaderFunctionArgs } from "react-router";
-import { MetaFunction, useLoaderData } from "react-router";
+import { MetaFunction, useLoaderData, LoaderFunctionArgs } from "react-router";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
 import { tryGetPage } from "~/cms-data.server";
