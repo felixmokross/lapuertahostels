@@ -13,9 +13,9 @@
   "devDependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
     "@playwright/test": "^1.49.1",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "dotenv": "^16.4.7",
-    "prettier": "^3.2.4",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2"
   }
 }
