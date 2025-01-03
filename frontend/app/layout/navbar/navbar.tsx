@@ -10,7 +10,7 @@ import { Brand } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
-import { useLocation } from "@remix-run/react";
+import { useLocation } from "react-router";
 import {
   buildLocalizedRelativeUrl,
   getLocaleAndPageUrl,

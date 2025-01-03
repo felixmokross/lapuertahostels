@@ -1,7 +1,4 @@
-import {
-  Link as RemixLink,
-  LinkProps as RemixLinkProps,
-} from "@remix-run/react";
+import { Link as RemixLink, LinkProps as RemixLinkProps } from "react-router";
 import { useTranslation } from "react-i18next";
 import { buildLocalizedRelativeUrl } from "./routing";
 import { forwardRef } from "react";

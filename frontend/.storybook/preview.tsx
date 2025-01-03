@@ -1,5 +1,5 @@
 import type { Decorator, Preview } from "@storybook/react";
-import { createRemixStub } from "@remix-run/testing";
+import { createRoutesStub } from "react-router";
 import "../app/global.css";
 import React from "react";
 import i18n from "./i18next";
@@ -9,7 +9,7 @@ import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { allModes } from "./modes";
 
 const withRemix: Decorator = (Story) => {
-  const RemixStub = createRemixStub([
+  const RemixStub = createRoutesStub([
     {
       path: "/*",
       Component: Story,

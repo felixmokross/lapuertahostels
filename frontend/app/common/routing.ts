@@ -1,4 +1,4 @@
-import { matchPath, type Location } from "@remix-run/react";
+import { matchPath, type Location } from "react-router";
 import i18n from "~/i18n";
 
 export function getLocaleAndPageUrl(relativeUrl: string) {

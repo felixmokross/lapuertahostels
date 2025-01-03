@@ -2,7 +2,7 @@ import {
   ArrowRightStartOnRectangleIcon,
   WrenchIcon,
 } from "@heroicons/react/16/solid";
-import { Form } from "@remix-run/react";
+import { Form } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
