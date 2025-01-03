@@ -1,4 +1,6 @@
-import { Page } from "~/payload-types";
+// TODO this should not be a copy
+
+import { Page } from "./payload-types";
 import {
   TextNode,
   ElementNode,

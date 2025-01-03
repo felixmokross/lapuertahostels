@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { createPage, createPlainText } from "../cms";
+import { createPage, createPlainText } from "../common/cms";
 
 test("has title and heading", async ({ page }) => {
   const titleText = await createPlainText("E2E Test Page");

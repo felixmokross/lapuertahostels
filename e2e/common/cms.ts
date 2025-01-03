@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
+import { RichTextObject } from "./rich-text.model";
 
 export async function createPage(data: Record<string, any> = {}) {
   const testPagePathname = `/e2e/${createId()}`;
@@ -21,6 +22,10 @@ export async function createPage(data: Record<string, any> = {}) {
 
 export async function createPlainText(text: string) {
   return await create("texts", { type: "plainText", text });
+}
+
+export async function createRichText(richText: RichTextObject) {
+  return await create("texts", { type: "richText", richText });
 }
 
 export async function getPuertaBrand() {
