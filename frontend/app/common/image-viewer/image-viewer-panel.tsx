@@ -1,7 +1,6 @@
 import {
-  ForwardedRef,
+  Ref,
   SetStateAction,
-  forwardRef,
   useCallback,
   useEffect,
   useRef,
@@ -19,12 +18,15 @@ export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
   images: ImageViewerImage[];
   onDismiss: () => void;
+  ref?: Ref<HTMLDivElement>;
 };
 
-export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
-  { defaultImageIndex, images, onDismiss }: ImageViewerPanelProps,
-  ref: ForwardedRef<HTMLDivElement>,
-) {
+export function ImageViewerPanel({
+  defaultImageIndex,
+  images,
+  onDismiss,
+  ref,
+}: ImageViewerPanelProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(
     defaultImageIndex ?? 0,
   );
@@ -247,7 +249,7 @@ export const ImageViewerPanel = forwardRef(function ImageViewerPanel(
       </div>
     </div>
   );
-});
+}
 
 function isInFullscreen() {
   return !!document.fullscreenElement;

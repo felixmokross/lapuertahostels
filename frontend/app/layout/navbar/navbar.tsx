@@ -5,7 +5,7 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
-import { forwardRef, RefObject, useEffect, useRef, useState } from "react";
+import { Ref, RefObject, useEffect, useRef, useState } from "react";
 import { Brand } from "~/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
@@ -24,14 +24,17 @@ export type NavbarProps = {
   brand: Brand;
   allBrands: Brand[];
   onHeightChanged?: (height: number) => void;
+  ref?: Ref<HTMLDivElement>;
 };
 
 const HIDE_NAVBAR_THRESHOLD = 100;
 
-export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
-  { brand, allBrands, onHeightChanged },
+export function Navbar({
+  brand,
+  allBrands,
+  onHeightChanged,
   ref,
-) {
+}: NavbarProps) {
   const { i18n } = useTranslation();
   const [localeSwitcherOpen, setLocaleSwitcherOpen] = useState(false);
 
@@ -157,7 +160,7 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
       ) : null}
     </>
   );
-});
+}
 
 type NavLinkProps = PageLinkProps;
 
@@ -168,7 +171,7 @@ function NavLink({ className, ...props }: NavLinkProps) {
 }
 
 function useElementHeightObserver(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   onHeightChanged: (height: number) => void,
 ) {
   useEffect(() => {
@@ -187,24 +190,23 @@ function useElementHeightObserver(
 
 type BookButtonProps = {
   cta: NonNullable<Brand["bookCta"]>;
+  ref?: Ref<HTMLButtonElement>;
 } & Omit<ButtonProps, "children" | "variant" | "icon" | "as">;
 
-const BookButton = forwardRef<HTMLAnchorElement, BookButtonProps>(
-  function BookButton({ cta, ...props }, ref) {
-    return (
-      <Button
-        {...props}
-        as={PageLink}
-        icon={CalendarDateRangeIcon}
-        link={cta.link!}
-        variant="primary"
-        ref={ref}
-      >
-        {gracefully(cta.label, "text")}
-      </Button>
-    );
-  },
-);
+function BookButton({ cta, ref, ...props }: BookButtonProps) {
+  return (
+    <Button
+      {...props}
+      as={PageLink}
+      icon={CalendarDateRangeIcon}
+      link={cta.link!}
+      variant="primary"
+      ref={ref}
+    >
+      {gracefully(cta.label, "text")}
+    </Button>
+  );
+}
 
 type ScrollDirection = "up" | "down";
 
@@ -235,7 +237,7 @@ function useScrollDirection(): ScrollDirection | undefined {
   // When detecting navigation, reset scroll direction and block scroll events for a short time to avoid
   // confusing scroll direction changes due to scroll events upon navigation (e.g. when navigating to a fragment link)
   const location = useLocation();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(undefined);
   useEffect(() => {
     setScrollDirection(undefined);
     isNavigating.current = true;
@@ -271,7 +273,7 @@ function useScrollY(): number {
   return scrollY;
 }
 
-function useIsScrolled(ref: RefObject<HTMLElement>): boolean {
+function useIsScrolled(ref: RefObject<HTMLDivElement | null>): boolean {
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => {

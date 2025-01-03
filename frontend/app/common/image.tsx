@@ -1,6 +1,7 @@
 import {
+  DetailedHTMLProps,
   ImgHTMLAttributes,
-  forwardRef,
+  Ref,
   useCallback,
   useEffect,
   useId,
@@ -18,27 +19,23 @@ export type ImageProps = {
   onLoadingFinished?: () => void;
   layout: "fixed" | "responsive";
   srcMultiplier?: number;
+  ref?: Ref<HTMLImageElement>;
 } & Pick<
-  React.DetailedHTMLProps<
-    ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  >,
+  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,
   "loading" | "sizes"
 >;
 
-export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
-  {
-    src,
-    alt,
-    layout = "responsive",
-    srcMultiplier = 3,
-    className,
-    transformation,
-    onLoadingFinished,
-    ...props
-  },
+export function Image({
+  src,
+  alt,
+  layout = "responsive",
+  srcMultiplier = 3,
+  className,
+  transformation,
+  onLoadingFinished,
   ref,
-) {
+  ...props
+}: ImageProps) {
   const { imagekitBaseUrl, useImageCacheBuster } = useEnvironment();
   const [isLoading, setIsLoading] = useState(true);
   const localRef = useRef<HTMLImageElement>(null);
@@ -107,7 +104,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(
       onLoad={onLoad}
     />
   );
-});
+}
 
 export type ImageTransformation = {
   width?: number;

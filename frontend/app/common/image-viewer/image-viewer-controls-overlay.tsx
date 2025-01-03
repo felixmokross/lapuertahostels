@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { cn } from "../cn";
-import { ElementType, ForwardedRef, forwardRef } from "react";
+import { ElementType, Ref } from "react";
 
 export type ImageViewerControlsOverlayProps = {
   supportsFullscreen: boolean;
@@ -113,19 +113,18 @@ type PreviousNextButtonProps = {
   title: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  ref?: Ref<HTMLButtonElement>;
 };
 
-const PreviousNextButton = forwardRef(function PreviousNextButton(
-  {
-    className,
-    onClick,
-    icon,
-    title,
-    onMouseEnter,
-    onMouseLeave,
-  }: PreviousNextButtonProps,
-  ref: ForwardedRef<HTMLButtonElement>,
-) {
+function PreviousNextButton({
+  className,
+  onClick,
+  icon,
+  title,
+  onMouseEnter,
+  onMouseLeave,
+  ref,
+}: PreviousNextButtonProps) {
   return (
     <IconButton
       icon={icon}
@@ -140,7 +139,7 @@ const PreviousNextButton = forwardRef(function PreviousNextButton(
       onMouseLeave={onMouseLeave}
     />
   );
-});
+}
 
 type IconButtonProps = {
   className?: string;
@@ -149,19 +148,18 @@ type IconButtonProps = {
   title: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  ref?: Ref<HTMLButtonElement>;
 };
 
-const IconButton = forwardRef(function IconButton(
-  {
-    className,
-    icon: Icon,
-    onClick,
-    title,
-    onMouseEnter,
-    onMouseLeave,
-  }: IconButtonProps,
-  ref: ForwardedRef<HTMLButtonElement>,
-) {
+function IconButton({
+  className,
+  icon: Icon,
+  onClick,
+  title,
+  onMouseEnter,
+  onMouseLeave,
+  ref,
+}: IconButtonProps) {
   return (
     <button
       className={cn(
@@ -178,4 +176,4 @@ const IconButton = forwardRef(function IconButton(
       <Icon className="h-5 w-5" />
     </button>
   );
-});
+}
