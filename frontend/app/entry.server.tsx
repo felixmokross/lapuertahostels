@@ -38,6 +38,8 @@ export default async function handleRequest(
 ) {
   const i18nInstance = createI18nInstance() as i18n;
   const { locale } = getLocaleAndPageUrl(toRelativeUrl(getRequestUrl(request)));
+
+  // @ts-ignore TODO deal with this
   const ns = i18next.getRouteNamespaces(reactRouterContext);
 
   await i18nInstance
@@ -80,7 +82,10 @@ function handleBotRequest(
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={i18nInstance}>
-        <ServerRouter context={reactRouterContext} url={getRequestUrl(request)} />
+        <ServerRouter
+          context={reactRouterContext}
+          url={getRequestUrl(request)}
+        />
       </I18nextProvider>,
       {
         onAllReady() {
@@ -131,7 +136,10 @@ function handleBrowserRequest(
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={i18nInstance}>
-        <ServerRouter context={reactRouterContext} url={getRequestUrl(request)} />
+        <ServerRouter
+          context={reactRouterContext}
+          url={getRequestUrl(request)}
+        />
       </I18nextProvider>,
       {
         onShellReady() {
