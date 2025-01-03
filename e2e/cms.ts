@@ -2,14 +2,21 @@ import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
 
-export async function createPage(data: object) {
+export async function createPage(data: Record<string, any> = {}) {
   const testPagePathname = `/e2e/${createId()}`;
 
-  return await create("pages", {
+  data = {
     pathname: testPagePathname,
     brand: "puerta",
     ...data,
-  });
+  };
+
+  if (!data.title) {
+    const titleText = await createPlainText("Default Title");
+    data.title = titleText.id;
+  }
+
+  return await create("pages", data);
 }
 
 export async function createPlainText(text: string) {
@@ -20,8 +27,17 @@ export async function getPuertaBrand() {
   return await get("brands/puerta");
 }
 
+export async function getMedia(filename: string) {
+  const result = await get(
+    `media?where[filename][equals]=${encodeURIComponent(filename)}&pagination=false&limit=1`,
+  );
+  if (!result.docs) return null;
+
+  return result.docs[0];
+}
+
 export async function createPuertaBrand() {
-  const media = await createFile("./logo-puerta-simple.png", "image/png");
+  const media = await getOrCreate("logo-puerta-simple.png", "image/png");
 
   await create("brands", {
     id: "puerta",
@@ -40,15 +56,31 @@ export async function create(collection: string, content: object) {
   ).doc;
 }
 
-export async function createFile(filePath: string, mimeType: string) {
-  const buffer = await fs.readFile(filePath);
-  const file = new File([buffer], path.basename(filePath), {
+export async function getOrCreate(
+  filename: string,
+  mimeType: string,
+  alt?: string,
+) {
+  const media = await getMedia(filename);
+  if (media) return media;
+
+  return await createMedia(filename, mimeType);
+}
+
+async function createMedia(filename: string, mimeType: string, alt?: string) {
+  const buffer = await fs.readFile(path.join("./assets", filename));
+  const file = new File([buffer], filename, {
     type: mimeType,
   });
 
   const formData = new FormData();
   formData.append("file", file);
   formData.append("mimeType", file.type);
+
+  if (alt) {
+    const altText = await createPlainText(alt);
+    formData.append("alt", altText.id);
+  }
 
   return (
     await fetchCms("media", {

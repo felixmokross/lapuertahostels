@@ -45,6 +45,7 @@ export function SlideImage({
           onLoadingFinished?.();
         }}
         loading={withPreview ? "eager" : "lazy"}
+        data-testid="full-image"
       />
     </div>
   );
