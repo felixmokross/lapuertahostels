@@ -12,7 +12,7 @@ import { MediaCategories } from "./collections/media-categories";
 import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
 import { Texts } from "./collections/texts";
 import { Links } from "./collections/links";
-import { Config } from "./payload-types";
+import { Config } from "@lapuertahostels/shared";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -128,7 +128,7 @@ export default buildConfig({
     fallback: true,
   },
   typescript: {
-    outputFile: path.resolve(dirname, "./payload-types.ts"),
+    outputFile: path.resolve(dirname, "../../shared/payload-types.ts"),
     declare: false,
   },
   graphQL: {

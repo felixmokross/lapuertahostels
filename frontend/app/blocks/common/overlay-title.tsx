@@ -3,7 +3,7 @@ import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
 import { RichTextObject } from "~/common/rich-text.model";
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
 import { gracefully, isObject } from "~/common/utils";

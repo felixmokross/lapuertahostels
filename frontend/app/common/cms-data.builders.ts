@@ -1,5 +1,12 @@
 import { createId } from "@paralleldrive/cuid2";
-import { Banner, Brand, Link, Media, Page, Text } from "~/payload-types";
+import {
+  Banner,
+  Brand,
+  Link,
+  Media,
+  Page,
+  Text,
+} from "@lapuertahostels/shared";
 import { ElementNode } from "./rich-text.model";
 import { richTextRoot } from "./rich-text.builders";
 

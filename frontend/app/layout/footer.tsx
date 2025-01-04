@@ -1,6 +1,6 @@
 import { Button } from "../common/button";
 import { BrandLogo } from "../common/brand-logo";
-import { Brand, Common, Text } from "~/payload-types";
+import { Brand, Common, Text } from "@lapuertahostels/shared";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 import { useTheme } from "~/themes";

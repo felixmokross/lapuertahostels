@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 
 export type RoomListBlock = NonNullable<Page["layout"]>[number] & {
   blockType: "RoomList";

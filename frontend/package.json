@@ -1,11 +1,9 @@
 {
-  "name": "frontend",
+  "name": "@lapuertahostels/frontend",
   "private": true,
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "update-types": "cd ../cms && pnpm generate:types && cd - && pnpm copy-types",
-    "copy-types": "cp ../cms/src/payload-types.ts ./app",
     "build": "react-router build",
     "dev": "react-router dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
@@ -19,6 +17,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@lapuertahostels/shared": "workspace:../shared",
     "@paralleldrive/cuid2": "^2.2.2",
     "@payloadcms/live-preview-react": "3.13.0",
     "@react-router/node": "^7.1.1",

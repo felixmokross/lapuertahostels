@@ -1,4 +1,4 @@
-import { Brand } from "~/payload-types";
+import { Brand } from "@lapuertahostels/shared";
 import { type BrandId } from "../brands";
 import { cn } from "./cn";
 import { themesByBrand } from "~/themes";

@@ -42,5 +42,4 @@ next-env.d.ts
 
 /media
 
-/src/payload-types.ts
 /src/app/(payload)/admin/importMap.js

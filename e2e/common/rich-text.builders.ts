@@ -1,6 +1,6 @@
 // TODO this should not be a copy
 
-import { Page } from "./payload-types";
+import { Page } from "@lapuertahostels/shared";
 import {
   TextNode,
   ElementNode,

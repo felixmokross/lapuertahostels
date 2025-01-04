@@ -1,4 +1,4 @@
-import { Page as PageItem } from "~/payload-types";
+import { Page as PageItem } from "@lapuertahostels/shared";
 import { LayoutBlocks } from "~/blocks/layout-blocks";
 import { HeroBlocks } from "~/blocks/hero-blocks";
 

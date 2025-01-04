@@ -3,7 +3,7 @@ import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { Link } from "~/common/link";
 import { gracefully } from "~/common/utils";
-import { Maintenance } from "~/payload-types";
+import { Maintenance } from "@lapuertahostels/shared";
 
 export type MaintenanceScreenProps = NonNullable<
   Maintenance["maintenanceScreen"]

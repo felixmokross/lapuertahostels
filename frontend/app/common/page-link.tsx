@@ -1,4 +1,4 @@
-import { Brand } from "~/payload-types";
+import { Brand } from "@lapuertahostels/shared";
 import { Link, LinkProps } from "./link";
 import { PropsWithChildren } from "react";
 import { gracefully, isObject } from "./utils";

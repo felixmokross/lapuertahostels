@@ -5,7 +5,7 @@ import { Transition } from "@headlessui/react";
 import { OverlayTitle } from "../common/overlay-title";
 import { useEnvironment } from "~/common/environment";
 import { useSwipeable } from "react-swipeable";
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import { useTranslation } from "react-i18next";
 import { isObject } from "~/common/utils";
 

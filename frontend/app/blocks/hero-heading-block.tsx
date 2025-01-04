@@ -1,4 +1,4 @@
-import { Page, Text } from "~/payload-types";
+import { Page, Text } from "@lapuertahostels/shared";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";

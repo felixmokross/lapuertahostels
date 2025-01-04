@@ -1,6 +1,6 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { cn } from "../common/cn";
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "~/common/rich-text.model";
 import { RichTextHeading } from "~/common/heading";
