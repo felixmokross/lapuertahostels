@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
-import { RichText, RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
 import { gracefully } from "~/common/utils";
+import { RichText } from "~/common/rich-text";
 
 type FooterProps = {
   content: Common["footer"];

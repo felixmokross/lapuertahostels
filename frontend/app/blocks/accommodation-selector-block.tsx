@@ -3,7 +3,7 @@ import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { RichTextParagraph } from "../common/paragraph";
 import { BrandId } from "~/brands";
-import { RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { ReactNode } from "react";

@@ -3,7 +3,7 @@ import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { gracefully } from "~/common/utils";
 import { Text } from "~/payload-types";
 

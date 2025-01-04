@@ -1,7 +1,7 @@
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { type TextColumnsWithImagesBlock } from "./types";
 import { TextWithImageItem } from "./text-with-image-item";
 import { gracefully } from "~/common/utils";

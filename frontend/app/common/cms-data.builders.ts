@@ -1,6 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { Banner, Brand, Link, Media, Page, Text } from "~/payload-types";
-import { ElementNode } from "./rich-text";
+import { ElementNode } from "./rich-text.model";
 import { richTextRoot } from "./rich-text.builders";
 
 export function plainText(text: string): Text {

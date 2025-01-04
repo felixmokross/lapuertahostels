@@ -1,8 +1,9 @@
 import { PropsWithChildren, createContext, useContext } from "react";
 import { cn } from "./cn";
 import { useTheme } from "~/themes";
-import { RichText, RichTextObject } from "./rich-text";
+import { RichTextObject } from "./rich-text.model";
 import { TextHighlight } from "./text-highlight";
+import { RichText } from "./rich-text";
 
 type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 

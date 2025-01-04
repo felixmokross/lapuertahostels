@@ -2,7 +2,7 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { cn } from "../common/cn";
 import { Page } from "~/payload-types";
 import { useTheme } from "~/themes";
-import { RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
 import { gracefully } from "~/common/utils";

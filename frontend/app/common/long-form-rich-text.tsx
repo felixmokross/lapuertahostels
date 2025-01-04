@@ -1,11 +1,12 @@
 import { PropsWithChildren } from "react";
 import { Heading, HeadingProps } from "./heading";
 import { Paragraph } from "./paragraph";
-import { RichTextObject, RichText } from "./rich-text";
+import { RichTextObject } from "./rich-text.model";
 import { TextHighlight } from "./text-highlight";
 import { useTheme } from "~/themes";
 import { cn } from "./cn";
 import { Link } from "./link";
+import { RichText } from "./rich-text";
 
 export type LongFormRichTextProps = {
   content?: RichTextObject;

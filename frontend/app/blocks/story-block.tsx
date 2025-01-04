@@ -1,6 +1,6 @@
 import { Heading } from "../common/heading";
 import { cn } from "../common/cn";
-import { RichTextObject } from "~/common/rich-text";
+import { RichTextObject } from "~/common/rich-text.model";
 import { Page } from "~/payload-types";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
