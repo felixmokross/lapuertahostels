@@ -141,6 +141,8 @@ jobs:
         uses: ./.github/actions/setup
         with:
           working-directory: frontend
+      - name: Populate CMS types
+        uses: ./.github/actions/populate-cms-types
       - name: Publish frontend to Chromatic
         uses: chromaui/action@v1
         with:
