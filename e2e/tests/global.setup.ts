@@ -1,5 +1,5 @@
 import { test as setup } from "@playwright/test";
-import { getPuertaBrand, createPuertaBrand } from "./common/cms";
+import { getPuertaBrand, createPuertaBrand } from "../common/cms";
 
 setup("setting up CMS", async ({}) => {
   const puertaBrand = await getPuertaBrand();

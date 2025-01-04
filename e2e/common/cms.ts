@@ -53,12 +53,12 @@ export async function createPuertaBrand() {
 }
 
 export async function create(collection: string, content: object) {
-  return (
-    await fetchCms(collection, {
-      method: "POST",
-      body: JSON.stringify(content),
-    })
-  ).doc;
+  const result = await fetchCms(collection, {
+    method: "POST",
+    body: JSON.stringify(content),
+  });
+
+  return result.doc;
 }
 
 export async function getOrCreate(
@@ -69,23 +69,23 @@ export async function getOrCreate(
   const media = await getMedia(filename);
   if (media) return media;
 
-  return await createMedia(filename, mimeType);
+  return await createMedia(filename, mimeType, alt);
 }
 
 async function createMedia(filename: string, mimeType: string, alt?: string) {
   const buffer = await fs.readFile(path.join("./assets", filename));
-  const file = new File([buffer], filename, {
-    type: mimeType,
-  });
+  const file = new File([buffer], filename, { type: mimeType });
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("mimeType", file.type);
 
+  const additionalFields: Record<string, string> = {};
   if (alt) {
     const altText = await createPlainText(alt);
-    formData.append("alt", altText.id);
+    additionalFields.alt = altText.id;
   }
+
+  formData.append("_payload", JSON.stringify(additionalFields));
 
   return (
     await fetchCms("media", {
@@ -102,19 +102,33 @@ export async function get(path: string) {
 async function fetchCms(path: string, init?: RequestInit) {
   const url = new URL(`/api/${path}`, process.env.CMS_BASE_URL);
 
-  const result = await fetch(url, {
-    ...init,
-    headers: {
-      ...init?.headers,
-      Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
-      "Content-Type": "application/json",
-    },
+  const method = init?.method ?? "GET";
+
+  const headers = new Headers({
+    ...init?.headers,
+    Authorization: `users API-Key ${process.env.CMS_API_KEY}`,
   });
+  if (typeof init?.body === "string") {
+    headers.set("Content-Type", "application/json");
+  }
+
+  const result = await fetch(url, { ...init, method, headers });
 
   if (!result.ok) {
-    if (result.status === 404) return null;
+    if (method === "GET" && result.status === 404) return null;
 
-    console.error(`Request to ${path} returned: ${await result.text()}`);
+    console.error(
+      `${method} ${path} returned: ${JSON.stringify(await result.json(), null, 2)}`,
+    );
+
+    if (method !== "GET") {
+      console.debug(
+        `request body:`,
+        headers.get("Content-Type") === "application/json" && init?.body
+          ? JSON.stringify(JSON.parse(init.body as string), null, 2)
+          : init?.body,
+      );
+    }
     throw new Error(`Failed with status code: ${result.status}`);
   }
 
