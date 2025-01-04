@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { TextWithImageItem } from "./text-with-image-item";
-import { paragraph, text } from "~/common/rich-text.builders";
+import { paragraph, text } from "@lapuertahostels/shared";
 import {
   callToAction,
   media,

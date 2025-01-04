@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
 import {
   callToAction,
   media,
@@ -9,6 +8,7 @@ import {
   richText,
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Text Columns with Images Block",

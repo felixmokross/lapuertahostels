@@ -7,7 +7,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Features Block",

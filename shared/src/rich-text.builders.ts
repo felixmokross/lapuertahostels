@@ -1,5 +1,5 @@
-import { Page } from "~/payload-types";
 import {
+  Page,
   TextNode,
   ElementNode,
   Node,
@@ -13,7 +13,7 @@ import {
   LinkElementNode,
   LineBreakNode,
   ParagraphElementNode,
-} from "./rich-text";
+} from "@lapuertahostels/shared";
 
 export function richTextRoot(...children: ElementNode[]): RichTextObject {
   return {

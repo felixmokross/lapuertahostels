@@ -7,7 +7,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 import { createId } from "@paralleldrive/cuid2";
 
 const meta = {

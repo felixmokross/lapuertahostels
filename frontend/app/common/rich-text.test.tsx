@@ -18,7 +18,7 @@ import {
   unsupportedElementWithoutChildren,
   lineBreak,
   listitem,
-} from "./rich-text.builders";
+} from "../../../shared/src/rich-text.builders";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(

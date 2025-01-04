@@ -1,4 +1,4 @@
-import { paragraph, text } from "~/common/rich-text.builders";
+import { paragraph, text } from "@lapuertahostels/shared";
 import { RoomCard } from "./room-card";
 import { Meta, StoryObj } from "@storybook/react";
 import {

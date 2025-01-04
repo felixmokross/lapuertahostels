@@ -1,9 +1,8 @@
-import { Page } from "~/payload-types";
+import { Page, RichTextObject } from "@lapuertahostels/shared";
 import { cn } from "../common/cn";
 import { Heading } from "../common/heading";
 import { RichTextParagraph } from "../common/paragraph";
 import { BrandId } from "~/brands";
-import { RichTextObject } from "~/common/rich-text";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { ReactNode } from "react";

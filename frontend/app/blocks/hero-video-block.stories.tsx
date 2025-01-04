@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { HeroVideoBlock } from "./hero-video-block";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Hero Video Block",

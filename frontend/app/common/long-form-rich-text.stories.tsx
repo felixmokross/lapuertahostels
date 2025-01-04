@@ -8,7 +8,7 @@ import {
   paragraph,
   text,
   listitem,
-} from "./rich-text.builders";
+} from "../../../shared/src/rich-text.builders";
 import { LongFormRichText } from "./long-form-rich-text";
 
 const meta = {

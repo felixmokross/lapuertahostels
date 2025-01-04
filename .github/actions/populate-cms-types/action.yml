@@ -1,5 +1,5 @@
 name: "Populate CMS Types"
-description: "Generates the CMS types and copies them to the frontend"
+description: "Generates the CMS types into the `shared` package"
 runs:
   using: "composite"
   steps:
@@ -7,9 +7,6 @@ runs:
       run: pnpm --filter cms install
       shell: bash
       working-directory: cms
-    - run: pnpm generate:types
+    - run: pnpm pull-payload-types
       shell: bash
-      working-directory: cms
-    - run: pnpm copy-types
-      shell: bash
-      working-directory: frontend
+      working-directory: shared

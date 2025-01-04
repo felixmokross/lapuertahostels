@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { allModes } from ".storybook/modes";
 import { plainText, richText } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Image with Floating Text Block",

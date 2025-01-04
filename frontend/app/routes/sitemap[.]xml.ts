@@ -1,5 +1,5 @@
 import { getMaintenance, loadData } from "~/cms-data.server";
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import i18n from "~/i18n";
 import { buildLocalizedRelativeUrl, getRequestUrl } from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";

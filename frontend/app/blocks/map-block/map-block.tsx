@@ -1,4 +1,4 @@
-import { Page } from "~/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import {
   AdvancedMarker,
   Map,

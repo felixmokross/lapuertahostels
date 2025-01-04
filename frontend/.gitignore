@@ -7,6 +7,4 @@ node_modules
 /storybook-static
 *.log
 
-/app/payload-types.ts
-
 /.cms-cache

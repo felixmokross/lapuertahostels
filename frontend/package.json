@@ -1,11 +1,9 @@
 {
-  "name": "frontend",
+  "name": "@lapuertahostels/frontend",
   "private": true,
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "update-types": "cd ../cms && pnpm generate:types && cd - && pnpm copy-types",
-    "copy-types": "cp ../cms/src/payload-types.ts ./app",
     "build": "react-router build",
     "dev": "react-router dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
@@ -19,6 +17,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@lapuertahostels/shared": "workspace:../shared",
     "@paralleldrive/cuid2": "^2.2.2",
     "@payloadcms/live-preview-react": "3.13.0",
     "@react-router/node": "^7.1.1",
@@ -69,6 +68,7 @@
     "jsdom": "^25.0.1",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.9",
+    "react-router-devtools": "^1.0.5",
     "storybook": "^8.4.7",
     "storybook-react-i18next": "^3.1.8",
     "tailwindcss": "^3.4.17",
@@ -83,5 +83,6 @@
   },
   "version": "0.0.0-unknown",
   "readme": "ERROR: No README data found!",
-  "_id": "lapuertahostels@"
+  "_id": "lapuertahostels@",
+  "packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"
 }

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { cn } from "~/common/cn";
 import { Transition } from "@headlessui/react";
 import { useTheme } from "~/themes";
-import { type Banner } from "~/payload-types";
+import { type Banner } from "@lapuertahostels/shared";
 import { PageLink } from "~/common/page-link";
 import { useState } from "react";
 import { gracefully, isObject } from "~/common/utils";

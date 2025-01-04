@@ -1,14 +1,14 @@
 import { Button } from "../common/button";
 import { BrandLogo } from "../common/brand-logo";
-import { Brand, Common, Text } from "~/payload-types";
+import { Brand, Common, RichTextObject, Text } from "@lapuertahostels/shared";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
-import { RichText, RichTextObject } from "~/common/rich-text";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
 import { gracefully } from "~/common/utils";
+import { RichText } from "~/common/rich-text";
 
 type FooterProps = {
   content: Common["footer"];

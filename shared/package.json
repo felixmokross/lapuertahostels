@@ -1,0 +1,16 @@
+{
+  "name": "@lapuertahostels/shared",
+  "version": "0.0.0-unknown",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "pull-payload-types": "cd ../cms && pnpm generate:types && cp ./src/payload-types.ts ../shared/src/payload-types.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
