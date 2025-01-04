@@ -8,7 +8,7 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { Page } from "@/payload-types";
+import { Page } from "@lapuertahostels/shared";
 import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";

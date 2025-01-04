@@ -1,7 +1,7 @@
 "use client";
 
 import { socialPlatformOptions } from "@/common/social-platforms";
-import { Common } from "@/payload-types";
+import { Common } from "@lapuertahostels/shared";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { useRowLabel, useTranslation } from "@payloadcms/ui";
 

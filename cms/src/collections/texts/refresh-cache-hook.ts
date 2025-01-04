@@ -1,4 +1,4 @@
-import { Text } from "@/payload-types";
+import { Text } from "@lapuertahostels/shared";
 import { CollectionAfterChangeHook, PayloadRequest } from "payload";
 import { findTextUsages } from "./usages";
 import { getUniqueGlobals, getUniqueCollectionItemIds } from "@/fields/usages";

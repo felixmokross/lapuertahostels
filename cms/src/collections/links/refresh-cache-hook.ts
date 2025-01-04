@@ -1,4 +1,4 @@
-import { Link } from "@/payload-types";
+import { Link } from "@lapuertahostels/shared";
 import { CollectionAfterChangeHook, PayloadRequest } from "payload";
 import { findLinkUsages } from "./usages";
 import { getUniqueCollectionItemIds, getUniqueGlobals } from "@/fields/usages";

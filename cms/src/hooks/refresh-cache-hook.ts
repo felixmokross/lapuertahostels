@@ -10,7 +10,7 @@ import {
   getPageCacheKey,
   refreshCacheForTarget,
 } from "../common/frontend-cache";
-import { Link, Page } from "@/payload-types";
+import { Link, Page } from "@lapuertahostels/shared";
 
 type CachePurgeTarget = {
   cacheKey: string;
