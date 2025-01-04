@@ -1,7 +1,7 @@
 import { GroupField, RadioField, RelationshipField } from "payload";
 import { showField } from "./show";
 import { makeCallToActionField } from "./call-to-action";
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "@/payload-types";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;

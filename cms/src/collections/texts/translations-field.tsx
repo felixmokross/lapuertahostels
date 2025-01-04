@@ -29,7 +29,7 @@ import { getLabelText, Label } from "@/common/labels";
 import Link from "next/link";
 import { LanguagesIcon, SparklesIcon } from "@/common/icons";
 import { cn } from "@/common/cn";
-import { Text } from "@lapuertahostels/shared";
+import { Text } from "@/payload-types";
 import { useDrawerDepth } from "@payloadcms/ui/elements/Drawer";
 import { Translation } from "@payloadcms/ui";
 

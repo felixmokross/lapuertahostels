@@ -10,7 +10,7 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
 import { canManageContent, isAdmin } from "../../common/access-control";
-import { Link, Page } from "@lapuertahostels/shared";
+import { Link, Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
 import { getPageCacheKey } from "@/common/frontend-cache";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Text } from "@lapuertahostels/shared";
+import { Text } from "@/payload-types";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { usePayloadAPI, useRowLabel, useTranslation } from "@payloadcms/ui";
 

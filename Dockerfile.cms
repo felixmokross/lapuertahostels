@@ -12,7 +12,6 @@ RUN corepack enable pnpm
 
 # Install dependencies
 COPY --link pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY --link shared shared
 COPY --link cms cms
 RUN pnpm --filter cms deploy cms.deployed
 

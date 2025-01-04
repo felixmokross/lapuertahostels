@@ -1,6 +1,6 @@
 import { Endpoint } from "payload";
 import { refreshCacheForAllPages } from "../common/frontend-cache";
-import { User } from "@lapuertahostels/shared";
+import { User } from "@/payload-types";
 
 const allowedRoles = ["cicd", "admin"];
 

@@ -8,9 +8,6 @@ importers:
 
   cms:
     dependencies:
-      '@lapuertahostels/shared':
-        specifier: workspace:../shared
-        version: link:../shared
       '@lexical/headless':
         specifier: 0.20.0
         version: 0.20.0

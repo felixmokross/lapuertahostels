@@ -1,4 +1,4 @@
-import { Link } from "@lapuertahostels/shared";
+import { Link } from "@/payload-types";
 import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {

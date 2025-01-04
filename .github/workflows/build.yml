@@ -280,8 +280,6 @@ jobs:
       - name: Generate version
         uses: ./.github/actions/version
         id: version
-      - name: Populate CMS types
-        uses: ./.github/actions/populate-cms-types
       - name: Get CMS image name
         id: image-name
         run: |

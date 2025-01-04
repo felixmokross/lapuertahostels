@@ -7,6 +7,6 @@ runs:
       run: pnpm --filter cms install
       shell: bash
       working-directory: cms
-    - run: pnpm generate:types
+    - run: pnpm pull-payload-types
       shell: bash
-      working-directory: cms
+      working-directory: shared

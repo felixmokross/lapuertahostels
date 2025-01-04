@@ -17,7 +17,6 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
-    "@lapuertahostels/shared": "workspace:../shared",
     "@lexical/headless": "0.20.0",
     "@lexical/html": "0.20.0",
     "@payloadcms/db-mongodb": "3.13.0",

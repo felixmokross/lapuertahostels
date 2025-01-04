@@ -2,7 +2,7 @@ import { resolve6 } from "dns/promises";
 import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocaleCodes } from "./locales";
 import * as cookie from "cookie";
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "@/payload-types";
 
 export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
   return collectionSlug;
