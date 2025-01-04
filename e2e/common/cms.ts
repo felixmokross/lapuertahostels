@@ -1,7 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
-import { RichTextObject } from "./rich-text.model";
+import { RichTextObject } from "@lapuertahostels/shared";
 
 export async function createPage(data: Record<string, any> = {}) {
   const testPagePathname = `/e2e/${createId()}`;

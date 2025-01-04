@@ -18,7 +18,7 @@ import {
   IS_STRIKETHROUGH,
   IS_CODE,
   Node,
-} from "./rich-text.model";
+} from "@lapuertahostels/shared";
 
 export type RichTextProps = {
   content?: RichTextObject;

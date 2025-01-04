@@ -2,13 +2,13 @@ import { createId } from "@paralleldrive/cuid2";
 import {
   Banner,
   Brand,
+  ElementNode,
   Link,
   Media,
   Page,
   Text,
 } from "@lapuertahostels/shared";
-import { ElementNode } from "./rich-text.model";
-import { richTextRoot } from "./rich-text.builders";
+import { richTextRoot } from "../../../shared/src/rich-text.builders";
 
 export function plainText(text: string): Text {
   return {

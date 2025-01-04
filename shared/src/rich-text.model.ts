@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "./payload-types";
 
 export const IS_BOLD = 1;
 export const IS_ITALIC = 1 << 1;

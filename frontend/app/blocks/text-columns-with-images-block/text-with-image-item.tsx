@@ -5,7 +5,7 @@ import { PageLink } from "~/common/page-link";
 import { cn } from "~/common/cn";
 import { Heading, HeadingProps } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "~/common/rich-text.model";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { gracefully } from "~/common/utils";
 
 export type TextWithImageItemProps = Partial<

@@ -128,7 +128,7 @@ export default buildConfig({
     fallback: true,
   },
   typescript: {
-    outputFile: path.resolve(dirname, "../../shared/payload-types.ts"),
+    outputFile: path.resolve(dirname, "../../shared/src/payload-types.ts"),
     declare: false,
   },
   graphQL: {

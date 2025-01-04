@@ -6,7 +6,7 @@ import {
 } from "~/common/cms-data.builders";
 import { RoomListBlock } from "./room-list-block";
 import { Meta, StoryObj } from "@storybook/react";
-import { paragraph, text } from "~/common/rich-text.builders";
+import { paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Room List Block",

@@ -10,7 +10,7 @@ import {
   plainText,
   richText,
 } from "~/common/cms-data.builders";
-import { paragraph, text } from "~/common/rich-text.builders";
+import { paragraph, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "layout/Footer",

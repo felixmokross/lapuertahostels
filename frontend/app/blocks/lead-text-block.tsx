@@ -1,9 +1,8 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
-import { Page } from "@lapuertahostels/shared";
+import { Page, RichTextObject } from "@lapuertahostels/shared";
 import { cn } from "~/common/cn";
-import { RichTextObject } from "~/common/rich-text.model";
 import { PageLink } from "~/common/page-link";
 import { gracefully } from "~/common/utils";
 

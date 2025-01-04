@@ -1,7 +1,5 @@
-// TODO this should not be a copy
-
-import { Page } from "@lapuertahostels/shared";
 import {
+  Page,
   TextNode,
   ElementNode,
   Node,
@@ -15,7 +13,7 @@ import {
   LinkElementNode,
   LineBreakNode,
   ParagraphElementNode,
-} from "./rich-text.model";
+} from "@lapuertahostels/shared";
 
 export function richTextRoot(...children: ElementNode[]): RichTextObject {
   return {

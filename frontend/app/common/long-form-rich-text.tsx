@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Heading, HeadingProps } from "./heading";
 import { Paragraph } from "./paragraph";
-import { RichTextObject } from "./rich-text.model";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { TextHighlight } from "./text-highlight";
 import { useTheme } from "~/themes";
 import { cn } from "./cn";

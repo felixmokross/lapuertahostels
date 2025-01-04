@@ -10,8 +10,12 @@ import {
   richText,
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
-import { Page as PageItem } from "@lapuertahostels/shared";
+import {
+  bold,
+  Page as PageItem,
+  paragraph,
+  text,
+} from "@lapuertahostels/shared";
 
 const meta = {
   title: "layout/Page",

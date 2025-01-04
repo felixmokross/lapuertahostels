@@ -5,7 +5,7 @@ import {
   createPlainText,
   createRichText,
 } from "../common/cms";
-import { paragraph, richTextRoot, text } from "../common/rich-text.builders";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 test("hero heading block", async ({ page }) => {
   const headingText = await createPlainText("Hero Heading Test");

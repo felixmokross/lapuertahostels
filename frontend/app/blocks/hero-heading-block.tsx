@@ -1,8 +1,13 @@
-import { Page, Text } from "@lapuertahostels/shared";
+import {
+  Page,
+  Text,
+  paragraph,
+  richTextRoot,
+  text,
+} from "@lapuertahostels/shared";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
-import { richTextRoot, paragraph, text } from "~/common/rich-text.builders";
 import { gracefully } from "~/common/utils";
 
 type HeroHeadingBlockProps = Partial<

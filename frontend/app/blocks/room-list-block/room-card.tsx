@@ -3,7 +3,7 @@ import { Heading } from "~/common/heading";
 import { ImageViewer } from "~/common/image-viewer/image-viewer";
 import { Room } from "./types";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "~/common/rich-text.model";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { getAltFromMedia, getSrcFromMedia } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { gracefully, isObject } from "~/common/utils";

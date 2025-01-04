@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { OverlayTitle } from "./overlay-title";
-import { bold, paragraph, text } from "~/common/rich-text.builders";
+import { bold, paragraph, text } from "@lapuertahostels/shared";
 import { callToAction, media, richText } from "~/common/cms-data.builders";
 import { SlideImage } from "../slides-block/slide-image";
 
