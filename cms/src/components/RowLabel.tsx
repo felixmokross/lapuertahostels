@@ -20,19 +20,16 @@ export function RowLabel({ textProp, fallbackLabelKey }: RowLabelProps) {
     n: (rowNumber != null ? rowNumber + 1 : 0).toString().padStart(2, "0"),
   });
 
-  const textId = getValueByPath(data, textProp);
-  if (textId != null && typeof textId !== "string") {
-    throw new Error(
-      `${textId} must be a string, but was ${typeof textId} (path ${textProp})`,
-    );
-  }
-
+  const textId = getValueByPath(data, textProp) as string | { value: string };
   if (!textId) {
     return fallbackLabel;
   }
 
   return (
-    <RowLabelWithDefinedText textId={textId} fallbackLabel={fallbackLabel} />
+    <RowLabelWithDefinedText
+      textId={typeof textId === "object" ? textId.value : textId}
+      fallbackLabel={fallbackLabel}
+    />
   );
 }
 
@@ -51,6 +48,6 @@ function RowLabelWithDefinedText({
   return text?.title ?? fallbackLabel;
 }
 
-function getValueByPath(data: Record<string, any>, path: string) {
+function getValueByPath(data: Record<string, any>, path: string): any {
   return path.split(".").reduce((acc, key) => acc?.[key], data);
 }
