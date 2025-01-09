@@ -11,6 +11,6 @@
     "pull-payload-types": "cd ../cms && pnpm generate:types && cp ./src/payload-types.ts ../shared/src/payload-types.ts"
   },
   "devDependencies": {
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   }
 }

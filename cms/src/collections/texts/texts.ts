@@ -84,7 +84,6 @@ export const Texts: CollectionConfig = {
                     if (!data) return data;
                     if (data.type !== "richText") return null;
 
-                    // @ts-expect-error 'all' locale value is not included in Payload types
                     return req.locale === "all"
                       ? await transformRecordAsync(
                           data.richText,
