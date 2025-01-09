@@ -5,6 +5,7 @@ import {
   toRelativeUrl,
   getRequestUrl,
   buildLocalizedRelativeUrl,
+  getCanonicalRequestUrl,
 } from "./routing";
 import { getMaintenance } from "~/cms-data.server";
 import { isAuthenticated } from "./auth";
@@ -15,7 +16,7 @@ export async function handleIncomingRequest(request: Request) {
   redirectIfBrandSubdomain(url, "aqua");
   redirectIfBrandSubdomain(url, "azul");
 
-  redirectIfNonCanonicalHostname(url);
+  redirectIfNonCanonicalHostname(request);
   redirectIfPathnameEndsWithSlash(url);
 
   const { locale, pageUrl } = getLocaleAndPageUrl(toRelativeUrl(url));
@@ -45,16 +46,14 @@ function redirectIfBrandSubdomain(url: URL, brandName: string) {
   if (url.hostname.startsWith(domainPrefix)) {
     url.hostname = url.hostname.replace(domainPrefix, "");
     url.pathname = `/${brandName}${url.pathname === "/" ? "" : url.pathname}`;
-    throw redirect(url.toString());
+    throw redirect(url.href);
   }
 }
 
-function redirectIfNonCanonicalHostname(url: URL) {
-  const canonicalHostname = process.env.CANONICAL_HOSTNAME;
-  if (!canonicalHostname) throw new Error("Missing CANONICAL_HOSTNAME");
-  if (url.hostname !== canonicalHostname) {
-    url.hostname = canonicalHostname;
-    throw redirect(url.toString(), { status: 301 });
+function redirectIfNonCanonicalHostname(request: Request) {
+  const canonicalRequestUrl = getCanonicalRequestUrl(request);
+  if (getRequestUrl(request).hostname !== canonicalRequestUrl.hostname) {
+    throw redirect(canonicalRequestUrl.href, { status: 301 });
   }
 }
 

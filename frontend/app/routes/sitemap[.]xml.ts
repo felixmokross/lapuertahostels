@@ -1,7 +1,10 @@
 import { getMaintenance, loadData } from "~/cms-data.server";
 import { Page } from "@lapuertahostels/shared";
 import i18n from "~/i18n";
-import { buildLocalizedRelativeUrl, getRequestUrl } from "~/common/routing";
+import {
+  buildLocalizedRelativeUrl,
+  getCanonicalRequestUrl,
+} from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
 
@@ -25,7 +28,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       .flatMap((l) =>
         pages.map(
           (p) => `  <url>
-    <loc>${getRequestUrl(request).origin}${buildLocalizedRelativeUrl(l, p.pathname)}</loc>
+    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l, p.pathname)}</loc>
     <lastmod>${p.updatedAt.split("T")[0]}</lastmod>
   </url>`,
         ),
