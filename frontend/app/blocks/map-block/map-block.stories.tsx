@@ -11,6 +11,8 @@ const meta = {
   component: MapBlock,
   parameters: {
     layout: "fullscreen",
+    // give Map some time to load
+    chromatic: { delay: 1_000 },
   },
   decorators: [
     (Story) => {
