@@ -7,6 +7,7 @@ import { handleIncomingRequest } from "~/common/routing.server";
 import i18n from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
+  getCanonicalRequestUrl,
   getRequestUrl,
   toUrl,
 } from "~/common/routing";
@@ -188,7 +189,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   return {
     origin: requestUrl.origin,
-    canonicalUrl: requestUrl.toString(),
+    canonicalUrl: getCanonicalRequestUrl(request).href,
     pageUrl,
     dataPath,
     content,

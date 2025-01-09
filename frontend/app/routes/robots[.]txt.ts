@@ -1,12 +1,12 @@
 import { LoaderFunctionArgs } from "react-router";
-import { getRequestUrl } from "~/common/routing";
+import { getCanonicalRequestUrl } from "~/common/routing";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const content = `User-Agent: *
 Disallow: 
 Allow: /
 
-Sitemap: ${new URL("/sitemap.xml", getRequestUrl(request).origin).href}`;
+Sitemap: ${new URL("/sitemap.xml", getCanonicalRequestUrl(request)).href}`;
 
   return new Response(content, {
     status: 200,
