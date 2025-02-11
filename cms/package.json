@@ -17,8 +17,6 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
-    "@lexical/headless": "0.20.0",
-    "@lexical/html": "0.20.0",
     "@payloadcms/db-mongodb": "^3.23.0",
     "@payloadcms/next": "^3.23.0",
     "@payloadcms/richtext-lexical": "^3.23.0",

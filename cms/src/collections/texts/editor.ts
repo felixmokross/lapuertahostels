@@ -18,7 +18,7 @@ import {
   UnorderedListFeature,
 } from "@payloadcms/richtext-lexical";
 import { SlateToLexicalFeature } from "@payloadcms/richtext-lexical/migrate";
-import { createHeadlessEditor } from "@lexical/headless";
+import { createHeadlessEditor } from "@payloadcms/richtext-lexical/lexical/headless";
 import payloadConfig from "@/payload.config";
 
 const features = [
