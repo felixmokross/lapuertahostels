@@ -50,8 +50,6 @@ runs:
       shell: bash
     - name: Install PNPM
       uses: pnpm/action-setup@v4
-      with:
-        version: ${{ env.PNPM_VERSION }}
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
