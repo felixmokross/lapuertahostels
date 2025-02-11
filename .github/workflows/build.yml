@@ -149,6 +149,7 @@ jobs:
           exitOnceUploaded: true
           onlyChanged: true
           workingDir: frontend
+          storybookBaseDir: frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
           STORYBOOK_USE_IMAGE_CACHE_BUSTER: true

@@ -3,8 +3,12 @@ import {
   convertLexicalToHTML,
 } from "@payloadcms/richtext-lexical";
 import { createEditor, getEditorConfig } from "./editor";
-import { $getRoot, $getSelection, SerializedEditorState } from "lexical";
-import { $generateNodesFromDOM } from "@lexical/html";
+import {
+  $getRoot,
+  $getSelection,
+  SerializedEditorState,
+} from "@payloadcms/richtext-lexical/lexical";
+import { $generateNodesFromDOM } from "@payloadcms/richtext-lexical/lexical/html";
 import { JSDOM } from "jsdom";
 
 export async function richTextToFullText(richText: SerializedEditorState) {
