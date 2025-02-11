@@ -93,8 +93,6 @@ jobs:
   frontend-build-push:
     name: "Frontend: Build and Push"
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
     outputs:
       image: ${{ steps.image-name.outputs.image }}
     steps:
@@ -268,8 +266,6 @@ jobs:
   cms-build-push:
     name: "CMS: Build and Push"
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
     outputs:
       image: ${{ steps.image-name.outputs.image }}
     steps:
