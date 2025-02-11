@@ -1,5 +1,5 @@
 import { Endpoint } from "payload";
-import { SerializedEditorState } from "lexical";
+import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { transformRecord, transformRecordAsync } from "../../common/records";
 import { translate } from "../../common/translation";
 import { getSupportedLocaleCodes } from "../../common/locales";
