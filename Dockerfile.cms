@@ -13,7 +13,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies
-COPY --link pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --link cms cms
 RUN pnpm --filter cms install --frozen-lockfile
 
