@@ -30,7 +30,8 @@ Now you'll need to pick a host to deploy it to.
 
 ### DIY
 
-If you're familiar with deploying node applications, the built-in React Router app server is production-ready.
+If you're familiar with deploying node applications, the built-in React Router
+app server is production-ready.
 
 Make sure to deploy the output of `react-router build`
 

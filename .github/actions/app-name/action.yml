@@ -1,9 +1,12 @@
 name: "App Name"
-description: Generates the Fly.io app name for a preview deployment based on the current Git commit
+description:
+  Generates the Fly.io app name for a preview deployment based on the current
+  Git commit
 inputs:
   component:
     required: true
-    description: The component for which the app name should be generated (frontend or cms)
+    description:
+      The component for which the app name should be generated (frontend or cms)
 outputs:
   app-name:
     value: ${{ steps.app-name.outputs.app-name }}
