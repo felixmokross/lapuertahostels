@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/populate-cms-types
       - name: Run lint in frontend
         run: pnpm lint --max-warnings=0
-        working-directory: frontend
+        working-directory: apps/frontend
 
   frontend-check-format:
     name: "Frontend: Check Format"
@@ -55,7 +55,7 @@ jobs:
           project: frontend
       - name: Check format in frontend
         run: pnpm check-format
-        working-directory: frontend
+        working-directory: apps/frontend
 
   frontend-typecheck:
     name: "Frontend: Typecheck"
@@ -71,7 +71,7 @@ jobs:
         uses: ./.github/actions/populate-cms-types
       - name: Run typecheck in frontend
         run: pnpm typecheck
-        working-directory: frontend
+        working-directory: apps/frontend
 
   frontend-unit-tests:
     name: "Frontend: Unit Tests"
@@ -87,7 +87,7 @@ jobs:
         uses: ./.github/actions/populate-cms-types
       - name: Run unit tests in frontend
         run: pnpm test
-        working-directory: frontend
+        working-directory: apps/frontend
 
   frontend-build-push:
     name: "Frontend: Build and Push"
@@ -148,8 +148,8 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           onlyChanged: true
-          workingDir: frontend
-          storybookBaseDir: frontend
+          workingDir: apps/frontend
+          storybookBaseDir: apps/frontend
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
           STORYBOOK_USE_IMAGE_CACHE_BUSTER: true
@@ -199,7 +199,7 @@ jobs:
         env:
           PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
           PREVIEW_GOOGLE_MAPS_API_KEY: ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
-        working-directory: frontend
+        working-directory: apps/frontend
       - name: Deploy frontend preview app
         run: |
           flyctl deploy \

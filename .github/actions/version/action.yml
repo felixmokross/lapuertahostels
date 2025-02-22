@@ -57,7 +57,7 @@ runs:
     - name: Set version on frontend
       run: pnpm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash
-      working-directory: frontend
+      working-directory: apps/frontend
     - name: Set version on CMS
       run: pnpm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash

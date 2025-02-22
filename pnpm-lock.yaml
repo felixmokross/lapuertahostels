@@ -8,101 +8,7 @@ importers:
 
   .: {}
 
-  cms:
-    dependencies:
-      '@payloadcms/db-mongodb':
-        specifier: ^3.23.0
-        version: 3.23.0(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))
-      '@payloadcms/next':
-        specifier: ^3.23.0
-        version: 3.23.0(@types/react@19.0.8)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
-      '@payloadcms/richtext-lexical':
-        specifier: ^3.23.0
-        version: 3.23.0(015b080d1e1f3a93b431088a3ce5863c)
-      '@payloadcms/storage-s3':
-        specifier: ^3.23.0
-        version: 3.23.0(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))
-      '@payloadcms/translations':
-        specifier: ^3.23.0
-        version: 3.23.0
-      '@payloadcms/ui':
-        specifier: ^3.23.0
-        version: 3.23.0(@types/react@19.0.8)(monaco-editor@0.52.2)(next@15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
-      bson:
-        specifier: ^6.10.2
-        version: 6.10.2
-      cookie:
-        specifier: ^1.0.2
-        version: 1.0.2
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      deepl-node:
-        specifier: ^1.16.0
-        version: 1.16.0
-      jsdom:
-        specifier: ^25.0.1
-        version: 25.0.1
-      next:
-        specifier: ^15.1.7
-        version: 15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)
-      openai:
-        specifier: ^4.83.0
-        version: 4.83.0(ws@8.18.0)
-      payload:
-        specifier: ^3.23.0
-        version: 3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-      sharp:
-        specifier: 0.32.6
-        version: 0.32.6
-    devDependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@3.4.17)
-      '@types/jsdom':
-        specifier: ^21.1.7
-        version: 21.1.7
-      '@types/node':
-        specifier: ^22.13.1
-        version: 22.13.1
-      '@types/react':
-        specifier: ^19.0.8
-        version: 19.0.8
-      '@types/react-dom':
-        specifier: ^19.0.3
-        version: 19.0.3(@types/react@19.0.8)
-      autoprefixer:
-        specifier: ^10.4.20
-        version: 10.4.20(postcss@8.5.2)
-      eslint:
-        specifier: ^8.57.1
-        version: 8.57.1
-      eslint-config-next:
-        specifier: ^15.1.7
-        version: 15.1.7(eslint@8.57.1)(typescript@5.6.3)
-      postcss:
-        specifier: ^8.5.2
-        version: 8.5.2
-      prettier:
-        specifier: 3.2.5
-        version: 3.2.5
-      prettier-plugin-tailwindcss:
-        specifier: ^0.6.11
-        version: 0.6.11(prettier@3.2.5)
-      tailwindcss:
-        specifier: ^3.4.17
-        version: 3.4.17
-      typescript:
-        specifier: 5.6.3
-        version: 5.6.3
-
-  frontend:
+  apps/frontend:
     dependencies:
       '@headlessui/react':
         specifier: ^2.2.0
@@ -111,8 +17,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
       '@lapuertahostels/shared':
-        specifier: workspace:../libs/shared
-        version: link:../libs/shared
+        specifier: workspace:../../libs/shared
+        version: link:../../libs/shared
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
@@ -282,6 +188,100 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.13.1)(jsdom@25.0.1)(sass@1.77.4)
+
+  cms:
+    dependencies:
+      '@payloadcms/db-mongodb':
+        specifier: ^3.23.0
+        version: 3.23.0(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))
+      '@payloadcms/next':
+        specifier: ^3.23.0
+        version: 3.23.0(@types/react@19.0.8)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
+      '@payloadcms/richtext-lexical':
+        specifier: ^3.23.0
+        version: 3.23.0(015b080d1e1f3a93b431088a3ce5863c)
+      '@payloadcms/storage-s3':
+        specifier: ^3.23.0
+        version: 3.23.0(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))
+      '@payloadcms/translations':
+        specifier: ^3.23.0
+        version: 3.23.0
+      '@payloadcms/ui':
+        specifier: ^3.23.0
+        version: 3.23.0(@types/react@19.0.8)(monaco-editor@0.52.2)(next@15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
+      bson:
+        specifier: ^6.10.2
+        version: 6.10.2
+      cookie:
+        specifier: ^1.0.2
+        version: 1.0.2
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      deepl-node:
+        specifier: ^1.16.0
+        version: 1.16.0
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
+      next:
+        specifier: ^15.1.7
+        version: 15.1.7(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)
+      openai:
+        specifier: ^4.83.0
+        version: 4.83.0(ws@8.18.0)
+      payload:
+        specifier: ^3.23.0
+        version: 3.23.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.6.3)
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      sharp:
+        specifier: 0.32.6
+        version: 0.32.6
+    devDependencies:
+      '@tailwindcss/typography':
+        specifier: ^0.5.16
+        version: 0.5.16(tailwindcss@3.4.17)
+      '@types/jsdom':
+        specifier: ^21.1.7
+        version: 21.1.7
+      '@types/node':
+        specifier: ^22.13.1
+        version: 22.13.1
+      '@types/react':
+        specifier: ^19.0.8
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: ^19.0.3
+        version: 19.0.3(@types/react@19.0.8)
+      autoprefixer:
+        specifier: ^10.4.20
+        version: 10.4.20(postcss@8.5.2)
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-next:
+        specifier: ^15.1.7
+        version: 15.1.7(eslint@8.57.1)(typescript@5.6.3)
+      postcss:
+        specifier: ^8.5.2
+        version: 8.5.2
+      prettier:
+        specifier: 3.2.5
+        version: 3.2.5
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.11
+        version: 0.6.11(prettier@3.2.5)
+      tailwindcss:
+        specifier: ^3.4.17
+        version: 3.4.17
+      typescript:
+        specifier: 5.6.3
+        version: 5.6.3
 
   libs/shared:
     devDependencies:
