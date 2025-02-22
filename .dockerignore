@@ -8,4 +8,4 @@ node_modules
 /apps/frontend/storybook-static
 /apps/frontend/.react-router
 
-/cms/.next
+/apps/cms/.next

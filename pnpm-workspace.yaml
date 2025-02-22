@@ -1,5 +1,5 @@
 packages:
   - "apps/frontend"
-  - "cms"
+  - "apps/cms"
   - "libs/shared"
   - "tests/e2e"

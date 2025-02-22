@@ -2,7 +2,7 @@
   "folders": [
     { "name": "<root>", "path": "." },
     { "name": "apps/frontend", "path": "./apps/frontend" },
-    { "path": "./cms" },
+    { "name": "apps/cms", "path": "./apps/cms" },
     { "name": "libs/shared", "path": "./libs/shared" },
     { "name": "tests/e2e", "path": "./tests/e2e" }
   ],

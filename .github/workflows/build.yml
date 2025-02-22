@@ -351,7 +351,7 @@ jobs:
           PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
           PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
           PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
-        working-directory: cms
+        working-directory: apps/cms
       - name: Deploy CMS preview app
         run: |
           flyctl deploy \
