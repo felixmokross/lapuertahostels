@@ -26,7 +26,6 @@ import {
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { Locale } from "payload";
 import { getLabelText, Label } from "@/common/labels";
-import Link from "next/link";
 import { LanguagesIcon, SparklesIcon } from "@/common/icons";
 import { cn } from "@/common/cn";
 import { Text } from "@/payload-types";
@@ -305,7 +304,6 @@ function DrawerContent({
                   >
                     <Button
                       el="link"
-                      Link={Link}
                       to={`/admin/collections/texts/${id}?locale=${locale.code}`}
                       size="medium"
                       buttonStyle="secondary"
