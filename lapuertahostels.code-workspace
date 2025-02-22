@@ -3,17 +3,17 @@
     { "name": "<root>", "path": "." },
     { "path": "./frontend" },
     { "path": "./cms" },
-    { "path": "./e2e" },
-    { "path": "./shared" },
+    { "name": "libs/shared", "path": "./libs/shared" },
+    { "path": "./e2e" }
   ],
   "settings": {
     "github.copilot.enable": {
       "*": true,
       "plaintext": false,
       "markdown": false,
-      "scminput": false,
+      "scminput": false
     },
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-  },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

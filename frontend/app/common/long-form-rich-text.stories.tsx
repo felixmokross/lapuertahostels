@@ -8,7 +8,7 @@ import {
   paragraph,
   text,
   listitem,
-} from "../../../shared/src/rich-text.builders";
+} from "@lapuertahostels/shared";
 import { LongFormRichText } from "./long-form-rich-text";
 
 const meta = {
