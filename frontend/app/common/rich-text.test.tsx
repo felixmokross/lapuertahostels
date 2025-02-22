@@ -18,7 +18,7 @@ import {
   unsupportedElementWithoutChildren,
   lineBreak,
   listitem,
-} from "../../../shared/src/rich-text.builders";
+} from "@lapuertahostels/shared";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(

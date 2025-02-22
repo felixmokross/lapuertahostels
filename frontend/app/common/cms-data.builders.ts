@@ -7,8 +7,8 @@ import {
   Media,
   Page,
   Text,
+  richTextRoot,
 } from "@lapuertahostels/shared";
-import { richTextRoot } from "../../../shared/src/rich-text.builders";
 
 export function plainText(text: string): Text {
   return {
