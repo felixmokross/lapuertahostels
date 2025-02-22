@@ -261,7 +261,7 @@ jobs:
           project: cms
       - name: Check format in CMS
         run: pnpm check-format
-        working-directory: cms
+        working-directory: apps/cms
 
   cms-build-push:
     name: "CMS: Build and Push"
