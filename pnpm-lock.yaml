@@ -292,8 +292,8 @@ importers:
   tests/e2e:
     devDependencies:
       '@lapuertahostels/shared':
-        specifier: workspace:../libs/shared
-        version: link:../libs/shared
+        specifier: workspace:../../libs/shared
+        version: link:../../libs/shared
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
