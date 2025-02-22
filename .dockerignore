@@ -3,9 +3,9 @@ node_modules
 *.log
 .DS_Store
 
-/frontend/.cache
-/frontend/build
-/frontend/storybook-static
-/frontend/.react-router
+/apps/frontend/.cache
+/apps/frontend/build
+/apps/frontend/storybook-static
+/apps/frontend/.react-router
 
 /cms/.next
