@@ -8,7 +8,7 @@ import {
   Page,
   Text,
 } from "@lapuertahostels/shared";
-import { richTextRoot } from "../../../shared/src/rich-text.builders";
+import { richTextRoot } from "@lapuertahostels/shared";
 
 export function plainText(text: string): Text {
   return {
