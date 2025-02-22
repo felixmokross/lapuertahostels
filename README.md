@@ -4,7 +4,7 @@
 [![Clean Preview](https://github.com/felixmokross/lapuertahostels/actions/workflows/clean-preview.yml/badge.svg)](https://github.com/felixmokross/lapuertahostels/actions/workflows/clean-preview.yml)
 
 This is the website for La Puerta Hostels, a Colombian hotel business. All
-content is controlled via a custom-tailored CMS based on
+content is controlled via a tailored CMS based on
 [Payload CMS](https://payloadcms.com/). The frontend is powered by the
 [React Router framework (formerly Remix)](https://reactrouter.com).
 
