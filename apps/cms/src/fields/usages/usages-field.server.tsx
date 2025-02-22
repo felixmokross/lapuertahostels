@@ -3,9 +3,8 @@ import { findUsages } from ".";
 import { UsagesConfig } from "./types";
 import { I18nClient } from "@payloadcms/translations";
 import { TranslationsKey, TranslationsObject } from "@/translations";
-import { Pill, FieldLabel } from "@payloadcms/ui";
+import { Pill, FieldLabel, Link } from "@payloadcms/ui";
 import { Label } from "@/common/labels";
-import Link from "next/link";
 
 export async function UsagesField({
   config,
