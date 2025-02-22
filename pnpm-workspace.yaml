@@ -2,4 +2,4 @@ packages:
   - "frontend"
   - "cms"
   - "libs/shared"
-  - "e2e"
+  - "tests/e2e"

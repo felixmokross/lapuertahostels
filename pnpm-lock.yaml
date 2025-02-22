@@ -102,30 +102,6 @@ importers:
         specifier: 5.6.3
         version: 5.6.3
 
-  e2e:
-    devDependencies:
-      '@lapuertahostels/shared':
-        specifier: workspace:../libs/shared
-        version: link:../libs/shared
-      '@paralleldrive/cuid2':
-        specifier: ^2.2.2
-        version: 2.2.2
-      '@playwright/test':
-        specifier: ^1.50.1
-        version: 1.50.1
-      '@types/node':
-        specifier: ^22.13.1
-        version: 22.13.1
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
-      prettier:
-        specifier: ^3.5.0
-        version: 3.5.0
-      typescript:
-        specifier: ^5.7.3
-        version: 5.7.3
-
   frontend:
     dependencies:
       '@headlessui/react':
@@ -309,6 +285,30 @@ importers:
 
   libs/shared:
     devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
+  tests/e2e:
+    devDependencies:
+      '@lapuertahostels/shared':
+        specifier: workspace:../libs/shared
+        version: link:../libs/shared
+      '@paralleldrive/cuid2':
+        specifier: ^2.2.2
+        version: 2.2.2
+      '@playwright/test':
+        specifier: ^1.50.1
+        version: 1.50.1
+      '@types/node':
+        specifier: ^22.13.1
+        version: 22.13.1
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
+      prettier:
+        specifier: ^3.5.0
+        version: 3.5.0
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
