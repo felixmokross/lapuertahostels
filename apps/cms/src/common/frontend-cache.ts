@@ -106,6 +106,9 @@ async function refreshCacheForFlyTarget(
   );
 
   const targetUrls = await queryFlyVmUrls(appName, parseInt(internalPort, 10));
+  if (!targetUrls.length) {
+    return;
+  }
 
   console.log(`Refreshing cache at ${targetUrls.length} frontend VMs`);
 
@@ -127,10 +130,17 @@ async function refreshCacheForFlyTarget(
 
 async function queryFlyVmUrls(appName: string, port: number) {
   const address = `global.${appName}.internal`;
-  const ipv6s = await resolve6(address);
-  const urls = ipv6s.map((ip) => `http://[${ip}]:${port}`);
 
-  return urls;
+  try {
+    const ipv6s = await resolve6(address);
+    const urls = ipv6s.map((ip) => `http://[${ip}]:${port}`);
+    return urls;
+  } catch (e) {
+    console.warn(
+      `Could not resolve IPs for ${appName}: No IPv6 addresses found for ${address}. The frontend machines may not be running.`,
+    );
+    return [];
+  }
 }
 
 async function refreshCache(
