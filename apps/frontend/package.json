@@ -17,7 +17,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "@lapuertahostels/shared": "workspace:../libs/shared",
+    "@lapuertahostels/shared": "workspace:../../libs/shared",
     "@paralleldrive/cuid2": "^2.2.2",
     "@payloadcms/live-preview-react": "^3.23.0",
     "@react-router/node": "^7.1.5",

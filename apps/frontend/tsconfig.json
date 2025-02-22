@@ -4,8 +4,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".react-router/types/**/*",
-    "../libs/shared/src/rich-text.model.ts",
-    "../libs/shared/src/rich-text.builders.ts"
   ],
   "compilerOptions": {
     "types": ["@react-router/node", "vite/client"],
