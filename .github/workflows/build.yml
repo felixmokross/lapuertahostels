@@ -36,7 +36,7 @@ jobs:
       - name: Set up frontend
         uses: ./.github/actions/setup
         with:
-          working-directory: frontend
+          project: frontend
       - name: Populate CMS types
         uses: ./.github/actions/populate-cms-types
       - name: Run lint in frontend
@@ -52,7 +52,7 @@ jobs:
       - name: Set up frontend
         uses: ./.github/actions/setup
         with:
-          working-directory: frontend
+          project: frontend
       - name: Check format in frontend
         run: pnpm check-format
         working-directory: frontend
@@ -66,7 +66,7 @@ jobs:
       - name: Set up frontend
         uses: ./.github/actions/setup
         with:
-          working-directory: frontend
+          project: frontend
       - name: Populate CMS types
         uses: ./.github/actions/populate-cms-types
       - name: Run typecheck in frontend
@@ -82,7 +82,7 @@ jobs:
       - name: Set up frontend
         uses: ./.github/actions/setup
         with:
-          working-directory: frontend
+          project: frontend
       - name: Populate CMS types
         uses: ./.github/actions/populate-cms-types
       - name: Run unit tests in frontend
@@ -139,7 +139,7 @@ jobs:
       - name: Set up frontend
         uses: ./.github/actions/setup
         with:
-          working-directory: frontend
+          project: frontend
       - name: Populate CMS types
         uses: ./.github/actions/populate-cms-types
       - name: Publish frontend to Chromatic
@@ -258,7 +258,7 @@ jobs:
       - name: Set up CMS
         uses: ./.github/actions/setup
         with:
-          working-directory: cms
+          project: cms
       - name: Check format in CMS
         run: pnpm check-format
         working-directory: cms
