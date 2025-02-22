@@ -1,5 +1,6 @@
 name: "Setup"
-description: Sets up PNPM, Node.js, and installs dependencies for the specified project
+description:
+  Sets up PNPM, Node.js, and installs dependencies for the specified project
 inputs:
   project:
     required: true

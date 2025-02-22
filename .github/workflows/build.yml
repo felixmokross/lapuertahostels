@@ -153,7 +153,8 @@ jobs:
         env:
           STORYBOOK_IMAGEKIT_BASE_URL: ${{ env.STORYBOOK_IMAGEKIT_BASE_URL }}
           STORYBOOK_USE_IMAGE_CACHE_BUSTER: true
-          STORYBOOK_GOOGLE_MAPS_API_KEY: ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
+          STORYBOOK_GOOGLE_MAPS_API_KEY:
+            ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
 
   frontend-deploy-preview:
     name: "Frontend: Deploy Preview"
@@ -197,8 +198,10 @@ jobs:
             GOOGLE_MAPS_API_KEY=$PREVIEW_GOOGLE_MAPS_API_KEY \
             --app ${{ steps.app-name.outputs.app-name }} --stage
         env:
-          PREVIEW_PAYLOAD_CMS_API_KEY: ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
-          PREVIEW_GOOGLE_MAPS_API_KEY: ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
+          PREVIEW_PAYLOAD_CMS_API_KEY:
+            ${{ secrets.PREVIEW_PAYLOAD_CMS_API_KEY }}
+          PREVIEW_GOOGLE_MAPS_API_KEY:
+            ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
         working-directory: apps/frontend
       - name: Deploy frontend preview app
         run: |
@@ -347,8 +350,10 @@ jobs:
         env:
           PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
           PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
-          PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
-          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          PREVIEW_MEDIA_S3_ACCESS_KEY_ID:
+            ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
+          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY:
+            ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
           PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
           PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
         working-directory: apps/cms
@@ -442,8 +447,10 @@ jobs:
           SESSION_SECRET: $(openssl rand -hex 32)
           CMS_IMAGE: ${{ needs.cms-build-push.outputs.image }}
           PAYLOAD_SECRET: $(openssl rand -hex 12)
-          PREVIEW_MEDIA_S3_ACCESS_KEY_ID: ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
-          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY: ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
+          PREVIEW_MEDIA_S3_ACCESS_KEY_ID:
+            ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
+          PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY:
+            ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
           PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
         working-directory: tests/e2e
       - name: Get Playwright version
@@ -457,7 +464,9 @@ jobs:
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.playwright_version }}
+          key:
+            ${{ runner.os }}-playwright-${{
+            steps.playwright-version.outputs.playwright_version }}
       - name: Install Playwright dependencies
         run: pnpm playwright install --with-deps chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -494,8 +503,10 @@ jobs:
       fly_app_frontend: ${{ steps.define-env.outputs.fly_app_frontend }}
       fly_app_cms: ${{ steps.define-env.outputs.fly_app_cms }}
       fly_frontend_config: ${{ steps.define-env.outputs.fly_frontend_config }}
-      analytics_domain_frontend: ${{ steps.define-env.outputs.analytics_domain_frontend }}
-      canonical_hostname_frontend: ${{ steps.define-env.outputs.canonical_hostname_frontend }}
+      analytics_domain_frontend:
+        ${{ steps.define-env.outputs.analytics_domain_frontend }}
+      canonical_hostname_frontend:
+        ${{ steps.define-env.outputs.canonical_hostname_frontend }}
       domain_cms: ${{ steps.define-env.outputs.domain_cms }}
       s3_bucket: ${{ steps.define-env.outputs.s3_bucket }}
       imagekit_base_url: ${{ steps.define-env.outputs.imagekit_base_url }}
