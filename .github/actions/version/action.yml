@@ -61,4 +61,4 @@ runs:
     - name: Set version on CMS
       run: pnpm version ${{ steps.complete-version.outputs.version }} --git-tag-version false
       shell: bash
-      working-directory: cms
+      working-directory: apps/cms
