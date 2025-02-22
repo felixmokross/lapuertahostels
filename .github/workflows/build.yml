@@ -426,7 +426,7 @@ jobs:
       - name: Set up e2e
         uses: ./.github/actions/setup
         with:
-          working-directory: tests/e2e
+          project: e2e
       - name: Set up flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
         with:
