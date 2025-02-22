@@ -1,9 +1,9 @@
 name: "Setup"
-description: Sets up PNPM, Node.js, and installs dependencies for the specified project / working directory
+description: Sets up PNPM, Node.js, and installs dependencies for the specified project
 inputs:
-  working-directory:
+  project:
     required: true
-    description: The project / working directory to install dependencies
+    description: The project in which to install dependencies
 runs:
   using: "composite"
   steps:
@@ -16,6 +16,5 @@ runs:
         cache: "pnpm"
         cache-dependency-path: pnpm-lock.yaml
     - name: Install dependencies
-      run: pnpm --filter ${{ inputs.working-directory }} install # we assume here that the project name matches the directory
+      run: pnpm --filter ${{ inputs.project }} install
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
