@@ -18,9 +18,9 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
   const [t] = useTranslation();
   return (
     <div className={className}>
-      <div className="grid max-w-[35rem] grid-cols-4 grid-rows-[auto,auto] gap-1.5 overflow-hidden sm:gap-2 sm:rounded-md">
+      <div className="grid max-w-[35rem] grid-cols-4 grid-rows-[auto_auto] gap-1.5 overflow-hidden sm:gap-2 sm:rounded-md">
         <button
-          className="group col-span-4 aspect-[16/9] overflow-hidden bg-white shadow-md"
+          className="group col-span-4 aspect-16/9 overflow-hidden bg-white shadow-md"
           onClick={() => {
             setCurrentImageIndex(0);
           }}
@@ -52,7 +52,7 @@ export function ImageViewer({ images, className }: ImageViewerProps) {
             <Image
               src={image.src}
               alt={image.alt}
-              className="aspect-[4/3] object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
+              className="aspect-4/3 object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
               transformation={{
                 width: 140,
                 aspectRatio: { width: 4, height: 3 },

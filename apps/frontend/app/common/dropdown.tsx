@@ -38,7 +38,7 @@ export function Dropdown({
       >
         <MenuItems
           className={cn(
-            "absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
+            "absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden",
             {
               "left-0 origin-top-left": menuPosition === "left",
               "right-0 origin-top-right": menuPosition === "right",
@@ -71,7 +71,7 @@ export function DropdownItem<T extends ElementType>({
         <Component
           className={cn(
             focus ? "bg-neutral-100 text-neutral-900" : "text-neutral-700",
-            " block w-full px-4 py-2 text-left text-sm",
+            "block w-full px-4 py-2 text-left text-sm",
             className,
           )}
           {...props}

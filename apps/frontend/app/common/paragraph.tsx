@@ -30,7 +30,7 @@ export function Paragraph({
     <VariantContext.Provider value={variant}>
       <p
         className={cn(
-          justify && "hyphens-auto text-justify",
+          justify && "text-justify hyphens-auto",
           {
             "text-sm leading-normal": size === "small",
             "text-base leading-relaxed": size === "medium",

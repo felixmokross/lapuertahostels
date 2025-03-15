@@ -36,7 +36,7 @@ export function Banner({ message, cta }: BannerProps) {
             {isObject(cta?.link) && (
               <PageLink
                 link={cta.link}
-                className="text-nowrap font-bold after:content-['_→'] hover:underline"
+                className="font-bold text-nowrap after:content-['_→'] hover:underline"
               >
                 {gracefully(cta.label, "text")}
               </PageLink>

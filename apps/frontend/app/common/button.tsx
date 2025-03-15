@@ -48,7 +48,7 @@ export function Button<T extends ElementType>({
             size === "large",
           "gap-1.5 rounded-md px-4 py-2 text-xs tracking-wide shadow-md hover:shadow-lg md:gap-2 md:px-4 md:py-3 md:text-sm":
             size === "medium",
-          "gap-1.5 rounded-md px-3 py-2 text-xs tracking-wide shadow-sm hover:shadow-md":
+          "gap-1.5 rounded-md px-3 py-2 text-xs tracking-wide shadow-xs hover:shadow-md":
             size === "small",
         },
         blackShadow && "shadow-black/50 hover:shadow-black/50",
@@ -59,7 +59,7 @@ export function Button<T extends ElementType>({
     >
       {Icon && (
         <Icon
-          className={cn("flex-shrink-0", {
+          className={cn("shrink-0", {
             "size-5": size === "floating-action-button",
             "size-4 md:size-5": size === "large",
             "size-3.5 md:size-4": size === "medium",

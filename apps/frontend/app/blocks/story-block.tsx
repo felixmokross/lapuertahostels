@@ -17,14 +17,14 @@ export function StoryBlock({
   text,
   elementId,
 }: StoryBlockProps) {
-  imagePosition = image ? imagePosition ?? "left" : undefined;
+  imagePosition = image ? (imagePosition ?? "left") : undefined;
   return (
     <div
       id={elementId || undefined}
       className={cn(
         image &&
           "lg:grid lg:grid-cols-2 lg:items-center lg:justify-center lg:gap-16",
-        "mx-auto mb-24 mt-20 max-w-4xl",
+        "mx-auto mt-20 mb-24 max-w-4xl",
       )}
     >
       <div
@@ -48,9 +48,9 @@ export function StoryBlock({
       {image && (
         <div
           className={cn(
-            "mt-32 aspect-[3/4] overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
+            "mt-32 aspect-3/4 overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
             {
-              "sm:-rotate-6 lg:-ml-10 lg:mr-12": imagePosition === "left",
+              "sm:-rotate-6 lg:mr-12 lg:-ml-10": imagePosition === "left",
               "sm:rotate-6 lg:-mr-10 lg:ml-12": imagePosition === "right",
             },
           )}

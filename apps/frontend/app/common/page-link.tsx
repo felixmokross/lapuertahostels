@@ -15,7 +15,7 @@ export function PageLink({ link, ...props }: PageLinkProps) {
         isObject(link)
           ? link.type === "internal"
             ? `${gracefully(link.page, "pathname") ?? ""}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
-            : link.url ?? "about:blank"
+            : (link.url ?? "about:blank")
           : "about:blank"
       }
     />

@@ -45,7 +45,7 @@ export function ImageViewerControlsOverlay({
       {hasMultipleImages && (
         <>
           <PreviousNextButton
-            className={cn("right-0 top-1/2 -translate-y-1/2")}
+            className={cn("top-1/2 right-0 -translate-y-1/2")}
             icon={ArrowRightIcon}
             onClick={onGoToNextImage}
             title={t("imageViewer.next")}
@@ -53,7 +53,7 @@ export function ImageViewerControlsOverlay({
             onMouseLeave={onMouseLeave}
           />
           <PreviousNextButton
-            className={cn("left-0 top-1/2 -translate-y-1/2")}
+            className={cn("top-1/2 left-0 -translate-y-1/2")}
             icon={ArrowLeftIcon}
             onClick={onGoToPreviousImage}
             title={t("imageViewer.previous")}
@@ -67,10 +67,10 @@ export function ImageViewerControlsOverlay({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <div className="whitespace-nowrap p-2 text-center">
+        <div className="p-2 text-center whitespace-nowrap">
           {currentImageIndex + 1} / {numberOfImages}
         </div>
-        <div className="invisible flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap p-2 text-center sm:visible">
+        <div className="invisible grow overflow-hidden p-2 text-center text-ellipsis whitespace-nowrap sm:visible">
           {caption}
         </div>
         <div className="flex items-center justify-end gap-1 md:gap-2">
@@ -98,7 +98,7 @@ export function ImageViewerControlsOverlay({
         </div>
       </div>
       <div className="fixed bottom-0 left-0 flex h-12 w-full items-center justify-center bg-black/60 px-4 text-sm text-neutral-300 shadow-lg sm:hidden">
-        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap px-2 text-center ">
+        <div className="overflow-hidden px-2 text-center text-ellipsis whitespace-nowrap">
           {caption}
         </div>
       </div>

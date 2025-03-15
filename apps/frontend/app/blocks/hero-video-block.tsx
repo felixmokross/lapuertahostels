@@ -17,7 +17,7 @@ export function HeroVideoBlock({
 
   const previewUrl = gracefully(previewImage, "filename");
   return (
-    <div className="relative h-[30rem] bg-puerta-100 md:h-[40rem]">
+    <div className="bg-puerta-100 relative h-[30rem] md:h-[40rem]">
       {isObject(video) ? (
         <video
           src={`${imagekitBaseUrl}/${video.filename}`}
