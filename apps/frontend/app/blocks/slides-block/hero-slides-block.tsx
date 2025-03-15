@@ -48,7 +48,7 @@ export function HeroSlidesBlock({
   return (
     <div
       {...swipeHandlers}
-      className="relative h-[30rem] bg-puerta-100 focus:outline-none md:h-[40rem]"
+      className="relative h-[30rem] bg-puerta-100 focus:outline-hidden md:h-[40rem]"
       onKeyDown={(e) => {
         if (e.key === "ArrowLeft") goToPrevious();
         if (e.key === "ArrowRight") goToNext();
@@ -91,13 +91,13 @@ export function HeroSlidesBlock({
           >
             {slides.map((_, i) => (
               <button
-                className="group z-10 inline-flex h-10 flex-grow items-end"
+                className="group z-10 inline-flex h-10 grow items-end"
                 key={i}
                 onClick={() => goTo(i)}
               >
                 <span
                   className={cn(
-                    "h-1.5 flex-grow transition-[background-color,opacity] duration-200 ease-in",
+                    "h-1.5 grow transition-[background-color,opacity] duration-200 ease-in",
                     i === slideIndex
                       ? "bg-white opacity-85"
                       : "bg-neutral-200 opacity-65 group-hover:bg-white group-hover:opacity-85",

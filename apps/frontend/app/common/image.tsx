@@ -148,7 +148,7 @@ function toImagekitTransformationItemString(
       return `fo-${transformation.focus!}`;
     case "enhancement":
       return `e-${transformation.enhancement!}`;
-    case "blur":
+    case "blur-sm":
       return `bl-${transformation.blur!}`;
     default:
       throw new Error(`Unsupported key: ${key}`);

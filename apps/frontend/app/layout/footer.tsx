@@ -147,7 +147,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                   )?.text ?? ""
                 }
               />
-              <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
+              <div className="mt-4 sm:ml-4 sm:mt-0 sm:shrink-0">
                 <Button
                   size="small"
                   type="submit"

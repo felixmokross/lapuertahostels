@@ -70,7 +70,7 @@ export function ImageViewerControlsOverlay({
         <div className="whitespace-nowrap p-2 text-center">
           {currentImageIndex + 1} / {numberOfImages}
         </div>
-        <div className="invisible flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap p-2 text-center sm:visible">
+        <div className="invisible grow overflow-hidden text-ellipsis whitespace-nowrap p-2 text-center sm:visible">
           {caption}
         </div>
         <div className="flex items-center justify-end gap-1 md:gap-2">
@@ -98,7 +98,7 @@ export function ImageViewerControlsOverlay({
         </div>
       </div>
       <div className="fixed bottom-0 left-0 flex h-12 w-full items-center justify-center bg-black/60 px-4 text-sm text-neutral-300 shadow-lg sm:hidden">
-        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap px-2 text-center ">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap px-2 text-center ">
           {caption}
         </div>
       </div>

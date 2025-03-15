@@ -37,7 +37,7 @@ export function TextWithImageItem({
     >
       {image && (
         <MediaImage
-          className="aspect-[9/10] rounded-md object-cover shadow-lg"
+          className="aspect-9/10 rounded-md object-cover shadow-lg"
           media={image}
           layout="responsive"
           transformation={{

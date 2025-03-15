@@ -48,7 +48,7 @@ export function StoryBlock({
       {image && (
         <div
           className={cn(
-            "mt-32 aspect-[3/4] overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
+            "mt-32 aspect-3/4 overflow-hidden sm:mx-auto sm:max-w-xs sm:rounded-md sm:shadow-lg lg:mt-0 lg:max-w-none",
             {
               "sm:-rotate-6 lg:-ml-10 lg:mr-12": imagePosition === "left",
               "sm:rotate-6 lg:-mr-10 lg:ml-12": imagePosition === "right",

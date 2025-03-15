@@ -22,7 +22,7 @@ export function AccommodationSelectorBlock({
 }: AccommodationSelectorBlockProps) {
   return (
     <div className="relative">
-      <div className="absolute inset-0 -z-10 h-[23rem] bg-gradient-to-br from-puerta-700 to-puerta-600"></div>
+      <div className="absolute inset-0 -z-10 h-[23rem] bg-linear-to-br from-puerta-700 to-puerta-600"></div>
       <div className="pb-12 pt-8 md:pb-20 md:pt-16">
         <div className="lg-px-0 mx-auto max-w-4xl px-8">
           <Heading
@@ -83,7 +83,7 @@ function AccommodationCard({
 
   return getComponent(
     <>
-      <div className="relative aspect-[1/1] overflow-hidden bg-white sm:aspect-[4/3] md:aspect-[1/1] lg:aspect-[4/3] xl:aspect-[16/9]">
+      <div className="relative aspect-1/1 overflow-hidden bg-white sm:aspect-4/3 md:aspect-1/1 lg:aspect-4/3 xl:aspect-16/9">
         <MediaImage
           media={image}
           className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:opacity-75"
