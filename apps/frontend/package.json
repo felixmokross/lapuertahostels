@@ -75,7 +75,7 @@
     "vite": "^6.2.2",
     "vite-plugin-turbosnap": "^1.0.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^2.1.9"
+    "vitest": "^3.0.8"
   },
   "engines": {
     "node": "22"
