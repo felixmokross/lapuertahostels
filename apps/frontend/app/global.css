@@ -94,12 +94,10 @@
   --color-accent-negative-900: #7f1d1d;
   --color-accent-negative-950: #450a0a;
 
-  --font-sans:
-    Lato, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+  --font-sans: Lato, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif:
-    Playfair Display, ui-serif, Georgia, Cambria, "Times New Roman", Times,
-    serif;
+  --font-serif: Playfair Display, ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
 
   --font-weight-inherit: inherit;
 }

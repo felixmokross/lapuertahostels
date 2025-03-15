@@ -7,5 +7,6 @@ node_modules
 /apps/frontend/build
 /apps/frontend/storybook-static
 /apps/frontend/.react-router
+/apps/frontend/docs
 
 /apps/cms/.next
