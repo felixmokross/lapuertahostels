@@ -90,9 +90,6 @@ importers:
       eslint-config-next:
         specifier: ^15.2.2
         version: 15.2.2(eslint@8.57.1)(typescript@5.6.3)
-      postcss:
-        specifier: ^8.5.3
-        version: 8.5.3
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -129,6 +126,9 @@ importers:
       '@react-router/serve':
         specifier: ^7.3.0
         version: 7.3.0(react-router@7.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)
+      '@tailwindcss/vite':
+        specifier: ^4.0.14
+        version: 4.0.14(vite@6.2.2(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(tsx@4.19.2)(yaml@2.7.0))
       '@vis.gl/react-google-maps':
         specifier: ^1.5.2
         version: 1.5.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2707,6 +2707,11 @@ packages:
     resolution: {integrity: sha512-0wDLwCVF5V3x3b1SGXPCDcdsbDHMBe+lkFzBRaHeLvNi+nrrnZ1lA18u+OTWO8iSWU2GxUOCvlXtDuqftc1oiA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1'
+
+  '@tailwindcss/vite@4.0.14':
+    resolution: {integrity: sha512-y69ztPTRFy+13EPS/7dEFVl7q2Goh1pQueVO8IfGeyqSpcx/joNJXFk0lLhMgUbF0VFJotwRSb9ZY7Xoq3r26Q==}
+    peerDependencies:
+      vite: ^5.2.0 || ^6
 
   '@tanstack/react-virtual@3.13.4':
     resolution: {integrity: sha512-jPWC3BXvVLHsMX67NEHpJaZ+/FySoNxFfBEiF4GBc1+/nVwdRm+UcSCYnKP3pXQr0eEsDpXi/PQZhNfJNopH0g==}
@@ -9820,6 +9825,14 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.17
+
+  '@tailwindcss/vite@4.0.14(vite@6.2.2(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(tsx@4.19.2)(yaml@2.7.0))':
+    dependencies:
+      '@tailwindcss/node': 4.0.14
+      '@tailwindcss/oxide': 4.0.14
+      lightningcss: 1.29.2
+      tailwindcss: 4.0.14
+      vite: 6.2.2(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(tsx@4.19.2)(yaml@2.7.0)
 
   '@tanstack/react-virtual@3.13.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
