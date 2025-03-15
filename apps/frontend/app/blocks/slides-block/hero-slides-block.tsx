@@ -48,7 +48,7 @@ export function HeroSlidesBlock({
   return (
     <div
       {...swipeHandlers}
-      className="relative h-[30rem] bg-puerta-100 focus:outline-hidden md:h-[40rem]"
+      className="bg-puerta-100 relative h-[30rem] focus:outline-hidden md:h-[40rem]"
       onKeyDown={(e) => {
         if (e.key === "ArrowLeft") goToPrevious();
         if (e.key === "ArrowRight") goToNext();

@@ -189,7 +189,7 @@ export function ImageViewerPanel({
             src={images[currentImageIndex].src}
             alt={images[currentImageIndex].alt}
             className={cn(
-              "max-w-screen max-h-screen",
+              "max-h-screen max-w-screen",
               !isFullscreen && "py-12",
             )}
             transformation={{
@@ -207,7 +207,7 @@ export function ImageViewerPanel({
             {...swipeHandlers}
           />
           {showImageLoadingIndicator && (
-            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <SpinnerIcon className="size-10 text-neutral-300" />
             </div>
           )}

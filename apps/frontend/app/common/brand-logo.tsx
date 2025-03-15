@@ -21,7 +21,7 @@ export function BrandLogo({
   return (
     <span
       className={cn(
-        "flex items-center text-nowrap font-serif uppercase",
+        "flex items-center font-serif text-nowrap uppercase",
         theme.logoTextColor,
         {
           "gap-2 text-base tracking-wider": size === "small",

@@ -23,7 +23,7 @@ export function ImageWithFloatingTextBlock({
   const theme = useTheme();
   return (
     <div
-      className="relative mx-auto mb-20 mt-14 lg:mb-48 lg:mt-32 lg:max-w-4xl"
+      className="relative mx-auto mt-14 mb-20 lg:mt-32 lg:mb-48 lg:max-w-4xl"
       id={elementId || undefined}
     >
       <div className="relative aspect-1/1 overflow-hidden shadow-md sm:aspect-4/3 lg:aspect-16/9 lg:rounded-lg">
@@ -79,8 +79,7 @@ export function ImageWithFloatingTextBlock({
           className={cn(
             "px-8 py-6 md:mx-auto md:max-w-lg md:-translate-y-32 md:rounded-md md:px-6 md:py-4 md:shadow-lg lg:mx-0 lg:translate-y-20",
             {
-              "bg-linear-to-bl lg:translate-x-12":
-                textPosition === "top-left",
+              "bg-linear-to-bl lg:translate-x-12": textPosition === "top-left",
               "bg-linear-to-br lg:-translate-x-12":
                 textPosition === "top-right",
             },

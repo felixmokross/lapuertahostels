@@ -56,7 +56,7 @@ export function Navbar({
       <Menu
         as="nav"
         className={cn(
-          "sticky inset-0 z-40 bg-white ",
+          "sticky inset-0 z-40 bg-white",
           isScrolled
             ? cn(
                 "shadow-md transition-transform duration-500 ease-in-out",
@@ -76,7 +76,7 @@ export function Navbar({
                 brand={brand}
                 allBrands={allBrands}
               />
-              <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-nowrap text-sm font-bold text-neutral-500 xl:block">
+              <div className="z-50 hidden max-w-[40rem] space-x-12 justify-self-center overflow-hidden text-sm font-bold text-nowrap text-neutral-500 xl:block">
                 {navLinks?.map((navLink) => {
                   return (
                     <NavLink key={navLink.id} link={navLink.link}>
@@ -101,7 +101,7 @@ export function Navbar({
                   ) : null}
                 </div>
                 <div className="-mr-2 flex items-center xl:hidden">
-                  <MenuButton className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-neutral-500">
+                  <MenuButton className="relative inline-flex items-center justify-center rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-500 focus:ring-2 focus:ring-neutral-500 focus:outline-hidden focus:ring-inset">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -115,26 +115,26 @@ export function Navbar({
             </div>
 
             <MenuItems className="absolute z-10 w-full bg-white shadow-md xl:hidden">
-              <div className="space-y-1 pb-3 pt-2">
+              <div className="space-y-1 pt-2 pb-3">
                 {navLinks?.map((navLink) => {
                   return (
                     <MenuItem
                       key={navLink.id}
                       as={PageLink}
                       link={navLink.link}
-                      className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
+                      className="block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                     >
                       {gracefully(navLink.label, "text")}
                     </MenuItem>
                   );
                 })}
               </div>
-              <div className="border-t border-neutral-200 pb-3 pt-4 sm:hidden">
+              <div className="border-t border-neutral-200 pt-4 pb-3 sm:hidden">
                 <div className="space-y-1">
                   <MenuItem
                     as="button"
                     onClick={() => setLocaleSwitcherOpen(true)}
-                    className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
+                    className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                   >
                     <LanguageIcon className="h-5" />
                     {getLocaleLabel(i18n.language)}
@@ -155,7 +155,7 @@ export function Navbar({
         <BookButton
           cta={brand.bookCta}
           size="floating-action-button"
-          className="fixed bottom-6 right-6 z-50 sm:hidden"
+          className="fixed right-6 bottom-6 z-50 sm:hidden"
         />
       ) : null}
     </>

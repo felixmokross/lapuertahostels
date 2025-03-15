@@ -43,11 +43,11 @@ export function OverlayTitle({
       />
       <div
         className={cn("absolute max-w-xl", {
-          "left-8 top-8": position === "top-left",
-          "right-8 top-8 text-right": position === "top-right",
+          "top-8 left-8": position === "top-left",
+          "top-8 right-8 text-right": position === "top-right",
           "bottom-8 left-8": position === "bottom-left",
-          "bottom-8 right-8 text-right": position === "bottom-right",
-          "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
+          "right-8 bottom-8 text-right": position === "bottom-right",
+          "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center":
             position === "center",
         })}
         onMouseEnter={onMouseEnter}

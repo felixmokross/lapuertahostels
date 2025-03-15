@@ -38,15 +38,15 @@ export function Heading({
                 "text-inherit": variant === "inherit",
               },
           {
-            "font-sans text-sm font-bold uppercase leading-relaxed tracking-wider":
+            "font-sans text-sm leading-relaxed font-bold tracking-wider uppercase":
               size === "extra-small",
-            "font-sans text-sm font-bold uppercase leading-relaxed tracking-wider md:text-xl md:font-normal md:leading-relaxed md:tracking-normal":
+            "font-sans text-sm leading-relaxed font-bold tracking-wider uppercase md:text-xl md:leading-relaxed md:font-normal md:tracking-normal":
               size === "small",
             "font-serif text-3xl leading-relaxed tracking-tight md:text-4xl md:leading-relaxed":
               size === "medium",
             "font-serif text-4xl leading-relaxed tracking-tight md:text-5xl md:leading-relaxed":
               size === "large",
-            "font-serif text-5xl leading-relaxed tracking-tight md:text-6xl md:font-light md:leading-relaxed":
+            "font-serif text-5xl leading-relaxed tracking-tight md:text-6xl md:leading-relaxed md:font-light":
               size === "extra-large",
           },
           className,

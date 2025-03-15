@@ -33,7 +33,7 @@ export function MobileLocaleSwitcher({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-neutral-500 bg-opacity-75 transition-opacity" />
+          <div className="bg-opacity-75 fixed inset-0 bg-neutral-500 transition-opacity" />
         </TransitionChild>
 
         <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
@@ -46,7 +46,7 @@ export function MobileLocaleSwitcher({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pb-4 pt-5 text-left shadow-xl transition-all sm:my-8">
+              <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pt-5 pb-4 text-left shadow-xl transition-all sm:my-8">
                 {i18nConfig.supportedLngs.map((locale) => (
                   <form
                     key={locale}
@@ -59,7 +59,7 @@ export function MobileLocaleSwitcher({
                     <button
                       type="submit"
                       className={cn(
-                        "flex w-full items-center gap-1.5 border-l-4 py-2 pl-6 pr-8 text-base font-bold",
+                        "flex w-full items-center gap-1.5 border-l-4 py-2 pr-8 pl-6 text-base font-bold",
                         currentLocale !== locale
                           ? "border-transparent text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                           : theme.navButtonClassName,

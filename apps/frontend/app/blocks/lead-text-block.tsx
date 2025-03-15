@@ -19,7 +19,7 @@ export function LeadTextBlock({
   return (
     <div
       id={elementId || undefined}
-      className="mx-auto mb-14 mt-12 flex max-w-4xl flex-col px-8 md:mb-36 md:mt-24 lg:px-0"
+      className="mx-auto mt-12 mb-14 flex max-w-4xl flex-col px-8 md:mt-24 md:mb-36 lg:px-0"
     >
       {heading && (
         <Heading as="h3" size="medium">

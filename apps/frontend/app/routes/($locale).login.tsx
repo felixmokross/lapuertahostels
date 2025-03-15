@@ -105,7 +105,7 @@ export default function Route() {
         name="password"
       />
       {actionData && (
-        <p className="text-sm text-accent-negative-800">
+        <p className="text-accent-negative-800 text-sm">
           {actionData.errorMessage}
         </p>
       )}

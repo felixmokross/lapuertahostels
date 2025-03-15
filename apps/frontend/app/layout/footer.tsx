@@ -42,7 +42,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
       <h2 id="footer-heading" className="sr-only">
         {t("footer.heading")}
       </h2>
-      <div className="mx-auto max-w-5xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+      <div className="mx-auto max-w-5xl px-6 pt-16 pb-8 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <h3 className="mt-2">
@@ -88,7 +88,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
 
               return (
                 <div key={linkGroup.id}>
-                  <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+                  <h3 className="text-sm leading-6 font-semibold text-neutral-900">
                     {linkGroup.title.text}
                   </h3>
                   <ul className="mt-6 space-y-4">
@@ -121,7 +121,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         {content.newsletter && content.newsletter.show && (
           <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
             <div>
-              <h3 className="text-sm font-semibold leading-6 text-neutral-900">
+              <h3 className="text-sm leading-6 font-semibold text-neutral-900">
                 {gracefully(content.newsletter.title, "text")}
               </h3>
               <p className="mt-2 text-sm leading-6 text-neutral-600">
@@ -147,7 +147,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                   )?.text ?? ""
                 }
               />
-              <div className="mt-4 sm:ml-4 sm:mt-0 sm:shrink-0">
+              <div className="mt-4 sm:mt-0 sm:ml-4 sm:shrink-0">
                 <Button
                   size="small"
                   type="submit"
