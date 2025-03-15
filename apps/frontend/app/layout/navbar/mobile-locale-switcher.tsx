@@ -33,7 +33,7 @@ export function MobileLocaleSwitcher({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="bg-opacity-75 fixed inset-0 bg-neutral-500 transition-opacity" />
+          <div className="fixed inset-0 bg-neutral-500/75 transition-opacity" />
         </TransitionChild>
 
         <div className="fixed inset-0 z-50 w-screen overflow-y-auto">

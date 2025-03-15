@@ -38,7 +38,7 @@ export function Dropdown({
       >
         <MenuItems
           className={cn(
-            "ring-opacity-5 absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-hidden",
+            "absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden",
             {
               "left-0 origin-top-left": menuPosition === "left",
               "right-0 origin-top-right": menuPosition === "right",
