@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { BrandId } from "./brands";
 
 export type Theme = {
+  loadingBarColor: string;
   logoTextColor: string;
   headingTextColor: string;
   whiteHighlightTextColor: string;
@@ -64,6 +65,7 @@ export function useTheme() {
 
 export const themesByBrand: Record<BrandId, Theme> = {
   puerta: {
+    loadingBarColor: "bg-puerta-500",
     logoTextColor: "text-neutral-900",
     headingTextColor: "text-puerta-600",
     whiteHighlightTextColor: "text-puerta-200",
@@ -98,6 +100,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
     },
   },
   aqua: {
+    loadingBarColor: "bg-aqua-400",
     logoTextColor: "text-aqua-600",
     headingTextColor: "text-aqua-600",
     whiteHighlightTextColor: "text-aqua-200",
@@ -132,6 +135,7 @@ export const themesByBrand: Record<BrandId, Theme> = {
     },
   },
   azul: {
+    loadingBarColor: "bg-azul-800",
     logoTextColor: "text-azul-900",
     headingTextColor: "text-azul-900",
     whiteHighlightTextColor: "text-azul-200",
