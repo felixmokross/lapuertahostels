@@ -16,7 +16,7 @@ export function LoadingBar() {
       {isDelayedNavigating && (
         <motion.div
           className={cn(
-            "fixed top-0 right-0 left-0 z-50 h-0.5 animate-pulse rounded-r-full",
+            "fixed top-0 right-0 left-0 z-50 h-[3px] animate-pulse rounded-r-full",
             theme.loadingBarColor,
           )}
           initial={{ width: "0%" }}
