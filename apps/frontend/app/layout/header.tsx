@@ -2,6 +2,7 @@ import { Brand } from "@lapuertahostels/shared";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
 import { isObject } from "~/common/utils";
+import { LoadingBar } from "./loading-bar";
 
 type HeaderProps = {
   hasSession?: boolean;
@@ -20,6 +21,7 @@ export function Header({ brand, allBrands, onHeightChanged }: HeaderProps) {
         allBrands={allBrands}
         onHeightChanged={onHeightChanged}
       />
+      <LoadingBar />
     </header>
   );
 }
