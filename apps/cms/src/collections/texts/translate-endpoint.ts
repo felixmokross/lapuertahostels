@@ -9,7 +9,7 @@ import {
   richTextToFullText,
   richTextToHtml,
 } from "./utils";
-import { addLocalesToRequestFromData } from "@payloadcms/next/utilities";
+import { addLocalesToRequestFromData } from "payload";
 
 export const translateEndpoint: Endpoint = {
   path: "/:id/translate",
