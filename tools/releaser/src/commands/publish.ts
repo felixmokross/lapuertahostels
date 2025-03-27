@@ -22,7 +22,7 @@ program
     console.log(`Creating release…`);
     const createReleaseResponse = await octokit.repos.createRelease({
       owner: "felixmokross",
-      repo: "website",
+      repo: "lapuertahostels",
       tag_name: newVersionTag,
       name: newVersionTag,
       body: await getReleaseNotes(lastVersionTag, config),
