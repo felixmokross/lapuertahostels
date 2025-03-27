@@ -1,10 +1,5 @@
 name: "Setup"
-description:
-  Sets up PNPM, Node.js, and installs dependencies for the specified project
-inputs:
-  project:
-    required: true
-    description: The project in which to install dependencies
+description: Sets up PNPM and Node.js
 runs:
   using: "composite"
   steps:
@@ -16,6 +11,3 @@ runs:
         node-version: ${{ env.NODE_VERSION }}
         cache: "pnpm"
         cache-dependency-path: pnpm-lock.yaml
-    - name: Install dependencies
-      run: pnpm --filter ${{ inputs.project }} install
-      shell: bash

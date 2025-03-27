@@ -1,6 +1,6 @@
 import { Endpoint } from "payload";
 import { DEFAULT_LOCALE, generateAltText } from "@/common/openai";
-import { addLocalesToRequestFromData } from "@payloadcms/next/utilities";
+import { addLocalesToRequestFromData } from "payload";
 import { getSupportedLocaleCodes } from "@/common/locales";
 import { translate } from "@/common/translation";
 import { transformRecord } from "@/common/records";
