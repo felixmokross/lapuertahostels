@@ -1,5 +1,3 @@
-import { Page } from "./payload-types";
-
 export const IS_BOLD = 1;
 export const IS_ITALIC = 1 << 1;
 export const IS_STRIKETHROUGH = 1 << 2;
@@ -53,7 +51,7 @@ export type LinkElementNode = BaseElementNode & {
         linkType: "internal";
         doc: {
           relationTo: "pages";
-          value: Page;
+          value: { pathname: string };
         };
       };
 };

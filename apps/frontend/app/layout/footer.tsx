@@ -1,6 +1,6 @@
 import { Button } from "../common/button";
 import { BrandLogo } from "../common/brand-logo";
-import { Brand, Common, RichTextObject, Text } from "@lapuertahostels/shared";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { useTranslation } from "react-i18next";
 import { socials } from "~/common/socials";
 import { useTheme } from "~/themes";
@@ -9,6 +9,7 @@ import { Input } from "~/common/input";
 import { ReactNode } from "react";
 import { gracefully } from "~/common/utils";
 import { RichText } from "~/common/rich-text";
+import { Brand, Common, Text } from "@lapuertahostels/payload-types";
 
 type FooterProps = {
   content: Common["footer"];

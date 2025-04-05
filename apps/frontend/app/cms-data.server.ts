@@ -1,5 +1,10 @@
 import fs from "fs/promises";
-import { Brand, Common, Maintenance, Page } from "@lapuertahostels/shared";
+import {
+  Brand,
+  Common,
+  Maintenance,
+  Page,
+} from "@lapuertahostels/payload-types";
 import path from "path";
 import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
 

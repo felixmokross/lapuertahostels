@@ -1,10 +1,11 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
-import { Page, RichTextObject } from "@lapuertahostels/shared";
+import { Page } from "@lapuertahostels/payload-types";
 import { cn } from "~/common/cn";
 import { PageLink } from "~/common/page-link";
 import { gracefully } from "~/common/utils";
+import { RichTextObject } from "@lapuertahostels/shared";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "LeadText";

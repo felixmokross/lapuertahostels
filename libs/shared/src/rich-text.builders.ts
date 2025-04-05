@@ -1,5 +1,4 @@
 import {
-  Page,
   TextNode,
   ElementNode,
   Node,
@@ -129,7 +128,7 @@ export function internalLink(
       linkType: "internal",
       doc: {
         relationTo: "pages",
-        value: { pathname } as Page,
+        value: { pathname },
       },
     },
     children,

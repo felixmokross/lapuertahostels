@@ -7,9 +7,6 @@
     ".": "./src/index.ts"
   },
   "types": "./src/index.ts",
-  "scripts": {
-    "pull-payload-types": "cd ../../apps/cms && pnpm generate:types && cp ./src/payload-types.ts ../../libs/shared/src/payload-types.ts"
-  },
   "devDependencies": {
     "typescript": "^5.8.2"
   },

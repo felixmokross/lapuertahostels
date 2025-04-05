@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { BrandLogo } from "~/common/brand-logo";
 import { cn } from "~/common/cn";
 import { PageLink } from "~/common/page-link";
-import { Brand } from "@lapuertahostels/shared";
+import { Brand } from "@lapuertahostels/payload-types";
 
 export type NavbarBrandLogoProps = {
   brand: Brand;

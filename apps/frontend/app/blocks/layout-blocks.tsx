@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "@lapuertahostels/payload-types";
 import { AccommodationSelectorBlock } from "./accommodation-selector-block";
 import { ImageWithFloatingTextBlock } from "./image-with-floating-text-block";
 import { LeadTextBlock } from "./lead-text-block";

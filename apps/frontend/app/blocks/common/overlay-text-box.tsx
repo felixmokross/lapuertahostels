@@ -4,7 +4,8 @@ import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { gracefully } from "~/common/utils";
-import { RichTextObject, Text } from "@lapuertahostels/shared";
+import { RichTextObject } from "@lapuertahostels/shared";
+import { Text } from "@lapuertahostels/payload-types";
 
 type OverlayTextBoxProps<TCta extends ElementType = ElementType> = {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | null;

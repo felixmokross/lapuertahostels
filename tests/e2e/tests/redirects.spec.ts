@@ -1,5 +1,5 @@
 import test, { expect } from "@playwright/test";
-import { createPage, createPlainText } from "../common/cms";
+import { createPage } from "../common/cms";
 
 test("redirects to fallback locale", async ({ page, baseURL }) => {
   const testPage = await createPage();

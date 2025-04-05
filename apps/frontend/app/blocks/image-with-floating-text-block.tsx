@@ -1,10 +1,11 @@
 import { RichTextParagraph } from "~/common/paragraph";
 import { cn } from "../common/cn";
-import { RichTextObject, Page } from "@lapuertahostels/shared";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { useTheme } from "~/themes";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
 import { gracefully } from "~/common/utils";
+import { Page } from "@lapuertahostels/payload-types";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
   Page["layout"]

@@ -1,5 +1,4 @@
 import { getMaintenance, loadData } from "~/cms-data.server";
-import { Page } from "@lapuertahostels/shared";
 import i18n from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
@@ -7,6 +6,7 @@ import {
 } from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
+import { Page } from "@lapuertahostels/payload-types";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const maintenance = await getMaintenance(i18n.fallbackLng);

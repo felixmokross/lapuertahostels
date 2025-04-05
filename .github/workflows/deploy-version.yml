@@ -1,0 +1,99 @@
+name: Deploy version
+on:
+  workflow_call:
+    inputs:
+      version_with_sha:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
+
+env:
+  FLYCTL_VERSION: 0.3.55
+  FRONTEND_INTERNAL_PORT: 3000
+
+jobs:
+  frontend-deploy:
+    name: "Frontend: Deploy"
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}-frontend
+      url: https://${{ vars.CANONICAL_HOSTNAME }}/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: ${{ env.FLYCTL_VERSION }}
+      - name: Prepare configuration file
+        run: |
+          envsubst \
+            < apps/frontend/fly.template.toml \
+            > apps/frontend/fly.generated.toml \
+
+          echo "Generated configuration file:"
+          cat apps/frontend/fly.generated.toml
+        env:
+          FLY_APP: ${{ vars.FLY_APP }}
+          FLY_PRIMARY_REGION: ${{ vars.FLY_PRIMARY_REGION }}
+          FLY_MIN_MACHINES_RUNNING: ${{ vars.FLY_MIN_MACHINES_RUNNING }}
+          FLY_MEMORY: ${{ vars.FLY_MEMORY }}
+          FLY_CPU_KIND: ${{ vars.FLY_CPU_KIND }}
+          FLY_CPUS: ${{ vars.FLY_CPUS }}
+          CANONICAL_HOSTNAME: ${{ vars.CANONICAL_HOSTNAME }}
+          PAYLOAD_CMS_BASE_URL: ${{ vars.PAYLOAD_CMS_BASE_URL }}
+          IMAGEKIT_BASE_URL: ${{ vars.IMAGEKIT_BASE_URL }}
+          ANALYTICS_DOMAIN: ${{ vars.ANALYTICS_DOMAIN }}
+      - name: Deploy frontend
+        run: |
+          flyctl deploy \
+          --config apps/frontend/fly.generated.toml \
+          --image registry.fly.io/${{ vars.FLY_STAGING_FRONTEND_APP }}:v${{ inputs.version_with_sha }} \
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  cms-deploy:
+    name: "CMS: Deploy"
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    environment:
+      name: ${{ inputs.environment }}-cms
+      url: https://${{ vars.CANONICAL_HOSTNAME }}/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: ${{ env.FLYCTL_VERSION }}
+      - name: Prepare configuration file
+        run: |
+          envsubst \
+            < apps/cms/fly.template.toml \
+            > apps/cms/fly.generated.toml \
+            
+          echo "Generated configuration file:"
+          cat apps/cms/fly.generated.toml
+        env:
+          FLY_APP: ${{ vars.FLY_APP }}
+          FLY_PRIMARY_REGION: ${{ vars.FLY_PRIMARY_REGION }}
+          FLY_MIN_MACHINES_RUNNING: ${{ vars.FLY_MIN_MACHINES_RUNNING }}
+          FLY_MEMORY: ${{ vars.FLY_MEMORY }}
+          FLY_CPU_KIND: ${{ vars.FLY_CPU_KIND }}
+          FLY_CPUS: ${{ vars.FLY_CPUS }}
+          MEDIA_S3_REGION: ${{ vars.MEDIA_S3_REGION }}
+          MEDIA_S3_BUCKET: ${{ vars.MEDIA_S3_BUCKET }}
+          CACHE_REFRESH_TARGET_TYPE: fly
+          CACHE_REFRESH_TARGET_ARG:
+            "${{ vars.FRONTEND_FLY_APP }},${{ env.FRONTEND_INTERNAL_PORT }}"
+          FRONTEND_BASE_URL: ${{ vars.FRONTEND_BASE_URL }}
+          IMAGEKIT_BASE_URL: ${{ vars.IMAGEKIT_BASE_URL }}
+      - name: Deploy CMS
+        run: |
+          flyctl deploy \
+            --config apps/cms/fly.generated.toml \
+            --image registry.fly.io/${{ vars.FLY_STAGING_CMS_APP }}:v${{ inputs.version_with_sha }} \
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
