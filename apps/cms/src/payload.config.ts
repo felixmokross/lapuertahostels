@@ -22,6 +22,7 @@ import { Banners } from "./collections/banners";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
+import { ApiKeys } from "./collections/api-keys/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -84,6 +85,7 @@ export default buildConfig({
   editor: lexicalEditor({}),
   collections: [
     Users,
+    ApiKeys,
     Brands,
     Pages,
     Media,

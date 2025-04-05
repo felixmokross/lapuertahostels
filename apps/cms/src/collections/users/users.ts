@@ -13,9 +13,7 @@ export const Users: CollectionConfig = {
       es: "Usuarios",
     },
   },
-  auth: {
-    useAPIKey: true,
-  },
+  auth: true,
   defaultSort: "email",
   defaultPopulate: {
     email: true,
@@ -27,9 +25,9 @@ export const Users: CollectionConfig = {
     listSearchableFields: ["id", "email", "role"],
   },
   access: {
-    read: ({ req, id }) => isSelf(req, id!) || isAdmin(req),
+    read: ({ req, id }) => isSelf(req, id!, "users") || isAdmin(req),
     create: ({ req }) => isAdmin(req),
-    update: ({ req, id }) => isSelf(req, id!) || isAdmin(req),
+    update: ({ req, id }) => isSelf(req, id!, "users") || isAdmin(req),
     delete: ({ req }) => isAdmin(req),
     admin: canManageContent,
   },
@@ -42,8 +40,6 @@ export const Users: CollectionConfig = {
       },
       type: "radio",
       options: [
-        { value: "cicd", label: { en: "CI/CD", es: "CI/CD" } },
-        { value: "frontend", label: { en: "Frontend", es: "Frontend" } },
         { value: "editor", label: { en: "Editor", es: "Editor" } },
         { value: "admin", label: { en: "Admin", es: "Administrador" } },
       ],
