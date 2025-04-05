@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "@lapuertahostels/payload-types";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { OverlayTextBox } from "./common/overlay-text-box";

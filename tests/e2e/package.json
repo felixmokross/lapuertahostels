@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@lapuertahostels/shared": "workspace:../../libs/shared",
+    "@lapuertahostels/payload-types": "workspace:../../libs/payload-types",
     "@paralleldrive/cuid2": "^2.2.2",
     "@playwright/test": "^1.50.1",
     "@types/node": "^22.13.1",

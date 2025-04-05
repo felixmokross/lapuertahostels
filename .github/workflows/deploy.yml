@@ -1,0 +1,25 @@
+name: Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        required: true
+        default: "staging"
+        options:
+          - staging
+          - production
+
+jobs:
+  version:
+    name: "Generate version"
+    uses: ./.github/workflows/version.yml
+
+  deploy-version:
+    name: "Deploy version"
+    needs: version
+    uses: ./.github/workflows/deploy-version.yml
+    with:
+      version_with_sha: ${{ needs.version.outputs.version_with_sha }}
+      environment: ${{ inputs.environment }}
+    secrets: inherit

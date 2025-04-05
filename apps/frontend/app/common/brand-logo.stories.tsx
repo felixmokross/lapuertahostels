@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { BrandLogo } from "./brand-logo";
-import { Brand } from "@lapuertahostels/shared";
+import { Brand } from "@lapuertahostels/payload-types";
 import { media } from "./cms-data.builders";
 
 const meta = {

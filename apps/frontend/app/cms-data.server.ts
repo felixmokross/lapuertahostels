@@ -1,5 +1,10 @@
 import fs from "fs/promises";
-import { Brand, Common, Maintenance, Page } from "@lapuertahostels/shared";
+import {
+  Brand,
+  Common,
+  Maintenance,
+  Page,
+} from "@lapuertahostels/payload-types";
 import path from "path";
 import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
 
@@ -120,7 +125,7 @@ export async function loadData(
   console.log(`Loading data from CMS for ${url.toString()} in ${locale}`);
   const response = await fetch(url, {
     headers: {
-      Authorization: `users API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
+      Authorization: `api-keys API-Key ${process.env.PAYLOAD_CMS_API_KEY}`,
     },
   });
 

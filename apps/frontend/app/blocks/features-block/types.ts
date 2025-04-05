@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/shared";
+import { Page } from "@lapuertahostels/payload-types";
 
 export type FeaturesBlock = NonNullable<Page["layout"]>[number] & {
   blockType: "Features";

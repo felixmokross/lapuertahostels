@@ -1,4 +1,4 @@
-import { Brand, Page } from "@lapuertahostels/shared";
+import { Brand, Page } from "@lapuertahostels/payload-types";
 import { gracefully } from "./utils";
 
 export function getPageTitle(page: Page) {

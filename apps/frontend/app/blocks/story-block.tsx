@@ -1,9 +1,10 @@
 import { Heading } from "../common/heading";
 import { cn } from "../common/cn";
-import { RichTextObject, Page } from "@lapuertahostels/shared";
+import { RichTextObject } from "@lapuertahostels/shared";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
 import { gracefully } from "~/common/utils";
+import { Page } from "@lapuertahostels/payload-types";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "Story";

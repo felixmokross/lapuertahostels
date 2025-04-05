@@ -30,7 +30,7 @@ import {
   toRelativeUrl,
   toUrl,
 } from "./common/routing";
-import { Brand } from "@lapuertahostels/shared";
+import { Brand } from "@lapuertahostels/payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
 import { PreviewBar } from "./layout/preview-bar";

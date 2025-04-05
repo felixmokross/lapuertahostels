@@ -14,6 +14,7 @@ ENV NODE_ENV="production"
 
 # Install latest corepack to work around this issue: https://github.com/nodejs/corepack/issues/612
 RUN npm install -g corepack@latest
+
 RUN corepack enable pnpm
 
 # Throw-away build stage to reduce size of final image
@@ -24,16 +25,17 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
 # Install node modules
-COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --link package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY --link apps/frontend/package.json apps/frontend/
 RUN pnpm --filter frontend install --prod=false --frozen-lockfile
 
 # Copy application code
 COPY --link apps/frontend apps/frontend
 COPY --link libs/shared libs/shared
+COPY --link libs/payload-types libs/payload-types
 
 # Build application
-RUN pnpm --dir apps/frontend build
+RUN pnpm --filter frontend build
 
 # Remove development dependencies
 RUN pnpm --dir apps/frontend prune --prod
@@ -47,4 +49,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "pnpm", "--dir", "apps/frontend", "start" ]
+CMD [ "pnpm", "--filter", "frontend", "start" ]

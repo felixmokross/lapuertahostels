@@ -1,5 +1,5 @@
 import { ComponentType, SVGProps } from "react";
-import { Common } from "@lapuertahostels/shared";
+import { Common } from "@lapuertahostels/payload-types";
 
 export const socials = {
   facebook: {
