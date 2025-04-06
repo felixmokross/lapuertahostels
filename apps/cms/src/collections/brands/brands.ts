@@ -44,6 +44,7 @@ export const Brands: CollectionConfig = {
         payload,
       }: {
         collectionConfig?: SanitizedCollectionConfig;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: Record<string, any>;
         locale: Locale;
         payload: Payload;

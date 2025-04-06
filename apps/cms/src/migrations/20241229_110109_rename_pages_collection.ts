@@ -22,7 +22,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       },
       {
         $set: {
-          // @ts-expect-error
+          // @ts-expect-error type not defined in migration
           page: link["newPage"],
         },
         $unset: {
@@ -36,10 +36,6 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   }
 }
 
-export async function down({
-  payload,
-  req,
-  session,
-}: MigrateDownArgs): Promise<void> {
+export async function down(_: MigrateDownArgs): Promise<void> {
   // Migration code
 }

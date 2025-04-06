@@ -42,12 +42,13 @@ function RowLabelWithDefinedText({
   textId,
   fallbackLabel,
 }: RowLabelWithDefinedTextProps) {
-  const [{ data, isError }] = usePayloadAPI(`/api/texts/${textId}`);
+  const [{ data }] = usePayloadAPI(`/api/texts/${textId}`);
   const text = data as Text;
 
   return text?.title ?? fallbackLabel;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getValueByPath(data: Record<string, any>, path: string): any {
   return path.split(".").reduce((acc, key) => acc?.[key], data);
 }

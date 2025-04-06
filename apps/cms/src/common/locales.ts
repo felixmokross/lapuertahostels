@@ -14,7 +14,7 @@ export async function getSupportedLocales() {
     localization.locales
       // locales have a 'toString' function, which prevents us passing this from server components
       .map((l) => {
-        // @ts-expect-error
+        // @ts-expect-error we definitely want to remove toString
         delete l.toString;
         return l;
       })

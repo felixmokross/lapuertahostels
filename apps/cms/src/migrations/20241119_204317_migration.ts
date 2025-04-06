@@ -2,7 +2,7 @@ import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const pages = await payload.db.connection
-    .collection<any>("pages")
+    .collection("pages")
     .find()
     .toArray();
 
@@ -11,7 +11,9 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     const result = await payload.db.connection
       .collection("new-pages")
       .insertOne({
+        // @ts-expect-error type not defined in migration
         pathname: pageIdToUrl(page._id),
+        // @ts-expect-error type not defined in migration
         brand: brandForId(page._id),
         title: page.title,
         hero: page.hero,
@@ -41,7 +43,7 @@ function pageIdToUrl(id: string) {
   return id.replaceAll(":", "/");
 }
 
-export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
+export async function down(_: MigrateDownArgs): Promise<void> {
   // Migration code
 }
 

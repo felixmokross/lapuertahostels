@@ -1,4 +1,4 @@
-import { Media, Text } from "@/payload-types";
+import { Media } from "@/payload-types";
 import { CollectionAfterChangeHook, PayloadRequest } from "payload";
 import { findMediaUsages } from "./usages";
 import { getUniqueCollectionItemIds } from "@/fields/usages";

@@ -1,5 +1,6 @@
 import { text } from "payload/shared";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateUrl(val: string | undefined | null, args: any) {
   if (val && !isValidHttpUrl(val)) {
     return args.t

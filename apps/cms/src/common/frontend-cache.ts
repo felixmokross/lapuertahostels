@@ -135,7 +135,7 @@ async function queryFlyVmUrls(appName: string, port: number) {
     const ipv6s = await resolve6(address);
     const urls = ipv6s.map((ip) => `http://[${ip}]:${port}`);
     return urls;
-  } catch (e) {
+  } catch {
     console.warn(
       `Could not resolve IPs for ${appName}: No IPv6 addresses found for ${address}. The frontend machines may not be running.`,
     );

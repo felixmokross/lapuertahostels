@@ -143,9 +143,9 @@ function DrawerContent({
         <div className="tw-mt-8 tw-space-y-4">
           <p>
             <Translation
-              // @ts-expect-error
+              // @ts-expect-error types don't match
               t={t}
-              // @ts-expect-error
+              // @ts-expect-error types don't match
               i18nKey="custom:texts:selectLocalesDescription"
               variables={{
                 sourceLocale: getLabelText(currentLocale.label, i18n),
@@ -185,9 +185,9 @@ function DrawerContent({
 
         <p className="tw-mt-8">
           <Translation
-            // @ts-expect-error
+            // @ts-expect-error types don't match
             t={t}
-            // @ts-expect-error
+            // @ts-expect-error types don't match
             i18nKey="custom:texts:selectLocalesNote"
             elements={{ s: ({ children }) => <strong>{children}</strong> }}
           />
