@@ -15,7 +15,7 @@ export function Logo() {
 
 export function LogoSmall() {
   return (
-    <img
+    <Image
       src={puertaAdminLogo.src}
       alt="La Puerta Hostels Admin Logo"
       width={15}

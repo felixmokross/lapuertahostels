@@ -1,4 +1,4 @@
-import { Media } from "@lapuertahostels/shared";
+import { Media } from "@lapuertahostels/payload-types";
 import { Image, ImageProps } from "./image";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useLayoutEffect } from "react";

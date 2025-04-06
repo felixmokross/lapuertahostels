@@ -15,7 +15,7 @@ import { HeroHeadingBlock } from "./blocks/hero-heading-block";
 import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
-import { Maintenance, Text } from "@lapuertahostels/shared";
+import { Maintenance, Text } from "@lapuertahostels/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { gracefully } from "./common/utils";
 

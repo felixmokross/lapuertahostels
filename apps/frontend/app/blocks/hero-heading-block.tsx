@@ -1,14 +1,9 @@
-import {
-  Page,
-  Text,
-  paragraph,
-  richTextRoot,
-  text,
-} from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
 import { gracefully } from "~/common/utils";
+import { Page, Text } from "@lapuertahostels/payload-types";
 
 type HeroHeadingBlockProps = Partial<
   NonNullable<Page["hero"]>[number] & {

@@ -3,6 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
+  injectWorkspacePackages: true
 
 importers:
 
@@ -114,6 +115,9 @@ importers:
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
+      '@lapuertahostels/payload-types':
+        specifier: workspace:../../libs/payload-types
+        version: link:../../libs/payload-types
       '@lapuertahostels/shared':
         specifier: workspace:../../libs/shared
         version: link:../../libs/shared
@@ -290,6 +294,12 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(jsdom@26.0.0)(lightningcss@1.29.2)(sass@1.77.4)(tsx@4.19.3)(yaml@2.7.0)
 
+  libs/payload-types:
+    devDependencies:
+      typescript:
+        specifier: ^5.7.3
+        version: 5.8.2
+
   libs/shared:
     devDependencies:
       typescript:
@@ -298,6 +308,9 @@ importers:
 
   tests/e2e:
     devDependencies:
+      '@lapuertahostels/payload-types':
+        specifier: workspace:../../libs/payload-types
+        version: link:../../libs/payload-types
       '@lapuertahostels/shared':
         specifier: workspace:../../libs/shared
         version: link:../../libs/shared

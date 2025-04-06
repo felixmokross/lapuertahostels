@@ -1,4 +1,4 @@
-import { Brand } from "@lapuertahostels/shared";
+import { Brand } from "@lapuertahostels/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
 import { isObject } from "~/common/utils";

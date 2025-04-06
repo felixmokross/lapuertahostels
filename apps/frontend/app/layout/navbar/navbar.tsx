@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
 import { Ref, RefObject, useEffect, useRef, useState } from "react";
-import { Brand } from "@lapuertahostels/shared";
+import { Brand } from "@lapuertahostels/payload-types";
 import { getLocaleLabel } from "~/i18n";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
