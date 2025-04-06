@@ -84,7 +84,7 @@ jobs:
         run: |
           flyctl deploy \
           --config apps/frontend/fly.generated.toml \
-          --ha ${{ inputs.high_availability }} \
+          --ha=${{ inputs.high_availability }} \
           --image registry.fly.io/${{ vars.FLY_STAGING_FRONTEND_APP }}:v${{ inputs.version_with_sha }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -165,7 +165,7 @@ jobs:
         run: |
           flyctl deploy \
             --config apps/cms/fly.generated.toml \
-            --ha ${{ inputs.high_availability }} \
+            --ha=${{ inputs.high_availability }} \
             --image registry.fly.io/${{ vars.FLY_STAGING_CMS_APP }}:v${{ inputs.version_with_sha }} \
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
