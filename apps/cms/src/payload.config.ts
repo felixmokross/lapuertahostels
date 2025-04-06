@@ -176,6 +176,7 @@ export default buildConfig({
             enableAPIKey: true,
             apiKey: process.env.E2E_TESTS_API_KEY,
             name: "e2e-tests",
+            role: "e2e-tests",
           },
         });
       }

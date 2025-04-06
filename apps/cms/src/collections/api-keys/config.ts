@@ -1,4 +1,4 @@
-import { canManageContent, isAdmin, isSelf } from "@/common/access-control";
+import { canManageContent, isAdmin } from "@/common/access-control";
 import { CollectionConfig } from "payload";
 
 export const ApiKeys: CollectionConfig = {
@@ -32,6 +32,26 @@ export const ApiKeys: CollectionConfig = {
       type: "text",
       required: true,
       unique: true,
+    },
+    {
+      name: "role",
+      label: {
+        en: "Role",
+        es: "Rol",
+      },
+      type: "radio",
+      options: [
+        { value: "cicd", label: { en: "CI/CD", es: "CI/CD" } },
+        { value: "frontend", label: { en: "Frontend", es: "Frontend" } },
+        { value: "e2e-tests", label: { en: "E2E Tests", es: "E2E Tests" } },
+      ],
+      defaultValue: "editor",
+      required: true,
+      access: {
+        read: () => true,
+        create: ({ req }) => isAdmin(req),
+        update: ({ req }) => isAdmin(req),
+      },
     },
   ],
 };
