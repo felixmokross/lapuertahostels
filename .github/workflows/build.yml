@@ -351,6 +351,7 @@ jobs:
     with:
       version_with_sha: ${{ needs.version.outputs.version_with_sha }}
       environment: preview
+      high_availability: false
     secrets: inherit
 
   create-release:
