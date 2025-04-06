@@ -88,8 +88,9 @@ jobs:
           CACHE_REFRESH_TARGET_TYPE: fly
           CACHE_REFRESH_TARGET_ARG:
             "${{ vars.FRONTEND_FLY_APP }},${{ env.FRONTEND_INTERNAL_PORT }}"
-          FRONTEND_BASE_URL: ${{ vars.FRONTEND_BASE_URL }}
+          LIVE_PREVIEW_URL: ${{ vars.LIVE_PREVIEW_URL }}
           IMAGEKIT_BASE_URL: ${{ vars.IMAGEKIT_BASE_URL }}
+          SERVER_URL: ${{ vars.SERVER_URL }}
       - name: Deploy CMS
         run: |
           flyctl deploy \
