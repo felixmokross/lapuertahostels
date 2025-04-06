@@ -19,20 +19,10 @@ export const ApiKeys: CollectionConfig = {
     useAPIKey: true,
   },
   admin: {
-    defaultColumns: ["name", "createdAt", "updatedAt"],
-    useAsTitle: "name",
+    defaultColumns: ["name", "role", "remark", "createdAt", "updatedAt"],
+    useAsTitle: "id",
   },
   fields: [
-    {
-      name: "name",
-      label: {
-        en: "Name",
-        es: "Nombre",
-      },
-      type: "text",
-      required: true,
-      unique: true,
-    },
     {
       name: "role",
       label: {
@@ -52,6 +42,14 @@ export const ApiKeys: CollectionConfig = {
         create: ({ req }) => isAdmin(req),
         update: ({ req }) => isAdmin(req),
       },
+    },
+    {
+      name: "remark",
+      label: {
+        en: "Remark",
+        es: "Comentario",
+      },
+      type: "text",
     },
   ],
 };
