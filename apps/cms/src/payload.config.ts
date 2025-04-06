@@ -165,7 +165,7 @@ export default buildConfig({
     if (!!process.env.E2E_TESTS_API_KEY) {
       const e2eTestApiKeys = await payload.find({
         collection: "api-keys",
-        where: { name: { equals: "e2e-tests" } },
+        where: { role: { equals: "e2e-tests" } },
         pagination: false,
       });
 
