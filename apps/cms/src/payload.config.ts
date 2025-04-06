@@ -162,22 +162,20 @@ export default buildConfig({
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [primeFrontendCacheEndpoint],
   async onInit(payload) {
-    if (process.env.ENABLE_E2E_USER === "true") {
-      const users = await payload.find({
-        collection: "users",
-        where: { email: { equals: "e2e@lapuertahostels.co" } },
+    if (!!process.env.E2E_TESTS_API_KEY) {
+      const e2eTestApiKeys = await payload.find({
+        collection: "api-keys",
+        where: { name: { equals: "e2e-tests" } },
         pagination: false,
       });
 
-      if (users.totalDocs === 0) {
+      if (e2eTestApiKeys.totalDocs === 0) {
         await payload.create({
-          collection: "users",
+          collection: "api-keys",
           data: {
-            email: "e2e@lapuertahostels.co",
-            password: "password",
             enableAPIKey: true,
-            apiKey: "apikey",
-            role: "admin",
+            apiKey: process.env.E2E_TESTS_API_KEY,
+            name: "e2e-tests",
           },
         });
       }
