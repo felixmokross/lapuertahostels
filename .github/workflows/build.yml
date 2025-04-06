@@ -375,3 +375,9 @@ jobs:
           pnpm --filter releaser start publish --draft ${{ needs.version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  clean-preview:
+    name: Clean Preview Apps
+    uses: ./.github/workflows/clean-preview.yml
+    secrets: inherit
+    needs: deploy-preview
