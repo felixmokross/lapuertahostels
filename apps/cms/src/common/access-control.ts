@@ -1,11 +1,11 @@
 import { Access, CollectionSlug, PayloadRequest } from "payload";
 
 export function isAdmin(req: PayloadRequest) {
-  return req.user?.role === "admin";
+  return req.user?.collection === "users" && req.user?.role === "admin";
 }
 
 export function isEditor(req: PayloadRequest) {
-  return req.user?.role === "editor";
+  return req.user?.collection === "users" && req.user?.role === "editor";
 }
 
 export function isSelf(
