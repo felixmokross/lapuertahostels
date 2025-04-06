@@ -15,7 +15,6 @@ import Backend from "i18next-http-backend";
 import { getInitialNamespaces } from "remix-i18next/client";
 
 async function hydrate() {
-  // eslint-disable-next-line import/no-named-as-default-member
   await i18next
     .use(initReactI18next) // Tell i18next to use the react-i18next plugin
     .use(LanguageDetector) // Setup a client-side language detector

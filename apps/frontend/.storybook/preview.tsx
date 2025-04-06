@@ -1,7 +1,6 @@
 import type { Decorator, Preview } from "@storybook/react";
 import { createRoutesStub } from "react-router";
 import "../app/global.css";
-import React from "react";
 import i18n from "./i18next";
 import { ThemeProvider } from "../app/themes";
 
@@ -17,19 +16,20 @@ const withReactRouter: Decorator = (Story) => {
   ]);
 
   return (
+    // @ts-expect-error TypeScript requires the 'React' import for JSX to work here for some reason
     <ReactRouterStub
       hydrationData={{
         loaderData: {
           root: {
             environment: {
               version: "0.0.0-storybook",
-              // @ts-ignore
+              // @ts-expect-error env exists
               imagekitBaseUrl: import.meta.env.STORYBOOK_IMAGEKIT_BASE_URL,
               payloadCmsBaseUrl: "http://wwww.example.com",
               useImageCacheBuster:
-                // @ts-ignore
+                // @ts-expect-error env exists
                 import.meta.env.STORYBOOK_USE_IMAGE_CACHE_BUSTER === "true",
-              // @ts-ignore
+              // @ts-expect-error env exists
               googleMapsApiKey: import.meta.env.STORYBOOK_GOOGLE_MAPS_API_KEY,
             },
             common: {
