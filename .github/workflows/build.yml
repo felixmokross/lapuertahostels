@@ -177,20 +177,6 @@ jobs:
           STORYBOOK_GOOGLE_MAPS_API_KEY:
             ${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }}
 
-  # frontend-deploy-preview:
-  #   name: "Frontend: Deploy Preview"
-  #   runs-on: ubuntu-latest
-  #   if: github.event_name == 'pull_request'
-  #   env:
-  #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  #     FLY_ORG: ${{ vars.FLY_ORG }}
-  #   needs: [frontend-build-push, cms-build-push]
-  #   uses: ./.github/workflows/deploy-version.yml
-  #   with:
-  #     version_with_sha: ${{ needs.version.outputs.version_with_sha }}
-  #     environment: preview
-  #   secrets: inherit
-
   cms-lint:
     name: "CMS: Lint"
     runs-on: ubuntu-latest
@@ -256,74 +242,6 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
-  # cms-deploy-preview:
-  #   name: "CMS: Deploy Preview"
-  #   runs-on: ubuntu-latest
-  #   if: github.event_name == 'pull_request'
-  #   env:
-  #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  #     FLY_ORG: ${{ vars.FLY_ORG }}
-  #   needs: cms-build-push
-  #   environment:
-  #     name: preview-cms
-  #     url: ${{ steps.app-name.outputs.app-url }}
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Set up flyctl
-  #       uses: superfly/flyctl-actions/setup-flyctl@master
-  #       with:
-  #         version: ${{ env.FLYCTL_VERSION }}
-  #     - name: Get CMS preview app name
-  #       uses: ./.github/actions/app-name
-  #       id: app-name
-  #       with:
-  #         component: cms
-  #     - name: Get frontend preview app name
-  #       uses: ./.github/actions/app-name
-  #       id: frontend-app-name
-  #       with:
-  #         component: frontend
-  #     - name: Delete CMS preview app if exists
-  #       run: |
-  #         flyctl apps destroy --yes ${{ steps.app-name.outputs.app-name }} || true
-  #     - name: Create CMS preview app
-  #       run: |
-  #         echo Creating app ${{ steps.app-name.outputs.app-name }}:
-  #         flyctl apps create --name ${{ steps.app-name.outputs.app-name }} --org $FLY_ORG
-
-  #         echo Setting secrets:
-  #         flyctl secrets set DATABASE_URI=$PREVIEW_DATABASE_URI \
-  #           PAYLOAD_SECRET=$PREVIEW_PAYLOAD_SECRET \
-  #           MEDIA_S3_ACCESS_KEY_ID=$PREVIEW_MEDIA_S3_ACCESS_KEY_ID \
-  #           MEDIA_S3_SECRET_ACCESS_KEY=$PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY \
-  #           DEEPL_API_AUTH_KEY=$PREVIEW_DEEPL_API_AUTH_KEY \
-  #           OPENAI_API_KEY="$PREVIEW_OPENAI_API_KEY" \
-  #           --app ${{ steps.app-name.outputs.app-name }} --stage
-  #       env:
-  #         PREVIEW_DATABASE_URI: ${{ secrets.PREVIEW_DATABASE_URI }}
-  #         PREVIEW_PAYLOAD_SECRET: ${{ secrets.PREVIEW_PAYLOAD_SECRET }}
-  #         PREVIEW_MEDIA_S3_ACCESS_KEY_ID:
-  #           ${{ secrets.PREVIEW_MEDIA_S3_ACCESS_KEY_ID }}
-  #         PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY:
-  #           ${{ secrets.PREVIEW_MEDIA_S3_SECRET_ACCESS_KEY }}
-  #         PREVIEW_DEEPL_API_AUTH_KEY: ${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }}
-  #         PREVIEW_OPENAI_API_KEY: ${{ secrets.PREVIEW_OPENAI_API_KEY }}
-  #       working-directory: apps/cms
-  #     - name: Deploy CMS preview app
-  #       run: | TODO
-  #         flyctl deploy \
-  #           --app ${{ steps.app-name.outputs.app-name }} \
-  #           --config fly.cms.toml \
-  #           --ha=false \
-  #           --image ${{ needs.cms-build-push.outputs.image }} \
-  #           --env CACHE_REFRESH_TARGET_TYPE=fly \
-  #           --env CACHE_REFRESH_TARGET_ARG=${{ steps.frontend-app-name.outputs.app-name }},${{ env.FRONTEND_INTERNAL_PORT }} \
-  #           --env MEDIA_S3_BUCKET=${{ env.PREVIEW_MEDIA_S3_BUCKET }} \
-  #           --env MEDIA_S3_REGION=${{ env.MEDIA_S3_REGION }} \
-  #           --env IMAGEKIT_BASE_URL=${{ env.PREVIEW_IMAGEKIT_BASE_URL }} \
-  #           --env LIVE_PREVIEW_URL=${{ steps.frontend-app-name.outputs.app-url }} \
-  #           --env SERVER_URL=${{ steps.app-name.outputs.app-url }} \
   e2e-tests:
     name: End-to-End Tests
     timeout-minutes: 60
@@ -415,11 +333,11 @@ jobs:
       - cms-check-format
       - cms-build-push
       - e2e-tests
-    if: github.event_name != 'pull_request'
     uses: ./.github/workflows/deploy-version.yml
     with:
       version_with_sha: ${{ needs.version.outputs.version_with_sha }}
-      environment: staging
+      environment:
+        ${{ github.event_name == 'pull_request' && 'preview' || 'staging' }}
     secrets: inherit
 
   create-release:
