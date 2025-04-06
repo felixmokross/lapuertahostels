@@ -351,6 +351,7 @@ jobs:
         env:
           FRONTEND_IMAGE: ${{ needs.frontend-build-push.outputs.image }}
           CMS_API_KEY: ${{ env.CMS_API_KEY }}
+          SESSION_SECRET: $(openssl rand -hex 12)
           CMS_IMAGE: ${{ needs.cms-build-push.outputs.image }}
           PAYLOAD_SECRET: $(openssl rand -hex 12)
           MEDIA_S3_BUCKET: ${{ vars.E2E_TESTS_MEDIA_S3_BUCKET }}
