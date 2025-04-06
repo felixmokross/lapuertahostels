@@ -25,10 +25,9 @@ services:
       MEDIA_S3_SECRET_ACCESS_KEY: ${MEDIA_S3_SECRET_ACCESS_KEY}
       CACHE_REFRESH_TARGET_TYPE: single
       CACHE_REFRESH_TARGET: http://frontend:3000
-      FRONTEND_BASE_URL: http://frontend:3000
+      LIVE_PREVIEW_URL: http://frontend:3000
       IMAGEKIT_BASE_URL: ${IMAGEKIT_BASE_URL}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
-      PREVIEW_KEY: preview-key
 
   mongo:
     image: mongo:latest
