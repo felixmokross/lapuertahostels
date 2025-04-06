@@ -322,6 +322,7 @@ jobs:
 
   deploy:
     name: Deploy
+    if: github.event_name != 'pull_request'
     needs:
       - version
       - frontend-lint
@@ -336,8 +337,20 @@ jobs:
     uses: ./.github/workflows/deploy-version.yml
     with:
       version_with_sha: ${{ needs.version.outputs.version_with_sha }}
-      environment:
-        ${{ github.event_name == 'pull_request' && 'preview' || 'staging' }}
+      environment: staging
+    secrets: inherit
+
+  deploy-preview:
+    name: Deploy Preview
+    if: github.event_name == 'pull_request'
+    needs:
+      - version
+      - frontend-build-push
+      - cms-build-push
+    uses: ./.github/workflows/deploy-version.yml
+    with:
+      version_with_sha: ${{ needs.version.outputs.version_with_sha }}
+      environment: preview
     secrets: inherit
 
   create-release:

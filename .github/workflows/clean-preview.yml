@@ -24,7 +24,7 @@ jobs:
           flyctl apps list --json --org $FLY_ORG \
             | jq '[map(
               { ID, LastReleasedAt: .CurrentRelease.CreatedAt }
-              | select(.ID | (test("^lapuertahostels-preview-") or test("^lapuertahostels-cms-preview-")))
+              | select(.ID | (test("^${{ vars.FLY_PREVIEW_FRONTEND_APP_PREFIX }}-") or test("^${{ vars.FLY_PREVIEW_CMS_APP_PREFIX }}-")))
               | {
                   ID,
                   LastReleasedDaysAgo: (

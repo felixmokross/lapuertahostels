@@ -49,6 +49,8 @@ jobs:
             SESSION_SECRET=$(openssl rand -hex 12) \
             GOOGLE_MAPS_API_KEY=${{ secrets.PREVIEW_GOOGLE_MAPS_API_KEY }} \
             --app $APP_NAME --stage
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Prepare configuration file
         run: |
           envsubst \
@@ -122,6 +124,8 @@ jobs:
             DEEPL_API_AUTH_KEY=${{ secrets.PREVIEW_DEEPL_API_AUTH_KEY }} \
             OPENAI_API_KEY=${{ secrets.PREVIEW_OPENAI_API_KEY }} \
             --app $APP_NAME --stage
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Prepare configuration file
         run: |
           envsubst \
