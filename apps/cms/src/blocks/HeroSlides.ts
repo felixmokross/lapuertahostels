@@ -2,7 +2,7 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { makeOverlayTitleField } from "../fields/overlay-title";
 import { Block, RelationshipField } from "payload";
-import { headingField, makeHeadingField } from "@/fields/heading";
+import { headingField } from "@/fields/heading";
 import { RowLabelProps } from "@/components/RowLabel";
 
 export const HeroSlidesBlock: Block = {

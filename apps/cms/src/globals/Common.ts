@@ -124,7 +124,7 @@ export const Common: GlobalConfig = {
                     type: { equals: "plainText" },
                   },
                   admin: {
-                    condition: (data: any) => !!data.footer?.newsletter?.show,
+                    condition: (data) => !!data.footer?.newsletter?.show,
                   },
                 },
                 {
@@ -140,7 +140,7 @@ export const Common: GlobalConfig = {
                     type: { equals: "plainText" },
                   },
                   admin: {
-                    condition: (data: any) => !!data?.footer?.newsletter?.show,
+                    condition: (data) => !!data?.footer?.newsletter?.show,
                   },
                 },
                 {

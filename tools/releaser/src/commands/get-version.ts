@@ -19,7 +19,7 @@ program
 
     const lastVersion = lastVersionTag.substring(1);
 
-    let newVersion = lastVersion;
+    let baseVersion = lastVersion;
     if (gitCommits.length > 0) {
       // At least the patch version will increase if there are any new commits
       const bumpType = determineSemverChange(gitCommits, config) ?? "patch";
@@ -28,14 +28,15 @@ program
         throw new Error("New version could not be determined");
       }
 
-      newVersion = bumpedVersion;
+      baseVersion = bumpedVersion;
     }
 
     const sha = execSync(`git rev-parse --short HEAD`).toString().trim();
     const isRelease = commitMessage.includes("!release") || !!options.release;
 
-    let completeNewVersion = newVersion;
+    let version = baseVersion;
 
+    let prereleaseTag = null;
     if (!isRelease) {
       const commitsSinceLastVersion = execSync(
         `git rev-list --count ${lastVersionTag}..HEAD`,
@@ -44,20 +45,25 @@ program
         .trim();
 
       const githubHeadRef = process.env.GITHUB_HEAD_REF;
-      const sanitizedBranchName = (githubHeadRef || branchName)
+      prereleaseTag = (githubHeadRef || branchName)
         .replace("/", "-")
         .replace("_", "-")
         .replace(/[^a-zA-Z0-9.-]/g, "");
 
-      completeNewVersion += `-${sanitizedBranchName}.${commitsSinceLastVersion}`;
+      version += `-${prereleaseTag}.${commitsSinceLastVersion}`;
     }
 
     console.log(
       JSON.stringify(
         {
-          version: completeNewVersion,
-          versionWithSha: `${completeNewVersion}-${sha}`,
-          isNewRelease: isRelease && newVersion !== lastVersion,
+          version: version,
+          versionWithSha: `${version}-${sha}`,
+          isRelease,
+          isNewRelease: isRelease && baseVersion !== lastVersion,
+          baseVersion: baseVersion,
+          prereleaseTag,
+          sha: sha,
+          lastVersion: lastVersion,
         },
         null,
         2,

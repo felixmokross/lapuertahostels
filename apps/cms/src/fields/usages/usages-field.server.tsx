@@ -15,7 +15,7 @@ export async function UsagesField({
   path,
 }: {
   config: UsagesConfig;
-  data: any;
+  data: { id: string };
   payload: Payload;
   i18n: I18nClient<TranslationsObject, TranslationsKey>;
   clientField: UIFieldClient;

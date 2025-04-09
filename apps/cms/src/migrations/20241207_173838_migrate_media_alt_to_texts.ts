@@ -19,7 +19,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     const result = await payload.db.connection.collection("texts").insertOne({
       text: mediaItem.alt,
       title: transformRecord(
-        // @ts-expect-error
+        // @ts-expect-error type not defined in migration
         mediaItem.alt,
         fullTextToTitle,
       ),
@@ -39,6 +39,6 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   }
 }
 
-export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
+export async function down(_: MigrateDownArgs): Promise<void> {
   // Migration code
 }

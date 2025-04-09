@@ -337,6 +337,7 @@ jobs:
     uses: ./.github/workflows/deploy-version.yml
     with:
       version_with_sha: ${{ needs.version.outputs.version_with_sha }}
+      sha: ${{ needs.version.outputs.sha }}
       environment: staging
     secrets: inherit
 
@@ -350,6 +351,7 @@ jobs:
     uses: ./.github/workflows/deploy-version.yml
     with:
       version_with_sha: ${{ needs.version.outputs.version_with_sha }}
+      sha: ${{ needs.version.outputs.sha }}
       environment: preview
       high_availability: false
     secrets: inherit

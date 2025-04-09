@@ -66,8 +66,8 @@ export async function findUsages(
             fieldPath: path,
             title: (
               item as DataFromCollectionSlug<CollectionSlug> &
-                Record<string, any>
-            )[collectionConfig.admin.useAsTitle],
+                Record<string, unknown>
+            )[collectionConfig.admin.useAsTitle] as string,
           })),
         );
       }),
@@ -119,7 +119,8 @@ function findItemUsagesOnCollection(
   fieldType: RelationshipFieldType,
   collectionToFind: CollectionSlug,
   id: string,
-  data: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Record<string, any>,
   fields: Field[],
 ) {
   const usagePaths: string[] = [];

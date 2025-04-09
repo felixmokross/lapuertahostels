@@ -13,7 +13,8 @@ export function makeCallToActionField({
   variant = { default: "secondary" },
 }: CallToActionFieldOptions = {}): GroupField {
   const condition = optional
-    ? (_: any, siblingData: any) => siblingData.show
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (_: any, siblingData: any) => siblingData.show
     : undefined;
   return {
     name: "cta",
