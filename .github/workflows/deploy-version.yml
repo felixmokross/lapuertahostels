@@ -5,6 +5,9 @@ on:
       version_with_sha:
         type: string
         required: true
+      sha:
+        type: string
+        required: true
       environment:
         type: string
         required: true
@@ -36,10 +39,8 @@ jobs:
         if: inputs.environment == 'preview'
         id: create-app
         run: |
-          VERSION_WITH_SHA=${{ inputs.version_with_sha }}
-          VERSION_DOMAIN_SAFE=${VERSION_WITH_SHA//./-}
-          APP_NAME=${{ vars.FLY_PREVIEW_FRONTEND_APP_PREFIX }}-$VERSION_DOMAIN_SAFE
-          CMS_APP_NAME=${{ vars.FLY_PREVIEW_CMS_APP_PREFIX }}-$VERSION_DOMAIN_SAFE
+          APP_NAME=${{ vars.FLY_PREVIEW_FRONTEND_APP_PREFIX }}-${{ inputs.sha }}
+          CMS_APP_NAME=${{ vars.FLY_PREVIEW_CMS_APP_PREFIX }}-${{ inputs.sha }}
 
           echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
           echo "cms_app_name=$CMS_APP_NAME" >> $GITHUB_OUTPUT
@@ -108,10 +109,8 @@ jobs:
         if: inputs.environment == 'preview'
         id: create-app
         run: |
-          VERSION_WITH_SHA=${{ inputs.version_with_sha }}
-          VERSION_DOMAIN_SAFE=${VERSION_WITH_SHA//./-}
-          APP_NAME=${{ vars.FLY_PREVIEW_CMS_APP_PREFIX }}-$VERSION_DOMAIN_SAFE
-          FRONTEND_APP_NAME=${{ vars.FLY_PREVIEW_FRONTEND_APP_PREFIX }}-$VERSION_DOMAIN_SAFE
+          APP_NAME=${{ vars.FLY_PREVIEW_CMS_APP_PREFIX }}-${{ inputs.sha }}
+          FRONTEND_APP_NAME=${{ vars.FLY_PREVIEW_FRONTEND_APP_PREFIX }}-${{ inputs.sha }}
 
           echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
           echo "frontend_app_name=$FRONTEND_APP_NAME" >> $GITHUB_OUTPUT
