@@ -73,7 +73,7 @@ export function GenerateAltTextButton() {
           : t("custom:media:generate:generate")}
       </Button>
       {isModified && (
-        <p className="field-description -tw-mt-4 tw-mb-8">
+        <p className="field-description tw:-mt-4 tw:mb-8">
           {t("custom:media:generate:pleaseSaveYourChangesToGenerateAltText")}
         </p>
       )}

@@ -25,14 +25,14 @@ export async function UsagesField({
   const { t } = i18n;
   return (
     <>
-      <div className="tw-mb-base tw-flex tw-items-center tw-justify-between">
+      <div className="tw:mb-base tw:flex tw:items-center tw:justify-between">
         <FieldLabel
           label={clientField.label}
           localized={clientField.localized}
           path={path}
         />
 
-        <span className="tw-text-theme-elevation-400">
+        <span className="tw:text-theme-elevation-400">
           {t("custom:usages:numberOfUsages", {
             count: value?.length ?? 0,
           })}
@@ -82,8 +82,8 @@ export async function UsagesField({
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="tw-py-base tw-text-center">
-                  <span className="tw-text-theme-elevation-400">
+                <td colSpan={3} className="tw:py-base tw:text-center">
+                  <span className="tw:text-theme-elevation-400">
                     {t("custom:usages:noUsages")}
                   </span>
                 </td>
