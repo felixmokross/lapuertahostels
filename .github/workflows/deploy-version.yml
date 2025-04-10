@@ -150,8 +150,8 @@ jobs:
           CACHE_REFRESH_TARGET_TYPE: fly
           CACHE_REFRESH_TARGET_ARG:
             "${{ inputs.environment == 'preview' &&
-            steps.create-app.outputs.app_name || vars.FRONTEND_FLY_APP }},${{
-            env.FRONTEND_INTERNAL_PORT }}"
+            steps.create-app.outputs.frontend_app_name || vars.FLY_FRONTEND_APP
+            }},${{ env.FRONTEND_INTERNAL_PORT }}"
           LIVE_PREVIEW_URL:
             ${{ inputs.environment == 'preview' && format('https://{0}.fly.dev',
             steps.create-app.outputs.frontend_app_name) || vars.LIVE_PREVIEW_URL
