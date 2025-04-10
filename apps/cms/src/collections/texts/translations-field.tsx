@@ -68,7 +68,7 @@ export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
           {t("custom:texts:translationsButtonLabel")}
         </Button>
         {translationsDisabled && (
-          <p className="field-description -tw-mt-4 tw-mb-8">
+          <p className="field-description tw:-mt-4 tw:mb-8">
             {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
           </p>
         )}
@@ -122,7 +122,7 @@ function DrawerContent({
 
   if (!data) {
     return (
-      <div className="tw-flex tw-h-[calc(100vh-10rem)] tw-items-center tw-justify-center tw-text-2xl tw-text-theme-elevation-600">
+      <div className="tw:flex tw:h-[calc(100vh-10rem)] tw:items-center tw:justify-center tw:text-2xl tw:text-theme-elevation-600">
         {t("custom:common:loading")}
       </div>
     );
@@ -140,7 +140,7 @@ function DrawerContent({
         slug={selectLocalesModalSlug}
         title={t("custom:texts:selectLocales")}
       >
-        <div className="tw-mt-8 tw-space-y-4">
+        <div className="tw:mt-8 tw:space-y-4">
           <p>
             <Translation
               // @ts-expect-error types don't match
@@ -164,7 +164,7 @@ function DrawerContent({
             />
           </p>
         </div>
-        <div className="tw-mt-8 tw-space-y-4">
+        <div className="tw:mt-8 tw:space-y-4">
           {otherLocales.map((locale) => (
             <div key={locale.code}>
               <CheckboxInput
@@ -183,7 +183,7 @@ function DrawerContent({
           ))}
         </div>
 
-        <p className="tw-mt-8">
+        <p className="tw:mt-8">
           <Translation
             // @ts-expect-error types don't match
             t={t}
@@ -192,7 +192,7 @@ function DrawerContent({
             elements={{ s: ({ children }) => <strong>{children}</strong> }}
           />
         </p>
-        <div className="tw-mt-1">
+        <div className="tw:mt-1">
           <Button
             type="submit"
             size="large"
@@ -235,13 +235,13 @@ function DrawerContent({
         </div>
       </Drawer>
       <div className="table">
-        <div className="tw-max-h-[calc(100vh-10rem)] tw-overflow-y-auto">
+        <div className="tw:max-h-[calc(100vh-10rem)] tw:overflow-y-auto">
           <table
-            className="tw-min-w-[unset] tw-table-fixed"
+            className="tw:min-w-[unset] tw:table-fixed"
             cellPadding="0"
             cellSpacing="0"
           >
-            <thead className="tw-bg-theme-bg">
+            <thead className="tw:bg-theme-bg">
               <tr>
                 <TableHeaderFooterCell
                   isHighlighted={true}
@@ -280,7 +280,7 @@ function DrawerContent({
                 ))}
               </tr>
             </tbody>
-            <tfoot className="tw-bg-theme-bg">
+            <tfoot className="tw:bg-theme-bg">
               <tr>
                 <TableHeaderFooterCell
                   isHighlighted={true}
@@ -340,22 +340,22 @@ function TableHeaderFooterCell({
   return (
     <th
       className={cn(
-        "tw-px-12 tw-py-3",
+        "tw:px-12 tw:py-3",
         isHighlighted
-          ? "tw-bg-theme-elevation-50 tw-text-theme-elevation-700"
-          : "tw-bg-theme-bg",
+          ? "tw:bg-theme-elevation-50 tw:text-theme-elevation-700"
+          : "tw:bg-theme-bg",
         (isStickyTop || isStickyLeft || isStickyBottom) &&
           cn(
-            "tw-sticky",
-            isStickyLeft && "tw-left-0",
-            isStickyTop && "tw-top-0 tw-shadow-sm",
-            isStickyBottom && "tw-bottom-0",
+            "tw:sticky",
+            isStickyLeft && "tw:left-0",
+            isStickyTop && "tw:top-0 tw:shadow-sm",
+            isStickyBottom && "tw:bottom-0",
           ),
-        isStickyTop && isStickyLeft && "tw-z-10",
-        isStickyBottom && isStickyLeft && "tw-z-10",
+        isStickyTop && isStickyLeft && "tw:z-10",
+        isStickyBottom && isStickyLeft && "tw:z-10",
       )}
     >
-      <div className="tw-flex tw-gap-4">{children}</div>
+      <div className="tw:flex tw:gap-4">{children}</div>
     </th>
   );
 }
@@ -376,13 +376,13 @@ function TableContentCell({
     <td
       className={cn(
         isWide
-          ? "tw-w-[40rem] tw-min-w-[40rem]"
-          : "tw-w-[24rem] tw-min-w-[24rem]",
-        "tw-p-12",
+          ? "tw:w-[40rem] tw:min-w-[40rem]"
+          : "tw:w-[24rem] tw:min-w-[24rem]",
+        "tw:p-12",
         isHighlighted
-          ? "tw-bg-theme-elevation-100"
-          : "tw-bg-theme-elevation-50",
-        isStickyLeft && "tw-sticky tw-left-0",
+          ? "tw:bg-theme-elevation-100"
+          : "tw:bg-theme-elevation-50",
+        isStickyLeft && "tw:sticky tw:left-0",
       )}
     >
       {children}
@@ -413,7 +413,7 @@ function AllLocalesTextRenderer({
             __html: data.richText_html[localeCode] ?? "",
           }}
           lang={localeCode}
-          className="rich-text-html tw-prose-xl tw-pointer-events-none tw-hyphens-auto tw-font-serif"
+          className="rich-text-html tw:prose-xl tw:pointer-events-none tw:hyphens-auto tw:font-serif"
         />
       )}
     </>

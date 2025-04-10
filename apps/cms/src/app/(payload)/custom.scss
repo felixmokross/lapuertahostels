@@ -1,5 +1,4 @@
-@tailwind components;
-@tailwind utilities;
+@import "./tailwind.css";
 
 .rich-text-html {
   li:has(> ul:first-child),
