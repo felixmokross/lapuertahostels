@@ -21,9 +21,9 @@ on:
       is_new_release:
         value: ${{ jobs.version.outputs.is_new_release }}
         description: "Is this a new release?"
-      base_version:
-        value: ${{ jobs.version.outputs.base_version }}
-        description: "Base version (without prerelease tag if any)"
+      release_version:
+        value: ${{ jobs.version.outputs.release_version }}
+        description: "Release version (without prerelease tag if any)"
       prerelease_tag:
         value: ${{ jobs.version.outputs.prerelease_tag }}
         description: "Prerelease tag"
@@ -43,10 +43,9 @@ jobs:
       version_with_sha: ${{ steps.get-version.outputs.version_with_sha }}
       is_release: ${{ steps.get-version.outputs.is_release }}
       is_new_release: ${{ steps.get-version.outputs.is_new_release }}
-      base_version: ${{ steps.get-version.outputs.base_version }}
+      release_version: ${{ steps.get-version.outputs.release_version }}
       prerelease_tag: ${{ steps.get-version.outputs.prerelease_tag }}
       sha: ${{ steps.get-version.outputs.sha }}
-      last_version: ${{ steps.get-version.outputs.last_version }}
     steps:
       - name: Checkout with full history
         uses: actions/checkout@v4
@@ -67,7 +66,6 @@ jobs:
           echo "version_with_sha=$(echo $RESULT | jq -r '.versionWithSha')" >> "$GITHUB_OUTPUT"
           echo "is_release=$(echo $RESULT | jq -r '.isRelease')" >> "$GITHUB_OUTPUT"
           echo "is_new_release=$(echo $RESULT | jq -r '.isNewRelease')" >> "$GITHUB_OUTPUT"
-          echo "base_version=$(echo $RESULT | jq -r '.baseVersion')" >> "$GITHUB_OUTPUT"
+          echo "release_version=$(echo $RESULT | jq -r '.releaseVersion')" >> "$GITHUB_OUTPUT"
           echo "prerelease_tag=$(echo $RESULT | jq -r '.prereleaseTag // ""')" >> "$GITHUB_OUTPUT"
           echo "sha=$(echo $RESULT | jq -r '.sha')" >> "$GITHUB_OUTPUT"
-          echo "last_version=$(echo $RESULT | jq -r '.lastVersion')" >> "$GITHUB_OUTPUT"
