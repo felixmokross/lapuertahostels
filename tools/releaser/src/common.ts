@@ -2,8 +2,10 @@ import {
   ChangelogConfig,
   generateMarkDown,
   getGitDiff,
+  GitCommit,
   loadChangelogConfig,
   parseCommits,
+  RawGitCommit,
   ResolvedChangelogConfig,
 } from "changelogen";
 import { execSync } from "child_process";
@@ -14,22 +16,29 @@ export async function getConfig(lastVersionTag: string) {
   });
 }
 
-export function getLastVersionTag(): string {
+export function getLastReleaseVersionTag(): string {
   const tag = execSync("git describe --tags --abbrev=0").toString().trim();
   return tag;
 }
 
-export async function getGitCommits(
-  lastVersionTag: string,
+export async function getRawCommits(lastVersionTag: string) {
+  return await getGitDiff(lastVersionTag);
+}
+
+export function filterConventionalCommits(
+  rawCommits: RawGitCommit[],
   config: ChangelogConfig,
 ) {
-  return parseCommits(await getGitDiff(lastVersionTag), config);
+  return parseCommits(rawCommits, config);
 }
 
 export async function getReleaseNotes(
-  lastVersionTag: string,
+  lastReleaseVersionTag: string,
   config: ResolvedChangelogConfig,
 ) {
-  const gitCommits = await getGitCommits(lastVersionTag, config);
-  return await generateMarkDown(gitCommits, config);
+  const conventionalCommits = filterConventionalCommits(
+    await getRawCommits(lastReleaseVersionTag),
+    config,
+  );
+  return await generateMarkDown(conventionalCommits, config);
 }
