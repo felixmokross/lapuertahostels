@@ -25,7 +25,7 @@ export async function TranslationsView({
     <TranslationsViewClient
       documentId={doc.id}
       fieldPaths={localizedTextFieldPaths}
-      locales={locales.map((l) => ({ ...l }))}
+      locales={locales.map((l) => ({ code: l.code, label: l.label }))}
       docWithTranslations={docWithTranslations}
       locale={locale}
     />

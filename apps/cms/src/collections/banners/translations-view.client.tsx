@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Pill, toast, useTranslation } from "@payloadcms/ui";
-import { deepMerge, Locale } from "payload";
+import { Locale } from "payload";
 import { saveTranslations } from "./save-translations";
 import { Banner } from "@/payload-types";
 import { getLabelText } from "@/common/labels";
@@ -11,6 +11,7 @@ import { SparklesIcon } from "@/common/icons";
 import { autoTranslate } from "./auto-translate";
 import { CheckboxInput } from "../texts/translations-field";
 import { TranslationsKey, TranslationsObject } from "@/translations";
+import { deepMerge } from "@/common/records";
 
 export function TranslationsViewClient({
   documentId,
