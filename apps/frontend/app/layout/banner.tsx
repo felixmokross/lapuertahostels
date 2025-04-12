@@ -6,7 +6,7 @@ import { useTheme } from "~/themes";
 import { type Banner } from "@lapuertahostels/payload-types";
 import { PageLink } from "~/common/page-link";
 import { useState } from "react";
-import { gracefully, isObject } from "~/common/utils";
+import { isObject } from "~/common/utils";
 
 export type BannerProps = Partial<Banner>;
 
@@ -28,7 +28,7 @@ export function Banner({ message, cta }: BannerProps) {
       leaveTo="-translate-y-full"
     >
       <div className="leading-6">
-        {gracefully(message, "text")}
+        {message}
         {cta?.show && (
           <>
             {" "}
@@ -38,7 +38,7 @@ export function Banner({ message, cta }: BannerProps) {
                 link={cta.link}
                 className="font-bold text-nowrap after:content-['_→'] hover:underline"
               >
-                {gracefully(cta.label, "text")}
+                {cta.label}
               </PageLink>
             )}
           </>

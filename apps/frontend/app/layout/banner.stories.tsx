@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Banner } from "./banner";
 import { allModes } from ".storybook/modes";
-import { callToAction, plainText } from "~/common/cms-data.builders";
+import { callToAction2 } from "~/common/cms-data.builders";
 
 const meta = {
   title: "layout/Banner",
@@ -30,9 +30,8 @@ export const Default: Story = {
     id: "1",
     createdAt: "2021-09-01T00:00:00Z",
     updatedAt: "2021-09-01T00:00:00Z",
-    name: "Discount before 20 September",
-    message: plainText("Travel before 20 September and get 20% off!"),
-    cta: callToAction("Book Now"),
+    message: "Travel before 20 September and get 20% off!",
+    cta: callToAction2("Book Now"),
   },
 };
 

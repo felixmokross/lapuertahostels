@@ -71,6 +71,16 @@ export function callToAction(
   };
 }
 
+type CallToAction2 = NonNullable<Banner["cta"]>;
+
+export function callToAction2(label: string): CallToAction2 {
+  return {
+    show: true,
+    label,
+    link: externalLink("http://example.com/"),
+  };
+}
+
 type RequiredCallToAction = NonNullable<
   (NonNullable<Page["layout"]>[number] & {
     blockType: "RoomList";
@@ -123,11 +133,8 @@ export function banner(message: string, ctaLabel?: string): Banner {
     id: createId(),
     createdAt: date,
     updatedAt: date,
-    name: "Discount before 20 September",
-    message: plainText(
-      message ?? "Travel before 20 September and get 20% off!",
-    ),
-    cta: callToAction(ctaLabel ?? "Book Now"),
+    message: message ?? "Travel before 20 September and get 20% off!",
+    cta: callToAction2(ctaLabel ?? "Book Now"),
   };
 }
 

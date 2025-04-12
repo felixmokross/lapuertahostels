@@ -1,0 +1,82 @@
+import { GroupField, RadioField } from "payload";
+import { showField } from "./show";
+
+export type CallToAction2FieldOptions = {
+  optional?: boolean;
+  showByDefault?: boolean;
+  variant?: { default: "primary" | "secondary" } | false;
+};
+
+export function makeCallToAction2Field({
+  optional = false,
+  showByDefault = true,
+  variant = { default: "secondary" },
+}: CallToAction2FieldOptions = {}): GroupField {
+  const condition = optional
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (_: any, siblingData: any) => siblingData.show
+    : undefined;
+  return {
+    name: "cta",
+    label: {
+      en: "Call to Action (CTA)",
+      es: "Call to Action (CTA)",
+    },
+    type: "group",
+    fields: [
+      ...(optional ? [{ ...showField, defaultValue: showByDefault }] : []),
+      {
+        name: "label",
+        label: {
+          en: "Label",
+          es: "Etiqueta",
+        },
+        type: "text",
+        localized: true,
+        required: true,
+        admin: { condition },
+      },
+      {
+        name: "link",
+        label: {
+          en: "Link",
+          es: "Enlace",
+        },
+        type: "relationship",
+        relationTo: "links",
+        required: true,
+        admin: { condition },
+      },
+      ...(variant
+        ? [
+            {
+              name: "variant",
+              type: "radio",
+              label: {
+                en: "Variant",
+                es: "Variante",
+              },
+              options: [
+                {
+                  label: {
+                    en: "Primary",
+                    es: "Primario",
+                  },
+                  value: "primary",
+                },
+                {
+                  label: {
+                    en: "Secondary",
+                    es: "Secundario",
+                  },
+                  value: "secondary",
+                },
+              ],
+              defaultValue: variant.default,
+              admin: { condition },
+            } as RadioField,
+          ]
+        : []),
+    ],
+  };
+}
