@@ -27,3 +27,26 @@ export async function transformRecordAsync<
     ),
   ) as Record<K, TTargetValue>;
 }
+
+function isObject(obj: unknown) {
+  return obj && typeof obj === "object" && !Array.isArray(obj);
+}
+
+export function deepMerge(
+  target: Record<string, unknown>,
+  source: Record<string, unknown>,
+) {
+  const output = structuredClone(target);
+  for (const key in source) {
+    if (isObject(source[key])) {
+      if (!(key in output)) output[key] = {};
+      output[key] = deepMerge(
+        output[key] as Record<string, unknown>,
+        source[key] as Record<string, unknown>,
+      );
+    } else {
+      output[key] = source[key];
+    }
+  }
+  return output;
+}

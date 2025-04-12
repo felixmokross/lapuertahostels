@@ -29,6 +29,21 @@ export const Banners: CollectionConfig = {
       en: "A banner is useful to announce promotions or important news and can have a call to action. Here you can create and manage banners. Go to Brands to enable a banner on all pages of the brand.",
       es: "Un banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Aquí puedes crear y gestionar banners. Ve a Marcas para habilitar un banner en todas las páginas de la marca.",
     },
+    components: {
+      views: {
+        edit: {
+          translations: {
+            Component:
+              "src/collections/banners/translations-view#TranslationsView",
+            path: "/translations",
+            tab: {
+              label: ({ t }) => t("custom:banners:translations"),
+              href: "/translations",
+            },
+          },
+        },
+      },
+    },
   },
   hooks: {
     afterChange: [

@@ -433,7 +433,7 @@ function isLongContent(data: AllLocalesText, localeCode: string) {
 }
 
 type CheckboxInputProps = {
-  name: string;
+  name?: string;
   defaultChecked?: boolean;
   readOnly?: boolean;
   label: ReactNode;
