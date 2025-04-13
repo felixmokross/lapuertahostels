@@ -1,4 +1,4 @@
-import { GroupField, RelationshipField, TextField } from "payload";
+import { GroupField, RichTextField, TextField } from "payload";
 import { makeCallToAction2Field } from "./call-to-action-2";
 import { showField } from "./show";
 import { heading2Field } from "./heading2";
@@ -45,7 +45,7 @@ export function overlayTextBox2Field({
           ...richTextField.admin,
           condition,
         },
-      } as RelationshipField,
+      } as RichTextField,
       callToActionLabelOnly
         ? {
             name: "callToActionLabel",

@@ -320,7 +320,7 @@ function getValue(doc: object, fieldPath: string) {
   let value = doc;
   for (const part of fieldPathParts) {
     if (value && typeof value === "object") {
-      // @ts-expect-error
+      // @ts-expect-error We don't care about the type here
       value = value[part];
     } else {
       return undefined;
