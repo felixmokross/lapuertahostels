@@ -1,6 +1,5 @@
 import { Block } from "payload";
 import { imageField } from "../fields/image";
-import { makeRichTextField } from "../fields/rich-text";
 import { RowLabelProps } from "@/components/RowLabel";
 import { heading2Field } from "@/fields/heading2";
 import { makeCallToAction2Field } from "@/fields/call-to-action-2";

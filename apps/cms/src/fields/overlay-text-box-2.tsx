@@ -1,11 +1,10 @@
 import { GroupField, RelationshipField, TextField } from "payload";
-import { makeRichTextField } from "./rich-text";
 import { makeCallToAction2Field } from "./call-to-action-2";
-import { headingField } from "./heading";
 import { showField } from "./show";
 import { heading2Field } from "./heading2";
+import { makeRichText2Field } from "./rich-text-2";
 
-const richTextField = makeRichTextField();
+const richTextField = makeRichText2Field();
 const callToAction2Field = makeCallToAction2Field({
   optional: true,
   showByDefault: false,
