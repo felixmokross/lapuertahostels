@@ -3,17 +3,15 @@ import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { gracefully } from "~/common/utils";
 import { RichTextObject } from "@lapuertahostels/shared";
-import { Text } from "@lapuertahostels/payload-types";
 
 type OverlayTextBoxProps<TCta extends ElementType = ElementType> = {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | null;
-  heading: Text | string | null | undefined;
-  text: Text | string | null | undefined;
+  heading: string | undefined | null;
+  text: RichTextObject | undefined | null;
   cta?: {
     as: TCta;
-    label: Text;
+    label: string;
     variant: "primary" | "secondary";
     icon?: ComponentType<{ className?: string }>;
   } & Omit<ComponentPropsWithoutRef<TCta>, "as">;
@@ -44,14 +42,12 @@ export function OverlayTextBox({
       )}
     >
       <Heading as="h3" size="small">
-        {gracefully(heading, "text")}
+        {heading}
       </Heading>
-      <RichTextParagraph className="mt-2">
-        {gracefully(text, "richText") as RichTextObject | undefined}
-      </RichTextParagraph>
+      {text && <RichTextParagraph className="mt-2">{text}</RichTextParagraph>}
       {cta && (
         <Button {...cta} className="mt-4">
-          {gracefully(cta.label, "text")}
+          {cta.label}
         </Button>
       )}
     </div>

@@ -47,7 +47,7 @@ export function media(filename: string, altText?: string): Media {
     id: createId(),
     mimeType: "image/jpeg",
     filename,
-    alt: plainText(altText ?? "Puerta Aqua"),
+    alt: altText ?? "Puerta Aqua",
     createdAt: date,
     updatedAt: date,
   };
@@ -65,7 +65,7 @@ export function callToAction(
 ): CallToAction {
   return {
     show: true,
-    label: plainText(label),
+    label,
     link: externalLink("http://example.com/"),
     variant: variant ?? "secondary",
   };
@@ -92,7 +92,7 @@ export function requiredCallToAction(
   variant?: CallToAction["variant"],
 ): RequiredCallToAction {
   return {
-    label: plainText(label),
+    label,
     link: externalLink("http://example.com/"),
     variant: variant ?? "secondary",
   };

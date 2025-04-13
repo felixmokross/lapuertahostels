@@ -32,7 +32,7 @@ export function AccommodationSelectorBlock({
             variant="white"
             id={elementId || undefined}
           >
-            {gracefully(heading, "text")}
+            {heading}
           </Heading>
           <RichTextParagraph
             className="mt-4 md:mt-6"
@@ -40,7 +40,7 @@ export function AccommodationSelectorBlock({
             size="large"
             variant="white"
           >
-            {gracefully(text, "richText") as RichTextObject | undefined}
+            {text as RichTextObject | undefined}
           </RichTextParagraph>
         </div>
         <div className="mx-auto mt-8 grid max-w-7xl grid-rows-2 gap-16 px-0 md:mt-14 md:grid-cols-2 md:grid-rows-none md:gap-8 md:px-8">
@@ -109,7 +109,7 @@ function AccommodationCard({
           {gracefully(brand, "name")}
         </Heading>
         <RichTextParagraph variant="inherit" justify>
-          {gracefully(description, "richText") as RichTextObject | undefined}
+          {description as unknown as RichTextObject | undefined}
         </RichTextParagraph>
       </div>
     </>,

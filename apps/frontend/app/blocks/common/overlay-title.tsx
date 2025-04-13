@@ -5,7 +5,6 @@ import { MouseEventHandler } from "react";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
-import { gracefully, isObject } from "~/common/utils";
 import { Page } from "@lapuertahostels/payload-types";
 
 type OverlayTitleType = NonNullable<
@@ -60,16 +59,16 @@ export function OverlayTitle({
           variant="white"
           textShadow
         >
-          {gracefully(text, "richText") as RichTextObject | undefined}
+          {text as RichTextObject | undefined}
         </RichTextHeading>
-        {isObject(supportingText) && (
+        {supportingText && (
           <RichTextParagraph
             size="extra-large"
             variant="white"
             textShadow
             className="mt-6"
           >
-            {supportingText.richText as unknown as RichTextObject}
+            {supportingText as unknown as RichTextObject}
           </RichTextParagraph>
         )}
         {cta?.show && (
@@ -81,7 +80,7 @@ export function OverlayTitle({
             blackShadow
             className={cn(supportingText ? "mt-10" : "mt-6")}
           >
-            {gracefully(cta.label, "text")}
+            {cta.label}
           </Button>
         )}
       </div>

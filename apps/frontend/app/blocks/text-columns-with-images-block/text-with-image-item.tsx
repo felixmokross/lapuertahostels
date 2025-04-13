@@ -6,7 +6,6 @@ import { cn } from "~/common/cn";
 import { Heading, HeadingProps } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "@lapuertahostels/shared";
-import { gracefully } from "~/common/utils";
 
 export type TextWithImageItemProps = Partial<
   TextColumnsWithImagesBlock["items"][number] & {
@@ -54,7 +53,7 @@ export function TextWithImageItem({
           size="small"
           className={cn(image && "mt-8")}
         >
-          {gracefully(heading, "text")}
+          {heading}
         </Heading>
       )}
       {text && (
@@ -62,7 +61,7 @@ export function TextWithImageItem({
           size="medium"
           className={cn(heading ? "mt-2" : image ? "mt-8" : false)}
         >
-          {gracefully(text, "richText") as RichTextObject | undefined}
+          {text as unknown as RichTextObject | undefined}
         </RichTextParagraph>
       )}
       {cta?.show && (
@@ -73,7 +72,7 @@ export function TextWithImageItem({
           variant={cta.variant ?? "secondary"}
           className={cn((image || heading || text) && "mt-6")}
         >
-          {gracefully(cta.label, "text")}
+          {cta.label}
         </Button>
       )}
     </div>

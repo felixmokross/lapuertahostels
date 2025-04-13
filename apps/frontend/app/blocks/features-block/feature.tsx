@@ -7,7 +7,6 @@ import { Button } from "~/common/button";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
-import { gracefully } from "~/common/utils";
 
 export type FeatureProps = PropsWithChildren<{
   orientation?: "image-left" | "image-right";
@@ -30,10 +29,10 @@ export function Feature({
     >
       <div className="px-8 text-center sm:px-16 md:px-0">
         <Heading size="medium" variant="brand" as="h3" className="-mt-4">
-          {gracefully(heading, "text")}
+          {heading}
         </Heading>
         <RichTextParagraph size="large" className="mt-2">
-          {gracefully(text, "richText") as RichTextObject | undefined}
+          {text as unknown as RichTextObject | undefined}
         </RichTextParagraph>
         {cta?.show && (
           <Button
@@ -43,7 +42,7 @@ export function Feature({
             as={PageLink}
             link={cta.link}
           >
-            {gracefully(cta.label, "text")}
+            {cta.label}
           </Button>
         )}
       </div>

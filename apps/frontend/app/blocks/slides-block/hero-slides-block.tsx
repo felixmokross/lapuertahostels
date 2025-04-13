@@ -7,7 +7,6 @@ import { useEnvironment } from "~/common/environment";
 import { useSwipeable } from "react-swipeable";
 import { Page } from "@lapuertahostels/payload-types";
 import { useTranslation } from "react-i18next";
-import { isObject } from "~/common/utils";
 
 export type HeroSlidesBlockProps = Partial<
   NonNullable<Page["hero"]>[number] & {
@@ -56,9 +55,7 @@ export function HeroSlidesBlock({
       tabIndex={0}
       role="tablist"
     >
-      {isObject(seoPageHeading) && (
-        <h2 className="sr-only">{seoPageHeading.text}</h2>
-      )}
+      {seoPageHeading && <h2 className="sr-only">{seoPageHeading}</h2>}
       {slides && slides.length > 1 && (
         <>
           <div

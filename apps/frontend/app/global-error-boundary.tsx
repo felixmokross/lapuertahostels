@@ -12,12 +12,11 @@ import { getTitle } from "./common/meta";
 import { ThemeProvider } from "./themes";
 import { Header } from "./layout/header";
 import { HeroHeadingBlock } from "./blocks/hero-heading-block";
-import { StoryBlock } from "./blocks/story-block";
+import { StoryBlock, StoryBlockProps } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
-import { Maintenance, Text } from "@lapuertahostels/payload-types";
+import { Maintenance } from "@lapuertahostels/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
-import { gracefully } from "./common/utils";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -39,11 +38,9 @@ export function GlobalErrorBoundary() {
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
 
   const errorPageTitle = getTitle(
-    (
-      (isPageNotFound
-        ? common.pageNotFoundScreen.heading
-        : common.errorScreen.heading) as Text
-    ).text!,
+    isPageNotFound
+      ? common.pageNotFoundScreen.heading
+      : common.errorScreen.heading,
     brand,
   );
 
@@ -74,8 +71,8 @@ export function GlobalErrorBoundary() {
               blockType="Story"
               text={
                 (isPageNotFound
-                  ? common.pageNotFoundScreen.text
-                  : common.errorScreen.text) as Text
+                  ? common.pageNotFoundScreen
+                  : common.errorScreen) as unknown as StoryBlockProps["text"]
               }
             />
           </main>
@@ -119,9 +116,7 @@ function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
-        <title>
-          {gracefully(maintenance.maintenanceScreen!.message, "text")}
-        </title>
+        <title>{maintenance.maintenanceScreen!.message}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />

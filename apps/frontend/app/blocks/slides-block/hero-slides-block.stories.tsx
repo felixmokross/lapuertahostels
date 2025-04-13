@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HeroSlidesBlock } from "./hero-slides-block";
-import { callToAction, media, richText } from "~/common/cms-data.builders";
-import { paragraph, text } from "@lapuertahostels/shared";
+import { HeroSlidesBlock, HeroSlidesBlockProps } from "./hero-slides-block";
+import { callToAction, media } from "~/common/cms-data.builders";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Hero Slides Block",
@@ -25,7 +25,11 @@ export const Default: Story = {
         image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: richText(paragraph(text("Lost City"))),
+          text: richTextRoot(
+            paragraph(text("Lost City")),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           position: "top-right",
           cta: callToAction("Read More", "primary"),
         },
@@ -34,7 +38,11 @@ export const Default: Story = {
         image: media("azzedine-rouichi-gc5OYAll-rc-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: richText(paragraph(text("Parque Tayrona"))),
+          text: richTextRoot(
+            paragraph(text("Parque Tayrona")),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           position: "bottom-left",
           cta: callToAction("Read More", "primary"),
         },
@@ -43,7 +51,11 @@ export const Default: Story = {
         image: media("david-hertle-3YCkAhD--Ic-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: richText(paragraph(text("Santa Marta"))),
+          text: richTextRoot(
+            paragraph(text("Santa Marta")),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           position: "bottom-right",
           cta: callToAction("Read More", "primary"),
         },
@@ -52,7 +64,11 @@ export const Default: Story = {
         image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
         overlayTitle: {
           show: true,
-          text: richText(paragraph(text("Minca"))),
+          text: richTextRoot(
+            paragraph(text("Minca")),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           position: "top-left",
           cta: callToAction("Read More", "primary"),
         },

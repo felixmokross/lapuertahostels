@@ -1,13 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Feature } from "./feature";
-import {
-  callToAction,
-  media,
-  plainText,
-  richText,
-} from "~/common/cms-data.builders";
-import { paragraph, text } from "@lapuertahostels/shared";
+import { Feature, FeatureProps } from "./feature";
+import { callToAction, media } from "~/common/cms-data.builders";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Features Block/Feature",
@@ -32,14 +27,14 @@ export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
     image: media("_DSC0299.jpg"),
-    heading: plainText("Beautiful Rooms"),
-    text: richText(
+    heading: "Beautiful Rooms",
+    text: richTextRoot(
       paragraph(
         text(
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut odio in quam interdum vulputate. Morbi id sapien in libero vehicula dignissim. Curabitur eget urna eu mauris consectetur imperdiet. Proinconsequat libero et justo cursus ultricies.",
         ),
       ),
-    ),
+    ) as unknown as FeatureProps["text"],
     cta: callToAction("Book Now"),
   },
 };

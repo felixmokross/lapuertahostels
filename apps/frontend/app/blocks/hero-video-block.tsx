@@ -33,7 +33,7 @@ export function HeroVideoBlock({
           disableRemotePlayback
           className="pointer-events-none absolute top-0 h-full w-full object-cover"
         >
-          {video.alt && <p>{gracefully(video.alt, "text")}</p>}
+          {video.alt && <p>{video.alt}</p>}
         </video>
       ) : (
         <MediaPlaceholder />

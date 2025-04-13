@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { MapBlock } from "./map-block";
-import { plainText, richText } from "~/common/cms-data.builders";
-import { paragraph, text } from "@lapuertahostels/shared";
+import { MapBlock, MapBlockProps } from "./map-block";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useEnvironment } from "~/common/environment";
 import { useCommon } from "~/common/common";
@@ -40,16 +39,16 @@ export const Default: Story = {
       "Puerta Aqua By La Puerta Hostels, Calle 18, Comuna 2, Santa Marta, Magdalena, Colombia",
     zoomLevel: 14.5,
     overlayTextBox: {
-      heading: plainText("Visit Us"),
-      text: richText(
+      heading: "Visit Us",
+      text: richTextRoot(
         paragraph(
           text(
             "We're located in Santa Marta, Colombia. Come say hi! This is a longer text.",
           ),
         ),
         paragraph(text("We're looking forward to meeting you!")),
-      ),
-      callToActionLabel: plainText("Get Directions"),
+      ) as unknown as MapBlockProps["overlayTextBox"]["text"],
+      callToActionLabel: "Get Directions",
     },
   },
 };

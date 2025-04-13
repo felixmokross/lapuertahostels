@@ -17,7 +17,7 @@ import {
   toRelativeUrl,
 } from "~/common/routing";
 import { Button, ButtonProps } from "~/common/button";
-import { mergeRefs, gracefully } from "~/common/utils";
+import { mergeRefs } from "~/common/utils";
 
 export type NavbarProps = {
   className?: string;
@@ -80,7 +80,7 @@ export function Navbar({
                 {navLinks?.map((navLink) => {
                   return (
                     <NavLink key={navLink.id} link={navLink.link}>
-                      {gracefully(navLink.label, "text")}
+                      {navLink.label}
                     </NavLink>
                   );
                 })}
@@ -124,7 +124,7 @@ export function Navbar({
                       link={navLink.link}
                       className="block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
                     >
-                      {gracefully(navLink.label, "text")}
+                      {navLink.label}
                     </MenuItem>
                   );
                 })}
@@ -203,7 +203,7 @@ function BookButton({ cta, ref, ...props }: BookButtonProps) {
       variant="primary"
       ref={ref}
     >
-      {gracefully(cta.label, "text")}
+      {cta.label}
     </Button>
   );
 }

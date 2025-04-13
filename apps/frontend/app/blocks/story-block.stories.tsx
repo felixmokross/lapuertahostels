@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { StoryBlock } from "./story-block";
-import { media, plainText, richText } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { StoryBlock, StoryBlockProps } from "./story-block";
+import { media } from "~/common/cms-data.builders";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Story Block",
@@ -17,8 +17,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     blockType: "Story",
-    heading: plainText("About Us"),
-    text: richText(
+    heading: "About Us",
+    text: richTextRoot(
       paragraph(
         text("Step into our "),
         bold("Santa Marta haven,"),
@@ -51,7 +51,7 @@ export const Default: Story = {
           "Join us in this heartfelt journey—where stories come to life, friendships find a common thread, and the enchantment of Santa Marta unfolds at our intimately personal hostel.",
         ),
       ),
-    ),
+    ) as unknown as StoryBlockProps["text"],
     image: media("351429301_1381427532589680_2319248312954498147_n.jpg"),
   },
 };
