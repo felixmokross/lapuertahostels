@@ -1,19 +1,35 @@
 import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 import { ObjectId } from "bson";
-import { Data, Field, Payload } from "payload";
+import { CollectionSlug, Data, Field, Payload } from "payload";
 
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
-  const pages = await payload.db.connection
-    .collection("pages")
+  await migrateCollection("pages", payload);
+  await migrateCollection("brands", payload);
+  await migrateCollection("media", payload);
+}
+
+async function migrateCollection(
+  collectionSlug: CollectionSlug,
+  payload: Payload,
+) {
+  console.log(`Collection: ${collectionSlug}`);
+  const items = await payload.db.connection
+    .collection(collectionSlug)
     .find()
     .toArray();
 
-  for (const page of pages) {
-    console.log(`Migrating page ${page._id} '${page.pathname}…`);
+  for (const item of items) {
+    console.log(`Migrating ${collectionSlug}/${item._id}…`);
     const textsToInline = await migrateData(
-      page,
-      payload.collections.pages.config.fields,
+      item,
+      payload.collections[collectionSlug].config.fields,
     );
+
+    if (textsToInline.length === 0) {
+      console.log("Found no texts to inline");
+      console.log("");
+      continue;
+    }
 
     console.log(`Found ${textsToInline.length} texts to inline`);
 
@@ -31,11 +47,13 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     };
 
     await payload.db.connection
-      .collection("pages")
-      .updateOne({ _id: page._id }, update);
+      .collection(collectionSlug)
+      .updateOne({ _id: item._id }, update);
 
     console.log("");
   }
+
+  console.log("");
 }
 
 export async function down(_: MigrateDownArgs): Promise<void> {

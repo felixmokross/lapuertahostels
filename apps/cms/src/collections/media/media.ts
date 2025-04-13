@@ -26,6 +26,26 @@ export const Media: CollectionConfig = {
   admin: {
     defaultColumns: ["filename", "category", "comment", "updatedAt"],
     listSearchableFields: ["id", "filename", "comment", "alt"],
+    components: {
+      views: {
+        edit: {
+          translations: {
+            Component: {
+              path: "src/collections/banners/translations-view",
+              exportName: "TranslationsView",
+              serverProps: {
+                collection: "media",
+              },
+            },
+            path: "/translations",
+            tab: {
+              label: ({ t }) => t("custom:banners:translations"),
+              href: "/translations",
+            },
+          },
+        },
+      },
+    },
   },
   endpoints: [generateAltTextEndpoint],
   hooks: {
@@ -93,11 +113,8 @@ export const Media: CollectionConfig = {
                 en: "Alternative Text",
                 es: "Texto alternativo",
               },
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              type: "textarea",
+              localized: true,
               admin: {
                 description: {
                   en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility. For images an alt text can be generated automatically using OpenAI.",

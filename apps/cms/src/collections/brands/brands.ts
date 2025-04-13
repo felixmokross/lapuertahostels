@@ -69,6 +69,26 @@ export const Brands: CollectionConfig = {
         );
       },
     },
+    components: {
+      views: {
+        edit: {
+          translations: {
+            Component: {
+              path: "src/collections/banners/translations-view",
+              exportName: "TranslationsView",
+              serverProps: {
+                collection: "brands",
+              },
+            },
+            path: "/translations",
+            tab: {
+              label: ({ t }) => t("custom:banners:translations"),
+              href: "/translations",
+            },
+          },
+        },
+      },
+    },
   },
   access: {
     create: ({ req }) => isAdmin(req),
@@ -146,11 +166,8 @@ export const Brands: CollectionConfig = {
                 en: "Base Title",
                 es: "Título Base",
               },
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              type: "text",
+              localized: true,
               admin: {
                 description: {
                   en: "The base title is appended to the titles of the brand’s pages. If the page does not have a title, the base title will be used as the title. Include important keywords in the title for SEO.",
@@ -213,11 +230,8 @@ export const Brands: CollectionConfig = {
                     en: "Label",
                     es: "Etiqueta",
                   },
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                   required: true,
                 },
                 {
@@ -259,11 +273,8 @@ export const Brands: CollectionConfig = {
                     en: "Label",
                     es: "Etiqueta",
                   },
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                   required: true,
                   admin: {
                     condition: (_, siblingData) => siblingData?.show,
@@ -318,11 +329,8 @@ export const Brands: CollectionConfig = {
                     es: "Título",
                   },
                   required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                 },
                 {
                   name: "links",
@@ -348,11 +356,8 @@ export const Brands: CollectionConfig = {
                         en: "Label",
                         es: "Etiqueta",
                       },
-                      type: "relationship",
-                      relationTo: "texts",
-                      filterOptions: {
-                        type: { equals: "plainText" },
-                      },
+                      type: "text",
+                      localized: true,
                       required: true,
                     },
                     {

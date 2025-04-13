@@ -38,7 +38,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
-    listSearchableFields: ["id", "pathname", "title.text", "brand.name"],
+    listSearchableFields: ["id", "pathname", "title", "brand.name"],
     livePreview: {
       url: ({
         data,
