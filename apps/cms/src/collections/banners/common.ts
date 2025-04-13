@@ -13,10 +13,17 @@ export function getLocalizedTextFields(
     }
     if (f.type === "tabs") {
       return f.tabs.flatMap((tab) =>
-        getLocalizedTextFields(tab.fields, basePath),
+        getLocalizedTextFields(
+          tab.fields,
+          "name" in tab
+            ? basePath
+              ? `${basePath}.${tab.name}`
+              : tab.name
+            : basePath,
+        ),
       );
     }
-    if (f.type === "text" && f.localized) {
+    if ((f.type === "text" || f.type === "textarea") && f.localized) {
       return [basePath ? `${basePath}.${f.name}` : f.name];
     }
     return [];

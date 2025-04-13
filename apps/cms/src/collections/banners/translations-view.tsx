@@ -1,5 +1,5 @@
 import { getSupportedLocales } from "@/common/locales";
-import { DocumentViewServerProps } from "payload";
+import { CollectionSlug, DocumentViewServerProps } from "payload";
 import { getLocalizedTextFields } from "./common";
 import { TranslationsViewClient } from "./translations-view.client";
 
@@ -7,22 +7,26 @@ export async function TranslationsView({
   payload,
   doc,
   locale,
-}: DocumentViewServerProps) {
+  collection,
+}: DocumentViewServerProps & {
+  collection: CollectionSlug;
+}) {
   const [locales, docWithTranslations] = await Promise.all([
     getSupportedLocales(),
     payload.findByID({
       id: doc.id,
-      collection: "banners",
+      collection,
       locale: "all",
     }),
   ]);
 
   const localizedTextFieldPaths = getLocalizedTextFields(
-    payload.collections.banners.config.fields,
+    payload.collections[collection].config.fields,
   );
 
   return (
     <TranslationsViewClient
+      collection={collection}
       documentId={doc.id}
       fieldPaths={localizedTextFieldPaths}
       locales={locales.map((l) => ({ code: l.code, label: l.label }))}

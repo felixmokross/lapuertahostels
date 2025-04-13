@@ -33,8 +33,13 @@ export const Banners: CollectionConfig = {
       views: {
         edit: {
           translations: {
-            Component:
-              "src/collections/banners/translations-view#TranslationsView",
+            Component: {
+              path: "src/collections/banners/translations-view",
+              exportName: "TranslationsView",
+              serverProps: {
+                collection: "banners",
+              },
+            },
             path: "/translations",
             tab: {
               label: ({ t }) => t("custom:banners:translations"),

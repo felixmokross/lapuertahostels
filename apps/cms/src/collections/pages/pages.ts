@@ -56,6 +56,26 @@ export const Pages: CollectionConfig = {
           locale.code,
         ),
     },
+    components: {
+      views: {
+        edit: {
+          translations: {
+            Component: {
+              path: "src/collections/banners/translations-view",
+              exportName: "TranslationsView",
+              serverProps: {
+                collection: "pages",
+              },
+            },
+            path: "/translations",
+            tab: {
+              label: ({ t }) => t("custom:banners:translations"),
+              href: "/translations",
+            },
+          },
+        },
+      },
+    },
   },
   access: {
     create: canManageContent,
@@ -106,11 +126,8 @@ export const Pages: CollectionConfig = {
                 en: "Description",
                 es: "Descripción",
               },
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              type: "textarea",
+              localized: true,
               admin: {
                 description: {
                   en: "The description is shown in search engine results. It should be between 100 and 150 characters.",
@@ -235,11 +252,8 @@ export const Pages: CollectionConfig = {
         en: "Title",
         es: "Título",
       },
-      type: "relationship",
-      relationTo: "texts",
-      filterOptions: {
-        type: { equals: "plainText" },
-      },
+      type: "text",
+      localized: true,
       admin: {
         position: "sidebar",
         description: {

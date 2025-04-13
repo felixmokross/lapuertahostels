@@ -1,9 +1,8 @@
 "use client";
 
 import { Button, Pill, toast, useTranslation } from "@payloadcms/ui";
-import { Locale } from "payload";
+import { CollectionSlug, Locale } from "payload";
 import { saveTranslations } from "./save-translations";
-import { Banner } from "@/payload-types";
 import { getLabelText } from "@/common/labels";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
@@ -19,12 +18,14 @@ export function TranslationsViewClient({
   locales,
   docWithTranslations,
   locale,
+  collection,
 }: {
   documentId: string;
   fieldPaths: string[];
   locales: Locale[];
-  docWithTranslations: Banner;
+  docWithTranslations: object;
   locale: Locale | undefined;
+  collection: CollectionSlug;
 }) {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [selectedLocales, setSelectedLocales] = useState<string[]>(
@@ -54,7 +55,7 @@ export function TranslationsViewClient({
       }}
     >
       <input type="hidden" name="id" value={documentId} />
-      <input type="hidden" name="fromLocale" value={locale?.code} />
+      <input type="hidden" name="collection" value={collection} />
       <div className="gutter--left gutter--right tw:gap-4 tw:flex tw:justify-end tw:h-[var(--doc-controls-height)] tw:items-center">
         <Button
           disabled={
@@ -169,7 +170,7 @@ export function TranslationsViewClient({
                 </th>
                 <td className="tw:py-2 tw:px-[17px] tw:border-b tw:border-r tw:border-theme-elevation-100">
                   <Editor
-                    value={texts[p][locale!.code]}
+                    value={texts[p] ? texts[p][locale!.code] : ""}
                     onChange={(value) => {
                       setTexts({
                         ...texts,
@@ -182,7 +183,7 @@ export function TranslationsViewClient({
                   <input
                     type="hidden"
                     name={`${p}.${locale!.code}`}
-                    value={texts[p][locale!.code]}
+                    value={texts[p] ? texts[p][locale!.code] : ""}
                   />
                 </td>
                 {locales
@@ -193,7 +194,7 @@ export function TranslationsViewClient({
                       className="tw:py-2 tw:px-[17px] tw:border-b tw:border-r tw:border-theme-elevation-100"
                     >
                       <Editor
-                        value={texts[p][locale.code]}
+                        value={texts[p] ? texts[p][locale.code] : ""}
                         onChange={(value) => {
                           setTexts({
                             ...texts,
@@ -206,7 +207,7 @@ export function TranslationsViewClient({
                       <input
                         type="hidden"
                         name={`${p}.${locale.code}`}
-                        value={texts[p][locale.code]}
+                        value={texts[p] ? texts[p][locale.code] : ""}
                       />
                     </td>
                   ))}
@@ -276,7 +277,7 @@ function Editor({
   );
 }
 
-function getValue(doc: Banner, fieldPath: string) {
+function getValue(doc: object, fieldPath: string) {
   const fieldPathParts = fieldPath.split(".");
   let value = doc;
   for (const part of fieldPathParts) {
