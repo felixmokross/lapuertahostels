@@ -3,7 +3,7 @@ import { canManageContent } from "../common/access-control";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
-import { translationsView } from "@/collections/banners/translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",

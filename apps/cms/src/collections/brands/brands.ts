@@ -13,7 +13,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
-import { translationsView } from "../banners/translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Brands: CollectionConfig = {
   slug: "brands",

@@ -17,7 +17,7 @@ import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { translationsView } from "../banners/translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Pages: CollectionConfig = {
   slug: "pages",

@@ -3,7 +3,7 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { bannerUsagesField } from "./usages";
 import { makeCallToActionField } from "@/fields/call-to-action";
-import { translationsView } from "./translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Banners: CollectionConfig = {
   slug: "banners",

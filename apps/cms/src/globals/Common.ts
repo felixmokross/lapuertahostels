@@ -8,7 +8,7 @@ import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { makeRichTextField } from "@/fields/rich-text";
 import { headingField } from "@/fields/heading";
-import { translationsView } from "@/collections/banners/translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Common: GlobalConfig = {
   slug: "common",

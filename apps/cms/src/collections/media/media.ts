@@ -2,7 +2,7 @@ import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
 import { refreshCacheHook } from "./refresh-cache-hook";
-import { translationsView } from "../banners/translations-view-config";
+import { translationsView } from "@/views/translations/translations-view-config";
 
 export const Media: CollectionConfig = {
   slug: "media",

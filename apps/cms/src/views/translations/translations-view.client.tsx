@@ -1,14 +1,20 @@
 "use client";
 
-import { Button, Pill, toast, useTranslation } from "@payloadcms/ui";
+import { Button, CheckIcon, Pill, toast, useTranslation } from "@payloadcms/ui";
 import { CollectionSlug, GlobalSlug, Locale } from "payload";
 import { saveTranslations } from "./save-translations";
 import { getLabelText } from "@/common/labels";
-import { useEffect, useRef, useState, useTransition } from "react";
+import {
+  ReactNode,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { useFormStatus } from "react-dom";
 import { SparklesIcon } from "@/common/icons";
 import { autoTranslate } from "./auto-translate";
-import { CheckboxInput } from "../texts/translations-field";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { deepMerge } from "@/common/records";
 import {
@@ -343,5 +349,61 @@ function SubmitButton({ isFormDirty }: { isFormDirty: boolean }) {
     >
       {pending ? t("custom:banners:saving") : t("custom:banners:save")}
     </Button>
+  );
+}
+
+type CheckboxInputProps = {
+  name?: string;
+  defaultChecked?: boolean;
+  readOnly?: boolean;
+  label: ReactNode;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
+};
+
+export function CheckboxInput({
+  name,
+  label,
+  readOnly = false,
+  checked,
+  setChecked,
+}: CheckboxInputProps) {
+  const inputBaseClass = "checkbox-input";
+  const ref = useRef<HTMLInputElement>(null);
+  const id = `checkbox-input-${useId()}`;
+
+  return (
+    <div
+      className={[
+        inputBaseClass,
+        checked && `${inputBaseClass}--checked`,
+        readOnly && `${inputBaseClass}--read-only`,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <div className={`${inputBaseClass}__input`}>
+        <input
+          aria-label=""
+          checked={checked}
+          disabled={readOnly}
+          type="checkbox"
+          ref={ref}
+          id={id}
+          onChange={(e) => setChecked(e.target.checked)}
+          name={name}
+        />
+        <span
+          className={[`${inputBaseClass}__icon`, !checked ? "partial" : "check"]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {checked && <CheckIcon />}
+        </span>
+      </div>
+      <label htmlFor={id} className={`${inputBaseClass}__label`}>
+        {label}
+      </label>
+    </div>
   );
 }
