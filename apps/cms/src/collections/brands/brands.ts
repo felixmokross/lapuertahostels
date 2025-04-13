@@ -13,6 +13,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
+import { translationsView } from "../banners/translations-view-config";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -72,20 +73,7 @@ export const Brands: CollectionConfig = {
     components: {
       views: {
         edit: {
-          translations: {
-            Component: {
-              path: "src/collections/banners/translations-view",
-              exportName: "TranslationsView",
-              serverProps: {
-                collection: "brands",
-              },
-            },
-            path: "/translations",
-            tab: {
-              label: ({ t }) => t("custom:banners:translations"),
-              href: "/translations",
-            },
-          },
+          translations: translationsView(),
         },
       },
     },

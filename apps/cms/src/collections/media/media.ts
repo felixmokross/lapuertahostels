@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
 import { refreshCacheHook } from "./refresh-cache-hook";
+import { translationsView } from "../banners/translations-view-config";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -29,20 +30,7 @@ export const Media: CollectionConfig = {
     components: {
       views: {
         edit: {
-          translations: {
-            Component: {
-              path: "src/collections/banners/translations-view",
-              exportName: "TranslationsView",
-              serverProps: {
-                collection: "media",
-              },
-            },
-            path: "/translations",
-            tab: {
-              label: ({ t }) => t("custom:banners:translations"),
-              href: "/translations",
-            },
-          },
+          translations: translationsView(),
         },
       },
     },

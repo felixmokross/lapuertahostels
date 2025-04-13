@@ -3,6 +3,7 @@ import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { bannerUsagesField } from "./usages";
 import { makeCallToAction2Field } from "@/fields/call-to-action-2";
+import { translationsView } from "./translations-view-config";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -32,20 +33,7 @@ export const Banners: CollectionConfig = {
     components: {
       views: {
         edit: {
-          translations: {
-            Component: {
-              path: "src/collections/banners/translations-view",
-              exportName: "TranslationsView",
-              serverProps: {
-                collection: "banners",
-              },
-            },
-            path: "/translations",
-            tab: {
-              label: ({ t }) => t("custom:banners:translations"),
-              href: "/translations",
-            },
-          },
+          translations: translationsView(),
         },
       },
     },

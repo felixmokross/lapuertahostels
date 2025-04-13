@@ -3,6 +3,7 @@ import { canManageContent } from "../common/access-control";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
+import { translationsView } from "@/collections/banners/translations-view-config";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",
@@ -20,6 +21,9 @@ export const Maintenance: GlobalConfig = {
         pageUrl: "/",
       }),
     ],
+  },
+  admin: {
+    components: { views: { edit: { translations: translationsView() } } },
   },
   fields: [
     {
@@ -44,11 +48,8 @@ export const Maintenance: GlobalConfig = {
             es: "Mensaje",
           },
           required: true,
-          type: "relationship",
-          relationTo: "texts",
-          filterOptions: {
-            type: { equals: "plainText" },
-          },
+          type: "text",
+          localized: true,
           admin: {
             condition: (_, siblingData) => siblingData.show,
           },

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Pill, toast, useTranslation } from "@payloadcms/ui";
-import { CollectionSlug, Locale } from "payload";
+import { CollectionSlug, GlobalSlug, Locale } from "payload";
 import { saveTranslations } from "./save-translations";
 import { getLabelText } from "@/common/labels";
 import { useEffect, useRef, useState, useTransition } from "react";
@@ -11,7 +11,6 @@ import { autoTranslate } from "./auto-translate";
 import { CheckboxInput } from "../texts/translations-field";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { deepMerge } from "@/common/records";
-import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import {
   SerializedEditorState,
   SerializedLexicalNode,
@@ -25,13 +24,15 @@ export function TranslationsViewClient({
   docWithTranslations,
   locale,
   collection,
+  global,
 }: {
   documentId: string;
   fieldPaths: string[];
   locales: Locale[];
   docWithTranslations: object;
   locale: Locale | undefined;
-  collection: CollectionSlug;
+  collection?: CollectionSlug;
+  global?: GlobalSlug;
 }) {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [selectedLocales, setSelectedLocales] = useState<string[]>(
@@ -62,6 +63,7 @@ export function TranslationsViewClient({
     >
       <input type="hidden" name="id" value={documentId} />
       <input type="hidden" name="collection" value={collection} />
+      <input type="hidden" name="global" value={global} />
       <div className="gutter--left gutter--right tw:gap-4 tw:flex tw:justify-end tw:h-[var(--doc-controls-height)] tw:items-center">
         <Button
           disabled={

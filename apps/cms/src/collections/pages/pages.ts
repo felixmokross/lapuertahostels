@@ -17,6 +17,7 @@ import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
+import { translationsView } from "../banners/translations-view-config";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -59,20 +60,7 @@ export const Pages: CollectionConfig = {
     components: {
       views: {
         edit: {
-          translations: {
-            Component: {
-              path: "src/collections/banners/translations-view",
-              exportName: "TranslationsView",
-              serverProps: {
-                collection: "pages",
-              },
-            },
-            path: "/translations",
-            tab: {
-              label: ({ t }) => t("custom:banners:translations"),
-              href: "/translations",
-            },
-          },
+          translations: translationsView(),
         },
       },
     },

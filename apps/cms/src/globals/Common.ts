@@ -1,13 +1,14 @@
 import { GlobalConfig } from "payload";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { canManageContent } from "../common/access-control";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { showField } from "../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
+import { makeRichText2Field } from "@/fields/rich-text-2";
+import { heading2Field } from "@/fields/heading2";
+import { translationsView } from "@/collections/banners/translations-view-config";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -23,6 +24,15 @@ export const Common: GlobalConfig = {
       refreshCacheHook({ cacheKey: getGlobalCacheKey("common"), pageUrl: "/" }),
     ],
   },
+  admin: {
+    components: {
+      views: {
+        edit: {
+          translations: translationsView(),
+        },
+      },
+    },
+  },
   fields: [
     {
       type: "tabs",
@@ -35,7 +45,7 @@ export const Common: GlobalConfig = {
           },
           fields: [
             {
-              ...makeRichTextField(),
+              ...makeRichText2Field(),
               name: "address",
               label: {
                 en: "Address",
@@ -43,7 +53,7 @@ export const Common: GlobalConfig = {
               },
             },
             {
-              ...makeRichTextField(),
+              ...makeRichText2Field(),
               name: "copyright",
               label: {
                 en: "Copyright",
@@ -118,11 +128,8 @@ export const Common: GlobalConfig = {
                     es: "Título",
                   },
                   required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                   admin: {
                     condition: (data) => !!data.footer?.newsletter?.show,
                   },
@@ -134,11 +141,8 @@ export const Common: GlobalConfig = {
                     es: "Descripción",
                   },
                   required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "textarea",
+                  localized: true,
                   admin: {
                     condition: (data) => !!data?.footer?.newsletter?.show,
                   },
@@ -150,11 +154,8 @@ export const Common: GlobalConfig = {
                     es: "Marcador de correo electrónico",
                   },
                   required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
@@ -166,11 +167,8 @@ export const Common: GlobalConfig = {
                     es: "Etiqueta del botón",
                   },
                   required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  type: "text",
+                  localized: true,
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
@@ -230,8 +228,8 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when a user tries to access a page that does not exist.",
               es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
             }),
-            headingField,
-            makeRichTextField(),
+            heading2Field,
+            makeRichText2Field(),
           ],
         },
         {
@@ -245,8 +243,8 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when the server encounters an error.",
               es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
             }),
-            headingField,
-            makeRichTextField(),
+            heading2Field,
+            makeRichText2Field(),
           ],
         },
       ],
