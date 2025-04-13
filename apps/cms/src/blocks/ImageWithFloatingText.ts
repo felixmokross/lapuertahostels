@@ -2,8 +2,8 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeOverlayTitle2Field } from "@/fields/overlay-title-2";
+import { makeRichText2Field } from "@/fields/rich-text-2";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",
@@ -27,7 +27,7 @@ export const ImageWithFloatingTextBlock: Block = {
       supportsPositions: ["top-left", "top-right"],
       supportsSupportingText: false,
     }),
-    makeRichTextField(),
+    makeRichText2Field(),
     makeMoreOptionsField(elementIdField),
   ],
 };

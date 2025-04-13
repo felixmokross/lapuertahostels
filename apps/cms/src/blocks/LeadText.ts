@@ -1,9 +1,9 @@
 import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
-import { makeRichTextField } from "../fields/rich-text";
 import { makeCallToAction2Field } from "@/fields/call-to-action-2";
 import { heading2Field } from "@/fields/heading2";
+import { makeRichText2Field } from "@/fields/rich-text-2";
 
 export const LeadTextBlock: Block = {
   slug: "LeadText",
@@ -22,7 +22,7 @@ export const LeadTextBlock: Block = {
     "Preview of the Lead Text block, showing a heading and a large text",
   fields: [
     { ...heading2Field, required: false },
-    makeRichTextField(),
+    makeRichText2Field(),
     makeCallToAction2Field({ optional: true, showByDefault: false }),
     makeMoreOptionsField(elementIdField),
   ],

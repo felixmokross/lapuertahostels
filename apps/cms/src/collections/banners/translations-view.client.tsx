@@ -11,6 +11,12 @@ import { autoTranslate } from "./auto-translate";
 import { CheckboxInput } from "../texts/translations-field";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { deepMerge } from "@/common/records";
+import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import {
+  SerializedEditorState,
+  SerializedLexicalNode,
+} from "@payloadcms/richtext-lexical/lexical";
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
 
 export function TranslationsViewClient({
   documentId,
@@ -169,22 +175,36 @@ export function TranslationsViewClient({
                   />
                 </th>
                 <td className="tw:py-2 tw:px-[17px] tw:border-b tw:border-r tw:border-theme-elevation-100">
-                  <Editor
-                    value={texts[p] ? texts[p][locale!.code] : ""}
-                    onChange={(value) => {
-                      setTexts({
-                        ...texts,
-                        [p]: { ...texts[p], [locale!.code]: value },
-                      });
+                  {texts[p] && typeof texts[p][locale!.code] === "string" ? (
+                    <>
+                      <Editor
+                        value={texts[p] ? texts[p][locale!.code] : ""}
+                        onChange={(value) => {
+                          setTexts({
+                            ...texts,
+                            [p]: { ...texts[p], [locale!.code]: value },
+                          });
 
-                      setIsDirty(true);
-                    }}
-                  />
-                  <input
-                    type="hidden"
-                    name={`${p}.${locale!.code}`}
-                    value={texts[p] ? texts[p][locale!.code] : ""}
-                  />
+                          setIsDirty(true);
+                        }}
+                      />
+                      <input
+                        type="hidden"
+                        name={`${p}.${locale!.code}`}
+                        value={texts[p] ? texts[p][locale!.code] : ""}
+                      />
+                    </>
+                  ) : (
+                    <div>
+                      {texts[p]
+                        ? convertLexicalToPlaintext({
+                            data: texts[p][
+                              locale!.code
+                            ] as unknown as SerializedEditorState<SerializedLexicalNode>,
+                          })
+                        : ""}
+                    </div>
+                  )}
                 </td>
                 {locales
                   .filter((l) => l.code !== locale?.code)
@@ -193,22 +213,37 @@ export function TranslationsViewClient({
                       key={locale.code}
                       className="tw:py-2 tw:px-[17px] tw:border-b tw:border-r tw:border-theme-elevation-100"
                     >
-                      <Editor
-                        value={texts[p] ? texts[p][locale.code] : ""}
-                        onChange={(value) => {
-                          setTexts({
-                            ...texts,
-                            [p]: { ...texts[p], [locale.code]: value },
-                          });
+                      {texts[p] &&
+                      typeof texts[p][locale!.code] === "string" ? (
+                        <>
+                          <Editor
+                            value={texts[p] ? texts[p][locale.code] : ""}
+                            onChange={(value) => {
+                              setTexts({
+                                ...texts,
+                                [p]: { ...texts[p], [locale.code]: value },
+                              });
 
-                          setIsDirty(true);
-                        }}
-                      />
-                      <input
-                        type="hidden"
-                        name={`${p}.${locale.code}`}
-                        value={texts[p] ? texts[p][locale.code] : ""}
-                      />
+                              setIsDirty(true);
+                            }}
+                          />
+                          <input
+                            type="hidden"
+                            name={`${p}.${locale.code}`}
+                            value={texts[p] ? texts[p][locale.code] : ""}
+                          />
+                        </>
+                      ) : (
+                        <div>
+                          {texts[p]
+                            ? convertLexicalToPlaintext({
+                                data: texts[p][
+                                  locale!.code
+                                ] as unknown as SerializedEditorState<SerializedLexicalNode>,
+                              })
+                            : ""}
+                        </div>
+                      )}
                     </td>
                   ))}
               </tr>

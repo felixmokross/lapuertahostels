@@ -2,6 +2,9 @@ import { GroupField, RadioField, RelationshipField } from "payload";
 import { showField } from "./show";
 import { Page } from "@/payload-types";
 import { makeCallToAction2Field } from "./call-to-action-2";
+import { editor } from "@/collections/texts/editor";
+import { transformRecordAsync } from "@/common/records";
+import { richTextToHtml } from "@/collections/texts/utils";
 
 type OverlayTitle2FieldOptions = {
   optional?: boolean;
@@ -45,11 +48,9 @@ export function makeOverlayTitle2Field({
           es: "Texto",
         },
         required: true,
-        type: "relationship",
-        relationTo: "texts",
-        filterOptions: {
-          type: { equals: "richText" },
-        },
+        type: "richText",
+        localized: true,
+        editor: editor(),
         admin: {
           condition,
         },

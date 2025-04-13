@@ -2,8 +2,9 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { makeRichTextField } from "../fields/rich-text";
 import { heading2Field } from "@/fields/heading2";
+import { makeRichText2Field } from "@/fields/rich-text-2";
+import { editor } from "@/collections/texts/editor";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -22,7 +23,7 @@ export const AccommodationSelectorBlock: Block = {
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
     heading2Field,
-    makeRichTextField(),
+    makeRichText2Field(),
     {
       name: "cards",
       label: {
@@ -62,11 +63,9 @@ export const AccommodationSelectorBlock: Block = {
             en: "Description",
             es: "Descripción",
           },
-          type: "relationship",
-          relationTo: "texts",
-          filterOptions: {
-            type: { equals: "richText" },
-          },
+          type: "richText",
+          localized: true,
+          editor: editor(),
           required: true,
         },
       ],

@@ -26,7 +26,11 @@ export function getLocalizedTextFields(
         ),
       );
     }
-    if ((f.type === "text" || f.type === "textarea") && f.localized) {
+    if (
+      (f.type === "text" || f.type === "textarea" || f.type === "richText") &&
+      f.localized &&
+      !f.virtual
+    ) {
       return [basePath ? `${basePath}.${f.name}` : f.name];
     }
 

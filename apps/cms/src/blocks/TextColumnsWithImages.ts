@@ -2,10 +2,10 @@ import { Block } from "payload";
 import { makeImageField } from "../fields/image";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
-import { makeRichTextField } from "../fields/rich-text";
 import { RowLabelProps } from "@/components/RowLabel";
 import { makeHeading2Field } from "@/fields/heading2";
 import { makeCallToAction2Field } from "@/fields/call-to-action-2";
+import { makeRichText2Field } from "@/fields/rich-text-2";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -24,7 +24,7 @@ export const TextColumnsWithImagesBlock: Block = {
     "Preview of the Text Columns with Images block, showing a three-column grid in which each columns has a picture, a heading, a text, and a call to action.",
   fields: [
     makeHeading2Field({ optional: true }),
-    makeRichTextField({ optional: true }),
+    makeRichText2Field({ optional: true }),
     {
       name: "numberOfColumns",
       label: {
@@ -80,7 +80,7 @@ export const TextColumnsWithImagesBlock: Block = {
           },
         },
         makeHeading2Field({ optional: true }),
-        makeRichTextField({ optional: true }),
+        makeRichText2Field({ optional: true }),
         makeCallToAction2Field({ optional: true, showByDefault: false }),
       ],
       admin: {

@@ -4,6 +4,7 @@ import { makeRichTextField } from "../fields/rich-text";
 import { RowLabelProps } from "@/components/RowLabel";
 import { heading2Field } from "@/fields/heading2";
 import { makeCallToAction2Field } from "@/fields/call-to-action-2";
+import { makeRichText2Field } from "@/fields/rich-text-2";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -42,7 +43,7 @@ export const RoomListBlock: Block = {
       minRows: 1,
       fields: [
         heading2Field,
-        makeRichTextField({ optional: true }),
+        makeRichText2Field({ optional: true }),
         {
           name: "images",
           type: "array",
