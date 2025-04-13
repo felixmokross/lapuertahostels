@@ -2,7 +2,7 @@ import { CollectionConfig } from "payload";
 import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { bannerUsagesField } from "./usages";
-import { makeCallToAction2Field } from "@/fields/call-to-action-2";
+import { makeCallToActionField } from "@/fields/call-to-action";
 import { translationsView } from "./translations-view-config";
 
 export const Banners: CollectionConfig = {
@@ -66,7 +66,7 @@ export const Banners: CollectionConfig = {
               type: "text",
               localized: true,
             },
-            makeCallToAction2Field({ optional: true, variant: false }),
+            makeCallToActionField({ optional: true, variant: false }),
           ],
         },
 

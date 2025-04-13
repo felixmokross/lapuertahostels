@@ -1,24 +1,24 @@
 import { GroupField, RichTextField, TextField } from "payload";
-import { makeCallToAction2Field } from "./call-to-action-2";
+import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
-import { heading2Field } from "./heading2";
-import { makeRichText2Field } from "./rich-text-2";
+import { headingField } from "./heading";
+import { makeRichTextField } from "./rich-text";
 
-const richTextField = makeRichText2Field();
-const callToAction2Field = makeCallToAction2Field({
+const richTextField = makeRichTextField();
+const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
 });
 
-type OverlayTextBox2FieldOptions = {
+type OverlayTextBoxFieldOptions = {
   optional?: boolean;
   callToActionLabelOnly?: boolean;
 };
 
-export function overlayTextBox2Field({
+export function overlayTextBoxField({
   optional = true,
   callToActionLabelOnly = false,
-}: OverlayTextBox2FieldOptions = {}): GroupField {
+}: OverlayTextBoxFieldOptions = {}): GroupField {
   const condition = optional
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_: any, siblingData: any) => siblingData.show
@@ -33,9 +33,9 @@ export function overlayTextBox2Field({
     fields: [
       ...(optional ? [showField] : []),
       {
-        ...heading2Field,
+        ...headingField,
         admin: {
-          ...heading2Field.admin,
+          ...headingField.admin,
           condition,
         },
       } as TextField,
@@ -63,9 +63,9 @@ export function overlayTextBox2Field({
             },
           }
         : {
-            ...callToAction2Field,
+            ...callToActionField,
             admin: {
-              ...callToAction2Field.admin,
+              ...callToActionField.admin,
               condition,
             },
           },

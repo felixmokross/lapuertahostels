@@ -3,9 +3,9 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { elementIdField } from "../fields/element-id";
 import { imageField } from "../fields/image";
 import { RowLabelProps } from "@/components/RowLabel";
-import { heading2Field } from "@/fields/heading2";
-import { makeCallToAction2Field } from "@/fields/call-to-action-2";
-import { makeRichText2Field } from "@/fields/rich-text-2";
+import { headingField } from "@/fields/heading";
+import { makeCallToActionField } from "@/fields/call-to-action";
+import { makeRichTextField } from "@/fields/rich-text";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -72,9 +72,9 @@ export const FeaturesBlock: Block = {
       required: true,
       fields: [
         imageField,
-        heading2Field,
-        makeRichText2Field(),
-        makeCallToAction2Field({ optional: true, showByDefault: false }),
+        headingField,
+        makeRichTextField(),
+        makeCallToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {
         initCollapsed: true,

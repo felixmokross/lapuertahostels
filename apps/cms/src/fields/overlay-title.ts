@@ -1,10 +1,10 @@
 import { GroupField, RadioField, RichTextField } from "payload";
 import { showField } from "./show";
 import { Page } from "@/payload-types";
-import { makeCallToAction2Field } from "./call-to-action-2";
+import { makeCallToActionField } from "./call-to-action";
 import { editor } from "@/collections/texts/editor";
 
-type OverlayTitle2FieldOptions = {
+type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsSupportingText?: boolean;
   supportsCallToAction?: boolean;
@@ -13,18 +13,18 @@ type OverlayTitle2FieldOptions = {
   })["overlayTitle"]["position"][];
 };
 
-const callToAction2Field = makeCallToAction2Field({
+const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
   variant: { default: "primary" },
 });
 
-export function makeOverlayTitle2Field({
+export function makeOverlayTitleField({
   optional = false,
   supportsSupportingText = true,
   supportsCallToAction = true,
   supportsPositions,
-}: OverlayTitle2FieldOptions = {}): GroupField {
+}: OverlayTitleFieldOptions = {}): GroupField {
   const condition = optional
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_: any, siblingData: any) => siblingData.show
@@ -72,9 +72,9 @@ export function makeOverlayTitle2Field({
       ...(supportsCallToAction
         ? [
             {
-              ...callToAction2Field,
+              ...callToActionField,
               admin: {
-                ...callToAction2Field.admin,
+                ...callToActionField.admin,
                 condition,
               },
             },

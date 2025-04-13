@@ -2,8 +2,8 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { heading2Field } from "@/fields/heading2";
-import { makeRichText2Field } from "@/fields/rich-text-2";
+import { headingField } from "@/fields/heading";
+import { makeRichTextField } from "@/fields/rich-text";
 import { editor } from "@/collections/texts/editor";
 
 export const AccommodationSelectorBlock: Block = {
@@ -22,8 +22,8 @@ export const AccommodationSelectorBlock: Block = {
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
-    heading2Field,
-    makeRichText2Field(),
+    headingField,
+    makeRichTextField(),
     {
       name: "cards",
       label: {

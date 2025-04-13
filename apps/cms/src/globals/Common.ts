@@ -6,8 +6,8 @@ import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
-import { makeRichText2Field } from "@/fields/rich-text-2";
-import { heading2Field } from "@/fields/heading2";
+import { makeRichTextField } from "@/fields/rich-text";
+import { headingField } from "@/fields/heading";
 import { translationsView } from "@/collections/banners/translations-view-config";
 
 export const Common: GlobalConfig = {
@@ -45,7 +45,7 @@ export const Common: GlobalConfig = {
           },
           fields: [
             {
-              ...makeRichText2Field(),
+              ...makeRichTextField(),
               name: "address",
               label: {
                 en: "Address",
@@ -53,7 +53,7 @@ export const Common: GlobalConfig = {
               },
             },
             {
-              ...makeRichText2Field(),
+              ...makeRichTextField(),
               name: "copyright",
               label: {
                 en: "Copyright",
@@ -228,8 +228,8 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when a user tries to access a page that does not exist.",
               es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
             }),
-            heading2Field,
-            makeRichText2Field(),
+            headingField,
+            makeRichTextField(),
           ],
         },
         {
@@ -243,8 +243,8 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when the server encounters an error.",
               es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
             }),
-            heading2Field,
-            makeRichText2Field(),
+            headingField,
+            makeRichTextField(),
           ],
         },
       ],

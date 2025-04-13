@@ -1,6 +1,6 @@
 import { Block } from "payload";
 import { makeImageField } from "../fields/image";
-import { makeOverlayTitle2Field } from "@/fields/overlay-title-2";
+import { makeOverlayTitleField } from "@/fields/overlay-title";
 
 const optionalImageField = makeImageField({ optional: true });
 
@@ -54,6 +54,6 @@ export const HeroVideoBlock: Block = {
         },
       },
     },
-    makeOverlayTitle2Field({ optional: true }),
+    makeOverlayTitleField({ optional: true }),
   ],
 };

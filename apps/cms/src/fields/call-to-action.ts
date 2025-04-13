@@ -1,17 +1,17 @@
 import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
 
-export type CallToAction2FieldOptions = {
+export type CallToActionFieldOptions = {
   optional?: boolean;
   showByDefault?: boolean;
   variant?: { default: "primary" | "secondary" } | false;
 };
 
-export function makeCallToAction2Field({
+export function makeCallToActionField({
   optional = false,
   showByDefault = true,
   variant = { default: "secondary" },
-}: CallToAction2FieldOptions = {}): GroupField {
+}: CallToActionFieldOptions = {}): GroupField {
   const condition = optional
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_: any, siblingData: any) => siblingData.show

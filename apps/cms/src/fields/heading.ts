@@ -1,12 +1,12 @@
 import { TextField } from "payload";
 
-type Heading2FieldOptions = {
+type HeadingFieldOptions = {
   optional?: boolean;
 };
 
-export function makeHeading2Field({
+export function makeHeadingField({
   optional = false,
-}: Heading2FieldOptions = {}): TextField {
+}: HeadingFieldOptions = {}): TextField {
   return {
     name: "heading",
     label: {
@@ -19,4 +19,4 @@ export function makeHeading2Field({
   };
 }
 
-export const heading2Field = makeHeading2Field();
+export const headingField = makeHeadingField();

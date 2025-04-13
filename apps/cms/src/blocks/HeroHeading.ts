@@ -1,6 +1,6 @@
 import { Block } from "payload";
 import { makeImageField } from "../fields/image";
-import { heading2Field } from "@/fields/heading2";
+import { headingField } from "@/fields/heading";
 import { descriptionField } from "@/fields/description";
 
 const optionalImageField = makeImageField({ optional: true });
@@ -25,7 +25,7 @@ export const HeroHeadingBlock: Block = {
       en: "The Hero Heading block can have an optional image for a more engaging page heading. If no image is uploaded, a simple page heading will be displayed.",
       es: "El bloque de encabezado de héroe puede tener una imagen opcional para un encabezado de página más atractivo. Si no se sube ninguna imagen, se mostrará un encabezado de página simple.",
     }),
-    heading2Field,
+    headingField,
     optionalImageField,
   ],
 };

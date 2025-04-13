@@ -1,6 +1,6 @@
 import { elementIdField } from "@/fields/element-id";
 import { makeMoreOptionsField } from "@/fields/more-options";
-import { overlayTextBox2Field } from "@/fields/overlay-text-box-2";
+import { overlayTextBoxField } from "@/fields/overlay-text-box";
 import { Block } from "payload";
 
 export const MapBlock: Block = {
@@ -52,7 +52,7 @@ export const MapBlock: Block = {
         },
       },
     },
-    overlayTextBox2Field({ optional: false, callToActionLabelOnly: true }),
+    overlayTextBoxField({ optional: false, callToActionLabelOnly: true }),
     makeMoreOptionsField(elementIdField),
   ],
 };
