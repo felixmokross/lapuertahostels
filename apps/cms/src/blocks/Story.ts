@@ -2,8 +2,8 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { makeImageField } from "../fields/image";
-import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
+import { heading2Field } from "@/fields/heading2";
 
 const optionalImageField = makeImageField({ optional: true });
 
@@ -23,7 +23,7 @@ export const StoryBlock: Block = {
   imageAltText:
     "Preview of the Story block, showing an image on the left and text on the right",
   fields: [
-    { ...headingField, required: false },
+    { ...heading2Field, required: false },
     makeRichTextField(),
     optionalImageField,
     {

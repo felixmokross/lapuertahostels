@@ -11,13 +11,19 @@ export async function saveTranslations(formData: FormData) {
   const localeCodes = await getSupportedLocaleCodes();
   const collection = formData.get("collection") as CollectionSlug;
   const payload = await getPayload({ config });
+
+  const data = await payload.findByID({
+    id: formData.get("id") as string,
+    collection,
+  });
   const localizedTextFieldPaths = getLocalizedTextFields(
+    data,
     payload.collections[collection].config.fields,
   );
 
   await payload.db.connection.collection(collection).updateOne(
     {
-      _id: ObjectId.createFromHexString(formData.get("id") as string),
+      _id: ObjectId.createFromHexString(data.id),
     },
     {
       $set: Object.fromEntries(

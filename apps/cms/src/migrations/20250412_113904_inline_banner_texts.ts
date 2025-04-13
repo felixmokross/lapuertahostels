@@ -32,30 +32,6 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         $unset: { name: true },
       },
     );
-
-    if (messageText) {
-      const usages = await findTextUsages(messageText._id.toString(), payload);
-      if (usages.length === 0) {
-        console.info(
-          `Deleting text ${messageText._id} because it is not used anymore`,
-        );
-        await payload.db.connection
-          .collection("texts")
-          .deleteOne({ _id: messageText._id });
-      }
-    }
-
-    if (ctaLabelText) {
-      const usages = await findTextUsages(ctaLabelText._id.toString(), payload);
-      if (usages.length === 0) {
-        console.info(
-          `Deleting text ${ctaLabelText._id} because it is not used anymore`,
-        );
-        await payload.db.connection
-          .collection("texts")
-          .deleteOne({ _id: ctaLabelText._id });
-      }
-    }
   }
 }
 

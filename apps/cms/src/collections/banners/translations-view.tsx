@@ -21,6 +21,7 @@ export async function TranslationsView({
   ]);
 
   const localizedTextFieldPaths = getLocalizedTextFields(
+    doc,
     payload.collections[collection].config.fields,
   );
 
@@ -31,7 +32,7 @@ export async function TranslationsView({
       fieldPaths={localizedTextFieldPaths}
       locales={locales.map((l) => ({ code: l.code, label: l.label }))}
       docWithTranslations={docWithTranslations}
-      locale={locale}
+      locale={locale ? { code: locale.code, label: locale.label } : undefined}
     />
   );
 }

@@ -2,8 +2,8 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { makeOverlayTitleField } from "../fields/overlay-title";
 import { makeRichTextField } from "../fields/rich-text";
+import { makeOverlayTitle2Field } from "@/fields/overlay-title-2";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",
@@ -22,7 +22,7 @@ export const ImageWithFloatingTextBlock: Block = {
     "Preview of the Image with Floating Text block, showing a large image with an integrated heading and a text box on the bottom right.",
   fields: [
     imageField,
-    makeOverlayTitleField({
+    makeOverlayTitle2Field({
       supportsCallToAction: false,
       supportsPositions: ["top-left", "top-right"],
       supportsSupportingText: false,

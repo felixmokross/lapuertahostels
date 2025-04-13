@@ -1,9 +1,9 @@
 import { Block } from "payload";
 import { imageField } from "../fields/image";
-import { headingField } from "../fields/heading";
 import { makeRichTextField } from "../fields/rich-text";
-import { makeCallToActionField } from "../fields/call-to-action";
 import { RowLabelProps } from "@/components/RowLabel";
+import { heading2Field } from "@/fields/heading2";
+import { makeCallToAction2Field } from "@/fields/call-to-action-2";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -41,7 +41,7 @@ export const RoomListBlock: Block = {
       },
       minRows: 1,
       fields: [
-        headingField,
+        heading2Field,
         makeRichTextField({ optional: true }),
         {
           name: "images",
@@ -62,11 +62,8 @@ export const RoomListBlock: Block = {
             imageField,
             {
               name: "caption",
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              type: "text",
+              localized: true,
               label: {
                 en: "Caption",
                 es: "Pie de foto",
@@ -74,7 +71,7 @@ export const RoomListBlock: Block = {
             },
           ],
         },
-        makeCallToActionField(),
+        makeCallToAction2Field(),
       ],
       admin: {
         components: {

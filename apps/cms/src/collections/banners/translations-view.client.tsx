@@ -110,7 +110,7 @@ export function TranslationsViewClient({
           className="tw:table-fixed tw:w-full tw:relative"
         >
           <colgroup>
-            <col className="tw:w-[150px]"></col>
+            <col></col>
             {locales.map((l) => (
               <col key={l.code} className="tw:w-[200px]"></col>
             ))}
@@ -227,7 +227,7 @@ function Editor({
   value: string;
   onChange: (value: string) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -238,8 +238,8 @@ function Editor({
   return (
     <>
       {isEditing ? (
-        <div className="field-type text tw:-mx-[16px] tw:my-[calc(var(--tw-spacing)_*_-2_-_2px)]">
-          <input
+        <div className="field-type textarea tw:-mx-[16px] tw:my-[calc(var(--tw-spacing)_*_-2_-_2px)]">
+          <textarea
             value={value}
             onChange={(e) => onChange(e.currentTarget.value)}
             onBlur={() => {
@@ -254,6 +254,7 @@ function Editor({
                 setIsEditing(false);
               }
             }}
+            className="tw:min-h-[unset]!"
             ref={ref}
           />
         </div>
