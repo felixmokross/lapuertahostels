@@ -5,7 +5,7 @@ import { elementIdField } from "../fields/element-id";
 import { RowLabelProps } from "@/components/RowLabel";
 import { makeHeadingField } from "@/fields/heading";
 import { makeCallToActionField } from "@/fields/call-to-action";
-import { makeRichTextField } from "@/fields/rich-text";
+import { richTextField } from "@/fields/rich-text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
@@ -24,7 +24,7 @@ export const TextColumnsWithImagesBlock: Block = {
     "Preview of the Text Columns with Images block, showing a three-column grid in which each columns has a picture, a heading, a text, and a call to action.",
   fields: [
     makeHeadingField({ optional: true }),
-    makeRichTextField({ optional: true }),
+    richTextField({ required: false }),
     {
       name: "numberOfColumns",
       label: {
@@ -80,7 +80,7 @@ export const TextColumnsWithImagesBlock: Block = {
           },
         },
         makeHeadingField({ optional: true }),
-        makeRichTextField({ optional: true }),
+        richTextField({ required: false }),
         makeCallToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {

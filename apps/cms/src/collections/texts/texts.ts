@@ -6,6 +6,7 @@ import { transformRecordAsync } from "@/common/records";
 import { textUsagesField } from "./usages";
 import { refreshCacheHook } from "./refresh-cache-hook";
 
+// TODO remove collection once all environments have been migrated
 export const Texts: CollectionConfig = {
   slug: "texts",
   labels: {
@@ -26,6 +27,7 @@ export const Texts: CollectionConfig = {
     title: true,
   },
   admin: {
+    hidden: true,
     useAsTitle: "title",
     defaultColumns: ["title", "type", "comment"],
     listSearchableFields: ["id", "title", "comment"],

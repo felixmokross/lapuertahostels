@@ -3,7 +3,7 @@ import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { headingField } from "@/fields/heading";
-import { makeRichTextField } from "@/fields/rich-text";
+import { richTextField } from "@/fields/rich-text";
 import { editor } from "@/collections/texts/editor";
 
 export const AccommodationSelectorBlock: Block = {
@@ -23,7 +23,7 @@ export const AccommodationSelectorBlock: Block = {
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
     headingField,
-    makeRichTextField(),
+    richTextField(),
     {
       name: "cards",
       label: {

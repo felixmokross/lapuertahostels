@@ -1,13 +1,9 @@
 import { editor } from "@/collections/texts/editor";
 import { RichTextField } from "payload";
 
-export type RichTextFieldOptions = {
-  optional?: boolean;
-};
-
-export function makeRichTextField({
-  optional = false,
-}: RichTextFieldOptions = {}): RichTextField {
+export function richTextField(
+  config: Partial<RichTextField> = {},
+): RichTextField {
   return {
     name: "text",
     label: {
@@ -17,6 +13,7 @@ export function makeRichTextField({
     type: "richText",
     editor: editor(),
     localized: true,
-    required: !optional,
+    required: true,
+    ...config,
   };
 }

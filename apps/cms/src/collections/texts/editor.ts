@@ -1,12 +1,11 @@
 import {
   BoldFeature,
   defaultEditorConfig,
-  FixedToolbarFeature,
   getEnabledNodes,
   HeadingFeature,
-  HTMLConverterFeature,
   IndentFeature,
   InlineCodeFeature,
+  InlineToolbarFeature,
   ItalicFeature,
   lexicalEditor,
   LinkFeature,
@@ -17,7 +16,6 @@ import {
   UnderlineFeature,
   UnorderedListFeature,
 } from "@payloadcms/richtext-lexical";
-import { SlateToLexicalFeature } from "@payloadcms/richtext-lexical/migrate";
 import { createHeadlessEditor } from "@payloadcms/richtext-lexical/lexical/headless";
 import payloadConfig from "@/payload.config";
 
@@ -40,11 +38,7 @@ const features = [
   // Also currently we don't support the 'open in new tab' checkbox, should we? External links are already always opened in a new tab.
   LinkFeature({ enabledCollections: ["pages"] }),
 
-  FixedToolbarFeature(),
-
-  // TODO remove this once we have migrated to Lexical on all environments
-  SlateToLexicalFeature({ disableHooks: true }),
-  HTMLConverterFeature({}),
+  InlineToolbarFeature(),
 ];
 
 export async function getEditorConfig() {

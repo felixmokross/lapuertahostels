@@ -5,7 +5,7 @@ import { imageField } from "../fields/image";
 import { RowLabelProps } from "@/components/RowLabel";
 import { headingField } from "@/fields/heading";
 import { makeCallToActionField } from "@/fields/call-to-action";
-import { makeRichTextField } from "@/fields/rich-text";
+import { richTextField } from "@/fields/rich-text";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
@@ -73,7 +73,7 @@ export const FeaturesBlock: Block = {
       fields: [
         imageField,
         headingField,
-        makeRichTextField(),
+        richTextField(),
         makeCallToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {

@@ -1,33 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
-import { ElementNode, richTextRoot } from "@lapuertahostels/shared";
 import {
   Banner,
   Brand,
   Link,
   Media,
   Page,
-  Text,
 } from "@lapuertahostels/payload-types";
-
-export function plainText(text: string): Text {
-  return {
-    id: createId(),
-    type: "plainText",
-    text,
-    createdAt: date,
-    updatedAt: date,
-  };
-}
-
-export function richText(...nodes: ElementNode[]): Text {
-  return {
-    id: createId(),
-    type: "richText",
-    richText: richTextRoot(...nodes) as unknown as Text["richText"],
-    createdAt: date,
-    updatedAt: date,
-  };
-}
 
 export function brand(values: Partial<Brand> = {}): Brand {
   return {

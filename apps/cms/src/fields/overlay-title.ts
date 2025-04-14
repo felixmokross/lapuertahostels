@@ -1,8 +1,8 @@
-import { GroupField, RadioField, RichTextField } from "payload";
+import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
 import { Page } from "@/payload-types";
 import { makeCallToActionField } from "./call-to-action";
-import { editor } from "@/collections/texts/editor";
+import { richTextField } from "./rich-text";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
@@ -39,34 +39,18 @@ export function makeOverlayTitleField({
     type: "group",
     fields: [
       ...(optional ? [showField] : []),
-      {
-        name: "text",
-        label: {
-          en: "Text",
-          es: "Texto",
-        },
-        required: true,
-        type: "richText",
-        localized: true,
-        editor: editor(),
-        admin: {
-          condition,
-        },
-      },
+      richTextField({ admin: { condition } }),
       ...(supportsSupportingText
         ? [
-            {
+            richTextField({
               name: "supportingText",
               label: {
                 en: "Supporting Text",
                 es: "Texto de apoyo",
               },
-              type: "richText",
-              localized: true,
-              admin: {
-                condition,
-              },
-            } as RichTextField,
+              admin: { condition },
+              required: false,
+            }),
           ]
         : []),
       ...(supportsCallToAction

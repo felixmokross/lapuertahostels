@@ -1,10 +1,9 @@
-import { GroupField, RichTextField, TextField } from "payload";
+import { GroupField, TextField } from "payload";
 import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
 import { headingField } from "./heading";
-import { makeRichTextField } from "./rich-text";
+import { richTextField } from "./rich-text";
 
-const richTextField = makeRichTextField();
 const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
@@ -39,13 +38,7 @@ export function overlayTextBoxField({
           condition,
         },
       } as TextField,
-      {
-        ...richTextField,
-        admin: {
-          ...richTextField.admin,
-          condition,
-        },
-      } as RichTextField,
+      richTextField({ admin: { condition } }),
       callToActionLabelOnly
         ? {
             name: "callToActionLabel",
