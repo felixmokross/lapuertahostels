@@ -8,6 +8,7 @@ import { convertHTMLToLexical } from "@payloadcms/richtext-lexical";
 import { getEditorConfig } from "@/collections/texts/editor";
 import { JSDOM } from "jsdom";
 import { getValueByPath } from "@/common/utils";
+import { type ObjectId as ObjectIdType } from "bson";
 
 export const autoTranslateEndpoint: Endpoint = {
   path: "/auto-translate",
@@ -57,11 +58,12 @@ export const autoTranslateEndpoint: Endpoint = {
         },
       );
     }
+    const _id = ObjectId.isValid(id!) ? new ObjectId(id!) : id!;
 
     const originalDoc = collection
       ? await req.payload.db.connection
-          .collection(collection)
-          .findOne({ _id: new ObjectId(id!) })
+          .collection<{ _id: string | ObjectIdType }>(collection)
+          .findOne({ _id })
       : await req.payload.db.connection
           .collection("globals")
           .findOne({ globalType: global });
@@ -138,7 +140,7 @@ export const autoTranslateEndpoint: Endpoint = {
     }
 
     await req.payload.db.connection
-      .collection(collection || "globals")
+      .collection<{ _id: string | ObjectIdType }>(collection || "globals")
       .updateOne(
         { _id: originalDoc._id },
         {
