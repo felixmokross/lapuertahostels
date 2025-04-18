@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/common/cn";
 import { SparklesIcon } from "@/common/icons";
 import { getLabelText } from "@/common/labels";
@@ -31,6 +32,8 @@ import {
   FieldLabelClientProps,
   GlobalSlug,
   Locale,
+  RichTextFieldClient,
+  TextareaFieldClient,
   TextFieldClient,
 } from "payload";
 import {
@@ -43,10 +46,12 @@ import {
   useState,
 } from "react";
 
-export function TranslationsButton({
+export function TranslationsFieldLabel({
   field,
   path,
-}: FieldLabelClientProps<TextFieldClient>) {
+}: FieldLabelClientProps<
+  TextFieldClient | TextareaFieldClient | RichTextFieldClient
+>) {
   const { openModal, isModalOpen, closeModal } = useModal();
 
   const { id, collectionSlug, globalSlug } = useDocumentInfo();
@@ -62,49 +67,50 @@ export function TranslationsButton({
 
   const { config } = useConfig();
 
-  // For direct fields, the Label component seems to be rendered also on the list page (even if not visible), but without `path`
-  // Therefore can't throw an error here
-  if (!path) return null;
-
   if (!config.localization) throw new Error("Localization must be enabled");
   if (typeof id === "number") throw new Error("number ids are not supported");
 
   const translationsDisabled = (collectionSlug && !id) || isModified;
   return (
     <div className="tw:flex tw:justify-between tw:items-baseline">
-      <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
-        {isModalOpen(modalSlug) && (
-          <DrawerContent
-            id={id}
-            currentLocale={locale}
-            locales={config.localization.locales}
-            collectionSlug={collectionSlug}
-            globalSlug={globalSlug}
-            fieldPath={path}
-            onClose={() => closeModal(modalSlug)}
-          />
-        )}
-      </Drawer>
       <FieldLabel
         label={field?.label ? getLabelText(field.label, i18n) : undefined}
         path={path}
         localized={true}
       />
-      <div className="tw:flex tw:gap-2 tw:items-baseline">
-        {translationsDisabled && (
-          <p className="field-description tw:m-0">
-            {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
-          </p>
-        )}
-        <button
-          disabled={isModified}
-          type="button"
-          className="tw:disabled:opacity-50 tw:disabled:cursor-not-allowed tw:disabled:hover:text-theme-elevation-800 tw:bg-transparent tw:underline tw:hover:text-theme-elevation-1000 tw:cursor-pointer tw:border-none tw:p-0 tw:text-theme-elevation-800"
-          onClick={() => openModal(modalSlug)}
-        >
-          {i18n.t("custom:texts:translationsButtonLabel")}
-        </button>
-      </div>
+      {/*  The Label is also rendered in the List view, here without path, see https://payloadcms.com/docs/fields/overview#label */}
+      {path && (
+        <>
+          <div className="tw:flex tw:gap-2 tw:items-baseline">
+            {translationsDisabled && (
+              <p className="field-description tw:m-0">
+                {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
+              </p>
+            )}
+            <button
+              disabled={isModified}
+              type="button"
+              className="tw:disabled:opacity-50 tw:disabled:cursor-not-allowed tw:disabled:hover:text-theme-elevation-800 tw:bg-transparent tw:underline tw:hover:text-theme-elevation-1000 tw:cursor-pointer tw:border-none tw:p-0 tw:text-theme-elevation-800"
+              onClick={() => openModal(modalSlug)}
+            >
+              {i18n.t("custom:texts:translationsButtonLabel")}
+            </button>
+          </div>
+          <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
+            {isModalOpen(modalSlug) && (
+              <DrawerContent
+                id={id}
+                currentLocale={locale}
+                locales={config.localization.locales}
+                collectionSlug={collectionSlug}
+                globalSlug={globalSlug}
+                fieldPath={path}
+                onClose={() => closeModal(modalSlug)}
+              />
+            )}
+          </Drawer>
+        </>
+      )}
     </div>
   );
 }

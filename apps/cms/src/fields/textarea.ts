@@ -16,7 +16,8 @@ export function textareaField(
     admin: {
       ...config.admin,
       components: {
-        Label: "/src/components/translations-button#TranslationsButton",
+        Label:
+          "/src/components/translations-field-label#TranslationsFieldLabel",
         ...config.admin?.components,
       },
     },

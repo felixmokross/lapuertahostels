@@ -14,7 +14,8 @@ export function textField(config: Partial<TextField> = {}): TextField {
     admin: {
       ...config.admin,
       components: {
-        Label: "/src/components/translations-button#TranslationsButton",
+        Label:
+          "/src/components/translations-field-label#TranslationsFieldLabel",
         ...config.admin?.components,
       },
     },
