@@ -1,3 +1,4 @@
+import { getValueByPath } from "@/common/utils";
 import { CollectionSlug, Endpoint, GlobalSlug } from "payload";
 
 export const translationsEndpoint: Endpoint = {
@@ -53,26 +54,14 @@ export const translationsEndpoint: Endpoint = {
           })
         : await req.payload.findGlobal({ slug: global!, locale: "all" });
 
-    return new Response(JSON.stringify({ value: getValue(data, fieldPath) }), {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
+    return new Response(
+      JSON.stringify({ value: getValueByPath(data, fieldPath) }),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+        },
       },
-    });
+    );
   },
 };
-
-function getValue(doc: object, fieldPath: string) {
-  const fieldPathParts = fieldPath.split(".");
-  let value = doc;
-  for (const part of fieldPathParts) {
-    if (value && typeof value === "object") {
-      // @ts-expect-error We don't care about the type here
-      value = value[part];
-    } else {
-      return undefined;
-    }
-  }
-
-  return value;
-}

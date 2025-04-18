@@ -1,7 +1,6 @@
-import { GroupField, TextField } from "payload";
+import { GroupField } from "payload";
 import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
-import { headingField } from "./heading";
 import { richTextField } from "./rich-text";
 import { textField } from "./text";
 
@@ -32,13 +31,11 @@ export function overlayTextBoxField({
     type: "group",
     fields: [
       ...(optional ? [showField] : []),
-      {
-        ...headingField,
-        admin: {
-          ...headingField.admin,
-          condition,
-        },
-      } as TextField,
+      textField({
+        name: "heading",
+        label: { en: "Heading", es: "Título" },
+        admin: { condition },
+      }),
       richTextField({ admin: { condition } }),
       callToActionLabelOnly
         ? textField({

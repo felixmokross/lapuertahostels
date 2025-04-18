@@ -7,7 +7,6 @@ import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
-import { headingField } from "@/fields/heading";
 import { textField } from "@/fields/text";
 import { textareaField } from "@/fields/textarea";
 
@@ -199,7 +198,10 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when a user tries to access a page that does not exist.",
               es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
             }),
-            headingField,
+            textField({
+              name: "heading",
+              label: { en: "Heading", es: "Título" },
+            }),
             richTextField(),
           ],
         },
@@ -214,7 +216,10 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when the server encounters an error.",
               es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
             }),
-            headingField,
+            textField({
+              name: "heading",
+              label: { en: "Heading", es: "Título" },
+            }),
             richTextField(),
           ],
         },

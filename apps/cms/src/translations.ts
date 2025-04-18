@@ -19,7 +19,7 @@ export const translations = {
             "The pathname must start with '{{ prefix }}'.",
         },
       },
-      texts: {
+      translations: {
         translationsButtonLabel: "Translations…",
         translationsTitle: "Translations",
         currentLocale: "Current Locale",
@@ -74,17 +74,6 @@ export const translations = {
         global: "Global",
         noUsages: "There are no usages of this item.",
       },
-      banners: {
-        translations: "Translations",
-        translationsSaved: "Translations saved",
-        autoTranslationFinished: "Auto-translation finished",
-        autoTranslating: "Auto-Translating…",
-        autoTranslate: "Auto-Translate",
-        field: "Field",
-        currentLocale: "Current Locale",
-        save: "Save",
-        saving: "Saving…",
-      },
     },
   },
   es: {
@@ -104,7 +93,7 @@ export const translations = {
             "La ruta debe comenzar con '{{ prefix }}'.",
         },
       },
-      texts: {
+      translations: {
         translationsButtonLabel: "Traducciones…",
         translationsTitle: "Traducciones",
         currentLocale: "Idioma actual",
@@ -158,17 +147,6 @@ export const translations = {
         numberOfUsages_other: "{{ count }} usos",
         global: "Global",
         noUsages: "No hay usos de este elemento.",
-      },
-      banners: {
-        translations: "Traducciones",
-        translationsSaved: "Traducciones guardadas",
-        autoTranslationFinished: "Traducción automática finalizada",
-        autoTranslating: "Auto-traduciendo…",
-        autoTranslate: "Auto-traducir",
-        field: "Campo",
-        currentLocale: "Idioma actual",
-        save: "Guardar",
-        saving: "Guardando…",
       },
     },
   },

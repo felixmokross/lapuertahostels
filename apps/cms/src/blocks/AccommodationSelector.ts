@@ -2,8 +2,8 @@ import { Block } from "payload";
 import { elementIdField } from "../fields/element-id";
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
-import { headingField } from "@/fields/heading";
 import { richTextField } from "@/fields/rich-text";
+import { textField } from "@/fields/text";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",
@@ -21,7 +21,7 @@ export const AccommodationSelectorBlock: Block = {
   imageAltText:
     "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
-    headingField,
+    textField({ name: "heading", label: { en: "Heading", es: "Título" } }),
     richTextField(),
     {
       name: "cards",

@@ -1,9 +1,9 @@
 import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { makeOverlayTitleField } from "@/fields/overlay-title";
-import { Block, TextField } from "payload";
+import { Block } from "payload";
 import { RowLabelProps } from "@/components/RowLabel";
-import { headingField } from "@/fields/heading";
+import { textField } from "@/fields/text";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",
@@ -21,21 +21,19 @@ export const HeroSlidesBlock: Block = {
   imageAltText:
     "Preview of the Hero Slides block, showing an image with an overlay title, CTA, and controls to switch slides.",
   fields: [
-    {
-      ...headingField,
+    textField({
       name: "seoPageHeading",
       label: {
         en: "Page Heading (SEO-only)",
         es: "Título de la página (solo SEO)",
       },
       admin: {
-        ...headingField.admin,
         description: {
           en: "This heading is only used for SEO purposes and is not shown on the page. Since the slide overlay titles semantically don't define the page's main heading, you can use this field to define the main heading of the page.",
           es: "Este título se utiliza solo con fines de SEO y no se muestra en la página. Dado que los títulos superpuestos de las diapositivas no definen semánticamente el título principal de la página, puedes utilizar este campo para definir el título principal de la página.",
         },
       },
-    } as TextField,
+    }),
     {
       name: "slides",
       label: {

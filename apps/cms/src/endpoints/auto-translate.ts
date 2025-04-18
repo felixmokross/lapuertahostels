@@ -7,6 +7,7 @@ import { translate } from "@/common/translation";
 import { convertHTMLToLexical } from "@payloadcms/richtext-lexical";
 import { getEditorConfig } from "@/collections/texts/editor";
 import { JSDOM } from "jsdom";
+import { getValueByPath } from "@/common/utils";
 
 export const autoTranslateEndpoint: Endpoint = {
   path: "/auto-translate",
@@ -75,7 +76,7 @@ export const autoTranslateEndpoint: Endpoint = {
       });
     }
 
-    const textInAllLocales = getValue(originalDoc, fieldPath) as
+    const textInAllLocales = getValueByPath(originalDoc, fieldPath) as
       | Record<string, SerializedEditorState | string>
       | undefined
       | null;
@@ -152,19 +153,3 @@ export const autoTranslateEndpoint: Endpoint = {
     return new Response(null, { status: 204 });
   },
 };
-
-// TODO reuse
-function getValue(doc: object, fieldPath: string) {
-  const fieldPathParts = fieldPath.split(".");
-  let value = doc;
-  for (const part of fieldPathParts) {
-    if (value && typeof value === "object") {
-      // @ts-expect-error We don't care about the type here
-      value = value[part];
-    } else {
-      return undefined;
-    }
-  }
-
-  return value;
-}

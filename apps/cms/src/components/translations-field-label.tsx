@@ -84,7 +84,9 @@ export function TranslationsFieldLabel({
           <div className="tw:flex tw:gap-2 tw:items-baseline">
             {translationsDisabled && (
               <p className="field-description tw:m-0">
-                {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
+                {t(
+                  "custom:translations:pleaseSaveYourChangesToEnableAutoTranslate",
+                )}
               </p>
             )}
             <button
@@ -93,10 +95,13 @@ export function TranslationsFieldLabel({
               className="tw:disabled:opacity-50 tw:disabled:cursor-not-allowed tw:disabled:hover:text-theme-elevation-800 tw:bg-transparent tw:underline tw:hover:text-theme-elevation-1000 tw:cursor-pointer tw:border-none tw:p-0 tw:text-theme-elevation-800"
               onClick={() => openModal(modalSlug)}
             >
-              {i18n.t("custom:texts:translationsButtonLabel")}
+              {i18n.t("custom:translations:translationsButtonLabel")}
             </button>
           </div>
-          <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
+          <Drawer
+            slug={modalSlug}
+            title={t("custom:translations:translationsTitle")}
+          >
             {isModalOpen(modalSlug) && (
               <DrawerContent
                 id={id}
@@ -199,7 +204,7 @@ function DrawerContent({
     <>
       <Drawer
         slug={selectLocalesModalSlug}
-        title={t("custom:texts:selectLocales")}
+        title={t("custom:translations:selectLocales")}
       >
         <div className="tw:mt-8 tw:space-y-4">
           <p>
@@ -207,7 +212,7 @@ function DrawerContent({
               // @ts-expect-error types don't match
               t={t}
               // @ts-expect-error types don't match
-              i18nKey="custom:texts:selectLocalesDescription"
+              i18nKey="custom:translations:selectLocalesDescription"
               variables={{
                 sourceLocale: getLabelText(currentLocale.label, i18n),
               }}
@@ -249,7 +254,7 @@ function DrawerContent({
             // @ts-expect-error types don't match
             t={t}
             // @ts-expect-error types don't match
-            i18nKey="custom:texts:selectLocalesNote"
+            i18nKey="custom:translations:selectLocalesNote"
             elements={{ s: ({ children }) => <strong>{children}</strong> }}
           />
         </p>
@@ -285,13 +290,18 @@ function DrawerContent({
                 if (response.ok) {
                   await updateData();
                   closeModal(selectLocalesModalSlug);
-                  console.info(t("custom:texts:autoTranslatedSuccessfully"));
-                  toast.success(t("custom:texts:autoTranslatedSuccessfully"), {
-                    duration: 3000,
-                  });
+                  console.info(
+                    t("custom:translations:autoTranslatedSuccessfully"),
+                  );
+                  toast.success(
+                    t("custom:translations:autoTranslatedSuccessfully"),
+                    {
+                      duration: 3000,
+                    },
+                  );
                 } else {
-                  console.error(t("custom:texts:failedToAutoTranslate"));
-                  toast.error(t("custom:texts:failedToAutoTranslate"), {
+                  console.error(t("custom:translations:failedToAutoTranslate"));
+                  toast.error(t("custom:translations:failedToAutoTranslate"), {
                     duration: 3000,
                   });
                 }
@@ -302,8 +312,8 @@ function DrawerContent({
             disabled={isTranslating || selectedLocaleCodes.length === 0}
           >
             {isTranslating
-              ? t("custom:texts:translating")
-              : t("custom:texts:translateToSelectedLocales")}
+              ? t("custom:translations:translating")
+              : t("custom:translations:translateToSelectedLocales")}
           </Button>
         </div>
       </Drawer>
@@ -322,7 +332,9 @@ function DrawerContent({
                   isStickyTop={true}
                 >
                   <Label>{currentLocale.label}</Label>
-                  <Pill rounded={true}>{t("custom:texts:currentLocale")}</Pill>
+                  <Pill rounded={true}>
+                    {t("custom:translations:currentLocale")}
+                  </Pill>
                 </TableHeaderFooterCell>
                 {otherLocales.map((locale) => (
                   <TableHeaderFooterCell key={locale.code} isStickyTop={true}>
@@ -367,7 +379,7 @@ function DrawerContent({
                     disabled={isTranslating}
                     icon={<SparklesIcon />}
                   >
-                    {t("custom:texts:autoTranslate")}
+                    {t("custom:translations:autoTranslate")}
                   </Button>
                 </TableHeaderFooterCell>
                 {otherLocales.map((locale) => (
@@ -384,7 +396,7 @@ function DrawerContent({
                       icon="edit"
                       disabled={isTranslating}
                     >
-                      {t("custom:texts:goToTranslation")}
+                      {t("custom:translations:goToTranslation")}
                     </Button>
                   </TableHeaderFooterCell>
                 ))}
