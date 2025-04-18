@@ -61,9 +61,12 @@ export function TranslationsButton({
   });
 
   const { config } = useConfig();
-  if (!config.localization) throw new Error("Localization must be enabled");
 
-  if (!path) throw new Error("path is not set");
+  // For direct fields, the Label component seems to be rendered also on the list page (even if not visible), but without `path`
+  // Therefore can't throw an error here
+  if (!path) return null;
+
+  if (!config.localization) throw new Error("Localization must be enabled");
   if (typeof id === "number") throw new Error("number ids are not supported");
 
   const translationsDisabled = (collectionSlug && !id) || isModified;
