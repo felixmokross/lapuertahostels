@@ -6,7 +6,6 @@ import {
   externalLink,
   internalLink,
   media,
-  plainText,
 } from "~/common/cms-data.builders";
 
 const meta = {
@@ -27,25 +26,25 @@ const puertaBrand = brand({
   homeLink: internalLink("/"),
   navLinks: [
     {
-      label: plainText("Accommodations"),
+      label: "Accommodations",
       link: internalLink("/accommodations"),
     },
     {
-      label: plainText("Santa Marta"),
+      label: "Santa Marta",
       link: internalLink("/santa-marta"),
     },
     {
-      label: plainText("About Us"),
+      label: "About Us",
       link: internalLink("/about-us"),
     },
     {
-      label: plainText("Contact"),
+      label: "Contact",
       link: internalLink("/contact"),
     },
   ],
   bookCta: {
     show: true,
-    label: plainText("Book Now"),
+    label: "Book Now",
     link: externalLink("https://www.example.com"),
   },
   logo: media("logo-puerta-simple.png"),

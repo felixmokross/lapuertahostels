@@ -2,7 +2,7 @@ import { Page } from "@lapuertahostels/payload-types";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { OverlayTextBox } from "./common/overlay-text-box";
-import { isObject } from "~/common/utils";
+import { RichTextObject } from "@lapuertahostels/shared";
 
 export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
   blockType: "WideImage";
@@ -25,10 +25,10 @@ export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
       {overlayTextBox?.show && (
         <OverlayTextBox
           heading={overlayTextBox.heading}
-          text={overlayTextBox.text}
+          text={overlayTextBox.text as unknown as RichTextObject}
           position={overlayTextBox.position}
           cta={
-            overlayTextBox.cta?.show && isObject(overlayTextBox.cta.label)
+            overlayTextBox.cta?.show && overlayTextBox.cta.label
               ? {
                   as: PageLink,
                   link: overlayTextBox.cta.link,

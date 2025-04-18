@@ -19,7 +19,7 @@ export const translations = {
             "The pathname must start with '{{ prefix }}'.",
         },
       },
-      texts: {
+      translations: {
         translationsButtonLabel: "Translations…",
         translationsTitle: "Translations",
         currentLocale: "Current Locale",
@@ -93,7 +93,7 @@ export const translations = {
             "La ruta debe comenzar con '{{ prefix }}'.",
         },
       },
-      texts: {
+      translations: {
         translationsButtonLabel: "Traducciones…",
         translationsTitle: "Traducciones",
         currentLocale: "Idioma actual",

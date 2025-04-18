@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { LeadTextBlock } from "./lead-text-block";
-import { callToAction, plainText, richText } from "~/common/cms-data.builders";
+import { LeadBlockProps, LeadTextBlock } from "./lead-text-block";
+import { callToAction } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Lead Text Block",
@@ -19,8 +19,8 @@ export const Default: Story = {
   args: {
     blockType: "LeadText",
     id: createId(),
-    heading: plainText("Discover the Colombian Costa Caribe"),
-    text: richText(
+    heading: "Discover the Colombian Costa Caribe",
+    text: richTextRoot(
       paragraph(
         text("Hike through the breath-taking beauty of "),
         bold("Tayrona National Park"),
@@ -34,7 +34,7 @@ export const Default: Story = {
         bold("your perfect home base"),
         text("."),
       ),
-    ),
+    ) as unknown as LeadBlockProps["text"],
   },
 };
 

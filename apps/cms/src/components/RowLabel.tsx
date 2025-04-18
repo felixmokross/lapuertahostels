@@ -1,8 +1,8 @@
 "use client";
 
-import { Text } from "@/payload-types";
 import { TranslationsKey, TranslationsObject } from "@/translations";
-import { usePayloadAPI, useRowLabel, useTranslation } from "@payloadcms/ui";
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+import { useRowLabel, useTranslation } from "@payloadcms/ui";
 
 export type RowLabelProps = {
   textProp: string;
@@ -20,32 +20,13 @@ export function RowLabel({ textProp, fallbackLabelKey }: RowLabelProps) {
     n: (rowNumber != null ? rowNumber + 1 : 0).toString().padStart(2, "0"),
   });
 
-  const textId = getValueByPath(data, textProp) as string | { value: string };
-  if (!textId) {
-    return fallbackLabel;
-  }
+  const value = getValueByPath(data, textProp);
 
   return (
-    <RowLabelWithDefinedText
-      textId={typeof textId === "object" ? textId.value : textId}
-      fallbackLabel={fallbackLabel}
-    />
+    (typeof value === "object"
+      ? convertLexicalToPlaintext({ data: value })
+      : value) || fallbackLabel
   );
-}
-
-type RowLabelWithDefinedTextProps = {
-  textId: string;
-  fallbackLabel: string;
-};
-
-function RowLabelWithDefinedText({
-  textId,
-  fallbackLabel,
-}: RowLabelWithDefinedTextProps) {
-  const [{ data }] = usePayloadAPI(`/api/texts/${textId}`);
-  const text = data as Text;
-
-  return text?.title ?? fallbackLabel;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

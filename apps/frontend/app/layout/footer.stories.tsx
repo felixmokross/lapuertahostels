@@ -7,10 +7,9 @@ import {
   externalLink,
   internalLink,
   media,
-  plainText,
-  richText,
 } from "~/common/cms-data.builders";
-import { paragraph, text } from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { Common } from "~/common/common";
 
 const meta = {
   title: "layout/Footer",
@@ -40,64 +39,64 @@ const puertaBrand = brand({
   footer: {
     linkGroups: [
       {
-        title: plainText("Hotel"),
+        title: "Hotel",
         links: [
           {
-            label: plainText("About Us"),
+            label: "About Us",
             link: internalLink("/about-us"),
           },
           {
-            label: plainText("Puerta Aqua"),
+            label: "Puerta Aqua",
             link: internalLink("/aqua"),
           },
           {
-            label: plainText("La Puerta Azul"),
+            label: "La Puerta Azul",
             link: internalLink("/azul"),
           },
           {
-            label: plainText("Contact"),
+            label: "Contact",
             link: internalLink("/contact"),
           },
         ],
       },
       {
-        title: plainText("Experiences"),
+        title: "Experiences",
         links: [
           {
-            label: plainText("Santa Marta"),
+            label: "Santa Marta",
             link: internalLink("/santa-marta"),
           },
           {
-            label: plainText("Lost City"),
+            label: "Lost City",
             link: internalLink("/lost-city"),
           },
           {
-            label: plainText("Tayrona Park"),
+            label: "Tayrona Park",
             link: internalLink("/tayrona-park"),
           },
           {
-            label: plainText("Minca"),
+            label: "Minca",
             link: internalLink("/minca"),
           },
         ],
       },
       {
-        title: plainText("Legal"),
+        title: "Legal",
         links: [
           {
-            label: plainText("Terms"),
+            label: "Terms",
             link: internalLink("/terms"),
           },
           {
-            label: plainText("Cancelation"),
+            label: "Cancelation",
             link: internalLink("/cancelation"),
           },
           {
-            label: plainText("Privacy"),
+            label: "Privacy",
             link: internalLink("/privacy"),
           },
           {
-            label: plainText("FAQ"),
+            label: "FAQ",
             link: internalLink("/faq"),
           },
         ],
@@ -109,17 +108,17 @@ const puertaBrand = brand({
 export const Default: Story = {
   args: {
     content: {
-      address: richText(
+      address: richTextRoot(
         paragraph(
           text(`La Puerta Hostels S.A.S.
 Calle 18 #5-66
 Santa Marta 470004
 Colombia`),
         ),
-      ),
-      copyright: richText(
+      ) as unknown as Common["footer"]["address"],
+      copyright: richTextRoot(
         paragraph(text("La Puerta Hostels S.A.S. All rights reserved.")),
-      ),
+      ) as unknown as Common["footer"]["copyright"],
       socialLinks: [
         {
           platform: "facebook",
@@ -136,12 +135,11 @@ Colombia`),
       ],
       newsletter: {
         show: true,
-        title: plainText("Subscribe to our newsletter"),
-        description: plainText(
+        title: "Subscribe to our newsletter",
+        description:
           "Don’t miss out on new experiences, discounts, or any other news from us!",
-        ),
-        emailPlaceholder: plainText("Enter your email"),
-        buttonLabel: plainText("Subscribe"),
+        emailPlaceholder: "Enter your email",
+        buttonLabel: "Subscribe",
       },
     },
     allBrands: [puertaBrand],

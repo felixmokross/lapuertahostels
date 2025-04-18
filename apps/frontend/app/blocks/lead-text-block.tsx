@@ -4,7 +4,6 @@ import { Heading } from "~/common/heading";
 import { Page } from "@lapuertahostels/payload-types";
 import { cn } from "~/common/cn";
 import { PageLink } from "~/common/page-link";
-import { gracefully } from "~/common/utils";
 import { RichTextObject } from "@lapuertahostels/shared";
 
 export type LeadBlockProps = NonNullable<Page["layout"]>[number] & {
@@ -24,7 +23,7 @@ export function LeadTextBlock({
     >
       {heading && (
         <Heading as="h3" size="medium">
-          {gracefully(heading, "text")}
+          {heading}
         </Heading>
       )}
 
@@ -33,7 +32,7 @@ export function LeadTextBlock({
         size="extra-large"
         className={cn(heading && "mt-4 md:mt-6")}
       >
-        {gracefully(text, "richText") as RichTextObject | undefined}
+        {text as unknown as RichTextObject | undefined}
       </RichTextParagraph>
 
       {cta?.show && (
@@ -44,7 +43,7 @@ export function LeadTextBlock({
           variant={cta.variant || undefined}
           className="mt-10 text-center sm:self-center md:mt-12"
         >
-          {gracefully(cta.label, "text")}
+          {cta.label}
         </Button>
       )}
     </div>

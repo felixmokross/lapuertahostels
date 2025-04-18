@@ -4,7 +4,7 @@ import { UsagesConfig } from "./types";
 import { I18nClient } from "@payloadcms/translations";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { Pill, FieldLabel, Link } from "@payloadcms/ui";
-import { Label } from "@/common/labels";
+import { Label } from "@/common/labels.client";
 
 export async function UsagesField({
   config,

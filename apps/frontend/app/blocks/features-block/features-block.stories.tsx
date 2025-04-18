@@ -1,13 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { FeaturesBlock } from "./features-block";
-import {
-  callToAction,
-  media,
-  plainText,
-  richText,
-} from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { FeaturesBlock, FeaturesBlockProps } from "./features-block";
+import { callToAction, media } from "~/common/cms-data.builders";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Features Block",
@@ -27,8 +22,8 @@ export const Default: Story = {
     items: [
       {
         image: media("_DSC0358.jpg"),
-        heading: plainText("Feel Refreshed"),
-        text: richText(
+        heading: "Feel Refreshed",
+        text: richTextRoot(
           paragraph(
             text("A day full of exploring the city can be tiring. Our "),
             bold("air-conditioned"),
@@ -36,12 +31,12 @@ export const Default: Story = {
             bold("tasteful"),
             text(" details give you the perfect place to relax and unwind."),
           ),
-        ),
+        ) as unknown as FeaturesBlockProps["items"][number]["text"],
       },
       {
         image: media("_DSC0299.jpg"),
-        heading: plainText("Cool Down in the Pool"),
-        text: richText(
+        heading: "Cool Down in the Pool",
+        text: richTextRoot(
           paragraph(
             text("Our "),
             bold("courtyard pool"),
@@ -49,18 +44,18 @@ export const Default: Story = {
               " is the perfect place to cool down after a hot day under the Carribean sun.",
             ),
           ),
-        ),
+        ) as unknown as FeaturesBlockProps["items"][number]["text"],
       },
       {
         image: media("_DSC0325.jpg"),
-        heading: plainText("Bring Your Family"),
-        text: richText(
+        heading: "Bring Your Family",
+        text: richTextRoot(
           paragraph(
             text("Traveling with your loved ones? We offer "),
             bold("Twin Rooms"),
             text(" allowing an occupancy of up to four people."),
           ),
-        ),
+        ) as unknown as FeaturesBlockProps["items"][number]["text"],
         cta: callToAction("Book Twin Room"),
       },
     ],

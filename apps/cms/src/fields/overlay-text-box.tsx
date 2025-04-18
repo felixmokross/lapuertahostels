@@ -1,10 +1,9 @@
-import { GroupField, RelationshipField } from "payload";
-import { makeRichTextField } from "./rich-text";
+import { GroupField } from "payload";
 import { makeCallToActionField } from "./call-to-action";
-import { headingField } from "./heading";
 import { showField } from "./show";
+import { richTextField } from "./rich-text";
+import { textField } from "./text";
 
-const richTextField = makeRichTextField();
 const callToActionField = makeCallToActionField({
   optional: true,
   showByDefault: false,
@@ -32,39 +31,27 @@ export function overlayTextBoxField({
     type: "group",
     fields: [
       ...(optional ? [showField] : []),
-      {
-        ...headingField,
-        admin: {
-          ...headingField.admin,
-          condition,
-        },
-      } as RelationshipField,
-      {
-        ...richTextField,
-        admin: {
-          ...richTextField.admin,
-          condition,
-        },
-      } as RelationshipField,
+      textField({
+        name: "heading",
+        label: { en: "Heading", es: "Título" },
+        admin: { condition },
+      }),
+      richTextField({ admin: { condition } }),
       callToActionLabelOnly
-        ? {
+        ? textField({
             name: "callToActionLabel",
             label: {
               en: "Call to Action Label",
               es: "Etiqueta del Call to Action",
             },
-            type: "relationship",
-            filterOptions: {
-              type: { equals: "plainText" },
-            },
-            relationTo: "texts",
+            required: false,
             admin: {
               description: {
                 en: "Leave blank to hide the call to action.",
                 es: "Deja en blanco para ocultar el call to action.",
               },
             },
-          }
+          })
         : {
             ...callToActionField,
             admin: {

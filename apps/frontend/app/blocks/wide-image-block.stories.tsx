@@ -1,13 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { WideImageBlock } from "./wide-image-block";
-import {
-  callToAction,
-  media,
-  plainText,
-  richText,
-} from "~/common/cms-data.builders";
+import { WideImageBlock, WideImageBlockProps } from "./wide-image-block";
+import { callToAction, media } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Wide Image Block",
@@ -25,8 +20,8 @@ export const Default: Story = {
     image: media("IMG_6303.jpg"),
     overlayTextBox: {
       show: true,
-      heading: plainText("Feel at Home"),
-      text: richText(
+      heading: "Feel at Home",
+      text: richTextRoot(
         paragraph(
           text("Experience "),
           bold("Colombian hospitality"),
@@ -38,7 +33,9 @@ export const Default: Story = {
           bold("unforgettable"),
           text(" memories."),
         ),
-      ),
+      ) as unknown as NonNullable<
+        WideImageBlockProps["overlayTextBox"]
+      >["text"],
       cta: callToAction("Discover More"),
       position: "top-right",
     },

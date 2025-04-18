@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
 import { refreshCacheHook } from "./refresh-cache-hook";
+import { textareaField } from "@/fields/textarea";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -87,17 +88,13 @@ export const Media: CollectionConfig = {
             es: "Texto alternativo",
           },
           fields: [
-            {
+            textareaField({
               name: "alt",
               label: {
                 en: "Alternative Text",
                 es: "Texto alternativo",
               },
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              required: false,
               admin: {
                 description: {
                   en: "A brief description of the media for screen readers and search engines. It is not displayed on the page but is important for accessibility. For images an alt text can be generated automatically using OpenAI.",
@@ -109,7 +106,7 @@ export const Media: CollectionConfig = {
                   ],
                 },
               },
-            },
+            }),
           ],
         },
         {

@@ -15,7 +15,6 @@ import { SerializeFromLoader } from "~/common/types";
 import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
-import { gracefully } from "~/common/utils";
 import { PAGE_DEPTH } from "~/cms-data";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
@@ -27,7 +26,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
 
   const parentMeta = matches.flatMap((match) => match.meta ?? []);
 
-  const description = gracefully(data.content.seo?.description, "text") ?? "";
+  const description = data.content.seo?.description ?? "";
   return [
     ...parentMeta,
     ...i18n.supportedLngs.map((lng) => ({

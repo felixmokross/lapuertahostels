@@ -3,7 +3,6 @@ import { cn } from "../common/cn";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
-import { gracefully } from "~/common/utils";
 import { Page } from "@lapuertahostels/payload-types";
 
 export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
@@ -36,12 +35,12 @@ export function StoryBlock({
       >
         {heading && (
           <Heading as="h3" size="medium">
-            {gracefully(heading, "text")}
+            {heading}
           </Heading>
         )}
         <div className={cn(heading && "mt-4 md:mt-6")}>
           <LongFormRichText
-            content={gracefully(text, "richText") as RichTextObject | undefined}
+            content={text as unknown as RichTextObject | undefined}
             baseHeadingLevel={heading ? 4 : 3}
           />
         </div>

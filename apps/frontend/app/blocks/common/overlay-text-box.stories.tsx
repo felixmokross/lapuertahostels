@@ -1,12 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { OverlayTextBox } from "./overlay-text-box";
-import {
-  externalLink,
-  media,
-  plainText,
-  richText,
-} from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { externalLink, media } from "~/common/cms-data.builders";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { MediaImage } from "~/common/media";
 import { Cog6ToothIcon } from "@heroicons/react/20/solid";
 import { PageLink } from "~/common/page-link";
@@ -43,8 +38,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    heading: plainText("Feel at Home"),
-    text: richText(
+    heading: "Feel at Home",
+    text: richTextRoot(
       paragraph(
         text("Experience "),
         bold("Colombian hospitality"),
@@ -59,7 +54,7 @@ export const Default: Story = {
     ),
     cta: {
       as: PageLink,
-      label: plainText("Discover More"),
+      label: "Discover More",
       variant: "secondary",
       link: externalLink("http://example.com/"),
     },

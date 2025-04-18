@@ -2,8 +2,9 @@ import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
 import { RichTextObject } from "@lapuertahostels/shared";
+import { Brand, Media, Page } from "@lapuertahostels/payload-types";
 
-export async function createPage(data: Record<string, any> = {}) {
+export async function createPage(data: Partial<Page> = {}) {
   const testPagePathname = `/e2e/${createId()}`;
 
   data = {
@@ -13,23 +14,14 @@ export async function createPage(data: Record<string, any> = {}) {
   };
 
   if (!data.title) {
-    const titleText = await createPlainText("Default Title");
-    data.title = titleText.id;
+    data.title = "Default Title";
   }
 
   return await create("pages", data);
 }
 
-export async function createPlainText(text: string) {
-  return await create("texts", { type: "plainText", text });
-}
-
-export async function createRichText(richText: RichTextObject) {
-  return await create("texts", { type: "richText", richText });
-}
-
 export async function getPuertaBrand() {
-  return await get("brands/puerta");
+  return (await get("brands/puerta")) as Brand;
 }
 
 export async function getMedia(filename: string) {
@@ -38,18 +30,18 @@ export async function getMedia(filename: string) {
   );
   if (!result.docs) return null;
 
-  return result.docs[0];
+  return result.docs[0] as Media;
 }
 
 export async function createPuertaBrand() {
-  const media = await getOrCreate("logo-puerta-simple.png", "image/png");
+  const media = await getOrCreateMedia("logo-puerta-simple.png", "image/png");
 
   await create("brands", {
     id: "puerta",
     name: "La Puerta Hostels",
     logo: media.id,
     footer: { linkGroups: [] },
-  });
+  } as Omit<Brand, "updatedAt" | "createdAt">);
 }
 
 export async function create(collection: string, content: object) {
@@ -61,7 +53,7 @@ export async function create(collection: string, content: object) {
   return result.doc;
 }
 
-export async function getOrCreate(
+export async function getOrCreateMedia(
   filename: string,
   mimeType: string,
   alt?: string,
@@ -79,11 +71,8 @@ async function createMedia(filename: string, mimeType: string, alt?: string) {
   const formData = new FormData();
   formData.append("file", file);
 
-  const additionalFields: Record<string, string> = {};
-  if (alt) {
-    const altText = await createPlainText(alt);
-    additionalFields.alt = altText.id;
-  }
+  const additionalFields: Partial<Media> = {};
+  additionalFields.alt = alt;
 
   formData.append("_payload", JSON.stringify(additionalFields));
 
@@ -92,7 +81,7 @@ async function createMedia(filename: string, mimeType: string, alt?: string) {
       method: "POST",
       body: formData,
     })
-  ).doc;
+  ).doc as Media;
 }
 
 export async function get(path: string) {

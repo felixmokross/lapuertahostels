@@ -1,16 +1,9 @@
 import test, { expect } from "@playwright/test";
-import {
-  getOrCreate,
-  createPage,
-  createPlainText,
-  createRichText,
-} from "../common/cms";
+import { getOrCreateMedia, createPage } from "../common/cms";
 import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 test("hero heading block", async ({ page }) => {
-  const headingText = await createPlainText("Hero Heading Test");
-
-  const media = await getOrCreate(
+  const media = await getOrCreateMedia(
     "mesmerizing-scenery-seascape-with-lush-nature-daytime.jpg",
     "image/jpeg",
     "A serene beach",
@@ -20,7 +13,7 @@ test("hero heading block", async ({ page }) => {
     hero: [
       {
         blockType: "HeroHeading",
-        heading: headingText.id,
+        heading: "Hero Heading Test",
         image: media.id,
       },
     ],
@@ -43,28 +36,19 @@ test("hero heading block", async ({ page }) => {
 });
 
 test("hero slides block", async ({ page }) => {
-  const headingText = await createPlainText("Hero Slides Test");
-  const slide1Text = await createRichText(
-    richTextRoot(paragraph(text("Slide 1 Text"))),
-  );
-
-  const media1 = await getOrCreate(
+  const media1 = await getOrCreateMedia(
     "mesmerizing-scenery-seascape-with-lush-nature-daytime.jpg",
     "image/jpeg",
     "A serene beach",
   );
 
-  const slide2Text = await createRichText(
-    richTextRoot(paragraph(text("Slide 2 Text"))),
-  );
-
-  const media2 = await getOrCreate(
+  const media2 = await getOrCreateMedia(
     "david-hertle-3YCkAhD--Ic-unsplash.jpg",
     "image/jpeg",
     "A sunny courtyard sourrounded by lush greenery",
   );
 
-  const media3 = await getOrCreate(
+  const media3 = await getOrCreateMedia(
     "datingjungle-Vv4JB0SMfZ4-unsplash.jpg",
     "image/jpeg",
     "A lush green mountainious landscape",
@@ -74,13 +58,13 @@ test("hero slides block", async ({ page }) => {
     hero: [
       {
         blockType: "HeroSlides",
-        seoPageHeading: headingText.id,
+        seoPageHeading: "Hero Slides Test",
         slides: [
           {
             image: media1.id,
             overlayTitle: {
               show: true,
-              text: slide1Text.id,
+              text: richTextRoot(paragraph(text("Slide 1 Text"))),
               position: "bottom-right",
             },
           },
@@ -88,7 +72,7 @@ test("hero slides block", async ({ page }) => {
             image: media2.id,
             overlayTitle: {
               show: true,
-              text: slide2Text.id,
+              text: richTextRoot(paragraph(text("Slide 2 Text"))),
               position: "top-left",
             },
           },

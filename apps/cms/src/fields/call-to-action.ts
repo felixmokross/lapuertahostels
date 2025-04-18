@@ -1,5 +1,6 @@
 import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
+import { textField } from "./text";
 
 export type CallToActionFieldOptions = {
   optional?: boolean;
@@ -25,20 +26,11 @@ export function makeCallToActionField({
     type: "group",
     fields: [
       ...(optional ? [{ ...showField, defaultValue: showByDefault }] : []),
-      {
+      textField({
         name: "label",
-        label: {
-          en: "Label",
-          es: "Etiqueta",
-        },
-        type: "relationship",
-        filterOptions: {
-          type: { equals: "plainText" },
-        },
-        relationTo: "texts",
-        required: true,
+        label: { en: "Label", es: "Etiqueta" },
         admin: { condition },
-      },
+      }),
       {
         name: "link",
         label: {

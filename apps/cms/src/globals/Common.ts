@@ -1,13 +1,14 @@
 import { GlobalConfig } from "payload";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { canManageContent } from "../common/access-control";
-import { headingField } from "../fields/heading";
-import { makeRichTextField } from "../fields/rich-text";
 import { showField } from "../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
+import { richTextField } from "@/fields/rich-text";
+import { textField } from "@/fields/text";
+import { textareaField } from "@/fields/textarea";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -35,7 +36,7 @@ export const Common: GlobalConfig = {
           },
           fields: [
             {
-              ...makeRichTextField(),
+              ...richTextField(),
               name: "address",
               label: {
                 en: "Address",
@@ -43,7 +44,7 @@ export const Common: GlobalConfig = {
               },
             },
             {
-              ...makeRichTextField(),
+              ...richTextField(),
               name: "copyright",
               label: {
                 en: "Copyright",
@@ -111,70 +112,37 @@ export const Common: GlobalConfig = {
               type: "group",
               fields: [
                 showField,
-                {
+                textField({
                   name: "title",
-                  label: {
-                    en: "Title",
-                    es: "Título",
-                  },
-                  required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  label: { en: "Title", es: "Título" },
                   admin: {
                     condition: (data) => !!data.footer?.newsletter?.show,
                   },
-                },
-                {
+                }),
+                textareaField({
                   name: "description",
-                  label: {
-                    en: "Description",
-                    es: "Descripción",
-                  },
-                  required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  label: { en: "Description", es: "Descripción" },
                   admin: {
                     condition: (data) => !!data?.footer?.newsletter?.show,
                   },
-                },
-                {
+                }),
+                textField({
                   name: "emailPlaceholder",
                   label: {
                     en: "Email Placeholder",
                     es: "Marcador de correo electrónico",
                   },
-                  required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
-                },
-                {
+                }),
+                textField({
                   name: "buttonLabel",
-                  label: {
-                    en: "Button Label",
-                    es: "Etiqueta del botón",
-                  },
-                  required: true,
-                  type: "relationship",
-                  relationTo: "texts",
-                  filterOptions: {
-                    type: { equals: "plainText" },
-                  },
+                  label: { en: "Button Label", es: "Etiqueta del botón" },
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
-                },
+                }),
               ],
             },
           ],
@@ -230,8 +198,11 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when a user tries to access a page that does not exist.",
               es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
             }),
-            headingField,
-            makeRichTextField(),
+            textField({
+              name: "heading",
+              label: { en: "Heading", es: "Título" },
+            }),
+            richTextField(),
           ],
         },
         {
@@ -245,8 +216,11 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when the server encounters an error.",
               es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
             }),
-            headingField,
-            makeRichTextField(),
+            textField({
+              name: "heading",
+              label: { en: "Heading", es: "Título" },
+            }),
+            richTextField(),
           ],
         },
       ],

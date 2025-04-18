@@ -10,7 +10,7 @@ export function getSrcFromMedia(media: Media | string | undefined | null) {
 }
 
 export function getAltFromMedia(media: Media | string | undefined | null) {
-  return gracefully(gracefully(media, "alt"), "text") || "";
+  return gracefully(media, "alt") || "";
 }
 
 export type MediaImageProps = Omit<ImageProps, "src" | "alt"> & {

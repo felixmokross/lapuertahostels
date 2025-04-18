@@ -6,12 +6,12 @@ import {
   callToAction,
   internalLink,
   media,
-  plainText,
-  richText,
 } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
-import { Page as PageItem } from "@lapuertahostels/payload-types";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { Brand, Page as PageItem } from "@lapuertahostels/payload-types";
+import { HeroSlidesBlockProps } from "~/blocks/slides-block/hero-slides-block";
+import { FeaturesBlockProps } from "~/blocks/features-block/features-block";
 
 const meta = {
   title: "layout/Page",
@@ -48,9 +48,13 @@ export const Puerta: Story = {
               ),
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Hike Through\nthe "), bold("Tayrona Park")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 position: "top-left",
                 overlay: "moderate",
                 cta: callToAction("Read More", "primary"),
@@ -61,9 +65,13 @@ export const Puerta: Story = {
               image: media("datingjungle-Vv4JB0SMfZ4-unsplash.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Find the\n"), bold("Lost City")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 position: "top-right",
                 overlay: "moderate",
                 cta: callToAction("Read More", "primary"),
@@ -74,9 +82,13 @@ export const Puerta: Story = {
               image: media("denise-leisner-8eVV287ST0E-unsplash.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Follow the\n"), bold("Minca River")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 position: "bottom-left",
                 overlay: "moderate",
                 cta: callToAction("Read More", "primary"),
@@ -91,8 +103,8 @@ export const Puerta: Story = {
 
       layout: [
         {
-          heading: plainText("Discover the Colombian Costa Caribe"),
-          text: richText(
+          heading: "Discover the Colombian Costa Caribe",
+          text: richTextRoot(
             paragraph(
               text("Hike through the breath-taking beauty of "),
               bold("Tayrona National Park"),
@@ -106,14 +118,16 @@ export const Puerta: Story = {
               bold("your perfect home base"),
               text("."),
             ),
-          ),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           id: createId(),
           blockType: "LeadText",
         },
         {
           blockType: "AccommodationSelector",
-          heading: plainText("Your Home Base for a Perfect Trip"),
-          text: richText(
+          heading: "Your Home Base for a Perfect Trip",
+          text: richTextRoot(
             paragraph(
               text("Choose between our "),
               bold("two accommodations"),
@@ -129,7 +143,7 @@ export const Puerta: Story = {
                 homeLink: internalLink("/aqua"),
               }),
               image: media("Frente.jpg"),
-              description: richText(
+              description: richTextRoot(
                 paragraph(
                   text(
                     "Stay at our lively hostel in the heart of Santa Marta and meet travelers from all over the world. Our rooftop bar is perfect for a get-together at night.",
@@ -145,7 +159,7 @@ export const Puerta: Story = {
                 homeLink: internalLink("/azul"),
               }),
               image: media("10.jpg"),
-              description: richText(
+              description: richTextRoot(
                 paragraph(
                   text(
                     "Being one of the oldest houses in Santa Marta, La Puerta Azul is filled with beauty and history. It can also be booked completely as a private six-room villa.",
@@ -160,13 +174,13 @@ export const Puerta: Story = {
           elementId: "santa-marta",
           image: media("oscar-ivan-esquivel-arteaga-DZVY-1I2peQ-unsplash.jpg"),
           overlayTitle: {
-            text: richText(
+            text: richTextRoot(
               paragraph(text("Do You Know "), bold("Santa Marta?")),
             ),
             position: "top-right",
             overlay: "moderate",
           },
-          text: richText(
+          text: richTextRoot(
             paragraph(
               text("Santa Marta, nestled "),
               bold(
@@ -191,8 +205,8 @@ export const Puerta: Story = {
           blockType: "ImageWithFloatingText",
         },
         {
-          heading: plainText("About Us"),
-          text: richText(
+          heading: "About Us",
+          text: richTextRoot(
             paragraph(
               text("Step into our "),
               bold("Santa Marta haven,"),
@@ -263,9 +277,13 @@ export const Aqua: Story = {
               image: media("Frente.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Welcome to Your\n"), bold("Vacation Home")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 overlay: "intense",
                 cta: callToAction("Reserve Now", "primary"),
               },
@@ -275,8 +293,8 @@ export const Aqua: Story = {
       ],
       layout: [
         {
-          heading: plainText("Welcome to Our Boutique Hostel"),
-          text: richText(
+          heading: "Welcome to Our Boutique Hostel",
+          text: richTextRoot(
             paragraph(
               text("Nestled in the vibrant heart of Santa Marta, our "),
               bold("boutique hostel"),
@@ -297,8 +315,8 @@ export const Aqua: Story = {
           items: [
             {
               image: media("IMG_6244.jpg"),
-              heading: plainText("Time to Play"),
-              text: richText(
+              heading: "Time to Play",
+              text: richTextRoot(
                 paragraph(
                   text("Join fellow travelers in our "),
                   bold("cozy community area"),
@@ -308,12 +326,16 @@ export const Aqua: Story = {
                   bold("unforgettable memories and new friendships"),
                   text("."),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                NonNullable<
+                  HeroSlidesBlockProps["slides"]
+                >[number]["overlayTitle"]
+              >["text"],
             },
             {
               image: media("IMG_6591.jpg"),
-              heading: plainText("Relax on the Terrace"),
-              text: richText(
+              heading: "Relax on the Terrace",
+              text: richTextRoot(
                 paragraph(
                   text("Indulge in our "),
                   bold("Deluxe room"),
@@ -323,12 +345,16 @@ export const Aqua: Story = {
                     " where you can unwind and soak up the serene atmosphere.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                NonNullable<
+                  HeroSlidesBlockProps["slides"]
+                >[number]["overlayTitle"]
+              >["text"],
             },
             {
               image: media("IMG_6591.jpg"),
-              heading: plainText("Right in the City Center"),
-              text: richText(
+              heading: "Right in the City Center",
+              text: richTextRoot(
                 paragraph(
                   text("Located in the "),
                   bold("historic city center,"),
@@ -338,14 +364,18 @@ export const Aqua: Story = {
                     ", offering the perfect base for your Santa Marta adventure.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                NonNullable<
+                  HeroSlidesBlockProps["slides"]
+                >[number]["overlayTitle"]
+              >["text"],
             },
           ],
           blockType: "Features",
         },
         {
-          heading: plainText("Come By"),
-          text: richText(
+          heading: "Come By",
+          text: richTextRoot(
             paragraph(
               text(
                 "Discover the charm of Santa Marta at our boutique hostel, ideally located in the historic city center. Steps from pristine beaches and local attractions, our welcoming community area is perfect for connecting with fellow travelers over a board game.",
@@ -356,7 +386,9 @@ export const Aqua: Story = {
                 "For a touch of luxury, our deluxe room with a private terrace offers a tranquil retreat. Relax with a cool drink and enjoy the beautiful surroundings after a day of adventure. Experience our warm hospitality and make unforgettable memories in the heart of Santa Marta.",
               ),
             ),
-          ),
+          ) as unknown as NonNullable<
+            NonNullable<HeroSlidesBlockProps["slides"]>[number]["overlayTitle"]
+          >["text"],
           image: media("366944756_17942281163690648_3066160991932660286_n.jpg"),
           imagePosition: "right",
           grayscaleImage: false,
@@ -381,18 +413,24 @@ export const Azul: Story = {
       id: "azul",
       createdAt: "2024-05-10T19:18:09.727Z",
       updatedAt: "2024-05-18T16:01:55.117Z",
+      brand: null as unknown as Brand,
       pathname: "/azul",
       hero: [
         {
+          seoPageHeading: "La Puerta Azul",
           slides: [
             {
               image: media("10.jpg"),
               imageAlignment: "bottom",
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Welcome to Your\n"), bold("Vacation Home")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 overlay: "intense",
                 position: "center",
                 cta: callToAction("Reserve Now", "primary"),
@@ -402,9 +440,13 @@ export const Azul: Story = {
               image: media("10.jpg"),
               overlayTitle: {
                 show: true,
-                text: richText(
+                text: richTextRoot(
                   paragraph(text("Cool Down\n"), bold(" by the Pool")),
-                ),
+                ) as unknown as NonNullable<
+                  NonNullable<
+                    HeroSlidesBlockProps["slides"]
+                  >[number]["overlayTitle"]
+                >["text"],
                 overlay: "subtle",
                 position: "bottom-left",
                 cta: callToAction("Book Now", "primary"),
@@ -419,8 +461,8 @@ export const Azul: Story = {
           items: [
             {
               image: media("_DSC0358.jpg"),
-              heading: plainText("Feel Newborn"),
-              text: richText(
+              heading: "Feel Newborn",
+              text: richTextRoot(
                 paragraph(
                   text("A day full of exploring the city can be tiring. Our "),
                   bold("air-conditioned"),
@@ -430,12 +472,14 @@ export const Azul: Story = {
                     " details give you the perfect place to relax and unwind.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
             {
               image: media("_DSC0325.jpg"),
-              heading: plainText("Bring Your Family"),
-              text: richText(
+              heading: "Bring Your Family",
+              text: richTextRoot(
                 paragraph(
                   text("Traveling with your loved ones? We offer "),
                   bold("Twin Rooms"),
@@ -443,12 +487,14 @@ export const Azul: Story = {
                     " allowing an occupancy of up to four people. Perfect for your family get-away.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
             {
               image: media("_DSC0299.jpg"),
-              heading: plainText("Cool Down by the Pool"),
-              text: richText(
+              heading: "Cool Down by the Pool",
+              text: richTextRoot(
                 paragraph(
                   text("Our "),
                   bold("courtyard pool"),
@@ -456,12 +502,14 @@ export const Azul: Story = {
                     " is the perfect place to cool down after a hot day under the Carribean sun.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
             {
               image: media("_DSC0299.jpg"),
-              heading: plainText("A Beautiful Courtyard"),
-              text: richText(
+              heading: "A Beautiful Courtyard",
+              text: richTextRoot(
                 paragraph(
                   text(
                     "Our courtyard is the perfect place to enjoy a cocktail or two. With the nice little ",
@@ -471,12 +519,14 @@ export const Azul: Story = {
                     " and the lush greenery, you’ll feel like you’re in paradise.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
             {
               image: media("_DSC0820.jpg"),
-              heading: plainText("Freshen Up"),
-              text: richText(
+              heading: "Freshen Up",
+              text: richTextRoot(
                 paragraph(
                   text("Experience our impeccably appointed bathrooms, "),
                   bold("thoughtfully equipped"),
@@ -484,23 +534,27 @@ export const Azul: Story = {
                     " to ensure you’re primed for a night out in the historic center or refreshed for a restful night’s sleep.",
                   ),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
             {
               image: media("_dsc0989.jpg"),
-              heading: plainText("Enjoy the Morning"),
-              text: richText(
+              heading: "Enjoy the Morning",
+              text: richTextRoot(
                 paragraph(
                   text("Start your day right with a tinto on your "),
                   bold("private terrace"),
                   text(" and listen to Santa Marta coming to life."),
                 ),
-              ),
+              ) as unknown as NonNullable<
+                FeaturesBlockProps["items"]
+              >[number]["text"],
             },
           ],
           blockType: "Features",
         },
       ],
-    } as PageItem,
+    },
   },
 };

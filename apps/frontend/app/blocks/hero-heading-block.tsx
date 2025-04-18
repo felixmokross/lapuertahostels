@@ -1,9 +1,8 @@
 import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { SlideImage } from "./slides-block/slide-image";
-import { OverlayTitle } from "./common/overlay-title";
+import { OverlayTitle, OverlayTitleProps } from "./common/overlay-title";
 import { Heading } from "~/common/heading";
-import { gracefully } from "~/common/utils";
-import { Page, Text } from "@lapuertahostels/payload-types";
+import { Page } from "@lapuertahostels/payload-types";
 
 type HeroHeadingBlockProps = Partial<
   NonNullable<Page["hero"]>[number] & {
@@ -12,7 +11,6 @@ type HeroHeadingBlockProps = Partial<
 >;
 
 export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
-  const headingText = gracefully(heading, "text");
   return image ? (
     <div className="relative min-h-72 shadow-md md:min-h-96">
       <SlideImage media={image} withPreview={true} alignment="center" />
@@ -20,10 +18,10 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         headingLevel={2}
         position="center"
         text={
-          headingText
-            ? ({
-                richText: richTextRoot(paragraph(text(headingText))),
-              } as unknown as Text)
+          heading
+            ? (richTextRoot(
+                paragraph(text(heading)),
+              ) as unknown as OverlayTitleProps["text"])
             : undefined
         }
         overlay="intense"
@@ -37,7 +35,7 @@ export function HeroHeadingBlock({ heading, image }: HeroHeadingBlockProps) {
         variant="inherit"
         className="border-b-2 border-neutral-300 pb-2 text-center"
       >
-        {headingText}
+        {heading}
       </Heading>
     </div>
   );

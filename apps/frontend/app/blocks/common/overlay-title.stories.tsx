@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { OverlayTitle } from "./overlay-title";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
-import { callToAction, media, richText } from "~/common/cms-data.builders";
+import { OverlayTitle, OverlayTitleProps } from "./overlay-title";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { callToAction, media } from "~/common/cms-data.builders";
 import { SlideImage } from "../slides-block/slide-image";
 
 const meta = {
@@ -26,10 +26,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    text: richText(
+    text: richTextRoot(
       paragraph(text("This is")),
       paragraph(text("an "), bold("Overlay Title")),
-    ),
+    ) as unknown as OverlayTitleProps["text"],
     cta: callToAction("Click me", "primary"),
     headingLevel: 2,
   },
@@ -80,9 +80,9 @@ export const OverlayIntense: Story = {
 export const WithSupportingText: Story = {
   args: {
     ...Default.args,
-    supportingText: richText(
+    supportingText: richTextRoot(
       paragraph(text("Book through us and get one night for free.")),
-    ),
+    ) as unknown as OverlayTitleProps["supportingText"],
     position: "bottom-right",
     overlay: "intense",
   },

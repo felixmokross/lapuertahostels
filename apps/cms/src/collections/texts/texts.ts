@@ -1,11 +1,11 @@
 import { CollectionConfig } from "payload";
-import { translateEndpoint } from "./translate-endpoint";
 import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
 import { transformRecordAsync } from "@/common/records";
 import { textUsagesField } from "./usages";
 import { refreshCacheHook } from "./refresh-cache-hook";
 
+// TODO remove collection once all environments have been migrated
 export const Texts: CollectionConfig = {
   slug: "texts",
   labels: {
@@ -26,6 +26,7 @@ export const Texts: CollectionConfig = {
     title: true,
   },
   admin: {
+    hidden: true,
     useAsTitle: "title",
     defaultColumns: ["title", "type", "comment"],
     listSearchableFields: ["id", "title", "comment"],
@@ -33,7 +34,6 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [refreshCacheHook()],
   },
-  endpoints: [translateEndpoint],
   fields: [
     {
       type: "tabs",
@@ -134,17 +134,6 @@ export const Texts: CollectionConfig = {
           es: "Esto no se puede cambiar después de la creación.",
         },
         layout: "horizontal",
-        position: "sidebar",
-      },
-    },
-    {
-      type: "ui",
-      name: "translations",
-      admin: {
-        components: {
-          Field:
-            "src/collections/texts/translations-field.server#TranslationsFieldServer",
-        },
         position: "sidebar",
       },
     },

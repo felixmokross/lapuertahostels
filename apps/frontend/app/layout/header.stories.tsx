@@ -1,12 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Header } from "./header";
-import {
-  banner,
-  brand,
-  internalLink,
-  media,
-  plainText,
-} from "~/common/cms-data.builders";
+import { banner, brand, internalLink, media } from "~/common/cms-data.builders";
 
 const meta = {
   title: "layout/Header",
@@ -27,23 +21,23 @@ const puertaBrand = brand({
   homeLink: internalLink("/"),
   navLinks: [
     {
-      label: plainText("Puerta Aqua"),
+      label: "Puerta Aqua",
       link: internalLink("/aqua"),
     },
     {
-      label: plainText("La Puerta Azul"),
+      label: "La Puerta Azul",
       link: internalLink("/azul"),
     },
     {
-      label: plainText("Santa Marta"),
+      label: "Santa Marta",
       link: internalLink("/santa-marta"),
     },
     {
-      label: plainText("About Us"),
+      label: "About Us",
       link: internalLink("/about-us"),
     },
     {
-      label: plainText("Contact"),
+      label: "Contact",
       link: internalLink("/contact"),
     },
   ],

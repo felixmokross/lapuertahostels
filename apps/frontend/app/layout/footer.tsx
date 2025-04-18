@@ -7,9 +7,8 @@ import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
-import { gracefully } from "~/common/utils";
 import { RichText } from "~/common/rich-text";
-import { Brand, Common, Text } from "@lapuertahostels/payload-types";
+import { Brand, Common } from "@lapuertahostels/payload-types";
 
 type FooterProps = {
   content: Common["footer"];
@@ -22,10 +21,6 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
   const theme = useTheme();
   const puertaBrand = allBrands.find((b) => b.id === "puerta");
   if (!puertaBrand) throw new Error("Puerta brand not found");
-
-  if (content.address && typeof content.address !== "object") {
-    throw new Error("Invalid address");
-  }
 
   function getComponent(children: ReactNode) {
     if (!puertaBrand) throw new Error("Puerta brand not found");
@@ -53,9 +48,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
               <p className="text-sm leading-6 text-neutral-600">
                 <RichText
                   content={
-                    gracefully(content.address, "richText") as
-                      | RichTextObject
-                      | undefined
+                    content.address as unknown as RichTextObject | undefined
                   }
                   lineBreakHandling="line-break"
                 />
@@ -79,35 +72,20 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           </div>
           <div className="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
             {brand.footer?.linkGroups?.map((linkGroup) => {
-              if (typeof linkGroup !== "object") {
-                throw new Error("Invalid link group");
-              }
-
-              if (typeof linkGroup.title !== "object") {
-                throw new Error("Invalid link group title");
-              }
-
               return (
                 <div key={linkGroup.id}>
                   <h3 className="text-sm leading-6 font-semibold text-neutral-900">
-                    {linkGroup.title.text}
+                    {linkGroup.title}
                   </h3>
                   <ul className="mt-6 space-y-4">
                     {linkGroup.links?.map((link) => {
-                      if (typeof link !== "object") {
-                        throw new Error("Invalid link");
-                      }
-
-                      if (typeof link.label !== "object") {
-                        throw new Error("Invalid link label");
-                      }
                       return (
                         <li key={link.id}>
                           <PageLink
                             link={link.link}
                             className="text-sm leading-6 text-neutral-600 hover:text-neutral-900"
                           >
-                            {link.label.text}
+                            {link.label}
                           </PageLink>
                         </li>
                       );
@@ -123,10 +101,10 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
             <div>
               <h3 className="text-sm leading-6 font-semibold text-neutral-900">
-                {gracefully(content.newsletter.title, "text")}
+                {content.newsletter.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-neutral-600">
-                {gracefully(content.newsletter.description, "text")}
+                {content.newsletter.description}
               </p>
             </div>
             <form className="mt-6 sm:flex sm:max-w-md lg:mt-0">
@@ -139,14 +117,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                 id="email-address"
                 autoComplete="email"
                 required
-                placeholder={
-                  (
-                    content.newsletter.emailPlaceholder as
-                      | Text
-                      | null
-                      | undefined
-                  )?.text ?? ""
-                }
+                placeholder={content.newsletter.emailPlaceholder ?? ""}
               />
               <div className="mt-4 sm:mt-0 sm:ml-4 sm:shrink-0">
                 <Button
@@ -154,7 +125,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                   type="submit"
                   className="flex h-full w-full items-center justify-center"
                 >
-                  {gracefully(content.newsletter.buttonLabel, "text")}
+                  {content.newsletter.buttonLabel}
                 </Button>
               </div>
             </form>
@@ -168,9 +139,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
                 {" "}
                 <RichText
                   content={
-                    gracefully(content.copyright, "richText") as
-                      | RichTextObject
-                      | undefined
+                    content.copyright as unknown as RichTextObject | undefined
                   }
                   lineBreakHandling="line-break"
                 />

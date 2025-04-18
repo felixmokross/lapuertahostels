@@ -17,6 +17,8 @@ import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
+import { textareaField } from "@/fields/textarea";
+import { textField } from "@/fields/text";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -38,7 +40,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
-    listSearchableFields: ["id", "pathname", "title.text", "brand.name"],
+    listSearchableFields: ["id", "pathname", "title", "brand.name"],
     livePreview: {
       url: ({
         data,
@@ -100,24 +102,20 @@ export const Pages: CollectionConfig = {
               en: "The SEO fields are used to improve the page's visibility in search engine results and social media. The data should be unique and relevant to the page.",
               es: "Los campos SEO se utilizan para mejorar la visibilidad de la página en los resultados de los motores de búsqueda y en las redes sociales. Los datos deben ser únicos y relevantes para la página.",
             }),
-            {
+            textareaField({
               name: "description",
               label: {
                 en: "Description",
                 es: "Descripción",
               },
-              type: "relationship",
-              relationTo: "texts",
-              filterOptions: {
-                type: { equals: "plainText" },
-              },
+              required: false,
               admin: {
                 description: {
                   en: "The description is shown in search engine results. It should be between 100 and 150 characters.",
                   es: "La descripción se muestra en los resultados de los motores de búsqueda. Debe tener entre 100 y 150 caracteres.",
                 },
               },
-            },
+            }),
             {
               name: "image",
               label: {
@@ -229,17 +227,10 @@ export const Pages: CollectionConfig = {
         },
       },
     },
-    {
+    textField({
       name: "title",
-      label: {
-        en: "Title",
-        es: "Título",
-      },
-      type: "relationship",
-      relationTo: "texts",
-      filterOptions: {
-        type: { equals: "plainText" },
-      },
+      label: { en: "Title", es: "Título" },
+      required: false,
       admin: {
         position: "sidebar",
         description: {
@@ -247,6 +238,6 @@ export const Pages: CollectionConfig = {
           es: "El título se muestra en la barra de título del navegador y en los resultados de los motores de búsqueda. Incluye palabras clave importantes para el SEO. El título base de la marca se añade al título.",
         },
       },
-    },
+    }),
   ],
 };

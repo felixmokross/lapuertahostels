@@ -1,12 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { TextWithImageItem } from "./text-with-image-item";
-import { paragraph, text } from "@lapuertahostels/shared";
 import {
-  callToAction,
-  media,
-  plainText,
-  richText,
-} from "~/common/cms-data.builders";
+  TextWithImageItem,
+  TextWithImageItemProps,
+} from "./text-with-image-item";
+import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { callToAction, media } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
 
 const meta = {
@@ -32,13 +30,13 @@ export const Default: Story = {
   args: {
     id: createId(),
     image: media("_DSC0299.jpg"),
-    heading: plainText("Example Heading"),
+    heading: "Example Heading",
     headingLevel: 3,
-    text: richText(
+    text: richTextRoot(
       paragraph(
         text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
       ),
-    ),
+    ) as unknown as TextWithImageItemProps["text"],
     cta: callToAction("Learn More"),
     size: "full",
     imageWidth: 430,

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HeroVideoBlock } from "./hero-video-block";
-import { callToAction, media, richText } from "~/common/cms-data.builders";
-import { bold, paragraph, text } from "@lapuertahostels/shared";
+import { HeroVideoBlock, HeroVideoBlockProps } from "./hero-video-block";
+import { callToAction, media } from "~/common/cms-data.builders";
+import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 
 const meta = {
   title: "blocks/Hero Video Block",
@@ -23,7 +23,9 @@ export const Default: Story = {
     previewImage: media("video-compressed-preview.png"),
     overlayTitle: {
       show: true,
-      text: richText(paragraph(text("Explore "), bold("Tayrona"))),
+      text: richTextRoot(
+        paragraph(text("Explore "), bold("Tayrona")),
+      ) as unknown as NonNullable<HeroVideoBlockProps["overlayTitle"]>["text"],
       overlay: "subtle",
       position: "center",
       cta: callToAction("Book Now", "primary"),

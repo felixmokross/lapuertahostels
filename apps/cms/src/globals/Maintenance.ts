@@ -3,6 +3,7 @@ import { canManageContent } from "../common/access-control";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
+import { textField } from "@/fields/text";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",
@@ -37,22 +38,13 @@ export const Maintenance: GlobalConfig = {
       },
       fields: [
         showField,
-        {
+        textField({
           name: "message",
-          label: {
-            en: "Message",
-            es: "Mensaje",
-          },
-          required: true,
-          type: "relationship",
-          relationTo: "texts",
-          filterOptions: {
-            type: { equals: "plainText" },
-          },
+          label: { en: "Message", es: "Mensaje" },
           admin: {
             condition: (_, siblingData) => siblingData.show,
           },
-        },
+        }),
       ],
     },
   ],

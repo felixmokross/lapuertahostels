@@ -4,7 +4,6 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { type TextColumnsWithImagesBlock } from "./types";
 import { TextWithImageItem } from "./text-with-image-item";
-import { gracefully } from "~/common/utils";
 
 export type TextColumnsWithImagesBlockProps =
   Partial<TextColumnsWithImagesBlock>;
@@ -21,7 +20,7 @@ export function TextColumnsWithImagesBlock({
       <div className="mx-auto max-w-4xl">
         {heading && (
           <Heading as="h3" size="medium" className="text-center">
-            {gracefully(heading, "text")}
+            {heading}
           </Heading>
         )}
         {text && (
@@ -29,7 +28,7 @@ export function TextColumnsWithImagesBlock({
             size="large"
             className={cn(heading && "mt-4 md:mt-6", "text-center")}
           >
-            {gracefully(text, "richText") as RichTextObject | undefined}
+            {text as unknown as RichTextObject | undefined}
           </RichTextParagraph>
         )}
       </div>

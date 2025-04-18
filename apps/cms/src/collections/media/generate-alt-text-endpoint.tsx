@@ -3,9 +3,7 @@ import { DEFAULT_LOCALE, generateAltText } from "@/common/openai";
 import { addLocalesToRequestFromData } from "payload";
 import { getSupportedLocaleCodes } from "@/common/locales";
 import { translate } from "@/common/translation";
-import { transformRecord } from "@/common/records";
-import { fullTextToTitle } from "../texts/utils";
-import { findTextUsages } from "../texts/usages";
+import { ObjectId } from "bson";
 
 export const generateAltTextEndpoint: Endpoint = {
   path: "/:id/update-alt-text",
@@ -24,7 +22,7 @@ export const generateAltTextEndpoint: Endpoint = {
 
     addLocalesToRequestFromData(req);
 
-    const { id } = req.routeParams;
+    const { id } = req.routeParams as { id: string };
 
     const media = await req.payload.findByID({
       collection: "media",
@@ -55,41 +53,16 @@ export const generateAltTextEndpoint: Endpoint = {
       )),
     ]);
 
-    console.log(`Creating alt text`);
-
+    console.log(`Updating media ${id} with generated alt text`);
     // need to go directly to the DB to set the text for all locales at once.
-    const result = await req.payload.db.connection
-      .collection("texts")
-      .insertOne({
-        type: "plainText",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        text: localizedAltTexts,
-        title: transformRecord(localizedAltTexts, fullTextToTitle),
-      });
-
-    const altTextUsages = media.alt
-      ? await findTextUsages(media.alt as string, req.payload)
-      : null;
-
-    if (altTextUsages && altTextUsages.length === 1) {
-      console.log(`Deleting alt text ${media.alt}`);
-      await req.payload.delete({
-        collection: "texts",
-        id: media.alt as string,
-        req,
-      });
-    }
-
-    console.log(`Updating media ${id} with alt text ${result.insertedId}`);
-    await req.payload.update({
-      collection: "media",
-      id: id as string,
-      data: {
-        alt: result.insertedId.toString(),
+    await req.payload.db.connection.collection("media").updateOne(
+      {
+        _id: new ObjectId(id),
       },
-      req,
-    });
+      {
+        $set: { alt: localizedAltTexts },
+      },
+    );
 
     return new Response(null, { status: 204 });
   },

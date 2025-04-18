@@ -13,7 +13,7 @@ import { MapPinIcon } from "@heroicons/react/20/solid";
 import { Place, PlaceResolver } from "~/common/google-maps";
 import { OverlayTextBox } from "../common/overlay-text-box";
 import { useCommon } from "~/common/common";
-import { isObject } from "~/common/utils";
+import { RichTextObject } from "@lapuertahostels/shared";
 
 type MapBlockType = NonNullable<Page["layout"]>[number] & {
   blockType: "Map";
@@ -98,9 +98,9 @@ export function MapBlock({
           <OverlayTextBox
             position={overlayTextBox.position}
             heading={overlayTextBox.heading}
-            text={overlayTextBox.text}
+            text={overlayTextBox.text as unknown as RichTextObject}
             cta={
-              isObject(overlayTextBox.callToActionLabel)
+              overlayTextBox.callToActionLabel
                 ? {
                     icon: MapPinIcon,
                     label: overlayTextBox.callToActionLabel,

@@ -4,7 +4,6 @@ import { RichTextObject } from "@lapuertahostels/shared";
 import { useTheme } from "~/themes";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
-import { gracefully } from "~/common/utils";
 import { Page } from "@lapuertahostels/payload-types";
 
 export type ImageWithFloatingTextBlockProps = NonNullable<
@@ -62,11 +61,7 @@ export function ImageWithFloatingTextBlock({
             variant="white"
             textShadow
           >
-            {
-              gracefully(gracefully(overlayTitle, "text"), "richText") as
-                | RichTextObject
-                | undefined
-            }
+            {overlayTitle.text as unknown as RichTextObject | undefined}
           </RichTextHeading>
         </div>
       </div>
@@ -88,7 +83,7 @@ export function ImageWithFloatingTextBlock({
           )}
         >
           <RichTextParagraph variant="brand" justify>
-            {gracefully(text, "richText") as RichTextObject | undefined}
+            {text as unknown as RichTextObject | undefined}
           </RichTextParagraph>
         </div>
       </div>
