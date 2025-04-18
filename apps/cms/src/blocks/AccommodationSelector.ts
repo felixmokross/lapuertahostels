@@ -4,7 +4,6 @@ import { makeMoreOptionsField } from "../fields/more-options";
 import { imageField } from "../fields/image";
 import { headingField } from "@/fields/heading";
 import { richTextField } from "@/fields/rich-text";
-import { editor } from "@/collections/texts/editor";
 
 export const AccommodationSelectorBlock: Block = {
   slug: "AccommodationSelector",

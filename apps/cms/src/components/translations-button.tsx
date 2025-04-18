@@ -16,10 +16,7 @@ import {
   toast,
   Translation,
   useConfig,
-  useDocumentForm,
   useDocumentInfo,
-  useForm,
-  useFormFields,
   useFormModified,
   useLocale,
   useModal,
@@ -29,7 +26,6 @@ import {
   formatDrawerSlug,
   useDrawerDepth,
 } from "@payloadcms/ui/elements/Drawer";
-import { useRouter } from "next/router";
 import {
   CollectionSlug,
   FieldLabelClientProps,
@@ -155,7 +151,7 @@ function DrawerContent({
         setData(null);
       }
     },
-    [id],
+    [id, collectionSlug, fieldPath, globalSlug],
   );
 
   const { openModal, closeModal } = useModal();
