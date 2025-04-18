@@ -3,6 +3,7 @@ import { makeCallToActionField } from "./call-to-action";
 import { showField } from "./show";
 import { headingField } from "./heading";
 import { richTextField } from "./rich-text";
+import { textField } from "./text";
 
 const callToActionField = makeCallToActionField({
   optional: true,
@@ -40,21 +41,20 @@ export function overlayTextBoxField({
       } as TextField,
       richTextField({ admin: { condition } }),
       callToActionLabelOnly
-        ? {
+        ? textField({
             name: "callToActionLabel",
             label: {
               en: "Call to Action Label",
               es: "Etiqueta del Call to Action",
             },
-            type: "text",
-            localized: true,
+            required: false,
             admin: {
               description: {
                 en: "Leave blank to hide the call to action.",
                 es: "Deja en blanco para ocultar el call to action.",
               },
             },
-          }
+          })
         : {
             ...callToActionField,
             admin: {

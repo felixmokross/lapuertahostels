@@ -3,7 +3,7 @@ import { canManageContent } from "../common/access-control";
 import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
 import { getGlobalCacheKey } from "@/common/frontend-cache";
-import { translationsView } from "@/views/translations/translations-view-config";
+import { textField } from "@/fields/text";
 
 export const Maintenance: GlobalConfig = {
   slug: "maintenance",
@@ -22,9 +22,6 @@ export const Maintenance: GlobalConfig = {
       }),
     ],
   },
-  admin: {
-    components: { views: { edit: { translations: translationsView() } } },
-  },
   fields: [
     {
       name: "maintenanceScreen",
@@ -41,19 +38,13 @@ export const Maintenance: GlobalConfig = {
       },
       fields: [
         showField,
-        {
+        textField({
           name: "message",
-          label: {
-            en: "Message",
-            es: "Mensaje",
-          },
-          required: true,
-          type: "text",
-          localized: true,
+          label: { en: "Message", es: "Mensaje" },
           admin: {
             condition: (_, siblingData) => siblingData.show,
           },
-        },
+        }),
       ],
     },
   ],

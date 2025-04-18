@@ -4,6 +4,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { headingField } from "@/fields/heading";
 import { makeCallToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
+import { textField } from "@/fields/text";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -60,15 +61,14 @@ export const RoomListBlock: Block = {
           minRows: 1,
           fields: [
             imageField,
-            {
+            textField({
               name: "caption",
-              type: "text",
-              localized: true,
               label: {
                 en: "Caption",
                 es: "Pie de foto",
               },
-            },
+              required: false,
+            }),
           ],
         },
         makeCallToActionField(),

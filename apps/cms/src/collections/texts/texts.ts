@@ -1,5 +1,4 @@
 import { CollectionConfig } from "payload";
-import { translateEndpoint } from "./translate-endpoint";
 import { fullTextToTitle, richTextToFullText, richTextToHtml } from "./utils";
 import { editor } from "./editor";
 import { transformRecordAsync } from "@/common/records";
@@ -35,7 +34,6 @@ export const Texts: CollectionConfig = {
   hooks: {
     afterChange: [refreshCacheHook()],
   },
-  endpoints: [translateEndpoint],
   fields: [
     {
       type: "tabs",
@@ -136,17 +134,6 @@ export const Texts: CollectionConfig = {
           es: "Esto no se puede cambiar después de la creación.",
         },
         layout: "horizontal",
-        position: "sidebar",
-      },
-    },
-    {
-      type: "ui",
-      name: "translations",
-      admin: {
-        components: {
-          Field:
-            "src/collections/texts/translations-field.server#TranslationsFieldServer",
-        },
         position: "sidebar",
       },
     },

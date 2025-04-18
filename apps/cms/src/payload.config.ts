@@ -23,6 +23,8 @@ import { Banners } from "./collections/banners";
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
 import { ApiKeys } from "./collections/api-keys/config";
+import { translationsEndpoint } from "./endpoints/translations";
+import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -161,7 +163,11 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL,
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
-  endpoints: [primeFrontendCacheEndpoint],
+  endpoints: [
+    primeFrontendCacheEndpoint,
+    translationsEndpoint,
+    autoTranslateEndpoint,
+  ],
   async onInit(payload) {
     if (!!process.env.E2E_TESTS_API_KEY) {
       const e2eTestApiKeys = await payload.find({

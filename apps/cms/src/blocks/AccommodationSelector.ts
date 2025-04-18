@@ -57,17 +57,13 @@ export const AccommodationSelectorBlock: Block = {
           required: true,
         },
         imageField,
-        {
+        richTextField({
           name: "description",
           label: {
             en: "Description",
             es: "Descripción",
           },
-          type: "richText",
-          localized: true,
-          editor: editor(),
-          required: true,
-        },
+        }),
       ],
       admin: {
         initCollapsed: true,

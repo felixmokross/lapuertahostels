@@ -1,17 +1,15 @@
-import { editor } from "@/collections/texts/editor";
-import { RichTextField } from "payload";
+import { TextareaField } from "payload";
 
-export function richTextField(
-  config: Partial<RichTextField> = {},
-): RichTextField {
+export function textareaField(
+  config: Partial<TextareaField> = {},
+): TextareaField {
   return {
     name: "text",
     label: {
       en: "Text",
       es: "Texto",
     },
-    type: "richText",
-    editor: editor(),
+    type: "textarea",
     localized: true,
     required: true,
     ...config,
@@ -22,5 +20,5 @@ export function richTextField(
         ...config.admin?.components,
       },
     },
-  };
+  } as TextareaField;
 }

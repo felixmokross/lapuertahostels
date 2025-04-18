@@ -8,7 +8,8 @@ import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
 import { headingField } from "@/fields/heading";
-import { translationsView } from "@/views/translations/translations-view-config";
+import { textField } from "@/fields/text";
+import { textareaField } from "@/fields/textarea";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -23,15 +24,6 @@ export const Common: GlobalConfig = {
     afterChange: [
       refreshCacheHook({ cacheKey: getGlobalCacheKey("common"), pageUrl: "/" }),
     ],
-  },
-  admin: {
-    components: {
-      views: {
-        edit: {
-          translations: translationsView(),
-        },
-      },
-    },
   },
   fields: [
     {
@@ -121,58 +113,37 @@ export const Common: GlobalConfig = {
               type: "group",
               fields: [
                 showField,
-                {
+                textField({
                   name: "title",
-                  label: {
-                    en: "Title",
-                    es: "Título",
-                  },
-                  required: true,
-                  type: "text",
-                  localized: true,
+                  label: { en: "Title", es: "Título" },
                   admin: {
                     condition: (data) => !!data.footer?.newsletter?.show,
                   },
-                },
-                {
+                }),
+                textareaField({
                   name: "description",
-                  label: {
-                    en: "Description",
-                    es: "Descripción",
-                  },
-                  required: true,
-                  type: "textarea",
-                  localized: true,
+                  label: { en: "Description", es: "Descripción" },
                   admin: {
                     condition: (data) => !!data?.footer?.newsletter?.show,
                   },
-                },
-                {
+                }),
+                textField({
                   name: "emailPlaceholder",
                   label: {
                     en: "Email Placeholder",
                     es: "Marcador de correo electrónico",
                   },
-                  required: true,
-                  type: "text",
-                  localized: true,
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
-                },
-                {
+                }),
+                textField({
                   name: "buttonLabel",
-                  label: {
-                    en: "Button Label",
-                    es: "Etiqueta del botón",
-                  },
-                  required: true,
-                  type: "text",
-                  localized: true,
+                  label: { en: "Button Label", es: "Etiqueta del botón" },
                   admin: {
                     condition: (data) => data.footer.newsletter.show,
                   },
-                },
+                }),
               ],
             },
           ],

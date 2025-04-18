@@ -13,7 +13,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
-import { translationsView } from "@/views/translations/translations-view-config";
+import { textField } from "@/fields/text";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -68,13 +68,6 @@ export const Brands: CollectionConfig = {
           `brands/${data.id}`,
           locale.code,
         );
-      },
-    },
-    components: {
-      views: {
-        edit: {
-          translations: translationsView(),
-        },
       },
     },
   },
@@ -148,21 +141,20 @@ export const Brands: CollectionConfig = {
             es: "General",
           },
           fields: [
-            {
+            textField({
               name: "baseTitle",
               label: {
                 en: "Base Title",
                 es: "Título Base",
               },
-              type: "text",
-              localized: true,
+              required: false,
               admin: {
                 description: {
                   en: "The base title is appended to the titles of the brand’s pages. If the page does not have a title, the base title will be used as the title. Include important keywords in the title for SEO.",
                   es: "El título base se añade a los títulos de las páginas de la marca. Si la página no tiene un título, se usará el título base como título. Incluye palabras clave importantes en el título para SEO.",
                 },
               },
-            },
+            }),
             {
               ...imageField,
               name: "logo",
@@ -212,16 +204,10 @@ export const Brands: CollectionConfig = {
               },
               type: "array",
               fields: [
-                {
+                textField({
                   name: "label",
-                  label: {
-                    en: "Label",
-                    es: "Etiqueta",
-                  },
-                  type: "text",
-                  localized: true,
-                  required: true,
-                },
+                  label: { en: "Label", es: "Etiqueta" },
+                }),
                 {
                   name: "link",
                   label: {
@@ -255,19 +241,13 @@ export const Brands: CollectionConfig = {
               type: "group",
               fields: [
                 showField,
-                {
+                textField({
                   name: "label",
-                  label: {
-                    en: "Label",
-                    es: "Etiqueta",
-                  },
-                  type: "text",
-                  localized: true,
-                  required: true,
+                  label: { en: "Label", es: "Etiqueta" },
                   admin: {
                     condition: (_, siblingData) => siblingData?.show,
                   },
-                },
+                }),
                 {
                   name: "link",
                   label: {
@@ -310,16 +290,10 @@ export const Brands: CollectionConfig = {
               },
               type: "array",
               fields: [
-                {
+                textField({
                   name: "title",
-                  label: {
-                    en: "Title",
-                    es: "Título",
-                  },
-                  required: true,
-                  type: "text",
-                  localized: true,
-                },
+                  label: { en: "Title", es: "Título" },
+                }),
                 {
                   name: "links",
                   label: {
@@ -338,16 +312,10 @@ export const Brands: CollectionConfig = {
                   },
                   type: "array",
                   fields: [
-                    {
+                    textField({
                       name: "label",
-                      label: {
-                        en: "Label",
-                        es: "Etiqueta",
-                      },
-                      type: "text",
-                      localized: true,
-                      required: true,
-                    },
+                      label: { en: "Label", es: "Etiqueta" },
+                    }),
                     {
                       name: "link",
                       label: {

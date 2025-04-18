@@ -1,7 +1,43 @@
 "use client";
-
-import React, {
-  FunctionComponent,
+import { cn } from "@/common/cn";
+import { SparklesIcon } from "@/common/icons";
+import { getLabelText } from "@/common/labels";
+import { Label } from "@/common/labels.client";
+import { TranslationsKey, TranslationsObject } from "@/translations";
+import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+import {
+  Button,
+  CheckIcon,
+  Drawer,
+  FieldLabel,
+  Pill,
+  toast,
+  Translation,
+  useConfig,
+  useDocumentForm,
+  useDocumentInfo,
+  useForm,
+  useFormFields,
+  useFormModified,
+  useLocale,
+  useModal,
+  useTranslation,
+} from "@payloadcms/ui";
+import {
+  formatDrawerSlug,
+  useDrawerDepth,
+} from "@payloadcms/ui/elements/Drawer";
+import { useRouter } from "next/router";
+import {
+  CollectionSlug,
+  FieldLabelClientProps,
+  GlobalSlug,
+  Locale,
+  TextFieldClient,
+} from "payload";
+import {
   PropsWithChildren,
   ReactNode,
   useCallback,
@@ -10,88 +46,108 @@ import React, {
   useRef,
   useState,
 } from "react";
-import {
-  Button,
-  useFormModified,
-  useDocumentInfo,
-  useLocale,
-  useTranslation,
-  toast,
-  formatDrawerSlug,
-  Drawer,
-  useModal,
-  Pill,
-  CheckIcon,
-} from "@payloadcms/ui";
-import { TranslationsKey, TranslationsObject } from "@/translations";
-import { Locale } from "payload";
-import { getLabelText, Label } from "@/common/labels";
-import { LanguagesIcon, SparklesIcon } from "@/common/icons";
-import { cn } from "@/common/cn";
-import { Text } from "@/payload-types";
-import { useDrawerDepth } from "@payloadcms/ui/elements/Drawer";
-import { Translation } from "@payloadcms/ui";
 
-export const TranslationsField: FunctionComponent<{ locales: Locale[] }> =
-  function TranslateField({ locales }) {
-    const { id } = useDocumentInfo();
-    const { t } = useTranslation<TranslationsObject, TranslationsKey>();
-    const locale = useLocale();
-    const isModified = useFormModified();
-    const { openModal, isModalOpen } = useModal();
+export function TranslationsButton({
+  field,
+  path,
+}: FieldLabelClientProps<TextFieldClient>) {
+  const { openModal, isModalOpen, closeModal } = useModal();
 
-    const depth = useDrawerDepth();
-    const modalSlug = formatDrawerSlug({
-      slug: `translations-${locale.code}`,
-      depth,
-    });
+  const { id, collectionSlug, globalSlug } = useDocumentInfo();
+  const locale = useLocale();
+  const isModified = useFormModified();
 
-    const translationsDisabled = !id || isModified;
-    return (
-      <>
-        <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
-          {isModalOpen(modalSlug) && (
-            <DrawerContent
-              id={id as string}
-              currentLocale={locale}
-              locales={locales}
-            />
-          )}
-        </Drawer>
-        <Button
-          disabled={translationsDisabled}
-          onClick={() => openModal(modalSlug)}
-          size="large"
-          buttonStyle="secondary"
-          icon={<LanguagesIcon />}
-        >
-          {t("custom:texts:translationsButtonLabel")}
-        </Button>
+  const { t, i18n } = useTranslation<TranslationsObject, TranslationsKey>();
+  const depth = useDrawerDepth();
+  const modalSlug = formatDrawerSlug({
+    slug: `translations-${path}`,
+    depth,
+  });
+
+  const { config } = useConfig();
+  if (!config.localization) throw new Error("Localization must be enabled");
+
+  if (!path) throw new Error("path is not set");
+  if (typeof id === "number") throw new Error("number ids are not supported");
+
+  const translationsDisabled = (collectionSlug && !id) || isModified;
+  return (
+    <div className="tw:flex tw:justify-between tw:items-baseline">
+      <Drawer slug={modalSlug} title={t("custom:texts:translationsTitle")}>
+        {isModalOpen(modalSlug) && (
+          <DrawerContent
+            id={id}
+            currentLocale={locale}
+            locales={config.localization.locales}
+            collectionSlug={collectionSlug}
+            globalSlug={globalSlug}
+            fieldPath={path}
+            onClose={() => closeModal(modalSlug)}
+          />
+        )}
+      </Drawer>
+      <FieldLabel
+        label={field?.label ? getLabelText(field.label, i18n) : undefined}
+        path={path}
+        localized={true}
+      />
+      <div className="tw:flex tw:gap-2 tw:items-baseline">
         {translationsDisabled && (
-          <p className="field-description tw:-mt-4 tw:mb-8">
+          <p className="field-description tw:m-0">
             {t("custom:texts:pleaseSaveYourChangesToEnableAutoTranslate")}
           </p>
         )}
-      </>
-    );
-  };
+        <button
+          disabled={isModified}
+          type="button"
+          className="tw:disabled:opacity-50 tw:disabled:cursor-not-allowed tw:disabled:hover:text-theme-elevation-800 tw:bg-transparent tw:underline tw:hover:text-theme-elevation-1000 tw:cursor-pointer tw:border-none tw:p-0 tw:text-theme-elevation-800"
+          onClick={() => openModal(modalSlug)}
+        >
+          {i18n.t("custom:texts:translationsButtonLabel")}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 function DrawerContent({
   id,
+  collectionSlug,
+  globalSlug,
   currentLocale,
   locales,
+  fieldPath,
+  onClose,
 }: {
-  id: string;
+  id?: string;
+  collectionSlug?: CollectionSlug;
+  globalSlug?: GlobalSlug;
   currentLocale: Locale;
   locales: Locale[];
+  fieldPath: string;
+  onClose: () => void;
 }) {
   const [data, setData] = useState<AllLocalesText | null>(null);
 
   const updateData = useCallback(
     async function updateData() {
-      const result = await fetch(`/api/texts/${id}?locale=all`, {
-        credentials: "include",
-      });
+      const searchParams = new URLSearchParams();
+      if (collectionSlug) {
+        searchParams.set("collection", collectionSlug);
+      }
+      if (globalSlug) {
+        searchParams.set("global", globalSlug);
+      }
+      if (id) {
+        searchParams.set("id", id);
+      }
+      searchParams.set("fieldPath", fieldPath);
+      const result = await fetch(
+        `/api/translations?${searchParams.toString()}`,
+        {
+          credentials: "include",
+        },
+      );
 
       if (result.ok) {
         setData(await result.json());
@@ -199,8 +255,20 @@ function DrawerContent({
             onClick={async () => {
               setIsTranslating(true);
               try {
+                const searchParams = new URLSearchParams();
+                if (collectionSlug) {
+                  searchParams.set("collection", collectionSlug);
+                }
+                if (id) {
+                  searchParams.set("id", id);
+                }
+                if (globalSlug) {
+                  searchParams.set("global", globalSlug);
+                }
+                searchParams.set("fieldPath", fieldPath);
+                searchParams.set("locale", currentLocale.code);
                 const response = await fetch(
-                  `/api/texts/${id}/translate?locale=${currentLocale.code}`,
+                  `/api/auto-translate?${searchParams.toString()}`,
                   {
                     method: "POST",
                     credentials: "include",
@@ -304,7 +372,8 @@ function DrawerContent({
                   >
                     <Button
                       el="link"
-                      to={`/admin/collections/texts/${id}?locale=${locale.code}`}
+                      to={`?locale=${encodeURIComponent(locale.code)}`}
+                      onClick={async () => onClose()}
                       size="medium"
                       buttonStyle="secondary"
                       icon="edit"
@@ -390,9 +459,8 @@ function TableContentCell({
   );
 }
 
-type AllLocalesText = Pick<Text, "type"> & {
-  text?: Record<string, string | undefined>;
-  richText_html?: Record<string, string | undefined>;
+type AllLocalesText = {
+  value: Record<string, SerializedEditorState | string> | undefined | null;
 };
 
 type AllLocalesTextRendererProps = {
@@ -404,13 +472,19 @@ function AllLocalesTextRenderer({
   data,
   localeCode,
 }: AllLocalesTextRendererProps) {
+  if (!data.value) return null;
+
+  const text = data.value[localeCode];
   return (
     <>
-      {data.type === "plainText" && data.text && data.text[localeCode]}
-      {data.type === "richText" && data.richText_html && (
+      {typeof text === "string" ? (
+        text
+      ) : (
         <div
           dangerouslySetInnerHTML={{
-            __html: data.richText_html[localeCode] ?? "",
+            __html: convertLexicalToHTML({
+              data: text,
+            }),
           }}
           lang={localeCode}
           className="rich-text-html tw:prose-xl tw:pointer-events-none tw:hyphens-auto tw:font-serif"
@@ -421,15 +495,17 @@ function AllLocalesTextRenderer({
 }
 
 function isLongContent(data: AllLocalesText, localeCode: string) {
-  const fullText =
-    data.type === "plainText"
-      ? data.text
-        ? data.text[localeCode]
-        : ""
-      : data.richText_html
-        ? data.richText_html[localeCode]
-        : "";
-  return !!fullText && fullText.length > 200;
+  if (!data.value) return false;
+
+  const text = data.value[localeCode];
+
+  const plainText =
+    typeof text === "string"
+      ? text
+      : convertLexicalToPlaintext({
+          data: text,
+        });
+  return !!plainText && plainText.length > 200;
 }
 
 type CheckboxInputProps = {
