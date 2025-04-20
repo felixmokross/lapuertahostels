@@ -1,4 +1,3 @@
-import fs from "fs/promises";
 import {
   Brand,
   Common,
@@ -6,16 +5,15 @@ import {
   Page,
   Redirect,
 } from "@lapuertahostels/payload-types";
-import path from "path";
 import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
+import { redis } from "./redis";
 
-const CACHE_DIR = "./.cms-cache";
 const CACHE_EXPIRY_IN_MS = 1000 * 60; // 1 min
 
 async function loadAndCacheData<TData, TResult>(
   url: string,
   locale: string,
-  cacheFilePath: string,
+  cacheKeyWithLocale: string,
   depth: number,
   queryParams: Record<string, string>,
   getResultFn: (data: TData | null) => TResult | null,
@@ -23,25 +21,28 @@ async function loadAndCacheData<TData, TResult>(
   const result = getResultFn(await loadData(url, locale, depth, queryParams));
 
   if (result) {
-    await cacheData(cacheFilePath, result);
+    await cacheData(cacheKeyWithLocale, result);
   }
 
   return result;
 }
 
-async function cacheData(cacheFilePath: string, data: object) {
-  console.log(`Caching data to ${cacheFilePath}`);
-  await ensureDirectoryExists(path.dirname(cacheFilePath));
-  await fs.writeFile(cacheFilePath, JSON.stringify(data));
+async function cacheData(cacheKeyWithLocale: string, data: object) {
+  console.log(`Caching data to ${cacheKeyWithLocale}`);
+
+  await redis.set(
+    cacheKeyWithLocale,
+    JSON.stringify({
+      data,
+      cachedAt: new Date().toJSON(),
+    } as CacheEntry<object>),
+  );
 }
 
-function getCacheFolder(cacheKey: string) {
-  return `${CACHE_DIR}/${cacheKey}`;
-}
-
-function getCacheFilePath(cacheKey: string, locale: string) {
-  return `${getCacheFolder(cacheKey)}/${locale}.json`;
-}
+type CacheEntry<T> = {
+  data: T;
+  cachedAt: string;
+};
 
 async function getData<TData, TResult>(
   req: Request,
@@ -60,17 +61,20 @@ async function getData<TData, TResult>(
     return getResultFn(await loadData(pathname, locale, depth, queryParams));
   }
 
-  const cacheFilePath = getCacheFilePath(cacheKey, locale);
-  try {
-    const cache = await fs.readFile(cacheFilePath, "utf8");
+  const cacheKeyWithLocale = `${cacheKey}:${locale}`;
+  const cacheEntryString = await redis.get(cacheKeyWithLocale);
+  const cacheEntry = cacheEntryString
+    ? (JSON.parse(cacheEntryString) as CacheEntry<TResult>)
+    : null;
 
-    // refresh cache in the background _after_ returning the cached data (stale-while-revalidate)
+  if (cacheEntry) {
     queueMicrotask(async () => {
       try {
-        const cacheLastModified = (await fs.stat(cacheFilePath)).mtime;
+        const cacheLastModified = cacheEntry.cachedAt;
 
         const cacheExpired =
-          cacheLastModified.getTime() + CACHE_EXPIRY_IN_MS < Date.now();
+          new Date(cacheLastModified).getTime() + CACHE_EXPIRY_IN_MS <
+          Date.now();
         if (!cacheExpired) {
           console.log(`Cache not expired for ${cacheKey} in ${locale}`);
           return;
@@ -80,34 +84,32 @@ async function getData<TData, TResult>(
         await loadAndCacheData(
           pathname,
           locale,
-          cacheFilePath,
+          cacheKeyWithLocale,
           depth,
           queryParams,
           getResultFn,
         );
       } catch (e) {
         // As this runs in the background, just log the error
-        console.error(
-          `Failed to refresh cache in microtask for ${cacheKey} in ${locale}: ${e}`,
+        console.warn(
+          `Failed to refresh cache in microtask for ${cacheKey} in ${locale} (expected if data was deleted): ${e}`,
         );
       }
     });
 
-    console.log(`Cache hit for ${pathname} in ${locale}`);
-    return JSON.parse(cache) as TResult;
-  } catch (e) {
-    if ((e as NodeJS.ErrnoException)?.code !== "ENOENT") throw e;
-
-    console.log(`Cache miss for ${pathname} in ${locale}`);
-    return await loadAndCacheData(
-      pathname,
-      locale,
-      cacheFilePath,
-      depth,
-      queryParams,
-      getResultFn,
-    );
+    console.log(`Cache hit for ${cacheKey} in ${locale}`);
+    return cacheEntry.data;
   }
+
+  console.log(`Cache miss for ${cacheKey} in ${locale}`);
+  return await loadAndCacheData(
+    pathname,
+    locale,
+    cacheKeyWithLocale,
+    depth,
+    queryParams,
+    getResultFn,
+  );
 }
 
 export async function loadData(
@@ -155,7 +157,7 @@ export async function tryGetPage(
   return await getData<{ docs: Page[] }, Page>(
     request,
     `pages`,
-    `pages_${pathname.replaceAll("/", ":")}`,
+    `pages:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
     locale,
     PAGE_DEPTH,
     {
@@ -174,7 +176,7 @@ export async function tryGetRedirect(
   return await getData<{ docs: Redirect[] }, Redirect>(
     request,
     `redirects`,
-    `redirects_${pathname.replaceAll("/", ":")}`,
+    `redirects:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
     locale,
     1,
     {
@@ -189,7 +191,7 @@ export async function getCommon(request: Request, locale: string) {
   const common = (await getData(
     request,
     "globals/common",
-    "globals_common",
+    "globals:common",
     locale,
     2,
   )) as Common | null;
@@ -202,7 +204,7 @@ export async function getMaintenance(request: Request, locale: string) {
   const maintanance = (await getData(
     request,
     "globals/maintenance",
-    "globals_maintenance",
+    "globals:maintenance",
     locale,
     2,
   )) as Maintenance | null;
@@ -225,14 +227,7 @@ export async function getBrands(request: Request, locale: string) {
 
   return brands.docs;
 }
-export async function purgeCache() {
-  await fs.rm(CACHE_DIR, { force: true });
-}
 
-async function ensureDirectoryExists(dir: string) {
-  try {
-    await fs.mkdir(dir, { recursive: true });
-  } catch (e) {
-    if ((e as NodeJS.ErrnoException)?.code !== "EEXIST") throw e;
-  }
+export async function purgeCache() {
+  await redis.flushDb();
 }
