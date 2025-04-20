@@ -45,6 +45,7 @@ export const Redirects: CollectionConfig = {
       type: "text",
       required: true,
       unique: true,
+      index: true,
       access: { update: () => false },
     },
     {

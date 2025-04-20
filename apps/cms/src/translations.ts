@@ -17,6 +17,8 @@ export const translations = {
           pleaseEnterAPathname: "Please enter a pathname.",
           pathnameMustStartWithPrefix:
             "The pathname must start with '{{ prefix }}'.",
+          redirectWillBeAdded:
+            "A redirect from '{{ previousPathname }}' will be created.",
         },
       },
       translations: {
@@ -91,6 +93,8 @@ export const translations = {
           pleaseEnterAPathname: "Por favor, introduzca una ruta.",
           pathnameMustStartWithPrefix:
             "La ruta debe comenzar con '{{ prefix }}'.",
+          redirectWillBeAdded:
+            "Se creará una redirección desde '{{ previousPathname }}'.",
         },
       },
       translations: {
