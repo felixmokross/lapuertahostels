@@ -9,6 +9,7 @@ services:
       PAYLOAD_CMS_BASE_URL: http://cms:3001
       CANONICAL_HOSTNAME: canonical.localhost
       IMAGEKIT_BASE_URL: ${IMAGEKIT_BASE_URL}
+      REDIS_URL: redis://redis:6379
 
   cms:
     image: ${CMS_IMAGE}
@@ -40,5 +41,15 @@ services:
     logging:
       driver: none
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    logging:
+      driver: none
+
 volumes:
   data:
+  redis:
