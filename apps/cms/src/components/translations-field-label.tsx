@@ -71,14 +71,21 @@ export function TranslationsFieldLabel({
   if (typeof id === "number") throw new Error("number ids are not supported");
 
   const translationsDisabled = (collectionSlug && !id) || isModified;
+
+  const label = field?.label ? getLabelText(field.label, i18n) : undefined;
+  //  The Label is also rendered in the List view, here without path, see https://payloadcms.com/docs/fields/overview#label
+  if (!path) {
+    return <FieldLabel label={label} unstyled={true} />;
+  }
+
   return (
     <div className="tw:flex tw:justify-between tw:items-baseline">
       <FieldLabel
-        label={field?.label ? getLabelText(field.label, i18n) : undefined}
+        label={label}
         path={path}
         localized={true}
+        required={field?.required}
       />
-      {/*  The Label is also rendered in the List view, here without path, see https://payloadcms.com/docs/fields/overview#label */}
       {path && (
         <>
           <div className="tw:flex tw:gap-2 tw:items-baseline">
