@@ -169,7 +169,9 @@ export const Pages: CollectionConfig = {
       unique: true,
       hooks: {
         afterChange: [
-          async ({ previousDoc, req }) => {
+          async ({ previousDoc, req, operation }) => {
+            if (operation !== "update") return;
+
             const redirects = await req.payload.find({
               collection: "redirects",
               where: { fromPathname: { equals: previousDoc.pathname } },
