@@ -12,7 +12,7 @@ import { getTitle } from "./common/meta";
 import { ThemeProvider } from "./themes";
 import { Header } from "./layout/header";
 import { HeroHeadingBlock } from "./blocks/hero-heading-block";
-import { StoryBlock, StoryBlockProps } from "./blocks/story-block";
+import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
 import { Maintenance } from "@lapuertahostels/payload-types";
