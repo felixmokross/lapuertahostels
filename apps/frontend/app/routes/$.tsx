@@ -179,7 +179,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = await handleIncomingRequest(request);
 
   const requestUrl = getRequestUrl(request);
-  const content = await handlePathname(toUrl(pageUrl).pathname, locale);
+  const content = await handlePathname(
+    request,
+    toUrl(pageUrl).pathname,
+    locale,
+  );
   if (!content) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }

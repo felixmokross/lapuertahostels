@@ -1,5 +1,3 @@
-import { getRedirectCacheKey } from "@/common/frontend-cache";
-import { refreshCacheHook } from "@/hooks/refresh-cache-hook";
 import { CollectionConfig } from "payload";
 
 export const Redirects: CollectionConfig = {
@@ -18,22 +16,6 @@ export const Redirects: CollectionConfig = {
     useAsTitle: "fromPathname",
     defaultColumns: ["fromPathname"],
     listSearchableFields: ["id", "fromPathname"],
-  },
-  hooks: {
-    afterChange: [
-      ({ doc, req }) =>
-        refreshCacheHook({
-          cacheKey: getRedirectCacheKey(doc),
-          pageUrl: doc.fromPathname,
-        })({ req }),
-    ],
-    afterDelete: [
-      ({ doc, req }) =>
-        refreshCacheHook({
-          cacheKey: getRedirectCacheKey(doc),
-          pageUrl: doc.fromPathname,
-        })({ req }),
-    ],
   },
   fields: [
     {

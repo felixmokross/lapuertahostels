@@ -6,14 +6,12 @@ import {
   TextField,
   ValidateOptions,
 } from "payload";
-import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { Link, Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
-import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
@@ -64,15 +62,6 @@ export const Pages: CollectionConfig = {
     create: canManageContent,
     update: canManageContent,
     delete: ({ req }) => isAdmin(req),
-  },
-  hooks: {
-    afterChange: [
-      ({ doc, req }) =>
-        refreshCacheHook({
-          cacheKey: getPageCacheKey(doc),
-          pageUrl: doc.pathname,
-        })({ req }),
-    ],
   },
   fields: [
     {
@@ -176,6 +165,7 @@ export const Pages: CollectionConfig = {
       type: "text",
       index: true,
       required: true,
+      localized: true,
       unique: true,
       hooks: {
         afterChange: [

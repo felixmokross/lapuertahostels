@@ -9,8 +9,6 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/brands";
 import { Media } from "./collections/media";
 import { MediaCategories } from "./collections/media-categories";
-import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
-import { Texts } from "./collections/texts";
 import { Links } from "./collections/links";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
@@ -95,7 +93,6 @@ export default buildConfig({
     Media,
     MediaCategories,
     Banners,
-    Texts,
     Links,
     Redirects,
   ],
@@ -165,11 +162,7 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL,
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
-  endpoints: [
-    primeFrontendCacheEndpoint,
-    translationsEndpoint,
-    autoTranslateEndpoint,
-  ],
+  endpoints: [translationsEndpoint, autoTranslateEndpoint],
   async onInit(payload) {
     if (!!process.env.E2E_TESTS_API_KEY) {
       const e2eTestApiKeys = await payload.find({

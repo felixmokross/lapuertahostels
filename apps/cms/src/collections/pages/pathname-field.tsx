@@ -29,7 +29,12 @@ export function PathnameField({ path, field }: TextFieldClientProps) {
   return (
     <div className="field-type">
       <div className="tw:flex tw:justify-between tw:items-baseline tw:gap-4">
-        <FieldLabel path={path} label={field.label} required={field.required} />
+        <FieldLabel
+          path={path}
+          label={field.label}
+          required={field.required}
+          localized={field.localized}
+        />
 
         <button
           type="button"
@@ -52,6 +57,14 @@ export function PathnameField({ path, field }: TextFieldClientProps) {
         path={path}
         readOnly={isLocked}
         showError={showError}
+        localized={field.localized}
+        required={field.required}
+        placeholder={
+          field.admin?.placeholder as
+            | string
+            | Record<string, string>
+            | undefined
+        }
       />
       {isChanged && (
         <FieldDescription

@@ -1,10 +1,8 @@
 import { GlobalConfig } from "payload";
-import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { canManageContent } from "../common/access-control";
 import { showField } from "../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
-import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
@@ -19,11 +17,6 @@ export const Common: GlobalConfig = {
   access: {
     update: canManageContent,
   },
-  hooks: {
-    afterChange: [
-      refreshCacheHook({ cacheKey: getGlobalCacheKey("common"), pageUrl: "/" }),
-    ],
-  },
   fields: [
     {
       type: "tabs",
@@ -35,22 +28,20 @@ export const Common: GlobalConfig = {
             es: "Pie de página",
           },
           fields: [
-            {
-              ...richTextField(),
+            richTextField({
               name: "address",
               label: {
                 en: "Address",
                 es: "Dirección",
               },
-            },
-            {
-              ...richTextField(),
+            }),
+            richTextField({
               name: "copyright",
               label: {
                 en: "Copyright",
                 es: "Derechos de autor",
               },
-            },
+            }),
             {
               type: "array",
               name: "socialLinks",

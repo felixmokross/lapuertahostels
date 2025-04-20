@@ -44,6 +44,7 @@ function getCacheFilePath(cacheKey: string, locale: string) {
 }
 
 async function getData<TData, TResult>(
+  req: Request,
   pathname: string,
   cacheKey: string,
   locale: string,
@@ -52,6 +53,13 @@ async function getData<TData, TResult>(
   getResultFn: (data: TData | null) => TResult | null = (data: TData | null) =>
     data as TResult,
 ) {
+  if (new URL(req.url).searchParams.get("skipcache") === "true") {
+    console.log(
+      `Skipping cache for ${cacheKey} in ${locale} (?skipcache=true was specified)`,
+    );
+    return getResultFn(await loadData(pathname, locale, depth, queryParams));
+  }
+
   const cacheFilePath = getCacheFilePath(cacheKey, locale);
   try {
     const cache = await fs.readFile(cacheFilePath, "utf8");
@@ -139,8 +147,13 @@ export async function loadData(
   return await response.json();
 }
 
-export async function tryGetPage(pathname: string, locale: string) {
+export async function tryGetPage(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
   return await getData<{ docs: Page[] }, Page>(
+    request,
     `pages`,
     `pages_${pathname.replaceAll("/", ":")}`,
     locale,
@@ -153,11 +166,16 @@ export async function tryGetPage(pathname: string, locale: string) {
   );
 }
 
-export async function tryGetRedirect(pathname: string) {
+export async function tryGetRedirect(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
   return await getData<{ docs: Redirect[] }, Redirect>(
+    request,
     `redirects`,
     `redirects_${pathname.replaceAll("/", ":")}`,
-    "generic",
+    locale,
     1,
     {
       "where[fromPathname][equals]": pathname,
@@ -167,8 +185,9 @@ export async function tryGetRedirect(pathname: string) {
   );
 }
 
-export async function getCommon(locale: string) {
+export async function getCommon(request: Request, locale: string) {
   const common = (await getData(
+    request,
     "globals/common",
     "globals_common",
     locale,
@@ -179,8 +198,9 @@ export async function getCommon(locale: string) {
   return common;
 }
 
-export async function getMaintenance(locale: string) {
+export async function getMaintenance(request: Request, locale: string) {
   const maintanance = (await getData(
+    request,
     "globals/maintenance",
     "globals_maintenance",
     locale,
@@ -191,22 +211,22 @@ export async function getMaintenance(locale: string) {
   return maintanance;
 }
 
-export async function getBrands(locale: string) {
-  const brands = (await getData("brands", "brands", locale, BRANDS_DEPTH)) as {
+export async function getBrands(request: Request, locale: string) {
+  const brands = (await getData(
+    request,
+    "brands",
+    "brands",
+    locale,
+    BRANDS_DEPTH,
+  )) as {
     docs: Brand[];
   } | null;
   if (!brands) throw new Error("Could not load Brands collection");
 
   return brands.docs;
 }
-
-export async function purgeCacheFor(cacheKey: string) {
-  const cacheFolderPath = getCacheFolder(cacheKey);
-  await deleteFolderIfExists(cacheFolderPath);
-}
-
-async function deleteFolderIfExists(folderPath: string) {
-  await fs.rm(folderPath, { recursive: true, force: true });
+export async function purgeCache() {
+  await fs.rm(CACHE_DIR, { force: true });
 }
 
 async function ensureDirectoryExists(dir: string) {

@@ -27,7 +27,7 @@ export async function handleIncomingRequest(request: Request) {
     redirectToLocalizedRoute(url, locale);
   }
 
-  const maintenance = await getMaintenance(locale);
+  const maintenance = await getMaintenance(request, locale);
   if (
     maintenance.maintenanceScreen?.show &&
     !(await isAuthenticated(request)) &&
@@ -69,11 +69,15 @@ function redirectToLocalizedRoute(url: URL, locale: string): never {
   throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)));
 }
 
-export async function handlePathname(pathname: string, locale: string) {
-  const content = await tryGetPage(pathname, locale);
+export async function handlePathname(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
+  const content = await tryGetPage(request, pathname, locale);
   if (content) return content;
 
-  const redirectObj = await tryGetRedirect(pathname);
+  const redirectObj = await tryGetRedirect(request, pathname, locale);
   if (redirectObj && redirectObj.to) {
     throw redirect(
       getPageLinkHref({

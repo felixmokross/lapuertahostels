@@ -1,7 +1,6 @@
 import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
-import { refreshCacheHook } from "./refresh-cache-hook";
 import { textareaField } from "@/fields/textarea";
 
 export const Media: CollectionConfig = {
@@ -29,9 +28,6 @@ export const Media: CollectionConfig = {
     listSearchableFields: ["id", "filename", "comment", "alt"],
   },
   endpoints: [generateAltTextEndpoint],
-  hooks: {
-    afterChange: [refreshCacheHook()],
-  },
   upload: {
     disableLocalStorage: true,
     mimeTypes: ["image/*", "video/*"],

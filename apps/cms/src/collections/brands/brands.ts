@@ -4,13 +4,11 @@ import {
   Payload,
   SanitizedCollectionConfig,
 } from "payload";
-import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { Page } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
-import { getFullCollectionCacheKey } from "@/common/frontend-cache";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
@@ -75,14 +73,6 @@ export const Brands: CollectionConfig = {
     create: ({ req }) => isAdmin(req),
     update: canManageContent,
     delete: ({ req }) => isAdmin(req),
-  },
-  hooks: {
-    afterChange: [
-      refreshCacheHook({
-        cacheKey: getFullCollectionCacheKey("brands"),
-        pageUrl: "/",
-      }),
-    ],
   },
   fields: [
     {

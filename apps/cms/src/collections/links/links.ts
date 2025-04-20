@@ -1,7 +1,6 @@
 import { CollectionConfig } from "payload";
 import { validateUrl } from "../../common/validation";
 import { linkUsagesField } from "./usages";
-import { refreshCacheHook } from "./refresh-cache-hook";
 
 export const Links: CollectionConfig = {
   slug: "links",
@@ -28,9 +27,6 @@ export const Links: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],
     listSearchableFields: ["id", "title", "type"],
-  },
-  hooks: {
-    afterChange: [refreshCacheHook()],
   },
   fields: [
     {

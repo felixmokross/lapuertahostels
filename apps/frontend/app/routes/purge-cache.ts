@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "react-router";
-import { purgeCacheFor } from "~/cms-data.server";
+import { purgeCache } from "~/cms-data.server";
 import { isAuthenticated } from "~/common/auth";
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -7,10 +7,9 @@ export async function action({ request }: ActionFunctionArgs) {
     return new Response(null, { status: 401 });
   }
 
-  const { cacheKey } = await request.json();
-  console.log(`Purging cache for ${cacheKey}`);
-  await purgeCacheFor(cacheKey);
-  console.log(`Cache purged for ${cacheKey}`);
+  console.log(`Purging cache`);
+  await purgeCache();
+  console.log(`Cache purged`);
 
   return new Response(null, { status: 204 });
 }

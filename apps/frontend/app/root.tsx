@@ -107,10 +107,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!locale) throw new Error("Locale has not been determined");
 
   const [page, allBrands, common, maintenance] = await Promise.all([
-    tryGetPage(toUrl(pageUrl).pathname, locale),
-    getBrands(locale),
-    getCommon(locale),
-    getMaintenance(locale),
+    tryGetPage(request, toUrl(pageUrl).pathname, locale),
+    getBrands(request, locale),
+    getCommon(request, locale),
+    getMaintenance(request, locale),
   ]);
 
   // If maintenance screen is not enabled, public access is authorized
