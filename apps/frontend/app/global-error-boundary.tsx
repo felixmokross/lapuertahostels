@@ -70,9 +70,9 @@ export function GlobalErrorBoundary() {
             <StoryBlock
               blockType="Story"
               text={
-                (isPageNotFound
-                  ? common.pageNotFoundScreen
-                  : common.errorScreen) as unknown as StoryBlockProps["text"]
+                isPageNotFound
+                  ? common.pageNotFoundScreen.text
+                  : common.errorScreen.text
               }
             />
           </main>
