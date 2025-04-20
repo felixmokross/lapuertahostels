@@ -25,6 +25,7 @@ import { es } from "@payloadcms/translations/languages/es";
 import { ApiKeys } from "./collections/api-keys/config";
 import { translationsEndpoint } from "./endpoints/translations";
 import { autoTranslateEndpoint } from "./endpoints/auto-translate";
+import { Redirects } from "./collections/redirects/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -96,6 +97,7 @@ export default buildConfig({
     Banners,
     Texts,
     Links,
+    Redirects,
   ],
   globals: [Common, Maintenance],
   localization: {

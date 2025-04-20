@@ -9,6 +9,7 @@ import { getEditorConfig } from "@/collections/texts/editor";
 import { JSDOM } from "jsdom";
 import { getValueByPath } from "@/common/utils";
 import { type ObjectId as ObjectIdType } from "bson";
+import { canManageContent } from "@/common/access-control";
 
 export const autoTranslateEndpoint: Endpoint = {
   path: "/auto-translate",
@@ -16,6 +17,10 @@ export const autoTranslateEndpoint: Endpoint = {
   handler: async (req) => {
     if (!req.user) {
       return new Response(null, { status: 401, statusText: "Unauthorized" });
+    }
+
+    if (!canManageContent({ req })) {
+      return new Response(null, { status: 403, statusText: "Forbidden" });
     }
 
     if (!req.json) throw new Error("No JSON body");

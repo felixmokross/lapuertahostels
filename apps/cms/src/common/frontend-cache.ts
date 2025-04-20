@@ -2,7 +2,7 @@ import { resolve6 } from "dns/promises";
 import { CollectionSlug, GlobalSlug, PayloadRequest } from "payload";
 import { getSupportedLocaleCodes } from "./locales";
 import * as cookie from "cookie";
-import { Page } from "@/payload-types";
+import { Page, Redirect } from "@/payload-types";
 
 export function getFullCollectionCacheKey(collectionSlug: CollectionSlug) {
   return collectionSlug;
@@ -21,6 +21,13 @@ export function getCollectionItemCacheKey(
 
 export function getPageCacheKey(page: Page) {
   return getCollectionItemCacheKey("pages", page.pathname.replaceAll("/", ":"));
+}
+
+export function getRedirectCacheKey(redirect: Redirect) {
+  return getCollectionItemCacheKey(
+    "redirects",
+    redirect.fromPathname.replaceAll("/", ":"),
+  );
 }
 
 export async function refreshCacheForAllPages(

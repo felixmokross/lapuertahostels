@@ -53,6 +53,7 @@ export const Links: CollectionConfig = {
               required: true,
               admin: {
                 condition: (_, siblingData) => siblingData.type === "internal",
+                appearance: "drawer",
               },
             },
             {

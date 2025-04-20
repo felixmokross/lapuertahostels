@@ -1,9 +1,8 @@
 import { MetaFunction, useLoaderData, LoaderFunctionArgs } from "react-router";
 import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
-import { tryGetPage } from "~/cms-data.server";
 import { getPageTitle } from "~/common/meta";
-import { handleIncomingRequest } from "~/common/routing.server";
+import { handleIncomingRequest, handlePathname } from "~/common/routing.server";
 import i18n from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
@@ -180,7 +179,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = await handleIncomingRequest(request);
 
   const requestUrl = getRequestUrl(request);
-  const content = await tryGetPage(toUrl(pageUrl).pathname, locale);
+  const content = await handlePathname(toUrl(pageUrl).pathname, locale);
   if (!content) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }

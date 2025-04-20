@@ -7,8 +7,9 @@ import {
   buildLocalizedRelativeUrl,
   getCanonicalRequestUrl,
 } from "./routing";
-import { getMaintenance } from "~/cms-data.server";
+import { getMaintenance, tryGetPage, tryGetRedirect } from "~/cms-data.server";
 import { isAuthenticated } from "./auth";
+import { getPageLinkHref } from "./page-link";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -66,4 +67,24 @@ function redirectIfPathnameEndsWithSlash(url: URL) {
 
 function redirectToLocalizedRoute(url: URL, locale: string): never {
   throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)));
+}
+
+export async function handlePathname(pathname: string, locale: string) {
+  const content = await tryGetPage(pathname, locale);
+  if (content) return content;
+
+  const redirectObj = await tryGetRedirect(pathname);
+  if (redirectObj && redirectObj.to) {
+    throw redirect(
+      getPageLinkHref({
+        type: "internal",
+        page: redirectObj.to.page,
+        queryString: redirectObj.to.queryString,
+        fragment: redirectObj.to.fragment,
+      }),
+      { status: 301 },
+    );
+  }
+
+  throw new Response(null, { status: 404, statusText: "Not Found" });
 }

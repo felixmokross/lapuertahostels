@@ -4,6 +4,7 @@ import {
   Common,
   Maintenance,
   Page,
+  Redirect,
 } from "@lapuertahostels/payload-types";
 import path from "path";
 import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
@@ -146,6 +147,20 @@ export async function tryGetPage(pathname: string, locale: string) {
     PAGE_DEPTH,
     {
       "where[pathname][equals]": pathname,
+      limit: 1,
+    },
+    (data) => (data && data.docs.length > 0 ? data.docs[0] : null),
+  );
+}
+
+export async function tryGetRedirect(pathname: string) {
+  return await getData<{ docs: Redirect[] }, Redirect>(
+    `redirects`,
+    `redirects_${pathname.replaceAll("/", ":")}`,
+    "generic",
+    1,
+    {
+      "where[fromPathname][equals]": pathname,
       limit: 1,
     },
     (data) => (data && data.docs.length > 0 ? data.docs[0] : null),
