@@ -3,7 +3,7 @@ import { cn } from "./cn";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { TextHighlight } from "./text-highlight";
-import { RichText } from "./rich-text";
+import { isEmptyRichText, RichText } from "./rich-text";
 
 type HeadingVariant = "brand" | "white" | "inherit";
 
@@ -84,6 +84,7 @@ export type RichTextHeadingProps = Omit<HeadingProps, "children"> & {
 };
 
 export function RichTextHeading({ children, ...props }: RichTextHeadingProps) {
+  if (isEmptyRichText(children)) return null;
   return (
     <Heading {...props}>
       {children && (

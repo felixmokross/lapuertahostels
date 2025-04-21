@@ -3,7 +3,7 @@ import { cn } from "./cn";
 import { useTheme } from "~/themes";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { TextHighlight } from "./text-highlight";
-import { RichText } from "./rich-text";
+import { isEmptyRichText, RichText } from "./rich-text";
 
 type ParagraphVariant = "neutral" | "brand" | "white" | "inherit";
 
@@ -87,15 +87,14 @@ export function RichTextParagraph({
   children,
   ...props
 }: RichTextParagraphProps) {
+  if (isEmptyRichText(children)) return null;
   return (
     <Paragraph {...props}>
-      {children && (
-        <RichText
-          content={children}
-          elements={{ bold: ParagraphHighlight }}
-          lineBreakHandling="line-break"
-        />
-      )}
+      <RichText
+        content={children}
+        elements={{ bold: ParagraphHighlight }}
+        lineBreakHandling="line-break"
+      />
     </Paragraph>
   );
 }

@@ -7,7 +7,7 @@ import { useTheme } from "~/themes";
 import { PageLink } from "~/common/page-link";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
-import { RichText } from "~/common/rich-text";
+import { isEmptyRichText, RichText } from "~/common/rich-text";
 import { Brand, Common } from "@lapuertahostels/payload-types";
 
 type FooterProps = {
@@ -44,7 +44,9 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
             <h3 className="mt-2">
               {getComponent(<BrandLogo size="small" brand={puertaBrand} />)}
             </h3>
-            {content.address && (
+            {!isEmptyRichText(
+              content.address as unknown as RichTextObject | undefined,
+            ) && (
               <p className="text-sm leading-6 text-neutral-600">
                 <RichText
                   content={
@@ -134,7 +136,9 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
         <div className="mt-8 border-t border-neutral-900/10 pt-8 sm:mt-10 lg:mt-12">
           <p className="text-xs leading-5 text-neutral-500">
             &copy; {new Date().getFullYear()}
-            {content.copyright && (
+            {!isEmptyRichText(
+              content.copyright as unknown as RichTextObject | undefined,
+            ) && (
               <>
                 {" "}
                 <RichText

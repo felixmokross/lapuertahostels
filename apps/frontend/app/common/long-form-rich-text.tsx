@@ -6,7 +6,7 @@ import { TextHighlight } from "./text-highlight";
 import { useTheme } from "~/themes";
 import { cn } from "./cn";
 import { Link } from "./link";
-import { RichText } from "./rich-text";
+import { isEmptyRichText, RichText } from "./rich-text";
 
 export type LongFormRichTextProps = {
   content?: RichTextObject;
@@ -18,6 +18,8 @@ export function LongFormRichText({
   baseHeadingLevel,
 }: LongFormRichTextProps) {
   const theme = useTheme();
+
+  if (isEmptyRichText(content)) return null;
   return (
     <RichText
       content={content}
