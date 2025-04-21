@@ -175,12 +175,12 @@ export async function tryGetRedirect(
 ) {
   return await getData<{ docs: Redirect[] }, Redirect>(
     request,
-    `redirects`,
+    `redirects/get`,
     `redirects:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
     locale,
     1,
     {
-      "where[fromPathname][equals]": pathname,
+      pathname: pathname,
       limit: 1,
     },
     (data) => (data && data.docs.length > 0 ? data.docs[0] : null),

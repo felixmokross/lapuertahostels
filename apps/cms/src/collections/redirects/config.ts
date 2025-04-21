@@ -1,5 +1,6 @@
 import { locales } from "@/common/localization";
 import { CollectionConfig } from "payload";
+import { getRedirectsEndpoint } from "./get-redirects";
 
 export const Redirects: CollectionConfig = {
   slug: "redirects",
@@ -18,6 +19,7 @@ export const Redirects: CollectionConfig = {
     defaultColumns: ["fromPathname", "locales", "to"],
     listSearchableFields: ["id", "fromPathname", "to.page.pathname"],
   },
+  endpoints: [getRedirectsEndpoint],
   fields: [
     {
       name: "locales",
