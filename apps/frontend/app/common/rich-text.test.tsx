@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { RichText } from "./rich-text";
+import { isEmptyRichText, RichText } from "./rich-text";
 import { PropsWithChildren } from "react";
 import {
   text,
@@ -692,4 +692,20 @@ test("If an element with unsupported node type is used, it should throw a clear 
       <RichText content={richTextRoot(unsupportedElementWithoutChildren())} />,
     ),
   ).toThrowError(/unsupported node type NOT_SUPPORTED/i);
+});
+
+describe("isEmptyRichText", () => {
+  test("returns true for empty rich text content", () => {
+    expect(isEmptyRichText(richTextRoot())).toBe(true);
+  });
+
+  test("returns true for empty rich text content with empty paragraph", () => {
+    expect(isEmptyRichText(richTextRoot(paragraph(text(""))))).toBe(true);
+  });
+
+  test("returns false for non-empty rich text content", () => {
+    expect(
+      isEmptyRichText(richTextRoot(paragraph(text("Hello, world!")))),
+    ).toBe(false);
+  });
 });

@@ -243,3 +243,22 @@ function RenderedTextLines({ text }: { text: string }) {
     </Fragment>
   ));
 }
+
+export function isEmptyRichText(richText: RichTextObject | undefined | null) {
+  if (!richText) return true;
+
+  const textNodes = findAllTextNodes(richText.root);
+  return textNodes.length === 0 || textNodes.every((n) => !n.text);
+}
+
+function findAllTextNodes(
+  node: ElementNode | RichTextObject["root"],
+): TextNode[] {
+  return node.children.flatMap((child) => {
+    return "children" in child
+      ? findAllTextNodes(child)
+      : child.type === "text"
+        ? [child]
+        : [];
+  });
+}
