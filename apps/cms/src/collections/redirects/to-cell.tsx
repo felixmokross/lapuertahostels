@@ -1,4 +1,4 @@
-import { DefaultServerCellComponentProps, Payload } from "payload";
+import { DefaultServerCellComponentProps } from "payload";
 
 export async function ToCell({
   cellData,
