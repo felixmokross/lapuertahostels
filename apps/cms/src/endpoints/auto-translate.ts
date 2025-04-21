@@ -1,7 +1,6 @@
 import { CollectionSlug, Endpoint, GlobalSlug } from "payload";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { addLocalesToRequestFromData } from "payload";
-import { getSupportedLocaleCodes } from "@/common/locales";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { translate } from "@/common/translation";
 import { convertHTMLToLexical } from "@payloadcms/richtext-lexical";
@@ -10,6 +9,7 @@ import { JSDOM } from "jsdom";
 import { getValueByPath } from "@/common/utils";
 import { type ObjectId as ObjectIdType } from "bson";
 import { canManageContent } from "@/common/access-control";
+import { locales } from "@/common/localization";
 
 export const autoTranslateEndpoint: Endpoint = {
   path: "/auto-translate",
@@ -95,9 +95,9 @@ export const autoTranslateEndpoint: Endpoint = {
       return new Response(null, { status: 204 });
     }
 
-    const availableTranslationLocales = (
-      await getSupportedLocaleCodes()
-    ).filter((l) => l !== req.locale);
+    const availableTranslationLocales = locales
+      .map((l) => l.code)
+      .filter((l) => l !== req.locale);
 
     if (
       targetLocaleCodes.some((tl) => !availableTranslationLocales.includes(tl))

@@ -24,6 +24,7 @@ import { ApiKeys } from "./collections/api-keys/config";
 import { translationsEndpoint } from "./endpoints/translations";
 import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 import { Redirects } from "./collections/redirects/config";
+import { localization } from "./common/localization";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -97,40 +98,7 @@ export default buildConfig({
     Redirects,
   ],
   globals: [Common, Maintenance],
-  localization: {
-    locales: [
-      {
-        code: "en",
-        label: {
-          en: "English",
-          es: "Inglés",
-        },
-      },
-      {
-        code: "es",
-        label: {
-          en: "Spanish",
-          es: "Español",
-        },
-      },
-      {
-        code: "de",
-        label: {
-          en: "German",
-          es: "Alemán",
-        },
-      },
-      {
-        code: "fr",
-        label: {
-          en: "French",
-          es: "Francés",
-        },
-      },
-    ],
-    defaultLocale: "en",
-    fallback: true,
-  },
+  localization,
   typescript: {
     outputFile: path.resolve(dirname, "./payload-types.ts"),
     declare: false,

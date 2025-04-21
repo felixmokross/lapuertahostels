@@ -171,26 +171,42 @@ export const Pages: CollectionConfig = {
         afterChange: [
           async ({ previousDoc, req, operation }) => {
             if (operation !== "update") return;
+            if (!req.locale || req.locale === "all") {
+              throw new Error("Locale is invalid");
+            }
 
             const redirects = await req.payload.find({
               collection: "redirects",
-              where: { fromPathname: { equals: previousDoc.pathname } },
+              where: {
+                and: [
+                  { fromPathname: { equals: previousDoc.pathname } },
+                  {
+                    or: [
+                      { locales: { contains: req.locale } },
+                      { locales: { equals: [] } },
+                    ],
+                  },
+                ],
+              },
             });
 
             if (redirects.totalDocs > 0) {
               // Redirect already exists, so we don't need to create it again.
               console.log(
-                `Redirect already exists for ${previousDoc.pathname}`,
+                `Redirect already exists for ${previousDoc.pathname} and locale '${req.locale}'`,
               );
               return;
             }
 
-            console.log(`Creating redirect for ${previousDoc.pathname}`);
+            console.log(
+              `Creating redirect for ${previousDoc.pathname} and locale '${req.locale}'`,
+            );
             await req.payload.create({
               collection: "redirects",
               data: {
                 fromPathname: previousDoc.pathname,
                 to: { page: previousDoc.id },
+                locales: [req.locale],
               },
             });
           },

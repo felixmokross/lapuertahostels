@@ -1,9 +1,9 @@
 import { Endpoint } from "payload";
 import { DEFAULT_LOCALE, generateAltText } from "@/common/openai";
 import { addLocalesToRequestFromData } from "payload";
-import { getSupportedLocaleCodes } from "@/common/locales";
 import { translate } from "@/common/translation";
 import { ObjectId } from "bson";
+import { locales } from "@/common/localization";
 
 export const generateAltTextEndpoint: Endpoint = {
   path: "/:id/update-alt-text",
@@ -44,7 +44,8 @@ export const generateAltTextEndpoint: Endpoint = {
     const localizedAltTexts: Record<string, string> = Object.fromEntries([
       [DEFAULT_LOCALE, altText],
       ...(await Promise.all(
-        (await getSupportedLocaleCodes())
+        locales
+          .map((l) => l.code)
           .filter((l) => l !== DEFAULT_LOCALE)
           .map(async (l) => [
             l,
