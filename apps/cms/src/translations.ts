@@ -19,6 +19,8 @@ export const translations = {
             "The pathname must start with '{{ prefix }}'.",
           redirectWillBeAdded:
             "A redirect from '{{ previousPathname }}' will be created.",
+          lock: "Lock",
+          unlock: "Unlock",
         },
       },
       translations: {
@@ -95,6 +97,8 @@ export const translations = {
             "La ruta debe comenzar con '{{ prefix }}'.",
           redirectWillBeAdded:
             "Se creará una redirección desde '{{ previousPathname }}'.",
+          lock: "Bloquear",
+          unlock: "Desbloquear",
         },
       },
       translations: {

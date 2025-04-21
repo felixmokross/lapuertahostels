@@ -47,7 +47,9 @@ export function PathnameField({ path, field }: TextFieldClientProps) {
             })
           }
         >
-          {isLocked ? "Unlock" : "Lock"}
+          {isLocked
+            ? t("custom:pages:pathname:unlock")
+            : t("custom:pages:pathname:lock")}
         </button>
       </div>
 
