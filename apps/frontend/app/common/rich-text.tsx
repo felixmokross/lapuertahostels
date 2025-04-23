@@ -19,6 +19,8 @@ import {
   IS_CODE,
   Node,
 } from "@lapuertahostels/shared";
+import { buildLocalizedRelativeUrl } from "./routing";
+import { useTranslation } from "react-i18next";
 
 export type RichTextProps = {
   content?: RichTextObject;
@@ -107,6 +109,7 @@ function RenderedElementNode({
   isLast: boolean;
 }) {
   const { elements, content } = useRichTextContext();
+  const { i18n } = useTranslation();
 
   const renderedChildren = node.children?.map((child, i) => (
     <RenderedNode
@@ -133,7 +136,10 @@ function RenderedElementNode({
       const href =
         node.fields.linkType === "custom"
           ? node.fields.url
-          : node.fields.doc.value.pathname;
+          : buildLocalizedRelativeUrl(
+              i18n.language,
+              node.fields.doc.value.pathname,
+            );
 
       return elements.link === "a" ? (
         <a href={href}>{renderedChildren}</a>
