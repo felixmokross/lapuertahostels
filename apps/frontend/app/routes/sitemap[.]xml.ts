@@ -6,7 +6,6 @@ import {
 } from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
-import { Page } from "@lapuertahostels/payload-types";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const maintenance = await getMaintenance(request, i18n.fallbackLng);
