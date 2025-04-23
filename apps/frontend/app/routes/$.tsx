@@ -15,6 +15,7 @@ import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
 import { PAGE_DEPTH } from "~/cms-data";
+import { tryGetLocalizedPathname } from "~/cms-data.server";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -28,24 +29,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   const description = data.content.seo?.description ?? "";
   return [
     ...parentMeta,
-    ...i18n.supportedLngs.map((lng) => ({
+    ...data.alternateUrls.map((alternateUrl) => ({
       tagName: "link",
       rel: "alternate",
-      href: toUrl(
-        buildLocalizedRelativeUrl(lng, data.pageUrl),
-        data.origin,
-      ).toString(),
-      hrefLang: lng,
+      href: alternateUrl.href,
+      hrefLang: alternateUrl.hrefLang,
     })),
-    {
-      tagName: "link",
-      rel: "alternate",
-      href: toUrl(
-        buildLocalizedRelativeUrl(i18n.fallbackLng, data.pageUrl),
-        data.origin,
-      ).toString(),
-      hrefLang: "x-default",
-    },
     {
       tagName: "link",
       rel: "canonical",
@@ -179,6 +168,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = await handleIncomingRequest(request);
 
   const requestUrl = getRequestUrl(request);
+
   const content = await handlePathname(
     request,
     toUrl(pageUrl).pathname,
@@ -188,13 +178,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }
   const dataPath = `pages/${content.id}`;
-
+  const alternateUrlsByLocale = await getAlternateHrefsByLocale(
+    request,
+    content.pathname,
+  );
   return {
     origin: requestUrl.origin,
     canonicalUrl: getCanonicalRequestUrl(request).href,
     pageUrl,
     dataPath,
     content,
+    alternateUrls: [
+      ...Object.entries(alternateUrlsByLocale).map(([locale, href]) => ({
+        href,
+        hrefLang: locale,
+      })),
+      {
+        href: alternateUrlsByLocale[i18n.fallbackLng],
+        hrefLang: "x-default",
+      },
+    ],
   };
 }
 
@@ -205,5 +208,25 @@ export default function Route() {
     <OptInLivePreview path={dataPath} data={content} depth={PAGE_DEPTH}>
       {(data) => <Page content={data} />}
     </OptInLivePreview>
+  );
+}
+
+async function getAlternateHrefsByLocale(request: Request, pathname: string) {
+  return Object.fromEntries(
+    await Promise.all(
+      i18n.supportedLngs.map(async (lng) => {
+        const localizedPathname = await tryGetLocalizedPathname(
+          request,
+          pathname,
+          lng,
+        );
+        if (!localizedPathname) {
+          throw new Error("Localized pathname not found");
+        }
+        const requestUrl = getRequestUrl(request);
+        requestUrl.pathname = buildLocalizedRelativeUrl(lng, localizedPathname);
+        return [lng, requestUrl.toString()];
+      }),
+    ),
   );
 }
