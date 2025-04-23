@@ -149,6 +149,22 @@ export async function loadData(
   return await response.json();
 }
 
+export async function tryGetLocalizedPathname(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
+  return await getData<{ localizedPathname: string }, string | null>(
+    request,
+    `pages/localized-pathname`,
+    `localized-pathname:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
+    locale,
+    0,
+    { pathname },
+    (data) => (data ? data.localizedPathname : null),
+  );
+}
+
 export async function tryGetPage(
   request: Request,
   pathname: string,
