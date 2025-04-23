@@ -19,6 +19,7 @@ import { textareaField } from "@/fields/textarea";
 import { textField } from "@/fields/text";
 import { text } from "payload/shared";
 import { getRedirects } from "../redirects/get-redirects";
+import { getLocalizedPathnameEndpoint } from "./localized-pathname";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -37,6 +38,7 @@ export const Pages: CollectionConfig = {
     pathname: true,
     brand: true,
   },
+  endpoints: [getLocalizedPathnameEndpoint],
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
