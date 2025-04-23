@@ -20,7 +20,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
   }
 
-  const pages = (await loadData(`pages`, "en", 0, {})).docs as Page[];
+  const pages = (await loadData(`pages`, "all", 0, {})).docs as {
+    pathname: Record<string, string>;
+    updatedAt: string;
+  }[];
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -28,7 +31,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       .flatMap((l) =>
         pages.map(
           (p) => `  <url>
-    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l, p.pathname)}</loc>
+    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l, p.pathname[l])}</loc>
     <lastmod>${p.updatedAt.split("T")[0]}</lastmod>
   </url>`,
         ),
