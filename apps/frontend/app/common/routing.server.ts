@@ -73,10 +73,11 @@ function redirectIfPathnameEndsWithSlash(url: URL) {
   }
 }
 
-async function redirectToLocalizedRoute(
+export async function redirectToLocalizedRoute(
   request: Request,
   url: URL,
   locale: string,
+  headers?: Record<string, string>,
 ): Promise<never> {
   const localizedPagePathname = await tryGetLocalizedPathname(
     request,
@@ -85,11 +86,15 @@ async function redirectToLocalizedRoute(
   );
   if (localizedPagePathname) {
     url.pathname = localizedPagePathname;
-    throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)));
+    throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)), {
+      headers: { ...headers },
+    });
   }
 
   // route is not a page pathname, just redirect it as-is (e.g. '/login')
-  throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)));
+  throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)), {
+    headers: { ...headers },
+  });
 }
 
 export async function handlePathname(
