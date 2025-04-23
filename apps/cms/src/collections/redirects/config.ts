@@ -1,6 +1,4 @@
-import { locales } from "@/common/localization";
 import { CollectionConfig } from "payload";
-import { getRedirectsEndpoint } from "./get-redirects";
 
 export const Redirects: CollectionConfig = {
   slug: "redirects",
@@ -19,28 +17,7 @@ export const Redirects: CollectionConfig = {
     defaultColumns: ["fromPathname", "locales", "to"],
     listSearchableFields: ["id", "fromPathname", "to.page.pathname"],
   },
-  endpoints: [getRedirectsEndpoint],
   fields: [
-    {
-      name: "locales",
-      label: {
-        en: "Only apply to these locales/regions",
-        es: "Aplicar solo a estos idiomas/regiones",
-      },
-      type: "select",
-      hasMany: true,
-      options: locales.map((locale) => ({
-        label: locale.label,
-        value: locale.code,
-      })),
-      admin: {
-        description: {
-          en: "If left empty, the redirect will apply to any locale.",
-          es: "Si se deja vacío, la redirección se aplicará a cualquier idioma.",
-        },
-        position: "sidebar",
-      },
-    },
     {
       name: "fromPathname",
       label: {
@@ -49,6 +26,7 @@ export const Redirects: CollectionConfig = {
       },
       type: "text",
       required: true,
+      unique: true,
       index: true,
       access: { update: () => false },
     },

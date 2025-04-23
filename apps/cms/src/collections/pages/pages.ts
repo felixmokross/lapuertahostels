@@ -18,7 +18,6 @@ import { getLivePreviewUrl } from "@/common/live-preview";
 import { textareaField } from "@/fields/textarea";
 import { textField } from "@/fields/text";
 import { text } from "payload/shared";
-import { getRedirects } from "../redirects/get-redirects";
 import { getLocalizedPathnameEndpoint } from "./localized-pathname";
 
 export const Pages: CollectionConfig = {
@@ -178,12 +177,13 @@ export const Pages: CollectionConfig = {
               throw new Error("Locale is invalid");
             }
 
-            const redirects = await getRedirects(
-              req.payload,
-              previousDoc.pathname,
-              req.locale,
-              1,
-            );
+            const redirects = await req.payload.find({
+              collection: "redirects",
+              where: {
+                fromPathname: { equals: previousDoc.pathname },
+              },
+              pagination: false,
+            });
 
             if (redirects.totalDocs > 0) {
               // Redirect already exists, so we don't need to create it again.
@@ -201,7 +201,6 @@ export const Pages: CollectionConfig = {
               data: {
                 fromPathname: previousDoc.pathname,
                 to: { page: previousDoc.id },
-                locales: [req.locale],
               },
             });
           },
