@@ -19,8 +19,8 @@ import { textareaField } from "@/fields/textarea";
 import { textField } from "@/fields/text";
 import { text } from "payload/shared";
 import {
-  getLocalizedPathname,
   getLocalizedPathnameEndpoint,
+  getPagesForPathname,
 } from "./localized-pathname";
 
 export const Pages: CollectionConfig = {
@@ -212,7 +212,7 @@ export const Pages: CollectionConfig = {
         const defaultValidationResult = text(value, options);
         if (defaultValidationResult !== true) return defaultValidationResult;
 
-        const { req, siblingData } = options;
+        const { req, siblingData, id } = options;
         const t = req.t as unknown as TFunction<TranslationsKey>;
 
         if (!siblingData.brand) {
@@ -248,9 +248,9 @@ export const Pages: CollectionConfig = {
         }
 
         // Unique constraint only checks within the locale, but our pathnames must be unique across locales
-        const localizedPathnameExists =
-          (await getLocalizedPathname(req, value)) !== null;
-        if (localizedPathnameExists) {
+        const pages = await getPagesForPathname(req, value);
+        const alreadyExists = pages.some((p) => p.id !== id);
+        if (alreadyExists) {
           return t("custom:pages:pathname:alreadyExists");
         }
 

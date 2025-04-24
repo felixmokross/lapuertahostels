@@ -12,7 +12,7 @@ const CACHE_EXPIRY_IN_MS = 1000 * 60; // 1 min
 
 async function loadAndCacheData<TData, TResult>(
   url: string,
-  locale: string,
+  locale: string | null,
   cacheKeyWithLocale: string,
   depth: number,
   queryParams: Record<string, string>,
@@ -22,6 +22,9 @@ async function loadAndCacheData<TData, TResult>(
 
   if (result) {
     await cacheData(cacheKeyWithLocale, result);
+  } else {
+    console.log(`Deleting data for ${cacheKeyWithLocale} (if exists)`);
+    await redis.del(cacheKeyWithLocale);
   }
 
   return result;
@@ -48,20 +51,21 @@ async function getData<TData, TResult>(
   req: Request,
   pathname: string,
   cacheKey: string,
-  locale: string,
+  locale: string | null,
   depth = 1,
   queryParams = {},
   getResultFn: (data: TData | null) => TResult | null = (data: TData | null) =>
     data as TResult,
 ) {
+  const cacheKeyWithLocale = `${cacheKey}${locale ? `:${locale}` : ""}`;
+
   if (new URL(req.url).searchParams.get("skipcache") === "true") {
     console.log(
-      `Skipping cache for ${cacheKey} in ${locale} (?skipcache=true was specified)`,
+      `Skipping cache for ${cacheKeyWithLocale} (?skipcache=true was specified)`,
     );
     return getResultFn(await loadData(pathname, locale, depth, queryParams));
   }
 
-  const cacheKeyWithLocale = `${cacheKey}:${locale}`;
   const cacheEntryString = await redis.get(cacheKeyWithLocale);
   const cacheEntry = cacheEntryString
     ? (JSON.parse(cacheEntryString) as CacheEntry<TResult>)
@@ -76,11 +80,11 @@ async function getData<TData, TResult>(
           new Date(cacheLastModified).getTime() + CACHE_EXPIRY_IN_MS <
           Date.now();
         if (!cacheExpired) {
-          console.log(`Cache not expired for ${cacheKey} in ${locale}`);
+          console.log(`Cache not expired for ${cacheKeyWithLocale}`);
           return;
         }
 
-        console.log(`Cache expired for ${cacheKey} in ${locale}`);
+        console.log(`Cache expired for ${cacheKeyWithLocale}`);
         await loadAndCacheData(
           pathname,
           locale,
@@ -92,16 +96,16 @@ async function getData<TData, TResult>(
       } catch (e) {
         // As this runs in the background, just log the error
         console.warn(
-          `Failed to refresh cache in microtask for ${cacheKey} in ${locale} (expected if data was deleted): ${e}`,
+          `Failed to refresh cache in microtask for ${cacheKeyWithLocale} (expected if data was deleted): ${e}`,
         );
       }
     });
 
-    console.log(`Cache hit for ${cacheKey} in ${locale}`);
+    console.log(`Cache hit for ${cacheKeyWithLocale}`);
     return cacheEntry.data;
   }
 
-  console.log(`Cache miss for ${cacheKey} in ${locale}`);
+  console.log(`Cache miss for ${cacheKeyWithLocale}`);
   return await loadAndCacheData(
     pathname,
     locale,
@@ -114,7 +118,7 @@ async function getData<TData, TResult>(
 
 export async function loadData(
   pathname: string,
-  locale: string,
+  locale: string | null,
   depth: number,
   queryParams: Record<string, string>,
 ) {
@@ -125,7 +129,9 @@ export async function loadData(
     throw new Error("PAYLOAD_CMS_API_KEY is not set");
   }
   const url = new URL(`/api/${pathname}`, process.env.PAYLOAD_CMS_BASE_URL);
-  url.searchParams.set("locale", locale);
+  if (locale) {
+    url.searchParams.set("locale", locale);
+  }
   url.searchParams.set("depth", depth.toString());
   url.searchParams.set("draft", "false");
   url.searchParams.set("pagination", "false");
@@ -184,16 +190,12 @@ export async function tryGetPage(
   );
 }
 
-export async function tryGetRedirect(
-  request: Request,
-  pathname: string,
-  locale: string,
-) {
+export async function tryGetRedirect(request: Request, pathname: string) {
   return await getData<{ docs: Redirect[] }, Redirect>(
     request,
     `redirects`,
     `redirects:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
-    locale,
+    null, // redirects don't have localized fields
     1,
     {
       where: { equals: pathname },

@@ -36,7 +36,15 @@ export const getLocalizedPathnameEndpoint: Endpoint = {
   },
 };
 
-export async function getLocalizedPathname(
+async function getLocalizedPathname(
+  req: PayloadRequest,
+  pathnameToFind: string,
+) {
+  const pages = await getPagesForPathname(req, pathnameToFind);
+  return pages.length > 0 ? pages[0].pathname : null;
+}
+
+export async function getPagesForPathname(
   req: PayloadRequest,
   pathnameToFind: string,
 ) {
@@ -49,7 +57,8 @@ export async function getLocalizedPathname(
     },
     req,
     limit: 1,
+    pagination: false,
   });
 
-  return result.totalDocs > 0 ? result.docs[0].pathname : null;
+  return result.docs;
 }

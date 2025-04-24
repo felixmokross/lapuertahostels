@@ -105,7 +105,7 @@ export async function handlePathname(
   const content = await tryGetPage(request, pathname, locale);
   if (content) return content;
 
-  const redirectObj = await tryGetRedirect(request, pathname, locale);
+  const redirectObj = await tryGetRedirect(request, pathname);
   if (redirectObj && redirectObj.to) {
     throw redirect(
       getPageLinkHref({
