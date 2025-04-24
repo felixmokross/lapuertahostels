@@ -2,6 +2,7 @@
 
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import {
+  CheckboxInput,
   FieldDescription,
   FieldLabel,
   TextInput,
@@ -18,8 +19,11 @@ export function PathnameField({ path, field }: TextFieldClientProps) {
   });
 
   const { dispatchFields } = useForm();
-  const isLocked = useFormFields(([fields]) => {
-    return fields["pathname_locked"]?.value as boolean;
+  const [isLocked, createRedirect] = useFormFields(([fields]) => {
+    return [
+      fields["pathname_locked"].value as boolean,
+      fields["pathname_createRedirect"].value as boolean,
+    ];
   });
 
   const { t } = useTranslation<TranslationsObject, TranslationsKey>();
@@ -69,11 +73,25 @@ export function PathnameField({ path, field }: TextFieldClientProps) {
         }
       />
       {isChanged && (
-        <FieldDescription
-          path={path}
-          description={t("custom:pages:pathname:redirectWillBeAdded", {
-            previousPathname: initialValue,
-          })}
+        <CheckboxInput
+          Label={
+            <FieldLabel
+              path="pathname_createRedirect"
+              label={t("custom:pages:pathname:createRedirect", {
+                previousPathname: initialValue,
+              })}
+            />
+          }
+          id="field-pathname_createRedirect"
+          checked={createRedirect}
+          className="tw:mt-4 tw:[&>div]:shrink-0"
+          onToggle={(e) =>
+            dispatchFields({
+              type: "UPDATE",
+              path: "pathname_createRedirect",
+              value: e.currentTarget.checked,
+            })
+          }
         />
       )}
 

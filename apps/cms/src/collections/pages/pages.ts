@@ -174,11 +174,9 @@ export const Pages: CollectionConfig = {
       unique: true,
       hooks: {
         afterChange: [
-          async ({ previousDoc, req, operation }) => {
+          async ({ previousDoc, req, operation, siblingData }) => {
             if (operation !== "update") return;
-            if (!req.locale || req.locale === "all") {
-              throw new Error("Locale is invalid");
-            }
+            if (!siblingData["pathname_createRedirect"]) return;
 
             const redirects = await req.payload.find({
               collection: "redirects",
@@ -191,14 +189,12 @@ export const Pages: CollectionConfig = {
             if (redirects.totalDocs > 0) {
               // Redirect already exists, so we don't need to create it again.
               console.log(
-                `Redirect already exists for ${previousDoc.pathname} and locale '${req.locale}'`,
+                `Redirect already exists for ${previousDoc.pathname}`,
               );
               return;
             }
 
-            console.log(
-              `Creating redirect for ${previousDoc.pathname} and locale '${req.locale}'`,
-            );
+            console.log(`Creating redirect for ${previousDoc.pathname}`);
             await req.payload.create({
               collection: "redirects",
               data: {
@@ -274,6 +270,15 @@ export const Pages: CollectionConfig = {
     },
     {
       name: "pathname_locked",
+      type: "checkbox",
+      defaultValue: true,
+      virtual: true,
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "pathname_createRedirect",
       type: "checkbox",
       defaultValue: true,
       virtual: true,
