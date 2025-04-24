@@ -1,5 +1,5 @@
 import { locales } from "@/common/localization";
-import { addLocalesToRequestFromData, Endpoint } from "payload";
+import { addLocalesToRequestFromData, Endpoint, PayloadRequest } from "payload";
 
 export const getLocalizedPathnameEndpoint: Endpoint = {
   method: "get",
@@ -21,29 +21,35 @@ export const getLocalizedPathnameEndpoint: Endpoint = {
       );
     }
 
-    const result = await req.payload.find({
-      collection: "pages",
-      where: {
-        or: locales.map((l) => ({
-          [`pathname.${l.code}`]: { equals: pathname },
-        })),
-      },
-      req,
-      limit: 1,
-    });
+    const localizedPathname = await getLocalizedPathname(req, pathname);
 
-    if (result.totalDocs === 0) {
+    if (localizedPathname === null) {
       return new Response(null, { status: 404, statusText: "Not Found" });
     }
 
-    return new Response(
-      JSON.stringify({ localizedPathname: result.docs[0].pathname }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return new Response(JSON.stringify({ localizedPathname }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   },
 };
+
+export async function getLocalizedPathname(
+  req: PayloadRequest,
+  pathnameToFind: string,
+) {
+  const result = await req.payload.find({
+    collection: "pages",
+    where: {
+      or: locales.map((l) => ({
+        [`pathname.${l.code}`]: { equals: pathnameToFind },
+      })),
+    },
+    req,
+    limit: 1,
+  });
+
+  return result.totalDocs > 0 ? result.docs[0].pathname : null;
+}

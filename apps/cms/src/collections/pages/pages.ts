@@ -18,7 +18,10 @@ import { getLivePreviewUrl } from "@/common/live-preview";
 import { textareaField } from "@/fields/textarea";
 import { textField } from "@/fields/text";
 import { text } from "payload/shared";
-import { getLocalizedPathnameEndpoint } from "./localized-pathname";
+import {
+  getLocalizedPathname,
+  getLocalizedPathnameEndpoint,
+} from "./localized-pathname";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -246,6 +249,13 @@ export const Pages: CollectionConfig = {
           return t("custom:pages:pathname:pathnameMustStartWithPrefix", {
             prefix: brandHomeLinkPathname,
           });
+        }
+
+        // Unique constraint only checks within the locale, but our pathnames must be unique across locales
+        const localizedPathnameExists =
+          (await getLocalizedPathname(req, value)) !== null;
+        if (localizedPathnameExists) {
+          return t("custom:pages:pathname:alreadyExists");
         }
 
         return true;

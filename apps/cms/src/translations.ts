@@ -21,6 +21,7 @@ export const translations = {
             "A redirect from '{{ previousPathname }}' will be created.",
           lock: "Lock",
           unlock: "Unlock",
+          alreadyExists: "There is already a page with this pathname.",
         },
       },
       translations: {
@@ -99,6 +100,8 @@ export const translations = {
             "Se creará una redirección desde '{{ previousPathname }}'.",
           lock: "Bloquear",
           unlock: "Desbloquear",
+          // TODO check translation
+          alreadyExists: "Una página con esta ruta ya existe",
         },
       },
       translations: {
