@@ -96,13 +96,11 @@ export const translations = {
           pleaseEnterAPathname: "Por favor, introduzca una ruta.",
           pathnameMustStartWithPrefix:
             "La ruta debe comenzar con '{{ prefix }}'.",
-          // TODO check translation
           createRedirect:
-            "Creé una redirección desde '{{ previousPathname }}' a esta página.",
+            "Crea una redirección desde '{{ previousPathname }}' a esta página.",
           lock: "Bloquear",
           unlock: "Desbloquear",
-          // TODO check translation
-          alreadyExists: "Una página con esta ruta ya existe",
+          alreadyExists: "Ya existe una página con esta ruta.",
         },
       },
       translations: {
