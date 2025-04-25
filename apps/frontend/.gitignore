@@ -6,5 +6,3 @@ node_modules
 .env
 /storybook-static
 *.log
-
-/.cms-cache
