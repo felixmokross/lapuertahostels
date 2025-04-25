@@ -6,19 +6,22 @@ import {
   TextField,
   ValidateOptions,
 } from "payload";
-import { refreshCacheHook } from "../../hooks/refresh-cache-hook";
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { Link, Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
-import { getPageCacheKey } from "@/common/frontend-cache";
 import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { textareaField } from "@/fields/textarea";
 import { textField } from "@/fields/text";
+import { text } from "payload/shared";
+import {
+  getLocalizedPathnameEndpoint,
+  getPagesForPathname,
+} from "./localized-pathname";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -37,6 +40,7 @@ export const Pages: CollectionConfig = {
     pathname: true,
     brand: true,
   },
+  endpoints: [getLocalizedPathnameEndpoint],
   admin: {
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
@@ -63,15 +67,6 @@ export const Pages: CollectionConfig = {
     create: canManageContent,
     update: canManageContent,
     delete: ({ req }) => isAdmin(req),
-  },
-  hooks: {
-    afterChange: [
-      ({ doc, req }) =>
-        refreshCacheHook({
-          cacheKey: getPageCacheKey(doc),
-          pageUrl: doc.pathname,
-        })({ req }),
-    ],
   },
   fields: [
     {
@@ -175,13 +170,49 @@ export const Pages: CollectionConfig = {
       type: "text",
       index: true,
       required: true,
-      access: {
-        update: () => false,
+      localized: true,
+      unique: true,
+      hooks: {
+        afterChange: [
+          async ({ previousDoc, req, operation, siblingData }) => {
+            if (operation !== "update") return;
+            if (!siblingData["pathname_createRedirect"]) return;
+
+            const redirects = await req.payload.find({
+              collection: "redirects",
+              where: {
+                fromPathname: { equals: previousDoc.pathname },
+              },
+              pagination: false,
+            });
+
+            if (redirects.totalDocs > 0) {
+              // Redirect already exists, so we don't need to create it again.
+              console.log(
+                `Redirect already exists for ${previousDoc.pathname}`,
+              );
+              return;
+            }
+
+            console.log(`Creating redirect for ${previousDoc.pathname}`);
+            await req.payload.create({
+              collection: "redirects",
+              data: {
+                fromPathname: previousDoc.pathname,
+                to: { page: previousDoc.id },
+              },
+            });
+          },
+        ],
       },
       validate: async (
         value: string | undefined | null,
-        { req, siblingData }: ValidateOptions<Page, Page, TextField, string>,
+        options: ValidateOptions<Page, Page, TextField, string>,
       ) => {
+        const defaultValidationResult = text(value, options);
+        if (defaultValidationResult !== true) return defaultValidationResult;
+
+        const { req, siblingData, id } = options;
         const t = req.t as unknown as TFunction<TranslationsKey>;
 
         if (!siblingData.brand) {
@@ -216,15 +247,43 @@ export const Pages: CollectionConfig = {
           });
         }
 
+        // Unique constraint only checks within the locale, but our pathnames must be unique across locales
+        const pages = await getPagesForPathname(req, value);
+        const alreadyExists = pages.some((p) => p.id !== id);
+        if (alreadyExists) {
+          return t("custom:pages:pathname:alreadyExists");
+        }
+
         return true;
       },
       admin: {
         position: "sidebar",
         placeholder: "e.g. /experiences/lost-city",
         description: {
-          en: "The pathname is used to navigate to this page. It must be unique and cannot be changed after the page has been created. The first path segment must be the brand's home link.",
-          es: "La ruta se utiliza para navegar a esta página. Debe ser única y no se puede cambiar después de que se haya creado la página. El primer segmento de la ruta debe ser el enlace de inicio de la marca.",
+          en: "The pathname is used to navigate to this page. It must be unique. The first path segment must be the brand's home link.",
+          es: "La ruta se utiliza para navegar a esta página. Debe ser única. El primer segmento de la ruta debe ser el enlace de inicio de la marca.",
         },
+        components: {
+          Field: "/src/collections/pages/pathname-field#PathnameField",
+        },
+      },
+    },
+    {
+      name: "pathname_locked",
+      type: "checkbox",
+      defaultValue: true,
+      virtual: true,
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "pathname_createRedirect",
+      type: "checkbox",
+      defaultValue: true,
+      virtual: true,
+      admin: {
+        hidden: true,
       },
     },
     textField({

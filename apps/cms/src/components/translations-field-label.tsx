@@ -79,7 +79,7 @@ export function TranslationsFieldLabel({
   }
 
   return (
-    <div className="tw:flex tw:justify-between tw:items-baseline">
+    <div className="tw:flex tw:justify-between tw:items-baseline tw:gap-4">
       <FieldLabel
         label={label}
         path={path}

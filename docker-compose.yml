@@ -1,4 +1,13 @@
 services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    logging:
+      driver: none
+
   mongo:
     image: mongo:latest
     ports:
@@ -12,3 +21,4 @@ services:
 
 volumes:
   data:
+  redis:

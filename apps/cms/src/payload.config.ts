@@ -9,8 +9,6 @@ import { Common } from "./globals/Common";
 import { Brands } from "./collections/brands";
 import { Media } from "./collections/media";
 import { MediaCategories } from "./collections/media-categories";
-import { primeFrontendCacheEndpoint } from "./endpoints/prime-frontend-cache";
-import { Texts } from "./collections/texts";
 import { Links } from "./collections/links";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
@@ -25,6 +23,8 @@ import { es } from "@payloadcms/translations/languages/es";
 import { ApiKeys } from "./collections/api-keys/config";
 import { translationsEndpoint } from "./endpoints/translations";
 import { autoTranslateEndpoint } from "./endpoints/auto-translate";
+import { Redirects } from "./collections/redirects/config";
+import { localization } from "./common/localization";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -94,44 +94,11 @@ export default buildConfig({
     Media,
     MediaCategories,
     Banners,
-    Texts,
     Links,
+    Redirects,
   ],
   globals: [Common, Maintenance],
-  localization: {
-    locales: [
-      {
-        code: "en",
-        label: {
-          en: "English",
-          es: "Inglés",
-        },
-      },
-      {
-        code: "es",
-        label: {
-          en: "Spanish",
-          es: "Español",
-        },
-      },
-      {
-        code: "de",
-        label: {
-          en: "German",
-          es: "Alemán",
-        },
-      },
-      {
-        code: "fr",
-        label: {
-          en: "French",
-          es: "Francés",
-        },
-      },
-    ],
-    defaultLocale: "en",
-    fallback: true,
-  },
+  localization,
   typescript: {
     outputFile: path.resolve(dirname, "./payload-types.ts"),
     declare: false,
@@ -163,11 +130,7 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL,
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
-  endpoints: [
-    primeFrontendCacheEndpoint,
-    translationsEndpoint,
-    autoTranslateEndpoint,
-  ],
+  endpoints: [translationsEndpoint, autoTranslateEndpoint],
   async onInit(payload) {
     if (!!process.env.E2E_TESTS_API_KEY) {
       const e2eTestApiKeys = await payload.find({

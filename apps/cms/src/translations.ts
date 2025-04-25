@@ -17,6 +17,11 @@ export const translations = {
           pleaseEnterAPathname: "Please enter a pathname.",
           pathnameMustStartWithPrefix:
             "The pathname must start with '{{ prefix }}'.",
+          createRedirect:
+            "Create a redirect from '{{ previousPathname }}' to this page.",
+          lock: "Lock",
+          unlock: "Unlock",
+          alreadyExists: "There is already a page with this pathname.",
         },
       },
       translations: {
@@ -91,6 +96,11 @@ export const translations = {
           pleaseEnterAPathname: "Por favor, introduzca una ruta.",
           pathnameMustStartWithPrefix:
             "La ruta debe comenzar con '{{ prefix }}'.",
+          createRedirect:
+            "Crea una redirección desde '{{ previousPathname }}' a esta página.",
+          lock: "Bloquear",
+          unlock: "Desbloquear",
+          alreadyExists: "Ya existe una página con esta ruta.",
         },
       },
       translations: {

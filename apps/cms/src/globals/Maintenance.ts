@@ -1,8 +1,6 @@
 import { GlobalConfig } from "payload";
 import { canManageContent } from "../common/access-control";
-import { refreshCacheHook } from "../hooks/refresh-cache-hook";
 import { showField } from "../fields/show";
-import { getGlobalCacheKey } from "@/common/frontend-cache";
 import { textField } from "@/fields/text";
 
 export const Maintenance: GlobalConfig = {
@@ -13,14 +11,6 @@ export const Maintenance: GlobalConfig = {
   },
   access: {
     update: canManageContent,
-  },
-  hooks: {
-    afterChange: [
-      refreshCacheHook({
-        cacheKey: getGlobalCacheKey("maintenance"),
-        pageUrl: "/",
-      }),
-    ],
   },
   fields: [
     {

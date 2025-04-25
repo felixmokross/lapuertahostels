@@ -7,8 +7,14 @@ import {
   buildLocalizedRelativeUrl,
   getCanonicalRequestUrl,
 } from "./routing";
-import { getMaintenance } from "~/cms-data.server";
+import {
+  getMaintenance,
+  tryGetLocalizedPathname,
+  tryGetPage,
+  tryGetRedirect,
+} from "~/cms-data.server";
 import { isAuthenticated } from "./auth";
+import { getPageLinkHref } from "./page-link";
 
 export async function handleIncomingRequest(request: Request) {
   const url = getRequestUrl(request);
@@ -23,10 +29,13 @@ export async function handleIncomingRequest(request: Request) {
 
   if (!locale) {
     const locale = await i18next.getLocale(request);
-    redirectToLocalizedRoute(url, locale);
+    await redirectToLocalizedRoute(request, url, locale);
   }
 
-  const maintenance = await getMaintenance(locale);
+  // TypeScript doesn't recognize that the awaited `redirectToLocalizedRoute` never returns
+  if (!locale) throw new Error();
+
+  const maintenance = await getMaintenance(request, locale!);
   if (
     maintenance.maintenanceScreen?.show &&
     !(await isAuthenticated(request)) &&
@@ -64,6 +73,50 @@ function redirectIfPathnameEndsWithSlash(url: URL) {
   }
 }
 
-function redirectToLocalizedRoute(url: URL, locale: string): never {
-  throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)));
+export async function redirectToLocalizedRoute(
+  request: Request,
+  url: URL,
+  locale: string,
+  headers?: Record<string, string>,
+): Promise<never> {
+  const localizedPagePathname = await tryGetLocalizedPathname(
+    request,
+    url.pathname,
+    locale,
+  );
+  if (localizedPagePathname) {
+    url.pathname = localizedPagePathname;
+    throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)), {
+      headers: { ...headers },
+    });
+  }
+
+  // route is not a page pathname, just redirect it as-is (e.g. '/login')
+  throw redirect(buildLocalizedRelativeUrl(locale, toRelativeUrl(url)), {
+    headers: { ...headers },
+  });
+}
+
+export async function handlePathname(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
+  const content = await tryGetPage(request, pathname, locale);
+  if (content) return content;
+
+  const redirectObj = await tryGetRedirect(request, pathname);
+  if (redirectObj && redirectObj.to) {
+    throw redirect(
+      getPageLinkHref({
+        type: "internal",
+        page: redirectObj.to.page,
+        queryString: redirectObj.to.queryString,
+        fragment: redirectObj.to.fragment,
+      }),
+      { status: 301 },
+    );
+  }
+
+  throw new Response(null, { status: 404, statusText: "Not Found" });
 }

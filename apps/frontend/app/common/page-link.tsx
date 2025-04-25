@@ -1,4 +1,4 @@
-import { Brand } from "@lapuertahostels/payload-types";
+import { Brand, type Link as LinkType } from "@lapuertahostels/payload-types";
 import { Link, LinkProps } from "./link";
 import { PropsWithChildren } from "react";
 import { gracefully, isObject } from "./utils";
@@ -11,13 +11,18 @@ export function PageLink({ link, ...props }: PageLinkProps) {
   return (
     <Link
       {...props}
-      to={
-        isObject(link)
-          ? link.type === "internal"
-            ? `${gracefully(link.page, "pathname") ?? ""}${link.queryString ? `?${link.queryString}` : ""}${link.fragment ? `#${link.fragment}` : ""}`
-            : (link.url ?? "about:blank")
-          : "about:blank"
-      }
+      to={isObject(link) ? getPageLinkHref(link) : "about:blank"}
     />
   );
+}
+
+type PageLinkData = Pick<
+  LinkType,
+  "type" | "page" | "queryString" | "fragment" | "url"
+>;
+
+export function getPageLinkHref(linkData: PageLinkData) {
+  return linkData.type === "internal"
+    ? `${gracefully(linkData.page, "pathname") ?? ""}${linkData.queryString ? `?${linkData.queryString}` : ""}${linkData.fragment ? `#${linkData.fragment}` : ""}`
+    : (linkData.url ?? "about:blank");
 }
