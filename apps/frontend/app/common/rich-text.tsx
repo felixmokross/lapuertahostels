@@ -19,8 +19,9 @@ import {
   IS_CODE,
   Node,
 } from "@lapuertahostels/shared";
-import { buildLocalizedRelativeUrl } from "./routing";
 import { useTranslation } from "react-i18next";
+import { getPageLinkHref } from "./page-link";
+import { Page } from "@lapuertahostels/payload-types";
 
 export type RichTextProps = {
   content?: RichTextObject;
@@ -136,9 +137,14 @@ function RenderedElementNode({
       const href =
         node.fields.linkType === "custom"
           ? node.fields.url
-          : buildLocalizedRelativeUrl(
+          : getPageLinkHref(
+              {
+                type: "internal",
+                page: node.fields.doc.value as Page,
+                queryString: node.fields.queryString,
+                fragment: node.fields.fragment,
+              },
               i18n.language,
-              node.fields.doc.value.pathname,
             );
 
       return elements.link === "a" ? (

@@ -7,6 +7,7 @@ import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 import { textareaField } from "@/fields/textarea";
+import { linkField } from "@/fields/link";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -70,16 +71,7 @@ export const Common: GlobalConfig = {
                   options: socialPlatformOptions,
                   required: true,
                 },
-                {
-                  name: "link",
-                  label: {
-                    en: "Link",
-                    es: "Enlace",
-                  },
-                  type: "relationship",
-                  relationTo: "links",
-                  required: true,
-                },
+                linkField(),
               ],
               admin: {
                 initCollapsed: true,

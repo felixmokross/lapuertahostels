@@ -108,12 +108,15 @@ export async function handlePathname(
   const redirectObj = await tryGetRedirect(request, pathname);
   if (redirectObj && redirectObj.to) {
     throw redirect(
-      getPageLinkHref({
-        type: "internal",
-        page: redirectObj.to.page,
-        queryString: redirectObj.to.queryString,
-        fragment: redirectObj.to.fragment,
-      }),
+      getPageLinkHref(
+        {
+          type: "internal",
+          page: redirectObj.to.page,
+          queryString: redirectObj.to.queryString,
+          fragment: redirectObj.to.fragment,
+        },
+        locale,
+      ),
       { status: 301 },
     );
   }

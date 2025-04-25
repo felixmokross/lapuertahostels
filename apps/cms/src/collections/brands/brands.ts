@@ -12,6 +12,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
+import { linkField } from "@/fields/link";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -198,16 +199,7 @@ export const Brands: CollectionConfig = {
                   name: "label",
                   label: { en: "Label", es: "Etiqueta" },
                 }),
-                {
-                  name: "link",
-                  label: {
-                    en: "Link",
-                    es: "Enlace",
-                  },
-                  type: "relationship",
-                  relationTo: "links",
-                  required: true,
-                },
+                linkField(),
               ],
               admin: {
                 components: {

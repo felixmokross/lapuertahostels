@@ -4,7 +4,7 @@ import { addLocalesToRequestFromData } from "payload";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { translate } from "@/common/translation";
 import { convertHTMLToLexical } from "@payloadcms/richtext-lexical";
-import { getEditorConfig } from "@/collections/texts/editor";
+import { getEditorConfig } from "@/common/editor";
 import { JSDOM } from "jsdom";
 import { getValueByPath } from "@/common/utils";
 import { type ObjectId as ObjectIdType } from "bson";
