@@ -1,5 +1,4 @@
 import { CollectionConfig } from "payload";
-import { validateUrl } from "../../common/validation";
 import { linkUsagesField } from "./usages";
 import { queryStringAndFragmentField } from "@/fields/link";
 
@@ -63,7 +62,6 @@ export const Links: CollectionConfig = {
               },
               type: "text",
               required: true,
-              validate: validateUrl,
               admin: {
                 condition: (_, siblingData) => siblingData.type === "external",
               },

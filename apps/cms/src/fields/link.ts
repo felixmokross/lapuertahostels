@@ -1,5 +1,6 @@
-import { validateUrl } from "@/common/validation";
-import { GroupField, RowField } from "payload";
+import { validateUrl } from "@payloadcms/richtext-lexical";
+import { GroupField, RowField, TextField } from "payload";
+import { text } from "payload/shared";
 
 type LinkFieldOptions = {
   allowedLinkTypes?: ("internal" | "custom")[];
@@ -80,12 +81,23 @@ export function linkField({
         },
         type: "text",
         required,
-        // TODO check if we should re-use the one from Lexical
-        validate: validateUrl,
+        validate: (value, options) => {
+          let result = text(value, options);
+          if (result !== true) return result;
+
+          if (value) {
+            if (!validateUrl(value)) {
+              // @ts-expect-error t function is not typed with custom translations here
+              return options.req.t("custom:validation:mustBeValidUrl");
+            }
+          }
+
+          return true;
+        },
         admin: {
           condition: (_, siblingData) => siblingData.linkType === "custom",
         },
-      },
+      } as TextField,
     ],
     ...fieldConfig,
   };
