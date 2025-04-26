@@ -5,9 +5,15 @@ import {
   GlobalSlug,
   LabelFunction,
   Payload,
+  TypedLocale,
   UIField,
 } from "payload";
 import { RelationshipFieldType, UsagesConfig } from "./types";
+import {
+  SerializedEditorState,
+  SerializedLexicalNode,
+} from "@payloadcms/richtext-lexical/lexical";
+import { localization } from "@/common/localization";
 
 export function usagesField(config: UsagesConfig): UIField {
   return {
@@ -33,6 +39,7 @@ export async function findUsages(
   config: UsagesConfig,
   id: string,
   payload: Payload,
+  locale: TypedLocale | undefined,
 ) {
   const {
     fieldType,
@@ -47,6 +54,7 @@ export async function findUsages(
           collection: collectionSlug,
           pagination: false,
           depth: 0,
+          locale: "all",
         });
 
         const collectionConfig = payload.collections[collectionSlug].config;
@@ -65,9 +73,11 @@ export async function findUsages(
             id: item.id,
             fieldPath: path,
             title: (
-              item as DataFromCollectionSlug<CollectionSlug> &
-                Record<string, unknown>
-            )[collectionConfig.admin.useAsTitle] as string,
+              (
+                item as DataFromCollectionSlug<CollectionSlug> &
+                  Record<string, unknown>
+              )[collectionConfig.admin.useAsTitle] as Record<string, string>
+            )[locale ?? localization.defaultLocale],
           })),
         );
       }),
@@ -75,6 +85,7 @@ export async function findUsages(
         const global = await payload.findGlobal({
           slug: globalSlug,
           depth: 0,
+          locale: "all",
         });
 
         const globalConfig = payload.globals.config.find(
@@ -199,6 +210,25 @@ function findItemUsagesOnCollection(
           ).map((path) => (isNamedTab ? `${tab.name}.${path}` : path)),
         );
       }
+    } else if (field.type === "richText" && field.localized) {
+      if (data[field.name]) {
+        for (const dataLocale of Object.keys(data[field.name])) {
+          if (data[field.name][dataLocale]) {
+            const linkElementNodes = getLinkElementNodes(
+              (data[field.name][dataLocale] as SerializedEditorState).root,
+            );
+
+            for (const linkElementNode of linkElementNodes) {
+              if (linkElementNode.fields.linkType === "internal") {
+                const { doc } = linkElementNode.fields;
+                if (doc.relationTo === collectionToFind && doc.value === id) {
+                  addUsage(`${field.name}.${dataLocale}`);
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -207,6 +237,40 @@ function findItemUsagesOnCollection(
   function addUsage(fieldPath: string) {
     usagePaths.push(fieldPath);
   }
+}
+
+type LinkElementNode = {
+  fields:
+    | {
+        linkType: "other";
+      }
+    | {
+        linkType: "internal";
+        doc: {
+          relationTo: CollectionSlug;
+          value: string;
+        };
+      };
+};
+
+function getLinkElementNodes({
+  children,
+}: {
+  children: SerializedLexicalNode[];
+}): LinkElementNode[] {
+  return children.flatMap((child) => {
+    if (child.type === "link") {
+      return [child as unknown as LinkElementNode];
+    }
+
+    if ("children" in child) {
+      return getLinkElementNodes(
+        child as { children: SerializedLexicalNode[] },
+      );
+    }
+
+    return [];
+  });
 }
 
 export function getUniqueGlobals(usages: Usage[]) {
