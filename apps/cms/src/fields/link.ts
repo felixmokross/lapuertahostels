@@ -1,9 +1,24 @@
 import { validateUrl } from "@/common/validation";
 import { GroupField, RowField } from "payload";
 
-export function linkField(config: Partial<GroupField> = {}): GroupField {
+type LinkFieldOptions = {
+  allowedLinkTypes?: ("internal" | "custom")[];
+  required?: boolean;
+  fieldConfig?: Partial<GroupField>;
+};
+
+export function linkField({
+  allowedLinkTypes,
+  required,
+  fieldConfig,
+}: LinkFieldOptions = {}): GroupField {
+  if (required === undefined) required = true;
   return {
     name: "link",
+    label: {
+      en: "Link",
+      es: "Enlace",
+    },
     type: "group",
     fields: [
       {
@@ -13,7 +28,7 @@ export function linkField(config: Partial<GroupField> = {}): GroupField {
           es: "Tipo de enlace",
         },
         type: "radio",
-        required: true,
+        required,
         defaultValue: "internal",
         options: [
           {
@@ -21,16 +36,18 @@ export function linkField(config: Partial<GroupField> = {}): GroupField {
               en: "Custom URL",
               es: "URL Personalizado",
             },
-            value: "custom",
+            value: "custom" as const,
           },
           {
             label: {
               en: "Internal Link",
               es: "Enlace interno",
             },
-            value: "internal",
+            value: "internal" as const,
           },
-        ],
+        ].filter(
+          (o) => !allowedLinkTypes || allowedLinkTypes.includes(o.value),
+        ),
         admin: {
           position: "sidebar",
           description: {
@@ -47,7 +64,7 @@ export function linkField(config: Partial<GroupField> = {}): GroupField {
         },
         type: "relationship",
         relationTo: "pages",
-        required: true,
+        required,
         admin: {
           condition: (_, siblingData) => siblingData.linkType === "internal",
           appearance: "drawer",
@@ -61,7 +78,7 @@ export function linkField(config: Partial<GroupField> = {}): GroupField {
           es: "URL",
         },
         type: "text",
-        required: true,
+        required,
         // TODO check if we should re-use the one from Lexical
         validate: validateUrl,
         admin: {
@@ -69,7 +86,7 @@ export function linkField(config: Partial<GroupField> = {}): GroupField {
         },
       },
     ],
-    ...config,
+    ...fieldConfig,
   };
 }
 

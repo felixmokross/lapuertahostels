@@ -230,21 +230,22 @@ export const Pages: CollectionConfig = {
           },
         });
 
-        if (!brand.homeLink) {
+        if (brand.homeLink) {
           // Brand does not have a home link, so we can't validate the pathname.
           // We can't make the brand home link required, because we need to create a brand when there is no page yet.
-          return true;
-        }
 
-        const brandHomeLinkPathname = ((brand.homeLink as Link).page as Page)
-          .pathname;
-        const safePrefix = brandHomeLinkPathname.endsWith("/")
-          ? brandHomeLinkPathname
-          : brandHomeLinkPathname + "/";
-        if (value !== brandHomeLinkPathname && !value.startsWith(safePrefix)) {
-          return t("custom:pages:pathname:pathnameMustStartWithPrefix", {
-            prefix: brandHomeLinkPathname,
-          });
+          const brandHomeLinkPathname = (brand.homeLink.doc as Page).pathname;
+          const safePrefix = brandHomeLinkPathname.endsWith("/")
+            ? brandHomeLinkPathname
+            : brandHomeLinkPathname + "/";
+          if (
+            value !== brandHomeLinkPathname &&
+            !value.startsWith(safePrefix)
+          ) {
+            return t("custom:pages:pathname:pathnameMustStartWithPrefix", {
+              prefix: brandHomeLinkPathname,
+            });
+          }
         }
 
         // Unique constraint only checks within the locale, but our pathnames must be unique across locales

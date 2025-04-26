@@ -13,7 +13,6 @@ import { Links } from "./collections/links";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { Pages } from "./collections/pages";
 import { Banners } from "./collections/banners";

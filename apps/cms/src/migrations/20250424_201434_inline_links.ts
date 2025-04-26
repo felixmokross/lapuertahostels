@@ -1,4 +1,3 @@
-import { Link } from "@/payload-types";
 import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 import { ObjectId } from "bson";
 import { CollectionSlug, Data, Field, GlobalSlug, Payload } from "payload";
@@ -7,6 +6,8 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   await migrateGlobal("common", payload);
 
   await migrateCollection("brands", payload);
+  await migrateCollection("banners", payload);
+  await migrateCollection("pages", payload);
 }
 
 export async function down(_: MigrateDownArgs): Promise<void> {
