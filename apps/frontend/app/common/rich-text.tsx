@@ -139,8 +139,8 @@ function RenderedElementNode({
           ? node.fields.url
           : getPageLinkHref(
               {
-                type: "internal",
-                page: node.fields.doc.value as Page,
+                linkType: "internal",
+                doc: node.fields.doc.value as Page,
                 queryString: node.fields.queryString,
                 fragment: node.fields.fragment,
               },

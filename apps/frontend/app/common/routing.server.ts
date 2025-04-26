@@ -110,8 +110,8 @@ export async function handlePathname(
     throw redirect(
       getPageLinkHref(
         {
-          type: "internal",
-          page: redirectObj.to.page,
+          linkType: "internal",
+          doc: redirectObj.to.page,
           queryString: redirectObj.to.queryString,
           fragment: redirectObj.to.fragment,
         },

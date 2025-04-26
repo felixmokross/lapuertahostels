@@ -20,6 +20,7 @@ export function linkField({
       es: "Enlace",
     },
     type: "group",
+    interfaceName: "NewLink", // TODO rename interface once Link collection is removed
     fields: [
       {
         name: "linkType",

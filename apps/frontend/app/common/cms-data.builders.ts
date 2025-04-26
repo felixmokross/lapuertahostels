@@ -2,8 +2,8 @@ import { createId } from "@paralleldrive/cuid2";
 import {
   Banner,
   Brand,
-  Link,
   Media,
+  NewLink,
   Page,
 } from "@lapuertahostels/payload-types";
 
@@ -44,7 +44,7 @@ export function callToAction(
   return {
     show: true,
     label,
-    link: externalLink("http://example.com/"),
+    link: customLink("http://example.com/"),
     variant: variant ?? "secondary",
   };
 }
@@ -55,7 +55,7 @@ export function callToAction2(label: string): CallToAction2 {
   return {
     show: true,
     label,
-    link: externalLink("http://example.com/"),
+    link: customLink("http://example.com/"),
   };
 }
 
@@ -71,28 +71,22 @@ export function requiredCallToAction(
 ): RequiredCallToAction {
   return {
     label,
-    link: externalLink("http://example.com/"),
+    link: customLink("http://example.com/"),
     variant: variant ?? "secondary",
   };
 }
 
-export function internalLink(pageUrl?: string): Link {
+export function internalLink(pageUrl?: string): NewLink {
   return {
-    id: createId(),
-    type: "internal",
-    page: page(pageUrl ?? "/"),
-    createdAt: date,
-    updatedAt: date,
+    linkType: "internal",
+    doc: page(pageUrl ?? "/"),
   };
 }
 
-export function externalLink(url: string): Link {
+export function customLink(url: string): NewLink {
   return {
-    id: createId(),
-    type: "external",
+    linkType: "custom",
     url,
-    createdAt: date,
-    updatedAt: date,
   };
 }
 

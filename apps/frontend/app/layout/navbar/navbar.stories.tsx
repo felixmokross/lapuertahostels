@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Navbar } from "./navbar";
 import {
   brand,
-  externalLink,
+  customLink,
   internalLink,
   media,
 } from "~/common/cms-data.builders";
@@ -45,7 +45,7 @@ const puertaBrand = brand({
   bookCta: {
     show: true,
     label: "Book Now",
-    link: externalLink("https://www.example.com"),
+    link: customLink("https://www.example.com"),
   },
   logo: media("logo-puerta-simple.png"),
 });
