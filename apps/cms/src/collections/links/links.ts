@@ -28,6 +28,7 @@ export const Links: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],
     listSearchableFields: ["id", "title", "type"],
+    hidden: false,
   },
   fields: [
     {
