@@ -230,7 +230,7 @@ export const Pages: CollectionConfig = {
           },
         });
 
-        if (brand.homeLink) {
+        if (brand.homeLink?.doc) {
           // Brand does not have a home link, so we can't validate the pathname.
           // We can't make the brand home link required, because we need to create a brand when there is no page yet.
 

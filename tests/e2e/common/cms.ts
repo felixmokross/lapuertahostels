@@ -1,7 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
-import { RichTextObject } from "@lapuertahostels/shared";
 import { Brand, Media, Page } from "@lapuertahostels/payload-types";
 
 export async function createPage(data: Partial<Page> = {}) {
