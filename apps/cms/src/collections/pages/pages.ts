@@ -9,7 +9,7 @@ import {
 import { heroField } from "../../fields/hero";
 import { layoutField } from "../../fields/layout";
 import { canManageContent, isAdmin } from "../../common/access-control";
-import { Link, Page } from "@/payload-types";
+import { Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
 import { descriptionField } from "@/fields/description";
