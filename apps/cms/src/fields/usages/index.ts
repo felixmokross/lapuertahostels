@@ -59,8 +59,14 @@ export async function findUsages(
 
         const collectionConfig = payload.collections[collectionSlug].config;
 
-        return items.docs.flatMap((item) =>
-          findItemUsagesOnCollection(
+        return items.docs.flatMap((item) => {
+          const title = (
+            item as DataFromCollectionSlug<CollectionSlug> &
+              Record<string, unknown>
+          )[collectionConfig.admin.useAsTitle] as
+            | Record<string, string>
+            | string;
+          return findItemUsagesOnCollection(
             fieldType,
             collectionToFind,
             id,
@@ -72,14 +78,12 @@ export async function findUsages(
             label: collectionConfig.labels.singular,
             id: item.id,
             fieldPath: path,
-            title: (
-              (
-                item as DataFromCollectionSlug<CollectionSlug> &
-                  Record<string, unknown>
-              )[collectionConfig.admin.useAsTitle] as Record<string, string>
-            )[locale ?? localization.defaultLocale],
-          })),
-        );
+            title:
+              typeof title === "object"
+                ? title[locale ?? localization.defaultLocale]
+                : title,
+          }));
+        });
       }),
       ...globals.map(async (globalSlug) => {
         const global = await payload.findGlobal({
