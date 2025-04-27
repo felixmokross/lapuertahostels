@@ -198,7 +198,7 @@ export async function tryGetRedirect(request: Request, pathname: string) {
     null, // redirects don't have localized fields
     1,
     {
-      where: { equals: pathname },
+      "where[fromPathname][equals]": pathname,
       limit: 1,
     },
     (data) => (data && data.docs.length > 0 ? data.docs[0] : null),
