@@ -82,8 +82,8 @@ export function linkField({
         type: "text",
         required,
         validate: (value, options) => {
-          let result = text(value, options);
-          if (result !== true) return result;
+          const textValidationResult = text(value, options);
+          if (textValidationResult !== true) return textValidationResult;
 
           if (value) {
             if (!validateUrl(value)) {
