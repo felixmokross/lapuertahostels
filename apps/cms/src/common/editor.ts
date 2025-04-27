@@ -18,6 +18,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 import { createHeadlessEditor } from "@payloadcms/richtext-lexical/lexical/headless";
 import payloadConfig from "@/payload.config";
+import { queryStringAndFragmentField } from "@/fields/link";
 
 const features = [
   BoldFeature(),
@@ -30,13 +31,14 @@ const features = [
   UnorderedListFeature(),
   OrderedListFeature(),
   IndentFeature(),
-
-  // TODO this feature doesn't fit in our 'Links' concept, as it already distinguishes between internal and external links
-  // by itself. We should either create a custom feature or remove the 'Links' concept to ensure a consistent UX.
-  // Also this feature in its current config doesn't allow us to add a fragment or query string – if we stick with it,
-  // we should add the respective fields.
-  // Also currently we don't support the 'open in new tab' checkbox, should we? External links are already always opened in a new tab.
-  LinkFeature({ enabledCollections: ["pages"] }),
+  LinkFeature({
+    enabledCollections: ["pages"],
+    fields: ({ defaultFields }) => [
+      // Not using the 'newTab' field, as our external links are automatically opened in a new tab and for internal we don't want this (yet).
+      ...defaultFields.filter((f) => f.name !== "newTab"),
+      queryStringAndFragmentField(),
+    ],
+  }),
 
   InlineToolbarFeature(),
 ];

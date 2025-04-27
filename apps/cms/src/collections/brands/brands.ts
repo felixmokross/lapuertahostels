@@ -12,6 +12,7 @@ import { RowLabelProps } from "@/components/RowLabel";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
+import { linkField } from "@/fields/link";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -102,25 +103,6 @@ export const Brands: CollectionConfig = {
         position: "sidebar",
       },
     },
-    {
-      name: "homeLink",
-      label: {
-        en: "Home Link",
-        es: "Enlace de inicio",
-      },
-      type: "relationship",
-      relationTo: "links",
-      filterOptions: {
-        type: { equals: "internal" },
-      },
-      access: {
-        create: () => false,
-        update: () => false,
-      },
-      admin: {
-        position: "sidebar",
-      },
-    },
 
     {
       type: "tabs",
@@ -131,6 +113,21 @@ export const Brands: CollectionConfig = {
             es: "General",
           },
           fields: [
+            linkField({
+              fieldConfig: {
+                name: "homeLink",
+                label: {
+                  en: "Home Link",
+                  es: "Enlace de inicio",
+                },
+                access: {
+                  create: () => false,
+                  update: () => false,
+                },
+              },
+              allowedLinkTypes: ["internal"],
+              required: false,
+            }),
             textField({
               name: "baseTitle",
               label: {
@@ -198,16 +195,7 @@ export const Brands: CollectionConfig = {
                   name: "label",
                   label: { en: "Label", es: "Etiqueta" },
                 }),
-                {
-                  name: "link",
-                  label: {
-                    en: "Link",
-                    es: "Enlace",
-                  },
-                  type: "relationship",
-                  relationTo: "links",
-                  required: true,
-                },
+                linkField(),
               ],
               admin: {
                 components: {
@@ -238,19 +226,13 @@ export const Brands: CollectionConfig = {
                     condition: (_, siblingData) => siblingData?.show,
                   },
                 }),
-                {
-                  name: "link",
-                  label: {
-                    en: "Link",
-                    es: "Enlace",
+                linkField({
+                  fieldConfig: {
+                    admin: {
+                      condition: (_, siblingData) => siblingData?.show,
+                    },
                   },
-                  type: "relationship",
-                  relationTo: "links",
-                  required: true,
-                  admin: {
-                    condition: (_, siblingData) => siblingData?.show,
-                  },
-                },
+                }),
               ],
             },
           ],
@@ -306,16 +288,7 @@ export const Brands: CollectionConfig = {
                       name: "label",
                       label: { en: "Label", es: "Etiqueta" },
                     }),
-                    {
-                      name: "link",
-                      label: {
-                        en: "Link",
-                        es: "Enlace",
-                      },
-                      type: "relationship",
-                      relationTo: "links",
-                      required: true,
-                    },
+                    linkField(),
                   ],
                   admin: {
                     components: {

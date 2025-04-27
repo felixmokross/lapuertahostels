@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
-import { validateUrl } from "../../common/validation";
 import { linkUsagesField } from "./usages";
+import { queryStringAndFragmentField } from "@/fields/link";
 
 export const Links: CollectionConfig = {
   slug: "links",
@@ -27,6 +27,7 @@ export const Links: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "type"],
     listSearchableFields: ["id", "title", "type"],
+    hidden: true,
   },
   fields: [
     {
@@ -52,45 +53,7 @@ export const Links: CollectionConfig = {
                 appearance: "drawer",
               },
             },
-            {
-              type: "row",
-              fields: [
-                {
-                  name: "queryString",
-                  label: {
-                    en: "Query String",
-                    es: "Cadena de consulta",
-                  },
-                  type: "text",
-                  admin: {
-                    width: "50%",
-                    description: {
-                      en: "If a query string is provided, it will be appended to the URL with a '?' character.",
-                      es: "Si se proporciona una cadena de consulta, se añadirá a la URL con un carácter '?'.",
-                    },
-                    condition: (_, siblingData) =>
-                      siblingData.type === "internal",
-                  },
-                },
-                {
-                  name: "fragment",
-                  label: {
-                    en: "Fragment",
-                    es: "Fragmento",
-                  },
-                  type: "text",
-                  admin: {
-                    width: "50%",
-                    description: {
-                      en: "If a fragment is provided, it will be appended to the URL with a '#' character. Use this to link to a section of a page, defined by an 'Element ID'.",
-                      es: "Si se proporciona un fragmento, se añadirá a la URL con un carácter '#'. Úsalo para enlazar a una sección de una página, definida por un 'ID de elemento'.",
-                    },
-                    condition: (_, siblingData) =>
-                      siblingData.type === "internal",
-                  },
-                },
-              ],
-            },
+            queryStringAndFragmentField(),
             {
               name: "url",
               label: {
@@ -99,7 +62,6 @@ export const Links: CollectionConfig = {
               },
               type: "text",
               required: true,
-              validate: validateUrl,
               admin: {
                 condition: (_, siblingData) => siblingData.type === "external",
               },

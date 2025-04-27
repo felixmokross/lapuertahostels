@@ -1,6 +1,7 @@
 import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
 import { textField } from "./text";
+import { linkField } from "./link";
 
 export type CallToActionFieldOptions = {
   optional?: boolean;
@@ -31,17 +32,9 @@ export function makeCallToActionField({
         label: { en: "Label", es: "Etiqueta" },
         admin: { condition },
       }),
-      {
-        name: "link",
-        label: {
-          en: "Link",
-          es: "Enlace",
-        },
-        type: "relationship",
-        relationTo: "links",
-        required: true,
-        admin: { condition },
-      },
+      linkField({
+        fieldConfig: { admin: { condition } },
+      }),
       ...(variant
         ? [
             {

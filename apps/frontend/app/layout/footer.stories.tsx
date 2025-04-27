@@ -4,7 +4,7 @@ import { Footer } from "./footer";
 import { allModes } from ".storybook/modes";
 import {
   brand,
-  externalLink,
+  customLink,
   internalLink,
   media,
 } from "~/common/cms-data.builders";
@@ -122,15 +122,15 @@ Colombia`),
       socialLinks: [
         {
           platform: "facebook",
-          link: externalLink("http://example.com"),
+          link: customLink("http://example.com"),
         },
         {
           platform: "instagram",
-          link: externalLink("http://example.com"),
+          link: customLink("http://example.com"),
         },
         {
           platform: "whatsapp",
-          link: externalLink("http://example.com"),
+          link: customLink("http://example.com"),
         },
       ],
       newsletter: {

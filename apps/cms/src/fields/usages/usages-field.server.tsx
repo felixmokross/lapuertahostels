@@ -1,4 +1,4 @@
-import { Payload, UIFieldClient } from "payload";
+import { UIFieldServerProps } from "payload";
 import { findUsages } from ".";
 import { UsagesConfig } from "./types";
 import { I18nClient } from "@payloadcms/translations";
@@ -13,15 +13,14 @@ export async function UsagesField({
   i18n,
   clientField,
   path,
-}: {
+  req,
+}: UIFieldServerProps & {
   config: UsagesConfig;
-  data: { id: string };
-  payload: Payload;
   i18n: I18nClient<TranslationsObject, TranslationsKey>;
-  clientField: UIFieldClient;
-  path: string;
 }) {
-  const value = await findUsages(config, data.id, payload);
+  if (req.locale === "all") throw new Error("Locale cannot be 'all'");
+
+  const value = await findUsages(config, data.id, payload, req.locale);
   const { t } = i18n;
   return (
     <>

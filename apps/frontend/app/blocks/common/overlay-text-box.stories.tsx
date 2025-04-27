@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { OverlayTextBox } from "./overlay-text-box";
-import { externalLink, media } from "~/common/cms-data.builders";
+import { customLink, media } from "~/common/cms-data.builders";
 import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { MediaImage } from "~/common/media";
 import { Cog6ToothIcon } from "@heroicons/react/20/solid";
@@ -56,7 +56,7 @@ export const Default: Story = {
       as: PageLink,
       label: "Discover More",
       variant: "secondary",
-      link: externalLink("http://example.com/"),
+      link: customLink("http://example.com/"),
     },
   },
 };

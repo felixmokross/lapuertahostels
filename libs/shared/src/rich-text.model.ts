@@ -53,6 +53,8 @@ export type LinkElementNode = BaseElementNode & {
           relationTo: "pages";
           value: { pathname: string };
         };
+        queryString?: string;
+        fragment?: string;
       };
 };
 

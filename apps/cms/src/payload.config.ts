@@ -13,7 +13,6 @@ import { Links } from "./collections/links";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { Pages } from "./collections/pages";
 import { Banners } from "./collections/banners";
@@ -25,6 +24,7 @@ import { translationsEndpoint } from "./endpoints/translations";
 import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
+import { editor } from "./common/editor";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -85,7 +85,7 @@ export default buildConfig({
       ],
     },
   },
-  editor: lexicalEditor({}),
+  editor: editor(),
   collections: [
     Users,
     ApiKeys,
