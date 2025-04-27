@@ -14,9 +14,9 @@
     "@lapuertahostels/payload-types": "workspace:../../libs/payload-types",
     "@lapuertahostels/shared": "workspace:../../libs/shared",
     "@paralleldrive/cuid2": "^2.2.2",
-    "@playwright/test": "^1.51.1",
-    "@types/node": "^22.14.0",
-    "dotenv": "^16.4.7",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.2",
+    "dotenv": "^16.5.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   },
