@@ -25,6 +25,7 @@ import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
 import { editor } from "./common/editor";
+import { resendAdapter } from "@payloadcms/email-resend";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -131,6 +132,11 @@ export default buildConfig({
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
   endpoints: [translationsEndpoint, autoTranslateEndpoint],
+  email: resendAdapter({
+    defaultFromAddress: "no-reply@admin.lapuertahostels.co",
+    defaultFromName: "La Puerta Hostels Admin",
+    apiKey: process.env.RESEND_API_KEY!,
+  }),
   async onInit(payload) {
     if (!!process.env.E2E_TESTS_API_KEY) {
       const e2eTestApiKeys = await payload.find({
