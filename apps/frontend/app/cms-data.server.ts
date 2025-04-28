@@ -190,12 +190,16 @@ export async function tryGetPage(
   );
 }
 
-export async function tryGetRedirect(request: Request, pathname: string) {
+export async function tryGetRedirect(
+  request: Request,
+  pathname: string,
+  locale: string,
+) {
   return await getData<{ docs: Redirect[] }, Redirect>(
     request,
     `redirects`,
     `redirects:${pathname.substring(1).replaceAll("/", ":") || "index"}`,
-    null, // redirects don't have localized fields
+    locale,
     1,
     {
       "where[fromPathname][equals]": pathname,
