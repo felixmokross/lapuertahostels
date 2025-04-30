@@ -12,6 +12,7 @@ export const translations = {
         mustBeValidUrl: "Must be a valid URL",
       },
       pages: {
+        name: "Page",
         pathname: {
           pleaseSelectABrandFirst: "Please select a brand first.",
           pleaseEnterAPathname: "Please enter a pathname.",
@@ -91,6 +92,7 @@ export const translations = {
         mustBeValidUrl: "Debe ser una URL válida",
       },
       pages: {
+        name: "Página",
         pathname: {
           pleaseSelectABrandFirst: "Por favor, seleccione una marca primero.",
           pleaseEnterAPathname: "Por favor, introduzca una ruta.",
