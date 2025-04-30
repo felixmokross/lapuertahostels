@@ -1,3 +1,4 @@
+import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 
 export const Redirects: CollectionConfig = {
@@ -16,6 +17,7 @@ export const Redirects: CollectionConfig = {
     useAsTitle: "fromPathname",
     defaultColumns: ["fromPathname", "locales", "to"],
     listSearchableFields: ["id", "fromPathname", "to.page.pathname"],
+    group: adminGroup,
   },
   fields: [
     {

@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
 import { textareaField } from "@/fields/textarea";
+import { contentGroup } from "@/groups";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -26,6 +27,7 @@ export const Media: CollectionConfig = {
   admin: {
     defaultColumns: ["filename", "category", "comment", "updatedAt"],
     listSearchableFields: ["id", "filename", "comment", "alt"],
+    group: contentGroup,
   },
   endpoints: [generateAltTextEndpoint],
   upload: {

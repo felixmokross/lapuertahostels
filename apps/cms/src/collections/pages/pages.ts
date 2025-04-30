@@ -22,6 +22,7 @@ import {
   getLocalizedPathnameEndpoint,
   getPagesForPathname,
 } from "./localized-pathname";
+import { contentGroup } from "@/groups";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -42,6 +43,7 @@ export const Pages: CollectionConfig = {
   },
   endpoints: [getLocalizedPathnameEndpoint],
   admin: {
+    group: contentGroup,
     useAsTitle: "pathname",
     defaultColumns: ["pathname", "title", "brand", "updatedAt"],
     listSearchableFields: ["id", "pathname", "title", "brand.name"],
