@@ -1,7 +1,7 @@
 import { Block } from "payload";
-import { elementIdField } from "../fields/element-id";
-import { makeMoreOptionsField } from "../fields/more-options";
-import { imageField } from "../fields/image";
+import { elementIdField } from "../../fields/element-id";
+import { makeMoreOptionsField } from "../../fields/more-options";
+import { imageField } from "../../fields/image";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 

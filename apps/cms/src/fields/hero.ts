@@ -1,7 +1,7 @@
 import { BlocksField } from "payload";
-import { HeroSlidesBlock } from "../blocks/HeroSlides";
-import { HeroVideoBlock } from "../blocks/HeroVideo";
-import { HeroHeadingBlock } from "../blocks/HeroHeading";
+import { HeroSlidesBlock } from "../blocks/hero-slides/config";
+import { HeroVideoBlock } from "../blocks/hero-video/config";
+import { HeroHeadingBlock } from "../blocks/hero-heading/config";
 
 export const heroField: BlocksField = {
   name: "hero",

@@ -1,7 +1,7 @@
 import { Block } from "payload";
-import { makeMoreOptionsField } from "../fields/more-options";
-import { elementIdField } from "../fields/element-id";
-import { imageField } from "../fields/image";
+import { makeMoreOptionsField } from "@/fields/more-options";
+import { elementIdField } from "@/fields/element-id";
+import { imageField } from "@/fields/image";
 import { RowLabelProps } from "@/components/RowLabel";
 import { makeCallToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";

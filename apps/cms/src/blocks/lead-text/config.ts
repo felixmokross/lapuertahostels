@@ -1,6 +1,6 @@
 import { Block } from "payload";
-import { elementIdField } from "../fields/element-id";
-import { makeMoreOptionsField } from "../fields/more-options";
+import { elementIdField } from "@/fields/element-id";
+import { makeMoreOptionsField } from "@/fields/more-options";
 import { makeCallToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";

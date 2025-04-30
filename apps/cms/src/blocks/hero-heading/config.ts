@@ -1,5 +1,5 @@
 import { Block } from "payload";
-import { makeImageField } from "../fields/image";
+import { makeImageField } from "@/fields/image";
 import { descriptionField } from "@/fields/description";
 import { textField } from "@/fields/text";
 
