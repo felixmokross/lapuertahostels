@@ -12,7 +12,7 @@ import { Image } from "~/common/image";
 import { ImageViewerControlsOverlay } from "./image-viewer-controls-overlay";
 import { cn } from "../cn";
 import { useSwipeable } from "react-swipeable";
-import { SpinnerIcon } from "../icons/SpinnerIcon";
+import { SpinnerIcon } from "../icons/spinner-icon";
 
 export type ImageViewerPanelProps = {
   defaultImageIndex?: number;
