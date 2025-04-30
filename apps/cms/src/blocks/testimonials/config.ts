@@ -6,6 +6,9 @@ import { Block } from "payload";
 export const testimonialsBlock: Block = {
   slug: "testimonials",
   interfaceName: "Testimonials",
+  imageURL: "/assets/blocks/Testimonials.png",
+  imageAltText:
+    "Preview of the Testimonials block, showing a heading and three quote cards underneath.",
   labels: {
     singular: {
       en: "Testimonials",
