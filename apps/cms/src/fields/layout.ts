@@ -9,6 +9,7 @@ import { WideImageBlock } from "../blocks/WideImage";
 import { RoomListBlock } from "../blocks/RoomList";
 import { TextColumnsWithImagesBlock } from "../blocks/TextColumnsWithImages";
 import { MapBlock } from "@/blocks/map";
+import { testimonialsBlock } from "@/blocks/testimonials/config";
 
 export const layoutField: BlocksField = {
   name: "layout",
@@ -40,6 +41,7 @@ export const layoutField: BlocksField = {
     RoomListBlock,
     TextColumnsWithImagesBlock,
     MapBlock,
+    testimonialsBlock,
   ],
   admin: {
     initCollapsed: true,
