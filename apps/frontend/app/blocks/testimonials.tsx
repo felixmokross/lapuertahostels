@@ -16,7 +16,7 @@ export function TestimonialsBlock({
   items,
 }: TestimonialsBlockProps) {
   return (
-    <div className="mx-8 my-24 lg:mx-auto lg:max-w-6xl">
+    <div className="mx-auto mt-32 mb-60 max-w-6xl px-8 lg:px-0">
       {heading && (
         <Heading as="h3" size="medium" className="lg:text-center">
           {heading}
@@ -32,8 +32,8 @@ export function TestimonialsBlock({
       )}
       <div
         className={cn(
-          "flex flex-col justify-evenly gap-16 lg:flex-row lg:flex-wrap lg:gap-12 xl:gap-20",
-          (heading || supportingText) && "mt-20",
+          "flex flex-col justify-evenly gap-16 lg:flex-row lg:flex-wrap lg:gap-x-12 lg:gap-y-20 xl:gap-20",
+          supportingText ? "mt-20" : heading ? "mt-16" : "mt-0",
         )}
       >
         {items?.map((item) => (
