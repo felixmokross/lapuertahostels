@@ -1,7 +1,7 @@
 "use client";
 
 import { TranslationsKey, TranslationsObject } from "@/translations";
-import { useLocale, usePayloadAPI, useTranslation } from "@payloadcms/ui";
+import { usePayloadAPI, useTranslation } from "@payloadcms/ui";
 import { DefaultCellComponentProps } from "payload";
 
 export function ToCell({ cellData }: DefaultCellComponentProps) {
