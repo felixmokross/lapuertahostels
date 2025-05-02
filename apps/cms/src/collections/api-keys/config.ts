@@ -1,4 +1,5 @@
 import { canManageContent, isAdmin } from "@/common/access-control";
+import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 
 export const ApiKeys: CollectionConfig = {
@@ -19,6 +20,7 @@ export const ApiKeys: CollectionConfig = {
     useAPIKey: true,
   },
   admin: {
+    group: adminGroup,
     defaultColumns: ["name", "role", "remark", "createdAt", "updatedAt"],
     useAsTitle: "id",
   },

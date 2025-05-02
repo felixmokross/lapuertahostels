@@ -13,6 +13,7 @@ import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
 import { linkField } from "@/fields/link";
+import { contentGroup } from "@/groups";
 
 export const Brands: CollectionConfig = {
   slug: "brands",
@@ -69,6 +70,7 @@ export const Brands: CollectionConfig = {
         );
       },
     },
+    group: contentGroup,
   },
   access: {
     create: ({ req }) => isAdmin(req),

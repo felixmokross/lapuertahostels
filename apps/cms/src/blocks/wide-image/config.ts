@@ -1,5 +1,5 @@
 import { Block } from "payload";
-import { imageField } from "../fields/image";
+import { imageField } from "@/fields/image";
 import { overlayTextBoxField } from "@/fields/overlay-text-box";
 
 export const WideImageBlock: Block = {

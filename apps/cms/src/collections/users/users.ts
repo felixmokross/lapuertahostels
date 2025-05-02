@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload";
 import { canManageContent, isAdmin, isSelf } from "../../common/access-control";
+import { adminGroup } from "@/groups";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -23,6 +24,7 @@ export const Users: CollectionConfig = {
     useAsTitle: "email",
     defaultColumns: ["email", "role", "updatedAt"],
     listSearchableFields: ["id", "email", "role"],
+    group: adminGroup,
   },
   access: {
     read: ({ req, id }) => isSelf(req, id!, "users") || isAdmin(req),

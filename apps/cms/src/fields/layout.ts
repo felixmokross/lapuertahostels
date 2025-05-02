@@ -1,14 +1,14 @@
 import { BlocksField } from "payload";
-import { AccommodationSelectorBlock } from "../blocks/AccommodationSelector";
-import { FeaturesBlock } from "../blocks/Features";
-import { ImageWithFloatingTextBlock } from "../blocks/ImageWithFloatingText";
-import { LeadTextBlock } from "../blocks/LeadText";
-import { StoryBlock } from "../blocks/Story";
-import { SeparatorBlock } from "../blocks/Separator";
-import { WideImageBlock } from "../blocks/WideImage";
-import { RoomListBlock } from "../blocks/RoomList";
-import { TextColumnsWithImagesBlock } from "../blocks/TextColumnsWithImages";
-import { MapBlock } from "@/blocks/map";
+import { AccommodationSelectorBlock } from "../blocks/accommodation-selector/config";
+import { FeaturesBlock } from "../blocks/features/config";
+import { ImageWithFloatingTextBlock } from "../blocks/image-with-floating-text/config";
+import { LeadTextBlock } from "../blocks/lead-text/config";
+import { StoryBlock } from "../blocks/story/config";
+import { SeparatorBlock } from "../blocks/separator/config";
+import { WideImageBlock } from "../blocks/wide-image/config";
+import { RoomListBlock } from "../blocks/room-list/config";
+import { TextColumnsWithImagesBlock } from "../blocks/text-columns-with-images/config";
+import { MapBlock } from "@/blocks/map/config";
 import { testimonialsBlock } from "@/blocks/testimonials/config";
 
 export const layoutField: BlocksField = {

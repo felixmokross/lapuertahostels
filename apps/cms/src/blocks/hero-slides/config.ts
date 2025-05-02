@@ -1,5 +1,5 @@
-import { makeMoreOptionsField } from "../fields/more-options";
-import { imageField } from "../fields/image";
+import { makeMoreOptionsField } from "@/fields/more-options";
+import { imageField } from "@/fields/image";
 import { makeOverlayTitleField } from "@/fields/overlay-title";
 import { Block } from "payload";
 import { RowLabelProps } from "@/components/RowLabel";

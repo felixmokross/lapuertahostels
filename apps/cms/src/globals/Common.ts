@@ -8,6 +8,7 @@ import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 import { textareaField } from "@/fields/textarea";
 import { linkField } from "@/fields/link";
+import { contentGroup } from "@/groups";
 
 export const Common: GlobalConfig = {
   slug: "common",
@@ -17,6 +18,9 @@ export const Common: GlobalConfig = {
   },
   access: {
     update: canManageContent,
+  },
+  admin: {
+    group: contentGroup,
   },
   fields: [
     {
