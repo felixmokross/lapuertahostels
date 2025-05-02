@@ -7,7 +7,6 @@ import {
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { Page } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
@@ -50,21 +49,13 @@ export const Brands: CollectionConfig = {
         locale: Locale;
         payload: Payload;
       }) => {
-        const homeLink = await payload.findByID({
-          collection: "links",
-          id: data.homeLink,
-          populate: {
-            links: {
-              page: true,
-            },
-          },
+        const homePage = await payload.findByID({
+          collection: "pages",
+          id: data.homeLink.doc,
         });
 
-        if (!(homeLink.page as Page | null)?.pathname) {
-          throw new Error("Brand home page not found");
-        }
         return getLivePreviewUrl(
-          (homeLink.page as Page).pathname,
+          homePage.pathname,
           `brands/${data.id}`,
           locale.code,
         );
