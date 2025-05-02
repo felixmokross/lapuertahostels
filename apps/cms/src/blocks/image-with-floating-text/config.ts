@@ -7,6 +7,7 @@ import { richTextField } from "@/fields/rich-text";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",
+  interfaceName: "ImageWithFloatingText",
   labels: {
     singular: {
       en: "Image with Floating Text",

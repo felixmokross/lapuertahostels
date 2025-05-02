@@ -7,6 +7,7 @@ import { textField } from "@/fields/text";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
+  interfaceName: "RoomList",
   labels: {
     singular: {
       en: "Room List",

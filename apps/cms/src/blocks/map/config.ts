@@ -5,6 +5,7 @@ import { Block } from "payload";
 
 export const MapBlock: Block = {
   slug: "Map",
+  interfaceName: "Map",
   labels: {
     singular: {
       en: "Map",

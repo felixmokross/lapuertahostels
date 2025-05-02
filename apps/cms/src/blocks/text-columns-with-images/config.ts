@@ -9,6 +9,7 @@ import { textField } from "@/fields/text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
+  interfaceName: "TextColumnsWithImages",
   labels: {
     singular: {
       en: "Text Columns with Images",
@@ -65,7 +66,7 @@ export const TextColumnsWithImagesBlock: Block = {
       type: "array",
       required: true,
       fields: [
-        imageField({ optional: true }),
+        imageField({ required: false }),
         {
           name: "size",
           label: {

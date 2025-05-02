@@ -11,11 +11,11 @@ import { TextColumnsWithImagesBlock } from "./text-columns-with-images-block/tex
 import { MapBlock } from "./map-block";
 import { TestimonialsBlock } from "./testimonials";
 
-type LayoutBlocksProps = {
-  data: NonNullable<Page["layout"]>;
+type ContentBlocksProps = {
+  data: NonNullable<Page["content"]>;
 };
 
-export function LayoutBlocks({ data }: LayoutBlocksProps) {
+export function ContentBlocks({ data }: ContentBlocksProps) {
   return data.map((block) => {
     switch (block.blockType) {
       case "LeadText":

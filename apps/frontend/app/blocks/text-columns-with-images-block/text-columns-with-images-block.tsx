@@ -2,11 +2,10 @@ import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "@lapuertahostels/shared";
-import { type TextColumnsWithImagesBlock } from "./types";
 import { TextWithImageItem } from "./text-with-image-item";
+import { TextColumnsWithImages } from "@lapuertahostels/payload-types";
 
-export type TextColumnsWithImagesBlockProps =
-  Partial<TextColumnsWithImagesBlock>;
+export type TextColumnsWithImagesBlockProps = Partial<TextColumnsWithImages>;
 
 export function TextColumnsWithImagesBlock({
   heading,

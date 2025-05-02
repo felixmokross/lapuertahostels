@@ -2,10 +2,11 @@ import { Block } from "payload";
 import { imageField } from "@/fields/image";
 import { overlayTitleField } from "@/fields/overlay-title";
 
-const optionalImageField = imageField({ optional: true });
+const optionalImageField = imageField({ required: false });
 
 export const HeroVideoBlock: Block = {
   slug: "HeroVideo",
+  interfaceName: "HeroVideo",
   labels: {
     singular: {
       en: "Hero Video",

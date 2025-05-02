@@ -5,10 +5,11 @@ import { imageField } from "@/fields/image";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
-const optionalImageField = imageField({ optional: true });
+const optionalImageField = imageField({ required: false });
 
 export const StoryBlock: Block = {
   slug: "Story",
+  interfaceName: "Story",
   labels: {
     singular: {
       en: "Story",

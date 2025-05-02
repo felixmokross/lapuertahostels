@@ -4,6 +4,7 @@ import { overlayTextBoxField } from "@/fields/overlay-text-box";
 
 export const WideImageBlock: Block = {
   slug: "WideImage",
+  interfaceName: "WideImage",
   labels: {
     singular: {
       en: "Wide Image",

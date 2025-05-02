@@ -3,6 +3,7 @@ import { Block } from "payload";
 
 export const SeparatorBlock: Block = {
   slug: "Separator",
+  interfaceName: "Separator",
   labels: {
     singular: {
       en: "Separator",

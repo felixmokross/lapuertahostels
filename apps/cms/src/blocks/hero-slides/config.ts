@@ -7,6 +7,7 @@ import { textField } from "@/fields/text";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",
+  interfaceName: "HeroSlides",
   labels: {
     singular: {
       en: "Hero Slides",

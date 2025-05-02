@@ -7,6 +7,7 @@ import { textField } from "@/fields/text";
 
 export const LeadTextBlock: Block = {
   slug: "LeadText",
+  interfaceName: "LeadText",
   labels: {
     singular: {
       en: "Lead Text",

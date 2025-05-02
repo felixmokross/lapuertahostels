@@ -9,6 +9,7 @@ import { textField } from "@/fields/text";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
+  interfaceName: "Features",
   labels: {
     singular: {
       en: "Features",

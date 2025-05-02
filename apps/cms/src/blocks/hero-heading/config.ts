@@ -3,10 +3,11 @@ import { imageField } from "@/fields/image";
 import { descriptionField } from "@/fields/description";
 import { textField } from "@/fields/text";
 
-const optionalImageField = imageField({ optional: true });
+const optionalImageField = imageField({ required: false });
 
 export const HeroHeadingBlock: Block = {
   slug: "HeroHeading",
+  interfaceName: "HeroHeading",
   labels: {
     singular: {
       en: "Hero Heading",

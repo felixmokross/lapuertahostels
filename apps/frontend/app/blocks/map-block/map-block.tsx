@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/payload-types";
+import { Map as MapType } from "@lapuertahostels/payload-types";
 import {
   AdvancedMarker,
   Map,
@@ -15,9 +15,7 @@ import { OverlayTextBox } from "../common/overlay-text-box";
 import { useCommon } from "~/common/common";
 import { RichTextObject } from "@lapuertahostels/shared";
 
-type MapBlockType = NonNullable<Page["layout"]>[number] & {
-  blockType: "Map";
-};
+type MapBlockType = MapType;
 
 export type MapBlockProps = MapBlockType;
 
