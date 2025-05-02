@@ -7,7 +7,6 @@ import {
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { Page } from "@/payload-types";
 import { RowLabelProps } from "@/components/RowLabel";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
