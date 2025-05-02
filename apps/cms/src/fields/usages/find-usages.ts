@@ -2,38 +2,20 @@ import {
   CollectionSlug,
   DataFromCollectionSlug,
   Field,
-  GlobalSlug,
-  LabelFunction,
   Payload,
   TypedLocale,
-  UIField,
 } from "payload";
-import { RelationshipFieldType, UsagesConfig } from "./types";
+import {
+  LinkElementNode,
+  RelationshipFieldType,
+  Usage,
+  UsagesConfig,
+} from "./types";
 import {
   SerializedEditorState,
   SerializedLexicalNode,
 } from "@payloadcms/richtext-lexical/lexical";
 import { localization } from "@/common/localization";
-
-export function usagesField(config: UsagesConfig): UIField {
-  return {
-    type: "ui",
-    name: "usages",
-    label: {
-      en: "Usages",
-      es: "Usos",
-    },
-    admin: {
-      components: {
-        Field: {
-          path: "src/fields/usages/usages-field.server",
-          exportName: "UsagesField",
-          serverProps: { config },
-        },
-      },
-    },
-  };
-}
 
 export async function findUsages(
   config: UsagesConfig,
@@ -113,22 +95,6 @@ export async function findUsages(
     ])
   ).flat();
 }
-
-export type Usage = (
-  | {
-      type: "collection";
-      collection: CollectionSlug;
-      id: string;
-      title: string;
-    }
-  | {
-      type: "global";
-      global: GlobalSlug;
-    }
-) & {
-  label: string | Record<string, string> | LabelFunction;
-  fieldPath: string;
-};
 
 function findItemUsagesOnCollection(
   fieldType: RelationshipFieldType,
@@ -243,20 +209,6 @@ function findItemUsagesOnCollection(
   }
 }
 
-type LinkElementNode = {
-  fields:
-    | {
-        linkType: "other";
-      }
-    | {
-        linkType: "internal";
-        doc: {
-          relationTo: CollectionSlug;
-          value: string;
-        };
-      };
-};
-
 function getLinkElementNodes({
   children,
 }: {
@@ -275,29 +227,4 @@ function getLinkElementNodes({
 
     return [];
   });
-}
-
-export function getUniqueGlobals(usages: Usage[]) {
-  return [
-    ...new Set(
-      usages
-        .filter((u) => u.type === "global")
-        .map((u) => (u as Usage & { type: "global" }).global),
-    ),
-  ];
-}
-
-export function getUniqueCollectionItemIds(
-  usages: Usage[],
-  collectionSlug: CollectionSlug,
-) {
-  return [
-    ...new Set(
-      usages
-        .filter(
-          (u) => u.type === "collection" && u.collection === collectionSlug,
-        )
-        .map((u) => (u as Usage & { type: "collection" }).id),
-    ),
-  ];
 }

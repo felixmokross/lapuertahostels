@@ -1,10 +1,10 @@
 import { GroupField } from "payload";
-import { makeCallToActionField } from "./call-to-action";
+import { callToActionField } from "./call-to-action";
 import { showField } from "./show";
 import { richTextField } from "./rich-text";
 import { textField } from "./text";
 
-const callToActionField = makeCallToActionField({
+const configuredCallToActionField = callToActionField({
   optional: true,
   showByDefault: false,
 });
@@ -30,7 +30,7 @@ export function overlayTextBoxField({
     },
     type: "group",
     fields: [
-      ...(optional ? [showField] : []),
+      ...(optional ? [showField()] : []),
       textField({
         name: "heading",
         label: { en: "Heading", es: "Título" },
@@ -53,9 +53,9 @@ export function overlayTextBoxField({
             },
           })
         : {
-            ...callToActionField,
+            ...configuredCallToActionField,
             admin: {
-              ...callToActionField.admin,
+              ...configuredCallToActionField.admin,
               condition,
             },
           },

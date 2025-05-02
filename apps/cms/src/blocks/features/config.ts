@@ -1,14 +1,15 @@
 import { Block } from "payload";
-import { makeMoreOptionsField } from "@/fields/more-options";
+import { moreOptionsField } from "@/fields/more-options";
 import { elementIdField } from "@/fields/element-id";
 import { imageField } from "@/fields/image";
-import { RowLabelProps } from "@/components/RowLabel";
-import { makeCallToActionField } from "@/fields/call-to-action";
+import { RowLabelProps } from "@/components/row-label";
+import { callToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
+  interfaceName: "Features",
   labels: {
     singular: {
       en: "Features",
@@ -71,16 +72,16 @@ export const FeaturesBlock: Block = {
       minRows: 1,
       required: true,
       fields: [
-        imageField,
+        imageField(),
         textField({ name: "heading", label: { en: "Heading", es: "Título" } }),
         richTextField(),
-        makeCallToActionField({ optional: true, showByDefault: false }),
+        callToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {
         initCollapsed: true,
         components: {
           RowLabel: {
-            path: "/src/components/RowLabel",
+            path: "/src/components/row-label",
             exportName: "RowLabel",
             clientProps: {
               textProp: "heading",
@@ -89,6 +90,6 @@ export const FeaturesBlock: Block = {
         },
       },
     },
-    makeMoreOptionsField(elementIdField),
+    moreOptionsField(elementIdField()),
   ],
 };

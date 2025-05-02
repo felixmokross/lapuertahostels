@@ -1,12 +1,13 @@
-import { makeMoreOptionsField } from "@/fields/more-options";
+import { moreOptionsField } from "@/fields/more-options";
 import { imageField } from "@/fields/image";
-import { makeOverlayTitleField } from "@/fields/overlay-title";
+import { overlayTitleField } from "@/fields/overlay-title";
 import { Block } from "payload";
-import { RowLabelProps } from "@/components/RowLabel";
+import { RowLabelProps } from "@/components/row-label";
 import { textField } from "@/fields/text";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",
+  interfaceName: "HeroSlides",
   labels: {
     singular: {
       en: "Hero Slides",
@@ -55,7 +56,7 @@ export const HeroSlidesBlock: Block = {
       minRows: 1,
       maxRows: 6,
       fields: [
-        imageField,
+        imageField(),
         {
           // TODO consider to support this in other blocks/groups as well and add more values (together with imageField?)
           name: "imageAlignment",
@@ -76,13 +77,13 @@ export const HeroSlidesBlock: Block = {
             },
           },
         },
-        makeOverlayTitleField({ optional: true }),
+        overlayTitleField({ optional: true }),
       ],
       admin: {
         initCollapsed: true,
         components: {
           RowLabel: {
-            path: "/src/components/RowLabel",
+            path: "/src/components/row-label",
             exportName: "RowLabel",
             clientProps: {
               textProp: "overlayTitle.text",
@@ -96,7 +97,7 @@ export const HeroSlidesBlock: Block = {
         },
       },
     },
-    makeMoreOptionsField({
+    moreOptionsField({
       name: "autoplayIntervalInSeconds",
       type: "number",
       label: {

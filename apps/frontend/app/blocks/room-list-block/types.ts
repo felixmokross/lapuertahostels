@@ -1,7 +1,5 @@
-import { Page } from "@lapuertahostels/payload-types";
+import { RoomList } from "@lapuertahostels/payload-types";
 
-export type RoomListBlock = NonNullable<Page["layout"]>[number] & {
-  blockType: "RoomList";
-};
+export type RoomListBlock = RoomList;
 
 export type Room = RoomListBlock["rooms"][number];

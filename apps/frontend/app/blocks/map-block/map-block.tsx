@@ -1,4 +1,4 @@
-import { Page } from "@lapuertahostels/payload-types";
+import { Map as MapType } from "@lapuertahostels/payload-types";
 import {
   AdvancedMarker,
   Map,
@@ -12,12 +12,10 @@ import { Link } from "~/common/link";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import { Place, PlaceResolver } from "~/common/google-maps";
 import { OverlayTextBox } from "../common/overlay-text-box";
-import { useCommon } from "~/common/common";
 import { RichTextObject } from "@lapuertahostels/shared";
+import { useSettings } from "~/common/common";
 
-type MapBlockType = NonNullable<Page["layout"]>[number] & {
-  blockType: "Map";
-};
+type MapBlockType = MapType;
 
 export type MapBlockProps = MapBlockType;
 
@@ -32,7 +30,7 @@ export function MapBlock({
   const [isLoading, setIsLoading] = useState(false);
   const [requestedAddress, setRequestedAddress] = useState<string>();
 
-  const { maps } = useCommon();
+  const { maps } = useSettings();
 
   useEffect(() => {
     if (

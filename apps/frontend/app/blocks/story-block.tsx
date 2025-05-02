@@ -3,11 +3,9 @@ import { cn } from "../common/cn";
 import { RichTextObject } from "@lapuertahostels/shared";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
-import { Page } from "@lapuertahostels/payload-types";
+import { Story } from "@lapuertahostels/payload-types";
 
-export type StoryBlockProps = NonNullable<Page["layout"]>[number] & {
-  blockType: "Story";
-};
+export type StoryBlockProps = Story;
 
 export function StoryBlock({
   heading,

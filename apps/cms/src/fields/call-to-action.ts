@@ -9,7 +9,7 @@ export type CallToActionFieldOptions = {
   variant?: { default: "primary" | "secondary" } | false;
 };
 
-export function makeCallToActionField({
+export function callToActionField({
   optional = false,
   showByDefault = true,
   variant = { default: "secondary" },
@@ -26,7 +26,7 @@ export function makeCallToActionField({
     },
     type: "group",
     fields: [
-      ...(optional ? [{ ...showField, defaultValue: showByDefault }] : []),
+      ...(optional ? [showField({ defaultValue: showByDefault })] : []),
       textField({
         name: "label",
         label: { en: "Label", es: "Etiqueta" },

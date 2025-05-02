@@ -1,5 +1,5 @@
 import { UIFieldServerProps } from "payload";
-import { findUsages } from ".";
+import { findUsages } from "./find-usages";
 import { UsagesConfig } from "./types";
 import { I18nClient } from "@payloadcms/translations";
 import { TranslationsKey, TranslationsObject } from "@/translations";

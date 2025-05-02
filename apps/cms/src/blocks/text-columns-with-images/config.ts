@@ -1,14 +1,15 @@
 import { Block } from "payload";
-import { makeImageField } from "@/fields/image";
-import { makeMoreOptionsField } from "@/fields/more-options";
+import { imageField } from "@/fields/image";
+import { moreOptionsField } from "@/fields/more-options";
 import { elementIdField } from "@/fields/element-id";
-import { RowLabelProps } from "@/components/RowLabel";
-import { makeCallToActionField } from "@/fields/call-to-action";
+import { RowLabelProps } from "@/components/row-label";
+import { callToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",
+  interfaceName: "TextColumnsWithImages",
   labels: {
     singular: {
       en: "Text Columns with Images",
@@ -65,7 +66,7 @@ export const TextColumnsWithImagesBlock: Block = {
       type: "array",
       required: true,
       fields: [
-        makeImageField({ optional: true }),
+        imageField({ required: false }),
         {
           name: "size",
           label: {
@@ -89,12 +90,12 @@ export const TextColumnsWithImagesBlock: Block = {
           required: false,
         }),
         richTextField({ required: false }),
-        makeCallToActionField({ optional: true, showByDefault: false }),
+        callToActionField({ optional: true, showByDefault: false }),
       ],
       admin: {
         components: {
           RowLabel: {
-            path: "/src/components/RowLabel",
+            path: "/src/components/row-label",
             exportName: "RowLabel",
             clientProps: {
               textProp: "heading",
@@ -103,6 +104,6 @@ export const TextColumnsWithImagesBlock: Block = {
         },
       },
     },
-    makeMoreOptionsField(elementIdField),
+    moreOptionsField(elementIdField()),
   ],
 };

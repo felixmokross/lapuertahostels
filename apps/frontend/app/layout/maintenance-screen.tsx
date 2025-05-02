@@ -2,11 +2,9 @@ import { useTranslation } from "react-i18next";
 import { Button } from "~/common/button";
 import { Heading } from "~/common/heading";
 import { Link } from "~/common/link";
-import { Maintenance } from "@lapuertahostels/payload-types";
+import { Settings } from "@lapuertahostels/payload-types";
 
-export type MaintenanceScreenProps = NonNullable<
-  Maintenance["maintenanceScreen"]
->;
+export type MaintenanceScreenProps = NonNullable<Settings["maintenanceScreen"]>;
 
 export function MaintenanceScreen({ message }: MaintenanceScreenProps) {
   const { t } = useTranslation();

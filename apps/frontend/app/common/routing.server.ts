@@ -8,7 +8,7 @@ import {
   getCanonicalRequestUrl,
 } from "./routing";
 import {
-  getMaintenance,
+  getSettings,
   tryGetLocalizedPathname,
   tryGetPage,
   tryGetRedirect,
@@ -35,9 +35,9 @@ export async function handleIncomingRequest(request: Request) {
   // TypeScript doesn't recognize that the awaited `redirectToLocalizedRoute` never returns
   if (!locale) throw new Error();
 
-  const maintenance = await getMaintenance(request, locale!);
+  const settings = await getSettings(request, locale!);
   if (
-    maintenance.maintenanceScreen?.show &&
+    settings.maintenanceScreen?.show &&
     !(await isAuthenticated(request)) &&
     pageUrl !== "/login"
   ) {

@@ -1,12 +1,10 @@
-import { Page } from "@lapuertahostels/payload-types";
+import { WideImage } from "@lapuertahostels/payload-types";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { OverlayTextBox } from "./common/overlay-text-box";
 import { RichTextObject } from "@lapuertahostels/shared";
 
-export type WideImageBlockProps = NonNullable<Page["layout"]>[number] & {
-  blockType: "WideImage";
-};
+export type WideImageBlockProps = WideImage;
 
 export function WideImageBlock({ image, overlayTextBox }: WideImageBlockProps) {
   return (

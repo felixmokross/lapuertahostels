@@ -1,14 +1,15 @@
 import { Block } from "payload";
 import { elementIdField } from "@/fields/element-id";
-import { makeMoreOptionsField } from "@/fields/more-options";
-import { makeImageField } from "@/fields/image";
+import { moreOptionsField } from "@/fields/more-options";
+import { imageField } from "@/fields/image";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
-const optionalImageField = makeImageField({ optional: true });
+const optionalImageField = imageField({ required: false });
 
 export const StoryBlock: Block = {
   slug: "Story",
+  interfaceName: "Story",
   labels: {
     singular: {
       en: "Story",
@@ -60,6 +61,6 @@ export const StoryBlock: Block = {
         condition: (_, siblingData) => !!siblingData?.image,
       },
     },
-    makeMoreOptionsField(elementIdField),
+    moreOptionsField(elementIdField()),
   ],
 };

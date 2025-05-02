@@ -1,14 +1,11 @@
 import { useRouteLoaderData } from "react-router";
 import { type loader as rootLoader } from "~/root";
-import { SerializeFromLoader } from "./types";
 
-export type Common = SerializeFromLoader<typeof rootLoader>["common"];
-
-export function useCommon() {
+export function useSettings() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
-  const { common } = rootLoaderData;
+  const { settings } = rootLoaderData;
 
-  return common;
+  return settings;
 }

@@ -7,13 +7,9 @@ import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { ReactNode } from "react";
 import { gracefully } from "~/common/utils";
-import { Page } from "@lapuertahostels/payload-types";
+import { AccommodationSelector } from "@lapuertahostels/payload-types";
 
-export type AccommodationSelectorBlockProps = Partial<
-  NonNullable<Page["layout"]>[number] & {
-    blockType: "AccommodationSelector";
-  }
->;
+export type AccommodationSelectorBlockProps = Partial<AccommodationSelector>;
 
 export function AccommodationSelectorBlock({
   heading,

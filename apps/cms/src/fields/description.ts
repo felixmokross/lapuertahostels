@@ -8,7 +8,7 @@ export function descriptionField(description: Record<string, string>): UIField {
     admin: {
       components: {
         Field: {
-          path: "/src/components/DescriptionField",
+          path: "/src/components/description-field",
           exportName: "DescriptionField",
           serverProps: {
             description,

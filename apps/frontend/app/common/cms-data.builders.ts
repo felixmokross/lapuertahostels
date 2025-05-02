@@ -2,9 +2,11 @@ import { createId } from "@paralleldrive/cuid2";
 import {
   Banner,
   Brand,
+  LeadText,
   Media,
   NewLink,
   Page,
+  RoomList,
 } from "@lapuertahostels/payload-types";
 
 export function brand(values: Partial<Brand> = {}): Brand {
@@ -31,11 +33,7 @@ export function media(filename: string, altText?: string): Media {
   };
 }
 
-type CallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
-    blockType: "LeadText";
-  })["cta"]
->;
+type CallToAction = NonNullable<LeadText["cta"]>;
 
 export function callToAction(
   label: string,
@@ -59,11 +57,7 @@ export function callToAction2(label: string): CallToAction2 {
   };
 }
 
-type RequiredCallToAction = NonNullable<
-  (NonNullable<Page["layout"]>[number] & {
-    blockType: "RoomList";
-  })["rooms"][number]["cta"]
->;
+type RequiredCallToAction = NonNullable<RoomList["rooms"][number]["cta"]>;
 
 export function requiredCallToAction(
   label: string,

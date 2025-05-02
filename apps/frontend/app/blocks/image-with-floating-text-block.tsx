@@ -4,13 +4,9 @@ import { RichTextObject } from "@lapuertahostels/shared";
 import { useTheme } from "~/themes";
 import { RichTextHeading } from "~/common/heading";
 import { MediaImage } from "~/common/media";
-import { Page } from "@lapuertahostels/payload-types";
+import { ImageWithFloatingText } from "@lapuertahostels/payload-types";
 
-export type ImageWithFloatingTextBlockProps = NonNullable<
-  Page["layout"]
->[number] & {
-  blockType: "ImageWithFloatingText";
-};
+export type ImageWithFloatingTextBlockProps = ImageWithFloatingText;
 
 export function ImageWithFloatingTextBlock({
   overlayTitle,

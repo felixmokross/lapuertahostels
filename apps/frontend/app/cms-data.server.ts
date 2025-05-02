@@ -1,7 +1,7 @@
 import {
   Brand,
   Common,
-  Maintenance,
+  Settings,
   Page,
   Redirect,
 } from "@lapuertahostels/payload-types";
@@ -222,15 +222,15 @@ export async function getCommon(request: Request, locale: string) {
   return common;
 }
 
-export async function getMaintenance(request: Request, locale: string) {
+export async function getSettings(request: Request, locale: string) {
   const maintanance = (await getData(
     request,
-    "globals/maintenance",
-    "globals:maintenance",
+    "globals/settings",
+    "globals:settings",
     locale,
     2,
-  )) as Maintenance | null;
-  if (!maintanance) throw new Error("Could not load Maintenance global");
+  )) as Settings | null;
+  if (!maintanance) throw new Error("Could not load Settings global");
 
   return maintanance;
 }

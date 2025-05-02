@@ -1,12 +1,6 @@
 import { UploadField } from "payload";
 
-export type ImageFieldOptions = {
-  optional?: boolean;
-};
-
-export function makeImageField({
-  optional = false,
-}: ImageFieldOptions = {}): UploadField {
+export function imageField(config: Partial<UploadField> = {}): UploadField {
   return {
     name: "image",
     label: {
@@ -15,11 +9,10 @@ export function makeImageField({
     },
     type: "upload",
     relationTo: "media",
-    required: !optional,
+    required: true,
     filterOptions: {
       mimeType: { contains: "image/" },
     },
-  };
+    ...config,
+  } as UploadField;
 }
-
-export const imageField = makeImageField();

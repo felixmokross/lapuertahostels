@@ -1,6 +1,6 @@
 import { CollapsibleField, Field } from "payload";
 
-export function makeMoreOptionsField(...fields: Field[]): CollapsibleField {
+export function moreOptionsField(...fields: Field[]): CollapsibleField {
   return {
     type: "collapsible",
     label: {

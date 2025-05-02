@@ -1,12 +1,13 @@
 import { Block } from "payload";
-import { makeImageField } from "@/fields/image";
+import { imageField } from "@/fields/image";
 import { descriptionField } from "@/fields/description";
 import { textField } from "@/fields/text";
 
-const optionalImageField = makeImageField({ optional: true });
+const optionalImageField = imageField({ required: false });
 
 export const HeroHeadingBlock: Block = {
   slug: "HeroHeading",
+  interfaceName: "HeroHeading",
   labels: {
     singular: {
       en: "Hero Heading",

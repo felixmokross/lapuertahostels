@@ -1,25 +1,23 @@
 import { GroupField, RadioField } from "payload";
 import { showField } from "./show";
-import { Page } from "@/payload-types";
-import { makeCallToActionField } from "./call-to-action";
+import { ImageWithFloatingText } from "@/payload-types";
+import { callToActionField } from "./call-to-action";
 import { richTextField } from "./rich-text";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
   supportsSupportingText?: boolean;
   supportsCallToAction?: boolean;
-  supportsPositions?: (NonNullable<Page["layout"]>[number] & {
-    blockType: "ImageWithFloatingText";
-  })["overlayTitle"]["position"][];
+  supportsPositions?: ImageWithFloatingText["overlayTitle"]["position"][];
 };
 
-const callToActionField = makeCallToActionField({
+const configuredCallToActionField = callToActionField({
   optional: true,
   showByDefault: false,
   variant: { default: "primary" },
 });
 
-export function makeOverlayTitleField({
+export function overlayTitleField({
   optional = false,
   supportsSupportingText = true,
   supportsCallToAction = true,
@@ -38,7 +36,7 @@ export function makeOverlayTitleField({
     },
     type: "group",
     fields: [
-      ...(optional ? [showField] : []),
+      ...(optional ? [showField()] : []),
       richTextField({ admin: { condition } }),
       ...(supportsSupportingText
         ? [
@@ -56,9 +54,9 @@ export function makeOverlayTitleField({
       ...(supportsCallToAction
         ? [
             {
-              ...callToActionField,
+              ...configuredCallToActionField,
               admin: {
-                ...callToActionField.admin,
+                ...configuredCallToActionField.admin,
                 condition,
               },
             },

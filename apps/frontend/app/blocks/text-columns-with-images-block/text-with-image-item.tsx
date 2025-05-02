@@ -1,14 +1,14 @@
 import { MediaImage } from "~/common/media";
-import { TextColumnsWithImagesBlock } from "./types";
 import { Button } from "~/common/button";
 import { PageLink } from "~/common/page-link";
 import { cn } from "~/common/cn";
 import { Heading, HeadingProps } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
 import { RichTextObject } from "@lapuertahostels/shared";
+import { TextColumnsWithImages } from "@lapuertahostels/payload-types";
 
 export type TextWithImageItemProps = Partial<
-  TextColumnsWithImagesBlock["items"][number] & {
+  TextColumnsWithImages["items"][number] & {
     imageSizes?: string;
     imageWidth?: number;
     headingLevel: number;

@@ -7,7 +7,7 @@ import {
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { RowLabelProps } from "@/components/RowLabel";
+import { RowLabelProps } from "@/components/row-label";
 import { showField } from "@/fields/show";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
@@ -135,14 +135,13 @@ export const Brands: CollectionConfig = {
                 },
               },
             }),
-            {
-              ...imageField,
+            imageField({
               name: "logo",
               label: {
                 en: "Logo",
                 es: "Logo",
               },
-            },
+            }),
           ],
         },
         {
@@ -193,7 +192,7 @@ export const Brands: CollectionConfig = {
               admin: {
                 components: {
                   RowLabel: {
-                    path: "/src/components/RowLabel",
+                    path: "/src/components/row-label",
                     exportName: "RowLabel",
                     clientProps: {
                       textProp: "label",
@@ -211,7 +210,7 @@ export const Brands: CollectionConfig = {
               },
               type: "group",
               fields: [
-                showField,
+                showField(),
                 textField({
                   name: "label",
                   label: { en: "Label", es: "Etiqueta" },
@@ -286,7 +285,7 @@ export const Brands: CollectionConfig = {
                   admin: {
                     components: {
                       RowLabel: {
-                        path: "/src/components/RowLabel",
+                        path: "/src/components/row-label",
                         exportName: "RowLabel",
                         clientProps: {
                           textProp: "label",
@@ -300,7 +299,7 @@ export const Brands: CollectionConfig = {
               admin: {
                 components: {
                   RowLabel: {
-                    path: "/src/components/RowLabel",
+                    path: "/src/components/row-label",
                     exportName: "RowLabel",
                     clientProps: {
                       textProp: "title",

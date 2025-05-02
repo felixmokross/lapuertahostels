@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
 import { bannerUsagesField } from "./usages";
-import { makeCallToActionField } from "@/fields/call-to-action";
+import { callToActionField } from "@/fields/call-to-action";
 import { textField } from "@/fields/text";
 import { contentGroup } from "@/groups";
 
@@ -48,7 +48,7 @@ export const Banners: CollectionConfig = {
                 es: "Mensaje",
               },
             }),
-            makeCallToActionField({ optional: true, variant: false }),
+            callToActionField({ optional: true, variant: false }),
           ],
         },
 

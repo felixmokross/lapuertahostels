@@ -1,12 +1,13 @@
 import { Block } from "payload";
 import { imageField } from "@/fields/image";
-import { RowLabelProps } from "@/components/RowLabel";
-import { makeCallToActionField } from "@/fields/call-to-action";
+import { RowLabelProps } from "@/components/row-label";
+import { callToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
+  interfaceName: "RoomList",
   labels: {
     singular: {
       en: "Room List",
@@ -59,7 +60,7 @@ export const RoomListBlock: Block = {
           },
           minRows: 1,
           fields: [
-            imageField,
+            imageField(),
             textField({
               name: "caption",
               label: {
@@ -70,12 +71,12 @@ export const RoomListBlock: Block = {
             }),
           ],
         },
-        makeCallToActionField(),
+        callToActionField(),
       ],
       admin: {
         components: {
           RowLabel: {
-            path: "/src/components/RowLabel",
+            path: "/src/components/row-label",
             exportName: "RowLabel",
             clientProps: {
               textProp: "heading",

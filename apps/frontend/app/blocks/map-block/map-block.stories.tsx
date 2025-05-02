@@ -3,7 +3,7 @@ import { MapBlock, MapBlockProps } from "./map-block";
 import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useEnvironment } from "~/common/environment";
-import { useCommon } from "~/common/common";
+import { useSettings } from "~/common/common";
 
 const meta = {
   title: "blocks/Map Block",
@@ -16,7 +16,7 @@ const meta = {
   decorators: [
     (Story) => {
       const { googleMapsApiKey } = useEnvironment();
-      const { maps } = useCommon();
+      const { maps } = useSettings();
       return (
         <APIProvider
           apiKey={googleMapsApiKey}

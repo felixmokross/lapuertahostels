@@ -88,16 +88,17 @@ export function TranslationsFieldLabel({
       />
       {path && (
         <>
-          <div className="tw:flex tw:gap-2 tw:items-baseline">
-            {translationsDisabled && (
-              <p className="field-description tw:m-0">
-                {t(
-                  "custom:translations:pleaseSaveYourChangesToEnableAutoTranslate",
-                )}
-              </p>
-            )}
+          <div
+            title={
+              translationsDisabled
+                ? t(
+                    "custom:translations:pleaseSaveYourChangesToEnableAutoTranslate",
+                  )
+                : undefined
+            }
+          >
             <button
-              disabled={isModified}
+              disabled={translationsDisabled}
               type="button"
               className="tw:disabled:opacity-50 tw:disabled:cursor-not-allowed tw:disabled:hover:text-theme-elevation-800 tw:bg-transparent tw:underline tw:hover:text-theme-elevation-1000 tw:cursor-pointer tw:border-none tw:p-0 tw:text-theme-elevation-800"
               onClick={() => openModal(modalSlug)}

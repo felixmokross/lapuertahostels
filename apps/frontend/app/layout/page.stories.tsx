@@ -101,7 +101,7 @@ export const Puerta: Story = {
         },
       ],
 
-      layout: [
+      content: [
         {
           heading: "Discover the Colombian Costa Caribe",
           text: richTextRoot(
@@ -291,7 +291,7 @@ export const Aqua: Story = {
           ],
         },
       ],
-      layout: [
+      content: [
         {
           heading: "Welcome to Our Boutique Hostel",
           text: richTextRoot(
@@ -456,7 +456,7 @@ export const Azul: Story = {
           blockType: "HeroSlides",
         },
       ],
-      layout: [
+      content: [
         {
           items: [
             {
