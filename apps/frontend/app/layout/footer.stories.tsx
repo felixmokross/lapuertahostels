@@ -9,7 +9,7 @@ import {
   media,
 } from "~/common/cms-data.builders";
 import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
-import { Common } from "~/common/common";
+import { Common } from "@lapuertahostels/payload-types";
 
 const meta = {
   title: "layout/Footer",

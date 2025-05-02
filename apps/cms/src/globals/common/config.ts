@@ -131,44 +131,10 @@ export const Common: GlobalConfig = {
                   },
                 }),
               ],
-            },
-          ],
-        },
-        {
-          name: "maps",
-          label: {
-            en: "Maps",
-            es: "Mapas",
-          },
-          fields: [
-            {
-              name: "region",
-              type: "text",
-              label: {
-                en: "Region Code",
-                es: "Código de región",
-              },
-              minLength: 2,
-              maxLength: 2,
               admin: {
                 description: {
-                  en: "Enter the region code for maps, e.g. CO for Colombia. Must be two letters in uppercase. See https://developers.google.com/maps/documentation/javascript/localization#Region",
-                  es: "Ingresa el código de región para mapas, por ejemplo CO para Colombia. Debe ser de dos letras en mayúsculas. Consulta https://developers.google.com/maps/documentation/javascript/localization#Region",
-                },
-              },
-            },
-            {
-              name: "mapId",
-              type: "text",
-              required: true,
-              label: {
-                en: "Map ID",
-                es: "ID de mapa",
-              },
-              admin: {
-                description: {
-                  en: "Enter the ID of the map to display. This is the ID of the map in the Google Maps Platform and defines styling and POI settings.",
-                  es: "Ingresa el ID del mapa a mostrar. Este es el ID del mapa en Google Maps Platform y define la configuración de estilo y POI.",
+                  en: "For demo purposes only. This form is not enabled yet.",
+                  es: "Solo para fines de demostración. Este formulario aún no está habilitado.",
                 },
               },
             },

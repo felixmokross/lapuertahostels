@@ -196,7 +196,7 @@ export default function App() {
         <GoogleMapsAPIProvider
           apiKey={environment.googleMapsApiKey}
           language={mapToGoogleMapsLanguage(i18n.language)}
-          region={common.maps?.region || undefined}
+          region={maintenance.maps?.region || undefined}
         >
           <ThemeProvider brandId={brand.id as BrandId}>
             {maintenance.maintenanceScreen?.show && isAuthorized && (
