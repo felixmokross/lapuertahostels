@@ -4,6 +4,7 @@ import * as migration_20250420_151225_recreate_pages_indexes from "./20250420_15
 import * as migration_20250420_170045_pathname_localized from "./20250420_170045_pathname_localized";
 import * as migration_20250421_184948_fix_localized_text_fields from "./20250421_184948_fix_localized_text_fields";
 import * as migration_20250424_201434_inline_links from "./20250424_201434_inline_links";
+import * as migration_20250502_171326_rename_layout_to_content from "./20250502_171326_rename_layout_to_content";
 
 export const migrations = [
   {
@@ -35,5 +36,10 @@ export const migrations = [
     up: migration_20250424_201434_inline_links.up,
     down: migration_20250424_201434_inline_links.down,
     name: "20250424_201434_inline_links",
+  },
+  {
+    up: migration_20250502_171326_rename_layout_to_content.up,
+    down: migration_20250502_171326_rename_layout_to_content.down,
+    name: "20250502_171326_rename_layout_to_content",
   },
 ];

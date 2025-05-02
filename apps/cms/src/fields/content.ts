@@ -12,8 +12,7 @@ import { MapBlock } from "@/blocks/map/config";
 import { testimonialsBlock } from "@/blocks/testimonials/config";
 
 export const contentField: BlocksField = {
-  // TODO rename to content and migrate data
-  name: "layout",
+  name: "content",
   label: {
     en: "Content",
     es: "Contenido",
