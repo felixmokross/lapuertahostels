@@ -11,11 +11,12 @@ import { TextColumnsWithImagesBlock } from "../blocks/text-columns-with-images/c
 import { MapBlock } from "@/blocks/map/config";
 import { testimonialsBlock } from "@/blocks/testimonials/config";
 
-export const layoutField: BlocksField = {
+export const contentField: BlocksField = {
+  // TODO rename to content and migrate data
   name: "layout",
   label: {
-    en: "Layout",
-    es: "Diseño",
+    en: "Content",
+    es: "Contenido",
   },
   labels: {
     singular: {
@@ -46,8 +47,8 @@ export const layoutField: BlocksField = {
   admin: {
     initCollapsed: true,
     description: {
-      en: "Add blocks to create the layout of the page. You can reorder the blocks by dragging and dropping them using the handle on the left side.",
-      es: "Agrega bloques para crear el diseño de la página. Puedes reordenar los bloques arrastrándolos y soltándolos usando la manija en el lado izquierdo.",
+      en: "Add blocks to fill the page with content. You can reorder the blocks by dragging and dropping them using the handle on the left side.",
+      es: "Agrega bloques para llenar la página con contenido. Puedes reordenar los bloques arrastrándolos y soltándolos usando la manija en el lado izquierdo.",
     },
   },
 };

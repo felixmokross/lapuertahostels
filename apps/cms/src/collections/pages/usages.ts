@@ -1,4 +1,4 @@
-import { usagesField } from "@/fields/usages";
+import { usagesField } from "@/fields/usages/config";
 import { UsagesConfig } from "@/fields/usages/types";
 
 const usagesConfig: UsagesConfig = {

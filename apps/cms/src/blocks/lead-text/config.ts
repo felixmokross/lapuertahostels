@@ -1,7 +1,7 @@
 import { Block } from "payload";
 import { elementIdField } from "@/fields/element-id";
-import { makeMoreOptionsField } from "@/fields/more-options";
-import { makeCallToActionField } from "@/fields/call-to-action";
+import { moreOptionsField } from "@/fields/more-options";
+import { callToActionField } from "@/fields/call-to-action";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
 
@@ -27,7 +27,7 @@ export const LeadTextBlock: Block = {
       required: false,
     }),
     richTextField(),
-    makeCallToActionField({ optional: true, showByDefault: false }),
-    makeMoreOptionsField(elementIdField),
+    callToActionField({ optional: true, showByDefault: false }),
+    moreOptionsField(elementIdField()),
   ],
 };

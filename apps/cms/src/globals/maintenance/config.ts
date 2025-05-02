@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload";
-import { canManageContent } from "../common/access-control";
-import { showField } from "../fields/show";
+import { canManageContent } from "../../common/access-control";
+import { showField } from "../../fields/show";
 import { textField } from "@/fields/text";
 import { adminGroup } from "@/groups";
 
@@ -31,7 +31,7 @@ export const Maintenance: GlobalConfig = {
         },
       },
       fields: [
-        showField,
+        showField(),
         textField({
           name: "message",
           label: { en: "Message", es: "Mensaje" },

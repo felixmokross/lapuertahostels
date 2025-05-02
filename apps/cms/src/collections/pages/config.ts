@@ -7,7 +7,7 @@ import {
   ValidateOptions,
 } from "payload";
 import { heroField } from "../../fields/hero";
-import { layoutField } from "../../fields/layout";
+import { contentField as contentField } from "../../fields/content";
 import { canManageContent, isAdmin } from "../../common/access-control";
 import { Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
@@ -79,14 +79,14 @@ export const Pages: CollectionConfig = {
             en: "Hero",
             es: "Héroe",
           },
-          fields: [heroField],
+          fields: [heroField()],
         },
         {
           label: {
-            en: "Layout",
-            es: "Diseño",
+            en: "Content",
+            es: "Contenido",
           },
-          fields: [layoutField],
+          fields: [contentField],
         },
         {
           label: {

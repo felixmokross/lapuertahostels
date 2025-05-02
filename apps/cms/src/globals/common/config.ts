@@ -1,8 +1,8 @@
 import { GlobalConfig } from "payload";
-import { canManageContent } from "../common/access-control";
-import { showField } from "../fields/show";
+import { canManageContent } from "../../common/access-control";
+import { showField } from "../../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
-import { SocialPlatformRowLabelProps } from "@/components/SocialPlatformRowLabel";
+import { SocialPlatformRowLabelProps } from "@/globals/common/social-platform-row-label";
 import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
 import { textField } from "@/fields/text";
@@ -81,7 +81,7 @@ export const Common: GlobalConfig = {
                 initCollapsed: true,
                 components: {
                   RowLabel: {
-                    path: "@/components/SocialPlatformRowLabel",
+                    path: "/src/globals/common/social-platform-row-label",
                     exportName: "SocialPlatformRowLabel",
                     clientProps: {
                       fallbackLabelKey: "custom:common:socialLinkRowLabel",
@@ -98,7 +98,7 @@ export const Common: GlobalConfig = {
               },
               type: "group",
               fields: [
-                showField,
+                showField(),
                 textField({
                   name: "title",
                   label: { en: "Title", es: "Título" },

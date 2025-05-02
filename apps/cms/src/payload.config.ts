@@ -3,19 +3,18 @@ import path from "path";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 
-import { Users } from "./collections/users";
-import { Maintenance } from "./globals/Maintenance";
-import { Common } from "./globals/Common";
-import { Brands } from "./collections/brands";
-import { Media } from "./collections/media";
-import { MediaCategories } from "./collections/media-categories";
-import { Links } from "./collections/links";
+import { Users } from "./collections/users/config";
+import { Maintenance } from "./globals/maintenance/config";
+import { Common } from "./globals/common/config";
+import { Brands } from "./collections/brands/config";
+import { Media } from "./collections/media/config";
+import { MediaCategories } from "./collections/media-categories/config";
 import { Config } from "./payload-types";
 import { translations } from "./translations";
 import { fileURLToPath } from "url";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { Pages } from "./collections/pages";
-import { Banners } from "./collections/banners";
+import { Pages } from "./collections/pages/config";
+import { Banners } from "./collections/banners/config";
 
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
@@ -92,7 +91,6 @@ export default buildConfig({
     Brands,
     Banners,
     Media,
-    Links,
     Redirects,
     MediaCategories,
     Users,
