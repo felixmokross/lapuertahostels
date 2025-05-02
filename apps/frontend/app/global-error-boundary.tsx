@@ -15,8 +15,8 @@ import { HeroHeadingBlock } from "./blocks/hero-heading-block";
 import { StoryBlock } from "./blocks/story-block";
 import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
-import { Maintenance } from "@lapuertahostels/payload-types";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
+import { Settings } from "@lapuertahostels/payload-types";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -28,11 +28,11 @@ export function GlobalErrorBoundary() {
   // Without rootLoaderData, we just render a fatal error screen
   if (!rootLoaderData) return <FatalErrorScreen />;
 
-  const { common, brand, allBrands, analyticsDomain, maintenance } =
+  const { common, brand, allBrands, analyticsDomain, settings } =
     rootLoaderData;
 
   if (isRouteErrorResponse(error) && error.status === 503) {
-    return <MaintenanceErrorScreen maintenance={maintenance} />;
+    return <MaintenanceErrorScreen settings={settings} />;
   }
 
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
@@ -111,12 +111,12 @@ function FatalErrorScreen() {
   );
 }
 
-function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
+function MaintenanceErrorScreen({ settings }: { settings: Settings }) {
   const { i18n } = useTranslation();
   return (
     <html lang={i18n.language} dir={i18n.dir()}>
       <head>
-        <title>{maintenance.maintenanceScreen!.message}</title>
+        <title>{settings.maintenanceScreen!.message}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
@@ -124,7 +124,7 @@ function MaintenanceErrorScreen({ maintenance }: { maintenance: Maintenance }) {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId="puerta">
-          <MaintenanceScreen {...maintenance.maintenanceScreen!} />
+          <MaintenanceScreen {...settings.maintenanceScreen!} />
           <Scripts />
         </ThemeProvider>
       </body>

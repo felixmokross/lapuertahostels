@@ -1,4 +1,4 @@
-import { getMaintenance, loadData } from "~/cms-data.server";
+import { getSettings, loadData } from "~/cms-data.server";
 import i18n from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
@@ -8,11 +8,8 @@ import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const maintenance = await getMaintenance(request, i18n.fallbackLng);
-  if (
-    maintenance.maintenanceScreen?.show &&
-    !(await isAuthenticated(request))
-  ) {
+  const settings = await getSettings(request, i18n.fallbackLng);
+  if (settings.maintenanceScreen?.show && !(await isAuthenticated(request))) {
     throw new Response(null, {
       status: 401,
       statusText: "Unauthorized",

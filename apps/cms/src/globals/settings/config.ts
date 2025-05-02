@@ -4,8 +4,11 @@ import { showField } from "../../fields/show";
 import { textField } from "@/fields/text";
 import { adminGroup } from "@/groups";
 
-export const Maintenance: GlobalConfig = {
-  slug: "maintenance",
+export const Settings: GlobalConfig = {
+  slug: "settings",
+  typescript: {
+    interface: "Settings",
+  },
   label: {
     en: "Settings",
     es: "Configuración",

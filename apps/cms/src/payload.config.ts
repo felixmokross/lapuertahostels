@@ -4,7 +4,7 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 
 import { Users } from "./collections/users/config";
-import { Maintenance } from "./globals/maintenance/config";
+import { Settings } from "./globals/settings/config";
 import { Common } from "./globals/common/config";
 import { Brands } from "./collections/brands/config";
 import { Media } from "./collections/media/config";
@@ -96,7 +96,7 @@ export default buildConfig({
     Users,
     ApiKeys,
   ],
-  globals: [Common, Maintenance],
+  globals: [Settings, Common],
   localization,
   typescript: {
     outputFile: path.resolve(dirname, "./payload-types.ts"),

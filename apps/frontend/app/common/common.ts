@@ -5,7 +5,7 @@ export function useSettings() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
   if (!rootLoaderData) throw new Error("root loader not found");
 
-  const { maintenance } = rootLoaderData;
+  const { settings } = rootLoaderData;
 
-  return maintenance;
+  return settings;
 }

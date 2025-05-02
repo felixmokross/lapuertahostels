@@ -17,7 +17,7 @@ import { BrandId } from "./brands";
 import {
   getBrands,
   getCommon,
-  getMaintenance,
+  getSettings,
   tryGetPage,
 } from "./cms-data.server";
 import { OptInLivePreview } from "./common/live-preview";
@@ -106,17 +106,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
-  const [page, allBrands, common, maintenance] = await Promise.all([
+  const [page, allBrands, common, settings] = await Promise.all([
     tryGetPage(request, toUrl(pageUrl).pathname, locale),
     getBrands(request, locale),
     getCommon(request, locale),
-    getMaintenance(request, locale),
+    getSettings(request, locale),
   ]);
 
   // If maintenance screen is not enabled, public access is authorized
   // Otherwise, check if the user is authenticated
   const isAuthorized =
-    !maintenance.maintenanceScreen?.show || (await isAuthenticated(request));
+    !settings.maintenanceScreen?.show || (await isAuthenticated(request));
 
   // retrieving the brand from `allBrands`, `page.brand` does not have the right depth
   const brandId = page
@@ -128,12 +128,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     isAuthorized,
     locale,
-    adminLocale: maintenance.maintenanceScreen?.show
+    adminLocale: settings.maintenanceScreen?.show
       ? await loadAdminLocale()
       : undefined,
     brand,
     allBrands,
-    maintenance,
+    settings,
     common,
     environment: {
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY!,
@@ -168,7 +168,7 @@ export default function App() {
   const {
     brand,
     common,
-    maintenance,
+    settings,
     analyticsDomain,
     allBrands,
     isAuthorized,
@@ -196,10 +196,10 @@ export default function App() {
         <GoogleMapsAPIProvider
           apiKey={environment.googleMapsApiKey}
           language={mapToGoogleMapsLanguage(i18n.language)}
-          region={maintenance.maps?.region || undefined}
+          region={settings.maps?.region || undefined}
         >
           <ThemeProvider brandId={brand.id as BrandId}>
-            {maintenance.maintenanceScreen?.show && isAuthorized && (
+            {settings.maintenanceScreen?.show && isAuthorized && (
               <PreviewBar adminLocale={adminLocale!} />
             )}
             <OptInLivePreview
