@@ -48,7 +48,6 @@ export const Users: CollectionConfig = {
       defaultValue: "editor",
       required: true,
       access: {
-        read: () => true,
         create: ({ req }) => isAdmin(req),
         update: ({ req }) => isAdmin(req),
       },

@@ -3,6 +3,7 @@ import { bannerUsagesField } from "./usages";
 import { callToActionField } from "@/fields/call-to-action";
 import { textField } from "@/fields/text";
 import { contentGroup } from "@/groups";
+import { canManageContent } from "@/common/access-control";
 
 export const Banners: CollectionConfig = {
   slug: "banners",
@@ -30,6 +31,11 @@ export const Banners: CollectionConfig = {
       es: "Un banner es útil para anunciar promociones o noticias importantes y puede tener un call to action. Aquí puedes crear y gestionar banners. Ve a Marcas para habilitar un banner en todas las páginas de la marca.",
     },
     group: contentGroup,
+  },
+  access: {
+    create: canManageContent,
+    update: canManageContent,
+    delete: canManageContent,
   },
   fields: [
     {

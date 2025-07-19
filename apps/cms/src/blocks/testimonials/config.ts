@@ -53,6 +53,17 @@ export const testimonialsBlock: Block = {
           },
         }),
       ],
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/src/components/row-label",
+            exportName: "RowLabel",
+            clientProps: {
+              textProp: "author",
+            },
+          },
+        },
+      },
     },
   ],
 };

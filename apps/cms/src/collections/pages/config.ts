@@ -68,7 +68,7 @@ export const Pages: CollectionConfig = {
   access: {
     create: canManageContent,
     update: canManageContent,
-    delete: ({ req }) => isAdmin(req),
+    delete: canManageContent,
   },
   fields: [
     {

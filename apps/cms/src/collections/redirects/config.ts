@@ -1,3 +1,4 @@
+import { canManageContent } from "@/common/access-control";
 import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 
@@ -18,6 +19,11 @@ export const Redirects: CollectionConfig = {
     defaultColumns: ["fromPathname", "locales", "to"],
     listSearchableFields: ["id", "fromPathname", "to.page.pathname"],
     group: adminGroup,
+  },
+  access: {
+    create: canManageContent,
+    update: canManageContent,
+    delete: canManageContent,
   },
   fields: [
     {

@@ -1,3 +1,4 @@
+import { canManageContent } from "@/common/access-control";
 import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 
@@ -16,6 +17,11 @@ export const MediaCategories: CollectionConfig = {
   defaultSort: "name",
   defaultPopulate: {
     name: true,
+  },
+  access: {
+    create: canManageContent,
+    update: canManageContent,
+    delete: canManageContent,
   },
   admin: {
     useAsTitle: "name",

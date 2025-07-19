@@ -1,4 +1,4 @@
-import { canManageContent, isAdmin } from "@/common/access-control";
+import { isAdmin } from "@/common/access-control";
 import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 
@@ -13,7 +13,6 @@ export const ApiKeys: CollectionConfig = {
     create: ({ req }) => isAdmin(req),
     update: ({ req }) => isAdmin(req),
     delete: ({ req }) => isAdmin(req),
-    admin: canManageContent,
   },
   auth: {
     disableLocalStrategy: true,
