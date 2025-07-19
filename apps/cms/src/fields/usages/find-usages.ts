@@ -40,12 +40,15 @@ export async function findUsages(
         });
 
         const collectionConfig = payload.collections[collectionSlug].config;
+        if (!collectionConfig.admin.useAsTitle) {
+          throw new Error("Collection does not have useAsTitle configured");
+        }
 
         return items.docs.flatMap((item) => {
           const title = (
             item as DataFromCollectionSlug<CollectionSlug> &
               Record<string, unknown>
-          )[collectionConfig.admin.useAsTitle] as
+          )[collectionConfig.admin.useAsTitle!] as
             | Record<string, string>
             | string;
           return findItemUsagesOnCollection(
@@ -145,7 +148,7 @@ function findItemUsagesOnCollection(
           ).map((path) => `${field.name}.${i}.${path}`),
         );
       }
-    } else if (field.type === "group") {
+    } else if (field.type === "group" && "name" in field) {
       usagePaths.push(
         ...findItemUsagesOnCollection(
           fieldType,

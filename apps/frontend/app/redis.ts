@@ -13,7 +13,6 @@ export const redis = globalThis.redis as ReturnType<typeof createClient>;
 redis.on("error", (err) => console.error("Redis Client Error", err));
 
 declare global {
-  // eslint-disable-next-line no-var
   var redis: ReturnType<typeof createClient> | undefined;
 }
 
