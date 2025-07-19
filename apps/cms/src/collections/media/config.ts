@@ -3,6 +3,7 @@ import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
 import { textareaField } from "@/fields/textarea";
 import { contentGroup } from "@/groups";
+import { canManageContent } from "@/common/access-control";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -28,6 +29,11 @@ export const Media: CollectionConfig = {
     defaultColumns: ["filename", "category", "comment", "updatedAt"],
     listSearchableFields: ["id", "filename", "comment", "alt"],
     group: contentGroup,
+  },
+  access: {
+    create: canManageContent,
+    update: canManageContent,
+    delete: canManageContent,
   },
   endpoints: [generateAltTextEndpoint],
   upload: {
