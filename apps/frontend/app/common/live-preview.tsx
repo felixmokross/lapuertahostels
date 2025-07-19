@@ -9,7 +9,8 @@ export type OptInLivePreviewProps<TData> = {
   children: (data: TData) => ReactNode;
 };
 
-export function OptInLivePreview<TData>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function OptInLivePreview<TData extends Record<string, any>>({
   children,
   path,
   data,
@@ -18,7 +19,7 @@ export function OptInLivePreview<TData>({
   const { preview } = useEnvironment();
 
   return preview === path ? (
-    <LivePreview data={data} depth={depth}>
+    <LivePreview<TData> data={data} depth={depth}>
       {children}
     </LivePreview>
   ) : (
@@ -32,9 +33,14 @@ type LivePreviewProps<TData> = {
   children: (data: TData) => ReactNode;
 };
 
-function LivePreview<T>({ data, depth, children }: LivePreviewProps<T>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function LivePreview<T extends Record<string, any>>({
+  data,
+  depth,
+  children,
+}: LivePreviewProps<T>) {
   const { payloadCmsBaseUrl } = useEnvironment();
-  const { data: livePreviewData } = useLivePreview({
+  const { data: livePreviewData } = useLivePreview<T>({
     initialData: data,
     serverURL: payloadCmsBaseUrl,
     depth,
