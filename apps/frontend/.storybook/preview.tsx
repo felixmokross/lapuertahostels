@@ -16,7 +16,6 @@ const withReactRouter: Decorator = (Story) => {
   ]);
 
   return (
-    // @ts-expect-error TypeScript requires the 'React' import for JSX to work here for some reason
     <ReactRouterStub
       hydrationData={{
         loaderData: {
@@ -32,7 +31,7 @@ const withReactRouter: Decorator = (Story) => {
               // @ts-expect-error env exists
               googleMapsApiKey: import.meta.env.STORYBOOK_GOOGLE_MAPS_API_KEY,
             },
-            common: {
+            settings: {
               maps: { mapId: "7686c4d7ba62c06", region: "CO" },
             },
           },
