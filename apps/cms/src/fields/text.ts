@@ -1,5 +1,9 @@
 import { TextField } from "payload";
 
+export function optionalTextField(config: Partial<TextField> = {}): TextField {
+  return textField({ ...config, required: false });
+}
+
 export function textField(config: Partial<TextField> = {}): TextField {
   return {
     name: "text",

@@ -12,15 +12,15 @@ import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { createInstance as createI18nInstance, i18n } from "i18next";
-import i18next, { i18nextBackendOptions } from "./i18next.server";
+import i18next from "./i18next.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
-import Backend from "i18next-fs-backend/cjs";
 import i18nConfig from "./i18n";
 import {
   getLocaleAndPageUrl,
   getRequestUrl,
   toRelativeUrl,
 } from "./common/routing";
+import { I18NextBackend } from "./i18next-backend.server";
 
 // Reject/cancel all pending promises after 5 seconds
 export const streamTimeout = 5000;
@@ -42,12 +42,12 @@ export default async function handleRequest(
 
   await i18nInstance
     .use(initReactI18next) // Tell our instance to use react-i18next
-    .use(Backend) // Setup our backend
+    .use(I18NextBackend)
     .init({
       ...i18nConfig, // spread the configuration
       lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
-      backend: i18nextBackendOptions,
+      backend: { request },
     });
 
   return isbot(request.headers.get("user-agent"))

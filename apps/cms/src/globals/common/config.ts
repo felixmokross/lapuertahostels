@@ -5,8 +5,8 @@ import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/globals/common/social-platform-row-label";
 import { descriptionField } from "@/fields/description";
 import { richTextField } from "@/fields/rich-text";
-import { textField } from "@/fields/text";
-import { textareaField } from "@/fields/textarea";
+import { optionalTextField, textField } from "@/fields/text";
+import { optionalTextareaField, textareaField } from "@/fields/textarea";
 import { linkField } from "@/fields/link";
 import { contentGroup } from "@/groups";
 
@@ -174,6 +174,174 @@ export const Common: GlobalConfig = {
               label: { en: "Heading", es: "Título" },
             }),
             richTextField(),
+          ],
+        },
+        {
+          name: "uiLabels",
+          label: {
+            en: "UI Labels",
+            es: "Etiquetas de la Interfaz de Usuario",
+          },
+          fields: [
+            {
+              name: "banner",
+              label: { en: "Banner", es: "Banner" },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "dismiss",
+                  label: { en: "Dismiss", es: "Descartar" },
+                }),
+              ],
+            },
+            {
+              name: "footer",
+              label: { en: "Footer", es: "Pie de página" },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "heading",
+                  label: { en: "Heading", es: "Título" },
+                }),
+                {
+                  name: "newsletter",
+                  label: { en: "Newsletter", es: "Boletín" },
+                  type: "group",
+                  fields: [
+                    optionalTextField({
+                      name: "emailLabel",
+                      label: {
+                        en: "Email Label",
+                        es: "Etiqueta de correo electrónico",
+                      },
+                    }),
+                  ],
+                },
+              ],
+            },
+            {
+              name: "imageViewer",
+              label: { en: "Image Viewer", es: "Visor de Imágenes" },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "previous",
+                  label: { en: "Previous", es: "Anterior" },
+                }),
+                optionalTextField({
+                  name: "next",
+                  label: { en: "Next", es: "Siguiente" },
+                }),
+                optionalTextField({
+                  name: "fullscreen",
+                  label: { en: "Full Screen", es: "Pantalla Completa" },
+                }),
+                optionalTextField({
+                  name: "exitFullscreen",
+                  label: {
+                    en: "Exit Full Screen",
+                    es: "Salir de Pantalla Completa",
+                  },
+                }),
+                optionalTextField({
+                  name: "close",
+                  label: { en: "Close", es: "Cerrar" },
+                }),
+                optionalTextField({
+                  name: "seeMoreImages_one",
+                  label: {
+                    en: "See More Images (singular)",
+                    es: "Ver Más Imágenes (singular)",
+                  },
+                  admin: {
+                    description: {
+                      en: "Use the {{count}} placeholder to display the number of images.",
+                      es: "Usa el marcador {{count}} para mostrar el número de imágenes.",
+                    },
+                  },
+                }),
+                optionalTextField({
+                  name: "seeMoreImages_other",
+                  label: {
+                    en: "See More Images (plural)",
+                    es: "Ver Más Imágenes (plural)",
+                  },
+                  admin: {
+                    description: {
+                      en: "Use the {{count}} placeholder to display the number of images.",
+                      es: "Usa el marcador {{count}} para mostrar el número de imágenes.",
+                    },
+                  },
+                }),
+              ],
+            },
+            {
+              name: "slidesBlock",
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "goToSlide",
+                  label: { en: "Go to Slide", es: "Ir a la Diapositiva" },
+                  admin: {
+                    description: {
+                      en: "Use the {{slide}} placeholder to display the slide number.",
+                      es: "Usa el marcador {{slide}} para mostrar el número de diapositiva.",
+                    },
+                  },
+                }),
+              ],
+            },
+            {
+              name: "errorBoundary",
+              label: {
+                en: "Error Boundary",
+                es: "Límite de Error",
+              },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "title",
+                  label: { en: "Title", es: "Título" },
+                }),
+                optionalTextareaField({
+                  name: "text",
+                  label: { en: "Text (HTML)", es: "Texto (HTML)" },
+                }),
+              ],
+            },
+            {
+              name: "maintenanceScreen",
+              label: {
+                en: "Maintenance Screen",
+                es: "Pantalla de Mantenimiento",
+              },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "login",
+                  label: { en: "Login", es: "Iniciar sesión" },
+                }),
+              ],
+            },
+            {
+              name: "login",
+              label: { en: "Login", es: "Iniciar sesión" },
+              type: "group",
+              fields: [
+                optionalTextField({
+                  name: "email",
+                  label: { en: "Email", es: "Correo electrónico" },
+                }),
+                optionalTextField({
+                  name: "password",
+                  label: { en: "Password", es: "Contraseña" },
+                }),
+                optionalTextField({
+                  name: "submit",
+                  label: { en: "Submit", es: "Enviar" },
+                }),
+              ],
+            },
           ],
         },
       ],
