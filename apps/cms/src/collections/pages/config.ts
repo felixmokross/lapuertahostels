@@ -8,7 +8,7 @@ import {
 } from "payload";
 import { heroField } from "../../fields/hero";
 import { contentField as contentField } from "../../fields/content";
-import { canManageContent, isAdmin } from "../../common/access-control";
+import { canManageContent } from "../../common/access-control";
 import { Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
