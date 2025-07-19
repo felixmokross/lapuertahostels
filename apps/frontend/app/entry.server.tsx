@@ -12,11 +12,10 @@ import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { createInstance as createI18nInstance, i18n } from "i18next";
-import i18next from "./i18next.server";
+import i18next, { i18nextBackendOptions } from "./i18next.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import Backend from "i18next-fs-backend/cjs";
 import i18nConfig from "./i18n";
-import { resolve } from "node:path";
 import {
   getLocaleAndPageUrl,
   getRequestUrl,
@@ -48,9 +47,7 @@ export default async function handleRequest(
       ...i18nConfig, // spread the configuration
       lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
-      backend: {
-        loadPath: resolve("./public/assets/locales/{{lng}}/{{ns}}.json"),
-      },
+      backend: i18nextBackendOptions,
     });
 
   return isbot(request.headers.get("user-agent"))
