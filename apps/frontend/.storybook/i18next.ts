@@ -9,7 +9,7 @@ await i18n.use(initReactI18next).init({
 });
 
 // Mock UI label translations for Storybook
-i18n.addResourceBundle("en", "common", {
+i18n.addResourceBundle("en", "ui-labels", {
   maintenanceScreen: {
     login: "Login",
   },

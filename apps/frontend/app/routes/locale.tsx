@@ -23,7 +23,7 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  if (!i18nConfig.supportedLngs.includes(locale)) {
+  if (!(i18nConfig.supportedLngs as string[]).includes(locale)) {
     return data(
       { message: `Unsupported locale: ${locale}` },
       { status: 400, statusText: "Bad Request" },

@@ -8,7 +8,7 @@ import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const settings = await getSettings(request, i18n.fallbackLng);
+  const settings = await getSettings(request, i18n.fallbackLng as string);
   if (settings.maintenanceScreen?.show && !(await isAuthenticated(request))) {
     throw new Response(null, {
       status: 401,
@@ -23,7 +23,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${i18n.supportedLngs
+    ${(i18n.supportedLngs as string[])
       .flatMap((l) =>
         pages.map(
           (p) => `  <url>
