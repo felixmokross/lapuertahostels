@@ -7,7 +7,7 @@
   "scripts": {
     "build": "pnpm generate:types && pnpm generate:importmap && cross-env NODE_OPTIONS=--no-deprecation next build",
     "prod-preview": "pnpm build && mv .next/static .next/standalone/.next/static && cross-env PORT=3001 node .next/standalone/server.js",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation PORT=3001 next dev",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation PORT=3001 next dev --turbopack",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "touch \"src/app/(payload)/admin/importMap.js\" && cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
