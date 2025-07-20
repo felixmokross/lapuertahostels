@@ -1,3 +1,6 @@
+import { InitOptions } from "i18next";
+import { adminResources } from "./i18n.admin-resources";
+
 export default {
   // This is the list of languages your application supports
   supportedLngs: ["en", "es", "de", "fr"],
@@ -8,7 +11,9 @@ export default {
   defaultNS: "common",
   // Disabling suspense is recommended
   react: { useSuspense: false },
-};
+  partialBundledLanguages: true,
+  resources: adminResources,
+} as InitOptions;
 
 export function getLocaleLabel(locale: string) {
   switch (locale) {

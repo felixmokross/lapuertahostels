@@ -47,7 +47,7 @@ export function MobileLocaleSwitcher({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pt-5 pb-4 text-left shadow-xl transition-all sm:my-8">
-                {i18nConfig.supportedLngs.map((locale) => (
+                {(i18nConfig.supportedLngs as string[]).map((locale) => (
                   <form
                     key={locale}
                     method="post"

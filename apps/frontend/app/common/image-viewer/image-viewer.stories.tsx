@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { ImageViewer } from "./image-viewer";
-import { allModes } from ".storybook/modes";
 
 const meta = {
   title: "common/Image Viewer",
@@ -9,13 +8,6 @@ const meta = {
   argTypes: {},
   parameters: {
     layout: "fullscreen",
-    chromatic: {
-      modes: {
-        "locale-es": allModes["locale-es"],
-        "locale-de": allModes["locale-de"],
-        "locale-fr": allModes["locale-fr"],
-      },
-    },
   },
   decorators: [
     (Story) => (

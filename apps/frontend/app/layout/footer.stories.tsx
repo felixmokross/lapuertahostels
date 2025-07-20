@@ -21,9 +21,6 @@ const meta = {
       modes: {
         "brand-aqua": allModes["brand-aqua"],
         "brand-azul": allModes["brand-azul"],
-        "locale-es": allModes["locale-es"],
-        "locale-de": allModes["locale-de"],
-        "locale-fr": allModes["locale-fr"],
       },
     },
   },

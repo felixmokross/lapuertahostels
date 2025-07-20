@@ -22,16 +22,4 @@ export const allModes = {
     brand: "azul",
     viewport: "desktop",
   },
-  "locale-es": {
-    locale: "es",
-    viewport: "desktop",
-  },
-  "locale-de": {
-    locale: "de",
-    viewport: "desktop",
-  },
-  "locale-fr": {
-    locale: "fr",
-    viewport: "desktop",
-  },
 };

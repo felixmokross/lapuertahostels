@@ -30,7 +30,7 @@ export function LocaleSwitcher({
       menuPosition="right"
       manual
     >
-      {i18nConfig.supportedLngs
+      {(i18nConfig.supportedLngs as string[])
         .filter((locale) => locale !== currentLocale)
         .map((locale) => (
           <form

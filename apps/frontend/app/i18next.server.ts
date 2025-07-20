@@ -7,8 +7,8 @@ export const localeCookie = createCookie("locale");
 
 const i18next = new RemixI18Next({
   detection: {
-    supportedLanguages: i18n.supportedLngs,
-    fallbackLanguage: i18n.fallbackLng,
+    supportedLanguages: i18n.supportedLngs as string[],
+    fallbackLanguage: i18n.fallbackLng as string,
     order: ["searchParams", "cookie", "header"],
     cookie: localeCookie,
   },

@@ -1,8 +1,0 @@
-{
-  "previewBar": {
-    "message": "<strong>Preview</strong> ‧ This website is currently in maintenance mode and not accessible publicly.",
-    "manageContent": "Manage Content…",
-    "logOut": "Log Out",
-    "versionInfo": "Version: {{ version }}"
-  }
-}
