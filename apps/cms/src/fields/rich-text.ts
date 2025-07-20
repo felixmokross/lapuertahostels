@@ -1,5 +1,11 @@
 import { RichTextField } from "payload";
 
+export function optionalRichTextField(
+  config: Partial<RichTextField> = {},
+): RichTextField {
+  return richTextField({ ...config, required: false });
+}
+
 export function richTextField(
   config: Partial<RichTextField> = {},
 ): RichTextField {

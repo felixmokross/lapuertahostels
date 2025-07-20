@@ -1,40 +1,51 @@
 import { initReactI18next } from "react-i18next";
-import i18n, { Resource } from "i18next";
-import Backend from "i18next-http-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
+import i18n from "i18next";
+import i18nextConfig from "../app/i18n";
 
-const ns = ["common", "admin"];
-const supportedLngs = ["en", "es", "de", "fr"];
-
-async function loadResources() {
-  const resources = {};
-  for (const lng of supportedLngs) {
-    resources[lng] = {};
-    for (const n of ns) {
-      // TODO this seems weird, it produces a warning by Storybook (importing from 'public')
-      // Also we can't check if the file exists – we should rethink the approach how we can load these files
-      const data = await import(`../public/assets/locales/${lng}/${n}.json`);
-      resources[lng][n] = data;
-    }
-  }
-  return resources as Resource | undefined;
-}
-
-loadResources().then((resources) =>
-  i18n
-    .use(initReactI18next)
-    .use(LanguageDetector)
-    .use(Backend)
-    .init({
-      lng: "en",
-      fallbackLng: "en",
-      defaultNS: "common",
-      ns,
-      interpolation: { escapeValue: false },
-      react: { useSuspense: false },
-      supportedLngs,
-      resources,
-    }),
-);
+i18n
+  .use(initReactI18next)
+  .init({
+    ...i18nextConfig,
+    supportedLngs: ["en", "es"],
+    partialBundledLanguages: false, // no backend in Storybook, UI label translations are mocked below
+  })
+  .then(() => {
+    // Mock UI label translations for Storybook
+    i18n.addResourceBundle("en", "ui-labels", {
+      maintenanceScreen: {
+        login: "Login",
+      },
+      banner: {
+        dismiss: "Dismiss",
+      },
+      login: {
+        email: "Email",
+        password: "Password",
+        submit: "Log In",
+      },
+      imageViewer: {
+        next: "Next",
+        seeMoreImages_one: "+{{count}} Photo",
+        fullscreen: "Full Screen",
+        close: "Close",
+        seeMoreImages_other: "+{{count}} Photos",
+        previous: "Previous",
+        exitFullscreen: "Exit Full Screen",
+      },
+      slidesBlock: {
+        goToSlide: "Go to slide {{slide}}",
+      },
+      errorBoundary: {
+        text: "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>",
+        title: "500 – Something went wrong",
+      },
+      footer: {
+        heading: "Footer",
+        newsletter: {
+          emailLabel: "Email",
+        },
+      },
+    });
+  });
 
 export default i18n;

@@ -6,6 +6,7 @@ import { ThemeProvider } from "../app/themes";
 
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { allModes } from "./modes";
+import { I18nextProvider } from "react-i18next";
 
 const withReactRouter: Decorator = (Story) => {
   const ReactRouterStub = createRoutesStub([
@@ -42,15 +43,6 @@ const withReactRouter: Decorator = (Story) => {
 };
 
 const preview: Preview = {
-  initialGlobals: {
-    locale: "en",
-    locales: {
-      en: "English",
-      es: "Español",
-      de: "Deutsch",
-      fr: "Français",
-    },
-  },
   globalTypes: {
     brand: {
       defaultValue: "puerta",
@@ -104,10 +96,12 @@ const preview: Preview = {
   },
   decorators: [
     withReactRouter,
-    (Story, { globals }) => (
-      <ThemeProvider brandId={globals.brand}>
-        <Story />
-      </ThemeProvider>
+    (Story, { globals, parameters }) => (
+      <I18nextProvider i18n={parameters.i18n}>
+        <ThemeProvider brandId={globals.brand}>
+          <Story />
+        </ThemeProvider>
+      </I18nextProvider>
     ),
   ],
 };

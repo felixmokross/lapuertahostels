@@ -16,7 +16,14 @@ import {
 
 export function richTextRoot(...children: ElementNode[]): RichTextObject {
   return {
-    root: { type: "root", children },
+    root: {
+      type: "root",
+      children,
+      version: 1,
+      format: "",
+      indent: 0,
+      direction: null,
+    },
   };
 }
 
@@ -75,7 +82,7 @@ export function unsupportedElementWithoutChildren(): ElementNode {
 }
 
 export function listitem(...children: Node[]): ElementNode {
-  return { type: "listitem", children };
+  return { type: "listitem", version: 1, children };
 }
 
 export function paragraph(
@@ -84,11 +91,13 @@ export function paragraph(
   return typeof args[0] === "number"
     ? {
         type: "paragraph",
+        version: 1,
         indent: args[0],
         children: args.slice(1) as Node[],
       }
     : {
         type: "paragraph",
+        version: 1,
         children: args as Node[],
       };
 }
@@ -97,14 +106,14 @@ export function heading(
   tag: "h4" | "h5",
   ...children: Node[]
 ): HeadingElementNode {
-  return { type: "heading", tag, children };
+  return { type: "heading", version: 1, tag, children };
 }
 
 export function list(
   tag: "ul" | "ol",
   ...children: ElementNode[]
 ): ElementNode {
-  return { type: "list", tag, children };
+  return { type: "list", version: 1, tag, children };
 }
 
 export function customUrlLink(
@@ -113,6 +122,7 @@ export function customUrlLink(
 ): LinkElementNode {
   return {
     type: "link",
+    version: 1,
     fields: { linkType: "custom", url },
     children,
   };
@@ -124,6 +134,7 @@ export function internalLink(
 ): LinkElementNode {
   return {
     type: "link",
+    version: 1,
     fields: {
       linkType: "internal",
       doc: {

@@ -8,7 +8,14 @@ export const IS_SUPERSCRIPT = 1 << 6;
 export const IS_HIGHLIGHT = 1 << 7;
 
 export type RichTextObject = {
-  root: { type: "root"; children: ElementNode[] };
+  root: {
+    type: "root";
+    children: ElementNode[];
+    direction: ("ltr" | "rtl") | null;
+    format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+    indent: number;
+    version: number;
+  };
 };
 
 export type TextNode = { type: "text"; text?: string; format: number };
@@ -24,7 +31,7 @@ export type Node = ElementNode | TextNode | LineBreakNode;
 
 export type LineBreakNode = { type: "linebreak" };
 
-type BaseElementNode = { children: Node[] };
+type BaseElementNode = { version: number; children: Node[] };
 
 export type ListItemElementNode = BaseElementNode & {
   type: "listitem";

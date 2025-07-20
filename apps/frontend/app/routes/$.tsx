@@ -3,7 +3,7 @@ import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
 import { getPageTitle } from "~/common/meta";
 import { handleIncomingRequest, handlePathname } from "~/common/routing.server";
-import i18n from "~/i18n";
+import { fallbackLng, supportedLngs } from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
   getCanonicalRequestUrl,
@@ -57,7 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       name: "og:locale",
       content: rootLoaderData.locale,
     },
-    ...i18n.supportedLngs
+    ...supportedLngs
       .filter((lng) => lng !== rootLoaderData.locale)
       .map((lng) => ({
         name: "og:locale:alternate",
@@ -194,7 +194,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
         hrefLang: locale,
       })),
       {
-        href: alternateUrlsByLocale[i18n.fallbackLng],
+        href: alternateUrlsByLocale[fallbackLng],
         hrefLang: "x-default",
       },
     ],
@@ -214,7 +214,7 @@ export default function Route() {
 async function getAlternateHrefsByLocale(request: Request, pathname: string) {
   return Object.fromEntries(
     await Promise.all(
-      i18n.supportedLngs.map(async (lng) => {
+      supportedLngs.map(async (lng) => {
         const localizedPathname = await tryGetLocalizedPathname(
           request,
           pathname,

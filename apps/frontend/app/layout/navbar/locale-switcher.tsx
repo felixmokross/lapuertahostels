@@ -1,7 +1,7 @@
 import { LanguageIcon } from "@heroicons/react/16/solid";
 import { cn } from "~/common/cn";
 import { Dropdown, DropdownButton, DropdownItem } from "~/common/dropdown";
-import i18nConfig, { getLocaleLabel } from "~/i18n";
+import { getLocaleLabel, supportedLngs } from "~/i18n";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;
@@ -30,7 +30,7 @@ export function LocaleSwitcher({
       menuPosition="right"
       manual
     >
-      {i18nConfig.supportedLngs
+      {supportedLngs
         .filter((locale) => locale !== currentLocale)
         .map((locale) => (
           <form

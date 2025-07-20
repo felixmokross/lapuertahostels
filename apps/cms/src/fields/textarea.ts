@@ -1,5 +1,10 @@
 import { TextareaField } from "payload";
 
+export function optionalTextareaField(
+  config: Partial<TextareaField> = {},
+): TextareaField {
+  return textareaField({ ...config, required: false });
+}
 export function textareaField(
   config: Partial<TextareaField> = {},
 ): TextareaField {

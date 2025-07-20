@@ -45,19 +45,17 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
               {getComponent(<BrandLogo size="small" brand={puertaBrand} />)}
             </h3>
             {!isEmptyRichText(
-              content.address as unknown as RichTextObject | undefined,
+              content?.address as RichTextObject | undefined,
             ) && (
               <p className="text-sm leading-6 text-neutral-600">
                 <RichText
-                  content={
-                    content.address as unknown as RichTextObject | undefined
-                  }
+                  content={content?.address as RichTextObject | undefined}
                   lineBreakHandling="line-break"
                 />
               </p>
             )}
             <div className="flex space-x-6">
-              {content.socialLinks?.map((socialLink) => {
+              {content?.socialLinks?.map((socialLink) => {
                 const social = socials[socialLink.platform];
                 return (
                   <PageLink
@@ -99,7 +97,7 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           </div>
         </div>
 
-        {content.newsletter && content.newsletter.show && (
+        {content?.newsletter?.show && (
           <div className="mt-16 border-t border-neutral-900/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
             <div>
               <h3 className="text-sm leading-6 font-semibold text-neutral-900">
@@ -137,14 +135,12 @@ export function Footer({ content, brand, allBrands }: FooterProps) {
           <p className="text-xs leading-5 text-neutral-500">
             &copy; {new Date().getFullYear()}
             {!isEmptyRichText(
-              content.copyright as unknown as RichTextObject | undefined,
+              content?.copyright as RichTextObject | undefined,
             ) && (
               <>
                 {" "}
                 <RichText
-                  content={
-                    content.copyright as unknown as RichTextObject | undefined
-                  }
+                  content={content?.copyright as RichTextObject | undefined}
                   lineBreakHandling="line-break"
                 />
               </>

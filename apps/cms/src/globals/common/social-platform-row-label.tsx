@@ -13,7 +13,9 @@ export function SocialPlatformRowLabel({
   fallbackLabelKey,
 }: SocialPlatformRowLabelProps) {
   const { data, rowNumber } =
-    useRowLabel<NonNullable<Common["footer"]["socialLinks"]>[number]>();
+    useRowLabel<
+      NonNullable<NonNullable<Common["footer"]>["socialLinks"]>[number]
+    >();
   const { t } = useTranslation<TranslationsObject, TranslationsKey>();
 
   // using this format to match the default behavior of the RowLabel component that is initially shown

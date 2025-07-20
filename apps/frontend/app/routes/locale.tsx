@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, data } from "react-router";
 import { localeCookie } from "~/i18next.server";
-import i18nConfig from "~/i18n";
+import { supportedLngs } from "~/i18n";
 import { toUrl } from "~/common/routing";
 import { redirectToLocalizedRoute } from "~/common/routing.server";
 
@@ -23,7 +23,7 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  if (!i18nConfig.supportedLngs.includes(locale)) {
+  if (!supportedLngs.includes(locale)) {
     return data(
       { message: `Unsupported locale: ${locale}` },
       { status: 400, statusText: "Bad Request" },

@@ -50,7 +50,7 @@ export function Banner({ message, cta }: BannerProps) {
           type="button"
           className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
         >
-          <span className="sr-only">{t("bannerDismiss")}</span>
+          <span className="sr-only">{t("banner.dismiss")}</span>
           <XMarkIcon className="h-5 w-5 text-white" aria-hidden="true" />
         </button>
       </div>
