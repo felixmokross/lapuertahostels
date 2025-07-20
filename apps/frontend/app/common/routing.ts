@@ -1,12 +1,12 @@
 import { matchPath, type Location } from "react-router";
-import i18n from "~/i18n";
+import { supportedLngs } from "~/i18n";
 
 export function getLocaleAndPageUrl(relativeUrl: string) {
   const pathname = toUrl(relativeUrl).pathname;
   const match = matchPath("/:localeCandidate/*", pathname);
 
   const localeCandidate = match?.params.localeCandidate;
-  if (!localeCandidate || !i18n.supportedLngs.includes(localeCandidate)) {
+  if (!localeCandidate || !supportedLngs.includes(localeCandidate)) {
     return { locale: undefined, pageUrl: relativeUrl };
   }
 

@@ -1,14 +1,14 @@
 import { createCookie } from "react-router";
 import { RemixI18Next } from "remix-i18next/server";
-import i18n from "~/i18n"; // your i18n configuration file
+import i18n, { fallbackLng, supportedLngs } from "~/i18n"; // your i18n configuration file
 import { I18NextBackend } from "./i18next-backend.server";
 
 export const localeCookie = createCookie("locale");
 
 const i18next = new RemixI18Next({
   detection: {
-    supportedLanguages: i18n.supportedLngs as string[],
-    fallbackLanguage: i18n.fallbackLng as string,
+    supportedLanguages: supportedLngs,
+    fallbackLanguage: fallbackLng,
     order: ["searchParams", "cookie", "header"],
     cookie: localeCookie,
   },
