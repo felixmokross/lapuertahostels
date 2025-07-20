@@ -44,7 +44,7 @@ export const socials = {
 >;
 
 type SocialPlatform = NonNullable<
-  Common["footer"]["socialLinks"]
+  NonNullable<Common["footer"]>["socialLinks"]
 >[number]["platform"];
 type Icon = ComponentType<
   React.JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>

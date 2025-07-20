@@ -17,6 +17,7 @@ import { Footer } from "./layout/footer";
 import { AnalyticsScript } from "./analytics-script";
 import { MaintenanceScreen } from "./layout/maintenance-screen";
 import { Settings } from "@lapuertahostels/payload-types";
+import { richTextRoot } from "@lapuertahostels/shared";
 
 export function GlobalErrorBoundary() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>("root");
@@ -38,9 +39,9 @@ export function GlobalErrorBoundary() {
   const isPageNotFound = isRouteErrorResponse(error) && error.status === 404;
 
   const errorPageTitle = getTitle(
-    isPageNotFound
-      ? common.pageNotFoundScreen.heading
-      : common.errorScreen.heading,
+    (isPageNotFound
+      ? common.pageNotFoundScreen?.heading
+      : common.errorScreen?.heading) || "",
     brand,
   );
 
@@ -61,18 +62,18 @@ export function GlobalErrorBoundary() {
             <HeroHeadingBlock
               blockType="HeroHeading"
               heading={
-                isPageNotFound
-                  ? common.pageNotFoundScreen.heading
-                  : common.errorScreen.heading
+                (isPageNotFound
+                  ? common.pageNotFoundScreen?.heading
+                  : common.errorScreen?.heading) || ""
               }
             />
 
             <StoryBlock
               blockType="Story"
               text={
-                isPageNotFound
-                  ? common.pageNotFoundScreen.text
-                  : common.errorScreen.text
+                (isPageNotFound
+                  ? common.pageNotFoundScreen?.text
+                  : common.errorScreen?.text) || richTextRoot()
               }
             />
           </main>

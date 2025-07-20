@@ -9,7 +9,6 @@ import {
   media,
 } from "~/common/cms-data.builders";
 import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
-import { Common } from "@lapuertahostels/payload-types";
 
 const meta = {
   title: "layout/Footer",
@@ -112,10 +111,10 @@ Calle 18 #5-66
 Santa Marta 470004
 Colombia`),
         ),
-      ) as unknown as Common["footer"]["address"],
+      ),
       copyright: richTextRoot(
         paragraph(text("La Puerta Hostels S.A.S. All rights reserved.")),
-      ) as unknown as Common["footer"]["copyright"],
+      ),
       socialLinks: [
         {
           platform: "facebook",
