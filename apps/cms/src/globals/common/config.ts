@@ -4,7 +4,7 @@ import { showField } from "../../fields/show";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/globals/common/social-platform-row-label";
 import { descriptionField } from "@/fields/description";
-import { richTextField } from "@/fields/rich-text";
+import { optionalRichTextField } from "@/fields/rich-text";
 import { optionalTextField, textField } from "@/fields/text";
 import { optionalTextareaField, textareaField } from "@/fields/textarea";
 import { linkField } from "@/fields/link";
@@ -33,14 +33,14 @@ export const Common: GlobalConfig = {
             es: "Pie de página",
           },
           fields: [
-            richTextField({
+            optionalRichTextField({
               name: "address",
               label: {
                 en: "Address",
                 es: "Dirección",
               },
             }),
-            richTextField({
+            optionalRichTextField({
               name: "copyright",
               label: {
                 en: "Copyright",
@@ -151,11 +151,11 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when a user tries to access a page that does not exist.",
               es: "Esta pantalla se muestra cuando un usuario intenta acceder a una página que no existe.",
             }),
-            textField({
+            optionalTextField({
               name: "heading",
               label: { en: "Heading", es: "Título" },
             }),
-            richTextField(),
+            optionalRichTextField(),
           ],
         },
         {
@@ -169,11 +169,11 @@ export const Common: GlobalConfig = {
               en: "This screen is shown when the server encounters an error.",
               es: "Esta pantalla se muestra cuando el servidor encuentra un error.",
             }),
-            textField({
+            optionalTextField({
               name: "heading",
               label: { en: "Heading", es: "Título" },
             }),
-            richTextField(),
+            optionalRichTextField(),
           ],
         },
         {
