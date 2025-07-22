@@ -1,12 +1,15 @@
 import { matchPath, type Location } from "react-router";
-import { supportedLngs } from "~/i18n";
+
+// Simple regex only allowing locales with language code and optional country code
+// Consider to extend if needed
+const localeRegex = /^[a-zA-Z]{2}(?:-[a-zA-Z]{2})?$/;
 
 export function getLocaleAndPageUrl(relativeUrl: string) {
   const pathname = toUrl(relativeUrl).pathname;
   const match = matchPath("/:localeCandidate/*", pathname);
 
   const localeCandidate = match?.params.localeCandidate;
-  if (!localeCandidate || !supportedLngs.includes(localeCandidate)) {
+  if (!localeCandidate || !localeRegex.test(localeCandidate)) {
     return { locale: undefined, pageUrl: relativeUrl };
   }
 

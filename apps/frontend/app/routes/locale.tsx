@@ -1,8 +1,9 @@
 import { ActionFunctionArgs, data } from "react-router";
 import { localeCookie } from "~/i18next.server";
-import { supportedLngs } from "~/i18n";
 import { toUrl } from "~/common/routing";
 import { redirectToLocalizedRoute } from "~/common/routing.server";
+import { getSettings } from "~/cms-data.server";
+import { Locale } from "@lapuertahostels/payload-types";
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== "POST") {
@@ -23,7 +24,11 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  if (!supportedLngs.includes(locale)) {
+  const publishedLocaleCodes = (
+    (await getSettings(request)).publishedLocales.publishedLocales as Locale[]
+  ).map((l) => l.locale);
+
+  if (!publishedLocaleCodes.includes(locale as Locale["locale"])) {
     return data(
       { message: `Unsupported locale: ${locale}` },
       { status: 400, statusText: "Bad Request" },

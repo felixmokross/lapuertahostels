@@ -6,17 +6,19 @@ import {
 } from "@headlessui/react";
 import { cn } from "~/common/cn";
 import { useTheme } from "~/themes";
-import { getLocaleLabel, supportedLngs } from "~/i18n";
+import { Locale } from "@lapuertahostels/payload-types";
 
 export type MobileLocaleSwitcherProps = {
   currentLocale: string;
   open: boolean;
   onClose: () => void;
   redirectTo: string;
+  publishedLocales: Pick<Locale, "locale" | "displayLabel">[];
 };
 
 export function MobileLocaleSwitcher({
   currentLocale,
+  publishedLocales,
   open,
   onClose,
   redirectTo,
@@ -47,7 +49,7 @@ export function MobileLocaleSwitcher({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel className="relative w-full max-w-sm transform overflow-hidden rounded-lg bg-white pt-5 pb-4 text-left shadow-xl transition-all sm:my-8">
-                {supportedLngs.map((locale) => (
+                {publishedLocales.map(({ locale, displayLabel }) => (
                   <form
                     key={locale}
                     method="post"
@@ -65,7 +67,7 @@ export function MobileLocaleSwitcher({
                           : theme.navButtonClassName,
                       )}
                     >
-                      {getLocaleLabel(locale)}
+                      {displayLabel}
                     </button>
                   </form>
                 ))}

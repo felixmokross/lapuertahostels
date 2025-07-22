@@ -25,6 +25,7 @@ import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
 import { editor } from "./common/editor";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { Locales } from "./collections/locales/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -95,6 +96,7 @@ export default buildConfig({
     MediaCategories,
     Users,
     ApiKeys,
+    Locales,
   ],
   globals: [Settings, Common],
   localization,

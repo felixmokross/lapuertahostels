@@ -29,5 +29,11 @@ export const Default: Story = {
   args: {
     currentLocale: "en",
     redirectTo: "/",
+    publishedLocales: [
+      { locale: "en", displayLabel: "English" },
+      { locale: "es", displayLabel: "Español" },
+      { locale: "de", displayLabel: "Deutsch" },
+      { locale: "fr", displayLabel: "Français" },
+    ],
   },
 };

@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import i18next from "~/i18next.server";
+import { createRemixI18Next } from "~/i18next.server";
 import {
   getLocaleAndPageUrl,
   toRelativeUrl,
@@ -28,7 +28,8 @@ export async function handleIncomingRequest(request: Request) {
   const { locale, pageUrl } = getLocaleAndPageUrl(toRelativeUrl(url));
 
   if (!locale) {
-    const locale = await i18next.getLocale(request);
+    const remixI18Next = await createRemixI18Next(request);
+    const locale = await remixI18Next.getLocale(request);
     await redirectToLocalizedRoute(request, url, locale);
   }
 

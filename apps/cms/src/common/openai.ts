@@ -3,7 +3,7 @@ import { TypedLocale } from "payload";
 
 export const DEFAULT_LOCALE: TypedLocale = "en";
 
-export async function generateAltText(imageUrl: string) {
+export async function generateAltText(imageUrl: string, locale: TypedLocale) {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -16,7 +16,7 @@ export async function generateAltText(imageUrl: string) {
         content: [
           {
             type: "text",
-            text: `Generate alt text for this image. Only respond with the alt text itself.`,
+            text: `Generate alt text for this image in the locale '${locale}'. Only respond with the alt text itself.`,
           },
           {
             type: "image_url",
@@ -30,7 +30,7 @@ export async function generateAltText(imageUrl: string) {
     max_completion_tokens: 300,
   });
 
-  // Extract and print the alt text
+  // Extract the alt text from the response
   const altText = response.choices[0].message.content?.trim();
   if (!altText) {
     throw new Error("No alt text was returned");

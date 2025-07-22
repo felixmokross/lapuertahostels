@@ -30,16 +30,15 @@ import {
   toRelativeUrl,
   toUrl,
 } from "./common/routing";
-import { Brand } from "@lapuertahostels/payload-types";
+import { Brand, Locale } from "@lapuertahostels/payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
 import { PreviewBar } from "./layout/preview-bar";
 import { LanguageDetector } from "remix-i18next/server";
-import i18next from "./i18next.server";
+import { createRemixI18Next } from "./i18next.server";
 import { isAuthenticated } from "./common/auth";
 import { getVersion } from "./common/version.server";
 import { APIProvider as GoogleMapsAPIProvider } from "@vis.gl/react-google-maps";
-import { mapToGoogleMapsLanguage } from "./common/google-maps";
 import { BRANDS_DEPTH } from "./cms-data";
 
 export const links: LinksFunction = () => [
@@ -144,13 +143,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
       useImageCacheBuster: false, // Cache busting is only used in Storybook for Chromatic
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
+    publishedLocales: settings.publishedLocales.publishedLocales as Locale[],
   };
 
   async function loadAdminLocale() {
+    const remixI18Next = await createRemixI18Next(request);
     // The admin should be able to test the page in any locale, but see the admin controls in their preferred locale.
     // Therefore only using header for the admin locale (unfortunately we cannot get the user's locale from Payload CMS)
     return await new LanguageDetector({
-      ...i18next["options"].detection,
+      ...remixI18Next["options"].detection,
       order: ["header"],
     }).detect(request);
   }
@@ -174,6 +175,7 @@ export default function App() {
     isAuthorized,
     adminLocale,
     environment,
+    publishedLocales,
   } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
 
@@ -195,7 +197,10 @@ export default function App() {
       <body className="bg-white text-neutral-900 antialiased">
         <GoogleMapsAPIProvider
           apiKey={environment.googleMapsApiKey}
-          language={mapToGoogleMapsLanguage(i18n.language)}
+          language={
+            publishedLocales.find((l) => l.locale === i18n.language)
+              ?.googleMapsLanguage ?? undefined
+          }
           region={settings.maps?.region || undefined}
         >
           <ThemeProvider brandId={brand.id as BrandId}>
@@ -213,6 +218,7 @@ export default function App() {
                     <Header
                       brand={brand}
                       allBrands={allBrands}
+                      publishedLocales={publishedLocales}
                       onHeightChanged={setHeaderHeight}
                     />
                   )}

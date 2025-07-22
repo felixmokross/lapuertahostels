@@ -1,14 +1,14 @@
 import { getSettings, loadData } from "~/cms-data.server";
-import { fallbackLng, supportedLngs } from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
   getCanonicalRequestUrl,
 } from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
+import { Locale } from "@lapuertahostels/payload-types";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const settings = await getSettings(request, fallbackLng);
+  const settings = await getSettings(request);
   if (settings.maintenanceScreen?.show && !(await isAuthenticated(request))) {
     throw new Response(null, {
       status: 401,
@@ -16,18 +16,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
   }
 
-  const pages = (await loadData(`pages`, "all", 0, {})).docs as {
-    pathname: Record<string, string>;
-    updatedAt: string;
-  }[];
+  const [pages] = await Promise.all([getAllPages()]);
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${supportedLngs
+    ${(settings.publishedLocales.publishedLocales as Locale[])
       .flatMap((l) =>
         pages.map(
           (p) => `  <url>
-    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l, p.pathname[l])}</loc>
+    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l.locale, p.pathname[l.locale])}</loc>
     <lastmod>${p.updatedAt.split("T")[0]}</lastmod>
   </url>`,
         ),
@@ -42,4 +39,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
       encoding: "UTF-8",
     },
   });
+}
+
+async function getAllPages() {
+  return (await loadData(`pages`, "all", 0, {})).docs as {
+    pathname: Record<string, string>;
+    updatedAt: string;
+  }[];
 }

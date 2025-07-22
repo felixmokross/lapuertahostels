@@ -1,12 +1,3 @@
-export function mapToGoogleMapsLanguage(locale: string) {
-  return {
-    en: "en",
-    es: "es-419", // Spanish (Latin America)
-    de: "de",
-    fr: "fr",
-  }[locale];
-}
-
 export type Place = {
   url: string;
   location: google.maps.LatLngLiteral;

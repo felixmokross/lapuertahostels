@@ -3,6 +3,7 @@ import { canManageContent } from "../../common/access-control";
 import { showField } from "../../fields/show";
 import { textField } from "@/fields/text";
 import { adminGroup } from "@/groups";
+import { Settings as SettingsType } from "@/payload-types";
 
 export const Settings: GlobalConfig = {
   slug: "settings",
@@ -23,6 +24,48 @@ export const Settings: GlobalConfig = {
     {
       type: "tabs",
       tabs: [
+        {
+          name: "publishedLocales",
+          label: {
+            en: "Published Locales",
+            es: "Idiomas Publicados",
+          },
+          fields: [
+            {
+              name: "publishedLocales",
+              label: { en: "Published Locales", es: "Idiomas Publicados" },
+              type: "relationship",
+              relationTo: "locales",
+              hasMany: true,
+              required: true,
+              admin: {
+                description: {
+                  en: "Select locales with completely translated content to make them available to the user on the website. To add a new locale, it must be first added to the 'Locales' collection.",
+                  es: "Selecciona los idiomas con contenido completamente traducido para hacerlos disponibles al usuario en el sitio web. Para agregar un nuevo idioma, primero debe agregarse a la colección 'Idiomas'.",
+                },
+              },
+            },
+            {
+              name: "fallbackLocale",
+              label: {
+                en: "Fallback Locale",
+                es: "Idioma predeterminado",
+              },
+              type: "relationship",
+              relationTo: "locales",
+              filterOptions: ({ siblingData }) => ({
+                id: { in: (siblingData as SettingsType).publishedLocales },
+              }),
+              required: true,
+              admin: {
+                description: {
+                  en: "The fallback locale is used when a translation is not available in the requested locale. It must be one of the published locales.",
+                  es: "El idioma predeterminado se utiliza cuando no hay una traducción disponible en el idioma solicitado. Debe ser uno de los idiomas publicados.",
+                },
+              },
+            },
+          ],
+        },
         {
           name: "maintenanceScreen",
           label: {
@@ -64,8 +107,8 @@ export const Settings: GlobalConfig = {
               maxLength: 2,
               admin: {
                 description: {
-                  en: "Enter the region code for maps, e.g. CO for Colombia. Must be two letters in uppercase. See https://developers.google.com/maps/documentation/javascript/localization#Region",
-                  es: "Ingresa el código de región para mapas, por ejemplo CO para Colombia. Debe ser de dos letras en mayúsculas. Consulta https://developers.google.com/maps/documentation/javascript/localization#Region",
+                  en: "Enter the region code for maps, e.g. CO for Colombia. Must be two letters in uppercase. See https://developers.google.com/maps/coverage#coverage-legend",
+                  es: "Ingresa el código de región para mapas, por ejemplo CO para Colombia. Debe ser de dos letras en mayúsculas. Consulta https://developers.google.com/maps/coverage#coverage-legend",
                 },
               },
             },
