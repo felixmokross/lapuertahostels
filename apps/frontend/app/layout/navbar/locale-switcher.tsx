@@ -1,18 +1,20 @@
 import { LanguageIcon } from "@heroicons/react/16/solid";
+import { Locale } from "@lapuertahostels/payload-types";
 import { cn } from "~/common/cn";
 import { Dropdown, DropdownButton, DropdownItem } from "~/common/dropdown";
-import { getLocaleLabel, supportedLngs } from "~/i18n";
 
 export type LocaleSwitcherProps = {
   currentLocale: string;
   redirectTo: string;
   className?: string;
+  publishedLocales: Pick<Locale, "locale" | "displayLabel">[];
 };
 
 export function LocaleSwitcher({
   currentLocale,
   redirectTo,
   className,
+  publishedLocales,
 }: LocaleSwitcherProps) {
   return (
     <Dropdown
@@ -24,25 +26,28 @@ export function LocaleSwitcher({
           )}
         >
           <LanguageIcon className="h-4" />
-          {getLocaleLabel(currentLocale)}
+          {
+            publishedLocales.find((l) => l.locale === currentLocale)
+              ?.displayLabel
+          }
         </DropdownButton>
       }
       menuPosition="right"
       manual
     >
-      {supportedLngs
-        .filter((locale) => locale !== currentLocale)
+      {publishedLocales
+        .filter((locale) => locale.locale !== currentLocale)
         .map((locale) => (
           <form
-            key={locale}
+            key={locale.locale}
             method="post"
             action="/locale"
             className="contents"
           >
-            <input type="hidden" name="locale" value={locale} />
+            <input type="hidden" name="locale" value={locale.locale} />
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <DropdownItem as="button" type="submit">
-              {getLocaleLabel(locale)}
+              {locale.displayLabel}
             </DropdownItem>
           </form>
         ))}

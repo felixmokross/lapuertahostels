@@ -3,7 +3,6 @@ import { OptInLivePreview } from "~/common/live-preview";
 import { Page } from "../layout/page";
 import { getPageTitle } from "~/common/meta";
 import { handleIncomingRequest, handlePathname } from "~/common/routing.server";
-import { fallbackLng, supportedLngs } from "~/i18n";
 import {
   buildLocalizedRelativeUrl,
   getCanonicalRequestUrl,
@@ -15,7 +14,8 @@ import { type loader as rootLoader } from "~/root";
 import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
 import { PAGE_DEPTH } from "~/cms-data";
-import { tryGetLocalizedPathname } from "~/cms-data.server";
+import { getSettings, tryGetLocalizedPathname } from "~/cms-data.server";
+import { Locale } from "@lapuertahostels/payload-types";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -57,7 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
       name: "og:locale",
       content: rootLoaderData.locale,
     },
-    ...supportedLngs
+    ...data.publishedLocaleCodes
       .filter((lng) => lng !== rootLoaderData.locale)
       .map((lng) => ({
         name: "og:locale:alternate",
@@ -178,23 +178,35 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }
   const dataPath = `pages/${content.id}`;
+  const settings = await getSettings(request);
+  const publishedLocaleCodes = (
+    settings.publishedLocales.publishedLocales as Locale[]
+  ).map((l) => l.locale);
   const alternateUrlsByLocale = await getAlternateHrefsByLocale(
     request,
     content.pathname,
+    publishedLocaleCodes,
   );
+
+  const fallbackLocaleCode = (
+    settings.publishedLocales.fallbackLocale as Locale
+  ).locale;
+
   return {
     origin: requestUrl.origin,
     canonicalUrl: getCanonicalRequestUrl(request).href,
     pageUrl,
     dataPath,
     content,
+    publishedLocaleCodes,
+    fallbackLocaleCode,
     alternateUrls: [
       ...Object.entries(alternateUrlsByLocale).map(([locale, href]) => ({
         href,
         hrefLang: locale,
       })),
       {
-        href: alternateUrlsByLocale[fallbackLng],
+        href: alternateUrlsByLocale[fallbackLocaleCode],
         hrefLang: "x-default",
       },
     ],
@@ -211,10 +223,14 @@ export default function Route() {
   );
 }
 
-async function getAlternateHrefsByLocale(request: Request, pathname: string) {
+async function getAlternateHrefsByLocale(
+  request: Request,
+  pathname: string,
+  publishedLocaleCodes: string[],
+) {
   return Object.fromEntries(
     await Promise.all(
-      supportedLngs.map(async (lng) => {
+      publishedLocaleCodes.map(async (lng) => {
         const localizedPathname = await tryGetLocalizedPathname(
           request,
           pathname,

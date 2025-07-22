@@ -50,7 +50,7 @@ export const translations = {
           generate: "Generate",
           generating: "Generating…",
           confirm:
-            "This will send the image to OpenAI to generate an alternative text. The text will be translated into all locales using DeepL.\n\nThe existing alternative text will be overwritten. Do you want to continue?",
+            "This will send the image to OpenAI to generate an alternative text for the current locale.\n\nThe existing alternative text will be overwritten. Do you want to continue?",
           success: "Alt text generated successfully",
           failure: "Failed to generate alt text",
           pleaseSaveYourChangesToGenerateAltText:
@@ -130,7 +130,7 @@ export const translations = {
           generate: "Generar",
           generating: "Generando…",
           confirm:
-            "Esto enviará la imagen a OpenAI para generar un texto alternativo. El texto se traducirá a todos los idiomas utilizando DeepL.\n\nEl texto alternativo existente se sobrescribirá. ¿Desea continuar?",
+            "Esto enviará la imagen a OpenAI para generar un texto alternativo para el idioma actual.\n\nEl texto alternativo existente será sobrescrito. ¿Desea continuar?",
           success: "Texto alternativo generado con éxito",
           failure: "Error al generar el texto alternativo",
           pleaseSaveYourChangesToGenerateAltText:

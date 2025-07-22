@@ -1,38 +1,18 @@
 import { LocalizationConfig } from "payload";
-
-export const locales = [
-  {
-    code: "en",
-    label: {
-      en: "English",
-      es: "Inglés",
-    },
-  },
-  {
-    code: "es",
-    label: {
-      en: "Spanish",
-      es: "Español",
-    },
-  },
-  {
-    code: "de",
-    label: {
-      en: "German",
-      es: "Alemán",
-    },
-  },
-  {
-    code: "fr",
-    label: {
-      en: "French",
-      es: "Francés",
-    },
-  },
-];
+import locales from "./locales.json";
 
 export const localization: LocalizationConfig = {
   defaultLocale: "en",
   fallback: true,
   locales,
+  filterAvailableLocales: async ({ locales, req }) => {
+    const configuredLocales = await req.payload.find({
+      collection: "locales",
+      pagination: false,
+    });
+    return configuredLocales.docs.map((configuredLocale) => ({
+      code: configuredLocale.locale,
+      label: locales.find((l) => l.code === configuredLocale.locale)!.label,
+    }));
+  },
 };

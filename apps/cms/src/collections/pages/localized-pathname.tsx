@@ -1,4 +1,4 @@
-import { locales } from "@/common/localization";
+import { Locale } from "@/payload-types";
 import { addLocalesToRequestFromData, Endpoint, PayloadRequest } from "payload";
 
 export const getLocalizedPathnameEndpoint: Endpoint = {
@@ -48,11 +48,20 @@ export async function getPagesForPathname(
   req: PayloadRequest,
   pathnameToFind: string,
 ) {
+  const settings = await req.payload.findGlobal({
+    slug: "settings",
+    req,
+    select: {
+      publishedLocales: {
+        publishedLocales: true,
+      },
+    },
+  });
   const result = await req.payload.find({
     collection: "pages",
     where: {
-      or: locales.map((l) => ({
-        [`pathname.${l.code}`]: { equals: pathnameToFind },
+      or: (settings.publishedLocales.publishedLocales as Locale[]).map((l) => ({
+        [`pathname.${l.locale}`]: { equals: pathnameToFind },
       })),
     },
     req,
