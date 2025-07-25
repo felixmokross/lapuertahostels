@@ -442,14 +442,14 @@ function TableHeaderFooterCell({
           cn(
             "tw:sticky",
             isStickyLeft && "tw:left-0",
-            isStickyTop && "tw:top-0 tw:shadow-sm",
+            isStickyTop && "tw:top-0 tw:shadow-sm tw:z-20",
             isStickyBottom && "tw:bottom-0",
           ),
-        isStickyTop && isStickyLeft && "tw:z-10",
-        isStickyBottom && isStickyLeft && "tw:z-10",
+        isStickyTop && isStickyLeft && "tw:z-30",
+        isStickyBottom && isStickyLeft && "tw:z-20",
       )}
     >
-      <div className="tw:flex tw:gap-4">{children}</div>
+      <div className="tw:flex tw:gap-4 tw:items-center">{children}</div>
     </th>
   );
 }
@@ -476,7 +476,7 @@ function TableContentCell({
         isHighlighted
           ? "tw:bg-theme-elevation-100"
           : "tw:bg-theme-elevation-50",
-        isStickyLeft && "tw:sticky tw:left-0",
+        isStickyLeft && "tw:sticky tw:left-0 tw:z-10",
       )}
     >
       {children}
