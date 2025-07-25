@@ -6,6 +6,7 @@ i18n
   .use(initReactI18next)
   .init({
     ...i18nextConfig,
+    fallbackLng: "en",
     supportedLngs: ["en", "es"],
     partialBundledLanguages: false, // no backend in Storybook, UI label translations are mocked below
   })
