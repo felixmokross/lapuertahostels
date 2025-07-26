@@ -1,7 +1,7 @@
 import { Locale } from "@/payload-types";
 import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 
-export async function up({ payload }: MigrateUpArgs): Promise<void> {
+export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   const locales: Omit<Locale, "id" | "createdAt" | "updatedAt">[] = [
     {
       locale: "en",
@@ -44,11 +44,13 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     await payload.find({
       collection: "locales",
       pagination: false,
+      req,
     })
   ).docs;
 
   await payload.updateGlobal({
     slug: "settings",
+    req,
     data: {
       publishedLocales: {
         publishedLocales: localesInDb.map((l) => l.id),
