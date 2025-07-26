@@ -1,5 +1,10 @@
 import { test as setup } from "@playwright/test";
-import { getPuertaBrand, createPuertaBrand } from "../common/cms";
+import {
+  getPuertaBrand,
+  createPuertaBrand,
+  mockUiLabelTranslations,
+  initializeLocale,
+} from "../common/cms";
 
 setup("setting up CMS", async ({}) => {
   const puertaBrand = await getPuertaBrand();
@@ -8,4 +13,7 @@ setup("setting up CMS", async ({}) => {
 
     await createPuertaBrand();
   }
+
+  await mockUiLabelTranslations();
+  await initializeLocale();
 });
