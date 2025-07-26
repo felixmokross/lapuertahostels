@@ -31,5 +31,11 @@ export const Default: Story = {
     currentLocale: "en",
     onClose: () => {},
     redirectTo: "/",
+    publishedLocales: [
+      { locale: "en", displayLabel: "English" },
+      { locale: "es", displayLabel: "Español" },
+      { locale: "de", displayLabel: "Deutsch" },
+      { locale: "fr", displayLabel: "Français" },
+    ],
   },
 };

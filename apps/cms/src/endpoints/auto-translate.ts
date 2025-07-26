@@ -1,4 +1,4 @@
-import { CollectionSlug, Endpoint, GlobalSlug } from "payload";
+import { CollectionSlug, Endpoint, GlobalSlug, TypedLocale } from "payload";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { addLocalesToRequestFromData } from "payload";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
@@ -9,7 +9,7 @@ import { JSDOM } from "jsdom";
 import { getValueByPath } from "@/common/utils";
 import { type ObjectId as ObjectIdType } from "bson";
 import { canManageContent } from "@/common/access-control";
-import { locales } from "@/common/localization";
+import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 
 export const autoTranslateEndpoint: Endpoint = {
   path: "/auto-translate",
@@ -26,7 +26,7 @@ export const autoTranslateEndpoint: Endpoint = {
     if (!req.json) throw new Error("No JSON body");
 
     const { targetLocaleCodes } = (await req.json()) as {
-      targetLocaleCodes: string[];
+      targetLocaleCodes: TypedLocale[];
     };
 
     const { ObjectId } = await import("bson");
@@ -76,8 +76,8 @@ export const autoTranslateEndpoint: Endpoint = {
 
     addLocalesToRequestFromData(req);
 
-    if (!req.locale) {
-      return new Response("Locale required", {
+    if (!req.locale || req.locale === "all") {
+      return new Response("Concrete locale required (cannot be 'all')", {
         status: 400,
         statusText: "Bad Request",
       });
@@ -95,8 +95,14 @@ export const autoTranslateEndpoint: Endpoint = {
       return new Response(null, { status: 204 });
     }
 
-    const availableTranslationLocales = locales
-      .map((l) => l.code)
+    const configuredLocales = await req.payload.find({
+      collection: "locales",
+      req,
+      pagination: false,
+    });
+
+    const availableTranslationLocales = configuredLocales.docs
+      .map((l) => l.locale)
       .filter((l) => l !== req.locale);
 
     if (
@@ -112,6 +118,8 @@ export const autoTranslateEndpoint: Endpoint = {
     console.log(`Target locales: ${targetLocaleCodes}`);
 
     const isRichText = typeof originalText !== "string";
+
+    const sourceLanguageCode = getDeepLSourceLanguageCode(req.locale);
     const promises = await Promise.allSettled(
       targetLocaleCodes.map(async (tl) => {
         try {
@@ -120,8 +128,8 @@ export const autoTranslateEndpoint: Endpoint = {
               isRichText
                 ? convertLexicalToHTML({ data: originalText })
                 : originalText,
-              req.locale!,
-              tl,
+              sourceLanguageCode,
+              getDeepLTargetLanguageCode(tl),
               isRichText,
             )
           ).text;
@@ -158,5 +166,43 @@ export const autoTranslateEndpoint: Endpoint = {
     console.log("Text translated successfully");
 
     return new Response(null, { status: 204 });
+
+    function getDeepLSourceLanguageCode(sourceLocaleCode: TypedLocale) {
+      const sourceLocale = configuredLocales.docs.find(
+        (l) => l.locale === sourceLocaleCode,
+      );
+      if (!sourceLocale) {
+        throw new Error(
+          `Source locale ${sourceLocaleCode} not found in configured locales`,
+        );
+      }
+
+      if (!sourceLocale.deeplSourceLanguage) {
+        throw new Error(
+          `Source locale ${sourceLocaleCode} does not have a DeepL source language configured`,
+        );
+      }
+
+      return sourceLocale.deeplSourceLanguage as SourceLanguageCode;
+    }
+
+    function getDeepLTargetLanguageCode(targetLocaleCode: TypedLocale) {
+      const targetLocale = configuredLocales.docs.find(
+        (l) => l.locale === targetLocaleCode,
+      );
+      if (!targetLocale) {
+        throw new Error(
+          `Target locale ${targetLocaleCode} not found in configured locales`,
+        );
+      }
+
+      if (!targetLocale.deeplSourceLanguage) {
+        throw new Error(
+          `Source locale ${targetLocaleCode} does not have a DeepL source language configured`,
+        );
+      }
+
+      return targetLocale.deeplTargetLanguage as TargetLanguageCode;
+    }
   },
 };

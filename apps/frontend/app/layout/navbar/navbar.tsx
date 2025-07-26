@@ -6,8 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
 import { Ref, RefObject, useEffect, useRef, useState } from "react";
-import { Brand } from "@lapuertahostels/payload-types";
-import { getLocaleLabel } from "~/i18n";
+import { Brand, Locale } from "@lapuertahostels/payload-types";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
 import { useLocation } from "react-router";
@@ -23,6 +22,7 @@ export type NavbarProps = {
   className?: string;
   brand: Brand;
   allBrands: Brand[];
+  publishedLocales: Pick<Locale, "locale" | "displayLabel">[];
   onHeightChanged?: (height: number) => void;
   ref?: Ref<HTMLDivElement>;
 };
@@ -32,6 +32,7 @@ const HIDE_NAVBAR_THRESHOLD = 100;
 export function Navbar({
   brand,
   allBrands,
+  publishedLocales,
   onHeightChanged,
   ref,
 }: NavbarProps) {
@@ -50,6 +51,8 @@ export function Navbar({
   const location = useLocation();
   const { pageUrl } = getLocaleAndPageUrl(toRelativeUrl(location));
   const localeSwitcherRedirectTo = buildLocalizedRelativeUrl(null, pageUrl);
+
+  const showLocaleSwitcher = publishedLocales.length > 1;
 
   return (
     <>
@@ -87,15 +90,20 @@ export function Navbar({
               </div>
               <div className="flex shrink-0 items-center justify-end gap-4">
                 <div className="hidden items-center justify-center gap-4 sm:flex xl:gap-8">
-                  <div className="hidden leading-none sm:inline-block">
-                    <LocaleSwitcher
-                      currentLocale={i18n.language}
-                      redirectTo={localeSwitcherRedirectTo}
-                    />
-                  </div>
+                  {showLocaleSwitcher && (
+                    <div className="hidden leading-none sm:inline-block">
+                      <LocaleSwitcher
+                        currentLocale={i18n.language}
+                        redirectTo={localeSwitcherRedirectTo}
+                        publishedLocales={publishedLocales}
+                      />
+                    </div>
+                  )}
                   {brand.bookCta?.show ? (
                     <>
-                      <div className="h-8 border-l border-l-neutral-300" />
+                      {showLocaleSwitcher && (
+                        <div className="h-8 border-l border-l-neutral-300" />
+                      )}
                       <BookButton cta={brand.bookCta} size="medium" />
                     </>
                   ) : null}
@@ -129,25 +137,33 @@ export function Navbar({
                   );
                 })}
               </div>
-              <div className="border-t border-neutral-200 pt-4 pb-3 sm:hidden">
-                <div className="space-y-1">
-                  <MenuItem
-                    as="button"
-                    onClick={() => setLocaleSwitcherOpen(true)}
-                    className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
-                  >
-                    <LanguageIcon className="h-5" />
-                    {getLocaleLabel(i18n.language)}
-                  </MenuItem>
+              {showLocaleSwitcher && (
+                <div className="border-t border-neutral-200 pt-4 pb-3 sm:hidden">
+                  <div className="space-y-1">
+                    <MenuItem
+                      as="button"
+                      onClick={() => setLocaleSwitcherOpen(true)}
+                      className="flex w-full items-center gap-1.5 border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-bold text-neutral-500 hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-700"
+                    >
+                      <LanguageIcon className="h-5" />
+                      {
+                        publishedLocales.find((l) => l.locale === i18n.language)
+                          ?.displayLabel
+                      }
+                    </MenuItem>
+                  </div>
                 </div>
-              </div>
+              )}
             </MenuItems>
-            <MobileLocaleSwitcher
-              currentLocale={i18n.language}
-              onClose={() => setLocaleSwitcherOpen(false)}
-              open={localeSwitcherOpen}
-              redirectTo={localeSwitcherRedirectTo}
-            />
+            {showLocaleSwitcher && (
+              <MobileLocaleSwitcher
+                currentLocale={i18n.language}
+                publishedLocales={publishedLocales}
+                onClose={() => setLocaleSwitcherOpen(false)}
+                open={localeSwitcherOpen}
+                redirectTo={localeSwitcherRedirectTo}
+              />
+            )}
           </>
         )}
       </Menu>

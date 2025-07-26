@@ -1,7 +1,13 @@
 import { createId } from "@paralleldrive/cuid2";
 import fs from "fs/promises";
 import path from "path";
-import { Brand, Media, Page } from "@lapuertahostels/payload-types";
+import {
+  Brand,
+  Locale,
+  Media,
+  Page,
+  Settings,
+} from "@lapuertahostels/payload-types";
 
 export async function createPage(data: Partial<Page> = {}) {
   const testPagePathname = `/e2e/${createId()}`;
@@ -43,8 +49,94 @@ export async function createPuertaBrand() {
   } as Omit<Brand, "updatedAt" | "createdAt">);
 }
 
+export async function mockUiLabelTranslations() {
+  await updateGlobal("common", {
+    uiLabels: {
+      maintenanceScreen: {
+        login: "Login",
+      },
+      banner: {
+        dismiss: "Dismiss",
+      },
+      login: {
+        email: "Email",
+        password: "Password",
+        submit: "Log In",
+      },
+      imageViewer: {
+        next: "Next",
+        seeMoreImages_one: "+{{count}} Photo",
+        fullscreen: "Full Screen",
+        close: "Close",
+        seeMoreImages_other: "+{{count}} Photos",
+        previous: "Previous",
+        exitFullscreen: "Exit Full Screen",
+      },
+      slidesBlock: {
+        goToSlide: "Go to slide {{slide}}",
+      },
+      errorBoundary: {
+        text: "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>",
+        title: "500 – Something went wrong",
+      },
+      footer: {
+        heading: "Footer",
+        newsletter: {
+          emailLabel: "Email",
+        },
+      },
+    },
+  });
+}
+
+export async function initializeLocale() {
+  let englishLocale = (
+    await get("locales?where[locale][equals]=en&pagination=false&limit=1")
+  ).docs[0] as Locale | undefined;
+  if (!englishLocale) {
+    englishLocale = await create("locales", {
+      locale: "en",
+      displayLabel: "English",
+      deeplSourceLanguage: "en",
+      deeplTargetLanguage: "en-US",
+      googleMapsLanguage: "en",
+    } as Locale);
+  }
+  let spanishLocale = (
+    await get("locales?where[locale][equals]=es&pagination=false&limit=1")
+  ).docs[0] as Locale | undefined;
+  if (!spanishLocale) {
+    spanishLocale = await create("locales", {
+      locale: "es",
+      displayLabel: "Español",
+      deeplSourceLanguage: "es",
+      deeplTargetLanguage: "es-419",
+      googleMapsLanguage: "es-419",
+    } as Locale);
+  }
+
+  await updateGlobal("settings", {
+    publishedLocales: {
+      publishedLocales: [englishLocale!.id, spanishLocale!.id],
+      fallbackLocale: englishLocale!.id,
+    },
+    maps: {
+      mapId: "mock-map-id",
+    },
+  } as Settings);
+}
+
 export async function create(collection: string, content: object) {
   const result = await fetchCms(collection, {
+    method: "POST",
+    body: JSON.stringify(content),
+  });
+
+  return result.doc;
+}
+
+export async function updateGlobal(globalType: string, content: object) {
+  const result = await fetchCms(`globals/${globalType}`, {
     method: "POST",
     body: JSON.stringify(content),
   });

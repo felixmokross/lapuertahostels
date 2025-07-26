@@ -12,7 +12,7 @@ import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { createInstance as createI18nInstance, i18n } from "i18next";
-import i18next from "./i18next.server";
+import { createRemixI18Next } from "./i18next.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import i18nConfig from "./i18n";
 import {
@@ -21,6 +21,8 @@ import {
   toRelativeUrl,
 } from "./common/routing";
 import { I18NextBackend } from "./i18next-backend.server";
+import { getSettings } from "./cms-data.server";
+import { Locale } from "@lapuertahostels/payload-types";
 
 // Reject/cancel all pending promises after 5 seconds
 export const streamTimeout = 5000;
@@ -37,14 +39,22 @@ export default async function handleRequest(
 ) {
   const i18nInstance = createI18nInstance() as i18n;
   const { locale } = getLocaleAndPageUrl(toRelativeUrl(getRequestUrl(request)));
+  const settings = await getSettings(request);
+  const remixI18Next = await createRemixI18Next(request);
 
-  const ns = i18next.getRouteNamespaces(reactRouterContext);
+  const ns = remixI18Next.getRouteNamespaces(reactRouterContext);
 
   await i18nInstance
     .use(initReactI18next) // Tell our instance to use react-i18next
     .use(I18NextBackend)
     .init({
       ...i18nConfig, // spread the configuration
+      // This is the language you want to use in case
+      // if the user language is not in the supportedLngs
+      fallbackLng: (settings.publishedLocales.fallbackLocale as Locale).locale,
+      supportedLngs: (
+        settings.publishedLocales.publishedLocales as Locale[]
+      ).map((l) => l.locale),
       lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
       backend: { request },

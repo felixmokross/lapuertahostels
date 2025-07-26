@@ -29,8 +29,14 @@ export function GlobalErrorBoundary() {
   // Without rootLoaderData, we just render a fatal error screen
   if (!rootLoaderData) return <FatalErrorScreen />;
 
-  const { common, brand, allBrands, analyticsDomain, settings } =
-    rootLoaderData;
+  const {
+    common,
+    brand,
+    allBrands,
+    analyticsDomain,
+    settings,
+    publishedLocales,
+  } = rootLoaderData;
 
   if (isRouteErrorResponse(error) && error.status === 503) {
     return <MaintenanceErrorScreen settings={settings} />;
@@ -57,7 +63,11 @@ export function GlobalErrorBoundary() {
       </head>
       <body className="bg-white text-neutral-900 antialiased">
         <ThemeProvider brandId="puerta">
-          <Header brand={brand} allBrands={allBrands} />
+          <Header
+            brand={brand}
+            allBrands={allBrands}
+            publishedLocales={publishedLocales}
+          />
           <main>
             <HeroHeadingBlock
               blockType="HeroHeading"

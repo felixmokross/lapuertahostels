@@ -222,17 +222,20 @@ export async function getCommon(request: Request, locale: string) {
   return common;
 }
 
-export async function getSettings(request: Request, locale: string) {
-  const maintanance = (await getData(
+export async function getSettings(
+  request: Request,
+  locale: string | null = null,
+) {
+  const settings = (await getData(
     request,
     "globals/settings",
     "globals:settings",
     locale,
     2,
   )) as Settings | null;
-  if (!maintanance) throw new Error("Could not load Settings global");
+  if (!settings) throw new Error("Could not load Settings global");
 
-  return maintanance;
+  return settings;
 }
 
 export async function getBrands(request: Request, locale: string) {

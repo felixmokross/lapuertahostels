@@ -25,6 +25,7 @@ import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
 import { editor } from "./common/editor";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { Locales } from "./collections/locales/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -95,6 +96,7 @@ export default buildConfig({
     MediaCategories,
     Users,
     ApiKeys,
+    Locales,
   ],
   globals: [Settings, Common],
   localization,
@@ -153,49 +155,6 @@ export default buildConfig({
           },
         });
       }
-
-      // mock UI label translations for e2e tests
-      await payload.updateGlobal({
-        slug: "common",
-        locale: "en",
-        data: {
-          uiLabels: {
-            maintenanceScreen: {
-              login: "Login",
-            },
-            banner: {
-              dismiss: "Dismiss",
-            },
-            login: {
-              email: "Email",
-              password: "Password",
-              submit: "Log In",
-            },
-            imageViewer: {
-              next: "Next",
-              seeMoreImages_one: "+{{count}} Photo",
-              fullscreen: "Full Screen",
-              close: "Close",
-              seeMoreImages_other: "+{{count}} Photos",
-              previous: "Previous",
-              exitFullscreen: "Exit Full Screen",
-            },
-            slidesBlock: {
-              goToSlide: "Go to slide {{slide}}",
-            },
-            errorBoundary: {
-              text: "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>",
-              title: "500 – Something went wrong",
-            },
-            footer: {
-              heading: "Footer",
-              newsletter: {
-                emailLabel: "Email",
-              },
-            },
-          },
-        },
-      });
     }
   },
 });
