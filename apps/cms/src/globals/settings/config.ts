@@ -35,7 +35,7 @@ export const Settings: GlobalConfig = {
               name: "publishedLocales",
               label: { en: "Published Locales", es: "Idiomas Publicados" },
               type: "relationship",
-              relationTo: "locales",
+              relationTo: "locale-configs",
               hasMany: true,
               required: true,
               admin: {
@@ -52,7 +52,7 @@ export const Settings: GlobalConfig = {
                 es: "Idioma predeterminado",
               },
               type: "relationship",
-              relationTo: "locales",
+              relationTo: "locale-configs",
               filterOptions: ({ siblingData }) => ({
                 id: { in: (siblingData as SettingsType).publishedLocales },
               }),

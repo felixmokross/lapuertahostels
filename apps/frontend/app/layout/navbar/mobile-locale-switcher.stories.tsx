@@ -32,10 +32,10 @@ export const Default: Story = {
     onClose: () => {},
     redirectTo: "/",
     publishedLocales: [
-      { locale: "en", displayLabel: "English" },
-      { locale: "es", displayLabel: "Español" },
-      { locale: "de", displayLabel: "Deutsch" },
-      { locale: "fr", displayLabel: "Français" },
+      { id: "en", displayLabel: "English" },
+      { id: "es", displayLabel: "Español" },
+      { id: "de", displayLabel: "Deutsch" },
+      { id: "fr", displayLabel: "Français" },
     ],
   },
 };

@@ -14,6 +14,6 @@ setup("setting up CMS", async ({}) => {
     await createPuertaBrand();
   }
 
-  await mockUiLabelTranslations();
   await initializeLocale();
+  await mockUiLabelTranslations();
 });

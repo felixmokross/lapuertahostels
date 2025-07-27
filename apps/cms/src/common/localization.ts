@@ -7,7 +7,7 @@ export const localization: LocalizationConfig = {
   locales,
   filterAvailableLocales: async ({ locales, req }) => {
     const configuredLocales = await req.payload.find({
-      collection: "locales",
+      collection: "locale-configs",
       pagination: false,
     });
     return configuredLocales.docs.map((configuredLocale) => ({

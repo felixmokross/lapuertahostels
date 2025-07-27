@@ -2,29 +2,48 @@ import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 import locales from "@/common/locales.json";
 
-export const Locales: CollectionConfig = {
-  slug: "locales",
+export const LocaleConfigs: CollectionConfig = {
+  slug: "locale-configs",
   labels: {
     singular: {
-      en: "Locale",
-      es: "Idioma",
+      en: "Locale Configuration",
+      es: "Configuración de Idioma",
     },
     plural: {
-      en: "Locales",
-      es: "Idiomas",
+      en: "Locale Configurations",
+      es: "Configuraciones de Idioma",
     },
   },
   defaultSort: "displayLabel",
   defaultPopulate: {
-    locale: true,
     displayLabel: true,
     googleMapsLanguage: true,
   },
   admin: {
-    useAsTitle: "displayLabel",
+    useAsTitle: "locale",
     group: adminGroup,
+    listSearchableFields: ["locale", "displayLabel"],
+    defaultColumns: ["locale", "displayLabel"],
+  },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        data.id = data.locale;
+      },
+    ],
   },
   fields: [
+    {
+      name: "id",
+      label: {
+        en: "ID",
+        es: "ID",
+      },
+      type: "text",
+      admin: {
+        hidden: true,
+      },
+    },
     {
       name: "locale",
       label: {
@@ -36,14 +55,12 @@ export const Locales: CollectionConfig = {
         label: Object.fromEntries(
           Object.entries(locale.label).map(([key, value]) => [
             key,
-            `${value} – ${locale.code}`,
+            `${value} (${locale.code})`,
           ]),
         ),
         value: locale.code,
       })),
       required: true,
-      unique: true,
-      index: true,
       access: {
         update: () => false,
       },
