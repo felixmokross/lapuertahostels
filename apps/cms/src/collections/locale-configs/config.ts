@@ -1,6 +1,11 @@
 import { adminGroup } from "@/groups";
 import { CollectionConfig } from "payload";
 import locales from "@/common/locales.json";
+import {
+  deeplSourceLanguageCodes,
+  deeplTargetLanguage as deeplTargetLanguageCodes,
+} from "@/common/translation";
+import { googleMapLanguageCodes } from "./google-maps-language-codes";
 
 export const LocaleConfigs: CollectionConfig = {
   slug: "locale-configs",
@@ -51,15 +56,17 @@ export const LocaleConfigs: CollectionConfig = {
         es: "Idioma",
       },
       type: "select",
-      options: locales.map((locale) => ({
-        label: Object.fromEntries(
-          Object.entries(locale.label).map(([key, value]) => [
-            key,
-            `${value} (${locale.code})`,
-          ]),
-        ),
-        value: locale.code,
-      })),
+      options: locales
+        .toSorted((a, b) => a.code.localeCompare(b.code))
+        .map((locale) => ({
+          label: Object.fromEntries(
+            Object.entries(locale.label).map(([key, value]) => [
+              key,
+              `${value} (${locale.code})`,
+            ]),
+          ),
+          value: locale.code,
+        })),
       required: true,
       access: {
         update: () => false,
@@ -86,13 +93,17 @@ export const LocaleConfigs: CollectionConfig = {
         en: "DeepL Source Language",
         es: "Idioma de Origen DeepL",
       },
-      type: "text",
-      admin: {
-        description: {
-          en: "Use a supported DeepL source language code. See https://developers.deepl.com/docs/getting-started/supported-languages#translation-source-languages.",
-          es: "Utiliza un código de idioma de origen compatible con DeepL. Consulta https://developers.deepl.com/docs/getting-started/supported-languages#translation-source-languages.",
-        },
-      },
+      type: "select",
+      options: deeplSourceLanguageCodes
+        .toSorted((a, b) => a.localeCompare(b))
+        .map((languageCode) => ({
+          label: Object.fromEntries(
+            Object.entries(
+              locales.find((l) => l.code === languageCode)!.label,
+            ).map(([key, value]) => [key, `${value} (${languageCode})`]),
+          ),
+          value: languageCode,
+        })),
     },
     {
       name: "deeplTargetLanguage",
@@ -100,13 +111,17 @@ export const LocaleConfigs: CollectionConfig = {
         en: "DeepL Target Language",
         es: "Idioma de Destino DeepL",
       },
-      type: "text",
-      admin: {
-        description: {
-          en: "Use a supported DeepL target language code. See https://developers.deepl.com/docs/getting-started/supported-languages#translation-target-languages.",
-          es: "Utiliza un código de idioma de destino compatible con DeepL. Consulta https://developers.deepl.com/docs/getting-started/supported-languages#translation-target-languages.",
-        },
-      },
+      type: "select",
+      options: deeplTargetLanguageCodes
+        .toSorted((a, b) => a.localeCompare(b))
+        .map((languageCode) => ({
+          label: Object.fromEntries(
+            Object.entries(
+              locales.find((l) => l.code === languageCode)!.label,
+            ).map(([key, value]) => [key, `${value} (${languageCode})`]),
+          ),
+          value: languageCode,
+        })),
     },
     {
       name: "googleMapsLanguage",
@@ -114,13 +129,18 @@ export const LocaleConfigs: CollectionConfig = {
         en: "Google Maps Language",
         es: "Idioma de Google Maps",
       },
-      type: "text",
-      admin: {
-        description: {
-          en: "Use a supported Google Maps language code. For English, use 'en'; for other languages, see https://developers.google.com/maps/faq#languagesupport.",
-          es: "Utiliza un código de idioma compatible con Google Maps. Para inglés, usa 'en'; para otros idiomas, consulta https://developers.google.com/maps/faq#languagesupport.",
-        },
-      },
+      type: "select",
+
+      options: googleMapLanguageCodes
+        .toSorted((a, b) => a.localeCompare(b))
+        .map((languageCode) => ({
+          label: Object.fromEntries(
+            Object.entries(
+              locales.find((l) => l.code === languageCode)!.label,
+            ).map(([key, value]) => [key, `${value} (${languageCode})`]),
+          ),
+          value: languageCode,
+        })),
     },
   ],
 };

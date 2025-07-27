@@ -362,5 +362,24 @@
   {
     "code": "ps-AF",
     "label": { "en": "Pashto (Afghanistan)", "es": "Pastún (Afganistán)" }
+  },
+  {
+    "code": "es-419",
+    "label": {
+      "en": "Spanish (Latin America)",
+      "es": "Español (Latinoamérica)"
+    }
+  },
+  {
+    "code": "zh-Hans",
+    "label": { "en": "Chinese (Simplified)", "es": "Chino (Simplificado)" }
+  },
+  {
+    "code": "zh-Hant",
+    "label": { "en": "Chinese (Traditional)", "es": "Chino (Tradicional)" }
+  },
+  {
+    "code": "nb",
+    "label": { "en": "Norwegian Bokmål", "es": "Noruego Bokmål" }
   }
 ]
