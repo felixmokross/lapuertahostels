@@ -15,7 +15,7 @@ import { toImagekitTransformationString } from "~/common/image";
 import { getAltFromMedia } from "~/common/media";
 import { PAGE_DEPTH } from "~/cms-data";
 import { getSettings, tryGetLocalizedPathname } from "~/cms-data.server";
-import { Locale } from "@lapuertahostels/payload-types";
+import { LocaleConfig } from "@lapuertahostels/payload-types";
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
   if (!data) throw new Error("No loader data");
@@ -180,8 +180,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const dataPath = `pages/${content.id}`;
   const settings = await getSettings(request);
   const publishedLocaleCodes = (
-    settings.publishedLocales.publishedLocales as Locale[]
-  ).map((l) => l.locale);
+    settings.publishedLocales.publishedLocales as LocaleConfig[]
+  ).map((l) => l.id);
   const alternateUrlsByLocale = await getAlternateHrefsByLocale(
     request,
     content.pathname,
@@ -189,8 +189,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   );
 
   const fallbackLocaleCode = (
-    settings.publishedLocales.fallbackLocale as Locale
-  ).locale;
+    settings.publishedLocales.fallbackLocale as LocaleConfig
+  ).id;
 
   return {
     origin: requestUrl.origin,

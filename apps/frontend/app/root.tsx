@@ -30,7 +30,7 @@ import {
   toRelativeUrl,
   toUrl,
 } from "./common/routing";
-import { Brand, Locale } from "@lapuertahostels/payload-types";
+import { Brand, LocaleConfig } from "@lapuertahostels/payload-types";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { AnalyticsScript } from "./analytics-script";
 import { PreviewBar } from "./layout/preview-bar";
@@ -143,7 +143,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
       useImageCacheBuster: false, // Cache busting is only used in Storybook for Chromatic
     },
     analyticsDomain: process.env.ANALYTICS_DOMAIN,
-    publishedLocales: settings.publishedLocales.publishedLocales as Locale[],
+    publishedLocales: settings.publishedLocales
+      .publishedLocales as LocaleConfig[],
   };
 
   async function loadAdminLocale() {
@@ -198,7 +199,7 @@ export default function App() {
         <GoogleMapsAPIProvider
           apiKey={environment.googleMapsApiKey}
           language={
-            publishedLocales.find((l) => l.locale === i18n.language)
+            publishedLocales.find((l) => l.id === i18n.language)
               ?.googleMapsLanguage ?? undefined
           }
           region={settings.maps?.region || undefined}

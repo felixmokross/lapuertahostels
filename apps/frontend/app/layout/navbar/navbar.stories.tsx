@@ -56,8 +56,8 @@ export const Default: Story = {
     brand: puertaBrand,
     onHeightChanged: () => {},
     publishedLocales: [
-      { locale: "en", displayLabel: "English" },
-      { locale: "es", displayLabel: "Español" },
+      { id: "en", displayLabel: "English" },
+      { id: "es", displayLabel: "Español" },
     ],
   },
 };

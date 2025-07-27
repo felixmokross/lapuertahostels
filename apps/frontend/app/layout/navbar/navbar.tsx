@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, LanguageIcon } from "@heroicons/react/20/solid";
 import { Ref, RefObject, useEffect, useRef, useState } from "react";
-import { Brand, Locale } from "@lapuertahostels/payload-types";
+import { Brand, LocaleConfig } from "@lapuertahostels/payload-types";
 import { MobileLocaleSwitcher } from "./mobile-locale-switcher";
 import { PageLink, PageLinkProps } from "~/common/page-link";
 import { useLocation } from "react-router";
@@ -22,7 +22,7 @@ export type NavbarProps = {
   className?: string;
   brand: Brand;
   allBrands: Brand[];
-  publishedLocales: Pick<Locale, "locale" | "displayLabel">[];
+  publishedLocales: Pick<LocaleConfig, "id" | "displayLabel">[];
   onHeightChanged?: (height: number) => void;
   ref?: Ref<HTMLDivElement>;
 };
@@ -147,7 +147,7 @@ export function Navbar({
                     >
                       <LanguageIcon className="h-5" />
                       {
-                        publishedLocales.find((l) => l.locale === i18n.language)
+                        publishedLocales.find((l) => l.id === i18n.language)
                           ?.displayLabel
                       }
                     </MenuItem>

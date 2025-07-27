@@ -22,7 +22,7 @@ import {
 } from "./common/routing";
 import { I18NextBackend } from "./i18next-backend.server";
 import { getSettings } from "./cms-data.server";
-import { Locale } from "@lapuertahostels/payload-types";
+import { LocaleConfig } from "@lapuertahostels/payload-types";
 
 // Reject/cancel all pending promises after 5 seconds
 export const streamTimeout = 5000;
@@ -51,10 +51,11 @@ export default async function handleRequest(
       ...i18nConfig, // spread the configuration
       // This is the language you want to use in case
       // if the user language is not in the supportedLngs
-      fallbackLng: (settings.publishedLocales.fallbackLocale as Locale).locale,
+      fallbackLng: (settings.publishedLocales.fallbackLocale as LocaleConfig)
+        .id,
       supportedLngs: (
-        settings.publishedLocales.publishedLocales as Locale[]
-      ).map((l) => l.locale),
+        settings.publishedLocales.publishedLocales as LocaleConfig[]
+      ).map((l) => l.id),
       lng: locale, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
       backend: { request },

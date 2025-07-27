@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import {
   Brand,
-  Locale,
+  LocaleConfig,
   Media,
   Page,
   Settings,
@@ -50,75 +50,81 @@ export async function createPuertaBrand() {
 }
 
 export async function mockUiLabelTranslations() {
-  await updateGlobal("common", {
-    uiLabels: {
-      maintenanceScreen: {
-        login: "Login",
-      },
-      banner: {
-        dismiss: "Dismiss",
-      },
-      login: {
-        email: "Email",
-        password: "Password",
-        submit: "Log In",
-      },
-      imageViewer: {
-        next: "Next",
-        seeMoreImages_one: "+{{count}} Photo",
-        fullscreen: "Full Screen",
-        close: "Close",
-        seeMoreImages_other: "+{{count}} Photos",
-        previous: "Previous",
-        exitFullscreen: "Exit Full Screen",
-      },
-      slidesBlock: {
-        goToSlide: "Go to slide {{slide}}",
-      },
-      errorBoundary: {
-        text: "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>",
-        title: "500 – Something went wrong",
-      },
-      footer: {
-        heading: "Footer",
-        newsletter: {
-          emailLabel: "Email",
+  await updateGlobal(
+    "common",
+    {
+      uiLabels: {
+        maintenanceScreen: {
+          login: "Login",
+        },
+        banner: {
+          dismiss: "Dismiss",
+        },
+        login: {
+          email: "Email",
+          password: "Password",
+          submit: "Log In",
+        },
+        imageViewer: {
+          next: "Next",
+          seeMoreImages_one: "+{{count}} Photo",
+          fullscreen: "Full Screen",
+          close: "Close",
+          seeMoreImages_other: "+{{count}} Photos",
+          previous: "Previous",
+          exitFullscreen: "Exit Full Screen",
+        },
+        slidesBlock: {
+          goToSlide: "Go to slide {{slide}}",
+        },
+        errorBoundary: {
+          text: "<p>Oops! Something went wrong.</p><p>This page isn’t working right now. Please try refreshing or come back a bit later.</p><p>Thank you for your understanding!</p>",
+          title: "500 – Something went wrong",
+        },
+        footer: {
+          heading: "Footer",
+          newsletter: {
+            emailLabel: "Email",
+          },
         },
       },
     },
-  });
+    "en",
+  );
 }
 
 export async function initializeLocale() {
-  let englishLocale = (
-    await get("locales?where[locale][equals]=en&pagination=false&limit=1")
-  ).docs[0] as Locale | undefined;
+  let englishLocale = (await get("locale-configs/en")) as
+    | LocaleConfig
+    | undefined;
   if (!englishLocale) {
-    englishLocale = await create("locales", {
+    await create("locale-configs", {
       locale: "en",
       displayLabel: "English",
       deeplSourceLanguage: "en",
       deeplTargetLanguage: "en-US",
       googleMapsLanguage: "en",
-    } as Locale);
+    } as Omit<LocaleConfig, "id" | "createdAt" | "updatedAt">);
   }
-  let spanishLocale = (
-    await get("locales?where[locale][equals]=es&pagination=false&limit=1")
-  ).docs[0] as Locale | undefined;
+  let spanishLocale = (await get("locale-configs/es")) as
+    | LocaleConfig
+    | undefined;
   if (!spanishLocale) {
-    spanishLocale = await create("locales", {
+    await create("locale-configs", {
       locale: "es",
       displayLabel: "Español",
       deeplSourceLanguage: "es",
       deeplTargetLanguage: "es-419",
       googleMapsLanguage: "es-419",
-    } as Locale);
+    } as Omit<LocaleConfig, "id" | "createdAt" | "updatedAt">);
   }
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   await updateGlobal("settings", {
     publishedLocales: {
-      publishedLocales: [englishLocale!.id, spanishLocale!.id],
-      fallbackLocale: englishLocale!.id,
+      publishedLocales: ["en", "es"],
+      fallbackLocale: "en",
     },
     maps: {
       mapId: "mock-map-id",
@@ -135,11 +141,18 @@ export async function create(collection: string, content: object) {
   return result.doc;
 }
 
-export async function updateGlobal(globalType: string, content: object) {
-  const result = await fetchCms(`globals/${globalType}`, {
-    method: "POST",
-    body: JSON.stringify(content),
-  });
+export async function updateGlobal(
+  globalType: string,
+  content: object,
+  locale?: string,
+) {
+  const result = await fetchCms(
+    `globals/${globalType}${locale ? `?locale=${locale}` : ""}`,
+    {
+      method: "POST",
+      body: JSON.stringify(content),
+    },
+  );
 
   return result.doc;
 }

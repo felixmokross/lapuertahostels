@@ -96,13 +96,13 @@ export const autoTranslateEndpoint: Endpoint = {
     }
 
     const configuredLocales = await req.payload.find({
-      collection: "locales",
+      collection: "locale-configs",
       req,
       pagination: false,
     });
 
     const availableTranslationLocales = configuredLocales.docs
-      .map((l) => l.locale)
+      .map((l) => l.id)
       .filter((l) => l !== req.locale);
 
     if (
@@ -169,7 +169,7 @@ export const autoTranslateEndpoint: Endpoint = {
 
     function getDeepLSourceLanguageCode(sourceLocaleCode: TypedLocale) {
       const sourceLocale = configuredLocales.docs.find(
-        (l) => l.locale === sourceLocaleCode,
+        (l) => l.id === sourceLocaleCode,
       );
       if (!sourceLocale) {
         throw new Error(
@@ -188,7 +188,7 @@ export const autoTranslateEndpoint: Endpoint = {
 
     function getDeepLTargetLanguageCode(targetLocaleCode: TypedLocale) {
       const targetLocale = configuredLocales.docs.find(
-        (l) => l.locale === targetLocaleCode,
+        (l) => l.id === targetLocaleCode,
       );
       if (!targetLocale) {
         throw new Error(

@@ -3,7 +3,7 @@ import { RemixI18Next } from "remix-i18next/server";
 import i18n from "~/i18n"; // your i18n configuration file
 import { I18NextBackend } from "./i18next-backend.server";
 import { getSettings } from "./cms-data.server";
-import { Locale } from "@lapuertahostels/payload-types";
+import { LocaleConfig } from "@lapuertahostels/payload-types";
 
 export const localeCookie = createCookie("locale");
 
@@ -12,10 +12,11 @@ export async function createRemixI18Next(request: Request) {
   return new RemixI18Next({
     detection: {
       supportedLanguages: (
-        settings.publishedLocales.publishedLocales as Locale[]
-      ).map((l) => l.locale),
-      fallbackLanguage: (settings.publishedLocales.fallbackLocale as Locale)
-        .locale,
+        settings.publishedLocales.publishedLocales as LocaleConfig[]
+      ).map((l) => l.id),
+      fallbackLanguage: (
+        settings.publishedLocales.fallbackLocale as LocaleConfig
+      ).id,
       order: ["searchParams", "cookie", "header"],
       cookie: localeCookie,
     },

@@ -1,4 +1,4 @@
-import { Brand, Locale } from "@lapuertahostels/payload-types";
+import { Brand, LocaleConfig } from "@lapuertahostels/payload-types";
 import { Banner } from "./banner";
 import { Navbar, NavbarProps } from "./navbar/navbar";
 import { isObject } from "~/common/utils";
@@ -8,7 +8,7 @@ type HeaderProps = {
   hasSession?: boolean;
   brand: Brand;
   allBrands: Brand[];
-  publishedLocales: Pick<Locale, "locale" | "displayLabel">[];
+  publishedLocales: Pick<LocaleConfig, "id" | "displayLabel">[];
 } & Pick<NavbarProps, "onHeightChanged">;
 
 export function Header({

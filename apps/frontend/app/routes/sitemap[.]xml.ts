@@ -5,7 +5,7 @@ import {
 } from "~/common/routing";
 import { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "~/common/auth";
-import { Locale } from "@lapuertahostels/payload-types";
+import { LocaleConfig } from "@lapuertahostels/payload-types";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const settings = await getSettings(request);
@@ -20,11 +20,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const content = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${(settings.publishedLocales.publishedLocales as Locale[])
+    ${(settings.publishedLocales.publishedLocales as LocaleConfig[])
       .flatMap((l) =>
         pages.map(
           (p) => `  <url>
-    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l.locale, p.pathname[l.locale])}</loc>
+    <loc>${getCanonicalRequestUrl(request).origin}${buildLocalizedRelativeUrl(l.id, p.pathname[l.id])}</loc>
     <lastmod>${p.updatedAt.split("T")[0]}</lastmod>
   </url>`,
         ),

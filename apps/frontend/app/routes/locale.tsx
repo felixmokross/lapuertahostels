@@ -3,7 +3,7 @@ import { localeCookie } from "~/i18next.server";
 import { toUrl } from "~/common/routing";
 import { redirectToLocalizedRoute } from "~/common/routing.server";
 import { getSettings } from "~/cms-data.server";
-import { Locale } from "@lapuertahostels/payload-types";
+import { LocaleConfig } from "@lapuertahostels/payload-types";
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== "POST") {
@@ -25,10 +25,11 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   const publishedLocaleCodes = (
-    (await getSettings(request)).publishedLocales.publishedLocales as Locale[]
-  ).map((l) => l.locale);
+    (await getSettings(request)).publishedLocales
+      .publishedLocales as LocaleConfig[]
+  ).map((l) => l.id);
 
-  if (!publishedLocaleCodes.includes(locale as Locale["locale"])) {
+  if (!publishedLocaleCodes.includes(locale as LocaleConfig["id"])) {
     return data(
       { message: `Unsupported locale: ${locale}` },
       { status: 400, statusText: "Bad Request" },
