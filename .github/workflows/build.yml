@@ -21,4 +21,4 @@ env:
 jobs:
   build:
     name: "Build"
-    uses: felixmokross/webplatform/.github/workflows/export/build.yml@main
+    uses: felixmokross/webplatform/.github/workflows/export.build.yml@main
