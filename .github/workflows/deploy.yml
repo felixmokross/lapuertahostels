@@ -12,7 +12,8 @@ on:
 
 jobs:
   deploy:
-    name: "Deploy version"
+    name: "Deploy"
     uses: felixmokross/webplatform/.github/workflows/export.deploy.yml@main
     with:
       environment: ${{ inputs.environment }}
+    secrets: inherit

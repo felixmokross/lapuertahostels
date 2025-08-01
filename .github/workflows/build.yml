@@ -12,12 +12,6 @@ on:
         default: false
         type: boolean
 
-env:
-  NODE_VERSION: 22
-  FLYCTL_VERSION: 0.3.95
-  FRONTEND_INTERNAL_PORT: 3000
-  CMS_INTERNAL_PORT: 3001
-
 jobs:
   build:
     name: "Build"

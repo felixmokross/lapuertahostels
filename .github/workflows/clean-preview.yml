@@ -1,0 +1,11 @@
+name: Clean Preview
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  clean-preview:
+    name: Clean Preview
+    uses: felixmokross/webplatform/.github/workflows/export.clean-preview.yml@main
+    secrets: inherit
