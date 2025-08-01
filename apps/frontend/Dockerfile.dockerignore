@@ -7,7 +7,6 @@
 !pnpm-workspace.yaml
 !.npmrc
 !/apps/frontend
-!/libs/shared
 !/libs/payload-types
 
 # These should be ignored, though

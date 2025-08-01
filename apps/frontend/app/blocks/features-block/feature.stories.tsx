@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Feature, FeatureProps } from "./feature";
 import { callToAction, media } from "~/common/cms-data.builders";
-import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "blocks/Features Block/Feature",

@@ -3,7 +3,7 @@ import { Button } from "~/common/button";
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 
 type OverlayTextBoxProps<TCta extends ElementType = ElementType> = {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | null;

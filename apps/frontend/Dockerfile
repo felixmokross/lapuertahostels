@@ -31,7 +31,6 @@ RUN pnpm --filter frontend install --prod=false --frozen-lockfile
 
 # Copy application code
 COPY --link apps/frontend apps/frontend
-COPY --link libs/shared libs/shared
 COPY --link libs/payload-types libs/payload-types
 
 # Build application

@@ -4,7 +4,7 @@ import { Heading } from "~/common/heading";
 import { LeadText } from "@lapuertahostels/payload-types";
 import { cn } from "~/common/cn";
 import { PageLink } from "~/common/page-link";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 
 export type LeadBlockProps = LeadText;
 

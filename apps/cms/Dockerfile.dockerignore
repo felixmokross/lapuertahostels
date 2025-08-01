@@ -7,7 +7,6 @@
 !pnpm-workspace.yaml
 !.npmrc
 !/apps/cms
-!/libs/shared
 
 # These should be ignored, though
 **/.next

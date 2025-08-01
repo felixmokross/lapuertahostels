@@ -18,7 +18,7 @@
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "@lapuertahostels/payload-types": "workspace:../../libs/payload-types",
-    "@lapuertahostels/shared": "workspace:../../libs/shared",
+    "@fxmk/common": "0.0.2-main.14",
     "@paralleldrive/cuid2": "^2.2.2",
     "@payloadcms/live-preview-react": "^3.48.0",
     "@react-router/node": "^7.7.0",

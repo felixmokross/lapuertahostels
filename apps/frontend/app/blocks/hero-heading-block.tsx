@@ -1,4 +1,4 @@
-import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@fxmk/common";
 import { SlideImage } from "./slides-block/slide-image";
 import { OverlayTitle, OverlayTitleProps } from "./common/overlay-title";
 import { Heading } from "~/common/heading";

@@ -18,7 +18,7 @@ import {
   unsupportedElementWithoutChildren,
   lineBreak,
   listitem,
-} from "@lapuertahostels/shared";
+} from "@fxmk/common";
 
 test("Bold text node is rendered as <strong> element.", () => {
   render(

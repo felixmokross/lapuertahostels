@@ -8,7 +8,7 @@ import {
   internalLink,
   media,
 } from "~/common/cms-data.builders";
-import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "layout/Footer",

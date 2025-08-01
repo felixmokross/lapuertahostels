@@ -1,7 +1,7 @@
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { RichTextParagraph } from "~/common/paragraph";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 import { TextWithImageItem } from "./text-with-image-item";
 import { TextColumnsWithImages } from "@lapuertahostels/payload-types";
 

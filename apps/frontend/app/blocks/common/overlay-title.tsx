@@ -2,7 +2,7 @@ import { RichTextHeading, RichTextHeadingProps } from "~/common/heading";
 import { Button } from "../../common/button";
 import { cn } from "../../common/cn";
 import { MouseEventHandler } from "react";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 import { PageLink } from "~/common/page-link";
 import { RichTextParagraph } from "~/common/paragraph";
 import { Page } from "@lapuertahostels/payload-types";

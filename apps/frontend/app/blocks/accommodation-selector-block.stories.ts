@@ -4,7 +4,7 @@ import {
   AccommodationSelectorBlockProps,
 } from "./accommodation-selector-block";
 import { brand, internalLink, media } from "~/common/cms-data.builders";
-import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@fxmk/common";
 import { createId } from "@paralleldrive/cuid2";
 
 const meta = {

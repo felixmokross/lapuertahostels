@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LeadBlockProps, LeadTextBlock } from "./lead-text-block";
 import { callToAction } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "blocks/Lead Text Block",

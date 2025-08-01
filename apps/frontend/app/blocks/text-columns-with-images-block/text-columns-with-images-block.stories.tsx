@@ -6,7 +6,7 @@ import {
 } from "./text-columns-with-images-block";
 import { callToAction, media } from "~/common/cms-data.builders";
 import { createId } from "@paralleldrive/cuid2";
-import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "blocks/Text Columns with Images Block",
