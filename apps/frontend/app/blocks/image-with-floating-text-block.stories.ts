@@ -4,7 +4,7 @@ import {
   ImageWithFloatingTextBlockProps,
 } from "./image-with-floating-text-block";
 import { allModes } from ".storybook/modes";
-import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "blocks/Image with Floating Text Block",

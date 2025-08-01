@@ -2,7 +2,7 @@ import { WideImage } from "@lapuertahostels/payload-types";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 import { OverlayTextBox } from "./common/overlay-text-box";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 
 export type WideImageBlockProps = WideImage;
 

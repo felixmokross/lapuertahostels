@@ -1,6 +1,6 @@
 import test, { expect } from "@playwright/test";
 import { getOrCreateMedia, createPage } from "../common/cms";
-import { paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { paragraph, richTextRoot, text } from "@fxmk/common";
 
 test("hero heading block", async ({ page }) => {
   const media = await getOrCreateMedia(

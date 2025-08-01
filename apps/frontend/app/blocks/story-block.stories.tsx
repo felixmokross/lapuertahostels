@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { StoryBlock, StoryBlockProps } from "./story-block";
 import { media } from "~/common/cms-data.builders";
-import { bold, paragraph, richTextRoot, text } from "@lapuertahostels/shared";
+import { bold, paragraph, richTextRoot, text } from "@fxmk/common";
 
 const meta = {
   title: "blocks/Story Block",

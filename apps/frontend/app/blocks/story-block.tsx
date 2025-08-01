@@ -1,6 +1,6 @@
 import { Heading } from "../common/heading";
 import { cn } from "../common/cn";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 import { LongFormRichText } from "~/common/long-form-rich-text";
 import { MediaImage } from "~/common/media";
 import { Story } from "@lapuertahostels/payload-types";

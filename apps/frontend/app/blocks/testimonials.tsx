@@ -1,5 +1,5 @@
 import { Testimonials } from "@lapuertahostels/payload-types";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 import { cn } from "~/common/cn";
 import { Heading } from "~/common/heading";
 import { QuoteIcon } from "~/common/icons/quote-icon";

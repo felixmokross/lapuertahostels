@@ -4,7 +4,7 @@ import { RichTextParagraph } from "~/common/paragraph";
 import { type Feature } from "./types";
 import { Heading } from "~/common/heading";
 import { Button } from "~/common/button";
-import { RichTextObject } from "@lapuertahostels/shared";
+import { RichTextObject } from "@fxmk/common";
 import { MediaImage } from "~/common/media";
 import { PageLink } from "~/common/page-link";
 
