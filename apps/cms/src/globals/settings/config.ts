@@ -40,8 +40,8 @@ export const Settings: GlobalConfig = {
               required: true,
               admin: {
                 description: {
-                  en: "Select locales with completely translated content to make them available to the user on the website. To add a new locale, it must be first added to the 'Locales' collection.",
-                  es: "Selecciona los idiomas con contenido completamente traducido para hacerlos disponibles al usuario en el sitio web. Para agregar un nuevo idioma, primero debe agregarse a la colección 'Idiomas'.",
+                  en: "Select locales with completely translated content to make them available to the user on the website. To add a new locale, it must be first added to the 'Locale Configurations' collection.",
+                  es: "Selecciona los idiomas con contenido completamente traducido para hacerlos disponibles al usuario en el sitio web. Para agregar un nuevo idioma, primero debe agregarse a la colección 'Configuraciones de Idioma'.",
                 },
               },
             },
