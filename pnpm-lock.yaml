@@ -119,8 +119,8 @@ importers:
   apps/frontend:
     dependencies:
       '@fxmk/common':
-        specifier: 0.0.2-main.14
-        version: 0.0.2-main.14
+        specifier: 0.0.2-main.15
+        version: 0.0.2-main.15
       '@headlessui/react':
         specifier: ^2.2.4
         version: 2.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -303,8 +303,8 @@ importers:
   tests/e2e:
     devDependencies:
       '@fxmk/common':
-        specifier: 0.0.2-main.14
-        version: 0.0.2-main.14
+        specifier: 0.0.2-main.15
+        version: 0.0.2-main.15
       '@lapuertahostels/payload-types':
         specifier: workspace:../../libs/payload-types
         version: link:../../libs/payload-types
@@ -1179,8 +1179,8 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fxmk/common@0.0.2-main.14':
-    resolution: {integrity: sha512-GX5D9OujmG6hc9q0seImee9IeDAzzyynORJclbvNq/4/XzmT4kWiu8TrGK192hpT3RYVavegzVSI79XErcnmVw==}
+  '@fxmk/common@0.0.2-main.15':
+    resolution: {integrity: sha512-Jfs+i/oOYzYGyzOFgoQHCLIySb1wvFT7TAhtxOGyWoEqVqFmnXFpVtAq6dXqalyVR/bcH4cNUCq6MUg6g1k4Vw==}
 
   '@fxmk/releaser@0.0.2-main.10':
     resolution: {integrity: sha512-vAlP2o9fJAyL0MFdHlBmq62poSnkhXBpPL5EWm9sfYHwnkUm7sx+69Y8IkFPXLnspqij+aHAnnwY+aFc64nTrw==}
@@ -8081,7 +8081,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fxmk/common@0.0.2-main.14': {}
+  '@fxmk/common@0.0.2-main.15': {}
 
   '@fxmk/releaser@0.0.2-main.10':
     dependencies:
