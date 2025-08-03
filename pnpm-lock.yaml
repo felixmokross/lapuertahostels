@@ -19,8 +19,8 @@ importers:
   apps/cms:
     dependencies:
       '@fxmk/cms-plugin':
-        specifier: 0.0.2-main.41
-        version: 0.0.2-main.41(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))
+        specifier: 0.0.2-main.42
+        version: 0.0.2-main.42(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))
       '@payloadcms/db-mongodb':
         specifier: ^3.49.0
         version: 3.49.0(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))
@@ -1182,11 +1182,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fxmk/cms-plugin@0.0.2-main.41':
-    resolution: {integrity: sha512-1bFvrX6q4K/qvkB1q0skgr2cR6zQaMX3XCurNQWRzz7w9whh73CRXErxzWAZb03hIcCrv7GGQiz4NG81j82RvA==}
+  '@fxmk/cms-plugin@0.0.2-main.42':
+    resolution: {integrity: sha512-Dp0yddSRoK8GI0+yAi+dG0BVq1L5QLl4wqTeaSyYGC8+rmpFgiOojhbbRV/NvIBzgxw5OfcVacyPy9sgz+n4eQ==}
     engines: {node: ^18.20.2 || >=20.9.0, pnpm: ^9 || ^10}
     peerDependencies:
-      payload: ^3.37.0
+      payload: ^3.49.0
 
   '@fxmk/common@0.0.2-main.15':
     resolution: {integrity: sha512-Jfs+i/oOYzYGyzOFgoQHCLIySb1wvFT7TAhtxOGyWoEqVqFmnXFpVtAq6dXqalyVR/bcH4cNUCq6MUg6g1k4Vw==}
@@ -8091,7 +8091,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fxmk/cms-plugin@0.0.2-main.41(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))':
+  '@fxmk/cms-plugin@0.0.2-main.42(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))':
     dependencies:
       payload: 3.49.0(graphql@16.10.0)(typescript@5.8.3)
 
