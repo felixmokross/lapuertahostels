@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload";
 import { canManageContent } from "../../common/access-control";
-import { showField } from "../../fields/show";
+import { showField } from "@fxmk/cms-plugin";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/globals/common/social-platform-row-label";
 import { descriptionField } from "@/fields/description";

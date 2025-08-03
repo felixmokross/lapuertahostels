@@ -1,5 +1,5 @@
 import { GroupField, RadioField } from "payload";
-import { showField } from "./show";
+import { showField } from "@fxmk/cms-plugin";
 import { textField } from "./text";
 import { linkField } from "./link";
 

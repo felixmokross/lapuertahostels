@@ -2,8 +2,8 @@
 
 import { cn } from "@/common/cn";
 import { SparklesIcon } from "@/common/icons";
-import { getLabelText } from "@/common/labels";
-import { Label } from "@/common/labels.client";
+import { getLabelText } from "@fxmk/cms-plugin";
+import { Label } from "@fxmk/cms-plugin/client";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
