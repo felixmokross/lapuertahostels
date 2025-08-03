@@ -1,6 +1,6 @@
 import { GroupField } from "payload";
 import { callToActionField } from "./call-to-action";
-import { showField } from "./show";
+import { showField } from "@fxmk/cms-plugin";
 import { richTextField } from "./rich-text";
 import { textField } from "./text";
 

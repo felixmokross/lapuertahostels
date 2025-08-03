@@ -8,7 +8,7 @@ import { canManageContent, isAdmin } from "../../common/access-control";
 import { imageField } from "../../fields/image";
 import { getLivePreviewUrl } from "@/common/live-preview";
 import { RowLabelProps } from "@/components/row-label";
-import { showField } from "@/fields/show";
+import { showField } from "@fxmk/cms-plugin";
 import { brandUsagesField } from "./usages";
 import { textField } from "@/fields/text";
 import { linkField } from "@/fields/link";

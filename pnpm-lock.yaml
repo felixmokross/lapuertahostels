@@ -18,6 +18,9 @@ importers:
 
   apps/cms:
     dependencies:
+      '@fxmk/cms-plugin':
+        specifier: 0.0.2-main.41
+        version: 0.0.2-main.41(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))
       '@payloadcms/db-mongodb':
         specifier: ^3.49.0
         version: 3.49.0(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))
@@ -1178,6 +1181,12 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fxmk/cms-plugin@0.0.2-main.41':
+    resolution: {integrity: sha512-1bFvrX6q4K/qvkB1q0skgr2cR6zQaMX3XCurNQWRzz7w9whh73CRXErxzWAZb03hIcCrv7GGQiz4NG81j82RvA==}
+    engines: {node: ^18.20.2 || >=20.9.0, pnpm: ^9 || ^10}
+    peerDependencies:
+      payload: ^3.37.0
 
   '@fxmk/common@0.0.2-main.15':
     resolution: {integrity: sha512-Jfs+i/oOYzYGyzOFgoQHCLIySb1wvFT7TAhtxOGyWoEqVqFmnXFpVtAq6dXqalyVR/bcH4cNUCq6MUg6g1k4Vw==}
@@ -5327,6 +5336,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch-native@1.6.6:
     resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
@@ -8080,6 +8090,10 @@ snapshots:
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fxmk/cms-plugin@0.0.2-main.41(payload@3.49.0(graphql@16.10.0)(typescript@5.8.3))':
+    dependencies:
+      payload: 3.49.0(graphql@16.10.0)(typescript@5.8.3)
 
   '@fxmk/common@0.0.2-main.15': {}
 

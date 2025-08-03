@@ -1,6 +1,6 @@
 import { GlobalConfig } from "payload";
 import { canManageContent } from "../../common/access-control";
-import { showField } from "../../fields/show";
+import { showField } from "@fxmk/cms-plugin";
 import { textField } from "@/fields/text";
 import { adminGroup } from "@/groups";
 import { Settings as SettingsType } from "@/payload-types";
