@@ -22,8 +22,7 @@ export function richTextField(
     admin: {
       ...config.admin,
       components: {
-        Label:
-          "/src/components/translations-field-label#TranslationsFieldLabel",
+        Label: "@fxmk/cms-plugin/client#TranslationsFieldLabel",
         ...config.admin?.components,
       },
     },
