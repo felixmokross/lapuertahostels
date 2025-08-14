@@ -4,7 +4,7 @@ import locales from "@/common/locales.json";
 import {
   deeplSourceLanguageCodes,
   deeplTargetLanguage as deeplTargetLanguageCodes,
-} from "@/common/translation";
+} from "@fxmk/cms-plugin";
 import { googleMapLanguageCodes } from "./google-maps-language-codes";
 
 export const LocaleConfigs: CollectionConfig = {

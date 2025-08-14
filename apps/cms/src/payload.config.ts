@@ -19,7 +19,6 @@ import { Banners } from "./collections/banners/config";
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
 import { ApiKeys } from "./collections/api-keys/config";
-import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
 import { editor } from "./common/editor";
@@ -132,7 +131,6 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL,
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
-  endpoints: [autoTranslateEndpoint],
   email: resendAdapter({
     defaultFromAddress: "no-reply@admin.lapuertahostels.co",
     defaultFromName: "La Puerta Hostels Admin",

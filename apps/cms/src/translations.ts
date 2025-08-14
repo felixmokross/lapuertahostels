@@ -25,26 +25,6 @@ export const translations = {
           alreadyExists: "There is already a page with this pathname.",
         },
       },
-      translations: {
-        translationsButtonLabel: "Translations…",
-        translationsTitle: "Translations",
-        currentLocale: "Current Locale",
-        selectLocales: "Select Locales",
-        selectLocalesDescription:
-          "Please confirm the target locales below. The text will be translated from the current locale {{ sourceLocale }} into the selected locales. The translation is powered by the machine translation service <a>DeepL</a>.",
-        selectLocalesNote:
-          "<s>Note:</s> The existing translations will be overwritten.",
-        autoTranslate: "Auto-Translate",
-        translateToSelectedLocales: "Translate to Selected Locales",
-        goToTranslation: "Go to Translation",
-        translating: "Translating…",
-        pleaseSaveYourChangesToEnableAutoTranslate:
-          "Please save your changes to enable translation.",
-        confirmAutoTranslate:
-          "This will translate the {{ sourceLocale }} text to the other locales and overwrite the other translations.\n\nDo you want to proceed?",
-        autoTranslatedSuccessfully: "Auto-translated successfully",
-        failedToAutoTranslate: "Failed to auto-translate",
-      },
       media: {
         generate: {
           generate: "Generate",
@@ -104,26 +84,6 @@ export const translations = {
           unlock: "Desbloquear",
           alreadyExists: "Ya existe una página con esta ruta.",
         },
-      },
-      translations: {
-        translationsButtonLabel: "Traducciones…",
-        translationsTitle: "Traducciones",
-        currentLocale: "Idioma actual",
-        selectLocales: "Seleccionar idiomas",
-        selectLocalesDescription:
-          "Confirme los idiomas de destino a continuación. El texto se traducirá del idioma actual {{ sourceLocale }} a los idiomas seleccionados. La traducción es proporcionada por el servicio de traducción automática <a>DeepL</a>.",
-        selectLocalesNote:
-          "<s>Nota:</s> Las traducciones existentes se sobrescribirán.",
-        autoTranslate: "Auto-traducir",
-        translateToSelectedLocales: "Traducir a los idiomas seleccionados",
-        goToTranslation: "Ir a la traducción",
-        translating: "Traduciendo…",
-        pleaseSaveYourChangesToEnableAutoTranslate:
-          "Por favor, guarde sus cambios para habilitar la traducción.",
-        confirmAutoTranslate:
-          "Esto traducirá el texto de {{ sourceLocale }} a los otros idiomas y sobrescribirá las otras traducciones.\n\n¿Desea continuar?",
-        autoTranslatedSuccessfully: "Auto-traducido con éxito",
-        failedToAutoTranslate: "Error al auto-traducir",
       },
       media: {
         generate: {
