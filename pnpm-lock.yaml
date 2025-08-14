@@ -19,8 +19,8 @@ importers:
   apps/cms:
     dependencies:
       '@fxmk/cms-plugin':
-        specifier: 0.0.2-main.51
-        version: 0.0.2-main.51(b093c18023e31aadb21c14c4356044e6)
+        specifier: 0.0.2-main.55
+        version: 0.0.2-main.55(396509515d95b6109adef7e5a36b1397)
       '@payloadcms/db-mongodb':
         specifier: ^3.50.0
         version: 3.50.0(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))
@@ -1182,13 +1182,16 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fxmk/cms-plugin@0.0.2-main.51':
-    resolution: {integrity: sha512-aUi4Qt+CSMWL6Wj3u7PztliulB3x4e19y/lLEQ8oec7oJCtadkTpm1konA8T36/ydBKY/O5l6UbCr1eLb7lU3g==}
+  '@fxmk/cms-plugin@0.0.2-main.55':
+    resolution: {integrity: sha512-hF7UecY283p4Ee6hSqHzz2W/NhhwCOxxR+R6x+Vdb8VCUIlAoa+YbpOKgu/lZlGOjtSXuXsTFOR2kWcmpix0bA==}
     engines: {node: ^18.20.2 || >=20.9.0, pnpm: ^9 || ^10}
     peerDependencies:
-      '@payloadcms/next': ^3.50.0
+      '@payloadcms/db-mongodb': 3.50.0
       '@payloadcms/richtext-lexical': ^3.50.0
+      '@payloadcms/translations': ^3.50.0
       '@payloadcms/ui': ^3.50.0
+      bson: ^6.10.4
+      jsdom: 26.1.0
       payload: ^3.50.0
       react: ^18 || ^19
       react-dom: ^18 || ^19
@@ -8096,14 +8099,20 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fxmk/cms-plugin@0.0.2-main.51(b093c18023e31aadb21c14c4356044e6)':
+  '@fxmk/cms-plugin@0.0.2-main.55(396509515d95b6109adef7e5a36b1397)':
     dependencies:
-      '@payloadcms/next': 3.50.0(@types/react@19.1.8)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.4.4(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+      '@payloadcms/db-mongodb': 3.50.0(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))
       '@payloadcms/richtext-lexical': 3.50.0(@faceless-ui/modal@3.0.0-beta.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@payloadcms/next@3.50.0(@types/react@19.1.8)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.4.4(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3))(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(yjs@13.6.23)
+      '@payloadcms/translations': 3.50.0
       '@payloadcms/ui': 3.50.0(@types/react@19.1.8)(monaco-editor@0.52.2)(next@15.4.4(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.50.0(graphql@16.10.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+      bson: 6.10.4
+      deepl-node: 1.19.0
+      jsdom: 26.1.0
       payload: 3.50.0(graphql@16.10.0)(typescript@5.8.3)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
+    transitivePeerDependencies:
+      - debug
 
   '@fxmk/common@0.0.2-main.15': {}
 
