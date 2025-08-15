@@ -17,7 +17,7 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
-    "@fxmk/cms-plugin": "0.0.2-main.56",
+    "@fxmk/cms-plugin": "0.0.2-main.60",
     "@payloadcms/db-mongodb": "^3.50.0",
     "@payloadcms/email-resend": "^3.50.0",
     "@payloadcms/next": "^3.50.0",

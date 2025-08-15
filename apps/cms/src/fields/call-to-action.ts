@@ -1,7 +1,5 @@
 import { GroupField, RadioField } from "payload";
-import { showField } from "@fxmk/cms-plugin";
-import { textField } from "./text";
-import { linkField } from "./link";
+import { showField, linkField, textField } from "@fxmk/cms-plugin";
 
 export type CallToActionFieldOptions = {
   optional?: boolean;

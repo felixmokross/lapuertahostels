@@ -1,9 +1,9 @@
 import { CollectionConfig } from "payload";
 import { generateAltTextEndpoint } from "./generate-alt-text-endpoint";
 import { mediaUsagesField } from "./usages";
-import { textareaField } from "@/fields/textarea";
 import { contentGroup } from "@/groups";
 import { canManageContent } from "@/common/access-control";
+import { textareaField } from "@fxmk/cms-plugin";
 
 export const Media: CollectionConfig = {
   slug: "media",

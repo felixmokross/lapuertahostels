@@ -1,11 +1,13 @@
 import { Block } from "payload";
 import { imageField } from "@/fields/image";
-import { moreOptionsField } from "@/fields/more-options";
-import { elementIdField } from "@/fields/element-id";
 import { RowLabelProps } from "@/components/row-label";
 import { callToActionField } from "@/fields/call-to-action";
-import { richTextField } from "@/fields/rich-text";
-import { textField } from "@/fields/text";
+import {
+  textField,
+  richTextField,
+  elementIdField,
+  moreOptionsField,
+} from "@fxmk/cms-plugin";
 
 export const TextColumnsWithImagesBlock: Block = {
   slug: "TextColumnsWithImages",

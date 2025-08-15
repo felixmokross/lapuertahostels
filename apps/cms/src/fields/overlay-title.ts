@@ -1,8 +1,7 @@
 import { GroupField, RadioField } from "payload";
-import { showField } from "@fxmk/cms-plugin";
+import { richTextField, showField } from "@fxmk/cms-plugin";
 import { ImageWithFloatingText } from "@/payload-types";
 import { callToActionField } from "./call-to-action";
-import { richTextField } from "./rich-text";
 
 type OverlayTitleFieldOptions = {
   optional?: boolean;
