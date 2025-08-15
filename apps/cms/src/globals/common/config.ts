@@ -1,13 +1,17 @@
 import { GlobalConfig } from "payload";
 import { canManageContent } from "../../common/access-control";
-import { showField } from "../../fields/show";
+import {
+  descriptionField,
+  linkField,
+  optionalRichTextField,
+  optionalTextareaField,
+  optionalTextField,
+  showField,
+  textareaField,
+  textField,
+} from "@fxmk/cms-plugin";
 import { socialPlatformOptions } from "@/common/social-platforms";
 import { SocialPlatformRowLabelProps } from "@/globals/common/social-platform-row-label";
-import { descriptionField } from "@/fields/description";
-import { optionalRichTextField } from "@/fields/rich-text";
-import { optionalTextField, textField } from "@/fields/text";
-import { optionalTextareaField, textareaField } from "@/fields/textarea";
-import { linkField } from "@/fields/link";
 import { contentGroup } from "@/groups";
 
 export const Common: GlobalConfig = {

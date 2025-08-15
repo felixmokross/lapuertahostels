@@ -1,9 +1,9 @@
 import { CollectionConfig } from "payload";
 import { bannerUsagesField } from "./usages";
 import { callToActionField } from "@/fields/call-to-action";
-import { textField } from "@/fields/text";
 import { contentGroup } from "@/groups";
 import { canManageContent } from "@/common/access-control";
+import { textField } from "@fxmk/cms-plugin";
 
 export const Banners: CollectionConfig = {
   slug: "banners",

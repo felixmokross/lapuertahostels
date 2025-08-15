@@ -19,13 +19,12 @@ import { Banners } from "./collections/banners/config";
 import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
 import { ApiKeys } from "./collections/api-keys/config";
-import { translationsEndpoint } from "./endpoints/translations";
-import { autoTranslateEndpoint } from "./endpoints/auto-translate";
 import { Redirects } from "./collections/redirects/config";
 import { localization } from "./common/localization";
 import { editor } from "./common/editor";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { LocaleConfigs } from "./collections/locale-configs/config";
+import { cmsPlugin } from "@fxmk/cms-plugin";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -121,6 +120,7 @@ export default buildConfig({
         region: process.env.MEDIA_S3_REGION!,
       },
     }),
+    cmsPlugin({}),
   ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
@@ -131,7 +131,6 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL,
   csrf: process.env.LIVE_PREVIEW_URL ? [process.env.LIVE_PREVIEW_URL] : [],
   i18n: { supportedLanguages: { en, es }, translations },
-  endpoints: [translationsEndpoint, autoTranslateEndpoint],
   email: resendAdapter({
     defaultFromAddress: "no-reply@admin.lapuertahostels.co",
     defaultFromName: "La Puerta Hostels Admin",

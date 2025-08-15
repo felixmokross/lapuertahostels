@@ -1,4 +1,4 @@
-import { descriptionField } from "@/fields/description";
+import { descriptionField } from "@fxmk/cms-plugin";
 import { Block } from "payload";
 
 export const SeparatorBlock: Block = {

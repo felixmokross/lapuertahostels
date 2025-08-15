@@ -12,17 +12,15 @@ import { canManageContent } from "../../common/access-control";
 import { Page } from "@/payload-types";
 import { TFunction } from "@payloadcms/translations";
 import { TranslationsKey } from "@/translations";
-import { descriptionField } from "@/fields/description";
 import { pageUsagesField } from "./usages";
 import { getLivePreviewUrl } from "@/common/live-preview";
-import { textareaField } from "@/fields/textarea";
-import { textField } from "@/fields/text";
 import { text } from "payload/shared";
 import {
   getLocalizedPathnameEndpoint,
   getPagesForPathname,
 } from "./localized-pathname";
 import { contentGroup } from "@/groups";
+import { descriptionField, textareaField, textField } from "@fxmk/cms-plugin";
 
 export const Pages: CollectionConfig = {
   slug: "pages",

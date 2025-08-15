@@ -1,8 +1,6 @@
 import { GroupField } from "payload";
 import { callToActionField } from "./call-to-action";
-import { showField } from "./show";
-import { richTextField } from "./rich-text";
-import { textField } from "./text";
+import { richTextField, showField, textField } from "@fxmk/cms-plugin";
 
 const configuredCallToActionField = callToActionField({
   optional: true,

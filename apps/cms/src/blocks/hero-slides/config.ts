@@ -1,9 +1,8 @@
-import { moreOptionsField } from "@/fields/more-options";
 import { imageField } from "@/fields/image";
 import { overlayTitleField } from "@/fields/overlay-title";
 import { Block } from "payload";
 import { RowLabelProps } from "@/components/row-label";
-import { textField } from "@/fields/text";
+import { textField, moreOptionsField } from "@fxmk/cms-plugin";
 
 export const HeroSlidesBlock: Block = {
   slug: "HeroSlides",

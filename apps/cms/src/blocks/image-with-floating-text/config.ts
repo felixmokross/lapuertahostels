@@ -1,9 +1,11 @@
 import { Block } from "payload";
-import { elementIdField } from "../../fields/element-id";
-import { moreOptionsField } from "../../fields/more-options";
 import { imageField } from "../../fields/image";
 import { overlayTitleField } from "@/fields/overlay-title";
-import { richTextField } from "@/fields/rich-text";
+import {
+  richTextField,
+  moreOptionsField,
+  elementIdField,
+} from "@fxmk/cms-plugin";
 
 export const ImageWithFloatingTextBlock: Block = {
   slug: "ImageWithFloatingText",

@@ -18,7 +18,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 import { createHeadlessEditor } from "@payloadcms/richtext-lexical/lexical/headless";
 import payloadConfig from "@/payload.config";
-import { queryStringAndFragmentField } from "@/fields/link";
+import { queryStringAndFragmentField } from "@fxmk/cms-plugin";
 
 const features = [
   BoldFeature(),

@@ -1,7 +1,6 @@
 import { Block } from "payload";
 import { imageField } from "@/fields/image";
-import { descriptionField } from "@/fields/description";
-import { textField } from "@/fields/text";
+import { descriptionField, textField } from "@fxmk/cms-plugin";
 
 const optionalImageField = imageField({ required: false });
 

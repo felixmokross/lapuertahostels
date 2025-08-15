@@ -1,6 +1,4 @@
-import { richTextField } from "@/fields/rich-text";
-import { textField } from "@/fields/text";
-import { textareaField } from "@/fields/textarea";
+import { richTextField, textareaField, textField } from "@fxmk/cms-plugin";
 import { Block } from "payload";
 
 export const testimonialsBlock: Block = {

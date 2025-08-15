@@ -2,8 +2,7 @@ import { Block } from "payload";
 import { imageField } from "@/fields/image";
 import { RowLabelProps } from "@/components/row-label";
 import { callToActionField } from "@/fields/call-to-action";
-import { richTextField } from "@/fields/rich-text";
-import { textField } from "@/fields/text";
+import { textField, richTextField } from "@fxmk/cms-plugin";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",

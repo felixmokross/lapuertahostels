@@ -1,6 +1,5 @@
-import { elementIdField } from "@/fields/element-id";
-import { moreOptionsField } from "@/fields/more-options";
 import { overlayTextBoxField } from "@/fields/overlay-text-box";
+import { moreOptionsField, elementIdField } from "@fxmk/cms-plugin";
 import { Block } from "payload";
 
 export const MapBlock: Block = {

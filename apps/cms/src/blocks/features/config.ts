@@ -1,11 +1,13 @@
 import { Block } from "payload";
-import { moreOptionsField } from "@/fields/more-options";
-import { elementIdField } from "@/fields/element-id";
 import { imageField } from "@/fields/image";
 import { RowLabelProps } from "@/components/row-label";
 import { callToActionField } from "@/fields/call-to-action";
-import { richTextField } from "@/fields/rich-text";
-import { textField } from "@/fields/text";
+import {
+  textField,
+  richTextField,
+  moreOptionsField,
+  elementIdField,
+} from "@fxmk/cms-plugin";
 
 export const FeaturesBlock: Block = {
   slug: "Features",
