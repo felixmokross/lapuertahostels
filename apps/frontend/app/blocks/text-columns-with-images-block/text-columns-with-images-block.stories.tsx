@@ -34,7 +34,7 @@ export const Default: Story = {
     items: [
       {
         id: createId(),
-        image: media("_DSC0299.jpg"),
+        image: media("_DSC0320.jpg"),
         heading: "Example Heading",
         text: richTextRoot(
           paragraph(

@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 export const ImageLeft: Story = {
   args: {
     orientation: "image-left",
-    image: media("_DSC0299.jpg"),
+    image: media("_DSC0320.jpg"),
     heading: "Beautiful Rooms",
     text: richTextRoot(
       paragraph(
