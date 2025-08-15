@@ -420,7 +420,7 @@ export const Azul: Story = {
           seoPageHeading: "La Puerta Azul",
           slides: [
             {
-              image: media("10.jpg"),
+              image: media("DSC01636.jpg"),
               imageAlignment: "bottom",
               overlayTitle: {
                 show: true,
@@ -437,7 +437,7 @@ export const Azul: Story = {
               },
             },
             {
-              image: media("10.jpg"),
+              image: media("DSC01643.jpg"),
               overlayTitle: {
                 show: true,
                 text: richTextRoot(
