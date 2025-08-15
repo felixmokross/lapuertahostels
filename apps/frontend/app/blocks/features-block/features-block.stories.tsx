@@ -34,7 +34,7 @@ export const Default: Story = {
         ) as unknown as FeaturesBlockProps["items"][number]["text"],
       },
       {
-        image: media("_DSC0299.jpg"),
+        image: media("_DSC0320.jpg"),
         heading: "Cool Down in the Pool",
         text: richTextRoot(
           paragraph(
@@ -47,7 +47,7 @@ export const Default: Story = {
         ) as unknown as FeaturesBlockProps["items"][number]["text"],
       },
       {
-        image: media("_DSC0325.jpg"),
+        image: media("_DSC0820.jpg"),
         heading: "Bring Your Family",
         text: richTextRoot(
           paragraph(

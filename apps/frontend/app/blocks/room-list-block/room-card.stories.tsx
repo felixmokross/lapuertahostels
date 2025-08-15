@@ -46,13 +46,13 @@ export const Default: Story = {
         image: media("_DSC0334.jpg"),
       },
       {
-        image: media("_DSC0325.jpg"),
+        image: media("_DSC0820.jpg"),
       },
       {
         image: media("16.jpg"),
       },
       {
-        image: media("_dsc0989.jpg"),
+        image: media("IMG_6814-Mejorado.jpg"),
       },
     ],
     cta: requiredCallToAction("Reserve Now"),

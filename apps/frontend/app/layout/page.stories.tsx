@@ -420,7 +420,7 @@ export const Azul: Story = {
           seoPageHeading: "La Puerta Azul",
           slides: [
             {
-              image: media("10.jpg"),
+              image: media("DSC01636.jpg"),
               imageAlignment: "bottom",
               overlayTitle: {
                 show: true,
@@ -437,7 +437,7 @@ export const Azul: Story = {
               },
             },
             {
-              image: media("10.jpg"),
+              image: media("DSC01643.jpg"),
               overlayTitle: {
                 show: true,
                 text: richTextRoot(
@@ -477,7 +477,7 @@ export const Azul: Story = {
               >[number]["text"],
             },
             {
-              image: media("_DSC0325.jpg"),
+              image: media("_DSC0820.jpg"),
               heading: "Bring Your Family",
               text: richTextRoot(
                 paragraph(
@@ -492,7 +492,7 @@ export const Azul: Story = {
               >[number]["text"],
             },
             {
-              image: media("_DSC0299.jpg"),
+              image: media("_DSC0320.jpg"),
               heading: "Cool Down by the Pool",
               text: richTextRoot(
                 paragraph(
@@ -507,7 +507,7 @@ export const Azul: Story = {
               >[number]["text"],
             },
             {
-              image: media("_DSC0299.jpg"),
+              image: media("_DSC0320.jpg"),
               heading: "A Beautiful Courtyard",
               text: richTextRoot(
                 paragraph(
@@ -539,7 +539,7 @@ export const Azul: Story = {
               >[number]["text"],
             },
             {
-              image: media("_dsc0989.jpg"),
+              image: media("IMG_6814-Mejorado.jpg"),
               heading: "Enjoy the Morning",
               text: richTextRoot(
                 paragraph(

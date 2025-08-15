@@ -64,7 +64,7 @@ export const Default: Story = {
             image: media("16.jpg"),
           },
           {
-            image: media("_dsc0989.jpg"),
+            image: media("IMG_6814-Mejorado.jpg"),
           },
         ],
         cta: requiredCallToAction("Reserve Now"),
@@ -88,7 +88,7 @@ export const Default: Story = {
             image: media("16.jpg"),
           },
           {
-            image: media("_dsc0989.jpg"),
+            image: media("IMG_6814-Mejorado.jpg"),
           },
         ],
         cta: requiredCallToAction("Reserve Now"),

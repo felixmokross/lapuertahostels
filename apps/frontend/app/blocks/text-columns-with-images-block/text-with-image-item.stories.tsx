@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     id: createId(),
-    image: media("_DSC0299.jpg"),
+    image: media("_DSC0320.jpg"),
     heading: "Example Heading",
     headingLevel: 3,
     text: richTextRoot(
