@@ -14,6 +14,7 @@ import { cmsPlugin } from "@fxmk/cms-plugin";
 import { RoomListBlock } from "./blocks/room-list/config";
 import { AccommodationSelectorBlock } from "./blocks/accommodation-selector/config";
 import { footer } from "./globals/footer/config";
+import { additionalUiLabelFields } from "./ui-labels";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -51,6 +52,7 @@ export default buildConfig({
   plugins: [
     cmsPlugin({
       additionalContentBlocks: [RoomListBlock, AccommodationSelectorBlock],
+      additionalUiLabelFields,
       mediaS3Storage: {
         bucket: process.env.MEDIA_S3_BUCKET!,
         region: process.env.MEDIA_S3_REGION!,
