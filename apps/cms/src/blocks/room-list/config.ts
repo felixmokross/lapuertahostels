@@ -5,7 +5,6 @@ import {
   callToActionField,
   imageField,
 } from "@fxmk/cms-plugin";
-import { RowLabelProps } from "@payloadcms/ui";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
