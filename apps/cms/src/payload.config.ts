@@ -13,6 +13,7 @@ import { resendAdapter } from "@payloadcms/email-resend";
 import { cmsPlugin } from "@fxmk/cms-plugin";
 import { RoomListBlock } from "./blocks/room-list/config";
 import { AccommodationSelectorBlock } from "./blocks/accommodation-selector/config";
+import { footer } from "./globals/footer/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -64,6 +65,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
+  globals: [footer()],
   serverURL: process.env.SERVER_URL,
   i18n: { supportedLanguages: { en, es }, translations },
   email: resendAdapter({

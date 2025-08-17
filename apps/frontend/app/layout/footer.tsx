@@ -8,10 +8,10 @@ import { PageLink } from "~/common/page-link";
 import { Input } from "~/common/input";
 import { ReactNode } from "react";
 import { isEmptyRichText, RichText } from "~/common/rich-text";
-import { Brand, Common } from "@lapuertahostels/payload-types";
+import { Brand, Footer as FooterType } from "@lapuertahostels/payload-types";
 
 type FooterProps = {
-  content: Common["footer"];
+  content: FooterType;
   brand: Brand;
   allBrands: Brand[];
 };

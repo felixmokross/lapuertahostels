@@ -17,6 +17,7 @@ import { BrandId } from "./brands";
 import {
   getBrands,
   getCommon,
+  getFooter,
   getSettings,
   tryGetPage,
 } from "./cms-data.server";
@@ -105,11 +106,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { pageUrl, locale } = getLocaleAndPageUrl(toRelativeUrl(url));
   if (!locale) throw new Error("Locale has not been determined");
 
-  const [page, allBrands, common, settings] = await Promise.all([
+  const [page, allBrands, common, settings, footer] = await Promise.all([
     tryGetPage(request, toUrl(pageUrl).pathname, locale),
     getBrands(request, locale),
     getCommon(request, locale),
     getSettings(request, locale),
+    getFooter(request, locale),
   ]);
 
   // If maintenance screen is not enabled, public access is authorized
@@ -134,6 +136,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     allBrands,
     settings,
     common,
+    footer,
     environment: {
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY!,
       version: getVersion(),
@@ -169,8 +172,8 @@ export const handle = {
 export default function App() {
   const {
     brand,
-    common,
     settings,
+    footer,
     analyticsDomain,
     allBrands,
     isAuthorized,
@@ -230,7 +233,7 @@ export default function App() {
                     <Footer
                       brand={brand}
                       allBrands={allBrands}
-                      content={common.footer}
+                      content={footer}
                     />
                   )}
                 </>
