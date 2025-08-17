@@ -1,10 +1,6 @@
 import { MigrateDownArgs, MigrateUpArgs } from "@payloadcms/db-mongodb";
 
-export async function up({
-  payload,
-  req,
-  session,
-}: MigrateUpArgs): Promise<void> {
+export async function up({ payload }: MigrateUpArgs): Promise<void> {
   const common = await payload.db.connection
     .collection("globals")
     .findOne({ globalType: "common" });
