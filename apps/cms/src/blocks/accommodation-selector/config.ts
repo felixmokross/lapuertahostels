@@ -1,10 +1,10 @@
 import { Block } from "payload";
-import { imageField } from "../../fields/image";
 import {
   textField,
   richTextField,
   moreOptionsField,
   elementIdField,
+  imageField,
 } from "@fxmk/cms-plugin";
 
 export const AccommodationSelectorBlock: Block = {

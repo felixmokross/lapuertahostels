@@ -1,8 +1,11 @@
 import { Block } from "payload";
-import { imageField } from "@/fields/image";
-import { RowLabelProps } from "@/components/row-label";
-import { callToActionField } from "@/fields/call-to-action";
-import { textField, richTextField } from "@fxmk/cms-plugin";
+import {
+  textField,
+  richTextField,
+  callToActionField,
+  imageField,
+} from "@fxmk/cms-plugin";
+import { RowLabelProps } from "@payloadcms/ui";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -75,12 +78,12 @@ export const RoomListBlock: Block = {
       admin: {
         components: {
           RowLabel: {
-            path: "/src/components/row-label",
+            path: "@fxmk/cms-plugin/client",
             exportName: "RowLabel",
             clientProps: {
               textProp: "heading",
               fallbackLabelKey: "custom:roomList:roomRowLabel",
-            } as RowLabelProps,
+            },
           },
         },
       },
