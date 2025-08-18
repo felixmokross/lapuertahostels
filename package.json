@@ -7,6 +7,6 @@
   },
   "devDependencies": {
     "prettier": "3.5.3",
-    "@fxmk/releaser": "0.0.2-main.10"
+    "@fxmk/releaser": "0.5.0"
   }
 }

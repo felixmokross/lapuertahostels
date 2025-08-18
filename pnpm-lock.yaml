@@ -10,8 +10,8 @@ importers:
   .:
     devDependencies:
       '@fxmk/releaser':
-        specifier: 0.0.2-main.10
-        version: 0.0.2-main.10
+        specifier: 0.5.0
+        version: 0.5.0
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -86,8 +86,8 @@ importers:
   apps/frontend:
     dependencies:
       '@fxmk/common':
-        specifier: 0.0.2-main.15
-        version: 0.0.2-main.15
+        specifier: 0.5.0
+        version: 0.5.0
       '@headlessui/react':
         specifier: ^2.2.4
         version: 2.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -270,8 +270,8 @@ importers:
   tests/e2e:
     devDependencies:
       '@fxmk/common':
-        specifier: 0.0.2-main.15
-        version: 0.0.2-main.15
+        specifier: 0.5.0
+        version: 0.5.0
       '@lapuertahostels/payload-types':
         specifier: workspace:../../libs/payload-types
         version: link:../../libs/payload-types
@@ -1157,11 +1157,11 @@ packages:
       react: ^18 || ^19
       react-dom: ^18 || ^19
 
-  '@fxmk/common@0.0.2-main.15':
-    resolution: {integrity: sha512-Jfs+i/oOYzYGyzOFgoQHCLIySb1wvFT7TAhtxOGyWoEqVqFmnXFpVtAq6dXqalyVR/bcH4cNUCq6MUg6g1k4Vw==}
+  '@fxmk/common@0.5.0':
+    resolution: {integrity: sha512-EQa7jwPJYdNR2bALjGI8LhMx1Sj3N7kkiNxM6JUXt2kUCXvE1Jc4/HxxTnSYEjqVyZaTMjaP5txZYOsWKgeGUw==}
 
-  '@fxmk/releaser@0.0.2-main.10':
-    resolution: {integrity: sha512-vAlP2o9fJAyL0MFdHlBmq62poSnkhXBpPL5EWm9sfYHwnkUm7sx+69Y8IkFPXLnspqij+aHAnnwY+aFc64nTrw==}
+  '@fxmk/releaser@0.5.0':
+    resolution: {integrity: sha512-9yQTy1bAFQICLHm/yYpaiuXPYqmOMMvwBtv5hT8ZJpZXbwLlspQ8E8Cv4Hv+0L6BveNW5Ggdt0y7WDJQLgURfQ==}
     hasBin: true
 
   '@headlessui/react@2.2.4':
@@ -4709,10 +4709,6 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
-  jiti@2.4.2:
-    resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
-    hasBin: true
-
   jiti@2.5.1:
     resolution: {integrity: sha512-twQoecYPiVA5K/h6SxtORw/Bs3ar+mLUtoPSc7iMXzQzK8d7eJ/R09wmTwAjiamETn1cXYPGfNnu7DMoHgu12w==}
     hasBin: true
@@ -7948,9 +7944,9 @@ snapshots:
       - ws
       - zod
 
-  '@fxmk/common@0.0.2-main.15': {}
+  '@fxmk/common@0.5.0': {}
 
-  '@fxmk/releaser@0.0.2-main.10':
+  '@fxmk/releaser@0.5.0':
     dependencies:
       '@octokit/rest': 21.1.1
       changelogen: 0.6.2
@@ -10546,7 +10542,7 @@ snapshots:
       dotenv: 16.6.1
       exsolve: 1.0.7
       giget: 2.0.0
-      jiti: 2.4.2
+      jiti: 2.5.1
       ohash: 2.0.11
       pathe: 2.0.3
       perfect-debounce: 1.0.0
@@ -12109,8 +12105,6 @@ snapshots:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-
-  jiti@2.4.2: {}
 
   jiti@2.5.1: {}
 
