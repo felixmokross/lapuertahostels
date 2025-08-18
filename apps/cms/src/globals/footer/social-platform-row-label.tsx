@@ -1,3 +1,5 @@
+"use client";
+
 import { Footer } from "@/payload-types";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { useRowLabel, useTranslation } from "@payloadcms/ui";
