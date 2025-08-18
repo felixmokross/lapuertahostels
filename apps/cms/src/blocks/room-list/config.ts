@@ -19,9 +19,6 @@ export const RoomListBlock: Block = {
       es: "Listas de habitaciones",
     },
   },
-  imageURL: "/assets/blocks/RoomList.png",
-  imageAltText:
-    "Preview of the Room List block, showing three room cards which each have title, images, a description, and a CTA button.",
   fields: [
     {
       name: "rooms",

@@ -20,9 +20,6 @@ export const AccommodationSelectorBlock: Block = {
       es: "Selectores de alojamiento",
     },
   },
-  imageURL: "/assets/blocks/AccommodationSelector.png",
-  imageAltText:
-    "Preview of the Accommodation Selector block, showing a heading and introductory text followed by two accommodation cards",
   fields: [
     textField({ name: "heading", label: { en: "Heading", es: "Título" } }),
     richTextField(),
