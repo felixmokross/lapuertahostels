@@ -62,37 +62,19 @@ export default buildConfig({
       deeplApiKey: process.env.DEEPL_API_AUTH_KEY,
       openaiApiKey: process.env.OPENAI_API_KEY,
       publicMediaBaseUrl: process.env.IMAGEKIT_BASE_URL,
+      livePreviewBaseUrl: process.env.LIVE_PREVIEW_URL,
+      serverUrl: process.env.SERVER_URL,
+      e2eTestsApiKey: process.env.E2E_TESTS_API_KEY,
     }),
   ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI!,
   }),
   globals: [footer()],
-  serverURL: process.env.SERVER_URL,
   i18n: { supportedLanguages: { en, es }, translations },
   email: resendAdapter({
     defaultFromAddress: "no-reply@admin.lapuertahostels.co",
     defaultFromName: "La Puerta Hostels Admin",
     apiKey: process.env.RESEND_API_KEY!,
   }),
-  async onInit(payload) {
-    if (!!process.env.E2E_TESTS_API_KEY) {
-      const e2eTestApiKeys = await payload.find({
-        collection: "api-keys",
-        where: { role: { equals: "e2e-tests" } },
-        pagination: false,
-      });
-
-      if (e2eTestApiKeys.totalDocs === 0) {
-        await payload.create({
-          collection: "api-keys",
-          data: {
-            enableAPIKey: true,
-            apiKey: process.env.E2E_TESTS_API_KEY,
-            role: "e2e-tests",
-          },
-        });
-      }
-    }
-  },
 });
