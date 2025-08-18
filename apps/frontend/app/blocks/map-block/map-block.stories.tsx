@@ -20,7 +20,7 @@ const meta = {
       return (
         <APIProvider
           apiKey={googleMapsApiKey}
-          region={maps.region ?? undefined}
+          region={maps?.region ?? undefined}
         >
           <Story />
         </APIProvider>
