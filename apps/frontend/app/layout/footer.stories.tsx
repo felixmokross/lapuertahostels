@@ -104,6 +104,7 @@ const puertaBrand = brand({
 export const Default: Story = {
   args: {
     content: {
+      id: "footer",
       address: richTextRoot(
         paragraph(
           text(`La Puerta Hostels S.A.S.

@@ -4,6 +4,7 @@ import {
   Settings,
   Page,
   Redirect,
+  Footer,
 } from "@lapuertahostels/payload-types";
 import { BRANDS_DEPTH, PAGE_DEPTH } from "./cms-data";
 import { redis } from "./redis";
@@ -218,6 +219,19 @@ export async function getCommon(request: Request, locale: string) {
     2,
   )) as Common | null;
   if (!common) throw new Error("Could not load Common global");
+
+  return common;
+}
+
+export async function getFooter(request: Request, locale: string) {
+  const common = (await getData(
+    request,
+    "globals/footer",
+    "globals:footer",
+    locale,
+    2,
+  )) as Footer | null;
+  if (!common) throw new Error("Could not load Footer global");
 
   return common;
 }

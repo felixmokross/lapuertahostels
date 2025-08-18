@@ -1,5 +1,5 @@
 import { ComponentType, SVGProps } from "react";
-import { Common } from "@lapuertahostels/payload-types";
+import { Footer } from "@lapuertahostels/payload-types";
 
 export const socials = {
   facebook: {
@@ -44,7 +44,7 @@ export const socials = {
 >;
 
 type SocialPlatform = NonNullable<
-  NonNullable<Common["footer"]>["socialLinks"]
+  NonNullable<Footer>["socialLinks"]
 >[number]["platform"];
 type Icon = ComponentType<
   React.JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>

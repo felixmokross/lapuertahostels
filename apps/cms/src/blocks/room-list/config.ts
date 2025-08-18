@@ -1,8 +1,10 @@
 import { Block } from "payload";
-import { imageField } from "@/fields/image";
-import { RowLabelProps } from "@/components/row-label";
-import { callToActionField } from "@/fields/call-to-action";
-import { textField, richTextField } from "@fxmk/cms-plugin";
+import {
+  textField,
+  richTextField,
+  callToActionField,
+  imageField,
+} from "@fxmk/cms-plugin";
 
 export const RoomListBlock: Block = {
   slug: "RoomList",
@@ -17,9 +19,6 @@ export const RoomListBlock: Block = {
       es: "Listas de habitaciones",
     },
   },
-  imageURL: "/assets/blocks/RoomList.png",
-  imageAltText:
-    "Preview of the Room List block, showing three room cards which each have title, images, a description, and a CTA button.",
   fields: [
     {
       name: "rooms",
@@ -75,12 +74,12 @@ export const RoomListBlock: Block = {
       admin: {
         components: {
           RowLabel: {
-            path: "/src/components/row-label",
+            path: "@fxmk/cms-plugin/client",
             exportName: "RowLabel",
             clientProps: {
               textProp: "heading",
               fallbackLabelKey: "custom:roomList:roomRowLabel",
-            } as RowLabelProps,
+            },
           },
         },
       },

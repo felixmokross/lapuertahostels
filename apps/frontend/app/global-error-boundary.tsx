@@ -31,6 +31,7 @@ export function GlobalErrorBoundary() {
 
   const {
     common,
+    footer,
     brand,
     allBrands,
     analyticsDomain,
@@ -87,7 +88,7 @@ export function GlobalErrorBoundary() {
               }
             />
           </main>
-          <Footer allBrands={allBrands} brand={brand} content={common.footer} />
+          <Footer allBrands={allBrands} brand={brand} content={footer} />
         </ThemeProvider>
         <Scripts />
       </body>

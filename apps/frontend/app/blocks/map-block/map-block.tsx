@@ -81,7 +81,7 @@ export function MapBlock({
               keyboardShortcuts={false}
               gestureHandling="none"
               clickableIcons={false}
-              mapId={maps.mapId}
+              mapId={maps?.mapId}
               colorScheme="LIGHT"
               zoom={zoomLevel}
               center={place.location}

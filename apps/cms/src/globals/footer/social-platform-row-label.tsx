@@ -1,9 +1,7 @@
-"use client";
-
-import { socialPlatformOptions } from "@/common/social-platforms";
-import { Common } from "@/payload-types";
+import { Footer } from "@/payload-types";
 import { TranslationsKey, TranslationsObject } from "@/translations";
 import { useRowLabel, useTranslation } from "@payloadcms/ui";
+import { socialPlatformOptions } from "./social-platforms";
 
 export type SocialPlatformRowLabelProps = {
   fallbackLabelKey: TranslationsKey;
@@ -13,9 +11,7 @@ export function SocialPlatformRowLabel({
   fallbackLabelKey,
 }: SocialPlatformRowLabelProps) {
   const { data, rowNumber } =
-    useRowLabel<
-      NonNullable<NonNullable<Common["footer"]>["socialLinks"]>[number]
-    >();
+    useRowLabel<NonNullable<NonNullable<Footer>["socialLinks"]>[number]>();
   const { t } = useTranslation<TranslationsObject, TranslationsKey>();
 
   // using this format to match the default behavior of the RowLabel component that is initially shown
